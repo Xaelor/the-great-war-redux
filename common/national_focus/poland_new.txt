@@ -1,0 +1,1451 @@
+focus_tree = {
+	id = poland_focus
+	country = {
+		factor = 0
+		modifier = {
+			add = 10
+			tag = POL
+		}
+	}
+
+	default = no
+	#available_political_advisor
+	#available_chief_of_army
+	#available_chief_of_navy
+	#available_chief_of_airforce
+	#available_military_high_command
+	#available_theorist
+	#available_designer
+	#available_industrial_concern
+
+	##focus = POL_decree_of_pko
+	#focus = POL_decree_military_service
+	continuous_focus_position = { x = 175 y = 2000 }
+	initial_show_position = {
+		x = 0
+	}
+
+	#Focus Path shortcuts	
+	shortcut = {
+		name = armed_forces_tree_shortcut
+		target = POL_polish_general_staff
+		scroll_wheel_factor = 1
+	}
+
+	shortcut = {
+		name = inner_politics_tree_shortcut
+		target = POL_regency_council_of_the_kingdom_of_poland  
+		scroll_wheel_factor = 1
+	}
+
+	shortcut = {
+		name = economic_tree_shortcut
+		target = POL_postal_savings_bank 
+		scroll_wheel_factor = 1
+	}
+
+    ####################### Military focus
+
+	####################### Военные фокусы
+	
+	focus = {
+		id = POL_polish_general_staff
+		icon = GFX_focus_POL_war_school_of_general_staff
+
+		available = {
+			OR = {
+				AND = {
+			        is_subject = no
+			        NOT = { 
+				        has_idea = POL_governor_general_idea
+			        }
+				}
+				AND = {
+					OR = { is_subject_of = GER is_in_faction_with = GER }
+					has_completed_focus = POL_wojsko_polskie
+					GER = { has_global_flag = great_war_winner }
+				}
+			}
+		}
+
+		cost = 4
+		x = 5
+		y = 0
+		search_filters = {FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM}
+		completion_reward = {
+			army_experience = 25
+			custom_effect_tooltip = available_military_high_command
+			show_ideas_tooltip = POL_tadeusz_jordan_rozwadowski_army_chief
+			custom_effect_tooltip = available_theorist
+			show_ideas_tooltip = POL_tadeusz_jordan_rozwadowski_theorist
+		}
+	}
+	focus = {
+		id = POL_Organization_of_the_new_Polish_Army
+		icon = GFX_focus_POL_polish_general_staff
+
+		prerequisite = { focus = POL_polish_general_staff }
+
+		available = {
+			
+		}
+
+		cost = 5
+		x = 5
+		y = 1
+		search_filters = {FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM }
+		completion_reward = {
+			add_dynamic_modifier = { modifier = POL_the_Polish_army_dynamic_modifier }
+			upgrade_conscription_law = yes
+		}
+	}
+	focus = {
+		id = POL_Request_French_support
+		icon = GFX_focus_POL_polish_military_purchase_mission_in_paris
+
+		prerequisite = { focus = POL_Organization_of_the_new_Polish_Army }
+
+		available = {
+			is_subject = no
+			NOT = { is_in_faction_with = GER }
+			NOT = { has_war_with = FRA }
+		}
+
+		cost = 4
+		x = 4
+		y = 2
+		search_filters = {FOCUS_FILTER_HISTORICAL }
+		completion_reward = {
+			FRA = { country_event = ww1_poland.64 }
+		}
+	}
+	focus = {
+		id = POL_Creation_of_the_distinguished_cavalry
+		icon = GFX_generic_cavalry
+
+		prerequisite = { focus = POL_Organization_of_the_new_Polish_Army }
+
+		cost = 5
+		x = 2
+		y = 2
+		search_filters = {FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM }
+		completion_reward = {
+			custom_effect_tooltip = POL_the_Polish_army_dynamic_modifier_tt
+			add_to_variable = {
+				POL_Polish_army_cavalry_defence_factor = 0.05
+				tooltip = cavalry_defence_factor_tt
+			}
+			add_to_variable = {
+				POL_Polish_army_cavalry_attack_factor = 0.08
+				tooltip = cavalry_attack_factor_tt
+			}
+			set_technology = {
+				ITA_modernized_cavalry_tech = 1
+				popup = no
+			}
+			division_template = {
+				name = "Polish Cavalry Regiment"
+				is_locked = no
+				regiments = {
+					cavalry = { x = 0 y = 0 }
+					cavalry = { x = 0 y = 1 }
+					cavalry = { x = 1 y = 0 }
+					cavalry = { x = 1 y = 1 }
+					cavalry = { x = 2 y = 0 }
+					cavalry = { x = 2 y = 1 }
+				}
+				support = { 
+					engineer = { x = 0 y = 0 }
+					recon = { x = 0 y = 1 }
+					field_gun = { x = 0 y = 2 }
+				}
+			}
+			capital_scope = {
+				create_unit = {
+					division = "name = \"Polish Cavalry Regiment\" division_template = \"Polish Cavalry Regiment\" start_experience_factor = 0.5"
+					owner = POL
+					count = 5
+				}
+			}
+		}
+	}
+	focus = {
+		id = POL_Expand_the_work_of_CWS
+		icon = GFX_focus_generic_reorient_production
+
+		prerequisite = { focus = POL_Creation_of_the_distinguished_cavalry }
+
+		cost = 5
+		x = 0
+		y = 3
+		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM }
+		completion_reward = {
+
+		}
+	}
+	focus = {
+		id = POL_Get_the_technology_of_French_heavy_machinery
+		icon = GFX_focus_FRA_char2c
+        
+		available = {
+			has_idea = ideas_POL_French_military_mission
+		}
+		prerequisite = { focus = POL_Creation_of_the_distinguished_cavalry }
+		mutually_exclusive = { focus = POL_German_heavy_machinery_technology }
+
+		cost = 5
+		x = 2
+		y = 3
+		search_filters = {FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM }
+		completion_reward = {
+
+		}
+	}
+	focus = {
+		id = POL_German_heavy_machinery_technology
+		icon = GFX_focus_generic_A7V_tank
+        
+		available = {
+	        OR = { is_subject_of = GER is_in_faction_with = GER }
+		}
+
+		prerequisite = { focus = POL_Creation_of_the_distinguished_cavalry }
+		mutually_exclusive = { focus = POL_Get_the_technology_of_French_heavy_machinery }
+
+		cost = 5
+		x = 4
+		y = 3
+		search_filters = { FOCUS_FILTER_ARMY_REFORM }
+		completion_reward = {
+
+		}
+	}
+	focus = {
+		id = POL_Motorization_of_cavalry
+		icon = GFX_focus_generic_armored_car
+
+		prerequisite = { focus = POL_Expand_the_work_of_CWS }
+		mutually_exclusive = { focus = POL_Polish_tanks }
+
+		available = {
+			has_tech = coil_ignition
+		}
+
+		cost = 10
+		x = 0
+		y = 4
+		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_ARMY_REFORM}
+		completion_reward = {
+			custom_effect_tooltip = POL_the_Polish_army_dynamic_modifier_tt
+			add_to_variable = {
+				POL_Polish_army_mechanized_defence_factor = 0.10
+	            tooltip = mechanized_defence_factor_tt
+			}
+			add_to_variable = {
+				POL_Polish_army_motorized_defence_factor = 0.10
+				tooltip = motorized_defence_factor_tt
+			}
+			add_to_variable = {
+				POL_Polish_army_mechanized_attack_factor = 0.10
+				tooltip = mechanized_attack_factor_tt
+			}
+			add_to_variable = {
+				POL_Polish_army_motorized_attack_factor = 0.10
+				tooltip = motorized_attack_factor_tt
+			}
+			add_tech_bonus = {
+				name = AUS_motor_industry
+				category = motorized_equipment
+				uses = 1
+				ahead_reduction = 1
+			}
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				custom_effect_tooltip = available_industrial_concern
+				show_mio_tooltip = generic_armored_car_organization
+				mio:generic_armored_car_organization = {
+					add_mio_funds = 250
+				}
+			}
+		}
+	}
+	focus = {
+		id = POL_Polish_tanks
+		icon = GFX_focus_early_tank
+
+		prerequisite = { focus = POL_Expand_the_work_of_CWS }
+		prerequisite = { focus = POL_Get_the_technology_of_French_heavy_machinery focus = POL_German_heavy_machinery_technology }
+		mutually_exclusive = { focus = POL_Motorization_of_cavalr  }
+
+		cost = 10
+		x = 2
+		y = 4
+		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM }
+		completion_reward = {
+			custom_effect_tooltip = POL_the_Polish_army_dynamic_modifier_tt
+			add_to_variable = {
+				POL_Polish_army_army_armor_attack_factor = 0.10
+	            tooltip = army_armor_attack_factor_tt
+			}
+			add_to_variable = {
+				POL_Polish_army_army_armor_defence_factor = 0.10
+				tooltip = army_armor_defence_factor_tt
+			}
+			set_technology = { tank_design = 1 }
+			add_tech_bonus = {
+				name = FRA_ww1_the_french_miracle
+				uses = 1
+				bonus = 3
+				ahead_reduction = 1
+				category = cat_light_armor
+			}
+		}
+	}
+	focus = {
+		id = POL_Summon_the_Blue_Army
+		icon = GFX_focus_POL_sanation_left
+
+		prerequisite = { focus = POL_Organization_of_the_new_Polish_Army }
+
+		available = {
+			has_global_flag = great_war_ends
+			FRA = { has_country_flag = great_war_winner }
+            is_subject = no
+		}
+
+		cost = 5
+		x = 8
+		y = 2
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+		completion_reward = {
+			country_event = { id = ww1_poland.63 days = 1 }
+		}
+	}
+	focus = {
+		id = POL_Re-enlistment_of_officers
+		icon = GFX_focus_RUS_army_officers
+        
+		available = {
+            OR = { has_idea = idea_POL_The_patchwork_army has_idea = idea_POL_The_patchwork_army_1 }
+		}
+
+		prerequisite = { focus = POL_Organization_of_the_new_Polish_Army }
+        bypass = {
+			NOT = { has_idea = idea_POL_The_patchwork_army has_idea = idea_POL_The_patchwork_army_1 }
+		}
+		cost = 4
+		x = 6
+		y = 2
+		search_filters = {FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM}
+		completion_reward = {
+			army_experience = 35
+			if = {
+				limit = { has_idea = idea_POL_The_patchwork_army_1 }
+				swap_ideas = {
+					remove_idea = idea_POL_The_patchwork_army_1
+					add_idea = idea_POL_The_patchwork_army
+				}
+			}
+			else_if = {
+				limit = { has_idea = idea_POL_The_patchwork_army }
+				swap_ideas = {
+					remove_idea = idea_POL_The_patchwork_army
+					add_idea = idea_POL_The_patchwork_army-1
+				}
+			}
+			custom_effect_tooltip = POL_the_Polish_army_dynamic_modifier_tt
+			add_to_variable = {
+				POL_Polish_army_dig_in_speed_factor = 0.05
+	            tooltip = dig_in_speed_factor_tt
+			}
+			add_to_variable = {
+				POL_Polish_army_experience_gain_army_factor = 0.05
+	            tooltip = experience_gain_army_factor_tt
+			}
+			add_to_variable = {
+				POL_Polish_army_org_loss_at_low_org_factor = -0.1
+	            tooltip = org_loss_at_low_org_factor_tt
+			}	
+            random_unit_leader = {
+                limit = {  }
+				gain_xp = 160
+            }
+            random_unit_leader = {
+                limit = {  }
+				gain_xp = 160
+            }
+            random_unit_leader = {
+                limit = {  }
+				gain_xp = 160
+            }	
+		}
+	}
+	focus = {
+		id = POL_Strengthening_popular_mobilization
+		icon = GFX_focus_generic_limited_social_mobilization
+
+		prerequisite = { focus = POL_Re-enlistment_of_officers }
+
+		cost = 5
+		x = 6
+		y = 3
+		search_filters = {FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM}
+		completion_reward = {
+			add_manpower = 30000
+			custom_effect_tooltip = POL_the_Polish_army_dynamic_modifier_tt
+			add_to_variable = {
+				POL_Polish_conscription_factor = 0.1
+				tooltip = conscription_factor_tt
+			}
+			add_to_variable = {
+				POL_Polish_army_training_time_factor = -0.05
+				tooltip = training_time_factor_tt
+			}
+			upgrade_conscription_law = yes
+		}
+	}
+	focus = {
+		id = POL_Expand_the_activity_of_KOKW
+		icon = GFX_focus_POL_polnische_wehrmacht
+        
+		available = {
+			is_subject = no
+            NOT = { is_in_faction_with = GER }
+			has_global_flag = great_war_ends
+		}
+
+		prerequisite = { focus = POL_Re-enlistment_of_officers }
+
+		cost = 4
+		x = 9
+		y = 3
+		search_filters = {FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM}
+		completion_reward = {
+			custom_effect_tooltip = POL_Expand_the_activity_of_KOKW_tt
+			custom_effect_tooltip = empty_space_tt
+			unlock_decision_category_tooltip = POL_KOKW_activities
+			custom_effect_tooltip = POL_activity_of_KOKW_tt
+			custom_effect_tooltip = when_taken
+			effect_tooltip = {
+				custom_effect_tooltip = POL_spawn_divizion_KOKW_tt
+			}
+		    division_template = {
+			    name = "Części Komitetu Obrony Kresów Wschodnich"
+			    is_locked = yes
+	            regiments = {
+		            infantry = { x = 0 y = 0 }
+		            infantry = { x = 0 y = 1 }
+		            infantry = { x = 0 y = 2 }
+		            infantry = { x = 0 y = 3 }
+	            }
+	            regimental_support = {
+		            machine_gun_company = { x = 0 y = 0 }
+	            }
+	            support = {
+		            recon = { x = 0 y = 0 }
+		            engineer = { x = 0 y = 1 }
+	            }
+		    }
+		}
+	}
+	focus = {
+		id = POL_Reorganize_Lithuanian-Belarusian_units
+		icon = GFX_focus_POL_belarus_army
+
+		prerequisite = { focus = POL_Expand_the_activity_of_KOKW }
+
+		cost = 5
+		x = 10
+		y = 4
+		search_filters = {FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM}
+		completion_reward = {
+            unlock_decision_tooltip = {
+                decision = POL_To_form_Lithuanian-Belarusian_divisions
+                show_effect_tooltip = yes
+            }
+		}
+	}
+	focus = {
+		id = POL_Firepower_concentration_tactics
+		icon = GFX_focus_generic_mountain_artillery
+
+		prerequisite = { focus = POL_Strengthening_popular_mobilization }
+
+		cost = 5
+		x = 8
+		y = 4
+		search_filters = {FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_tech_bonus = {
+				name = AUS_artilleryburger
+				category = cat_artillery
+				uses = 1
+				bonus = 1
+			}
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				hidden_effect = {
+					mio:generic_artillery_organization = {
+						add_mio_funds = 350
+					}
+				}
+				mio:generic_artillery_organization = {
+					add_mio_funds = 350
+				}
+				else = {
+					custom_effect_tooltip = available_designer
+					show_ideas_tooltip = schneider
+				}
+			}
+			add_equipment_to_stockpile = {
+				type = field_gun_equipment_1
+				producer = POL
+				amount = 200
+			}
+			
+			set_country_flag = has_invested_in_schneider
+			custom_effect_tooltip = POL_the_Polish_army_dynamic_modifier_tt
+			add_to_variable = {
+				POL_Polish_army_artillery_attack_factor = 0.1
+				tooltip = army_artillery_attack_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = POL_Stabilization_of_supply_lines
+		icon = GFX_focus_generic_train_red
+
+		prerequisite = { focus = POL_Strengthening_popular_mobilization }
+
+		cost = 4
+		x = 6
+		y = 4
+		search_filters = {FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM }
+		completion_reward = {
+			add_tech_bonus = {
+				name = FRA_ww1_fund_berthier
+				bonus = 0.5
+				category = train_tech
+				uses = 2
+			}
+			add_equipment_to_stockpile = {
+				type = train_equipment_1
+				producer = POL
+				amount = 20
+			}
+			add_ideas = idea_POL_An_organized_supply_line
+		}
+	}
+	focus = {
+		id = POL_The_beauty_and_pride_of_Poland
+		icon = GFX_focus_POL_first_marshal_of_poland
+
+		prerequisite = { focus = POL_Strengthening_popular_mobilization }
+
+		available = {
+			
+		}
+
+		cost = 5
+		x = 4
+		y = 4
+		search_filters = {FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_command_power = 30
+			add_tech_bonus = {
+				name = AUS_modernize_army_equipment
+				uses = 1
+				bonus = 1
+				category = infantry_weapons
+			}
+			custom_effect_tooltip = POL_the_Polish_army_dynamic_modifier_tt
+			add_to_variable = {
+				POL_Polish_army_army_infantry_attack_factor = 0.08
+	            tooltip = army_infantry_attack_factor_tt
+			}
+			add_to_variable = {
+				POL_Polish_army_army_infantry_defence_factor = 0.05
+	            tooltip = army_infantry_defence_factor_tt
+			}
+			add_to_variable = {
+				POL_Polish_army_breakthrough_factor = 0.05
+	            tooltip = breakthrough_factor_tt
+			}
+			add_to_variable = {
+				POL_Polish_army_max_dig_in_factor = 0.05
+	            tooltip = max_dig_in_factor_tt
+			}
+			add_to_variable = {
+				POL_Polish_army_experience_loss_factor = -0.08
+	            tooltip = experience_loss_factor_tt
+			}
+		}
+	}
+	focus = {
+		id = POL_Tactics_of_the_old_war
+		icon = GFX_focus_ITA_army_officer
+
+		prerequisite = { focus = POL_Stabilization_of_supply_lines focus = POL_Firepower_concentration_tactics }
+		prerequisite = { focus = POL_The_beauty_and_pride_of_Poland }
+        mutually_exclusive = { focus = POL_Superior_firepower focus = POL_Theory_of_maneuver_warfare }
+
+		available = {
+			has_any_grand_doctrine = land
+		}
+
+		cost = 10
+		x = 5
+		y = 5
+		search_filters = { FOCUS_FILTER_ARMY_REFORM }
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = POL_Tactics_of_the_old_war
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine 
+			}
+			set_sub_doctrine = bite_and_hold
+			add_mastery = {
+                amount = 150
+                folder = land
+                grand_doctrine = industrial_warfare
+                sub_doctrine = bite_and_hold
+                track = ww1_infantry
+                index = 1
+            }
+		}
+	}
+	focus = {
+		id = POL_Superior_firepower
+		icon = GFX_focus_generic_artillery_antitank_antiair
+
+		prerequisite = { focus = POL_Firepower_concentration_tactics }
+		prerequisite = { focus = POL_The_beauty_and_pride_of_Poland focus = POL_Stabilization_of_supply_lines }
+        mutually_exclusive = { focus = POL_Tactics_of_the_old_war focus = POL_Theory_of_maneuver_warfare }
+
+		cost = 10
+		x = 7
+		y = 5
+		search_filters = {FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_tech_bonus = {
+				name = AUS_artilleryburger
+				category = cat_howitzer
+				uses = 1
+				bonus = 0.5
+			}
+			add_tech_bonus = {
+				name = AUS_artilleryburger
+				category = cat_field_gun
+				uses = 1
+				bonus = 0.5
+			}
+			add_doctrine_cost_reduction = {
+				name = POL_Tactics_of_the_old_war
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine 
+			}
+			set_grand_doctrine = superior_firepower
+		}
+	}
+	focus = {
+		id = POL_Theory_of_maneuver_warfare
+		icon = GFX_focus_RUS_Garford_Putilov_armoured_car
+
+		prerequisite = { focus = POL_Stabilization_of_supply_lines focus = POL_Firepower_concentration_tactics }
+		prerequisite = { focus = POL_Polish_tanks focus = POL_Motorization_of_cavalry}
+        mutually_exclusive = { focus = POL_Tactics_of_the_old_war focus = POL_Superior_firepower }
+
+		available = {
+			has_any_grand_doctrine = land
+		}
+
+		cost = 10
+		x = 3
+		y = 5
+		search_filters = { FOCUS_FILTER_ARMY_REFORM }
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = POL_Tactics_of_the_old_war
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine 
+			}
+			set_grand_doctrine = new_mobile_warfare
+			set_sub_doctrine = armored_infantry_support
+		}
+	}
+	focus = {
+		id = POL_Unification_of_the_Polish_Army
+		icon = GFX_focus_AUH_first_cadre_company
+
+		prerequisite = { focus = POL_Theory_of_maneuver_warfare focus = POL_Tactics_of_the_old_war focus = POL_Superior_firepower }
+
+		available = {
+			
+		}
+
+		cost = 10
+		x = 5
+		y = 6
+		search_filters = {FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_REFORM }
+		completion_reward = {
+			
+		}
+	}
+
+	
+
+
+	focus = {
+		id = POL_creation_of_polish_air_forces
+		icon = GFX_focus_POL_polish_air_forces
+		cost = 10
+		x = -7
+		y = 1
+
+		relative_position_id = POL_polish_general_staff
+
+		prerequisite = { focus = POL_polish_general_staff }
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				prioritize = {
+					10
+				}
+				limit = {
+					free_building_slots = {
+						building = air_base
+						size > 1
+					}
+				}
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = POL_air_base_expansion_1
+			}
+			custom_effect_tooltip = available_industrial_concern
+			show_ideas_tooltip = POL_cwl	
+		}
+	}
+	focus = {
+		id = POL_french_pilot_school
+		icon = GFX_focus_POL_french_pilot_school
+
+		relative_position_id = POL_creation_of_polish_air_forces
+		x = -1
+		y = 1
+
+		cost = 5
+		prerequisite = { focus = POL_creation_of_polish_air_forces }
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+
+		ai_will_do = {
+			factor = 10		
+		}
+
+
+		completion_reward = {
+			air_experience = 50
+			add_doctrine_cost_reduction = {
+			    name = POL_french_pilot_school
+			    cost_reduction = 0.5
+			    uses = 1
+			    category = air_doctrine
+		    }
+		}
+	}
+	focus = {
+		id = POL_french_pilot_school
+		icon = GFX_focus_POL_french_pilot_school
+
+		relative_position_id = POL_creation_of_polish_air_forces
+		x = -1
+		y = 1
+
+		cost = 5
+		prerequisite = { focus = POL_creation_of_polish_air_forces }
+		mutually_exclusive = { focus = POL_germany_pilot_school }
+		available = { 
+			is_subject = no
+		}
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+
+		ai_will_do = {
+			factor = 10		
+		}
+
+
+		completion_reward = {
+			air_experience = 50
+			add_doctrine_cost_reduction = {
+			    name = POL_french_pilot_school
+			    cost_reduction = 0.5
+			    uses = 1
+			    category = air_doctrine
+		    }
+		}
+	}
+	focus = {
+		id = POL_germany_pilot_school
+		icon = GFX_focus_align_germany
+
+		relative_position_id = POL_creation_of_polish_air_forces
+		x = -3
+		y = 1
+
+		cost = 5
+		prerequisite = { focus = POL_creation_of_polish_air_forces }
+		mutually_exclusive = { focus = POL_french_pilot_school }
+		available = {
+	        OR = { is_subject_of = GER is_in_faction_with = GER }
+		}
+
+		search_filters = {}
+
+		ai_will_do = {
+			factor = 10		
+		}
+
+
+		completion_reward = {
+			air_experience = 50
+			add_doctrine_cost_reduction = {
+			    name = POL_french_pilot_school
+			    cost_reduction = 0.5
+			    uses = 1
+			    category = air_doctrine
+		    }
+		}
+	}
+
+	focus = {
+		id = POL_air_warfare
+		icon = GFX_goal_generic_air_doctrine
+		cost = 10
+		prerequisite = {
+			focus = POL_creation_of_polish_air_forces
+		}
+
+		relative_position_id = POL_creation_of_polish_air_forces
+		x = 1
+		y = 1
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = POL_air_innovations
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = POL_officers_aeronautical_school
+		icon = GFX_goal_generic_air_bomber
+
+		relative_position_id = POL_french_pilot_school
+		x = 1
+		y = 1
+
+		cost = 5
+		prerequisite = { focus = POL_french_pilot_school focus = POL_germany_pilot_school }
+		prerequisite = { focus = POL_air_warfare }
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+
+		ai_will_do = {
+			factor = 10		
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = no
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+			    name = POL_french_pilot_school
+			    cost_reduction = 0.5
+			    uses = 1
+			    category = air_doctrine
+		    }
+		}
+	}
+
+	focus = {
+		id = POL_kosciuszko_squadron
+		icon = GFX_focus_SMB_special_forces_option_3
+
+		relative_position_id = POL_officers_aeronautical_school
+		x = 0
+		y = 1
+
+		cost = 5
+		prerequisite = { focus = POL_officers_aeronautical_school }
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+
+		ai_will_do = {
+			factor = 10		
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = no
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+		}
+	}
+
+	
+	focus = {
+		id = POL_Creation_of_the_Polish_Navy
+		icon = GFX_goal_generic_build_navy
+		cost = 10
+		x = 8
+		y = 1
+
+		relative_position_id = POL_polish_general_staff
+
+		prerequisite = { focus = POL_polish_general_staff }
+
+		available = { any_state = { impassable = no is_coastal = yes is_controlled_by = POL } }
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+
+		completion_reward = {
+			navy_experience = 20
+		}
+	}
+	focus = {
+		id = POL_Strengthening_the_small_fleet
+		icon = GFX_focus_generic_naval_ship
+		cost = 10
+		x = 8
+		y = 2
+
+		relative_position_id = POL_polish_general_staff
+
+		prerequisite = { focus = POL_Creation_of_the_Polish_Navy }
+		mutually_exclusive = { focus = POL_Building_an_underwater_force }
+
+		available = { }
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+
+		completion_reward = {
+			navy_experience = 20
+		}
+	}
+	focus = {
+		id = POL_Building_an_underwater_force
+		icon = GFX_goal_generic_navy_anti_submarine
+		cost = 10
+		x = 8
+		y = 2
+
+		relative_position_id = POL_polish_general_staff
+
+		prerequisite = { focus = POL_Creation_of_the_Polish_Navy }
+		mutually_exclusive = { focus = POL_Strengthening_the_small_fleet }
+
+		available = { }
+
+		search_filters = {}
+
+		completion_reward = {
+			navy_experience = 20
+		}
+	}
+	focus = {
+		id = POL_Finance_the_construction_of_shipyards
+		icon = GFX_focus_generic_shipyard
+		cost = 10
+		x = 10
+		y = 2
+
+		relative_position_id = POL_polish_general_staff
+
+		prerequisite = { focus = POL_Creation_of_the_Polish_Navy }
+
+		available = { }
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+
+		completion_reward = {
+			navy_experience = 20
+		}
+	}
+	focus = {
+		id = POL_Strengthening_the_coast
+		icon = GFX_focus_NOR_drobak_coastal_fort
+		cost = 10
+		x = 11
+		y = 3
+
+		relative_position_id = POL_polish_general_staff
+
+		prerequisite = { focus = POL_Finance_the_construction_of_shipyards }
+
+		available = { }
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+
+		completion_reward = {
+			navy_experience = 20
+		}
+	}
+	focus = {
+		id = POL_Destroyers_for_shallow_waters
+		icon = GFX_focus_generic_large_navy
+		cost = 10
+		x = 9
+		y = 3
+
+		relative_position_id = POL_polish_general_staff
+
+		prerequisite = { focus = POL_Strengthening_the_small_fleet }
+
+		available = { }
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+
+		completion_reward = {
+			navy_experience = 20
+		}
+	}
+	focus = {
+		id = POL_Improving_underwater_warfare
+		icon = GFX_focus_POL_Improving_underwater_warfare
+		cost = 10
+		x = 6
+		y = 3
+
+		relative_position_id = POL_polish_general_staff
+
+		prerequisite = { focus = POL_Building_an_underwater_force }
+
+		available = { }
+
+		search_filters = {}
+
+		completion_reward = {
+			navy_experience = 20
+		}
+	}
+	focus = {
+		id = POL_Strengthening_the_fleet_in_the_Baltic
+		icon = GFX_focus_generic_baltic_sea_fleet
+		cost = 10
+		x = 8
+		y = 4
+
+		relative_position_id = POL_polish_general_staff
+
+		prerequisite = { focus = POL_Building_an_underwater_force focus = POL_Strengthening_the_small_fleet }
+
+		available = { }
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+
+		completion_reward = {
+			navy_experience = 20
+		}
+	}
+
+
+    ####################### Military focus
+
+	####################### Военные фокусы
+
+	focus = {
+		id = POL_regency_council_of_the_kingdom_of_poland #27 October 1917
+		icon = GFX_focus_POL_regency_council
+		
+
+		x = 20
+		y = 0
+		cost = 5
+
+		ai_will_do = {
+			factor = 2.5
+		}
+	
+		
+		bypass = {
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+
+		completion_reward = {
+			promote_character = POL_regency_council
+			add_ideas = POL_unpopular_regency
+			add_ideas = POL_governor_general_idea
+		}
+	}
+
+	focus = {
+		id = POL_the_royal_polish_government #7 November 1918
+		icon = GFX_focus_POL_regency_council
+		
+		prerequisite = { focus = POL_regency_council_of_the_kingdom_of_poland }
+		relative_position_id = POL_regency_council_of_the_kingdom_of_poland
+
+		x = 0
+		y = 1
+		cost = 5
+
+		ai_will_do = {
+			factor = 2.5
+		}
+		
+		available = {
+			OR = {
+				is_subject_of = GER
+				is_in_faction_with = GER
+			}
+		}
+		
+		bypass = {
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+		completion_reward = {
+			add_political_power = 120
+			add_stability = 0.05
+			if = {
+				limit = {
+					NOT = {
+						POL_jan_kucharzewski = {
+							is_hired_as_advisor = yes
+						}
+					}
+				}
+				activate_advisor = POL_jan_kucharzewski
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.05
+			}
+		}
+	}
+
+	focus = {
+		id = POL_the_crown_council #12 february 1918
+		icon = GFX_focus_POL_regency_council
+		
+		prerequisite = { focus = POL_the_royal_polish_government }
+		relative_position_id = POL_the_royal_polish_government
+
+		x = 1
+		y = 1
+		cost = 5
+
+		ai_will_do = {
+			factor = 2.5
+		}
+		
+		available = {
+			OR = {
+				is_subject_of = GER
+				is_in_faction_with = GER
+			}
+		}
+		
+		bypass = {
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 100
+		}
+	}
+
+	focus = {
+		id = POL_council_of_state_elections #9 April 1918
+		icon = GFX_focus_generic_voting
+		
+		prerequisite = { focus = POL_the_royal_polish_government }
+		#prerequisite = { focus = POL_adoption_of_the_constitution_draft }
+		relative_position_id = POL_the_royal_polish_government
+
+		x = -1
+		y = 1
+		cost = 5
+
+		ai_will_do = {
+			factor = 2.5
+		}
+		
+		available = {
+			OR = {
+				is_subject_of = GER
+				is_in_faction_with = GER
+			}
+		}
+		
+		bypass = {
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+		completion_reward = {
+			add_political_power = 50
+			activate_mission = POL_council_of_state_elections_mission
+		}
+	}
+
+	focus = {
+		id = POL_declaration_of_independence #7 November 1918
+		icon = GFX_focus_BRA_the_polaca
+		
+		prerequisite = { focus = POL_council_of_state_elections }
+		prerequisite = { focus = POL_the_crown_council }
+		relative_position_id = POL_the_royal_polish_government
+
+		x = 0
+		y = 2
+		cost = 10
+
+		ai_will_do = {
+			factor = 2.5
+		}
+		
+		available = {
+			OR = {
+				is_subject_of = GER
+				is_in_faction_with = GER
+			}
+		}
+		
+		bypass = {
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+		completion_reward = {
+			add_political_power = 75
+			add_stability = 0.05
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.03
+			}
+		}
+	}
+
+	focus = {
+		id = POL_commissions_of_district_lands #19 November 1918
+		icon = GFX_focus_POL_commissions_of_district_lands
+		
+		prerequisite = { focus = POL_declaration_of_independence }
+		relative_position_id = POL_declaration_of_independence
+
+		x = 2
+		y = 1
+		cost = 4
+
+		ai_will_do = {
+			factor = 2.5
+		}
+		
+		available = {
+			OR = {
+				is_subject_of = GER
+				is_in_faction_with = GER
+			}
+		}
+		
+		bypass = {
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+		completion_reward = {
+			add_political_power = 50
+			add_stability = 0.03
+		}
+	}
+
+	focus = {
+		id = POL_swiezynskis_cabinet #23 November 1918
+		icon = GFX_generic_parliament
+		
+		prerequisite = { focus = POL_declaration_of_independence }
+		relative_position_id = POL_declaration_of_independence
+
+		x = 0
+		y = 1
+		cost = 4
+
+		ai_will_do = {
+			factor = 2.5
+		}
+		
+		available = {
+			OR = {
+				is_subject_of = GER
+				is_in_faction_with = GER
+			}
+		}
+		
+		bypass = {
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+		completion_reward = {
+			add_political_power = 75
+			if = {
+				limit = {
+					POL_jan_katy_steczkowski = {
+						is_hired_as_advisor = yes
+					}
+				}
+				deactivate_advisor = POL_jan_katy_steczkowski
+				activate_advisor = POL_jozef_swiezynski
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.1
+			}
+			hidden_effect = {
+				POL = {
+					country_event = {
+						id = ww1_poland.50
+						days = 12
+					}
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = POL_return_of_brigadier_pilsudski 
+		icon = GFX_focus_POL_chief_of_state
+		
+		prerequisite = { focus = POL_swiezynskis_cabinet }
+		prerequisite = { focus = POL_commissions_of_district_lands }
+		prerequisite = { focus = POL_wojsko_polskie }
+		relative_position_id = POL_swiezynskis_cabinet
+
+		x = 0
+		y = 1
+		cost = 4
+
+		ai_will_do = {
+			factor = 2.5
+		}
+		
+		available = {
+			OR = {
+				is_subject_of = GER
+				is_in_faction_with = GER
+			}
+		}
+		
+		bypass = {
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+		completion_reward = {
+			add_political_power = 200
+			POL_jozef_pilsudski = {
+				#promote_character = authoritarian_democracy
+				if = {
+					limit = {
+						is_advisor = yes
+					}
+					ROOT = { activate_advisor = POL_jozef_pilsudski_chief }
+				}
+			}
+			
+			if = {
+				limit = { has_idea = POL_oath_crisis }
+				remove_ideas = POL_oath_crisis
+			}
+		}
+	}
+	focus = {
+		id = POL_wojsko_polskie #12/24 November 1918
+		icon = GFX_focus_POL_polish_general_staff
+		
+		prerequisite = { focus = POL_declaration_of_independence }
+		relative_position_id = POL_declaration_of_independence
+
+		x = -2
+		y = 1
+		cost = 4
+
+		search_filters = {FOCUS_FILTER_HISTORICAL}
+
+		ai_will_do = {
+			factor = 2.5
+		}
+		
+		available = {
+			OR = {
+				is_subject_of = GER
+				is_in_faction_with = GER
+			}
+		}
+		
+		bypass = {
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = 0.05
+			army_experience = 15
+			remove_advisor_role = {
+				character = "POL_hans_hartwig_von_beseler"
+				slot = army_chief
+			}
+			POL_hans_hartwig_von_beseler = { set_nationality = GER }
+
+			if = {
+				limit = { has_idea = POL_governor_general_idea }
+				remove_ideas = POL_governor_general_idea
+			}
+
+			custom_effect_tooltip = available_military_high_command
+			custom_effect_tooltip = available_theorist
+			show_ideas_tooltip = POL_tadeusz_jordan_rozwadowski
+		}
+	}
+}
