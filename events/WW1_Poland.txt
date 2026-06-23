@@ -239,6 +239,7 @@ country_event = {
 	}
 	option = {
 		name = ww1_poland.1.a
+		add_ideas = idea_POL_The_patchwork_army
 		if = {
 			limit = {
 				is_subject_of = GER
@@ -260,6 +261,7 @@ country_event = {
 	}
 	option = {
 		name = ww1_poland.1.b
+		add_ideas = idea_POL_The_patchwork_army
 		hidden_effect = {
 			uncomplete_national_focus = {
 				focus = POL_declare_a_republic
@@ -3173,6 +3175,175 @@ country_event = {
 	}
 }
 
+<<<<<<< HEAD
+=======
+#The arrival of Haller's army - Прибытие армии Галлера
+country_event = {
+    id = ww1_poland.63
+    title = ww1_poland.63.title
+    desc = ww1_poland.63.desc
+    picture = GFX_ww1_france_211
+    is_triggered_only = yes
+    option = {
+		name = ww1_poland.63.a
+		add_war_support = 0.05
+		recruit_character = PNC_jozef_haller
+		division_template = {
+			name = "Korpus Polski"
+			is_locked = no
+	        regiments = {
+		        infantry = { x = 0 y = 0 }
+		        infantry = { x = 0 y = 1 }
+		        infantry = { x = 0 y = 2 }
+		        infantry = { x = 1 y = 0 }
+		        infantry = { x = 1 y = 1 }
+		        infantry = { x = 1 y = 2 }
+		        infantry = { x = 2 y = 0 }
+		        infantry = { x = 2 y = 1 }
+		        infantry = { x = 2 y = 2 }
+		        infantry = { x = 3 y = 0 }
+		        infantry = { x = 3 y = 1 }
+		        field_gun_brigade = { x = 4 y = 0 }
+	        }
+	        regimental_support = {
+		        machine_gun_company = { x = 0 y = 0 }
+	        }
+	        support = {
+		        recon = { x = 0 y = 0 }
+		        engineer = { x = 0 y = 1 }
+		        field_gun = { x = 0 y = 2 }
+	        }
+			priority = 2
+		}
+		capital_scope = {
+			create_unit = {
+				division = "name = \"Dywizja Strzelców Polskich\" division_template = \"Korpus Polski\" start_experience_factor = 0.8"
+				owner = POL
+				count = 6
+			}
+		}
+		if = {
+			limit = { has_idea = idea_POL_The_patchwork_army }
+			swap_ideas = {
+				remove_idea = idea_POL_The_patchwork_army
+				add_idea = idea_POL_The_patchwork_army_1
+			}
+		}
+		else_if = {
+			limit = { has_idea = idea_POL_The_patchwork_army-1 }
+			swap_ideas = {
+				remove_idea = idea_POL_The_patchwork_army-1
+				add_idea = idea_POL_The_patchwork_army
+			}
+		}
+	}
+}
+
+#Military mission in Poland - Военная миссия в Польше
+country_event = {
+    id = ww1_poland.64
+    title = ww1_poland.64.title
+    desc = ww1_poland.64.desc
+    picture = GFX_report_polish_french_military_support
+    is_triggered_only = yes
+    option = {
+		name = ww1_poland.64.a
+		POL = { country_event = { id = ww1_poland.66 days = 1 } }
+		ai_chance = {
+			factor = 5
+		}
+	}
+    option = {
+		name = ww1_poland.64.b
+		POL = { country_event = { id = ww1_poland.65 days = 3 } }
+		ai_chance = {
+			factor = 1
+			modifier = { factor = 2 POL = { has_army_manpower = { size > 59999 } } }
+			modifier = { factor = 2 POL = { has_army_manpower = { size > 69999 } } }
+			modifier = { factor = 2 POL = { has_army_manpower = { size > 79999 } } }
+			modifier = { factor = 2 POL = { has_army_manpower = { size > 89999 } } }
+			modifier = { factor = 2 POL = { has_army_manpower = { size > 99999 } } }
+			modifier = { factor = 3 POL = { has_army_manpower = { size > 149999 } } }
+			modifier = { factor = 5 POL = { has_government = ROOT } }
+			modifier = { factor = 2 has_opinion = { target = POL value > -1 } }
+			modifier = { factor = 2 has_opinion = { target = POL value > 9 } }
+			modifier = { factor = 2 has_opinion = { target = POL value > 19 } }
+			modifier = { factor = 2 has_opinion = { target = POL value > 29 } }
+			modifier = { factor = 2 has_opinion = { target = POL value > 49 } }
+			modifier = { factor = 2 has_opinion = { target = POL value > 69 } }
+			modifier = { factor = 2 has_opinion = { target = POL value > 79 } }
+			modifier = { factor = 2 has_opinion = { target = POL value > 89 } }
+			modifier = { factor = 2 has_opinion = { target = POL value > 99 } }
+		}
+	}
+}
+country_event = {
+    id = ww1_poland.65
+    title = ww1_poland.65.title
+    desc = ww1_poland.65.desc
+    picture = GFX_report_polish_french_military_support
+    is_triggered_only = yes
+    option = {
+		name = ww1_poland.65.a
+		add_ideas = ideas_POL_French_military_mission
+        add_opinion_modifier = {
+			target = FRA
+			modifier = offered_support
+		}
+		send_equipment = {
+			equipment = infantry_equipment
+			amount = 6000
+			target = POL
+		}
+		send_equipment = {
+			equipment = support_equipment
+			amount = 800
+			target = POL
+		}
+		send_equipment = {
+			equipment = motorized_equipment
+			amount = 250
+		    target = POL
+		}
+		send_equipment = {
+			equipment = armored_car_equipment
+			amount = 100
+			target = POL
+		}
+		send_equipment = {
+			equipment = heavy_tank_chassis
+			amount = 100
+			target = POL
+		}
+		send_equipment = {
+			equipment = biplane_plane_airframe
+			amount = 50
+			target = POL
+		}
+		send_equipment = {
+			equipment = field_guns_equipment
+			amount = 200
+			target = POL
+		}
+		send_equipment = {
+			equipment = artillery_equipment
+		    amount = 200
+			target = POL
+		}
+	}
+}
+country_event = {
+    id = ww1_poland.66
+    title = ww1_poland.66.title
+    desc = ww1_poland.66.desc
+    picture = GFX_report_polish_french_military_support
+    is_triggered_only = yes
+    option = {
+		name = ww1_poland.66.a
+	}
+}
+
+>>>>>>> 656f6fd9bf (Poland Update)
 # poland gives industry to austria
 country_event = {
 	id = ww1_poland.24
