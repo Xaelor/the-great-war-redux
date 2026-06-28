@@ -977,7 +977,7 @@ right_vote_temp_var_setter = {
 		var = center_vote
 		value = 0.25
 	}
-	round_variable = center_vote
+	round_temp_variable = center_vote
 
 	set_temp_variable = {
 		var = merged_vote_strengh
@@ -3443,9 +3443,11 @@ GER_1918_revolution_effect = {
 							has_war_with = FRA
 						}
 					}
-					add_to_war = {
-						targeted_alliance = GER
-						enemy = FRA
+					FRA = {
+						declare_war_on = {
+							target = ALS
+							type = annex_everything
+						}
 					}
 				}
 				give_military_access = GER
@@ -3640,7 +3642,9 @@ GER_reduction_of_submarine_warfare_effect = {
 	if = {
 		limit = { 
 			has_character = GER_alfred_von_tirpitz
-			has_idea = GER_alfred_von_tirpitz
+			GER_alfred_von_tirpitz = {
+				is_hired_as_advisor = yes
+			}
 			has_unrestricted_submarine_warfare = no
 			NOT = {
 				has_active_mission = GER_alfred_von_tirpitz_resignation_mission
@@ -5594,6 +5598,7 @@ GER_schlieffen_moltke_plan_effect = {
 				}
 				OR = {
 					state = 907
+					state = 33
 					state = 8
 					state = 906
 					state = 34
@@ -5778,6 +5783,7 @@ GER_create_koenig_class = {
 		name = "König Class"
 		type = ship_hull_heavy_2
 		name_group = GER_DREADNOUGHTS_HISTORICAL
+		model = GER_battleship_3_entity
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_heavy_battery_2
@@ -5798,6 +5804,7 @@ GER_create_derfflinger_class = {
 	create_equipment_variant = {
 		name = "Derfflinger Class"
 		type = ship_hull_heavy_3
+		model = GER_battle_cruiser_3_entity
 		name_group = GER_BATTLECRUISERS_HISTORICAL
 		parent_version = 0
 		modules = {

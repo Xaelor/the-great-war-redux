@@ -76,6 +76,7 @@ replace_path="scenario_tests/effects"
 replace_path="scenario_tests/tests"
 replace_path="scenario_tests/triggers"
 replace_path="common/focus_inlay_windows"
+replace_path="common/frontend/backgrounds"
 tags={
 	"Historical"
 	"Gameplay"
@@ -83,7 +84,7 @@ tags={
 	"Events"
 	"Technologies"
 }
-name="The Great War Redux - 1.17.*"
-version="0.15.13"
-supported_version="1.17.*"
+name="The Great War Redux - 1.19.*"
+version="0.15.19"
+supported_version="1.19.*"
 remote_file_id="3365515312"
