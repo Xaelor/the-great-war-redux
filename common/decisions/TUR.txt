@@ -3908,22 +3908,6 @@ TUR_millet_system = {
 				}
 			}
 		}
-		complete_effect = {
-			FROM = {
-				custom_effect_tooltip = TUR_modify_greek_minority
-				add_to_variable = {
-					tooltip = attrition_10
-					TUR_ottoman_attrition = 0.1
-				}
-			}
-		}
-		cancel_effect = {
-			FROM = {
-				custom_effect_tooltip = TUR_modify_greek_minority
-				custom_effect_tooltip = attrition_minus_10
-				clear_variable = TUR_ottoman_attrition
-			}
-		}
 		remove_effect = {
 			TUR_reduce_greek_effect = yes
 			FROM_add_1_centralization = yes
@@ -6541,8 +6525,10 @@ TUR_millet_system = {
 		on_map_mode = map_only
 		cost = 30
 		days_remove = 30
+		available = { TUR_vilayet_centralization_100 = yes }
 		remove_effect = {
 			hidden_effect = {
+				set_temp_variable = { TUR_integrate_arab_citizens = FROM.TUR_arab_sunni_state_variable }
 				if = {
 					limit = {
 						FROM = {
@@ -6553,28 +6539,25 @@ TUR_millet_system = {
 							}
 						}
 					}
-					FROM = {
-						set_temp_variable = { TUR_integrate_armenian_citizens = FROM.TUR_armenian_apostolic_state_variable }
-						if = {
-							limit = {
-								FROM = {
-									OR = {
-										has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
-										has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
-									}
+					if = {
+						limit = {
+							FROM = {
+								OR = {
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
 								}
 							}
-							multiply_temp_variable = { TUR_integrate_armenian_citizens = 0 }
 						}
-						if = {
-							limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
-							divide_temp_variable = { TUR_integrate_armenian_citizens = 2 }
-						}
-						multiply_temp_variable = { TUR_integrate_armenian_citizens = TUR_armenian_population_factor_new }
-						multiply_temp_variable = { TUR_integrate_armenian_citizens = TUR_apostolic_population_factor_new }
-						divide_temp_variable = { TUR_integrate_armenian_citizens = -100 }
-						clear_variable = TUR_armenian_apostolic_state_variable
+						multiply_temp_variable = { TUR_integrate_armenian_citizens = 0 }
 					}
+					if = {
+						limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+						divide_temp_variable = { TUR_integrate_armenian_citizens = 2 }
+					}
+					multiply_temp_variable = { TUR_integrate_armenian_citizens = TUR_armenian_population_factor_new }
+					multiply_temp_variable = { TUR_integrate_armenian_citizens = TUR_apostolic_population_factor_new }
+					divide_temp_variable = { TUR_integrate_armenian_citizens = -100 }
+					clear_variable = TUR_armenian_apostolic_state_variable
 				}
 				else = {
 					if = {
@@ -6594,7 +6577,7 @@ TUR_millet_system = {
 					}
 					multiply_temp_variable = { TUR_integrate_armenian_citizens = TUR_armenian_population_factor_new }
 					multiply_temp_variable = { TUR_integrate_armenian_citizens = TUR_apostolic_population_factor_new }
-					divide_temp_variable = { TUR_integrate_armenian_citizens = 100 }
+					divide_temp_variable = { TUR_integrate_armenian_citizens = -100 }
 				}
 			}
 			custom_effect_tooltip = TUR_integrate_armenian_citizens_tt
@@ -6702,8 +6685,10 @@ TUR_millet_system = {
 		}
 		cost = 30
 		days_remove = 30
+		available = { TUR_vilayet_centralization_100 = yes }
 		remove_effect = {
 			hidden_effect = {
+				set_temp_variable = { TUR_integrate_arab_citizens = FROM.TUR_arab_sunni_state_variable }
 				if = {
 					limit = { check_variable = { TUR_arab_catholic_state_variable < 0 } }
 					if = {
@@ -6716,28 +6701,25 @@ TUR_millet_system = {
 								}
 							}
 						}
-						FROM = {
-							set_temp_variable = { TUR_integrate_arab_citizens = FROM.TUR_arab_catholic_state_variable }
-							if = {
-								limit = {
-									FROM = {
-										OR = {
-											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
-											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
-										}
+						if = {
+							limit = {
+								FROM = {
+									OR = {
+										has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+										has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
 									}
 								}
-								multiply_temp_variable = { TUR_integrate_arab_citizens = 0 }
 							}
-							if = {
-								limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
-								divide_temp_variable = { TUR_integrate_arab_citizens = 2 }
-							}
-							multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_arab_population_factor_new }
-							multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_catholic_population_factor_new }
-							divide_temp_variable = { TUR_integrate_arab_citizens = -100 }
-							clear_variable = TUR_arab_catholic_state_variable
+							multiply_temp_variable = { TUR_integrate_arab_citizens = 0 }
 						}
+						if = {
+							limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+							divide_temp_variable = { TUR_integrate_arab_citizens = 2 }
+						}
+						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_catholic_population_factor_new }
+						divide_temp_variable = { TUR_integrate_arab_citizens = -100 }
+						clear_variable = TUR_arab_catholic_state_variable
 					}
 					else = {
 						if = {
@@ -6757,7 +6739,7 @@ TUR_millet_system = {
 						}
 						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_arab_population_factor_new }
 						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_catholic_population_factor_new }
-						divide_temp_variable = { TUR_integrate_arab_citizens = 100 }
+						divide_temp_variable = { TUR_integrate_arab_citizens = -100 }
 					}
 				}
 				else_if = {
@@ -6772,28 +6754,25 @@ TUR_millet_system = {
 								}
 							}
 						}
-						FROM = {
-							set_temp_variable = { TUR_integrate_arab_citizens = FROM.TUR_arab_orthodox_state_variable }
-							if = {
-								limit = {
-									FROM = {
-										OR = {
-											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
-											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
-										}
+						if = {
+							limit = {
+								FROM = {
+									OR = {
+										has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+										has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
 									}
 								}
-								multiply_temp_variable = { TUR_integrate_arab_citizens = 0 }
 							}
-							if = {
-								limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
-								divide_temp_variable = { TUR_integrate_arab_citizens = 2 }
-							}
-							multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_arab_population_factor_new }
-							multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_orthodox_population_factor_new }
-							divide_temp_variable = { TUR_integrate_arab_citizens = -100 }
-							clear_variable = TUR_arab_orthodox_state_variable
+							multiply_temp_variable = { TUR_integrate_arab_citizens = 0 }
 						}
+						if = {
+							limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+							divide_temp_variable = { TUR_integrate_arab_citizens = 2 }
+						}
+						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_orthodox_population_factor_new }
+						divide_temp_variable = { TUR_integrate_arab_citizens = -100 }
+						clear_variable = TUR_arab_orthodox_state_variable
 					}
 					else = {
 						if = {
@@ -6813,7 +6792,7 @@ TUR_millet_system = {
 						}
 						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_arab_population_factor_new }
 						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_orthodox_population_factor_new }
-						divide_temp_variable = { TUR_integrate_arab_citizens = 100 }
+						divide_temp_variable = { TUR_integrate_arab_citizens = -100 }
 					}
 				}
 				else_if = {
@@ -6828,28 +6807,25 @@ TUR_millet_system = {
 								}
 							}
 						}
-						FROM = {
-							set_temp_variable = { TUR_integrate_arab_citizens = FROM.TUR_arab_shia_state_variable }
-							if = {
-								limit = {
-									FROM = {
-										OR = {
-											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
-											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
-										}
+						if = {
+							limit = {
+								FROM = {
+									OR = {
+										has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+										has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
 									}
 								}
-								multiply_temp_variable = { TUR_integrate_arab_citizens = 0 }
 							}
-							if = {
-								limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
-								divide_temp_variable = { TUR_integrate_arab_citizens = 2 }
-							}
-							multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_arab_population_factor_new }
-							multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_shia_population_factor_new }
-							divide_temp_variable = { TUR_integrate_arab_citizens = -100 }
-							clear_variable = TUR_arab_shia_state_variable
+							multiply_temp_variable = { TUR_integrate_arab_citizens = 0 }
 						}
+						if = {
+							limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+							divide_temp_variable = { TUR_integrate_arab_citizens = 2 }
+						}
+						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_shia_population_factor_new }
+						divide_temp_variable = { TUR_integrate_arab_citizens = -100 }
+						clear_variable = TUR_arab_shia_state_variable
 					}
 					else = {
 						if = {
@@ -6869,7 +6845,7 @@ TUR_millet_system = {
 						}
 						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_arab_population_factor_new }
 						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_shia_population_factor_new }
-						divide_temp_variable = { TUR_integrate_arab_citizens = 100 }
+						divide_temp_variable = { TUR_integrate_arab_citizens = -100 }
 					}
 				}
 				else_if = {
@@ -6884,28 +6860,25 @@ TUR_millet_system = {
 								}
 							}
 						}
-						FROM = {
-							set_temp_variable = { TUR_integrate_arab_citizens = FROM.TUR_arab_sunni_state_variable }
-							if = {
-								limit = {
-									FROM = {
-										OR = {
-											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
-											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
-										}
+						if = {
+							limit = {
+								FROM = {
+									OR = {
+										has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+										has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
 									}
 								}
-								multiply_temp_variable = { TUR_integrate_arab_citizens = 0 }
 							}
-							if = {
-								limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
-								divide_temp_variable = { TUR_integrate_arab_citizens = 2 }
-							}
-							multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_arab_population_factor_new }
-							multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_sunni_population_factor_new }
-							divide_temp_variable = { TUR_integrate_arab_citizens = -100 }
-							clear_variable = TUR_arab_sunni_state_variable
+							multiply_temp_variable = { TUR_integrate_arab_citizens = 0 }
 						}
+						if = {
+							limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+							divide_temp_variable = { TUR_integrate_arab_citizens = 2 }
+						}
+						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_sunni_population_factor_new }
+						divide_temp_variable = { TUR_integrate_arab_citizens = -100 }
+						clear_variable = TUR_arab_sunni_state_variable
 					}
 					else = {
 						if = {
@@ -6925,7 +6898,7 @@ TUR_millet_system = {
 						}
 						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_arab_population_factor_new }
 						multiply_temp_variable = { TUR_integrate_arab_citizens = TUR_sunni_population_factor_new }
-						divide_temp_variable = { TUR_integrate_arab_citizens = 100 }
+						divide_temp_variable = { TUR_integrate_arab_citizens = -100 }
 					}
 				}
 			}
@@ -6966,8 +6939,10 @@ TUR_millet_system = {
 		}
 		cost = 30
 		days_remove = 30
+		available = { TUR_vilayet_centralization_100 = yes }
 		remove_effect = {
 			hidden_effect = {
+				set_temp_variable = { TUR_integrate_kurdish_citizens = FROM.TUR_kurdish_sunni_state_variable }
 				if = {
 					limit = {
 						FROM = {
@@ -6978,28 +6953,25 @@ TUR_millet_system = {
 							}
 						}
 					}
-					FROM = {
-						set_temp_variable = { TUR_integrate_kurdish_citizens = FROM.TUR_kurdish_sunni_state_variable }
-						if = {
-							limit = {
-								FROM = {
-									OR = {
-										has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
-										has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
-									}
+					if = {
+						limit = {
+							FROM = {
+								OR = {
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
 								}
 							}
-							multiply_temp_variable = { TUR_integrate_kurdish_citizens = 0 }
 						}
-						if = {
-							limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
-							divide_temp_variable = { TUR_integrate_kurdish_citizens = 2 }
-						}
-						multiply_temp_variable = { TUR_integrate_kurdish_citizens = TUR_kurdish_population_factor_new }
-						multiply_temp_variable = { TUR_integrate_kurdish_citizens = TUR_sunni_population_factor_new }
-						divide_temp_variable = { TUR_integrate_kurdish_citizens = -100 }
-						clear_variable = TUR_kurdish_sunni_state_variable
+						multiply_temp_variable = { TUR_integrate_kurdish_citizens = 0 }
 					}
+					if = {
+						limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+						divide_temp_variable = { TUR_integrate_kurdish_citizens = 2 }
+					}
+					multiply_temp_variable = { TUR_integrate_kurdish_citizens = TUR_kurdish_population_factor_new }
+					multiply_temp_variable = { TUR_integrate_kurdish_citizens = TUR_sunni_population_factor_new }
+					divide_temp_variable = { TUR_integrate_kurdish_citizens = -100 }
+					clear_variable = TUR_kurdish_sunni_state_variable
 				}
 				else = {
 					if = {
@@ -7019,7 +6991,7 @@ TUR_millet_system = {
 					}
 					multiply_temp_variable = { TUR_integrate_kurdish_citizens = TUR_kurdish_population_factor_new }
 					multiply_temp_variable = { TUR_integrate_kurdish_citizens = TUR_sunni_population_factor_new }
-					divide_temp_variable = { TUR_integrate_kurdish_citizens = 100 }
+					divide_temp_variable = { TUR_integrate_kurdish_citizens = -100 }
 				}
 			}
 			custom_effect_tooltip = TUR_integrate_kurdish_citizens_tt
@@ -7054,8 +7026,10 @@ TUR_millet_system = {
 		}
 		cost = 30
 		days_remove = 30
+		available = { TUR_vilayet_centralization_100 = yes }
 		remove_effect = {
 			hidden_effect = {
+				set_temp_variable = { TUR_integrate_jewish_citizens = FROM.TUR_jewish_judaic_state_variable }
 				if = {
 					limit = {
 						FROM = {
@@ -7066,28 +7040,25 @@ TUR_millet_system = {
 							}
 						}
 					}
-					FROM = {
-						set_temp_variable = { TUR_integrate_jewish_citizens = FROM.TUR_jewish_judaic_state_variable }
-						if = {
-							limit = {
-								FROM = {
-									OR = {
-										has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
-										has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
-									}
+					if = {
+						limit = {
+							FROM = {
+								OR = {
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
 								}
 							}
-							multiply_temp_variable = { TUR_integrate_jewish_citizens = 0 }
 						}
-						if = {
-							limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
-							divide_temp_variable = { TUR_integrate_jewish_citizens = 2 }
-						}
-						multiply_temp_variable = { TUR_integrate_jewish_citizens = TUR_jewish_population_factor_new }
-						multiply_temp_variable = { TUR_integrate_jewish_citizens = TUR_judaic_population_factor_new }
-						divide_temp_variable = { TUR_integrate_jewish_citizens = -100 }
-						clear_variable = TUR_jewish_judaic_state_variable
+						multiply_temp_variable = { TUR_integrate_jewish_citizens = 0 }
 					}
+					if = {
+						limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+						divide_temp_variable = { TUR_integrate_jewish_citizens = 2 }
+					}
+					multiply_temp_variable = { TUR_integrate_jewish_citizens = TUR_jewish_population_factor_new }
+					multiply_temp_variable = { TUR_integrate_jewish_citizens = TUR_judaic_population_factor_new }
+					divide_temp_variable = { TUR_integrate_jewish_citizens = -100 }
+					clear_variable = TUR_jewish_judaic_state_variable
 				}
 				else = {
 					if = {
@@ -7107,7 +7078,7 @@ TUR_millet_system = {
 					}
 					multiply_temp_variable = { TUR_integrate_jewish_citizens = TUR_jewish_population_factor_new }
 					multiply_temp_variable = { TUR_integrate_jewish_citizens = TUR_judaic_population_factor_new }
-					divide_temp_variable = { TUR_integrate_jewish_citizens = 100 }
+					divide_temp_variable = { TUR_integrate_jewish_citizens = -100 }
 				}
 			}
 			custom_effect_tooltip = TUR_integrate_jewish_citizens_tt

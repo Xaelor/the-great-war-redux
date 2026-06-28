@@ -5363,14 +5363,55 @@ focus_tree = {
 			has_dynamic_modifier = { modifier = ALB_sublime_realm }
 		}
 		completion_reward = {
-			
+			###VALUES###
+			#set_variable = { TUR_armenian_population_factor_new = 7 }
+			#set_variable = { TUR_greek_population_factor_new = 7 }
+			#set_variable = { TUR_jewish_population_factor_new = 6.3 }
+			#set_variable = { TUR_arab_population_factor_new = 6.3 }
+			#set_variable = { TUR_bulgarian_population_factor_new = 7 }
+			#set_variable = { TUR_albanian_population_factor_new = 0 }
+			#set_variable = { TUR_serbian_population_factor_new = 7 }
+			#set_variable = { TUR_kurdish_population_factor_new = 5.6 }
+			#set_variable = { TUR_assyrian_population_factor_new = 7 }
+			#set_variable = { TUR_georgian_population_factor_new = 7 }
+			#set_variable = { TUR_turkish_population_factor_new = 4.9 }
+
+			#set_variable = { TUR_sunni_population_factor_new = 0.9 }
+			#set_variable = { TUR_orthodox_population_factor_new = 1.5 }
+			#set_variable = { TUR_apostolic_population_factor_new = 1.5 }
+			#set_variable = { TUR_judaic_population_factor_new = 1.5 }
+			#set_variable = { TUR_syriac_population_factor_new = 1.5 }
+			#set_variable = { TUR_shia_population_factor_new = 1.1 }
+			#set_variable = { TUR_catholic_population_factor_new = 1.5 }
+
+			add_to_variable = {
+				var = global.TUR_kosova_centralization
+				value = 20
+				tooltip = TUR_change_kosova_centralization
+			}
+			add_to_variable = {
+				var = global.TUR_manastir_centralization
+				value = 15
+				tooltip = TUR_change_manastir_centralization
+			}
+			add_to_variable = {
+				var = global.TUR_yanya_centralization
+				value = 15
+				tooltip = TUR_change_yanya_centralization
+			}
+			add_to_variable = {
+				var = global.TUR_iskodra_centralization
+				value = 25
+				tooltip = TUR_change_iskodra_centralization
+			}
+			ottoman_centralization_variable_check = yes
 		}
 		ai_will_do = { factor = 100 }
 	}
 	focus = {
 		id = ALB_ally_the_turks_in_administration
 		icon = GFX_focus_generic_little_entente
-		cost = 5
+		cost = 10
 		search_filters = {
 		}
 		prerequisite = { focus = ALB_four_vilayets_many_people }
@@ -5381,7 +5422,25 @@ focus_tree = {
 			has_dynamic_modifier = { modifier = ALB_sublime_realm }
 		}
 		completion_reward = {
-			
+			custom_effect_tooltip = ALB_ally_the_turks_in_administration_tt
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_turkish_value = yes
+				set_temp_variable = {
+					ALB_ally_the_turks_in_administration = {
+						value = old_turkish_value
+						divide = TUR_turkish_population_factor_new
+						multiply = {
+							value = TUR_turkish_population_factor_new
+							add = -2.5
+						}
+						subtract = old_turkish_value
+					}
+				}
+			}
+			add_to_variable = { TUR_turkish_population_factor_new = -2.5 }
+			custom_effect_tooltip = ALB_ally_the_turks_in_administration_tt2
+			TUR_reload_minority_values = yes
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5400,7 +5459,51 @@ focus_tree = {
 			has_dynamic_modifier = { modifier = ALB_sublime_realm }
 		}
 		completion_reward = {
-			
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_orthodox_value = yes
+				set_temp_variable = {
+					ALB_beacon_of_religious_tolerance_orthodox = {
+						value = old_orthodox_value
+						divide = TUR_orthodox_population_factor_new
+						multiply = {
+							value = TUR_orthodox_population_factor_new
+							add = -0.1
+						}
+					}
+				}
+				
+				TUR_set_old_catholic_value = yes
+				set_temp_variable = {
+					ALB_beacon_of_religious_tolerance_catholic = {
+						value = old_catholic_value
+						divide = TUR_catholic_population_factor_new
+						multiply = {
+							value = TUR_catholic_population_factor_new
+							add = -0.1
+						}
+					}
+				}
+
+				set_temp_variable = {
+					ALB_beacon_of_religious_tolerance = {
+						value = ALB_beacon_of_religious_tolerance_orthodox
+						add = ALB_beacon_of_religious_tolerance_catholic
+						subtract = {
+							value = old_orthodox_value
+							add = old_catholic_value
+						}
+					}
+				}
+			}
+			add_to_variable = { TUR_orthodox_population_factor_new = -0.1 }
+			add_to_variable = { TUR_catholic_population_factor_new = -0.1 }
+			custom_effect_tooltip = ALB_beacon_of_religious_tolerance_tt
+			every_core_state = {
+				limit = { has_resistance = yes }
+				add_compliance = 10
+			}
+			TUR_reload_minority_values = yes
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5419,7 +5522,28 @@ focus_tree = {
 			has_dynamic_modifier = { modifier = ALB_sublime_realm }
 		}
 		completion_reward = {
-			
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_sunni_value = yes
+				set_temp_variable = {
+					ALB_maintain_muslim_dominance = {
+						value = old_sunni_value
+						divide = TUR_sunni_population_factor_new
+						multiply = {
+							value = TUR_sunni_population_factor_new
+							add = -0.3
+						}
+						subtract = old_sunni_value
+					}
+				}
+			}
+			add_to_variable = { TUR_sunni_population_factor_new = -0.3 }
+			custom_effect_tooltip = ALB_maintain_muslim_dominance_tt
+			every_core_state = {
+				limit = { has_resistance = yes }
+				add_resistance = -25
+			}
+			TUR_reload_minority_values = yes
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5438,18 +5562,37 @@ focus_tree = {
 			has_dynamic_modifier = { modifier = ALB_sublime_realm }
 		}
 		completion_reward = {
-			
+			custom_effect_tooltip = TUR_suppress_serb_irredentists_tt
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_serbian_value = yes
+				set_temp_variable = {
+					ALB_push_back_serbian_colonialists = {
+						value = old_serbian_value
+						divide = TUR_serbian_population_factor_new
+						multiply = {
+							value = TUR_serbian_population_factor_new
+							add = 0.7
+						}
+						subtract = old_serbian_value
+					}
+				}
+			}
+			add_to_variable = { TUR_serbian_population_factor_new = 0.7 }
+			custom_effect_tooltip = ALB_push_back_serbian_colonialists_tt
+			TUR_reload_minority_values = yes
 		}
 		ai_will_do = { factor = 100 }
 	}
 	focus = {
-		id = ALB_promote_coexistance_with_bulgarians
+		id = ALB_macedonian_autonomous_zone
 		icon = GFX_focus_generic_little_entente
 		cost = 5
 		search_filters = {
 		}
 		prerequisite = { focus = ALB_ally_the_turks_in_administration }
 		prerequisite = { focus = ALB_beacon_of_religious_tolerance }
+		mutually_exclusive = { focus = ALB_eliminate_macedonian_bulgarians }
 		x = -1
 		y = 1
 		relative_position_id = ALB_beacon_of_religious_tolerance
@@ -5457,7 +5600,59 @@ focus_tree = {
 			has_dynamic_modifier = { modifier = ALB_sublime_realm }
 		}
 		completion_reward = {
-			
+			every_state = {
+				limit = {
+					check_variable = { TUR_bulgarian_orthodox_state_variable < 0 }
+					OR = {
+						has_state_flag = TUR_kosova
+						has_state_flag = TUR_manastir
+					}
+				}
+				custom_effect_tooltip = TUR_modify_bulgarian_minority
+				custom_effect_tooltip = ALB_macedonian_autonomous_zone_tt1
+				custom_effect_tooltip = ALB_macedonian_autonomous_zone_tt2
+				custom_effect_tooltip = ALB_macedonian_autonomous_zone_tt3
+				set_variable = { TUR_ottoman_attrition_bulgarian = 0 }
+				set_variable = { TUR_ottoman_required_garrison_factor_bulgarian = 0 }
+				set_variable = { TUR_ottoman_resistance_decay_bulgarian = 0 }
+				custom_effect_tooltip = empty_space
+			}
+			effect_tooltip = {
+				every_state = {
+					limit = {
+						OR = {
+							state = 106
+							state = 1140
+							state = 1141
+						}
+					}
+					add_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+				}
+			}
+			hidden_effect = {
+				every_controlled_state = {
+					limit = {
+						OR = {
+							state = 106
+							state = 1140
+							state = 1141
+						}
+					}
+					add_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+				}
+				every_state = {
+					limit = {
+						NOT = { is_controlled_by = ROOT }
+						OR = {
+							state = 106
+							state = 1140
+							state = 1141
+						}
+					}
+					set_state_flag = TUR_semi_autonomous_vilayet_no_control
+				}
+			}
+			custom_effect_tooltip = ALB_macedonian_autonomous_zone_tt
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5469,6 +5664,7 @@ focus_tree = {
 		}
 		prerequisite = { focus = ALB_ally_the_turks_in_administration focus = ALB_maintain_muslim_dominance }
 		prerequisite = { focus = ALB_ally_the_turks_in_administration focus = ALB_beacon_of_religious_tolerance }
+		mutually_exclusive = { focus = ALB_macedonian_autonomous_zone }
 		x = 1
 		y = 1
 		relative_position_id = ALB_beacon_of_religious_tolerance
@@ -5476,7 +5672,25 @@ focus_tree = {
 			has_dynamic_modifier = { modifier = ALB_sublime_realm }
 		}
 		completion_reward = {
-			
+			custom_effect_tooltip = TUR_subdue_bulgarians_tt
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_bulgarian_value = yes
+				set_temp_variable = {
+					ALB_eliminate_macedonian_bulgarians = {
+						value = old_bulgarian_value
+						divide = TUR_bulgarian_population_factor_new
+						multiply = {
+							value = TUR_bulgarian_population_factor_new
+							add = 0.7
+						}
+						subtract = old_bulgarian_value
+					}
+				}
+			}
+			add_to_variable = { TUR_bulgarian_population_factor_new = 0.7 }
+			custom_effect_tooltip = ALB_eliminate_macedonian_bulgarians_tt
+			TUR_reload_minority_values = yes
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5495,39 +5709,60 @@ focus_tree = {
 			has_dynamic_modifier = { modifier = ALB_sublime_realm }
 		}
 		completion_reward = {
-			
+			custom_effect_tooltip = TUR_displace_christians_from_economy_tt
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_greek_value = yes
+				set_temp_variable = {
+					ALB_combat_greek_monopolies = {
+						value = old_greek_value
+						divide = TUR_greek_population_factor_new
+						multiply = {
+							value = TUR_greek_population_factor_new
+							add = 0.7
+						}
+						subtract = old_greek_value
+					}
+				}
+			}
+			add_to_variable = { TUR_greek_population_factor_new = 0.7 }
+			custom_effect_tooltip = ALB_combat_greek_monopolies_tt
+			TUR_reload_minority_values = yes
 		}
 		ai_will_do = { factor = 100 }
 	}
 	focus = {
-		id = ALB_recognize_aromanian_rights
+		id = ALB_integrate_the_peoples_of_the_four_vilayets
 		icon = GFX_focus_generic_little_entente
-		cost = 5
+		cost = 10
 		search_filters = {
 		}
-		prerequisite = { focus = ALB_promote_coexistance_with_bulgarians focus = ALB_eliminate_macedonian_bulgarians }
+		prerequisite = { focus = ALB_macedonian_autonomous_zone focus = ALB_eliminate_macedonian_bulgarians }
 		x = 1
 		y = 1
-		relative_position_id = ALB_promote_coexistance_with_bulgarians
+		relative_position_id = ALB_macedonian_autonomous_zone
 		available = {
 			has_dynamic_modifier = { modifier = ALB_sublime_realm }
 		}
 		completion_reward = {
-			
+			custom_effect_tooltip = ALB_integrate_the_peoples_of_the_four_vilayets_tt
 		}
 		ai_will_do = { factor = 100 }
 	}
 
 	focus = {
-		id = ALB_use_greek_expertise_in_thessaloniki
+		id = ALB_law_and_order_in_macedonia
 		icon = GFX_focus_generic_little_entente
 		cost = 5
 		search_filters = {
 		}
-		prerequisite = { focus = ALB_recognize_aromanian_rights }
+		prerequisite = { focus = ALB_integrate_the_peoples_of_the_four_vilayets }
+		prerequisite = { focus = ALB_eliminate_macedonian_bulgarians }
+		prerequisite = { focus = ALB_combat_greek_monopolies }
+		mutually_exclusive = { focus = ALB_expand_bulgarian_cooperation focus = ALB_promote_turkish_presence_in_thessaloniki }
 		x = -2
 		y = 1
-		relative_position_id = ALB_recognize_aromanian_rights
+		relative_position_id = ALB_integrate_the_peoples_of_the_four_vilayets
 		available = {
 			has_dynamic_modifier = { modifier = ALB_sublime_realm }
 			TUR_owns_selanik_vilayet = yes
@@ -5538,17 +5773,17 @@ focus_tree = {
 		ai_will_do = { factor = 100 }
 	}
 	focus = {
-		id = ALB_macedonia_for_albanians
+		id = ALB_expand_bulgarian_cooperation
 		icon = GFX_focus_generic_little_entente
 		cost = 5
 		search_filters = {
 		}
-		prerequisite = { focus = ALB_recognize_aromanian_rights }
-		prerequisite = { focus = ALB_eliminate_macedonian_bulgarians }
-		prerequisite = { focus = ALB_combat_greek_monopolies }
+		prerequisite = { focus = ALB_integrate_the_peoples_of_the_four_vilayets }
+		prerequisite = { focus = ALB_macedonian_autonomous_zone }
+		mutually_exclusive = { focus = ALB_law_and_order_in_macedonia focus = ALB_promote_turkish_presence_in_thessaloniki }
 		x = 0
 		y = 1
-		relative_position_id = ALB_recognize_aromanian_rights
+		relative_position_id = ALB_integrate_the_peoples_of_the_four_vilayets
 		available = {
 			has_dynamic_modifier = { modifier = ALB_sublime_realm }
 			TUR_owns_selanik_vilayet = yes
@@ -5564,8 +5799,9 @@ focus_tree = {
 		cost = 5
 		search_filters = {
 		}
-		prerequisite = { focus = ALB_recognize_aromanian_rights }
+		prerequisite = { focus = ALB_integrate_the_peoples_of_the_four_vilayets }
 		prerequisite = { focus = ALB_combat_greek_monopolies }
+		mutually_exclusive = { focus = ALB_law_and_order_in_macedonia focus = ALB_expand_bulgarian_cooperation }
 		x = 0
 		y = 1
 		relative_position_id = ALB_combat_greek_monopolies
@@ -5584,10 +5820,10 @@ focus_tree = {
 		cost = 5
 		search_filters = {
 		}
-		prerequisite = { focus = ALB_use_greek_expertise_in_thessaloniki focus = ALB_macedonia_for_albanians focus = ALB_promote_turkish_presence_in_thessaloniki }
+		prerequisite = { focus = ALB_law_and_order_in_macedonia focus = ALB_expand_bulgarian_cooperation focus = ALB_promote_turkish_presence_in_thessaloniki }
 		x = 0
 		y = 1
-		relative_position_id = ALB_macedonia_for_albanians
+		relative_position_id = ALB_expand_bulgarian_cooperation
 		available = {
 			has_dynamic_modifier = { modifier = ALB_sublime_realm }
 			any_owned_state = { has_dynamic_modifier = { modifier = TUR_jewish_minority } }

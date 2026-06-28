@@ -3297,6 +3297,21 @@ foreign_politics = {
 }
 
 ALB_millet_system = {
+	ALB_looming_rebellion_dummy = {
+		name = TUR_looming_rebellion_dummy
+		icon = GFX_decision_SWI_consolidate_council_power
+		allowed = { always = yes }
+		visible = { TUR_has_minority_system = yes }
+		priority = 100
+		available = {
+			any_owned_state = {
+				TUR_revolt_decision_trigger = yes
+				resistance > 75
+			}
+			hidden_trigger = { always = no }
+		}
+		complete_effect = { custom_effect_tooltip = TUR_looming_rebellion_dummy_tt }
+	}
 	ALB_selanik_vilayet = {
 		name = TUR_selanik_vilayet
 		icon = GFX_TUR_minority_state_modifier_bg
@@ -3445,6 +3460,611 @@ ALB_millet_system = {
 				}
 			}
 		}
+	}
+	ALB_concessions_to_the_turks = {
+		icon = GFX_TUR_integrate_turkish
+		allowed = { original_tag = ALB }
+		state_target = yes
+		targets = { 106 1140 1141 1213 203 1256 826 }
+		on_map_mode = map_only
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = { modifier = TUR_turkish_minority }
+				OR = {
+					check_variable = { TUR_ottoman_local_manpower_turkish < 0 }
+					check_variable = { TUR_ottoman_local_building_slots_factor_turkish < 0 }
+				}
+			}
+		}
+		target_root_trigger = { has_completed_focus = ALB_ally_the_turks_in_administration }
+		visible = { controls_state = FROM }
+		cost = 30
+		days_remove = 70
+		modifier = {
+			consumer_goods_factor = 0.05
+			political_power_cost = 0.02
+		}
+		remove_effect = {
+			TUR_reduce_turkish_effect = yes
+			FROM_add_3_centralization = yes
+			ottoman_centralization_variable_check = yes
+		}
+		cancel_trigger = { NOT = { controls_state = FROM } }
+		ai_will_do = {
+			base = 50
+			modifier = {
+				add = -65
+				FROM = { state = 200 }
+			}
+			modifier = {
+				add = 80
+				FROM = { any_neighbor_state = { controller = { has_war_with = ROOT } } }
+			}
+		}
+	}
+	ALB_increased_pressure_on_bulgarians = {
+		name = TUR_increased_pressure_on_bulgarians
+		icon = GFX_decision_oppression
+		allowed = { original_tag = ALB }
+		state_target = yes
+		targets = { 1141 1140 106 1213 202 }
+		on_map_mode = map_only
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = { modifier = TUR_bulgarian_minority }
+				OR = {
+					check_variable = { TUR_ottoman_required_garrison_factor_bulgarian > 0 }
+					check_variable = { TUR_ottoman_resistance_decay_bulgarian < 0 }
+				}
+			}
+		}
+		target_root_trigger = { has_completed_focus = TUR_subdue_bulgarians }
+		visible = { controls_state = FROM }
+		cost = 15
+		days_remove = 15
+		available = {
+			has_equipment = { infantry_equipment > 199 }
+			FROM = {
+				NOT = {
+					has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+					has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+				}
+			}
+		}
+		complete_effect = { add_equipment_to_stockpile = { type = infantry_equipment amount = -200 } }
+		remove_effect = {
+			TUR_reduce_bulgarian_effect = yes
+			FROM_add_3_centralization = yes
+			ottoman_centralization_variable_check = yes
+		}
+		cancel_trigger = { NOT = { controls_state = FROM } }
+		ai_will_do = {
+			base = 50
+			modifier = {
+				add = -65
+				FROM = { state = 200 }
+			}
+			modifier = {
+				add = 80
+				FROM = { any_neighbor_state = { controller = { has_war_with = ROOT } } }
+			}
+		}
+	}
+	ALB_increased_pressure_on_serbs = {
+		name = TUR_increased_pressure_on_serbs
+		icon = GFX_decision_oppression
+		allowed = { original_tag = ALB }
+		state_target = yes
+		targets = { 106 760 761 847 848 }
+		on_map_mode = map_only
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = { modifier = TUR_serbian_minority }
+				OR = {
+					check_variable = { TUR_ottoman_required_garrison_factor_serbian > 0 }
+					check_variable = { TUR_ottoman_resistance_decay_serbian < 0 }
+				}
+			}
+		}
+		target_root_trigger = { has_completed_focus = ALB_push_back_serbian_colonialists }
+		visible = { controls_state = FROM }
+		cost = 15
+		days_remove = 15
+		available = {
+			has_equipment = { infantry_equipment > 199 }
+			if = {
+				limit = { has_completed_focus = ALB_macedonian_autonomous_zone }
+				FROM = {
+					OR = {
+						NOT = {
+							has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+							has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+						}
+						has_dynamic_modifier = { modifier = TUR_bulgarian_minority }
+					}
+				}
+			}
+			else = {
+				FROM = {
+					NOT = {
+						has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+						has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+					}
+				}
+			}
+		}
+		complete_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -200
+			}
+		}
+		remove_effect = {
+			TUR_reduce_serbian_effect = yes
+			FROM_add_3_centralization = yes
+			ottoman_centralization_variable_check = yes
+		}
+		cancel_trigger = { NOT = { controls_state = FROM } }
+		ai_will_do = {
+			base = 50
+			modifier = {
+				add = -65
+				FROM = { state = 200 }
+			}
+			modifier = {
+				add = 80
+				FROM = { any_neighbor_state = { controller = { has_war_with = ROOT } } }
+			}
+		}
+	}
+	ALB_nationalize_greek_businesses = {
+		icon = TUR_nationalize_greek_businesses
+		allowed = { original_tag = ALB }
+		state_target = yes
+		targets = { 1225 803 758 1256 826 }
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = { modifier = TUR_greek_minority }
+				OR = {
+					check_variable = { TUR_ottoman_local_resources_factor_greek < 0 }
+					check_variable = { TUR_ottoman_state_production_speed_buildings_factor_greek > 0 }
+				}
+			}
+		}
+		on_map_mode = map_only
+		target_root_trigger = { has_completed_focus = ALB_combat_greek_monopolies }
+		visible = { controls_state = FROM }
+		cost = 10
+		days_remove = 14
+		available = {
+			if = {
+				limit = { has_completed_focus = ALB_macedonian_autonomous_zone }
+				FROM = {
+					OR = {
+						NOT = {
+							has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+							has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+						}
+						has_dynamic_modifier = { modifier = TUR_bulgarian_minority }
+					}
+				}
+			}
+			else = {
+				FROM = {
+					NOT = {
+						has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+						has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+					}
+				}
+			}
+		}
+		remove_effect = {
+			TUR_reduce_greek_effect = yes
+			FROM_add_3_centralization = yes
+			if = {
+				limit = { FROM = { has_dynamic_modifier = { modifier = TUR_haci_adil_committee } } }
+				add_stability = 0.002
+			}
+			ottoman_centralization_variable_check = yes
+		}
+		cancel_trigger = { NOT = { controls_state = FROM } }
+		ai_will_do = {
+			base = 80
+			modifier = {
+				add = 80
+				FROM = { any_neighbor_state = { controller = { has_war_with = ROOT } } }
+			}
+		}
+	}
+	ALB_integrate_greek_citizens = {
+		name = TUR_integrate_greek_citizens
+		icon = GFX_TUR_greek_brainwash
+		allowed = { original_tag = ALB }
+		state_target = yes
+		targets = { 803 758 1225 1256 826 1257 731 345 184 }
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = { modifier = TUR_greek_minority }
+				check_variable = { TUR_greek_orthodox_state_variable < 0 }
+			}
+		}
+		target_root_trigger = { has_completed_focus = ALB_integrate_the_peoples_of_the_four_vilayets }
+		visible = { controls_state = FROM }
+		on_map_mode = map_only
+		cost = 30
+		days_remove = 30
+		available = { TUR_vilayet_centralization_100 = yes }
+		remove_effect = {
+			hidden_effect = {
+				set_temp_variable = { TUR_integrate_greek_citizens = FROM.TUR_greek_orthodox_state_variable }
+				if = {
+					limit = {
+						FROM = {
+							check_variable = {
+								var = TUR_greek_orthodox_state_variable
+								value = -0.3
+								compare = greater_than_or_equals
+							}
+						}
+					}
+					if = {
+						limit = {
+							FROM = {
+								OR = {
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+								}
+							}
+						}
+						multiply_temp_variable = { TUR_integrate_greek_citizens = 0 }
+					}
+					if = {
+						limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+						divide_temp_variable = { TUR_integrate_greek_citizens = 2 }
+					}
+					multiply_temp_variable = { TUR_integrate_greek_citizens = TUR_greek_population_factor_new }
+					multiply_temp_variable = { TUR_integrate_greek_citizens = TUR_apostolic_population_factor_new }
+					divide_temp_variable = { TUR_integrate_greek_citizens = -100 }
+					clear_variable = TUR_greek_orthodox_state_variable
+				}
+				else = {
+					if = {
+						limit = {
+							FROM = {
+								OR = {
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+								}
+							}
+						}
+						multiply_temp_variable = { TUR_integrate_greek_citizens = 0 }
+					}
+					if = {
+						limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+						divide_temp_variable = { TUR_integrate_greek_citizens = 2 }
+					}
+					multiply_temp_variable = { TUR_integrate_greek_citizens = TUR_greek_population_factor_new }
+					multiply_temp_variable = { TUR_integrate_greek_citizens = TUR_apostolic_population_factor_new }
+					divide_temp_variable = { TUR_integrate_greek_citizens = -100 }
+				}
+			}
+			custom_effect_tooltip = TUR_integrate_greek_citizens_tt
+			TUR_reload_minority_values = yes
+		}
+		cancel_trigger = { NOT = { controls_state = FROM } }
+		ai_will_do = { base = 30 }
+	}
+	ALB_integrate_bulgarian_citizens = {
+		name = TUR_integrate_bulgarian_citizens
+		icon = GFX_TUR_bulgarian_brainwash
+		allowed = { original_tag = ALB }
+		state_target = yes
+		targets = { 106 1213 1140 1141 203 1258 759 225 788 184 }
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = { modifier = TUR_bulgarian_minority }
+				check_variable = { TUR_bulgarian_orthodox_state_variable < 0 }
+			}
+		}
+		target_root_trigger = { has_completed_focus = ALB_integrate_the_peoples_of_the_four_vilayets }
+		visible = { controls_state = FROM }
+		on_map_mode = map_only
+		cost = 30
+		days_remove = 30
+		available = { TUR_vilayet_centralization_100 = yes }
+		remove_effect = {
+			hidden_effect = {
+				set_temp_variable = { TUR_integrate_bulgarian_citizens = FROM.TUR_bulgarian_orthodox_state_variable }
+				if = {
+					limit = {
+						FROM = {
+							check_variable = {
+								var = TUR_bulgarian_orthodox_state_variable
+								value = -0.3
+								compare = greater_than_or_equals
+							}
+						}
+					}
+					if = {
+						limit = {
+							FROM = {
+								OR = {
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+								}
+							}
+						}
+						multiply_temp_variable = { TUR_integrate_bulgarian_citizens = 0 }
+					}
+					if = {
+						limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+						divide_temp_variable = { TUR_integrate_bulgarian_citizens = 2 }
+					}
+					multiply_temp_variable = { TUR_integrate_bulgarian_citizens = TUR_bulgarian_population_factor_new }
+					multiply_temp_variable = { TUR_integrate_bulgarian_citizens = TUR_apostolic_population_factor_new }
+					divide_temp_variable = { TUR_integrate_bulgarian_citizens = -100 }
+					clear_variable = TUR_bulgarian_orthodox_state_variable
+				}
+				else = {
+					if = {
+						limit = {
+							FROM = {
+								OR = {
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+								}
+							}
+						}
+						multiply_temp_variable = { TUR_integrate_bulgarian_citizens = 0 }
+					}
+					if = {
+						limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+						divide_temp_variable = { TUR_integrate_bulgarian_citizens = 2 }
+					}
+					multiply_temp_variable = { TUR_integrate_bulgarian_citizens = TUR_bulgarian_population_factor_new }
+					multiply_temp_variable = { TUR_integrate_bulgarian_citizens = TUR_apostolic_population_factor_new }
+					divide_temp_variable = { TUR_integrate_bulgarian_citizens = -100 }
+				}
+			}
+			custom_effect_tooltip = TUR_integrate_bulgarian_citizens_tt
+			TUR_reload_minority_values = yes
+		}
+		cancel_trigger = { NOT = { controls_state = FROM } }
+		ai_will_do = { base = 30 }
+	}
+	ALB_integrate_serbian_citizens = {
+		name = TUR_integrate_serbian_citizens
+		icon = GFX_TUR_serbian_brainwash
+		allowed = { original_tag = ALB }
+		state_target = yes
+		targets = { 106 847 848 760 761 }
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = { modifier = TUR_serbian_minority }
+				check_variable = { TUR_serbian_orthodox_state_variable < 0 }
+			}
+		}
+		target_root_trigger = { has_completed_focus = ALB_integrate_the_peoples_of_the_four_vilayets }
+		visible = { controls_state = FROM }
+		on_map_mode = map_only
+		cost = 30
+		days_remove = 30
+		available = { TUR_vilayet_centralization_100 = yes }
+		remove_effect = {
+			hidden_effect = {
+				set_temp_variable = { TUR_integrate_serbian_citizens = FROM.TUR_serbian_orthodox_state_variable }
+				if = {
+					limit = {
+						FROM = {
+							check_variable = {
+								var = TUR_serbian_orthodox_state_variable
+								value = -0.3
+								compare = greater_than_or_equals
+							}
+						}
+					}
+					if = {
+						limit = {
+							FROM = {
+								OR = {
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+								}
+							}
+						}
+						multiply_temp_variable = { TUR_integrate_serbian_citizens = 0 }
+					}
+					if = {
+						limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+						divide_temp_variable = { TUR_integrate_serbian_citizens = 2 }
+					}
+					multiply_temp_variable = { TUR_integrate_serbian_citizens = TUR_serbian_population_factor_new }
+					multiply_temp_variable = { TUR_integrate_serbian_citizens = TUR_apostolic_population_factor_new }
+					divide_temp_variable = { TUR_integrate_serbian_citizens = -100 }
+					clear_variable = TUR_serbian_orthodox_state_variable
+				}
+				else = {
+					if = {
+						limit = {
+							FROM = {
+								OR = {
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+								}
+							}
+						}
+						multiply_temp_variable = { TUR_integrate_serbian_citizens = 0 }
+					}
+					if = {
+						limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+						divide_temp_variable = { TUR_integrate_serbian_citizens = 2 }
+					}
+					multiply_temp_variable = { TUR_integrate_serbian_citizens = TUR_serbian_population_factor_new }
+					multiply_temp_variable = { TUR_integrate_serbian_citizens = TUR_apostolic_population_factor_new }
+					divide_temp_variable = { TUR_integrate_serbian_citizens = -100 }
+				}
+			}
+			custom_effect_tooltip = TUR_integrate_serbian_citizens_tt
+			TUR_reload_minority_values = yes
+		}
+		cancel_trigger = { NOT = { controls_state = FROM } }
+		ai_will_do = { base = 30 }
+	}
+	ALB_integrate_turkish_citizens = {
+		name = TUR_integrate_turkish_citizens
+		icon = GFX_TUR_turkish_brainwash
+		allowed = { original_tag = ALB }
+		state_target = yes
+		targets = { 106 1213 1140 1141 203 1258 759 225 788 184 1256 826 1257 731 345 }
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = { modifier = TUR_turkish_minority }
+				check_variable = { TUR_turkish_sunni_state_variable < 0 }
+			}
+		}
+		target_root_trigger = { has_completed_focus = ALB_integrate_the_peoples_of_the_four_vilayets }
+		visible = { controls_state = FROM }
+		on_map_mode = map_only
+		cost = 30
+		days_remove = 30
+		available = { TUR_vilayet_centralization_100 = yes }
+		remove_effect = {
+			hidden_effect = {
+				set_temp_variable = { TUR_integrate_turkish_citizens = FROM.TUR_turkish_sunni_state_variable }
+				if = {
+					limit = {
+						FROM = {
+							check_variable = {
+								var = TUR_turkish_sunni_state_variable
+								value = -0.3
+								compare = greater_than_or_equals
+							}
+						}
+					}
+					if = {
+						limit = {
+							FROM = {
+								OR = {
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+								}
+							}
+						}
+						multiply_temp_variable = { TUR_integrate_turkish_citizens = 0 }
+					}
+					if = {
+						limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+						divide_temp_variable = { TUR_integrate_turkish_citizens = 2 }
+					}
+					multiply_temp_variable = { TUR_integrate_turkish_citizens = TUR_turkish_population_factor_new }
+					multiply_temp_variable = { TUR_integrate_turkish_citizens = TUR_apostolic_population_factor_new }
+					divide_temp_variable = { TUR_integrate_turkish_citizens = -100 }
+					clear_variable = TUR_turkish_sunni_state_variable
+				}
+				else = {
+					if = {
+						limit = {
+							FROM = {
+								OR = {
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+								}
+							}
+						}
+						multiply_temp_variable = { TUR_integrate_turkish_citizens = 0 }
+					}
+					if = {
+						limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+						divide_temp_variable = { TUR_integrate_turkish_citizens = 2 }
+					}
+					multiply_temp_variable = { TUR_integrate_turkish_citizens = TUR_turkish_population_factor_new }
+					multiply_temp_variable = { TUR_integrate_turkish_citizens = TUR_apostolic_population_factor_new }
+					divide_temp_variable = { TUR_integrate_turkish_citizens = -100 }
+				}
+			}
+			custom_effect_tooltip = TUR_integrate_turkish_citizens_tt
+			TUR_reload_minority_values = yes
+		}
+		cancel_trigger = { NOT = { controls_state = FROM } }
+		ai_will_do = { base = 30 }
+	}
+	ALB_integrate_jewish_citizens = {
+		name = TUR_integrate_jewish_citizens
+		icon = GFX_TUR_jewish_brainwash
+		allowed = { original_tag = ALB }
+		state_target = yes
+		targets = { 345 }
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = { modifier = TUR_jewish_minority }
+				check_variable = { TUR_jewish_judaic_state_variable < 0 }
+			}
+		}
+		target_root_trigger = { has_completed_focus = ALB_integrate_jewish_citizens }
+		visible = { controls_state = FROM }
+		on_map_mode = map_only
+		cost = 30
+		days_remove = 30
+		available = { TUR_vilayet_centralization_100 = yes }
+		remove_effect = {
+			hidden_effect = {
+				set_temp_variable = { TUR_integrate_jewish_citizens = FROM.TUR_jewish_judaic_state_variable }
+				if = {
+					limit = {
+						FROM = {
+							check_variable = {
+								var = TUR_jewish_judaic_state_variable
+								value = -0.3
+								compare = greater_than_or_equals
+							}
+						}
+					}
+					if = {
+						limit = {
+							FROM = {
+								OR = {
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+								}
+							}
+						}
+						multiply_temp_variable = { TUR_integrate_jewish_citizens = 0 }
+					}
+					if = {
+						limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+						divide_temp_variable = { TUR_integrate_jewish_citizens = 2 }
+					}
+					multiply_temp_variable = { TUR_integrate_jewish_citizens = TUR_jewish_population_factor_new }
+					multiply_temp_variable = { TUR_integrate_jewish_citizens = TUR_apostolic_population_factor_new }
+					divide_temp_variable = { TUR_integrate_jewish_citizens = -100 }
+					clear_variable = TUR_jewish_judaic_state_variable
+				}
+				else = {
+					if = {
+						limit = {
+							FROM = {
+								OR = {
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+									has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+								}
+							}
+						}
+						multiply_temp_variable = { TUR_integrate_jewish_citizens = 0 }
+					}
+					if = {
+						limit = { FROM = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+						divide_temp_variable = { TUR_integrate_jewish_citizens = 2 }
+					}
+					multiply_temp_variable = { TUR_integrate_jewish_citizens = TUR_jewish_population_factor_new }
+					multiply_temp_variable = { TUR_integrate_jewish_citizens = TUR_apostolic_population_factor_new }
+					divide_temp_variable = { TUR_integrate_jewish_citizens = -100 }
+				}
+			}
+			custom_effect_tooltip = TUR_integrate_jewish_citizens_tt
+			TUR_reload_minority_values = yes
+		}
+		cancel_trigger = { NOT = { controls_state = FROM } }
+		ai_will_do = { base = 30 }
 	}
 }
 

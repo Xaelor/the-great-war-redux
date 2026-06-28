@@ -16523,6 +16523,41 @@ TUR_reduce_albanian_effect = {
 	force_update_dynamic_modifier = yes
 }
 
+TUR_reduce_turkish_effect = {
+	FROM = {
+		custom_effect_tooltip = TUR_modify_turkish_minority
+		if = {
+			limit = {
+				check_variable = { TUR_turkish_sunni_state_variable < -0.3 }
+				OR = {
+					check_variable = { TUR_ottoman_local_manpower_turkish < -0.02 }
+					check_variable = { TUR_ottoman_local_building_slots_factor_turkish < 0.02 }
+				}
+			}
+			custom_effect_tooltip = TUR_minority_local_manpower1
+			add_to_variable = { TUR_ottoman_local_manpower_turkish = 0.02 }
+			custom_effect_tooltip = TUR_minority_local_building_slots_factor1
+			add_to_variable = { TUR_ottoman_local_building_slots_factor_turkish = 0.02 }
+		}
+		else = {
+			hidden_effect = {
+				set_temp_variable = { ROOT.TUR_minority_local_manpower_turkish = FROM.TUR_ottoman_local_manpower_turkish }
+				multiply_temp_variable = { ROOT.TUR_minority_local_manpower_turkish = -1 }
+				set_temp_variable = { ROOT.TUR_minority_local_building_slots_factor_turkish = FROM.TUR_ottoman_local_building_slots_factor_turkish }
+				multiply_temp_variable = { ROOT.TUR_minority_local_building_slots_factor_turkish = -1 }
+			}
+			custom_effect_tooltip = TUR_minority_local_manpower_turkish
+			set_variable = { TUR_ottoman_local_manpower_turkish = 0 }
+			custom_effect_tooltip = TUR_minority_local_building_slots_factor_turkish
+			set_variable = { TUR_ottoman_local_building_slots_factor_turkish = 0 }
+		}
+		clamp_variable = { var = TUR_ottoman_local_manpower_turkish max = 0 }
+		clamp_variable = { var = TUR_ottoman_local_building_slots_factor_turkish min = 0 }
+		custom_effect_tooltip = empty_space
+	}
+	force_update_dynamic_modifier = yes
+}
+
 TUR_reduce_bulgarian_effect = {
 	FROM = {
 		custom_effect_tooltip = TUR_modify_bulgarian_minority
@@ -16684,8 +16719,6 @@ TUR_remove_bulgarians_effect = {
 TUR_reduce_greek_effect = {
 	FROM = {
 		custom_effect_tooltip = TUR_modify_greek_minority
-		custom_effect_tooltip = attrition_minus_10
-		clear_variable = TUR_ottoman_attrition
 		if = {
 			limit = {
 				check_variable = { TUR_greek_orthodox_state_variable < -0.3 }
