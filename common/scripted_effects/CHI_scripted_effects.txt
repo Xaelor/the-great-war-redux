@@ -1668,3 +1668,162 @@ xinhai_end_effect = {
 		}
 	}
 }
+
+CHI_calculate_total_foreign_influnce = {
+	set_variable = { var = CHI_total_foreign_influence value = 0 }
+	set_variable = { var = CHI_total_independence value = 1 }
+	if = {
+		limit = {
+			OR = {
+				tag = CCG
+				capital_scope = {
+					OR = {
+						state = 328
+						state = 596
+						state = 617
+						state = 716
+						state = 1062
+					}
+				}
+			}	
+			JAP = {
+				exists = yes
+				NOT = { has_war_with = PREV }
+				has_dynamic_modifier = CHI_influence_in_china_modifier
+			}
+		}
+		add_to_variable = { var = CHI_total_foreign_influence value = JAP.CHI_foreign_influence }
+	}
+	if = {
+		limit = {
+			tag = CCG	
+			USA = {
+				exists = yes
+				NOT = { has_war_with = PREV }
+				has_dynamic_modifier = CHI_influence_in_china_modifier
+			}
+		}
+		add_to_variable = { var = CHI_total_foreign_influence value = USA.CHI_foreign_influence }
+	}
+	if = {
+		limit = { 
+			OR = { 
+				tag = CCG
+				capital_scope = {
+					OR = {
+						state = 592
+						state = 598
+						state = 600
+						state = 602
+						state = 603
+						state = 606
+						state = 620
+						state = 892
+						state = 893
+						state = 1046
+						state = 1062
+						state = 1064
+					}				
+				}
+			}
+			ENG = {
+				exists = yes
+				NOT = { has_war_with = PREV }
+				has_dynamic_modifier = CHI_influence_in_china_modifier
+			}
+		}
+		add_to_variable = { var = CHI_total_foreign_influence value = ENG.CHI_foreign_influence }
+	}
+	if = {
+		limit = { 
+			OR = { 
+				tag = CCG
+				capital_scope = {
+					OR = {
+						state = 714
+						state = 717
+						state = 1226
+					}				
+				}
+			}
+			RUS = {
+				exists = yes
+				NOT = { has_war_with = PREV }
+				has_dynamic_modifier = CHI_influence_in_china_modifier
+			}
+		}
+		add_to_variable = { var = CHI_total_foreign_influence value = RUS.CHI_foreign_influence }
+	}
+	if = {
+		limit = {
+			OR = {
+				tag = CCG
+				capital_scope = {
+					OR = {
+						state = 325
+						state = 591
+						state = 593
+						state = 594
+						state = 599					
+					}
+				}
+			}
+			FRA = {
+				exists = yes
+				NOT = { has_war_with = PREV }
+				has_dynamic_modifier = CHI_influence_in_china_modifier
+			}
+		}
+		add_to_variable = { var = CHI_total_foreign_influence value = FRA.CHI_foreign_influence }
+	}
+	if = {
+		limit = {
+			OR = {
+				tag = CCG
+				capital_scope = {
+					state = 872				
+				}
+			}
+			GER = {
+				exists = yes
+				NOT = { has_war_with = PREV }
+				has_dynamic_modifier = CHI_influence_in_china_modifier
+			}
+		}
+		add_to_variable = { var = CHI_total_foreign_influence value = GER.CHI_foreign_influence }
+	}
+	clamp_variable = {
+		var = CHI_total_foreign_influence
+		min = 0
+		max = 1
+	}
+	subtract_from_variable = {
+		CHI_total_independence = CHI_total_foreign_influence
+	}
+	clamp_variable = {
+		var = CHI_total_independence
+		min = 0
+		max = 1
+	}
+}
+CHI_calculate_foreign_influnce_modifiers = {
+	set_variable = { var = CHI_political_power_gain value = CHI_total_foreign_influence }
+	multiply_variable = { var = CHI_political_power_gain value = -0.5 }
+	set_variable = { var = CHI_consumer_goods_factor value = CHI_total_foreign_influence }
+	multiply_variable = { var = CHI_consumer_goods_factor value = 0.5 }
+	set_variable = { var = CHI_civilian_intel_to_others value = CHI_total_foreign_influence }
+	multiply_variable = { var = CHI_civilian_intel_to_others value = 50 }
+	
+	
+}
+CHI_calculate_foreign_influnce = {
+	CHI_calculate_total_foreign_influnce = yes
+	CHI_calculate_foreign_influnce_modifiers = yes
+}
+
+CHI_calculate_influnce_in_china_modifiers = {
+	set_variable = { var = CHI_political_power_gain value = CHI_foreign_influence }
+	multiply_variable = { var = CHI_political_power_gain value = 0.2 }
+	set_variable = { var = CHI_consumer_goods_factor value = CHI_foreign_influence }
+	multiply_variable = { var = CHI_consumer_goods_factor value = -0.1 }
+}
