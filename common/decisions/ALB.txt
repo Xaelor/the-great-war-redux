@@ -3487,6 +3487,50 @@ ALB_millet_system = {
 		remove_effect = {
 			TUR_reduce_turkish_effect = yes
 			FROM_add_3_centralization = yes
+			TUR_reload_minority_values = yes
+			ottoman_centralization_variable_check = yes
+		}
+		cancel_trigger = { NOT = { controls_state = FROM } }
+		ai_will_do = {
+			base = 50
+			modifier = {
+				add = -65
+				FROM = { state = 200 }
+			}
+			modifier = {
+				add = 80
+				FROM = { any_neighbor_state = { controller = { has_war_with = ROOT } } }
+			}
+		}
+	}
+	ALB_concessions_to_the_turks_thessaloniki = {
+		name = ALB_concessions_to_the_turks
+		icon = GFX_TUR_integrate_turkish
+		allowed = { original_tag = ALB }
+		state_target = yes
+		targets = { 1257 731 1258 759 225 788 345 184 }
+		on_map_mode = map_only
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = { modifier = TUR_turkish_minority }
+				OR = {
+					check_variable = { TUR_ottoman_local_manpower_turkish < 0 }
+					check_variable = { TUR_ottoman_local_building_slots_factor_turkish < 0 }
+				}
+			}
+		}
+		target_root_trigger = { has_completed_focus = ALB_promote_turkish_presence_in_thessaloniki }
+		visible = { controls_state = FROM }
+		cost = 30
+		days_remove = 70
+		modifier = {
+			consumer_goods_factor = 0.05
+			political_power_cost = 0.02
+		}
+		remove_effect = {
+			TUR_reduce_turkish_effect = yes
+			FROM_add_3_centralization = yes
+			TUR_reload_minority_values = yes
 			ottoman_centralization_variable_check = yes
 		}
 		cancel_trigger = { NOT = { controls_state = FROM } }
@@ -3522,6 +3566,59 @@ ALB_millet_system = {
 		visible = { controls_state = FROM }
 		cost = 15
 		days_remove = 15
+		available = {
+			has_equipment = { infantry_equipment > 199 }
+			FROM = {
+				NOT = {
+					has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+					has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+				}
+			}
+		}
+		complete_effect = { add_equipment_to_stockpile = { type = infantry_equipment amount = -200 } }
+		remove_effect = {
+			TUR_reduce_bulgarian_effect = yes
+			FROM_add_3_centralization = yes
+			ottoman_centralization_variable_check = yes
+		}
+		cancel_trigger = { NOT = { controls_state = FROM } }
+		ai_will_do = {
+			base = 50
+			modifier = {
+				add = -65
+				FROM = { state = 200 }
+			}
+			modifier = {
+				add = 80
+				FROM = { any_neighbor_state = { controller = { has_war_with = ROOT } } }
+			}
+		}
+	}
+	ALB_increased_pressure_on_bulgarians_thessaloniki = {
+		name = TUR_increased_pressure_on_bulgarians
+		icon = GFX_decision_oppression
+		allowed = { original_tag = ALB }
+		state_target = yes
+		targets = { 1258 759 225 788 184 }
+		on_map_mode = map_only
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = { modifier = TUR_bulgarian_minority }
+				OR = {
+					check_variable = { TUR_ottoman_required_garrison_factor_bulgarian > 0 }
+					check_variable = { TUR_ottoman_resistance_decay_bulgarian < 0 }
+				}
+			}
+		}
+		target_root_trigger = {
+			OR = {
+				has_completed_focus = ALB_law_and_order_in_macedonia
+				has_completed_focus = ALB_promote_turkish_presence_in_thessaloniki
+			}
+		}
+		visible = { controls_state = FROM }
+		cost = ALB_thessaloniki_decisions_cost?15
+		days_remove = ALB_thessaloniki_decisions_duration?15
 		available = {
 			has_equipment = { infantry_equipment > 199 }
 			FROM = {
@@ -3602,6 +3699,7 @@ ALB_millet_system = {
 		remove_effect = {
 			TUR_reduce_serbian_effect = yes
 			FROM_add_3_centralization = yes
+			TUR_reload_minority_values = yes
 			ottoman_centralization_variable_check = yes
 		}
 		cancel_trigger = { NOT = { controls_state = FROM } }
@@ -3618,7 +3716,7 @@ ALB_millet_system = {
 		}
 	}
 	ALB_nationalize_greek_businesses = {
-		icon = TUR_nationalize_greek_businesses
+		icon = GFX_decision_generic_consumer_goods
 		allowed = { original_tag = ALB }
 		state_target = yes
 		targets = { 1225 803 758 1256 826 }
@@ -3661,10 +3759,7 @@ ALB_millet_system = {
 		remove_effect = {
 			TUR_reduce_greek_effect = yes
 			FROM_add_3_centralization = yes
-			if = {
-				limit = { FROM = { has_dynamic_modifier = { modifier = TUR_haci_adil_committee } } }
-				add_stability = 0.002
-			}
+			TUR_reload_minority_values = yes
 			ottoman_centralization_variable_check = yes
 		}
 		cancel_trigger = { NOT = { controls_state = FROM } }
@@ -3674,6 +3769,175 @@ ALB_millet_system = {
 				add = 80
 				FROM = { any_neighbor_state = { controller = { has_war_with = ROOT } } }
 			}
+		}
+	}
+	ALB_nationalize_greek_businesses_thessaloniki = {
+		icon = GFX_decision_generic_consumer_goods
+		allowed = { original_tag = ALB }
+		state_target = yes
+		targets = { 1257 731 345 184 }
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = { modifier = TUR_greek_minority }
+				OR = {
+					check_variable = { TUR_ottoman_local_resources_factor_greek < 0 }
+					check_variable = { TUR_ottoman_state_production_speed_buildings_factor_greek > 0 }
+				}
+			}
+		}
+		on_map_mode = map_only
+		target_root_trigger = {
+			OR = {
+				has_completed_focus = ALB_law_and_order_in_macedonia
+				has_completed_focus = ALB_promote_turkish_presence_in_thessaloniki
+			}
+		}
+		visible = { controls_state = FROM }
+		cost = ALB_thessaloniki_decisions_cost?15
+		days_remove = ALB_thessaloniki_decisions_duration?15
+		available = {
+			if = {
+				limit = { has_completed_focus = ALB_macedonian_autonomous_zone }
+				FROM = {
+					OR = {
+						NOT = {
+							has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+							has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+						}
+						has_dynamic_modifier = { modifier = TUR_bulgarian_minority }
+					}
+				}
+			}
+			else = {
+				FROM = {
+					NOT = {
+						has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+						has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+					}
+				}
+			}
+		}
+		remove_effect = {
+			TUR_reduce_greek_effect = yes
+			FROM_add_3_centralization = yes
+			TUR_reload_minority_values = yes
+			ottoman_centralization_variable_check = yes
+		}
+		cancel_trigger = { NOT = { controls_state = FROM } }
+		ai_will_do = {
+			base = 80
+			modifier = {
+				add = 80
+				FROM = { any_neighbor_state = { controller = { has_war_with = ROOT } } }
+			}
+		}
+	}
+	ALB_force_integrate_turks = {
+		icon = GFX_decision_eng_trade_unions_demand
+		allowed = { original_tag = ALB }
+		state_target = yes
+		targets = { 1257 731 1258 759 225 788 345 184 }
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = { modifier = TUR_turkish_minority }
+				OR = {
+					check_variable = {
+						var = TUR_ottoman_local_building_slots_factor_turkish
+						value = -0.02
+						compare = less_than_or_equals
+					}
+					check_variable = {
+						var = TUR_ottoman_local_manpower_turkish
+						value = -0.02
+						compare = less_than_or_equals
+					}
+				}
+			}
+		}
+		on_map_mode = map_only
+		target_root_trigger = {
+			OR = {
+				has_completed_focus = ALB_law_and_order_in_macedonia
+				has_completed_focus = ALB_expand_bulgarian_cooperation
+			}
+		}
+		visible = { controls_state = FROM }
+		cost = 10
+		days_remove = 14
+		available = {
+			if = {
+				limit = { has_completed_focus = ALB_expand_bulgarian_cooperation }
+				FROM = {
+					OR = {
+						NOT = {
+							has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+							has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+						}
+						has_dynamic_modifier = { modifier = TUR_bulgarian_minority }
+					}
+				}
+			}
+			else = {
+				FROM = {
+					NOT = {
+						has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+						has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+					}
+				}
+			}
+		}
+		remove_effect = {
+			TUR_reduce_turkish_effect = yes
+			FROM_add_3_centralization = yes
+			TUR_reload_minority_values = yes
+			ottoman_centralization_variable_check = yes
+		}
+		cancel_trigger = { NOT = { controls_state = FROM } }
+		ai_will_do = {
+			base = 80
+			modifier = {
+				add = 80
+				FROM = { any_neighbor_state = { controller = { has_war_with = ROOT } } }
+			}
+		}
+	}
+	ALB_disperse_jewish_neighborhoods = {
+		name = TUR_disperse_jewish_neighborhoods
+		icon = GFX_decision_eng_blackshirt_march
+		allowed = { tag = TRS }
+		targets = { 345 }
+		state_target = yes
+		target_root_trigger = { has_completed_focus = ALB_integrate_jewish_pockets }
+		on_map_mode = map_only
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = { modifier = TUR_jewish_minority }
+				OR = {
+					check_variable = { TUR_ottoman_local_building_slots_factor_jewish < 0.02 }
+					check_variable = { TUR_ottoman_state_production_speed_buildings_factor_jewish > 0.01 }
+				}
+			}
+		}
+		visible = { controls_state = FROM }
+		cost = 10
+		days_remove = 14
+		available = {
+			FROM = {
+				NOT = {
+					has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+					has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+				}
+			}
+		}
+		remove_effect = {
+			TUR_reduce_jewish_effect = yes
+			FROM_add_3_centralization = yes
+			TUR_reload_minority_values = yes
+			ottoman_centralization_variable_check = yes
+		}
+		cancel_trigger = { NOT = { controls_state = FROM } }
+		ai_will_do = {
+			base = 80
 		}
 	}
 	ALB_integrate_greek_citizens = {
@@ -4000,7 +4264,7 @@ ALB_millet_system = {
 				check_variable = { TUR_jewish_judaic_state_variable < 0 }
 			}
 		}
-		target_root_trigger = { has_completed_focus = ALB_integrate_jewish_citizens }
+		target_root_trigger = { has_completed_focus = ALB_integrate_jewish_pockets }
 		visible = { controls_state = FROM }
 		on_map_mode = map_only
 		cost = 30

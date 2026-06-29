@@ -5768,7 +5768,12 @@ focus_tree = {
 			TUR_owns_selanik_vilayet = yes
 		}
 		completion_reward = {
-			
+			add_to_variable = {
+				var = global.TUR_selanik_centralization
+				value = 10
+				tooltip = TUR_change_selanik_centralization
+			}
+			custom_effect_tooltip = ALB_law_and_order_in_macedonia_tt
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5789,7 +5794,62 @@ focus_tree = {
 			TUR_owns_selanik_vilayet = yes
 		}
 		completion_reward = {
-			
+			every_state = {
+				limit = {
+					check_variable = { TUR_bulgarian_orthodox_state_variable < 0 }
+					has_state_flag = TUR_selanik
+				}
+				custom_effect_tooltip = TUR_modify_bulgarian_minority
+				custom_effect_tooltip = ALB_macedonian_autonomous_zone_tt1
+				custom_effect_tooltip = ALB_macedonian_autonomous_zone_tt2
+				custom_effect_tooltip = ALB_macedonian_autonomous_zone_tt3
+				set_variable = { TUR_ottoman_attrition_bulgarian = 0 }
+				set_variable = { TUR_ottoman_required_garrison_factor_bulgarian = 0 }
+				set_variable = { TUR_ottoman_resistance_decay_bulgarian = 0 }
+				custom_effect_tooltip = empty_space
+			}
+			effect_tooltip = {
+				every_state = {
+					limit = {
+						OR = {
+							state = 788
+							state = 225
+							state = 759
+							state = 1258
+							state = 184
+						}
+					}
+					add_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+				}
+			}
+			hidden_effect = {
+				every_controlled_state = {
+					limit = {
+						OR = {
+							state = 788
+							state = 225
+							state = 759
+							state = 1258
+							state = 184
+						}
+					}
+					add_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+				}
+				every_state = {
+					limit = {
+						NOT = { is_controlled_by = ROOT }
+						OR = {
+							state = 788
+							state = 225
+							state = 759
+							state = 1258
+							state = 184
+						}
+					}
+					set_state_flag = TUR_semi_autonomous_vilayet_no_control
+				}
+			}
+			custom_effect_tooltip = ALB_expand_bulgarian_cooperation_tt
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5810,7 +5870,25 @@ focus_tree = {
 			TUR_owns_selanik_vilayet = yes
 		}
 		completion_reward = {
-			
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_turkish_value = yes
+				set_temp_variable = {
+					ALB_ally_the_turks_in_administration = {
+						value = old_turkish_value
+						divide = TUR_turkish_population_factor_new
+						multiply = {
+							value = TUR_turkish_population_factor_new
+							add = -1.5
+						}
+						subtract = old_turkish_value
+					}
+				}
+			}
+			add_to_variable = { TUR_turkish_population_factor_new = -1.5 }
+			custom_effect_tooltip = ALB_promote_turkish_presence_in_thessaloniki_tt2
+			TUR_reload_minority_values = yes
+			custom_effect_tooltip = ALB_promote_turkish_presence_in_thessaloniki_tt
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5829,7 +5907,9 @@ focus_tree = {
 			any_owned_state = { has_dynamic_modifier = { modifier = TUR_jewish_minority } }
 		}
 		completion_reward = {
-			
+			custom_effect_tooltip = ALB_integrate_jewish_pockets_tt
+			set_variable = { ALB_thessaloniki_decisions_cost = 5 }
+			set_variable = { ALB_thessaloniki_decisions_duration = 10 }
 		}
 		ai_will_do = { factor = 100 }
 	}
