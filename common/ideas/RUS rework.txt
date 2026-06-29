@@ -34,7 +34,7 @@ ideas = {
 			}
 		}
 		RUS_government_of_public_trust_idea = {
-			picture = GFX_idea_RUS_june_third_political_system
+			picture = generic_deal_with_the_devil2
 			
 			allowed = { always = no }
 			
@@ -47,6 +47,25 @@ ideas = {
 			modifier = {
 				stability_factor = 0.05
 				political_power_factor = -0.1
+				democratic_drift = 0.03
+				custom_modifier_tooltip = RUS_government_of_public_trust_idea_tt
+			}
+		}
+		RUS_june_third_with_liberal_characteristics_idea = {
+			picture = GFX_idea_RUS_june_third_political_system
+			
+			allowed = { always = no }
+			
+			removal_cost = -1
+			
+			available = {
+				has_revolution = no
+			}
+
+			modifier = {
+				stability_factor = 0.05
+				political_power_gain = 0.5
+				neutrality_drift = 0.03
 				democratic_drift = 0.03
 			}
 		}
@@ -1199,7 +1218,7 @@ ideas = {
 			}
 		}
 		RUS_famine = {
-			picture = raj_risk_of_famine
+			picture = RAJ_state_of_famine_country
 			
 			allowed = { always = no }
 			
@@ -1449,9 +1468,6 @@ ideas = {
 			allowed_civil_war = { original_tag = RUS }
 			
 			available = {
-				RUS_vladimir_kokovtsov = {
-					is_prime_minister = yes
-				}
 				RUS_nikolay_maklakov = {
 					is_minister_of_internal_affairs = yes
 				}
@@ -1464,9 +1480,16 @@ ideas = {
 			}
 
 			on_remove = {
-				add_political_power = 100
-				set_temp_variable = { RUS_add_police_reform_progress_var = 15 }
-				RUS_add_police_reform_progress = yes
+				if = {
+					limit = {
+						RUS_sergei_kryzhanovsky = {
+							is_minister_of_internal_affairs = yes
+						}
+					}
+					add_political_power = 100
+					set_temp_variable = { RUS_add_police_reform_progress_var = 15 }
+					RUS_add_police_reform_progress = yes
+				}
 			}
 		}
 		RUS_internal_audit_idea = {
@@ -1477,10 +1500,7 @@ ideas = {
 			allowed_civil_war = { original_tag = RUS }
 
 			available = {
-				RUS_vladimir_kokovtsov = {
-					is_prime_minister = yes
-				}
-				RUS_nikolay_maklakov = {
+				RUS_sergei_kryzhanovsky = {
 					is_minister_of_internal_affairs = yes
 				}
 			}
@@ -1492,22 +1512,63 @@ ideas = {
 			}
 
 			on_remove = {
-				set_temp_variable = {
-					RUS_modify_loyalty_center_left_var = 2.5
+				if = {
+					limit = {
+						RUS_sergei_kryzhanovsky = {
+							is_minister_of_internal_affairs = yes
+						}
+					}
+					set_temp_variable = {
+						RUS_modify_loyalty_center_left_var = 2.5
+					}
+					RUS_modify_loyalty_center_left = yes
+					set_temp_variable = {
+						RUS_modify_loyalty_center_right_var = 2.5
+					}
+					RUS_modify_loyalty_center_right = yes
+					set_temp_variable = {
+						RUS_add_agrarian_reform_progress_var = 5
+					}
+					RUS_add_agrarian_reform_progress = yes
+					set_temp_variable = {
+						RUS_add_education_reform_progress_var = 5
+					}
+					RUS_add_education_reform_progress = yes
 				}
-				RUS_modify_loyalty_center_left = yes
-				set_temp_variable = {
-					RUS_modify_loyalty_center_right_var = 2.5
+			}
+		}
+		RUS_purges_of_bureaucracy_idea = {
+			picture = generic_oppression
+			
+			allowed = { always = no }
+			
+			allowed_civil_war = { original_tag = RUS }
+
+			available = {
+				has_idea = RUS_government_of_public_trust_idea
+				has_active_mission = RUS_mandate_of_reform_mission
+			}
+			
+			removal_cost = -1
+			
+			modifier = {
+				political_power_cost = 0.25
+				consumer_goods_factor = 0.1
+				neutrality_drift = -0.03
+			}
+
+			on_remove = {
+				if = {
+					limit = {
+						has_idea = RUS_government_of_public_trust_idea
+						has_active_mission = RUS_mandate_of_reform_mission
+					}
+					add_political_power = 50
+					add_days_mission_timeout = {
+						mission = RUS_mandate_of_reform_mission
+						days = 60
+					}
 				}
-				RUS_modify_loyalty_center_right = yes
-				set_temp_variable = {
-					RUS_add_agrarian_reform_progress_var = 5
-				}
-				RUS_add_agrarian_reform_progress = yes
-				set_temp_variable = {
-					RUS_add_education_reform_progress_var = 5
-				}
-				RUS_add_education_reform_progress = yes
 			}
 		}
 		RUS_complete_police_reform = {
@@ -1638,7 +1699,7 @@ ideas = {
 			}
 		}
 		RUS_food_shortages = {
-			picture = raj_risk_of_famine
+			picture = RAJ_state_of_famine_country
 			
 			allowed = { always = no }
 			
@@ -1667,7 +1728,7 @@ ideas = {
 			}
 		}
 		RUS_famine_in_cities = {
-			picture = raj_risk_of_famine
+			picture = RAJ_state_of_famine_country
 			
 			allowed = { always = no }
 			

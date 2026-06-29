@@ -4480,4 +4480,259 @@ RUS_parliament_gui_decision_category = {
 			custom_effect_tooltip = RUS_test_number_of_loyalty
 		}
 	}
+	#GOVERNMENT OF PUBLIC TRUST
+	RUS_law_on_peasant_civil_rights_sd = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			original_tag = RUS
+		}
+		available = {
+			duma_is_active = yes
+		}
+		visible = {
+			
+			duma_exists = yes
+			has_agrarian_question = yes
+			has_idea = RUS_government_of_public_trust_idea
+			has_completed_focus = RUS_expand_peasant_civil_rights
+			NOT = {
+				has_country_flag = RUS_law_on_peasant_civil_rights_passed_in_sd
+				has_country_flag = RUS_law_on_peasant_civil_rights_passed_in_sc
+			}
+		}
+		complete_effect = {
+			custom_effect_tooltip = RUS_need_majority_sd
+		}
+		remove_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						total_loyalist_count > RUS_duma_majority_threshold
+					}
+				}
+				custom_effect_tooltip = RUS_likely_to_pass
+			}
+			else = {
+				custom_effect_tooltip = RUS_likely_to_be_rejected
+			}
+			if = {
+				limit = {
+					check_variable = {
+						total_loyalist_count > RUS_duma_majority_threshold
+					}
+				}
+				hidden_effect = {
+					set_country_flag = RUS_law_on_peasant_civil_rights_passed_in_sd
+					add_political_power = 25
+					country_event = ww1_russia_common.1
+				}
+			}
+			else = {
+				hidden_effect = {
+					country_event = ww1_russia_common.3
+				}
+			}
+			custom_effect_tooltip = RUS_if_the_law_passes
+			effect_tooltip = {
+				add_political_power = 25
+				custom_effect_tooltip = RUS_law_available_for_state_council
+			}
+			custom_effect_tooltip = RUS_if_the_law_passes_in_sc
+			effect_tooltip = {
+				add_political_power = 50
+				set_temp_variable = { RUS_add_agrarian_reform_progress_var = 10 }
+				RUS_add_agrarian_reform_progress = yes
+				add_days_mission_timeout = {
+					mission = RUS_mandate_of_reform_mission
+					days = 60
+				}
+			}
+			
+		}
+		cost = 50
+		days_remove = 30
+		days_re_enable = 180
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					duma_is_active = no
+					duma_exists = no
+					NOT = {
+						has_idea = RUS_government_of_public_trust_idea
+						has_agrarian_question = yes
+					}
+				}
+			}
+		}
+	}
+	RUS_law_on_muslim_civil_rights_sd = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			original_tag = RUS
+		}
+		available = {
+			duma_is_active = yes
+		}
+		visible = {
+			
+			duma_exists = yes
+			has_idea = RUS_government_of_public_trust_idea
+			has_completed_focus = RUS_true_equality_for_muslims
+			NOT = {
+				has_country_flag = RUS_law_on_muslim_civil_rights_passed_in_sd
+				has_country_flag = RUS_law_on_muslim_civil_rights_passed_in_sc
+			}
+		}
+		complete_effect = {
+			custom_effect_tooltip = RUS_need_majority_sd
+		}
+		remove_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						total_loyalist_count > RUS_duma_majority_threshold
+					}
+				}
+				custom_effect_tooltip = RUS_likely_to_pass
+			}
+			else = {
+				custom_effect_tooltip = RUS_likely_to_be_rejected
+			}
+			if = {
+				limit = {
+					check_variable = {
+						total_loyalist_count > RUS_duma_majority_threshold
+					}
+				}
+				hidden_effect = {
+					set_country_flag = RUS_law_on_muslim_civil_rights_passed_in_sd
+					add_political_power = 25
+					country_event = ww1_russia_common.1
+				}
+			}
+			else = {
+				hidden_effect = {
+					country_event = ww1_russia_common.3
+				}
+			}
+			custom_effect_tooltip = RUS_if_the_law_passes
+			effect_tooltip = {
+				add_political_power = 25
+				custom_effect_tooltip = RUS_law_available_for_state_council
+			}
+			custom_effect_tooltip = RUS_if_the_law_passes_in_sc
+			effect_tooltip = {
+				add_political_power = 50
+				add_stability = 0.05
+				add_popularity = {
+					ideology = democratic
+					popularity  = 0.1
+				}
+				add_popularity = {
+					ideology = communism
+					popularity  = 0.05
+				}
+				add_days_mission_timeout = {
+					mission = RUS_mandate_of_reform_mission
+					days = 60
+				}
+			}
+			
+		}
+		cost = 50
+		days_remove = 30
+		days_re_enable = 180
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					duma_is_active = no
+					duma_exists = no
+					NOT = {
+						has_idea = RUS_government_of_public_trust_idea
+					}
+				}
+			}
+		}
+	}
+	RUS_law_on_reformation_of_state_council_sd = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			original_tag = RUS
+		}
+		available = {
+			duma_is_active = yes
+		}
+		visible = {
+			
+			duma_exists = yes
+			has_idea = RUS_government_of_public_trust_idea
+			has_country_flag = RUS_state_council_election_reform_sd
+			NOT = {
+				has_country_flag = RUS_law_on_reformation_of_state_council_passed_in_sd
+				has_country_flag = RUS_law_on_reformation_of_state_council_passed_in_sc
+			}
+		}
+		complete_effect = {
+			custom_effect_tooltip = RUS_need_majority_sd
+		}
+		remove_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						total_loyalist_count > RUS_duma_majority_threshold
+					}
+				}
+				custom_effect_tooltip = RUS_likely_to_pass
+			}
+			else = {
+				custom_effect_tooltip = RUS_likely_to_be_rejected
+			}
+			if = {
+				limit = {
+					check_variable = {
+						total_loyalist_count > RUS_duma_majority_threshold
+					}
+				}
+				hidden_effect = {
+					set_country_flag = RUS_law_on_reformation_of_state_council_passed_in_sd
+					add_political_power = 25
+					country_event = ww1_government_of_public_trust.6
+					clr_country_flag = RUS_state_council_election_reform_sd
+				}
+			}
+			else = {
+				hidden_effect = {
+					country_event = ww1_government_of_public_trust.5
+				}
+			}
+			custom_effect_tooltip = RUS_if_the_law_passes
+			effect_tooltip = {
+				add_political_power = 25
+				custom_effect_tooltip = RUS_law_available_for_state_council
+			}
+			custom_effect_tooltip = RUS_if_the_law_passes_in_sc
+			effect_tooltip = {
+				add_political_power = 50
+				set_temp_variable = { RUS_modify_state_council_var = -25 }
+				RUS_modify_state_council = yes
+				remove_mission = RUS_state_council_rotation
+				custom_effect_tooltip = RUS_state_council_election_reform_tt
+			}
+			
+		}
+		cost = 50
+		days_remove = 30
+		days_re_enable = 180
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					duma_is_active = no
+					duma_exists = no
+					NOT = {
+						has_idea = RUS_government_of_public_trust_idea
+					}
+				}
+			}
+		}
+	}
 }

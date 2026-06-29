@@ -45,9 +45,20 @@ focus_tree = {
 		y = 0
 		available_if_capitulated = yes
 		completion_reward = {
-			unlock_decision_tooltip = RUS_agrarian_reform_decision
-			unlock_decision_tooltip = RUS_education_reform_decision
-			unlock_decision_tooltip = RUS_settlement_in_FROM
+			unlock_decision_tooltip = {
+				decision = RUS_agrarian_reform_decision
+				show_effect_tooltip = yes
+			}
+			custom_effect_tooltip = empty_space_tt
+			unlock_decision_tooltip = {
+				decision = RUS_education_reform_decision
+				show_effect_tooltip = yes
+			}
+			custom_effect_tooltip = empty_space_tt
+			unlock_decision_tooltip = {
+				decision = RUS_settlement_in_FROM
+				show_effect_tooltip = yes
+			}
 		}
 		ai_will_do = {
 			factor = 3
@@ -1732,7 +1743,10 @@ focus_tree = {
 		relative_position_id = RUS_crack_down_on_finnish_autonomy
 		available_if_capitulated = yes
 		completion_reward = {
-			unlock_decision_tooltip = RUS_exporpriation_of_native_land_in_FROM
+			unlock_decision_tooltip = {
+				decision = RUS_exporpriation_of_native_land_in_FROM
+				show_effect_tooltip = yes
+			}
 		}
 		ai_will_do = {
 			factor = 3
@@ -1794,8 +1808,15 @@ focus_tree = {
 		relative_position_id = RUS_railroad_expansion
 		available_if_capitulated = yes
 		completion_reward = {
-			unlock_decision_tooltip = RUS_dnieper_dam_construction
-			unlock_decision_tooltip = RUS_volkhov_dam_construction
+			unlock_decision_tooltip = {
+				decision = RUS_dnieper_dam_construction
+				show_effect_tooltip = yes
+			}
+			custom_effect_tooltip = empty_space_tt
+			unlock_decision_tooltip = {
+				decision = RUS_volkhov_dam_construction
+				show_effect_tooltip = yes
+			}
 		}
 		ai_will_do = {
 			factor = 3
@@ -2473,10 +2494,22 @@ focus_tree = {
 		relative_position_id = RUS_centralize_army_command
 		available_if_capitulated = yes
 		completion_reward = {
-			unlock_decision_tooltip = RUS_sponsor_tsatitsyn_gun_factory
-			unlock_decision_tooltip = RUS_sponsor_plane_factories_in_saint_petersburg
-			unlock_decision_tooltip = RUS_sponsor_anatra_factory
-			unlock_decision_tooltip = RUS_sponsor_dux_factory
+			unlock_decision_tooltip = {
+				decision = RUS_sponsor_tsatitsyn_gun_factory
+				show_effect_tooltip = yes
+			}
+			unlock_decision_tooltip = {
+				decision = RUS_sponsor_plane_factories_in_saint_petersburg
+				show_effect_tooltip = yes
+			}
+			unlock_decision_tooltip = {
+				decision = RUS_sponsor_anatra_factory
+				show_effect_tooltip = yes
+			}
+			unlock_decision_tooltip = {
+				decision = RUS_sponsor_dux_factory
+				show_effect_tooltip = yes
+			}
 		}
 		ai_will_do = {
 			factor = 3
@@ -3072,10 +3105,6 @@ focus_tree = {
 				RUS_modify_loyalty_center_right_var = 2.5
 			}
 			RUS_modify_loyalty_center_right = yes
-			add_days_mission_timeout = {
-				mission = RUS_kokovtsov_resignation_mission
-				days = 180
-			}
 			country_event = ww1_kokovtsov.2
 		}
 		ai_will_do = {
@@ -3124,10 +3153,6 @@ focus_tree = {
 				custom_effect_tooltip = has_zemstvo_reform_progress_tt
 				custom_effect_tooltip = RUS_law_on_kholm_governorate_passed_in_sc
 				custom_effect_tooltip = RUS_law_of_equality_passed_in_sc
-			}
-			add_days_mission_timeout = {
-				mission = RUS_kokovtsov_resignation_mission
-				days = 180
 			}
 			country_event = ww1_kokovtsov.7
 		}
@@ -3195,10 +3220,6 @@ focus_tree = {
 				custom_effect_tooltip = has_zemstvo_reform_progress_tt
 				custom_effect_tooltip = RUS_center_left_loyalty_trigger_tt
 			}
-			add_days_mission_timeout = {
-				mission = RUS_kokovtsov_resignation_mission
-				days = 180
-			}
 			country_event = ww1_kokovtsov.4
 		}
 		ai_will_do = {
@@ -3248,10 +3269,6 @@ focus_tree = {
 				custom_effect_tooltip = RUS_law_on_kholm_governorate_passed_in_sc
 				custom_effect_tooltip = RUS_law_of_equality_passed_in_sc
 				custom_effect_tooltip = RUS_far_right_loyalty_trigger_tt
-			}
-			add_days_mission_timeout = {
-				mission = RUS_kokovtsov_resignation_mission
-				days = 180
 			}
 			country_event = ww1_kokovtsov.9
 		}
@@ -4029,6 +4046,7 @@ focus_tree = {
 			hidden_trigger = {
 				has_revolution = no
 			}
+			duma_is_active = yes
 		}
 		x = 0
 		y = 2
@@ -4067,6 +4085,12 @@ focus_tree = {
 		relative_position_id = RUS_meet_with_duma_members
 		available_if_capitulated = yes
 		completion_reward = {
+			if = {
+				limit = {
+					duma_is_active = no
+				}
+				clr_country_flag = RUS_duma_dismissed
+			}
 			hidden_effect = {
 				RUS_clear_the_cabinet = yes
 				RUS_alexander_krivoshein = {
@@ -4199,16 +4223,411 @@ focus_tree = {
 				}
 				remove_mission = RUS_growing_frustration_mission
 			}
-			else_if = {
+			if = {
 				limit = {
 					has_active_mission = RUS_krivoshein_resigns_mission
 				}
 				remove_mission = RUS_krivoshein_resigns_mission
 			}
+			country_event = ww1_government_of_public_trust.1
+			set_temp_variable = { RUS_modify_loyalty_center_left_var = 50 }
+			RUS_modify_loyalty_center_left = yes
+			set_temp_variable = { RUS_modify_loyalty_far_right_var = -25 }
+			RUS_modify_loyalty_far_right = yes
 			custom_effect_tooltip = unlocks_national_focus_tt
 			custom_effect_tooltip = RUS_abolish_pale_of_settlement
 			custom_effect_tooltip = load_more_focuses_tt
 			mark_focus_tree_layout_dirty = yes
+		}
+		ai_will_do = {
+			factor = 3
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICS
+		}
+	}
+	#GOVERNMENT OF PUBLIC TRUST
+	focus = {
+		id = RUS_expand_peasant_civil_rights
+		icon = GFX_focus_generic_self_management
+		cost = 5
+		prerequisite = {
+			focus = RUS_government_of_public_trust
+		}
+		available = {
+			has_agrarian_question = yes
+			duma_exists = yes
+			has_idea = RUS_government_of_public_trust_idea
+		}
+		allow_branch = {
+			OR = {
+				has_completed_focus = RUS_government_of_public_trust
+				is_debug = yes
+			}
+		}
+		x = -3
+		y = 1
+		relative_position_id = RUS_government_of_public_trust
+		available_if_capitulated = yes
+		completion_reward = {
+			unlock_decision_tooltip = RUS_law_on_peasant_civil_rights_sd
+			custom_effect_tooltip = RUS_if_the_law_passes_in_sc
+			effect_tooltip = {
+				add_political_power = 50
+				set_temp_variable = { RUS_add_agrarian_reform_progress_var = 10 }
+				RUS_add_agrarian_reform_progress = yes
+				add_days_mission_timeout = {
+					mission = RUS_mandate_of_reform_mission
+					days = 60
+				}
+			}
+			effect_tooltip = {
+				set_temp_variable = { RUS_state_council_socialist_support = 0 }
+				set_temp_variable = { RUS_state_council_liberal_support = 1 }
+				set_temp_variable = { RUS_state_council_centrist_support = 1 }
+				set_temp_variable = { RUS_state_council_rightist_support = 0 }
+				RUS_state_council_set_law_support = yes
+			}
+		}
+		ai_will_do = {
+			factor = 3
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICS
+		}
+	}
+	focus = {
+		id = RUS_abolish_political_exile
+		icon = GFX_focus_generic_self_management
+		cost = 5
+		prerequisite = {
+			focus = RUS_government_of_public_trust
+		}
+		available = {
+			has_idea = RUS_government_of_public_trust_idea
+		}
+		allow_branch = {
+			OR = {
+				has_completed_focus = RUS_government_of_public_trust
+				is_debug = yes
+			}
+		}
+		x = -1
+		y = 1
+		relative_position_id = RUS_government_of_public_trust
+		available_if_capitulated = yes
+		completion_reward = {
+			add_political_power = -25
+			add_popularity = {
+				ideology = communism
+				popularity  = 0.05
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity  = 0.05
+			}
+			add_days_mission_timeout = {
+				mission = RUS_mandate_of_reform_mission
+				days = 30
+			}
+			
+		}
+		ai_will_do = {
+			factor = 3
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICS
+		}
+	}
+	focus = {
+		id = RUS_amnesty_for_vyborg_manifestants
+		icon = GFX_focus_generic_self_management
+		cost = 5
+		prerequisite = {
+			focus = RUS_government_of_public_trust
+		}
+		available = {
+			has_idea = RUS_government_of_public_trust_idea
+		}
+		allow_branch = {
+			OR = {
+				has_completed_focus = RUS_government_of_public_trust
+				is_debug = yes
+			}
+		}
+		x = 1
+		y = 1
+		relative_position_id = RUS_government_of_public_trust
+		available_if_capitulated = yes
+		completion_reward = {
+			add_political_power = -25
+			add_popularity = {
+				ideology = democratic
+				popularity  = 0.05
+			}
+			add_days_mission_timeout = {
+				mission = RUS_mandate_of_reform_mission
+				days = 30
+			}
+			
+		}
+		ai_will_do = {
+			factor = 3
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICS
+		}
+	}
+	focus = {
+		id = RUS_crack_down_on_corrupt_bureaucracy
+		icon = GFX_focus_generic_self_management
+		cost = 5
+		prerequisite = {
+			focus = RUS_government_of_public_trust
+		}
+		available = {
+			has_idea = RUS_government_of_public_trust_idea
+		}
+		allow_branch = {
+			OR = {
+				has_completed_focus = RUS_government_of_public_trust
+				is_debug = yes
+			}
+		}
+		x = 3
+		y = 1
+		relative_position_id = RUS_government_of_public_trust
+		available_if_capitulated = yes
+		completion_reward = {
+			add_timed_idea = {
+				idea = RUS_purges_of_bureaucracy_idea
+				days = 80
+			}
+			custom_effect_tooltip = RUS_purges_in_gendarmerie_tt
+			effect_tooltip = {
+				add_political_power = 50
+				add_days_mission_timeout = {
+					mission = RUS_mandate_of_reform_mission
+					days = 60
+				}
+			}
+			
+		}
+		ai_will_do = {
+			factor = 3
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICS
+		}
+	}
+	focus = {
+		id = RUS_lift_restrictions_on_ukrainian_press
+		icon = GFX_focus_generic_self_management
+		cost = 5
+		prerequisite = {
+			focus = RUS_government_of_public_trust
+		}
+		available = {
+			has_idea = RUS_government_of_public_trust_idea
+		}
+		allow_branch = {
+			OR = {
+				has_completed_focus = RUS_government_of_public_trust
+				is_debug = yes
+			}
+		}
+		x = 2
+		y = 2
+		relative_position_id = RUS_government_of_public_trust
+		available_if_capitulated = yes
+		completion_reward = {
+			add_political_power = -25
+			add_popularity = {
+				ideology = democratic
+				popularity  = 0.05
+			}
+			add_days_mission_timeout = {
+				mission = RUS_mandate_of_reform_mission
+				days = 30
+			}
+			
+		}
+		ai_will_do = {
+			factor = 3
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICS
+		}
+	}
+	focus = {
+		id = RUS_release_political_prisoners
+		icon = GFX_focus_generic_self_management
+		cost = 5
+		prerequisite = {
+			focus = RUS_abolish_political_exile
+		}
+		prerequisite = {
+			focus = RUS_amnesty_for_vyborg_manifestants
+		}
+		available = {
+			has_idea = RUS_government_of_public_trust_idea
+		}
+		allow_branch = {
+			OR = {
+				has_completed_focus = RUS_government_of_public_trust
+				is_debug = yes
+			}
+		}
+		x = 0
+		y = 2
+		relative_position_id = RUS_government_of_public_trust
+		available_if_capitulated = yes
+		completion_reward = {
+			add_political_power = -25
+			add_popularity = {
+				ideology = democratic
+				popularity  = 0.05
+			}
+			add_days_mission_timeout = {
+				mission = RUS_mandate_of_reform_mission
+				days = 30
+			}
+			
+		}
+		ai_will_do = {
+			factor = 3
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICS
+		}
+	}
+	focus = {
+		id = RUS_true_equality_for_muslims
+		icon = GFX_focus_generic_self_management
+		cost = 5
+		prerequisite = {
+			focus = RUS_government_of_public_trust
+		}
+		available = {
+			duma_exists = yes
+			has_idea = RUS_government_of_public_trust_idea
+		}
+		allow_branch = {
+			OR = {
+				has_completed_focus = RUS_government_of_public_trust
+				is_debug = yes
+			}
+		}
+		x = -2
+		y = 2
+		relative_position_id = RUS_government_of_public_trust
+		available_if_capitulated = yes
+		completion_reward = {
+			unlock_decision_tooltip = RUS_law_on_muslim_civil_rights_sd
+			custom_effect_tooltip = RUS_if_the_law_passes_in_sc
+			effect_tooltip = {
+				add_political_power = 50
+				add_stability = 0.05
+				add_popularity = {
+					ideology = democratic
+					popularity  = 0.1
+				}
+				add_popularity = {
+					ideology = communism
+					popularity  = 0.05
+				}
+				add_days_mission_timeout = {
+					mission = RUS_mandate_of_reform_mission
+					days = 60
+				}
+			}
+			effect_tooltip = {
+				set_temp_variable = { RUS_state_council_socialist_support = 1 }
+				set_temp_variable = { RUS_state_council_liberal_support = 1 }
+				set_temp_variable = { RUS_state_council_centrist_support = 0 }
+				set_temp_variable = { RUS_state_council_rightist_support = 0 }
+				RUS_state_council_set_law_support = yes
+			}
+			
+		}
+		ai_will_do = {
+			factor = 3
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICS
+		}
+	}
+	focus = {
+		id = RUS_amnesty_for_central_asian_rebels
+		icon = GFX_focus_generic_self_management
+		cost = 5
+		prerequisite = {
+			focus = RUS_true_equality_for_muslims
+		}
+		prerequisite = {
+			focus = RUS_release_political_prisoners
+		}
+		available = {
+			has_idea = RUS_government_of_public_trust_idea
+			has_country_flag = RUS_cruelly_suppressed_the_central_asian_revolt
+		}
+		allow_branch = {
+			OR = {
+				has_completed_focus = RUS_government_of_public_trust
+				is_debug = yes
+			}
+		}
+		x = -1
+		y = 3
+		relative_position_id = RUS_government_of_public_trust
+		available_if_capitulated = yes
+		completion_reward = {
+			unlock_decision_tooltip = {
+				decision = RUS_compensation_for_victims_of_central_asian_revolt
+				show_effect_tooltip = yes
+			}
+		}
+		ai_will_do = {
+			factor = 3
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICS
+		}
+	}
+	focus = {
+		id = RUS_release_galician_ukrainian_prisoners
+		icon = GFX_focus_generic_self_management
+		cost = 5
+		prerequisite = {
+			focus = RUS_release_political_prisoners
+		}
+		prerequisite = {
+			focus = RUS_lift_restrictions_on_ukrainian_press
+		}
+		available = {
+			has_idea = RUS_government_of_public_trust_idea
+			has_war_with = AUS
+		}
+		allow_branch = {
+			OR = {
+				has_completed_focus = RUS_government_of_public_trust
+				is_debug = yes
+			}
+		}
+		x = 1
+		y = 3
+		relative_position_id = RUS_government_of_public_trust
+		available_if_capitulated = yes
+		completion_reward = {
+			add_political_power = -25
+			add_popularity = {
+				ideology = democratic
+				popularity  = 0.05
+			}
+			add_days_mission_timeout = {
+				mission = RUS_mandate_of_reform_mission
+				days = 30
+			}
 		}
 		ai_will_do = {
 			factor = 3
@@ -4530,6 +4949,44 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = RUS_a_united_monarchist_party
+		icon = GFX_generic_media_controls
+		cost = 5
+		prerequisite = {
+			focus = RUS_pack_the_state_council
+		}
+		available = {
+			any_character = {
+				is_prime_minister = yes
+				is_conservative = yes
+			}
+		}
+		x = -1
+		y = 1
+		relative_position_id = RUS_pack_the_state_council
+		available_if_capitulated = yes
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.1
+			}
+			set_party_name = {
+				ideology = fascism
+				long_name = RUS_council_of_monarchist_congresses_long
+				name = RUS_council_of_monarchist_congresses
+			}
+			set_temp_variable = { RUS_modify_loyalty_far_right_var =10 }
+			RUS_modify_loyalty_far_right = yes
+			add_political_power = 50
+		}
+		ai_will_do = {
+			factor = 3
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICS
+		}
+	}
+	focus = {
 		id = RUS_tighten_the_censorship
 		icon = GFX_generic_media_controls
 		cost = 5
@@ -4542,7 +4999,7 @@ focus_tree = {
 				is_conservative = yes
 			}
 		}
-		x = 0
+		x = 1
 		y = 1
 		relative_position_id = RUS_pack_the_state_council
 		available_if_capitulated = yes
@@ -4704,7 +5161,7 @@ focus_tree = {
 				is_conservative = yes
 			}
 		}
-		x = 0
+		x = 1
 		y = 1
 		relative_position_id = RUS_control_the_interior
 		available_if_capitulated = yes
@@ -4766,7 +5223,7 @@ focus_tree = {
 				is_conservative = yes
 			}
 		}
-		x = 2
+		x = 3
 		y = 1
 		relative_position_id = RUS_control_the_interior
 		available_if_capitulated = yes
@@ -4822,7 +5279,10 @@ focus_tree = {
 		icon = GFX_focus_generic_sympathetic_judges
 		cost = 5
 		prerequisite = {
-			focus = RUS_pack_the_state_council
+			focus = RUS_a_united_monarchist_party
+		}
+		prerequisite = {
+			focus = RUS_tighten_the_censorship
 		}
 		mutually_exclusive = {
 			focus = RUS_back_to_square_one
@@ -4842,7 +5302,7 @@ focus_tree = {
 				tooltip = RUS_far_right_loyalty_trigger_tt
 			}
 		}
-		x = -1
+		x = -2
 		y = 3
 		relative_position_id = RUS_strong_leadership
 		available_if_capitulated = yes
@@ -4891,7 +5351,7 @@ focus_tree = {
 				tooltip = RUS_center_left_loyalty_trigger_tt
 			}
 		}
-		x = 1
+		x = 2
 		y = 3
 		relative_position_id = RUS_strong_leadership
 		available_if_capitulated = yes
@@ -5568,7 +6028,11 @@ focus_tree = {
 		relative_position_id = RUS_second_patriotic_war
 		available_if_capitulated = yes
 		completion_reward = {
-			unlock_decision_tooltip = RUS_prodrazverstka_decision
+			unlock_decision_tooltip = {
+				decision = RUS_prodrazverstka_decision
+				show_effect_tooltip = yes
+			}
+
 		}
 		ai_will_do = {
 			factor = 3
