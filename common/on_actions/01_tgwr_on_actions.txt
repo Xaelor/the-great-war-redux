@@ -4448,12 +4448,7 @@
 				#Cossack Brigade cap
 				set_division_template_cap = { 
 					division_template = "Ataryād-e Qazāqkhāneh" 
-					division_cap = PER.PER_cossack_cap
-				}
-				#Bakhtiari cap
-				set_division_template_cap = { 
-					division_template = "Nīrū-ye Eshāyer" 
-					division_cap = PER_bakhtiari_cap
+					division_cap = global.PER_cossack_cap
 				}	
 			}
 		}
@@ -8683,7 +8678,10 @@
 				limit = {
 					original_tag = PER
 				}
-				set_capital = { state = 266 }
+				if = {
+					limit = { owns_state = 266 }
+					set_capital = { state = 266 }
+				}
 				FROM = {
 					every_character = {
 						limit = {
@@ -8700,6 +8698,9 @@
 						}
 						remove_claim_by = PREV
 					}
+					ROOT = {
+						copy_PER_foreign_advisors = yes
+					}			
 					# if = {
 					# 	limit = { is_dynamic_country = yes }
 					# 	reserve_dynamic_country = no
@@ -8709,16 +8710,27 @@
 					limit = {
 						NOT = { has_government = communism }						
 					}
-					PER_mirza_kuchik_khan = {
-						promote_character = religious_communism
+					if = {
+						limit = {
+							has_character = PER_mirza_kuchik_khan
+						}
+						PER_mirza_kuchik_khan = {
+							promote_character = religious_communism
+						}
 					}
-					PER_soleyman_eskandari = {
-						promote_character = reformist_socialism
+					if = {
+						limit = {
+							has_character = PER_soleyman_eskandari
+						}
+						PER_soleyman_eskandari = {
+							promote_character = reformist_socialism
+						}
 					}				
 				}
 				if = {
 					limit = {
-						NOT = { has_government = democratic }						
+						NOT = { has_government = democratic }	
+						has_character = PER_soleyman_eskandari
 					}
 					PER_soleyman_eskandari = {
 						promote_character = social_democracy
@@ -8735,26 +8747,22 @@
 								character = PER_abulfath_mirza
 							}
 						}
+						has_character = PER_abdol_majid_mirza
 					}
-					PER_reza_khan = {
-						promote_character = stratocracy
-					}
-					if = {
-						limit = {
-							has_character = PER_iskandar_khan_setkhanian
-						}
-						PER_iskandar_khan_setkhanian = {
-							promote_character = stratocracy
-						}
-					}		
+					PER_abdol_majid_mirza = {
+						promote_character = reactionism
+					}	
 				}
 				if = {
 					limit = {
-						NOT = {
-							any_other_country = {
-								original_tag = PER
+						OR = {
+							owns_state = 266
+							NOT = {
+								any_other_country = {
+									original_tag = PER
+								}
 							}
-						}
+						}			
 						OR = {
 							has_cosmetic_tag = PER_exiles
 							has_cosmetic_tag = PER_mohammad_ali_shah_revolt
@@ -8776,19 +8784,17 @@
 								is_in_faction_with = ROOT
 							}
 							NOT = {
-								is_subject_of = ROOT
 								has_war_with = ROOT
-								has_war_together_with = ENG
 							}
 						}
 					}
 					ARB = {
 						get_current_government_type = yes
 					}
-					PER = {
+					ROOT = {
 						set_autonomy = {
 							target = ARB
-							autonomous_state = autonomy_integrated_puppet
+							autonomous_state = autonomy_tgwr_feudal_autonomy
 							freedom_level = 0.9
 						}
 					}
@@ -8809,19 +8815,17 @@
 								is_in_faction_with = ROOT
 							}
 							NOT = {
-								is_subject_of = ROOT
 								has_war_with = ROOT
-								has_war_together_with = RUS
 							}
 						}
 					}
 					MAK = {
 						get_current_government_type = yes
 					}
-					PER = {
+					ROOT = {
 						set_autonomy = {
 							target = MAK
-							autonomous_state = autonomy_integrated_puppet
+							autonomous_state = autonomy_tgwr_feudal_autonomy
 							freedom_level = 0.9
 						}
 					}
@@ -8842,19 +8846,17 @@
 								is_in_faction_with = ROOT
 							}
 							NOT = {
-								is_subject_of = ROOT
 								has_war_with = ROOT
-								has_war_together_with = RUS
 							}
 						}
 					}
 					MRG = {
 						get_current_government_type = yes
 					}
-					PER = {
+					ROOT = {
 						set_autonomy = {
 							target = MRG
-							autonomous_state = autonomy_integrated_puppet
+							autonomous_state = autonomy_tgwr_feudal_autonomy
 							freedom_level = 0.9
 						}
 					}
@@ -12467,12 +12469,7 @@
 
 	on_weekly_PER = {
 		effect = {
-			every_country = {
-				limit = {
-					has_dynamic_modifier = PER_foreign_influence_modifier
-				}
-				PER_calculate_foreign_influnce = yes
-			}
+			PER_calculate_foreign_influnce = yes
 		}
 	}
 
@@ -12547,6 +12544,30 @@
 					}
 				}
 			}
+			else_if = {
+				limit = {
+					FROM = {
+						original_tag = PER
+					}
+					ROOT = {
+						original_tag = PER
+					}
+				}
+				every_state = {
+					limit = {
+						OR = {
+							has_contested_owner = PER
+							has_contested_owner = PRS
+							has_contested_owner = PEX
+							has_contested_owner = PRG
+							has_contested_owner = IRN
+						}					
+					}
+					remove_contested_owner = FROM
+					add_contested_owner = ROOT
+				}
+			}
+
 		}
 	}
 	on_subject_autonomy_level_change = {

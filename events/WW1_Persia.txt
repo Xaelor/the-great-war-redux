@@ -217,7 +217,7 @@ country_event = {
 					PER_mohammad_taqi_pessian = {
 						set_nationality = PREV.PREV
 					}
-					delete_unit_template_and_units = {
+					delete_unit = {
 						division_template = "Žāndārmirī-ye Daulatī"
 						disband = no
 					}
@@ -319,31 +319,43 @@ country_event = {
 		}
 		hidden_effect = {
 			PRG = {
+				copy_PER_base_ideas = yes
 				if = {
 					limit = {
-						NOT = { has_template = "Žāndārmirī-ye Daulatī" }
-					}
-					division_template = {
-						name = "Žāndārmirī-ye Daulatī"
-						is_locked = yes
-						regiments = {
-							militia = { x = 0 y = 0 }
+						check_variable = {
+						 	PER.PER_recruited_gendarmerie > 0
 						}
 					}
-				}			
-				set_division_template_cap = { 
-					division_template = "Žāndārmirī-ye Daulatī" 
-					division_cap = PER.PER_gendarmerie_cap
-				}
-				capital_scope = {
-					create_unit = {
-						division = "division_template = \"Žāndārmirī-ye Daulatī\" start_experience_factor = 0.2 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_1 = { owner = \"ENG\" }}" 
-						owner = PRG
-						count = PER.PER_gendarmerie_cap
-						allow_spawning_on_enemy_provs = yes
+					set_variable = {
+						PER_recruited_gendarmerie = PER.PER_recruited_gendarmerie
 					}
-				}
-			}
+					if = {
+						limit = {
+							NOT = { has_template = "Žāndārmirī-ye Daulatī" }
+						}
+						division_template = {
+							name = "Žāndārmirī-ye Daulatī"
+							is_locked = yes
+							regiments = {
+								militia = { x = 0 y = 0 }
+							}
+						}
+					}
+					set_division_template_cap = {
+						division_template = "Žāndārmirī-ye Daulatī" 
+						division_cap = global.PER_gendarmerie_cap
+					}
+					capital_scope = {
+						create_unit = {
+							division = "division_template = \"Žāndārmirī-ye Daulatī\" start_experience_factor = 0.2 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_1 = { owner = \"ENG\" }}" 
+							owner = PRG
+							count = PER_recruited_gendarmerie
+							allow_spawning_on_enemy_provs = yes
+						}
+					}
+					set_variable = { PER.PER_recruited_gendarmerie = 0 }
+				}				
+			}			
 			set_global_flag = PER_national_defense_committee
 			news_event = {
 				id = ww1_persia.8
@@ -2137,12 +2149,12 @@ country_event = {
 			custom_effect_tooltip = PER_cossack_regiment_station_tt
 		}	
 		add_to_variable = { 
-			PER.PER_cossack_cap = 1
+			global.PER_cossack_cap = 1
 			tooltip = PER_increase_cossack_cap_tt
 		}
 		set_division_template_cap = { 
 			division_template = "Ataryād-e Qazāqkhāneh" 
-			division_cap = PER.PER_cossack_cap
+			division_cap = global.PER_cossack_cap
 		}
 	}
 	after = {
