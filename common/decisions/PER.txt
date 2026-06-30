@@ -246,10 +246,10 @@ PER_guarded_domains	= {
 				tooltip = PER_raise_cossack_regiment_tt
 			}
 			set_variable = {
-				PER_recruited_cossacks_decimal_var = PER_recruited_cossacks
-			}
-			divide_variable = {
-				PER_recruited_cossacks_decimal_var = 100
+				PER_recruited_cossacks_decimal_var = {
+					value = PER_recruited_cossacks
+					divide = 100
+				}
 			}
 			FROM = {
 				create_unit = {
@@ -305,6 +305,20 @@ PER_guarded_domains	= {
 					}
 				}
 			}
+			modifier = {
+				factor = 0
+				check_variable = {
+					PER_recruited_cossacks > 2			
+				}
+				surrender_progress < 0.5
+				NOT = {
+					has_war_together_with = RUS
+					any_enemy_country = {
+						original_tag = PER
+						has_PER_constitutionalism = yes
+					}
+				}
+			}
 		}
 	}
 	PER_extend_the_cossack_contract = {
@@ -331,7 +345,7 @@ PER_guarded_domains	= {
 
 		fire_only_once = no
 		on_map_mode = map_and_decisions_view
-		days_re_enable = 30
+		days_re_enable = 60
 		complete_effect = {
 			add_to_variable = {
 				RUS.PER_foreign_influence = PER_recruited_cossacks_decimal_var
@@ -343,8 +357,9 @@ PER_guarded_domains	= {
 			}
 			add_days_mission_timeout = {
 				mission = PER_cossacks_leaving_mission
-				days = 30
+				days = 60
 			}
+			custom_effect_tooltip = back_in_60_days
 		}
 		ai_will_do = {
 			base = 0
@@ -419,7 +434,7 @@ PER_guarded_domains	= {
 		fire_only_once = no		
 
 		is_good = no
-		days_mission_timeout = 30
+		days_mission_timeout = 60
 
 		timeout_effect = {
 			custom_effect_tooltip = PER_cossacks_stand_down_tt
@@ -581,6 +596,12 @@ PER_guarded_domains = {
 					PER_recruited_kurds < global.PER_kurds_cap
 				}
 			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_irregulars_tt
+				check_variable = {
+					PER_recruited_irregulars < PER_irregulars_cap
+				}
+			}
 			NOT = {
 				any_other_country = {
 					check_variable = {
@@ -668,7 +689,7 @@ PER_guarded_domains = {
 			modifier = {
 				factor = 0
 				check_variable = {
-					PER_recruited_irregulars > 5
+					PER_recruited_irregulars > 4
 				}
 				surrender_progress < 0.5
 			}
@@ -745,6 +766,12 @@ PER_guarded_domains = {
 				tooltip = PER_can_recruit_turkmens_tt
 				check_variable = {
 					PER_recruited_turkmens < global.PER_turkmens_cap
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_irregulars_tt
+				check_variable = {
+					PER_recruited_irregulars < PER_irregulars_cap
 				}
 			}
 			NOT = {
@@ -834,7 +861,7 @@ PER_guarded_domains = {
 			modifier = {
 				factor = 0
 				check_variable = {
-					PER_recruited_irregulars > 5
+					PER_recruited_irregulars > 4
 				}
 				surrender_progress < 0.5
 			}
@@ -916,6 +943,12 @@ PER_guarded_domains = {
 				tooltip = PER_can_recruit_azerbaijanis_tt
 				check_variable = {
 					PER_recruited_azerbaijanis < global.PER_azerbaijanis_cap
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_irregulars_tt
+				check_variable = {
+					PER_recruited_irregulars < PER_irregulars_cap
 				}
 			}
 			NOT = {
@@ -1005,7 +1038,7 @@ PER_guarded_domains = {
 			modifier = {
 				factor = 0
 				check_variable = {
-					PER_recruited_irregulars > 5
+					PER_recruited_irregulars > 4
 				}
 				surrender_progress < 0.5
 			}
@@ -1090,6 +1123,12 @@ PER_guarded_domains = {
 				tooltip = PER_can_recruit_gilaks_tt
 				check_variable = {
 					PER_recruited_gilaks < global.PER_gilaks_cap
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_irregulars_tt
+				check_variable = {
+					PER_recruited_irregulars < PER_irregulars_cap
 				}
 			}
 			NOT = {
@@ -1179,7 +1218,7 @@ PER_guarded_domains = {
 			modifier = {
 				factor = 0
 				check_variable = {
-					PER_recruited_irregulars > 5
+					PER_recruited_irregulars > 4
 				}
 				surrender_progress < 0.5
 			}
@@ -1261,6 +1300,12 @@ PER_guarded_domains = {
 				tooltip = PER_can_recruit_mazanderanis_tt
 				check_variable = {
 					PER_recruited_mazanderanis < global.PER_mazanderanis_cap
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_irregulars_tt
+				check_variable = {
+					PER_recruited_irregulars < PER_irregulars_cap
 				}
 			}
 			NOT = {
@@ -1350,7 +1395,7 @@ PER_guarded_domains = {
 			modifier = {
 				factor = 0
 				check_variable = {
-					PER_recruited_irregulars > 5
+					PER_recruited_irregulars > 4
 				}
 				surrender_progress < 0.5
 			}
@@ -1426,6 +1471,12 @@ PER_guarded_domains = {
 				tooltip = PER_can_recruit_bakhtiari_tt
 				check_variable = {
 					PER_recruited_bakhtiari < global.PER_bakhtiari_cap
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_irregulars_tt
+				check_variable = {
+					PER_recruited_irregulars < PER_irregulars_cap
 				}
 			}
 			NOT = {
@@ -1515,7 +1566,7 @@ PER_guarded_domains = {
 			modifier = {
 				factor = 0
 				check_variable = {
-					PER_recruited_irregulars > 5
+					PER_recruited_irregulars > 4
 				}
 				surrender_progress < 0.5
 			}
@@ -1591,6 +1642,12 @@ PER_guarded_domains = {
 				tooltip = PER_can_recruit_lurs_tt
 				check_variable = {
 					PER_recruited_lurs < global.PER_lurs_cap
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_irregulars_tt
+				check_variable = {
+					PER_recruited_irregulars < PER_irregulars_cap
 				}
 			}
 			NOT = {
@@ -1680,7 +1737,7 @@ PER_guarded_domains = {
 			modifier = {
 				factor = 0
 				check_variable = {
-					PER_recruited_irregulars > 5
+					PER_recruited_irregulars > 4
 				}
 				surrender_progress < 0.5
 			}
