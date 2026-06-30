@@ -19,7 +19,7 @@
 	#Focus Path shortcuts
 	shortcut = {
 		name = inner_politics_tree_shortcut
-		target = PER_young_peoples_cabinet
+		target = PER_disarm_revolutionaries
 		scroll_wheel_factor = 1
 	}
 	
@@ -101,12 +101,16 @@
 		prerequisite = {
 			focus = PER_disarm_revolutionaries
 			focus = PER_stronger_cabinet
+			focus = PER_contact_the_nobles
 		}
 		relative_position_id = PER_disarm_revolutionaries
 		x = -1
 		y = 1
 		available = {
 			has_dynamic_modifier = PER_foreign_influence_modifier
+			capital_scope = {
+				state = 266
+			}
 		}
 
 		bypass = {
@@ -135,11 +139,24 @@
 		x = 0
 		y = 1
 		available = {
-			has_government = democratic
+			#has_government = democratic
+			has_capitulated = no
+			capital_scope = {
+				state = 266
+			}
 		}
 	
 		completion_reward = {
 			#add_ideas = PER_idea_government_gendarmerie
+			hidden_effect = {
+				if = {
+					limit = { has_template = "Žāndārmirī-ye Daulatī" }
+					delete_unit_template_and_units = {
+						division_template = "Žāndārmirī-ye Daulatī"
+						disband = yes
+					}					
+				}
+			}
 			division_template = {
 				name = "Žāndārmirī-ye Daulatī"
 				is_locked = yes
@@ -148,9 +165,15 @@
 				}
 			}
 			hidden_effect = {
+				add_to_variable = {
+					global.PER_gendarmerie_cap = 1
+				}
+				add_to_variable = {
+					PER_recruited_gendarmerie = 1
+				}
 				set_division_template_cap = { 
 					division_template = "Žāndārmirī-ye Daulatī" 
-					division_cap = PER_gendarmerie_cap
+					division_cap = global.PER_gendarmerie_cap
 				}
 			}
 			capital_scope = {
@@ -161,6 +184,7 @@
 					allow_spawning_on_enemy_provs = yes
 				}
 			}
+			unlock_decision_tooltip = PER_expand_government_gendarmerie
 			show_unit_leaders_tooltip = PER_mohammad_taqi_pessian
 		}
 
@@ -180,7 +204,10 @@
 		x = 0
 		y = 1
 		available = {
-			has_government = democratic
+			#has_government = democratic
+			capital_scope = {
+				state = 266
+			}
 		}
 	
 		completion_reward = {
@@ -214,6 +241,7 @@
 		x = 1
 		y = 1
 		available = {
+			has_PER_improve_foreign_advisor = yes
 			has_government = democratic
 			NOT = {
 				has_war_with = USA
@@ -238,11 +266,13 @@
 		prerequisite = {
 			focus = PER_disarm_revolutionaries
 			focus = PER_stronger_cabinet
+			focus = PER_contact_the_nobles
 		}
 		relative_position_id = PER_disarm_revolutionaries
 		x = 3
 		y = 1
 		available = {
+			has_PER_improve_foreign_advisor = yes
 			NOT = {
 				has_war_with = BEL
 			}
@@ -334,7 +364,10 @@
 	
 		completion_reward = {
 			PER_improve_foreign_advisors = yes
-			unlock_decision_tooltip = PER_extort_FROM
+			unlock_decision_tooltip = {
+				decision = PER_extort_FROM
+				show_effect_tooltip = yes
+			}	
 		}
 
 		search_filters = { FOCUS_FILTER_HISTORICAL }
@@ -518,6 +551,58 @@
 		search_filters = { FOCUS_FILTER_HISTORICAL }
 		ai_will_do = {
 			factor = 15
+		}
+	}
+	#Absolutists
+	focus = {
+		id = PER_guess_whos_back
+		icon = GFX_focus_PER_the_pahlavi_imperium
+		cost = 5
+		x = -2
+		y = 0
+		available = {
+			has_PER_absolutism_qajar = yes
+		}
+	
+		completion_reward = {
+			add_political_power = 100
+		}
+
+		#search_filters = { FOCUS_FILTER_HISTORICAL }
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	focus = {
+		id = PER_contact_the_nobles
+		icon = GFX_focus_PER_embrace_opulence
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = PER_guess_whos_back
+		prerequisite = {
+			focus = PER_guess_whos_back
+		}
+		available = {
+			has_PER_absolutism_qajar = yes
+		}
+	
+		completion_reward = {
+			add_to_variable = {
+				var = PER_available_funds
+				value = 1
+				tooltip = PER_add_funds_tt
+			}
+			add_to_variable = {
+				var = PER_centralization_level
+				value = 2.5
+				tooltip = PER_add_centralization_tt
+			}
+		}
+
+		#search_filters = { FOCUS_FILTER_HISTORICAL }
+		ai_will_do = {
+			factor = 100
 		}
 	}
 }
