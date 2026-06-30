@@ -5190,7 +5190,162 @@ focus_tree = {
 		y = 1
 		relative_position_id = ALB_nationalism_over_religion
 		available = { is_subject_of = TUR }
-		completion_reward = {
+		will_lead_to_war_with = TUR
+		complete_tooltip = {
+			TUR = { end_puppet = ALB }
+			effect_tooltip = {
+				declare_war_on = {
+					target = TUR
+					type = independence_wargoal
+				}
+			}
+			remove_dynamic_modifier = { modifier = ALB_sublime_realm }
+			every_owned_state = {
+				limit = { has_state_flag = ALB_reignite_our_struggle1 }
+				remove_core_of = ROOT
+			}
+			every_owned_state = {
+				limit = { has_state_flag = ALB_reignite_our_struggle2 }
+				cancel_resistance = yes
+			}
+			every_owned_state = {
+				limit = { has_state_flag = ALB_reignite_our_struggle3 }
+				remove_dynamic_modifier = { modifier = TUR_greek_minority }
+			}
+			every_owned_state = {
+				limit = { has_state_flag = ALB_reignite_our_struggle4 }
+				remove_dynamic_modifier = { modifier = TUR_bulgarian_minority }
+			}
+			every_owned_state = {
+				limit = { has_state_flag = ALB_reignite_our_struggle5 }
+				remove_dynamic_modifier = { modifier = TUR_serbian_minority }
+			}
+			every_owned_state = {
+				limit = { has_state_flag = ALB_reignite_our_struggle6 }
+				remove_dynamic_modifier = { modifier = TUR_turkish_minority }
+			}
+			complete_national_focus = ALB_albanian_independence
+			if = {
+				limit = { has_completed_focus = ALB_reorganize_the_rebels }
+				add_ideas = ALB_centralized_independence_movement
+				add_ideas = ALB_secret_committee_for_the_liberation_of_albania
+			}
+			if = {
+				limit = { has_completed_focus = ALB_reorganize_the_rebels }
+				division_template = {
+					name = "Kryengritësit Katolikë"
+					template_counter = 112
+					regiments = {
+						irregular_infantry = {
+							x = 0
+							y = 0
+						}
+						irregular_infantry = {
+							x = 0
+							y = 1
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 870
+							state = 1214
+							state = 803
+							state = 1225
+							state = 758
+						}
+					}
+					add_dynamic_modifier = { modifier = ALB_local_christian_support scope = ALB }
+				}
+				every_core_state = {
+					random_select_amount = 2
+					limit = {
+						OR = {
+							state = 870
+							state = 1214
+							state = 803
+							state = 1225
+							state = 758
+						}
+					}
+					create_unit = {
+						division = "division_template = \"Kryengritësit Katolikë\" start_experience_factor = 0.4"
+						owner = PREV
+						allow_spawning_on_enemy_provs = yes
+						prioritize_location = 13274
+					}
+				}
+			}
+			if = {
+				limit = { has_completed_focus = ALB_nationalism_over_religion }
+				division_template = {
+					name = "Kryengritësit Myslimanë"
+					template_counter = 105
+					regiments = {
+						irregular_infantry = {
+							x = 0
+							y = 0
+						}
+						irregular_infantry = {
+							x = 0
+							y = 1
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 44
+							state = 1215
+							state = 871
+							state = 203
+							state = 1213
+							state = 106
+							state = 1240
+							state = 847
+							state = 848
+						}
+					}
+					add_dynamic_modifier = { modifier = ALB_local_muslim_support scope = ALB }
+				}
+				every_core_state = {
+					random_select_amount = 3
+					limit = {
+						OR = {
+							state = 44
+							state = 1215
+							state = 871
+							state = 203
+							state = 1213
+							state = 106
+							state = 1240
+							state = 847
+							state = 848
+						}
+					}
+					create_unit = {
+						division = "division_template = \"Kryengritësit Myslimanë\" start_experience_factor = 0.4"
+						owner = PREV
+						allow_spawning_on_enemy_provs = yes
+						prioritize_location = 13274
+					}
+				}
+			}
+			if = {
+				limit = { has_completed_focus = ALB_lobby_for_our_cause }
+				TUR = { activate_mission = ALB_increasing_foreign_pressure }
+			}
+			if = {
+				limit = { has_completed_focus = ALB_cooperate_with_IMRO }
+				every_state = {
+					limit = {
+						is_core_of = BUL
+						check_variable = { TUR_bulgarian_orthodox_state_variable < 0 }
+					}
+					add_dynamic_modifier = { modifier = skirmishes_against_imro scope = TUR days = 365 }
+				}
+			}
 			every_country = {
 				limit = {
 					has_war_with = ROOT
@@ -5204,6 +5359,206 @@ focus_tree = {
 				}
 				white_peace = ROOT
 			}
+		}
+		completion_reward = {
+			TUR = {
+				end_puppet = ALB
+				hidden_effect = {
+					declare_war_on = {
+						target = ROOT
+						type = annex_everything
+					}
+				}
+			}
+			effect_tooltip = {
+				declare_war_on = {
+					target = TUR
+					type = independence_wargoal
+				}
+			}
+			remove_dynamic_modifier = { modifier = ALB_sublime_realm }
+			every_owned_state = {
+				limit = {
+					is_core_of = ROOT
+					has_resistance = yes
+					ALB_is_kosovar_state = no
+					ALB_is_northern_state = no
+					ALB_is_central_state = no
+					ALB_is_southern_state = no
+				}
+				remove_core_of = ROOT
+				set_state_flag = ALB_reignite_our_struggle1
+			}
+			every_owned_state = {
+				limit = {
+					is_core_of = ROOT
+					has_resistance = yes
+					OR = {
+						ALB_is_kosovar_state = yes
+						ALB_is_northern_state = yes
+						ALB_is_central_state = yes
+						ALB_is_southern_state = yes
+					}
+				}
+				cancel_resistance = yes
+				set_state_flag = ALB_reignite_our_struggle2
+			}
+			every_owned_state = {
+				limit = { has_dynamic_modifier = { modifier = TUR_greek_minority } }
+				remove_dynamic_modifier = { modifier = TUR_greek_minority }
+				set_state_flag = ALB_reignite_our_struggle3
+			}
+			every_owned_state = {
+				limit = { has_dynamic_modifier = { modifier = TUR_bulgarian_minority } }
+				remove_dynamic_modifier = { modifier = TUR_bulgarian_minority }
+				set_state_flag = ALB_reignite_our_struggle4
+			}
+			every_owned_state = {
+				limit = { has_dynamic_modifier = { modifier = TUR_serbian_minority } }
+				remove_dynamic_modifier = { modifier = TUR_serbian_minority }
+				set_state_flag = ALB_reignite_our_struggle5
+			}
+			every_owned_state = {
+				limit = { has_dynamic_modifier = { modifier = TUR_turkish_minority } }
+				remove_dynamic_modifier = { modifier = TUR_turkish_minority }
+				set_state_flag = ALB_reignite_our_struggle6
+			}
+			complete_national_focus = ALB_albanian_independence
+			if = {
+				limit = { has_completed_focus = ALB_reorganize_the_rebels }
+				add_ideas = ALB_centralized_independence_movement
+				add_ideas = ALB_secret_committee_for_the_liberation_of_albania
+			}
+			if = {
+				limit = { has_completed_focus = ALB_reorganize_the_rebels }
+				division_template = {
+					name = "Kryengritësit Katolikë"
+					template_counter = 112
+					regiments = {
+						irregular_infantry = {
+							x = 0
+							y = 0
+						}
+						irregular_infantry = {
+							x = 0
+							y = 1
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 870
+							state = 1214
+							state = 803
+							state = 1225
+							state = 758
+						}
+					}
+					add_dynamic_modifier = { modifier = ALB_local_christian_support scope = ALB }
+				}
+				every_core_state = {
+					random_select_amount = 2
+					limit = {
+						OR = {
+							state = 870
+							state = 1214
+							state = 803
+							state = 1225
+							state = 758
+						}
+					}
+					create_unit = {
+						division = "division_template = \"Kryengritësit Katolikë\" start_experience_factor = 0.4"
+						owner = PREV
+						allow_spawning_on_enemy_provs = yes
+						prioritize_location = 13274
+					}
+				}
+			}
+			if = {
+				limit = { has_completed_focus = ALB_nationalism_over_religion }
+				division_template = {
+					name = "Kryengritësit Myslimanë"
+					template_counter = 105
+					regiments = {
+						irregular_infantry = {
+							x = 0
+							y = 0
+						}
+						irregular_infantry = {
+							x = 0
+							y = 1
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 44
+							state = 1215
+							state = 871
+							state = 203
+							state = 1213
+							state = 106
+							state = 1240
+							state = 847
+							state = 848
+						}
+					}
+					add_dynamic_modifier = { modifier = ALB_local_muslim_support scope = ALB }
+				}
+				every_core_state = {
+					random_select_amount = 3
+					limit = {
+						OR = {
+							state = 44
+							state = 1215
+							state = 871
+							state = 203
+							state = 1213
+							state = 106
+							state = 1240
+							state = 847
+							state = 848
+						}
+					}
+					create_unit = {
+						division = "division_template = \"Kryengritësit Myslimanë\" start_experience_factor = 0.4"
+						owner = PREV
+						allow_spawning_on_enemy_provs = yes
+						prioritize_location = 13274
+					}
+				}
+			}
+			if = {
+				limit = { has_completed_focus = ALB_lobby_for_our_cause }
+				TUR = { activate_mission = ALB_increasing_foreign_pressure }
+			}
+			if = {
+				limit = { has_completed_focus = ALB_cooperate_with_IMRO }
+				every_state = {
+					limit = {
+						is_core_of = BUL
+						check_variable = { TUR_bulgarian_orthodox_state_variable < 0 }
+					}
+					add_dynamic_modifier = { modifier = skirmishes_against_imro scope = TUR days = 365 }
+				}
+			}
+			every_country = {
+				limit = {
+					has_war_with = ROOT
+					OR = {
+						has_country_flag = ALB_peace_w_albania_after_uprising
+						any_allied_country  = {
+							has_war_with = ROOT
+							has_country_flag = ALB_peace_w_albania_after_uprising
+						}
+					}
+				}
+				white_peace = ROOT
+			}
+			hidden_effect = { news_event = { id = albania.152 hours = 6 } }
 		}
 		ai_will_do = { factor = 100 }
 	}

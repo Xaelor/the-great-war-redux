@@ -9967,6 +9967,21 @@ focus_tree = {
 			}
 			every_state = {
 				limit = { has_state_flag = TUR_albanian_vilayet4 }
+				add_dynamic_modifier = { modifier = TUR_greek_minority }
+				custom_effect_tooltip = empty_space
+			}
+			every_state = {
+				limit = { has_state_flag = TUR_albanian_vilayet5 }
+				add_dynamic_modifier = { modifier = TUR_bulgarian_minority }
+				custom_effect_tooltip = empty_space
+			}
+			every_state = {
+				limit = { has_state_flag = TUR_albanian_vilayet6 }
+				add_dynamic_modifier = { modifier = TUR_serbian_minority }
+				custom_effect_tooltip = empty_space
+			}
+			every_state = {
+				limit = { has_state_flag = TUR_albanian_vilayet7 }
 				add_dynamic_modifier = { modifier = TUR_turkish_minority }
 				custom_effect_tooltip = empty_space
 			}
@@ -9986,7 +10001,10 @@ focus_tree = {
 					add_dynamic_modifier = { modifier = ALB_sublime_realm }
 					every_state = {
 						limit = {
-							TUR_is_owned_by_us_or_committee_government = yes
+							OR = {
+								TUR_is_owned_by_us_or_committee_government = yes
+								is_owned_by = ALB
+							}
 							OR = {
 								has_state_flag = TUR_manastir
 								has_state_flag = TUR_kosova
@@ -9994,58 +10012,45 @@ focus_tree = {
 								has_state_flag = TUR_iskodra
 							}
 						}
+						if = {
+							limit = {
+								TUR_is_owned_by_us_or_committee_government = yes
+								has_resistance = yes
+							}
+							set_temp_variable = { TUR_albania_resistance = THIS.resistance }
+							set_temp_variable = { TUR_albania_compliance = THIS.compliance }
+						}
 						transfer_state_to = ALB
 						add_core_of = ALB
-						if = {
-							limit = {
-								NOT = { has_dynamic_modifier = { modifier = TUR_greek_minority } }
-								check_variable = { TUR_greek_orthodox_state_variable < 0 }
-							}
-							add_dynamic_modifier = { modifier = TUR_greek_minority }
-						}
-						if = {
-							limit = {
-								NOT = { has_dynamic_modifier = { modifier = TUR_bulgarian_minority } }
-								check_variable = { TUR_bulgarian_orthodox_state_variable < 0 }
-							}
-							add_dynamic_modifier = { modifier = TUR_bulgarian_minority }
-						}
-						if = {
-							limit = {
-								NOT = { has_dynamic_modifier = { modifier = TUR_serbian_minority } }
-								check_variable = { TUR_serbian_orthodox_state_variable < 0 }
-							}
-							add_dynamic_modifier = { modifier = TUR_serbian_minority }
-						}
+						remove_core_of = TUR
 						if = {
 							limit = {
 								OR = {
-									check_variable = { TUR_albanian_sunni_state_variable < TUR_greek_orthodox_state_variable }
-									check_variable = { TUR_albanian_orthodox_state_variable < TUR_greek_orthodox_state_variable }
-									check_variable = { TUR_albanian_catholic_state_variable < TUR_greek_orthodox_state_variable }
-								}
-								OR = {
-									check_variable = { TUR_albanian_sunni_state_variable < TUR_bulgarian_orthodox_state_variable }
-									check_variable = { TUR_albanian_orthodox_state_variable < TUR_bulgarian_orthodox_state_variable }
-									check_variable = { TUR_albanian_catholic_state_variable < TUR_bulgarian_orthodox_state_variable }
-								}
-								OR = {
-									check_variable = { TUR_albanian_sunni_state_variable < TUR_serbian_orthodox_state_variable }
-									check_variable = { TUR_albanian_orthodox_state_variable < TUR_serbian_orthodox_state_variable }
-									check_variable = { TUR_albanian_catholic_state_variable < TUR_serbian_orthodox_state_variable }
-								}
-								OR = {
-									check_variable = { TUR_albanian_sunni_state_variable < TUR_turkish_sunni_state_variable }
-									check_variable = { TUR_albanian_orthodox_state_variable < TUR_turkish_sunni_state_variable }
-									check_variable = { TUR_albanian_catholic_state_variable < TUR_turkish_sunni_state_variable }
+									is_core_of = SER
+									is_core_of = MNT
+									is_core_of = MAC
+									is_core_of = GRE
+									is_core_of = BUL
 								}
 							}
 							force_enable_resistance = ALB
 							start_resistance = yes
-							set_resistance = 0
-							set_compliance = 80
+							set_occupation_law = local_police_force_garrison
+							set_resistance = TUR_albania_resistance
+							set_compliance = TUR_albania_compliance
 							set_garrison_strength = 1
-							set_occupation_law = foreign_civilian_oversight
+						}
+						if = {
+							limit = {
+								NOT = {
+									is_core_of = SER
+									is_core_of = MNT
+									is_core_of = MAC
+									is_core_of = GRE
+									is_core_of = BUL
+								}
+							}
+							cancel_resistance = yes
 						}
 					}
 					every_owned_state = {
@@ -10110,7 +10115,21 @@ focus_tree = {
 				autonomous_state = autonomy_tgwr_ottoman_autonomous_vilayet
 				freedom_level = 0.7
 			}
-			hidden_effect = { ALB = { restore_previous_government_type = yes } }
+			hidden_effect = {
+				ALB = { restore_previous_government_type = yes }
+				every_state = {
+					limit = {
+						is_owned_by = ALB
+						OR = {
+							has_state_flag = TUR_manastir
+							has_state_flag = TUR_kosova
+							has_state_flag = TUR_yanya
+							has_state_flag = TUR_iskodra
+						}
+					}
+					transfer_state_to = ALB
+				}
+			}
 			every_state = {
 				limit = {
 					OR = {
@@ -10163,12 +10182,16 @@ focus_tree = {
 						has_state_flag = TUR_yanya
 						has_state_flag = TUR_iskodra
 					}
-					controller = { TUR_has_minority_system = yes }
+					OR = {
+						is_controlled_by = TUR
+						is_controlled_by = ALB
+					}
 					OR = {
 						check_variable = { TUR_albanian_sunni_state_variable < 0 }
 						check_variable = { TUR_albanian_orthodox_state_variable < 0 }
 						check_variable = { TUR_albanian_catholic_state_variable < 0 }
 					}
+					has_dynamic_modifier = { modifier = TUR_albanian_minority }
 				}
 				remove_dynamic_modifier = { modifier = TUR_albanian_minority }
 				set_state_flag = TUR_albanian_vilayet3
@@ -10182,14 +10205,75 @@ focus_tree = {
 						has_state_flag = TUR_yanya
 						has_state_flag = TUR_iskodra
 					}
-					controller = { TUR_has_minority_system = yes }
+					OR = {
+						is_controlled_by = TUR
+						is_controlled_by = ALB
+					}
+					check_variable = { TUR_greek_orthodox_state_variable < 0 }
+					NOT = { has_dynamic_modifier = { modifier = TUR_greek_minority } }
+				}
+				add_dynamic_modifier = { modifier = TUR_greek_minority }
+				set_state_flag = TUR_albanian_vilayet4
+				custom_effect_tooltip = empty_space
+			}
+			every_state = {
+				limit = {
+					OR = {
+						has_state_flag = TUR_manastir
+						has_state_flag = TUR_kosova
+						has_state_flag = TUR_yanya
+						has_state_flag = TUR_iskodra
+					}
+					OR = {
+						is_controlled_by = TUR
+						is_controlled_by = ALB
+					}
+					check_variable = { TUR_bulgarian_orthodox_state_variable < 0 }
+					NOT = { has_dynamic_modifier = { modifier = TUR_bulgarian_minority } }
+				}
+				add_dynamic_modifier = { modifier = TUR_bulgarian_minority }
+				set_state_flag = TUR_albanian_vilayet5
+				custom_effect_tooltip = empty_space
+			}
+			every_state = {
+				limit = {
+					OR = {
+						has_state_flag = TUR_manastir
+						has_state_flag = TUR_kosova
+						has_state_flag = TUR_yanya
+						has_state_flag = TUR_iskodra
+					}
+					OR = {
+						is_controlled_by = TUR
+						is_controlled_by = ALB
+					}
+					check_variable = { TUR_serbian_orthodox_state_variable < 0 }
+					NOT = { has_dynamic_modifier = { modifier = TUR_serbian_minority } }
+				}
+				add_dynamic_modifier = { modifier = TUR_serbian_minority }
+				set_state_flag = TUR_albanian_vilayet6
+				custom_effect_tooltip = empty_space
+			}
+			every_state = {
+				limit = {
+					OR = {
+						has_state_flag = TUR_manastir
+						has_state_flag = TUR_kosova
+						has_state_flag = TUR_yanya
+						has_state_flag = TUR_iskodra
+					}
+					OR = {
+						is_controlled_by = TUR
+						is_controlled_by = ALB
+					}
 					OR = {
 						check_variable = { TUR_turkish_sunni_state_variable < 0 }
 						check_variable = { TUR_turkish_shia_state_variable < 0 }
 					}
+					NOT = { has_dynamic_modifier = { modifier = TUR_turkish_minority } }
 				}
 				add_dynamic_modifier = { modifier = TUR_turkish_minority }
-				set_state_flag = TUR_albanian_vilayet4
+				set_state_flag = TUR_albanian_vilayet7
 				custom_effect_tooltip = empty_space
 			}
 			#country_event = ottoman.125
@@ -17696,6 +17780,7 @@ focus_tree = {
 					every_state = { remove_core_of = TRS }
 					every_state = {
 						limit = {
+							TUR_is_owned_by_us_or_committee_government = yes
 							OR = {
 								has_state_flag = TUR_aleppo
 								has_state_flag = TUR_deir_ez_zor
@@ -17742,7 +17827,6 @@ focus_tree = {
 							}
 							force_enable_resistance = TRS
 							start_resistance = yes
-							set_garrison_strength = 0.5
 							set_occupation_law = local_police_force_garrison
 							set_resistance = TUR_syria_resistance
 							set_compliance = TUR_syria_compliance
