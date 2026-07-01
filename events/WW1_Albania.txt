@@ -7538,7 +7538,6 @@ country_event = { #albania approaches balkan league no
 	is_triggered_only = yes
 	option = {
 		name = albania.151.a
-		
 		ai_chance = { factor = 100 }
 	}
 }
@@ -7594,6 +7593,615 @@ news_event = { #albanian uprising after vilayet
 			}
 		}
 		ai_chance = { factor = 100 }
+	}
+}
+
+country_event = { #albania asks for ottoman generals
+	id = albania.153
+	title = albania.153.t
+	desc = albania.153.desc
+	picture = GFX_report_event_ottoman_pashas
+	is_triggered_only = yes
+	option = {
+		name = albania.153.a
+		effect_tooltip = {
+			every_character = {
+				limit = {
+					OR = {
+						AND = {
+							is_character = TUR_ahmet_izzet
+							is_country_leader = no
+						}
+						is_character = TUR_ahmet_niyazi_bey
+					}
+				}
+				set_nationality = FROM
+			}
+		}
+		if = {
+			limit = { has_country_flag = TUR_utilize_ahmet_niyazi_bey }
+			activate_decision  = TUR_dismiss_ahmet_niyazi_bey
+		}
+		hidden_effect = { FROM = { country_event = { id = albania.154 hours = 8 } } }
+		ai_chance = { factor = 100 }
+	}
+	option = {
+		name = albania.153.b
+		hidden_effect = { FROM = { country_event = { id = albania.155 hours = 8 } } }
+		ai_chance = { factor = 0 }
+	}
+}
+
+country_event = { #albania asks for ottoman generals yes
+	id = albania.154
+	title = albania.154.t
+	desc = albania.154.desc
+	picture = GFX_report_event_ottoman_pashas
+	is_triggered_only = yes
+	option = {
+		name = albania.154.a
+		FROM = {
+			every_character = {
+				limit = {
+					OR = {
+						AND = {
+							is_character = TUR_ahmet_izzet
+							is_country_leader = no
+						}
+						is_character = TUR_ahmet_niyazi_bey
+					}
+				}
+				set_nationality = ROOT
+			}
+		}
+		ai_chance = { factor = 100 }
+	}
+}
+
+country_event = { #albania asks for ottoman generals no
+	id = albania.155
+	title = albania.155.t
+	desc = albania.155.desc
+	picture = GFX_report_event_picture_ottoman_balkan_war
+	is_triggered_only = yes
+	option = {
+		name = albania.155.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+country_event = { #albania balkan threat
+	id = albania.156
+	title = albania.156.t
+	desc = albania.156.desc
+	picture = GFX_report_event_gre_balkan_pact
+	is_triggered_only = yes
+	option = {
+		name = albania.156.a
+		remove_ideas = ALB_preparing_for_the_balkan_threat
+		add_timed_idea = {
+			idea = ALB_fighting_the_balkan_threat
+			days = 365
+		}
+		ai_chance = { factor = 100 }
+	}
+}
+
+country_event = { #two people one empire
+	id = albania.157
+	title = albania.157.t
+	desc = albania.157.desc
+	picture = GFX_report_event_albanian_independence
+	is_triggered_only = yes
+	option = {
+		name = albania.157.a
+		add_ideas = ALB_empire_of_our_two
+		add_to_variable = {
+			tooltip = TUR_international_standing_var_tt
+			TUR_international_standing_var = 10
+		}
+		ai_chance = { factor = 100 }
+	}
+}
+
+country_event = { #albania ask thessaloniki
+	id = albania.158
+	title = albania.158.t
+	desc = albania.158.desc
+	picture = GFX_report_event_thessaloniki
+	is_triggered_only = yes
+	option = {
+		name = albania.158.a
+		FROM = {
+			custom_effect_tooltip = albania.158.tt
+			hidden_effect = { country_event = { id = albania.159 hours = 8 } }
+		}
+		ai_chance = { factor = 100 }
+	}
+	option = {
+		name = albania.158.b
+		hidden_effect = { FROM = { country_event = { id = albania.160 hours = 8 } } }
+		ai_chance = { factor = 100 }
+	}
+}
+
+country_event = { #albania ask thessaloniki yes
+	id = albania.159
+	title = albania.159.t
+	desc = albania.159.desc
+	picture = GFX_report_event_thessaloniki
+	is_triggered_only = yes
+	option = {
+		name = albania.159.a
+		custom_effect_tooltip = albania.159.tt
+		hidden_effect = {
+			every_state = {
+				limit = {
+					OR = {
+						OR = {
+							is_owned_by = FROM
+							custom_trigger_tooltip = {
+								tooltip = TUR_is_owned_by_committee_government_of_ROOT
+								AND = {
+									is_owned_by = TRS
+									TRS = {
+										is_subject_of = FROM
+										has_autonomy_state = autonomy_tgwr_ottoman_committee_government
+									}
+								}
+							}
+						}
+						is_owned_by = ALB
+					}
+					has_state_flag = TUR_selanik
+				}
+				if = {
+					limit = {
+						OR = {
+							is_owned_by = FROM
+							custom_trigger_tooltip = {
+								tooltip = TUR_is_owned_by_committee_government_of_ROOT
+								AND = {
+									is_owned_by = TRS
+									TRS = {
+										is_subject_of = FROM
+										has_autonomy_state = autonomy_tgwr_ottoman_committee_government
+									}
+								}
+							}
+						}
+						has_resistance = yes
+					}
+					set_temp_variable = { TUR_albania_resistance = THIS.resistance }
+					set_temp_variable = { TUR_albania_compliance = THIS.compliance }
+				}
+				transfer_state_to = ALB
+				add_core_of = ALB
+				remove_core_of = TUR
+				force_enable_resistance = ALB
+				start_resistance = yes
+				set_occupation_law = local_police_force_garrison
+				set_resistance = TUR_albania_resistance
+				set_compliance = TUR_albania_compliance
+				set_garrison_strength = 1
+			}
+		}
+		every_state = {
+			limit = {
+				has_state_flag = TUR_selanik
+				controller = { TUR_has_minority_system = yes }
+				OR = {
+					check_variable = { TUR_albanian_sunni_state_variable < 0 }
+					check_variable = { TUR_albanian_orthodox_state_variable < 0 }
+					check_variable = { TUR_albanian_catholic_state_variable < 0 }
+				}
+				has_state_flag = TUR_autonomous_vilayet
+			}
+			remove_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+			clr_state_flag = TUR_autonomous_vilayet
+			clr_state_flag = TUR_autonomous_vilayet_no_control
+			custom_effect_tooltip = empty_space
+		}
+		every_state = {
+			limit = {
+				has_state_flag = TUR_selanik
+				controller = { TUR_has_minority_system = yes }
+				OR = {
+					check_variable = { TUR_albanian_sunni_state_variable < 0 }
+					check_variable = { TUR_albanian_orthodox_state_variable < 0 }
+					check_variable = { TUR_albanian_catholic_state_variable < 0 }
+				}
+				has_state_flag = TUR_autonomous_vilayet
+			}
+			remove_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet }
+			clr_state_flag = TUR_semi_autonomous_vilayet
+			clr_state_flag = TUR_semi_autonomous_vilayet_no_control
+			custom_effect_tooltip = empty_space
+		}
+		every_state = {
+			limit = {
+				has_state_flag = TUR_selanik
+				OR = {
+					controller = { TUR_has_minority_system = yes }
+					is_controlled_by = ALB
+				}
+				OR = {
+					check_variable = { TUR_albanian_sunni_state_variable < 0 }
+					check_variable = { TUR_albanian_orthodox_state_variable < 0 }
+					check_variable = { TUR_albanian_catholic_state_variable < 0 }
+				}
+				has_dynamic_modifier = { modifier = TUR_albanian_minority }
+			}
+			remove_dynamic_modifier = { modifier = TUR_albanian_minority }
+			custom_effect_tooltip = empty_space
+		}
+		every_state = {
+			limit = {
+				has_state_flag = TUR_selanik
+				OR = {
+					controller = { TUR_has_minority_system = yes }
+					is_controlled_by = ALB
+				}
+				check_variable = { TUR_greek_orthodox_state_variable < 0 }
+				NOT = { has_dynamic_modifier = { modifier = TUR_greek_minority } }
+			}
+			add_dynamic_modifier = { modifier = TUR_greek_minority }
+			custom_effect_tooltip = empty_space
+		}
+		every_state = {
+			limit = {
+				has_state_flag = TUR_selanik
+				OR = {
+					controller = { TUR_has_minority_system = yes }
+					is_controlled_by = ALB
+				}
+				check_variable = { TUR_bulgarian_orthodox_state_variable < 0 }
+				NOT = { has_dynamic_modifier = { modifier = TUR_bulgarian_minority } }
+			}
+			add_dynamic_modifier = { modifier = TUR_bulgarian_minority }
+			custom_effect_tooltip = empty_space
+		}
+		every_state = {
+			limit = {
+				has_state_flag = TUR_selanik
+				OR = {
+					controller = { TUR_has_minority_system = yes }
+					is_controlled_by = ALB
+				}
+				check_variable = { TUR_serbian_orthodox_state_variable < 0 }
+				NOT = { has_dynamic_modifier = { modifier = TUR_serbian_minority } }
+			}
+			add_dynamic_modifier = { modifier = TUR_serbian_minority }
+			custom_effect_tooltip = empty_space
+		}
+		every_state = {
+			limit = {
+				has_state_flag = TUR_selanik
+				OR = {
+					controller = { TUR_has_minority_system = yes }
+					is_controlled_by = ALB
+				}
+				OR = {
+					check_variable = { TUR_turkish_sunni_state_variable < 0 }
+					check_variable = { TUR_turkish_shia_state_variable < 0 }
+				}
+				NOT = { has_dynamic_modifier = { modifier = TUR_turkish_minority } }
+			}
+			add_dynamic_modifier = { modifier = TUR_turkish_minority }
+			custom_effect_tooltip = empty_space
+		}
+		ai_chance = { factor = 100 }
+	}
+}
+
+country_event = { #albania ask thessaloniki no
+	id = albania.160
+	title = albania.160.t
+	desc = albania.160.desc
+	picture = GFX_report_event_thessaloniki
+	is_triggered_only = yes
+	option = {
+		name = albania.160.a
+		ai_chance = { factor = 100 }
+	}
+}
+
+country_event = { #albania ask bosnia
+	id = albania.161
+	title = {
+		text = albania.161.t1
+		trigger = { original_tag = BOS }
+	}
+	title = {
+		text = albania.161.t2
+		trigger = { NOT = { original_tag = BOS } }
+	}
+	desc = {
+		text = albania.161.desc1
+		trigger = { original_tag = BOS }
+	}
+	desc = {
+		text = albania.161.desc2
+		trigger = { NOT = { original_tag = BOS } }
+	}
+	picture = GFX_report_event_bosnia
+	is_triggered_only = yes
+	option = {
+		name = albania.161.a
+		effect_tooltip = {
+			if = {
+				limit = { BOS = { is_subject = yes } }
+				BOS = {
+					set_cosmetic_tag = BOS_muslim
+					BOS_dervis_beg_miralem = { promote_character = civilian_dictatorship }
+					set_party_name = {
+						ideology = neutrality
+						name = BOS_muslim_party
+						long_name = BOS_muslim_party_long
+					}
+					hidden_effect = {
+						set_politics = {
+							ruling_party = neutrality
+							elections_allowed = no
+						}
+					}
+				}
+				FROM = {
+					set_autonomy = {
+						target = BOS
+						autonomous_state = autonomy_satellite
+						freedom_level = 0.8
+					}
+				}
+			}
+			eles_if = {
+				limit = { NOT = { country_exists = BOS } }
+				BOS = {
+					every_state = {
+						limit = {
+							is_owned_by = FROM
+							is_core_of = BOS
+						}
+						transfer_state_to = PREV
+					}
+					set_cosmetic_tag = BOS_muslim
+					BOS_dervis_beg_miralem = { promote_character = civilian_dictatorship }
+					set_party_name = {
+						ideology = neutrality
+						name = BOS_muslim_party
+						long_name = BOS_muslim_party_long
+					}
+					hidden_effect = {
+						set_politics = {
+							ruling_party = neutrality
+							elections_allowed = no
+						}
+					}
+				}
+				FROM = {
+					set_autonomy = {
+						target = BOS
+						autonomous_state = autonomy_satellite
+						freedom_level = 0.8
+					}
+				}
+			}
+			else = {
+				set_cosmetic_tag = BOS_muslim
+				BOS_dervis_beg_miralem = { promote_character = civilian_dictatorship }
+				set_party_name = {
+					ideology = neutrality
+					name = BOS_muslim_party
+					long_name = BOS_muslim_party_long
+				}
+				hidden_effect = {
+					set_politics = {
+						ruling_party = neutrality
+						elections_allowed = no
+					}
+				}
+				FROM = {
+					set_autonomy = {
+						target = BOS
+						autonomous_state = autonomy_satellite
+						freedom_level = 0.8
+					}
+				}
+			}
+		}
+		hidden_effect = { FROM = { country_event = { id = albania.162 hours = 8 } } }
+		ai_chance = {
+			factor = 20
+			modifier = {
+				OR = {
+					is_major = no
+					is_in_faction = no
+				}
+				factor = -10
+			}
+		}
+	}
+	option = {
+		name = albania.161.b
+		hidden_effect = { FROM = { country_event = { id = albania.163 hours = 8 } } }
+		ai_chance = {
+			factor = 5
+			modifier = {
+				OR = {
+					is_major = no
+					is_in_faction = no
+				}
+				add = 20
+			}
+		}
+	}
+}
+
+country_event = { #albania ask bosnia yes
+	id = albania.162
+	title = {
+		text = albania.162.t1
+		trigger = { original_tag = BOS }
+	}
+	title = {
+		text = albania.162.t2
+		trigger = { NOT = { original_tag = BOS } }
+	}
+	desc = {
+		text = albania.162.desc1
+		trigger = { original_tag = BOS }
+	}
+	desc = {
+		text = albania.162.desc2
+		trigger = { NOT = { original_tag = BOS } }
+	}
+	picture = GFX_report_event_bosnia
+	is_triggered_only = yes
+	option = {
+		name = albania.162.a
+		if = {
+			limit = { BOS = { is_subject = yes } }
+			BOS = {
+				set_cosmetic_tag = BOS_muslim
+				BOS_dervis_beg_miralem = { promote_character = civilian_dictatorship }
+				set_party_name = {
+					ideology = neutrality
+					name = BOS_muslim_party
+					long_name = BOS_muslim_party_long
+				}
+				hidden_effect = {
+					set_politics = {
+						ruling_party = neutrality
+						elections_allowed = no
+					}
+				}
+			}
+			hidden_effect = { BOS = { get_current_government_type = yes } }
+			set_autonomy = {
+				target = BOS
+				autonomous_state = autonomy_satellite
+				freedom_level = 0.8
+			}
+			hidden_effect = { BOS = { restore_previous_government_type = yes } }
+		}
+		eles_if = {
+			limit = { NOT = { country_exists = BOS } }
+			BOS = {
+				every_state = {
+					limit = {
+						is_owned_by = FROM
+						is_core_of = BOS
+					}
+					transfer_state_to = PREV
+				}
+				set_cosmetic_tag = BOS_muslim
+				BOS_dervis_beg_miralem = { promote_character = civilian_dictatorship }
+				set_party_name = {
+					ideology = neutrality
+					name = BOS_muslim_party
+					long_name = BOS_muslim_party_long
+				}
+				hidden_effect = {
+					set_politics = {
+						ruling_party = neutrality
+						elections_allowed = no
+					}
+				}
+			}
+			hidden_effect = { BOS = { get_current_government_type = yes } }
+			set_autonomy = {
+				target = BOS
+				autonomous_state = autonomy_satellite
+				freedom_level = 0.8
+			}
+			hidden_effect = { BOS = { restore_previous_government_type = yes } }
+		}
+		else = {
+			BOS = {
+				set_cosmetic_tag = BOS_muslim
+				BOS_dervis_beg_miralem = { promote_character = civilian_dictatorship }
+				set_party_name = {
+					ideology = neutrality
+					name = BOS_muslim_party
+					long_name = BOS_muslim_party_long
+				}
+				hidden_effect = {
+					set_politics = {
+						ruling_party = neutrality
+						elections_allowed = no
+					}
+				}
+			}
+			hidden_effect = { BOS = { get_current_government_type = yes } }
+			set_autonomy = {
+				target = BOS
+				autonomous_state = autonomy_satellite
+				freedom_level = 0.8
+			}
+			hidden_effect = { BOS = { restore_previous_government_type = yes } }
+		}
+		ai_chance = { factor = 100 }
+	}
+}
+
+country_event = { #albania ask bosnia no
+	id = albania.163
+	title = {
+		text = albania.163.t1
+		trigger = { original_tag = BOS }
+	}
+	title = {
+		text = albania.163.t2
+		trigger = { NOT = { original_tag = BOS } }
+	}
+	desc = {
+		text = albania.163.desc1
+		trigger = { original_tag = BOS }
+	}
+	desc = {
+		text = albania.163.desc2
+		trigger = { NOT = { original_tag = BOS } }
+	}
+	picture = GFX_report_event_bosnia
+	is_triggered_only = yes
+	option = {
+		name = albania.163.a
+		ai_chance = {
+			factor = 10
+			modifier = {
+				FROM = {
+					OR = {
+						is_major = no
+						is_in_faction = no
+					}
+				}
+				factor = 0
+			}
+		}
+	}
+	option = {
+		name = albania.163.b
+		trigger = {
+			NOT = {
+				OR = {
+					is_in_faction_with = FROM
+					has_non_aggression_pact_with = FROM
+				}
+			}
+		}
+		declare_war_on = { target = FROM type = puppet_wargoal_focus }
+		ai_chance = {
+			factor = 0
+			modifier = {
+				FROM = {
+					OR = {
+						is_major = no
+						is_in_faction = no
+					}
+				}
+				add = 10
+			}
+		}
 	}
 }
 

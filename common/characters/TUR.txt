@@ -461,13 +461,14 @@ characters = {
 		advisor = {
 			slot = high_command
 			idea_token = TUR_ahmed_izzet
-			allowed = {
-				original_tag = TUR
-			}
+			allowed = { always = yes }
 			available = {
-				NOT = {
-					TUR_nazim_pasha = { is_hired_as_advisor = yes }
-					TUR_nazim_pasha = { is_country_leader = yes }
+				if = {
+					limit = { original_tag = TUR }
+					NOT = {
+						TUR_nazim_pasha = { is_hired_as_advisor = yes }
+						TUR_nazim_pasha = { is_country_leader = yes }
+					}
 				}
 			}
 			ledger = army 
@@ -3315,11 +3316,14 @@ characters = {
 				}
 			}
 			available = {
-				TUR_is_ittihadist_regime = yes
-				NOT_already_hired_except_as = political_advisor
-				OR = {
-					has_government = fascism
-					has_government = neutrality
+				if = {
+					limit = { original_tag = TUR }
+					TUR_is_ittihadist_regime = yes
+					NOT_already_hired_except_as = political_advisor
+					OR = {
+						has_government = fascism
+						has_government = neutrality
+					}
 				}
 #				if = {
 #					limit = { has_power_balance = { id = TUR_unionist_struggle } }

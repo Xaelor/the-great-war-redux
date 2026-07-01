@@ -5613,6 +5613,7 @@ focus_tree = {
 		relative_position_id = ALB_side_with_the_moderate_liberals
 		available = { is_subject_of = TUR }
 		completion_reward = {
+			add_ideas = ALB_outlawed_minority_parties
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5630,6 +5631,18 @@ focus_tree = {
 		relative_position_id = ALB_side_with_the_moderate_liberals
 		available = { is_subject_of = TUR }
 		completion_reward = {
+			add_ideas = ALB_minority_political_activities
+			if = {
+				limit = {
+					OR = {
+						has_character = TUR_sava_stojanovic
+						has_character = TUR_todor_pavlof
+					}
+				}
+				custom_effect_tooltip = available_political_advisor
+				show_ideas_tooltip = TUR_sava_stojanovic
+				show_ideas_tooltip = TUR_todor_pavlof
+			}
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5646,6 +5659,22 @@ focus_tree = {
 		relative_position_id = ALB_crush_minority_parties
 		available = { is_subject_of = TUR }
 		completion_reward = {
+			add_timed_idea = {
+				idea = ALB_migration_to_the_cities
+				days = 780
+			}
+			870 = {
+				increase_state_category = yes
+				add_manpower = 10000
+			}
+			44 = {
+				increase_state_category = yes
+				add_manpower = 32000
+			}
+			871 = {
+				increase_state_category = yes
+				add_manpower = 15000
+			}
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5662,6 +5691,7 @@ focus_tree = {
 		relative_position_id = ALB_resettling_towns
 		available = { is_subject_of = TUR }
 		completion_reward = {
+			add_ideas = ALB_preserving_the_domestic_economy
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5678,6 +5708,48 @@ focus_tree = {
 		relative_position_id = ALB_permit_minority_parties
 		available = { is_subject_of = TUR }
 		completion_reward = {
+			add_ideas = ALB_turkish_military_mission
+			custom_effect_tooltip = available_high_command
+			show_ideas_tooltip = ALB_bekir_fikri
+			effect_tooltip = {
+				ALB_bekir_fikri = {
+					add_corps_commander_role = {
+						traits = { commando irregulars_officer guerilla_fighter defend }
+						skill = 2
+						attack_skill = 1
+						defense_skill = 2
+						planning_skill = 3
+						logistics_skill = 1
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						AND = {
+							has_character = TUR_ahmet_izzet
+							TUR_ahmet_izzet = { is_country_leader = no }
+						}
+						has_character = TUR_ahmet_niyazi_bey
+					}
+				}
+				country_event = { id = albania.153 hours = 8 }
+				custom_effect_tooltip = if_they_accept_tt
+				effect_tooltip = {
+					every_character = {
+						limit = {
+							OR = {
+								AND = {
+									is_character = TUR_ahmet_izzet
+									is_country_leader = no
+								}
+								is_character = TUR_ahmet_niyazi_bey
+							}
+						}
+						set_nationality = ROOT
+					}
+				}
+			}
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5694,6 +5766,15 @@ focus_tree = {
 		relative_position_id = ALB_mission_to_the_albanian_lands
 		available = { is_subject_of = TUR }
 		completion_reward = {
+			add_timed_idea = {
+				idea = ALB_preparing_for_the_balkan_threat
+				days = 365
+			}
+			custom_effect_tooltip = ALB_prepare_against_the_balkan_league_tt
+			effect_tooltip = {
+				country_event = albania.156
+				event_option_tooltip = albania.156.a
+			}
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5710,6 +5791,17 @@ focus_tree = {
 		relative_position_id = ALB_resettling_towns
 		available = { is_subject_of = TUR }
 		completion_reward = {
+			add_ideas = ALB_empire_of_our_two
+			TUR = {
+				hidden_effect = { country_event = albania.157 }
+				effect_tooltip = {
+					add_ideas = ALB_empire_of_our_two
+					add_to_variable = {
+						tooltip = TUR_international_standing_var_tt
+						TUR_international_standing_var = 10
+					}
+				}
+			}
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5724,8 +5816,37 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = ALB_two_people_one_empire
-		available = { is_subject_of = TUR }
+		available = {
+			is_subject_of = TUR
+			TUR = {
+				custom_trigger_tooltip = {
+					tooltip = TUR_owns_selanik_vilayet_tt
+					any_state = {
+						has_state_flag = TUR_selanik
+						OR = {
+							OR = {
+								is_owned_by = PREV
+								custom_trigger_tooltip = {
+									tooltip = TUR_is_owned_by_committee_government_of_ROOT
+									AND = {
+										is_owned_by = TRS
+										TRS = {
+											is_subject_of = PREV
+											has_autonomy_state = autonomy_tgwr_ottoman_committee_government
+										}
+									}
+								}
+							}
+							owner = { has_country_flag = TUR_revolting_country }
+						}
+					}
+				}
+			}
+		}
 		completion_reward = {
+			TUR = { country_event = { id = albania.158 hours = 8 } }
+			custom_effect_tooltip = if_they_accept_tt
+			event_option_tooltip = albania.159.a
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -5740,8 +5861,113 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = ALB_two_people_one_empire
-		available = { is_subject_of = TUR }
+		available = {
+			is_subject_of = TUR
+			NOT = {
+				BOS = { is_subject_of = ROOT }
+				owns_state = 104
+			}
+		}
 		completion_reward = {
+			if = {
+				limit = { BOS = { is_subject = yes } }
+				random_country = {
+					limit = { has_subject = BOS }
+					country_event = { id = albania.161 hours = 8 }
+				}
+			}
+			eles_if = {
+				limit = { NOT = { country_exists = BOS } }
+				random_country = {
+					limit = { owns_state = 104 }
+					country_event = { id = albania.161 hours = 8 }
+				}
+			}
+			else = { BOS = { country_event = { id = albania.161 hours = 8 } } }
+			custom_effect_tooltip = if_they_accept_tt
+			effect_tooltip = {
+				if = {
+					limit = { BOS = { is_subject = yes } }
+					BOS = {
+						set_cosmetic_tag = BOS_muslim
+						BOS_dervis_beg_miralem = { promote_character = civilian_dictatorship }
+						set_party_name = {
+							ideology = neutrality
+							name = BOS_muslim_party
+							long_name = BOS_muslim_party_long
+						}
+						hidden_effect = {
+							set_politics = {
+								ruling_party = neutrality
+								elections_allowed = no
+							}
+						}
+					}
+					hidden_effect = { BOS = { get_current_government_type = yes } }
+					set_autonomy = {
+						target = BOS
+						autonomous_state = autonomy_satellite
+						freedom_level = 0.8
+					}
+					hidden_effect = { BOS = { restore_previous_government_type = yes } }
+				}
+				eles_if = {
+					limit = { NOT = { country_exists = BOS } }
+					BOS = {
+						every_state = {
+							limit = {
+								is_owned_by = FROM
+								is_core_of = BOS
+							}
+							transfer_state_to = PREV
+						}
+						set_cosmetic_tag = BOS_muslim
+						BOS_dervis_beg_miralem = { promote_character = civilian_dictatorship }
+						set_party_name = {
+							ideology = neutrality
+							name = BOS_muslim_party
+							long_name = BOS_muslim_party_long
+						}
+						hidden_effect = {
+							set_politics = {
+								ruling_party = neutrality
+								elections_allowed = no
+							}
+						}
+					}
+					hidden_effect = { BOS = { get_current_government_type = yes } }
+					set_autonomy = {
+						target = BOS
+						autonomous_state = autonomy_satellite
+						freedom_level = 0.8
+					}
+					hidden_effect = { BOS = { restore_previous_government_type = yes } }
+				}
+				else = {
+					BOS = {
+						set_cosmetic_tag = BOS_muslim
+						BOS_dervis_beg_miralem = { promote_character = civilian_dictatorship }
+						set_party_name = {
+							ideology = neutrality
+							name = BOS_muslim_party
+							long_name = BOS_muslim_party_long
+						}
+						hidden_effect = {
+							set_politics = {
+								ruling_party = neutrality
+								elections_allowed = no
+							}
+						}
+					}
+					hidden_effect = { BOS = { get_current_government_type = yes } }
+					set_autonomy = {
+						target = BOS
+						autonomous_state = autonomy_satellite
+						freedom_level = 0.8
+					}
+					hidden_effect = { BOS = { restore_previous_government_type = yes } }
+				}
+			}
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -6292,6 +6518,7 @@ focus_tree = {
 				tooltip = TUR_change_selanik_centralization
 			}
 			custom_effect_tooltip = ALB_law_and_order_in_macedonia_tt
+			unlock_decision_tooltip = TUR_abolish_mount_athos_autonomy
 		}
 		ai_will_do = { factor = 100 }
 	}

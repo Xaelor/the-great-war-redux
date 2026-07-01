@@ -423,7 +423,7 @@ TGWR_great_power_politics = {
 				set_party_name = {
 					ideology = neutrality
 					name = BOS_muslim_party
-					long_name = BOS_muslim_party_party
+					long_name = BOS_muslim_party_long
 				}
 				every_state = {
 					limit = { has_state_flag = TUR_treaty_of_yeni_pazar_state }
@@ -5316,13 +5316,18 @@ TUR_millet_system = {
 	}
 	TUR_abolish_mount_athos_autonomy = {
 		icon = GFX_decision_generic_break_treaty
-		allowed = { original_tag = TUR }
+		allowed = { always = yes }
 		visible = {
 			controls_state = 1255
 			owns_state = 1255
 			1255 = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } }
 		}
-		target_root_trigger = { has_completed_focus = TUR_status_of_the_autonomies }
+		target_root_trigger = {
+			OR = {
+				has_completed_focus = TUR_status_of_the_autonomies
+				has_completed_focus = ALB_law_and_order_in_macedonia
+			}
+		}
 		cost = 10
 		highlight_states = { highlight_state_targets = { state = 1255 } }
 		state_target = yes
