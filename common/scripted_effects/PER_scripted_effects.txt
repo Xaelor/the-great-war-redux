@@ -15,6 +15,17 @@ PER_calculate_total_foreign_influnce = {
 		}
 		add_to_variable = { var = PER_total_foreign_influence value = ENG.PER_foreign_influence }
 	}
+	else_if = {
+		limit = { 
+			ENG = {
+				NOT = {
+					exists = yes
+					has_dynamic_modifier = PER_influence_in_persia_modifier
+				}
+			}		
+		}
+		set_variable = { ENG.PER_foreign_influence = 0 }
+	}
 	if = {
 		limit = { 
 			# NOT = { original_tag = ARB }
@@ -25,6 +36,17 @@ PER_calculate_total_foreign_influnce = {
 			}
 		}
 		add_to_variable = { var = PER_total_foreign_influence value = RUS.PER_foreign_influence }
+	}
+	else_if = {
+		limit = {
+			RUS = {
+				NOT = {
+					exists = yes
+					has_dynamic_modifier = PER_influence_in_persia_modifier
+				}
+			}		
+		}
+		set_variable = { RUS.PER_foreign_influence = 0 }
 	}
 	if = {
 		limit = {
@@ -37,6 +59,17 @@ PER_calculate_total_foreign_influnce = {
 		}
 		add_to_variable = { var = PER_total_foreign_influence value = GER.PER_foreign_influence }
 	}
+	else_if = {
+		limit = {
+			GER = {
+				NOT = {
+					exists = yes
+					has_dynamic_modifier = PER_influence_in_persia_modifier
+				}
+			}		
+		}
+		set_variable = { GER.PER_foreign_influence = 0 }
+	}
 	if = {
 		limit = { 
 			TUR = {
@@ -46,6 +79,17 @@ PER_calculate_total_foreign_influnce = {
 			}
 		}
 		add_to_variable = { var = PER_total_foreign_influence value = TUR.PER_foreign_influence }
+	}
+	else_if = {
+		limit = {
+			TUR = {
+				NOT = {
+					exists = yes
+					has_dynamic_modifier = PER_influence_in_persia_modifier
+				}
+			}		
+		}
+		set_variable = { TUR.PER_foreign_influence = 0 }
 	}
 	clamp_variable = {
 		var = PER_total_foreign_influence
@@ -62,30 +106,47 @@ PER_calculate_total_foreign_influnce = {
 	}
 }
 PER_calculate_foreign_influnce_modifiers = {
-	set_variable = { var = PER_political_power_gain value = PER_total_foreign_influence }
-	multiply_variable = { var = PER_political_power_gain value = -1 }
+	set_variable = {
+		PER_political_power_gain = {
+			value = PER_total_foreign_influence
+			multiply = -1
+		}
+	}
 	#set_variable = { var = PER_consumer_goods_expected_value value = PER_total_foreign_influence }
 	#multiply_variable = { var = PER_consumer_goods_expected_value value = 0.1 }
-	set_variable = { var = PER_civilian_intel_to_others value = PER_total_foreign_influence }
-	multiply_variable = { var = PER_civilian_intel_to_others value = 100 }
-	
-	
+	set_variable = {
+		PER_civilian_intel_to_others = {
+			value = PER_total_foreign_influence
+			multiply = 100
+		}
+	}
 }
 PER_calculate_foreign_influnce = {
-	every_country = {
-		limit = {
-			has_dynamic_modifier = PER_foreign_influence_modifier
+	hidden_effect = {
+		every_country_with_original_tag = {
+			original_tag_to_check = PER
+			limit = {
+				has_dynamic_modifier = PER_foreign_influence_modifier
+			}
+			PER_calculate_total_foreign_influnce = yes
+			PER_calculate_foreign_influnce_modifiers = yes
 		}
-		PER_calculate_total_foreign_influnce = yes
-		PER_calculate_foreign_influnce_modifiers = yes
 	}	
 }
 
 PER_calculate_influnce_in_persia_modifiers = {
-	set_variable = { var = PER_political_power_gain value = PER_foreign_influence }
-	multiply_variable = { var = PER_political_power_gain value = 0.2 }
-	set_variable = { var = PER_consumer_goods_factor value = PER_foreign_influence }
-	multiply_variable = { var = PER_consumer_goods_factor value = -0.1 }
+	set_variable = {
+		PER_political_power_gain = {
+			value = PER_foreign_influence
+			multiply = 0.2
+		}
+	}
+	set_variable = {
+		PER_consumer_goods_factor = {
+			value = PER_foreign_influence
+			multiply = -0.1
+		}
+	}
 }
 
 PER_improve_foreign_advisors = {

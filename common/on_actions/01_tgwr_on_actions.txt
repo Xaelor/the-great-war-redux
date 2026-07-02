@@ -1037,25 +1037,17 @@
 			else_if = { ### Ottoman ###
 				limit = {
 					tag = TUR
-				}
-				if = {
-					limit = { 
-						has_completed_focus = TUR_legacy_of_the_4th_lancers
-					}
-					country_event = ottoman.38
-				}
-				else = {					
-					country_event = ottoman.42
-					country_event = ottoman.45
-					country_event = ottoman.118
-					country_event = ottoman.119
-					country_event = ottoman.151
-					country_event = ottoman.152
-					country_event = ottoman.153
-					country_event = ottoman.98
-					country_event = ottoman.164
-					country_event = ottoman.170
-				}
+				}					
+				country_event = ottoman.42
+				country_event = ottoman.45
+				country_event = ottoman.118
+				country_event = ottoman.119
+				country_event = ottoman.151
+				country_event = ottoman.152
+				country_event = ottoman.153
+				country_event = ottoman.98
+				country_event = ottoman.164
+				country_event = ottoman.170
 			}			
 			else_if = { ### Serbia ###
 				limit = {
@@ -2281,15 +2273,15 @@
 				}
 				if = {
 					limit = {
-						any_other_country = {
+						any_country_with_original_tag = {
+							original_tag_to_check = FRA
 							is_subject_of = GER
-							original_tag = FRA
 						}
 					}
-					random_other_country = {
+					random_country_with_original_tag = {
+						original_tag_to_check = FRA
 						limit = {
 							is_subject_of = GER
-							original_tag = FRA
 						}
 						annex_country = {
 							target = ROOT
@@ -2299,7 +2291,8 @@
 				else_if = {
 					limit = {
 						NOT = {
-							any_country = {
+							any_country_with_original_tag = {
+								original_tag_to_check = FRA
 								has_cosmetic_tag = FRP
 							}
 							GER = {
@@ -3738,15 +3731,15 @@
 				}
 				if = {
 					limit = {
-						any_other_country = {
+						any_country_with_original_tag = {
+							original_tag_to_check = FRA
 							is_subject_of = GER
-							original_tag = FRA
 						}
 					}
-					random_other_country = {
+					random_country_with_original_tag = {
+						original_tag_to_check = FRA
 						limit = {
 							is_subject_of = GER
-							original_tag = FRA
 						}
 						annex_country = {
 							target = ROOT
@@ -3756,7 +3749,8 @@
 				else_if = {
 					limit = {
 						NOT = {
-							any_country = {
+							any_country_with_original_tag = {
+								original_tag_to_check = FRA
 								has_cosmetic_tag = FRP
 							}
 							GER = {
@@ -6338,8 +6332,8 @@
 			if = {
 				limit = {
 					tag = JAP
-					any_other_country = {
-						original_tag = JAP
+					any_country_with_original_tag = {
+						original_tag_to_check = JAP
 						has_war_with = PREV
 						has_country_leader = {
 							character = JAP_tokugawa_iesato
@@ -8681,6 +8675,14 @@
 				if = {
 					limit = { owns_state = 266 }
 					set_capital = { state = 266 }
+					if = {
+						limit = { 
+							check_variable = {
+								PER_irregulars_cap < FROM.PER_irregulars_cap
+							}
+						}
+						set_variable = { PER_irregulars_cap = FROM.PER_irregulars_cap }
+					}				
 				}
 				FROM = {
 					every_character = {
@@ -8758,8 +8760,9 @@
 						OR = {
 							owns_state = 266
 							NOT = {
-								any_other_country = {
-									original_tag = PER
+								any_country_with_original_tag = {
+									original_tag_to_check = PER
+									NOT = { tag = ROOT }
 								}
 							}
 						}			

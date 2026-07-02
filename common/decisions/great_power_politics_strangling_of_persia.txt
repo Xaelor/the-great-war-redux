@@ -356,6 +356,97 @@ TGWR_great_power_politics = {
 			}
 		}
 	}
+	RUS_exile_khan_of_maku = {
+		icon = SWI_dismiss_council
+		allowed = {
+			tag = RUS
+		}
+		
+		targets = {
+			MAK
+		}
+
+		target_root_trigger = {
+			has_dynamic_modifier = PER_influence_in_persia_modifier
+			any_owned_state = {
+				has_contested_owner = PER
+			}
+		}
+
+		target_trigger = {
+			FROM = {
+				OR = {
+					is_subject_of = PER
+					is_subject = no
+				}
+			}
+		}
+
+		visible = {
+			great_power_politics_strangling_of_persia_visible = yes
+		}
+
+		available = {
+			has_global_flag = great_war
+			is_neighbor_of = FROM
+		}
+
+		fire_only_once = yes
+
+		days_remove = 15
+
+		custom_cost_text = 5_influence_in_PER
+
+		custom_cost_trigger = {
+			check_variable = {
+				var = RUS.PER_foreign_influence
+				value = 0.05
+				compare = greater_than_or_equals
+			}
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				RUS.PER_foreign_influence = -0.05
+				#tooltip = PER_modify_RUS_influence_tt
+			}
+			PER_calculate_foreign_influnce = yes
+			PER_calculate_influnce_in_persia_modifiers = yes
+		}
+
+		cancel_effect = {
+			hidden_effect = {
+				add_to_variable = {
+					RUS.PER_foreign_influence = 0.05
+					tooltip = PER_modify_RUS_influence_tt
+				}
+				PER_calculate_foreign_influnce = yes
+				PER_calculate_influnce_in_persia_modifiers = yes
+			}			
+		}
+
+		remove_effect = {
+			MAK = { 
+				get_current_government_type = yes 
+				set_country_flag = occupied_state
+			}
+			set_autonomy = {
+				target = MAK
+				autonomy_state = autonomy_tgwr_occupied_state
+			}
+			MAK = { 
+				restore_previous_government_type = yes
+				add_trait = {
+					character = MAK_murtuzaqulu_khan_bayat
+					ideology = absolute_monarchy
+					trait = tgwr_exiled
+				}
+			}
+		}
+		ai_will_do = {
+			base = 10
+		}
+	}
 }
 #PERSIA
 TGWR_great_power_politics = {

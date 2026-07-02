@@ -19,7 +19,7 @@
 	#Focus Path shortcuts
 	shortcut = {
 		name = inner_politics_tree_shortcut
-		target = PER_young_peoples_cabinet
+		target = PER_disarm_revolutionaries
 		scroll_wheel_factor = 1
 	}
 	
@@ -101,12 +101,16 @@
 		prerequisite = {
 			focus = PER_disarm_revolutionaries
 			focus = PER_stronger_cabinet
+			focus = PER_contact_the_nobles
 		}
 		relative_position_id = PER_disarm_revolutionaries
 		x = -1
 		y = 1
 		available = {
 			has_dynamic_modifier = PER_foreign_influence_modifier
+			capital_scope = {
+				state = 266
+			}
 		}
 
 		bypass = {
@@ -135,7 +139,11 @@
 		x = 0
 		y = 1
 		available = {
-			has_government = democratic
+			#has_government = democratic
+			has_capitulated = no
+			capital_scope = {
+				state = 266
+			}
 		}
 	
 		completion_reward = {
@@ -196,7 +204,10 @@
 		x = 0
 		y = 1
 		available = {
-			has_government = democratic
+			#has_government = democratic
+			capital_scope = {
+				state = 266
+			}
 		}
 	
 		completion_reward = {
@@ -230,6 +241,7 @@
 		x = 1
 		y = 1
 		available = {
+			has_PER_improve_foreign_advisor = yes
 			has_government = democratic
 			NOT = {
 				has_war_with = USA
@@ -254,11 +266,13 @@
 		prerequisite = {
 			focus = PER_disarm_revolutionaries
 			focus = PER_stronger_cabinet
+			focus = PER_contact_the_nobles
 		}
 		relative_position_id = PER_disarm_revolutionaries
 		x = 3
 		y = 1
 		available = {
+			has_PER_improve_foreign_advisor = yes
 			NOT = {
 				has_war_with = BEL
 			}
@@ -537,6 +551,205 @@
 		search_filters = { FOCUS_FILTER_HISTORICAL }
 		ai_will_do = {
 			factor = 15
+		}
+	}
+	#Absolutists
+	focus = {
+		id = PER_absolutist_focus
+		icon = {
+			GFX_focus_PER_first_iranian_empire = {
+				has_country_leader = {
+					character = PER_abulfath_mirza
+				} 
+			}
+			GFX_focus_PER_the_pahlavi_imperium = yes
+		}
+		cost = 5
+		x = -3
+		y = 0
+		available = {
+			has_PER_absolutism_qajar = yes
+		}
+	
+		completion_reward = {
+			add_political_power = 100
+		}
+
+		#search_filters = { FOCUS_FILTER_HISTORICAL }
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	focus = {
+		id = PER_contact_the_nobles
+		icon = GFX_focus_PER_embrace_opulence
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = PER_absolutist_focus
+		prerequisite = {
+			focus = PER_absolutist_focus
+		}
+		available = {
+			has_PER_absolutism_qajar = yes
+		}
+	
+		completion_reward = {
+			add_to_variable = {
+				var = PER_available_funds
+				value = 1
+				tooltip = PER_add_funds_tt
+			}
+			add_to_variable = {
+				var = PER_centralization_level
+				value = 2.5
+				tooltip = PER_add_centralization_tt
+			}
+		}
+
+		#search_filters = { FOCUS_FILTER_HISTORICAL }
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	focus = {
+		id = PER_contact_loyal_tribes
+		icon = GFX_focus_ITA_comandante_diavolo
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = PER_absolutist_focus
+		prerequisite = {
+			focus = PER_absolutist_focus
+		}
+		available = {
+			has_PER_absolutism_qajar = yes
+		}
+	
+		completion_reward = {
+			add_war_support = 0.1
+			add_to_variable = { 
+				PER_irregulars_cap = 1
+				tooltip = PER_increase_irregulars_cap_tt
+			}
+		}
+
+		#search_filters = { FOCUS_FILTER_HISTORICAL }
+		ai_will_do = {
+			factor = 50
+		}
+	}
+	focus = {
+		id = PER_our_rightful_place
+		icon = GFX_focus_generic_annex_country_2
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = PER_contact_the_nobles
+		prerequisite = {
+			focus = PER_contact_the_nobles
+			focus = PER_contact_loyal_tribes
+		}
+		available = {
+			has_PER_absolutism_qajar = yes
+			owns_state = 266
+		}
+	
+		completion_reward = {
+			if = {
+				limit = { 
+					NOT = {
+						capital_scope = {
+							state = 266
+						}
+					}
+				}
+				set_capital = {
+					state = 266
+				}
+			}
+			add_stability = 0.1
+			add_to_variable = {
+				var = PER_centralization_level
+				value = 5
+				tooltip = PER_add_centralization_tt
+			}
+			if = {
+				limit = { 
+					check_variable = {
+						PER_irregulars_cap < 6
+					}
+				}
+				set_variable = { 
+					PER_irregulars_cap = 6
+					tooltip = PER_set_irregulars_cap_tt
+				}
+			}
+		}
+
+		#search_filters = { FOCUS_FILTER_HISTORICAL }
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	focus = {
+		id = PER_to_our_benefactors
+		icon = GFX_focus_deal_with_russia
+		icon = {
+			GFX_focus_generic_befriend_turkey = {
+				has_country_leader = {
+					character = PER_abulfath_mirza
+				} 
+			}
+			GFX_focus_deal_with_russia = yes
+		}
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = PER_our_rightful_place
+		prerequisite = {
+			focus = PER_our_rightful_place
+		}
+		available = {
+			has_PER_absolutism_qajar = yes
+			capital_scope = { state = 266 }
+		}
+	
+		completion_reward = {
+			add_to_variable = {
+				PER_available_funds = 2
+				tooltip = PER_add_funds_tt
+			}
+			if = {
+				limit = { 
+					has_country_leader = {
+						character = PER_abulfath_mirza
+					}
+				}				
+				add_to_variable = {
+					TUR.PER_foreign_influence = 0.04
+					tooltip = PER_modify_TUR_influence_tt
+				}
+				PER_calculate_foreign_influnce = yes
+				TUR = {
+					PER_calculate_influnce_in_persia_modifiers = yes
+				}
+			}
+			else = {
+				add_to_variable = {
+					RUS.PER_foreign_influence = 0.04
+					tooltip = PER_modify_RUS_influence_tt
+				}
+				PER_calculate_foreign_influnce = yes
+				RUS = {
+					PER_calculate_influnce_in_persia_modifiers = yes
+				}
+			}
+		}
+
+		#search_filters = { FOCUS_FILTER_HISTORICAL }
+		ai_will_do = {
+			factor = 100
 		}
 	}
 }
