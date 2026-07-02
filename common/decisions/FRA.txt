@@ -457,7 +457,7 @@ FRA_french_bop = {
 }
 
 TGWR_great_power_politics = {
-	#great_power_politics_misc
+	#great_power_politics_scramble_for_africa
 	FRA_pull_out_from_mali = {
 		icon = GFX_decision_eng_blackshirt_march
 		allowed = {
@@ -470,7 +470,7 @@ TGWR_great_power_politics = {
 		# 	has_war_with = FROM
 		# }
 		visible = {
-			great_power_politics_misc_visible = yes
+			great_power_politics_scramble_for_africa_visible = yes
 			has_war_with = VOL
 			NOT = {
 				has_global_flag = mali_war_end
@@ -527,7 +527,7 @@ TGWR_great_power_politics = {
 			original_tag = FRA
 		}
 		visible = {
-			great_power_politics_misc_visible = yes
+			great_power_politics_scramble_for_africa_visible = yes
 			NOT = {
 				tag = FRC
 			}
@@ -599,20 +599,13 @@ TGWR_great_power_politics = {
 				original_tag = TUN
 			}
 		}
-		visible = {
+		cancel_trigger = {
 			hidden_trigger = {
-				OR = {
-					has_war_with = TUN
-					has_war_with = FRA
-				}
-				NOT = {
-					has_global_flag = france_tunisia_war_end
-				}
-				NOT = {
+				FRA = {
 					any_enemy_country = {
 						original_tag = FRA
 					}
-				}
+				}				
 			}
 		}
 		available = {
@@ -624,7 +617,6 @@ TGWR_great_power_politics = {
 				has_global_flag = france_tunisia_war_end
 			}
 		}
-		cancel_if_not_visible = yes
 		fixed_random_seed = no
 		is_good = no
 		fire_only_once = yes
@@ -634,6 +626,13 @@ TGWR_great_power_politics = {
 				white_peace = TUN
 			}
 			set_country_flag = france_lost_tunisia
+		}
+		cancel_effect = {
+			hidden_effect = {
+				FRA = {
+					white_peace = TUN
+				}
+			}
 		}
 	}
 	#great_power_politics_great_war
@@ -671,11 +670,10 @@ TGWR_great_power_politics = {
 			command_power > 9.9
 		}
 		custom_cost_text = decision_cost_CP_10
-		target_trigger = {
-			FROM = {
-				original_tag = RUS
-			}
+		targets = {
+			RUS
 		}
+		targets_dynamic = yes
 		available = {
 			FROM = {
 				any_enemy_country = {
@@ -698,21 +696,19 @@ TGWR_great_power_politics = {
 			}
 		}
 		complete_effect = {
-			effect_tooltip = {
-				FRA_maurice_janin = {
-					set_nationality = FROM
+			FRA_maurice_janin = {
+				set_nationality = FROM
+				unit_leader_event = {
+					id = ww1_france.240
+					hours = 5
 				}
+			}
+			effect_tooltip = {			
 				FROM = { add_command_power = 25 }
 			}
 			hidden_effect = {
 				set_country_flag = FRA_janin_sent_to_russia
 				add_command_power = -10
-				FROM = {
-					country_event = {
-						id = ww1_france.240
-						hours = 5
-					}
-				}
 			}
 		}
 	}
