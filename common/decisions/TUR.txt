@@ -5314,13 +5314,37 @@ TUR_millet_system = {
 		}
 		ai_will_do = { base = 70 }
 	}
+	TUR_integrate_mount_athos_autonomy = {
+		icon = GFX_decision_generic_break_treaty
+		allowed = { always = yes }
+		visible = { ATH = { is_subject_of = ROOT } }
+		target_root_trigger = {
+			OR = {
+				has_completed_focus = TUR_status_of_the_autonomies
+				has_completed_focus = ALB_law_and_order_in_macedonia
+			}
+		}
+		cost = 10
+		highlight_states = { highlight_state_targets = { state = 1255 } }
+		state_target = yes
+		targets = { 1255 }
+		complete_effect = {
+			annex_country = { target = ATH transfer_troops = yes }
+			1255 = {
+				add_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+				set_state_flag = TUR_autonomous_vilayet
+			}
+		}
+		ai_will_do = { base = 80 }
+	}
 	TUR_abolish_mount_athos_autonomy = {
 		icon = GFX_decision_generic_break_treaty
 		allowed = { always = yes }
 		visible = {
 			controls_state = 1255
 			owns_state = 1255
-			1255 = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } }
+			1255 = { has_dynamic_modifier = { modifier = TUR_autonomous_vilayet } }
+			always = no
 		}
 		target_root_trigger = {
 			OR = {
@@ -5333,7 +5357,10 @@ TUR_millet_system = {
 		state_target = yes
 		targets = { 1255 }
 		complete_effect = {
-			1255 = { remove_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } }
+			1255 = {
+				remove_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+				clr_state_flag = TUR_autonomous_vilayet
+			}
 			add_to_variable = {
 				var = global.TUR_selanik_centralization
 				value = 3
