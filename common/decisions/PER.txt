@@ -31,6 +31,7 @@ PER_guarded_domains = {
 		cancel_trigger = {
 			hidden_trigger = {
 				OR = {
+					has_PER_absolutism_qajar = yes
 					has_capitulated = yes
 					has_war_with = PRS
 					NOT = {					
@@ -63,8 +64,10 @@ PER_guarded_domains = {
 					add_claim_by = PRS
 				}
 			}
+			country_event = ww1_absolutist_revolts.1
 			PRS = {
 				declare_war_on = { target = ROOT type = civil_war }
+				activate_mission = PRS_enter_tehran
 				hidden_effect = {
 					add_civil_war_target = ROOT
 					inherit_technology = ROOT
@@ -103,6 +106,7 @@ PER_guarded_domains = {
 
 		cancel_trigger = {
 			hidden_trigger = {
+				has_PER_absolutism_qajar = yes
 				OR = {
 					has_capitulated = yes
 					has_war_with = PEX
@@ -134,8 +138,10 @@ PER_guarded_domains = {
 					add_claim_by = PEX
 				}
 			}
+			country_event = ww1_absolutist_revolts.2
 			PEX = {
 				declare_war_on = { target = ROOT type = civil_war }
+				activate_mission = PEX_enter_tehran
 				hidden_effect = {
 					add_civil_war_target = ROOT
 					inherit_technology = ROOT
@@ -145,6 +151,100 @@ PER_guarded_domains = {
 					copy_PER_base_ideas = yes
 				}			
 			}
+		}
+	}
+	PRS_enter_tehran = {
+		name = PER_enter_tehran
+		icon = generic_confiscation
+		
+		allowed = {
+			always = no
+		}
+
+		available = {
+			controls_province = 10837
+		}
+		
+		activation = {
+			always = no
+		}
+
+		highlight_states = {
+			highlight_state_targets = { state = 266 }
+   			highlight_provinces = { 10837 }
+			highlight_only_provinces = yes
+		}
+
+		cancel_trigger = {
+			NOT = {
+				has_war_with = PER
+			}
+		}
+
+		fire_only_once = yes
+
+		is_good = no
+		days_mission_timeout = 600
+
+		complete_effect = {
+			PER = {
+				force_capitulate = yes
+			}
+		}
+
+		timeout_effect = {
+			PER = {
+				country_event =  ww1_absolutist_revolts.3
+			}
+			custom_effect_tooltip = GAME_OVER_TT
+			force_capitulate = yes			
+		}
+	}
+	PEX_enter_tehran = {
+		name = PER_enter_tehran
+		icon = generic_confiscation
+		
+		allowed = {
+			always = no
+		}
+
+		available = {
+			controls_province = 10837
+		}
+		
+		activation = {
+			always = no
+		}
+
+		highlight_states = {
+			highlight_state_targets = { state = 266 }
+   			highlight_provinces = { 10837 }
+			highlight_only_provinces = yes
+		}
+
+		cancel_trigger = {
+			NOT = {
+				has_war_with = PER
+			}
+		}
+
+		fire_only_once = yes
+
+		is_good = no
+		days_mission_timeout = 60
+
+		complete_effect = {
+			PER = {
+				force_capitulate = yes
+			}
+		}
+
+		timeout_effect = {
+			PER = {
+				country_event =  ww1_absolutist_revolts.4
+			}
+			custom_effect_tooltip = GAME_OVER_TT
+			force_capitulate = yes			
 		}
 	}
 }	
@@ -211,7 +311,9 @@ PER_guarded_domains	= {
 			}
 			NOT = {
 				has_war_with = RUS
-				any_other_country = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
 					check_variable = {
 						PER_recruited_cossacks > 0
 						tooltip = PER_has_raised_cossacks_NOT
@@ -603,7 +705,9 @@ PER_guarded_domains = {
 				}
 			}
 			NOT = {
-				any_other_country = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
 					check_variable = {
 						PER_recruited_kurds > 0
 						tooltip = PER_has_raised_kurds_NOT
@@ -775,7 +879,9 @@ PER_guarded_domains = {
 				}
 			}
 			NOT = {
-				any_other_country = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
 					check_variable = {
 						PER_recruited_turkmens > 0
 						tooltip = PER_has_raised_turkmens_NOT
@@ -952,7 +1058,9 @@ PER_guarded_domains = {
 				}
 			}
 			NOT = {
-				any_other_country = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
 					check_variable = {
 						PER_recruited_azerbaijanis > 0
 						tooltip = PER_has_raised_azerbaijanis_NOT
@@ -1132,7 +1240,9 @@ PER_guarded_domains = {
 				}
 			}
 			NOT = {
-				any_other_country = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
 					check_variable = {
 						PER_recruited_gilaks > 0
 						tooltip = PER_has_raised_gilaks_NOT
@@ -1309,7 +1419,9 @@ PER_guarded_domains = {
 				}
 			}
 			NOT = {
-				any_other_country = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
 					check_variable = {
 						PER_recruited_mazanderanis > 0
 						tooltip = PER_has_raised_mazanderanis_NOT
@@ -1480,7 +1592,9 @@ PER_guarded_domains = {
 				}
 			}
 			NOT = {
-				any_other_country = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
 					check_variable = {
 						PER_recruited_bakhtiari > 0
 						tooltip = PER_has_raised_bakhtiaris_NOT
@@ -1651,7 +1765,9 @@ PER_guarded_domains = {
 				}
 			}
 			NOT = {
-				any_other_country = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
 					check_variable = {
 						PER_recruited_lurs > 0
 						tooltip = PER_has_raised_lurs_NOT
@@ -1814,7 +1930,9 @@ PER_guarded_domains = {
 				impassable = no
 			}
 			NOT = {
-				any_other_country = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
 					check_variable = {
 						PER_recruited_gendarmerie > 0
 						tooltip = PER_has_raised_gendarmerie_NOT
@@ -1895,7 +2013,9 @@ PER_guarded_domains = {
 				impassable = no			
 			}
 			NOT = {
-				any_other_country = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
 					check_variable = {
 						PER_recruited_gendarmerie > 0
 						tooltip = PER_has_raised_gendarmerie_NOT
