@@ -1,0 +1,281 @@
+types = {
+	
+	GRE_liberate_athos_raid = {
+
+		days_to_prepare = 30
+		days_re_enable = 0
+		speed_multiplier = 8
+		category = naval_commando_raids
+		custom_map_icon = GFX_raid_unit_icon_naval_commando_raids
+		target_icon = GFX_other_target_icon
+		target_loc_key = raid_target_name_state
+		launch_sound = raid_launch_marine
+
+		ai_min_success_chance = 0.15
+
+		arrow = {
+			type = naval
+		}
+
+		unit_model = {
+			entity = "westerngfx_traderoute_convoy" 
+			start_offset = 15
+		}
+
+		ai_will_do = {
+			base = 100
+		}
+
+		command_power = 10
+
+		allowed = {
+			tag = GRE
+		}
+
+		visible = {
+			NOT = { has_global_flag = GRE_surrender_in_balkan_war }
+			is_subject = no
+		}
+
+		show_target = {
+			FROM = {
+				tag = ATH
+				is_subject_of = TUR
+			}
+		}
+
+		target_type = {
+			province = 5012
+		}
+
+		fire_only_once = yes
+
+		available = {
+			has_war_with = TUR
+		}
+
+		launchable = {
+			
+		}
+
+		cancel_trigger = {
+			NOT = {
+				has_war_with = TUR
+				ATH = {
+					is_subject_of = TUR
+				}
+			}			
+		}
+
+		starting_point = {
+			types = { naval_base }
+			allow_faction_buildings = yes
+		}
+
+		unit_requirements = {
+			battalion_types = {
+				marine = { min = 1 }
+			}
+		}
+		unit_requirements = {
+			battalion_types = {
+				militia = { min = 1 }
+			}
+		}
+		unit_requirements = {
+			battalion_types = {
+				infantry = { min = 1 }
+			}
+		}
+
+		essential_equipment = {
+			convoy = 10
+		}
+
+		additional_equipment = {
+
+		}
+
+		success_factors = {
+			success = {
+				base = 0.5
+
+				# Raiding unit modifiers
+				experience = {
+					weight = 0.25
+					start_weight = -0.2
+					reference = 1.0
+				}
+
+				organisation = {
+					weight = 0.1
+					start_weight = -0.1
+					reference = 100
+				}
+				strength = {
+					weight = 0.1
+					start_weight = -0.1
+					reference = 1
+				}
+				recon = {
+					weight = 0.05
+					reference = 10
+				}
+
+				### Target Modifiers
+				air_superiority = {
+					reference = 1
+					start_reference = 0.5
+					weight = 0.2
+				}
+
+				enemy_units = {
+					reference = 4 # More than 4 DIVs in the target Province shouldn't make any difference
+					weight = -0.4
+				}
+				intel = {
+					weight = 0.2
+					#start_reference = 50
+					reference = 100
+				}
+			}
+		}
+
+		success_levels = {
+			failure = {
+				victim_effects = {
+				
+				}
+				actor_effects = {
+
+					# Damage to unit
+					raid_damage_units = {
+						org_damage = 0.65
+						str_damage = 0.60
+						ratio = yes
+					}
+					# Unit Experience
+					raid_add_unit_experience = 0.1
+					add_raid_history_entry = yes
+
+				}
+				division_effects = {
+					add_divisional_commander_xp = 10
+				}
+				visual_effect = {
+					entity = "raid_failed_entity"
+					animation = "attack"
+				}
+			}
+
+			limited_success = {
+				victim_effects = {
+					var:victim_country = {
+						country_event = ww1_mount_athos.5
+						TUR = {
+							country_event = {
+								id = ww1_mount_athos.6
+								hours = 1
+							}	
+						}
+					}
+				}
+				actor_effects = {
+					var:actor_country = {
+						country_event = ww1_mount_athos.4
+					}
+
+					# Damage to unit
+					raid_damage_units = {
+						org_damage = 0.65
+						str_damage = 0.60
+						ratio = yes
+					}
+					# Unit Experience
+					raid_add_unit_experience = 0.1
+					add_raid_history_entry = yes
+
+				}
+				division_effects = {
+					add_divisional_commander_xp = 10
+				}
+				visual_effect = {
+					entity = "land_raids_limited_success_entity"
+					animation = "attack"
+				}
+			}
+			success = {
+				victim_effects = {
+					var:victim_country = {
+						country_event = ww1_mount_athos.5
+						TUR = {
+							country_event = {
+								id = ww1_mount_athos.6
+								hours = 1
+							}	
+						}
+					}
+				}
+				actor_effects = {
+					var:actor_country = {
+						country_event = ww1_mount_athos.4
+					}
+
+					# Damage to unit
+					raid_damage_units = {
+						org_damage = 0.65
+						str_damage = 0.60
+						ratio = yes
+					}
+					# Unit Experience
+					raid_add_unit_experience = 0.2
+					add_raid_history_entry = yes
+
+				}
+				division_effects = {
+					add_divisional_commander_xp = 20
+				}
+				visual_effect = {
+					entity = "land_raids_success_entity"
+					animation = "attack"
+				}
+			}
+			critical_success = {
+				victim_effects = {
+					var:victim_country = {
+						country_event = ww1_mount_athos.5
+						TUR = {
+							country_event = {
+								id = ww1_mount_athos.6
+								hours = 1
+							}	
+						}
+					}
+				}
+				actor_effects = {
+					var:actor_country = {
+						country_event = ww1_mount_athos.4
+					}
+
+					# Damage to unit
+					raid_damage_units = {
+						org_damage = 0.1
+						str_damage = 0.05
+						ratio = yes
+					}
+					# Unit Experience
+					raid_add_unit_experience = 0.1
+					add_raid_history_entry = yes
+
+				}
+				division_effects = {
+					add_divisional_commander_xp = 20
+				}
+				visual_effect = {
+					entity = "land_raids_critical_success_entity"
+					animation = "attack"
+				}
+			}
+		}
+	}
+}
