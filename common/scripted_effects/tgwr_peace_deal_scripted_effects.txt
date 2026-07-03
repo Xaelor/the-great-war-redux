@@ -1506,6 +1506,7 @@ armistice_effect = {
 					OR = {
 						#state = 736
 						state = 1197
+						state = 1260
 						state = 1198
 						state = 1010
 						state = 163
@@ -1941,6 +1942,7 @@ armistice_effect = {
 					owns_state = 184
 					owns_state = 200
 					owns_state = 345
+					owns_state = 1255
 					owns_state = 757
 				}
 			}
@@ -1968,6 +1970,7 @@ armistice_effect = {
 						OR = {
 							state = 184
 							state = 345
+							state = 1255
 						}
 					}
 					transfer_state_to = PREV
@@ -2040,6 +2043,16 @@ armistice_effect = {
 				every_state = {
 					limit = { is_claimed_by = PREV }
 					remove_claim_by = PREV
+				}
+				every_state = {
+					limit = { has_contested_owner = PREV }
+					remove_contested_owner = PREV
+					if = {
+						limit = {
+							NOT = { is_owned_by = GRM }
+						}
+						add_contested_owner = GRM
+					}
 				}
 			}
 			if = {
@@ -2362,7 +2375,7 @@ armistice_effect = {
 			PER = {
 				any_enemy_country = {
 					original_tag = PER
-					has_country_flag = PER_gendarmerie_flag
+					has_country_flag = PER_defense_committee_flag
 					any_enemy_country = {
 						OR = {
 							has_country_flag = great_war_winner
@@ -2376,7 +2389,7 @@ armistice_effect = {
 			every_enemy_country = {
 				limit = {
 					original_tag = PER
-					has_country_flag = PER_gendarmerie_flag
+					has_country_flag = PER_defense_committee_flag
 				}
 				every_enemy_country = {
 					limit = {
@@ -2424,7 +2437,7 @@ armistice_effect = {
 				NOT = { has_country_flag = great_war_loser }
 				any_enemy_country = {
 					original_tag = PER
-					has_country_flag = PER_gendarmerie_flag
+					has_country_flag = PER_defense_committee_flag
 					NOT = {
 						has_war_with = ENG
 						has_war_with = RUS
@@ -2437,7 +2450,7 @@ armistice_effect = {
 			random_other_country = {
 				limit = {
 					original_tag = PER
-					has_country_flag = PER_gendarmerie_flag
+					has_country_flag = PER_defense_committee_flag
 				}
 				transfer_navy = {
 					target = PREV
@@ -2465,7 +2478,7 @@ armistice_effect = {
 		limit = {
 			country_exists = PER
 			has_global_flag = russian_revolution
-			has_global_flag = persian_gendarmerie_revolt
+			has_global_flag = PER_national_defense_committee
 			PER = {
 				NOT = {
 					has_country_flag = great_war_loser
@@ -2702,9 +2715,9 @@ armistice_effect = {
 				}
 			}
 		}
-		random_country = {
+		random_country_with_original_tag = {
+			original_tag_to_check = SAF
 			limit = {
-				original_tag = SAF
 				has_government = fascism
 			}
 			every_enemy_country = {
@@ -4124,21 +4137,9 @@ conference_effect = {
 						country_exists = TRP
 					}
 					TUR = {
-						set_autonomy = {
+						annex_country = {
 							target = TRP
-							autonomy_state = autonomy_tgwr_ottoman_emirate
-						}
-					}
-					TRP = {
-						set_politics = {
-							ruling_party = neutrality
-							elections_allowed = no
-						}
-						set_popularities = {
-							democratic = 0
-							fascism = 17
-							communism = 0
-							neutrality = 83
+							transfer_troops = no
 						}
 					}
 				}
@@ -4939,6 +4940,7 @@ conference_effect = {
 						region = 192
 
 						state = 766
+						state = 1263
 						state = 808
 						state = 91
 						state = 89
@@ -5246,6 +5248,36 @@ conference_effect = {
 		}
 		else = {
 			345 = { set_state_flag = dont_transfer }
+			1256 = { set_state_flag = dont_transfer }
+		}
+	}
+	if = {
+		limit = {
+			1255 = {
+				OWNER = {
+					has_country_flag = great_war_loser
+				}
+			}
+		}
+		if = {
+			limit = {
+				BUL = { has_country_flag = great_war_winner }
+				OR = {
+					BUL = { has_completed_focus = BUL_claim_salonika }
+					has_global_flag = greek_defeated_in_ww1
+				}
+			}
+			BUL = { transfer_state = 1255 }
+		}
+		else_if = {
+			limit = {
+				TUR = { has_country_flag = great_war_winner }
+				has_global_flag = greek_defeated_in_ww1
+			}
+			TUR = { transfer_state = 1255 }
+		}
+		else = {
+			1255 = { set_state_flag = dont_transfer }
 		}
 	}
 	if = {
@@ -5397,9 +5429,9 @@ conference_effect = {
 				has_country_flag = great_war_loser
 			}
 		}
-		every_country = {
+		random_country_with_original_tag = {
+			original_tag_to_check = GRE
 			limit = {
-				original_tag = GRE
 				has_country_flag = great_war_loser
 			}
 			if = {

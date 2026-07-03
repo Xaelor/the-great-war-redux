@@ -7,8 +7,7 @@ NDefines.NGame.END_DATE = "1935.1.1.1"
 NDefines.NGame.HANDS_OFF_START_TAG = "BHU"
 NDefines.NGame.DECISION_ALERT_TIMEOUT_DAYS = 60	
 NDefines.NGame.LAG_DAYS_FOR_LOWER_SPEED = 30								-- Vanilla is 10
-NDefines.NGame.LAG_DAYS_FOR_PAUSE = 60
-NDefines.NCountry.WAR_SUPPORT_OFFNSIVE_WAR = -0.1							-- Vanilla is 25
+NDefines.NGame.LAG_DAYS_FOR_PAUSE = 60							-- Vanilla is 25
 NDefines.NCountry.MAJOR_MIN_FACTORIES = 20							        -- Vanilla is 35 -- need at least these many factories to become a major
 
 NDefines.NDiplomacy.TENSION_TIME_SCALE_START_DATE = "1910.5.1.12"
@@ -124,7 +123,6 @@ NDefines.NSupply.CAPITAL_SUPPLY_MILITARY_FACTORIES = 0.5
 NDefines.NSupply.CAPITAL_SUPPLY_DOCKYARDS = 0.3
 
 -- Production AI
-NDefines.NProduction.BASE_ENERGY_COST = 2						-- How much energy per factory consumes (Vanilla is 0.25)
 
 NDefines.NDiplomacy.EMBARGO_COST = 0 -- Vanilla is 100
 NDefines.NDiplomacy.EMBARGO_THREAT_THRESHOLD = 0 -- Vanilla is 30

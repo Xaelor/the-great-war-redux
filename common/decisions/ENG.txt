@@ -1077,8 +1077,10 @@ operations = {
 		activation = {
 			has_capitulated = no
 			is_subject = no
+			has_dynamic_modifier = PER_influence_in_persia_modifier
 			RUS = {
 				is_in_faction_with = ROOT
+				has_dynamic_modifier = PER_influence_in_persia_modifier
 				NOT = {
 					has_war_with = PER
 					tag = SOV
@@ -1098,11 +1100,9 @@ operations = {
 					is_in_faction_with = ROOT
 					is_in_faction = no
 				}
-				has_idea = PER_idea_foreign_reliance
+				has_dynamic_modifier = PER_foreign_influence_modifier
 			}
-			any_state = {
-				has_dynamic_modifier = { modifier = per_british_sphere }
-			}
+			check_variable = { ENG.PER_foreign_influence > 0.1 }
 			OR = {
 				has_war_with = TUR
 				PER = { has_war_with = TUR }
@@ -1117,7 +1117,7 @@ operations = {
 				has_global_flag = great_war_ends
 				PER = {
 					NOT = {
-						has_idea = PER_idea_foreign_reliance
+						has_dynamic_modifier = PER_foreign_influence_modifier
 					}
 				}
 				NOT = {
@@ -1835,86 +1835,7 @@ ENG_british_civil_war_category = {
 		}
 	}
 }
-#If removing this decision causes no bugs after the RCW update, just remove it - keeping it just in case we need it
-GER_agadir_crisis = {
-	ENG_agadir_involvement = {
-		icon = GFX_decision_generic_naval
-		allowed = {
-			tag = ENG
-			always = no
-		}
-		available = {
-			always = no
-			NOT = {
-				has_global_flag = agadir_crisis_ends
-				has_global_flag = great_war
-				has_war_with = GER
-				has_war_with = FRA
-			}
-			GER = { 
-				# has_completed_focus = GER_moroccan_crisis 
-				has_country_flag = GER_sms_panther_morocco
-			}
-		}
-		visible = {
-			always = no
-			has_global_flag = agadir_crisis
-			NOT = {
-				has_global_flag = great_war
-				has_global_flag = agadir_crisis_ends
-				is_in_faction_with = GER
-			}
-		}
-		cancel_trigger = {
-			OR = {
-				has_global_flag = agadir_crisis_ends
-				has_global_flag = great_war
-				has_war_with = GER
-				has_war_with = FRA
-			}
-		}
-		fire_only_once = yes
-		days_remove = 5
-		complete_effect = {
-			add_state_claim = 887
-		}
-		remove_effect = {
-			FRA = { country_event = ww1_morocco.16 }
-			GER = { country_event = ww1_morocco.16 }
-			effect_tooltip = {
-				FRA = {
-					add_opinion_modifier = {
-						target = PREV
-						modifier = HOI4TGW_Opinion_diplomats_bonus
-					}
-				}
-				GER = {
-					add_opinion_modifier = {
-						target = PREV
-						modifier = HOI4TGW_Opinion_diplomats_malus
-					}
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 1000
-			modifier = {
-				factor = 0
-				has_opinion = {
-					target = GER
-					value > 50
-				}
-			}
-			modifier = {
-				factor = 0
-				has_opinion = {
-					target = FRA
-					value < 0
-				}
-			}
-		}
-	}
-}
+
 foreign_influence = {
 	ENG_integrate_orange_order = {
 		icon = GFX_decision_eng_ally_imperialist_coup

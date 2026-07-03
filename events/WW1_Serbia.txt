@@ -1044,6 +1044,7 @@ country_event = {
 				or = {
 					state = 106
 					state = 203
+					state = 1258
 					state = 759
 					state = 847
 					state = 44
@@ -1738,7 +1739,10 @@ country_event = {
 	trigger = {
 		original_tag = SER
 		has_global_flag = kis_secondbalkanwar_victory
-		owns_state = 203
+		OR = {
+			owns_state = 203
+			owns_state = 1258
+		}
 		country_exists = ALB
 		has_war = no
 		NOT = {
@@ -1751,9 +1755,23 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			set_global_flag = ohrid_debar
-			203 = {
-				transfer_state_to = MAC
-				add_core_of = MAC
+			if = {
+				limit = { 
+					owns_state = 203
+				}
+				203 = {
+					transfer_state_to = MAC
+					add_core_of = MAC
+				}
+			}
+			if = {
+				limit = { 
+					owns_state = 1258
+				}
+				1258 = {
+					transfer_state_to = MAC
+					add_core_of = MAC
+				}
 			}
 			MAC = {
 				load_oob = VMRO_ohrid_debar
@@ -3480,7 +3498,7 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_serbia.139.a
-		custom_effect_tooltip = GAME_OVER_TT
+		custom_effect_tooltip = GAME_OVER_TT	
 		FROM = {
 			annex_country = {
 				target = CRO
@@ -3536,6 +3554,12 @@ country_event = {
 					}
 					add_claim_by = PREV
 				}
+			}
+		}
+		if = {
+			limit = { has_character = AUH_dragutin_prica }
+			AUH_dragutin_prica = {
+				set_nationality = FROM
 			}
 		}
 	}

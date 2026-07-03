@@ -1,3 +1,9 @@
+diplomatic_trigger_always_no = {
+	custom_trigger_tooltip = {
+		tooltip = diplomatic_trigger_always_no_tt
+		always = no
+	}
+}
 has_completed_industrial_warfare_doctrine = {
 	custom_trigger_tooltip = {
 		tooltip = has_completed_industrial_warfare_doctrine_tt
@@ -493,6 +499,9 @@ is_islamic_core = {
 		is_core_of = DAR
 		is_core_of = KUT
 		is_core_of = BLC
+		is_core_of = ARB
+		is_core_of = MAK
+		is_core_of = MRG
 	}
 }
 
@@ -663,6 +672,21 @@ is_a_very_weak_country = {
 		num_of_controlled_states < 2
 		num_of_factories < 3
 	}
+}
+
+is_disabled_tag = {
+	OR = {
+		is_microstate = yes
+		original_tag = ZAN
+		original_tag = MLD
+		original_tag = PLS
+		original_tag = KED
+		original_tag = KEL
+		original_tag = TRG
+		original_tag = RIA
+		original_tag = FUJ
+	}
+
 }
 
 is_spanish_tag = {
@@ -993,14 +1017,20 @@ is_actual_major_without_exceptions = {
 is_polish_criteria_state = {
     OR = {
         state = 10  # Warszawa
+        state = 1266  # Pultulsk
         state = 87  # Kalisz
         state = 90  # Kielce
         state = 92  # Lublin
+        state = 1262  # Sedlets
         state = 98  # Plock
         state = 766 # Kholm
+        state = 1263 # Byala
         state = 1201 # Radom
         state = 1202 # Piotrków
+        state = 1264 # Lodz
+        state = 1265 # Chenstokhov
         state = 1203 # Łomża
+        state = 1267 # Kolno
         state = 1204 # Włocławek
     }
 }
@@ -1133,7 +1163,18 @@ is_generic_character = {
 is_in_colonial_war = {
 	custom_trigger_tooltip = {
 		tooltip = is_in_colonial_war_tt
+		has_war = yes
 		has_dynamic_modifier = colonial_war
+		all_enemy_country = {
+			capital_scope = {
+				OR = {
+					is_on_continent = africa
+					is_on_continent = middle_east
+					is_on_continent = asia
+				}
+			}
+			is_actual_major = no
+		}	
 	}
 }
 is_in_major_war = {
@@ -1143,6 +1184,6 @@ is_in_major_war = {
 		any_enemy_country = {
 			is_government_in_exile = no
 		}
-		NOT = { has_dynamic_modifier = colonial_war }
+		is_in_colonial_war = no
 	}
 }

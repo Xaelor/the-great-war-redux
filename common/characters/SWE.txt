@@ -1,6 +1,7 @@
 characters={
 	SWE_gustaf_v = {
 		name="SWE_gustaf_v"
+		can_be_captured = no
 		portraits={
 			civilian={
 				large="gfx/leaders/SWE/SWE_gustaf_v.png"
@@ -488,6 +489,7 @@ characters={
 	
 	SWE_knut_gillis_bildt = {	# Actually a bit liberal
 		name="SWE_knut_gillis_bildt"
+		can_be_captured = no
 		advisor={
 			slot = army_chief
 			idea_token = SWE_knut_gillis_bildt
@@ -2013,6 +2015,31 @@ characters={
 				large = "gfx/leaders/SWE/SWE_harald_hjalmarson.png"
 			}
 		}
+		advisor={
+			slot = theorist
+			idea_token = PER_harald_hjalmarson
+			ledger  = army 
+			allowed  = {
+				original_tag  = PER
+			}
+			available = {
+				NOT = {
+					has_war_with = SWE
+				}
+			}
+			visible = {
+				NOT = {
+					has_government = communism
+				}
+			}
+			traits  = {
+				military_theorist 
+			}
+			cost = 100
+			ai_will_do  = {
+				factor  = 1
+			}
+		}
 		corps_commander = {
 			traits = { politically_connected old_guard career_officer }
 			skill = 3
@@ -2025,6 +2052,12 @@ characters={
 					original_tag = SWE #He had never been a general in his country
 					has_government = communism
 					has_war_with = SWE
+				}
+				if = {
+					limit = { original_tag = PER }
+					check_variable = {
+						PER_recruited_gendarmerie > 0
+					}
 				}
 			}
 		}

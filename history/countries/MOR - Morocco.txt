@@ -31,6 +31,11 @@ recruit_character = MOR_mohammed_ameziane
 
 recruit_character = MOR_sidi_mohamed_of_tazeroualt
 
+recruit_character = MOR_zain_al_abidin_ibn_al_hasan
+
+set_country_flag = empty_focus
+load_focus_tree = empty_focus
+
 1910.1.1 = {
 	oob = "MOR_1910"
 	set_technology = {
@@ -114,9 +119,17 @@ recruit_character = MOR_sidi_mohamed_of_tazeroualt
 	# 	limit = { has_start_date < 1914.1.1 }
 	# 	MOR_muhammad_al_mustfa_al_qalqami = { unit_leader_event = { id = ww1_generic.38 days = 175 }} #died in 1910.10.23, should be its own event
 	# }
+	if = {
+		limit = { 
+			has_start_date < 1914.1.1 
+		}
+		activate_mission = MOR_tribal_discontent
+	}
 	GUD = {
 		if = {
-			limit = { has_start_date < 1914.1.1 }
+			limit = { 
+				has_start_date < 1914.1.1 
+			}
 			declare_war_on = {
 				target = MOR
 				type = civil_war
@@ -127,6 +140,7 @@ recruit_character = MOR_sidi_mohamed_of_tazeroualt
 					type = annex_everything
 				}
 			}
+			activate_mission = GUD_jihad_against_french
 			MOR_muhammad_al_mustfa_al_qalqami = {
 				unit_leader_event = { id = ww1_morocco.89 days = 175 }
 			}
@@ -274,6 +288,31 @@ create_dynamic_country = {
 		GUD_nation_of_poets
 		GUD_tribal_loyalty_medium
 		GUD_uncertain_mission
+	}
+}
+create_dynamic_country = {
+	original_tag = MOR
+	reserve_dynamic_country = yes
+	set_country_flag = MOR_anti_french
+	set_cosmetic_tag = RMO
+	PREV = {
+		MOR_zain_al_abidin_ibn_al_hasan = {
+			set_nationality = PREV.PREV
+			promote_character = absolute_monarchy
+			promote_character = reactionism
+		}
+		MOR_mouha_ou_hammou_zayani = {
+			set_nationality = PREV.PREV
+		}
+	}
+	set_country_flag = empty_focus
+	load_focus_tree = empty_focus
+	set_popularities = {
+		neutrality = 100
+	}
+	set_politics = {
+		ruling_party = neutrality
+		elections_allowed = no
 	}
 }
 

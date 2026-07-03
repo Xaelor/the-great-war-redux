@@ -3743,71 +3743,53 @@ focus_tree = {
 			is_in_faction = no
 			NOT = {
 				has_war_with = ENT
+				#ENG is democratic => France must be democratic or neutral / democratic + neutral alliance are valid
+				AND = {
+					has_government = democratic
+					ENT = {
+						OR = {
+							has_government = fascism
+							has_government = communism
+						}
+					}
+				}
+				#ENG is communist => France is communist too
+				AND = {
+					has_government = communism
+					ENT = {
+						NOT = {
+							has_government = communism
+							has_government = democratic #COMMIE BRITAIN IS MEANT TO BE ABLE TO JOIN HISTORICAL FRANCE NUMBNUTS
+						}
+					}
+				}
+				#ENG is fascist => France is fascist or neutral
+				AND = {
+					has_government = fascism
+					NOT = {
+						ENT = {
+							OR = {
+								has_government = fascism
+								has_government = neutrality
+							}
+						}
+					}
+				}
+				#ENG is neutral => France must be democratic or neutral or fascist
+				AND = {
+					has_government = neutrality
+					ENT = {
+						has_government = communism
+					}
+				}
 				has_global_flag = great_war_ends
 			}
 			NOT = {
 				has_idea = neutrality_idea
 			}
 		}
-		cancel_if_invalid = no
-		select_effect = {
-			if = {
-				limit = {
-					OR = {
-						has_war_with = ENT
-						#ENG is democratic => France must be democratic or neutral / democratic + neutral alliance are valid
-						AND = {
-							has_government = democratic
-							ENT = {
-								OR = {
-									has_government = fascism
-									has_government = communism
-								}
-							}
-						}
-						#ENG is communist => France is communist too
-						AND = {
-							has_government = communism
-							ENT = {
-								NOT = {
-									has_government = communism
-									has_government = democratic #COMMIE BRITAIN IS MEANT TO BE ABLE TO JOIN HISTORICAL FRANCE NUMBNUTS
-								}
-							}
-						}
-						#ENG is fascist => France is fascist or neutral
-						AND = {
-							has_government = fascism
-							NOT = {
-								ENT = {
-									OR = {
-										has_government = fascism
-										has_government = neutrality
-									}
-								}
-							}
-						}
-						#ENG is neutral => France must be democratic or neutral or fascist
-						AND = {
-							has_government = neutrality
-							ENT = {
-								has_government = communism
-							}
-						}
-					}
-				}
-				ENT = {
-					set_rule = {
-						can_create_factions = yes
-					}
-					set_country_flag = ENG_cant_ally_france
-				}
-			}
-			
-		}
 		bypass = {
 			OR = {
-				has_country_flag = ENG_cant_ally_france
 				is_in_faction_with = ENT
 				has_country_flag = entente_leader
 			}
@@ -4590,13 +4572,8 @@ focus_tree = {
 			has_subject = EGY
 		}
 		bypass = {
-			OR = {
-				NOT = {
-					has_subject = EGY
-				}
-				TUR = {
-					has_completed_focus = TUR_kick_the_british_out_of_egypt
-				}
+			NOT = {
+				has_subject = EGY
 			}
 		}
 		completion_reward = {
@@ -5418,7 +5395,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ENG_expand_Ship
-		icon = GFX_goal_placeholder
+		icon = GFX_focus_generic_shipyard
 		cost = 10
 		prerequisite = {
 			focus = ENG_Kingdom_Eternal
@@ -5606,15 +5583,9 @@ focus_tree = {
 				has_war_with = PER
 			}
 			PER = {
-				OR = {
-					has_idea = PER_idea_foreign_reliance
-					any_owned_state = {
-						has_dynamic_modifier = {
-							modifier = per_british_sphere
-						}
-					}
-				}
+				has_dynamic_modifier = PER_foreign_influence_modifier
 			}
+			check_variable = { ENG.PER_foreign_influence > 0.1 }
 		}
 		x = -2
 		y = 0
@@ -5622,17 +5593,6 @@ focus_tree = {
 		completion_reward = {
 			effect_tooltip = {
 				PER = {
-					add_ideas = PER_idea_nationalised_oil
-					every_subject_country = {
-						limit = {
-							OR = {
-								owns_state = 413
-								owns_state = 1246
-								owns_state = 412
-							}
-						}
-						add_ideas = PER_idea_nationalised_oil
-					}
 					if = {
 						limit = {
 							OR = {
@@ -6179,13 +6139,9 @@ focus_tree = {
 joint_focus = {
 	id = ENG_GER_haldane_mission
 	icon = {
-		trigger = { has_focus_tree = german_focus }
-		value = GFX_focus_chi_british_cooperation
+		GFX_focus_chi_british_cooperation = { has_focus_tree = german_focus }
+		GFX_focus_deal_with_german_empire = yes
 	}
-	icon = {
-		value = GFX_focus_deal_with_german_empire
-	}
-	icon = GFX_focus_chi_british_cooperation
 	text_icon = joint_ENG_GER_focus_style
 	cost = 2
 	x = 0

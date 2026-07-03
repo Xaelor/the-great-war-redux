@@ -92,6 +92,7 @@ country_event = {
 						state = 158
 						state = 159
 						state = 160
+						state = 1259
 						state = 161
 						state = 162
 						state = 735
@@ -431,6 +432,16 @@ country_event = {
 						}
 					}
 					set_state_controller = 160
+				}
+				if = {
+					limit = {
+						1259 = {
+							owner = {
+								original_tag = ITA
+							}
+						}
+					}
+					set_state_controller = 1259
 				}
 			}
 		}
@@ -981,6 +992,7 @@ country_event = {
 						state = 158
 						state = 159
 						state = 160
+						state = 1259
 						state = 161
 						state = 162
 						state = 735
@@ -2292,14 +2304,29 @@ country_event = {
 				}
 				if = {
 					limit = {
-						owns_state = 160
+						OR = {
+							owns_state = 160
+							owns_state = 1259
+						}
 						NOT = {
 							country_exists = VNC
 						}
 					}
 					VNC = {
-						add_state_core = 160
-						transfer_state = 160
+						PREV = {
+							every_owned_state = {
+								limit = {
+									OR = {
+										state = 160
+										state = 1259
+									}
+								}
+								PREV.PREV = {
+									add_state_core = PREV
+									transfer_state = PREV
+								}
+							}
+						}
 						if = {
 							limit = {
 								TTS = {

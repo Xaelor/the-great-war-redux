@@ -660,6 +660,7 @@
 				SER = {
 					remove_state_core = 106
 					remove_state_core = 203
+					remove_state_core = 1258
 					remove_state_core = 1140
 					remove_state_core = 1213
 					set_country_flag = BW1_loser
@@ -906,6 +907,12 @@
 				}
 				drop_cosmetic_tag = yes
 			}
+			if = {
+				limit = {
+					has_dynamic_modifier = PER_foreign_influence_modifier
+				}
+				PER_calculate_foreign_influnce = yes
+			}
 		}
 	}
 	
@@ -1030,10 +1037,9 @@
 			else_if = { ### Ottoman ###
 				limit = {
 					tag = TUR
-				}
+				}					
 				country_event = ottoman.42
 				country_event = ottoman.45
-				country_event = ottoman.38
 				country_event = ottoman.118
 				country_event = ottoman.119
 				country_event = ottoman.151
@@ -1292,12 +1298,6 @@
 						original_tag = TUN
 						original_tag = ALG
 					}
-					OR = {
-						has_cosmetic_tag = FRA_classic_blue
-						has_cosmetic_tag = FRA_socialist_red_alone
-						has_cosmetic_tag = ALG_FRA
-						has_cosmetic_tag = TUN_FRA
-					}
 				}
 				if = {
 					limit = {
@@ -1320,12 +1320,6 @@
 						original_tag = MOR
 						original_tag = TUN
 						original_tag = ALG
-					}
-					OR = {
-						has_cosmetic_tag = FRA_classic_blue
-						has_cosmetic_tag = FRA_socialist_red_alone
-						has_cosmetic_tag = ALG_FRA
-						has_cosmetic_tag = TUN_FRA
 					}
 				}
 				if = {
@@ -4440,6 +4434,16 @@
 		}
 	}
 	on_startup = {
+		#Persia
+		effect = {
+			PER = {
+				#Cossack Brigade cap
+				set_division_template_cap = { 
+					division_template = "Ataryād-e Qazāqkhāneh" 
+					division_cap = global.PER_cossack_cap
+				}	
+			}
+		}
 		effect = {
 			295 = {
 				add_dynamic_modifier = { modifier = BEL_belgian_colonial_policy }
@@ -5148,28 +5152,6 @@
 						40 = { RUS = { set_country_flag = SOV_AI_RANDOM_REVISIONIST } }
 						20 = { RUS = { set_country_flag = SOV_AI_RANDOM_MENSHEVIK } }
 						10 = { RUS = { set_country_flag = SOV_AI_RANDOM_THIRD_FORCE } }
-					}
-				}
-				if = {
-					limit = {
-						has_game_rule = {
-							rule = rule_russian_flag
-							option = AHISTORICAL_RUSSIAN_FLAG
-						}
-					}
-					RUS = {
-						set_cosmetic_tag = RUS_ahistorical_flag
-					}
-				}
-				else_if = {
-					limit = {
-						has_game_rule = {
-							rule = rule_russian_flag
-							option = IMPERIAL_RUSSIAN_FLAG
-						}
-					}
-					RUS = {
-						set_cosmetic_tag = RUS_absolutism
 					}
 				}
 			}
@@ -6470,16 +6452,19 @@
 			if = {
 				limit = {
 					tag = RMO
-					is_subject = no
-					has_war_with = FRA
-					MOR = {
-						is_subject_of = FRA
+				}
+				RMO = {
+					every_core_state = {
+						remove_core_of = PREV
 					}
 				}
 				MOR = {
 					annex_country = {
 						target = RMO
 						transfer_troops = no
+					}
+					MOR_zain_al_abidin_ibn_al_hasan = {
+						set_nationality = PREV
 					}
 				}
 			}
@@ -6517,11 +6502,43 @@
 								limit = {
 									OR = {
 										has_subject = PREV
-										has_idea = SPR_pact_of_cartagena_1907
+										SPR = {
+											has_idea = SPR_pact_of_cartagena_1907
+										}
 									}
 								}
 								transfer_state = 1236
+								transfer_state = 1254
 							}
+						}
+					}
+				}
+			}
+			if = {
+				limit = { 
+					tag = MOR
+					FROM = {
+						tag = GUD
+					}
+				}
+				FROM = {
+					annex_country = {
+						target = MOR
+						transfer_troops = no
+					}
+					ROOT = {
+						every_character = {
+							limit = {
+								is_generic_character = no
+								NOT = {
+									is_character = MOR_harry_aubrey_de_vere_maclean
+								}
+							}
+							set_nationality = FROM
+						}
+						every_core_state = {
+							remove_core_of = ROOT
+							add_core_of = FROM
 						}
 					}
 				}
@@ -7211,6 +7228,7 @@
 							}
 							NOT = {
 								state = 237
+								state = 1270
 							}
 						}
 						random_country = {
@@ -8652,7 +8670,18 @@
 				limit = {
 					original_tag = PER
 				}
-				set_capital = { state = 266 }
+				if = {
+					limit = { owns_state = 266 }
+					set_capital = { state = 266 }
+					if = {
+						limit = { 
+							check_variable = {
+								PER_irregulars_cap < FROM.PER_irregulars_cap
+							}
+						}
+						set_variable = { PER_irregulars_cap = FROM.PER_irregulars_cap }
+					}				
+				}
 				FROM = {
 					every_character = {
 						limit = {
@@ -8660,21 +8689,48 @@
 						}
 						set_nationality = ROOT
 					}
+					every_core_state = {
+						remove_core_of = PREV
+					}
+					every_state = {
+						limit = {
+							is_claimed_by = PREV
+						}
+						remove_claim_by = PREV
+					}
+					ROOT = {
+						copy_PER_foreign_advisors = yes
+					}			
+					# if = {
+					# 	limit = { is_dynamic_country = yes }
+					# 	reserve_dynamic_country = no
+					# }
 				}
 				if = {
 					limit = {
 						NOT = { has_government = communism }						
 					}
-					PER_mirza_kuchik_khan = {
-						promote_character = religious_communism
+					if = {
+						limit = {
+							has_character = PER_mirza_kuchik_khan
+						}
+						PER_mirza_kuchik_khan = {
+							promote_character = religious_communism
+						}
 					}
-					PER_soleyman_eskandari = {
-						promote_character = reformist_socialism
+					if = {
+						limit = {
+							has_character = PER_soleyman_eskandari
+						}
+						PER_soleyman_eskandari = {
+							promote_character = reformist_socialism
+						}
 					}				
 				}
 				if = {
 					limit = {
-						NOT = { has_government = democratic }						
+						NOT = { has_government = democratic }	
+						has_character = PER_soleyman_eskandari
 					}
 					PER_soleyman_eskandari = {
 						promote_character = social_democracy
@@ -8682,43 +8738,38 @@
 				}
 				if = {
 					limit = {
-						NOT = { has_government = fascism }						
-					}
-					PER_nezam_us_saltaneh = {
-						promote_character = stratocracy
-					}				
-				}
-				else_if = {
-					limit = {
-						has_country_leader = {
-							character = PER_nezam_us_saltaneh
-						}
-					}
-					remove_ideas = standing_alone
-					set_politics = {
-						ruling_party = neutrality
-						name = PER_fascism_party
-						long_name = PER_fascism_party
-						elections_allowed = yes
-					}
-					add_popularity = {
-						ideology = fascism
-						popularity = -0.2
-					}
-					PER_nezam_us_saltaneh = {
-						if = {
-							limit = { has_ideology = authoritarian_democracy }
-							promote_character = authoritarian_democracy
-						}
-						else = {
-							add_country_leader_role = {
-								promote_leader = yes
-								country_leader = {
-									ideology = authoritarian_democracy
-								}
+						NOT = {
+							has_government = fascism
+							has_country_leader = {
+								character = PER_mohammad_ali_shah
+							}
+							has_country_leader = {
+								character = PER_abulfath_mirza
 							}
 						}
+						has_character = PER_abdol_majid_mirza
 					}
+					PER_abdol_majid_mirza = {
+						promote_character = reactionism
+					}	
+				}
+				if = {
+					limit = {
+						OR = {
+							owns_state = 266
+							NOT = {
+								any_other_country = {
+									original_tag = PER
+								}
+							}
+						}			
+						OR = {
+							has_cosmetic_tag = PER_exiles
+							has_cosmetic_tag = PER_mohammad_ali_shah_revolt
+							has_cosmetic_tag = PER_salar_al_daula_revolt
+						}				
+					}
+					set_cosmetic_tag = PER
 				}
 				if = {
 					limit = {
@@ -8729,27 +8780,87 @@
 							}
 							OR = {
 								is_in_faction = no
-								is_in_faction_with = PER
+								is_in_faction_with = FROM
 								is_in_faction_with = ROOT
 							}
 							NOT = {
-								is_subject_of = ROOT
 								has_war_with = ROOT
-								has_war_together_with = ENG
 							}
 						}
 					}
 					ARB = {
 						get_current_government_type = yes
 					}
-					PER = {
+					ROOT = {
 						set_autonomy = {
 							target = ARB
-							autonomous_state = autonomy_integrated_puppet
+							autonomous_state = autonomy_tgwr_feudal_autonomy
 							freedom_level = 0.9
 						}
 					}
 					ARB = {
+						restore_previous_government_type = yes
+					}
+				}
+				if = {
+					limit = {
+						MAK = {
+							OR = {
+								is_subject = no
+								is_subject_of = FROM
+							}
+							OR = {
+								is_in_faction = no
+								is_in_faction_with = FROM
+								is_in_faction_with = ROOT
+							}
+							NOT = {
+								has_war_with = ROOT
+							}
+						}
+					}
+					MAK = {
+						get_current_government_type = yes
+					}
+					ROOT = {
+						set_autonomy = {
+							target = MAK
+							autonomous_state = autonomy_tgwr_feudal_autonomy
+							freedom_level = 0.9
+						}
+					}
+					MAK = {
+						restore_previous_government_type = yes
+					}
+				}
+				if = {
+					limit = {
+						MRG = {
+							OR = {
+								is_subject = no
+								is_subject_of = FROM
+							}
+							OR = {
+								is_in_faction = no
+								is_in_faction_with = FROM
+								is_in_faction_with = ROOT
+							}
+							NOT = {
+								has_war_with = ROOT
+							}
+						}
+					}
+					MRG = {
+						get_current_government_type = yes
+					}
+					ROOT = {
+						set_autonomy = {
+							target = MRG
+							autonomous_state = autonomy_tgwr_feudal_autonomy
+							freedom_level = 0.9
+						}
+					}
+					MRG = {
 						restore_previous_government_type = yes
 					}
 				}
@@ -8758,35 +8869,11 @@
 				limit = {
 					original_tag = CHA
 					has_country_flag = CHA_french_wadai_tag
-				}				
-				if = {
-					limit = {
-						is_subject_of = FRA
-					}
-					FRA = {
-						annex_country = {
-							target = ROOT
-						}
-					}
-					every_state = {
-						limit = {
-							is_claimed_by = ROOT
-						}
-						remove_claim_by = ROOT
-					}
-					every_state = {
-						limit = {
-							is_core_of = ROOT
-						}
-						remove_core_of = ROOT
-					}
-					else = {
-						set_cosmetic_tag = CHA
-						set_capital = { state = 774 }
-						clr_country_flag = empty_focus
-						load_focus_tree = generic_focus
-					}
-				}
+				}		
+				set_cosmetic_tag = CHA
+				set_capital = { state = 774 }
+				clr_country_flag = empty_focus
+				load_focus_tree = generic_focus
 			}
 			else_if = {
 				limit = {
@@ -9383,9 +9470,7 @@
 						limit = { 
 							NOT = {
 								has_cosmetic_tag = FRA_socialism
-								has_cosmetic_tag = FRA_socialism_not_commune
-								has_cosmetic_tag = FRA_socialism_syndicalist
-								has_cosmetic_tag = FRA_socialism_republic_of
+								has_cosmetic_tag = FRA_democratic
 								has_cosmetic_tag = NFA
 								has_country_flag = AEF
 								has_country_flag = AOF
@@ -10171,9 +10256,7 @@
 								has_cosmetic_tag = GER_socialism
 							}
 							has_cosmetic_tag = FRA_socialism
-							has_cosmetic_tag = FRA_socialism_not_commune
-							has_cosmetic_tag = FRA_socialism_syndicalist
-							has_cosmetic_tag = FRA_socialism_republic_of
+							has_cosmetic_tag = FRA_democratic
 							has_cosmetic_tag = FIN_socialist
 							has_cosmetic_tag = FIN_red
 							has_cosmetic_tag = SOV_puppet
@@ -11812,13 +11895,19 @@
 			}
 			if = {
 				limit = {
+					has_dynamic_modifier = PER_foreign_influence_modifier
+				}
+				PER_calculate_foreign_influnce = yes
+			}
+			if = {
+				limit = {
 					is_great_war_ongoing = yes
 					NOT = {
 						has_country_flag = joined_great_war
 					}
 					FROM = {
 						OR = {
-							original_tag = GER
+							tag = GER
 							tag = ENT
 						}
 					}
@@ -12353,33 +12442,6 @@
 					country_event = ww1_china.303
 				}
 			}
-			# Battle of Tiznit
-			if = {
-				limit = {
-					NOT = {
-						has_global_flag = battle_of_tiznit
-					}
-					has_start_date < 1914.1.1
-					ROOT = {
-						has_war_with = GUD
-					}
-					FROM.FROM = {
-						state = 1237
-					}
-				}
-				set_global_flag = battle_of_tiznit
-				every_country = {
-					limit = {
-						any_owned_state = {
-							region = 182
-						}
-					}
-					country_event = {
-						id = ww1_morocco.88
-						hours = 3
-					}
-				}
-			}
 		}
 	}
 	on_unit_leader_created = { # This uses the UNIT LEADER sub scope of a character, FROM == country
@@ -12402,6 +12464,12 @@
 		effect = {
 			# unit limit calculations
 			country_event = ww1_political.4
+		}
+	}
+
+	on_weekly_PER = {
+		effect = {
+			PER_calculate_foreign_influnce = yes
 		}
 	}
 
@@ -12476,6 +12544,30 @@
 					}
 				}
 			}
+			else_if = {
+				limit = {
+					FROM = {
+						original_tag = PER
+					}
+					ROOT = {
+						original_tag = PER
+					}
+				}
+				every_state = {
+					limit = {
+						OR = {
+							has_contested_owner = PER
+							has_contested_owner = PRS
+							has_contested_owner = PEX
+							has_contested_owner = PRG
+							has_contested_owner = IRN
+						}					
+					}
+					remove_contested_owner = FROM
+					add_contested_owner = ROOT
+				}
+			}
+
 		}
 	}
 	on_subject_autonomy_level_change = {
