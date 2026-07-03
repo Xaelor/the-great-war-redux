@@ -2957,7 +2957,7 @@ focus_tree = {
 		
 		available = {
 			communism < 0.10
-			democracy < 0.10
+			democratic < 0.10
 		}
 		
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_INTERNAL_AFFAIRS }
@@ -3874,7 +3874,7 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		available = {
-			custom_effect_tooltip = {
+			custom_trigger_tooltip = {
 				tooltip = not_implemented_this_patch
 				always = no
 			}
@@ -4233,8 +4233,19 @@ focus_tree = {
 			NOT = { has_idea = SWE_anti_war_promises }
 			NOT = { has_idea = idea_army_restrictions }
 			OR = {
-				has_tech = ww1_independent_air_force
-				has_tech = ww1_army_air_corps
+				AND = {
+					has_any_grand_doctrine = air
+					OR = {
+						has_mastery = {
+							amount = 50
+							track = fighter_aircraft
+						}
+						has_mastery = {
+							amount = 50
+							track = strike_aircraft
+						}
+					}
+				}
 				AND = {
 					has_tech = fighter1
 					date > 1917.1.1
@@ -4311,6 +4322,12 @@ focus_tree = {
 				cost_reduction = 0.5
 				uses = 1
 				category = air_doctrine
+			}
+			add_mastery_bonus = {
+				bonus = 0.1
+				days = 365
+				name = SWE_investigate_entente_doctrines
+				folder = air
 			}
 		}
 	}
@@ -4510,6 +4527,12 @@ focus_tree = {
 				uses = 1
 				category = land_doctrine
 			}
+			add_mastery_bonus = {
+				bonus = 0.2
+				days = 120
+				name = SWE_modernise_the_army
+				folder = land
+			}
 			custom_effect_tooltip = SWE_unlock_decisions_to_improve_army_spirit
 			set_country_flag = SWE_army_decisions
 			if = {
@@ -4653,9 +4676,12 @@ focus_tree = {
 						modifier = SWE_defensive_chokepoint
 					}
 				}
-				swap_ideas = {
-					add_idea = SWE_defensive_chokepoint_fake
-					remove_idea = SWE_strengthened_local_defences_fake
+				effect_tooltip = {
+					# Incredibly lazy solution until i make tooltip
+					swap_ideas = {
+						add_idea = SWE_defensive_chokepoint_fake
+						remove_idea = SWE_strengthened_local_defences_fake
+					}
 				}
 			}
 			custom_effect_tooltip = adjust_swe_military_tt
@@ -4759,16 +4785,17 @@ focus_tree = {
 		completion_reward = {
 			if = {
 				limit = { has_dlc = "Arms Against Tyranny" }
-				navy_experience = 5
-				unlock_mio_policy_tooltip = {
-					policy = SWE_mio_trait_coastal_battlefleet
-					show_modifiers = yes
+				navy_experience = 10
+				mio:SWE_marinvarkstaderna_organization = {
+					complete_mio_trait = {
+						trait = SWE_mio_trait_coastal_battlefleet
+					}
 				}
 			}
 			else = {
-				navy_experience = 10
+				navy_experience = 15
+				add_ideas = SWE_coastal_focus
 			}
-			add_ideas = SWE_coastal_focus
 			# Make it MIO later
 		}
 	}
@@ -7060,7 +7087,6 @@ focus_tree = {
 			focus = SWE_pragmatic_approach_to_finland
 			focus = SWE_military_cooperation_with_finland
 		}
-		mutually_exclusive = { focus = SWE_support_red_finland }
 		relative_position_id = SWE_finland_diplomacy
 		x = 0
 		y = 2
@@ -7329,6 +7355,12 @@ focus_tree = {
 				var = SWE_pol_stability_factor
 				value = 0.05
 			}
+			custom_effect_tooltip = adjust_swe_economic_tt
+			add_to_variable = {
+				tooltip = consumer_goods_factor_tt
+				var = SWE_consumer_goods
+				value = -0.05
+			}
 		}
 	}
 	focus = {
@@ -7424,7 +7456,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = SWE_our_place_in_the_world
+		id = SWE_withdraw_our_diplomatic_obligations
 		icon = GFX_focus_invite_finland
 		prerequisite = {
 			focus = SWE_prosper_in_europe
@@ -7434,12 +7466,83 @@ focus_tree = {
 		x = 0
 		y = 2
 		
-		cost = 3
+		cost = 4
 		
 		available_if_capitulated = yes
 		
 		completion_reward = {
-			add_stability = 0.05
+			add_war_support = -0.10
+			add_political_power = 70
+			if = {
+				limit = { is_in_faction = yes }
+				leave_faction = yes
+			}
+			every_other_country = {
+				limit = {
+					is_guaranteed_by = SWE
+				}
+				SWE = {
+					diplomatic_relation = {
+						country = PREV
+						relation = guarantee
+						active = no
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = SWE_a_nordic_powerhouse
+		icon = GFX_focus_invite_finland
+		prerequisite = { focus = SWE_withdraw_our_diplomatic_obligations }
+		mutually_exclusive = { focus = SWE_full_involvement_in_german_economy }
+		relative_position_id = SWE_work_within_the_new_europe
+		x = -1
+		y = 3
+		
+		cost = 5
+		
+		available_if_capitulated = yes
+		
+		completion_reward = {
+			add_tech_bonus = {
+				name = industry
+				category = industry
+				uses = 1
+				bonus = 0.5
+			}
+			custom_effect_tooltip = adjust_swe_economic_tt
+			add_to_variable = {
+				tooltip = production_speed_arms_factory_factor_tt
+				var = SWE_civ_build_speed
+				value = 0.05
+			}
+			add_to_variable = {
+				tooltip = production_speed_industrial_complex_factor_tt
+				var = SWE_inf_build_speed
+				value = 0.05
+			}
+		}
+	}
+	focus = {
+		id = SWE_full_involvement_in_german_economy
+		icon = GFX_focus_invite_finland
+		prerequisite = { focus = SWE_withdraw_our_diplomatic_obligations }
+		prerequisite = { focus = SWE_tie_to_german_economy }
+		mutually_exclusive = { focus = SWE_a_nordic_powerhouse }
+		relative_position_id = SWE_work_within_the_new_europe
+		x = 1
+		y = 3
+		
+		cost = 5
+		
+		available_if_capitulated = yes
+		
+		completion_reward = {
+			swap_ideas = {
+				add_idea = SWE_german_economic_ties_2
+				remove_idea = SWE_german_economic_ties
+			}
 		}
 	}
 	# Post-War Content:
