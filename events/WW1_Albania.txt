@@ -5025,27 +5025,29 @@ country_event = { #albanian nationalist party
 	option = {
 		name = albania.82.a
 		set_party_name = {
-			ideology = fascism
-			name = ALB_albanian_nationalist_party
-			long_name = ALB_albanian_nationalist_party_long
-		}
-		set_party_name = {
-			ideology = democratic
-			name = ALB_albanian_nationalist_party
-			long_name = ALB_albanian_nationalist_party_long
-		}
-		set_party_name = {
 			ideology = communism
 			name = ALB_albanian_nationalist_party
 			long_name = ALB_albanian_nationalist_party_long
 		}
-		add_country_leader_role = {
-			character = ALB_sabri_qyteza
-			promote_leader = yes
-			country_leader = {
-				ideology = revolutionary_nationalism
-				traits = { ALB_nationalist_jurist }
+		if = {
+			limit = { has_government = democratic }
+			set_party_name = {
+				ideology = neutrality
+				name = ALB_albanian_nationalist_party
+				long_name = ALB_albanian_nationalist_party_long
 			}
+			else = {
+				set_party_name = {
+					ideology = democratic
+					name = ALB_albanian_nationalist_party
+					long_name = ALB_albanian_nationalist_party_long
+				}
+			}
+		}
+		set_party_name = {
+			ideology = fascism
+			name = ALB_albanian_nationalist_party
+			long_name = ALB_albanian_nationalist_party_long
 		}
 		add_country_leader_role = {
 			character = ALB_kostandin_boshnjaku
@@ -5055,12 +5057,33 @@ country_event = { #albanian nationalist party
 				traits = { ALB_left_leaning_banker }
 			}
 		}
+		if = {
+			limit = { has_government = democratic }
+			add_country_leader_role = {
+				character = ALB_sabri_qyteza
+				promote_leader = yes
+				country_leader = {
+					ideology = authoritarian_democracy
+					traits = { ALB_nationalist_jurist }
+				}
+			}
+			else = {
+				add_country_leader_role = {
+					character = ALB_hile_mosi
+					promote_leader = yes
+					country_leader = {
+						ideology = social_liberalism
+						traits = { ALB_secular_nationalist }
+					}
+				}
+			}
+		}
 		add_country_leader_role = {
-			character = ALB_hile_mosi
+			character = ALB_sabri_qyteza
 			promote_leader = yes
 			country_leader = {
-				ideology = social_liberalism
-				traits = { ALB_secular_nationalist }
+				ideology = revolutionary_nationalism
+				traits = { ALB_nationalist_jurist }
 			}
 		}
 		set_country_flag = ALB_albanian_nationalist_party_formed
