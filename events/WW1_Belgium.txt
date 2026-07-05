@@ -1560,9 +1560,10 @@ country_event = {
 	}
 	trigger = {
 		tag = BEL
+		has_capitulated = yes
 		BEL = {
 			has_war = yes
-			date > 1915.2.2
+			longest_war_length > 6
 		}
 		any_enemy_country = {
 			is_major = yes
@@ -1575,17 +1576,38 @@ country_event = {
 		set_country_flag = BEL_ACM_corps
 		name = ww1_belgium.50.a
 		set_technology = {
-			basic_armored_car = 1
 			bicycle_infantry = 1
 		}
-		create_equipment_variant = {
-			type = armored_car_equipment_2
-			name = "ACM Minerva"
-			upgrades = {
-				tank_reliability_upgrade = 5
-				tank_armor_upgrade = 5
-				tank_gun_upgrade = 5
-				ac_engine_upgrade = 5
+		if = {
+			limit = { 
+				NOT = {
+					has_dlc = "No Step Back"
+				}
+			}
+			set_technology = {
+				basic_armored_car = 1
+			}
+			create_equipment_variant = {
+				type = armored_car_equipment_2
+				name = "ACM Minerva"
+				upgrades = {
+					tank_reliability_upgrade = 5
+					tank_armor_upgrade = 5
+					tank_gun_upgrade = 5
+					ac_engine_upgrade = 5
+				}
+			}
+		}
+		else = {
+			set_technology = {
+				basic_armored_car_chassis = 1
+			}
+			create_equipment_variant = {
+				type = armored_car_chassis_2
+				name = "ACM Minerva"
+				modules = {
+					main_armament_slot = tank_heavy_machine_gun
+				}
 			}
 		}
 		division_template = {
@@ -2030,8 +2052,8 @@ country_event = {
 		}
 		NOT = {
 			AND = {
-			has_country_flag = BEL_liberal_alliance
-			has_completed_focus = BEL_cut_local_school_funding
+				has_completed_focus = BEL_CLS_PL_alliance
+				has_completed_focus = BEL_cut_local_school_funding
 			}
 		}
 	}
@@ -2261,7 +2283,7 @@ country_event = {
 			has_country_flag = BEL_1912_elections
 		}
 		AND = {
-			has_country_flag = BEL_liberal_alliance
+			has_completed_focus = BEL_CLS_PL_alliance
 			has_completed_focus = BEL_cut_local_school_funding
 		}
 	}
@@ -2832,7 +2854,7 @@ country_event = {
 		set_country_flag = BEL_unlock_decision_offer_minerals
 		set_country_flag = BEL_rubber_crisis
 		if = {
-			limit = { has_country_flag = BEL_eas_completed }
+			limit = { has_completed_focus = BEL_expand_the_agricultural_sector }
 			swap_ideas = {
 				remove_idea = BEL_congo_profits
 				add_idea = BEL_congo_profitsca

@@ -515,7 +515,7 @@ AUH_destroy_ROM = {
 	ai_strategy = {
 		type = front_control
 		tag = ROM
-		ratio = 0.6
+		ratio = 0
 		priority = 1000
 		ordertype = front
 		execution_type = rush
@@ -674,62 +674,6 @@ AUH_front_with_RUS = {
 	}
 }
 
-AUH_passive_against_RUS = {
-	allowed = {
-		OR = {
-			original_tag = AUS
-			original_tag = HUN
-		}
-	}
-	enable = {
-		OR = {
-			has_war_with = RUS
-			has_global_flag = crisis_in_progress
-		}
-		AND = {
-			RUS = {
-				is_ai = yes
-			}
-			91 = {
-				is_controlled_by_ROOT_or_ally = yes
-			}			
-		}
-		NOT = {
-			AND = {
-				war_length_with = {
-					tag = RUS
-					months > 26
-				}
-				NOT = {
-					has_global_flag = russian_revolution
-				}
-			}
-			AND = {
-				war_length_with = {
-					tag = RUS
-					months > 40
-				}
-				has_global_flag = russian_revolution
-				NOT = {
-					RUS = {
-						tag = SOV
-					}
-				}
-			}
-			RUS = {
-				tag = SOV
-			}
-		}
-	}
-	abort_when_not_enabled = yes
-	ai_strategy = {
-		type = front_control
-		tag = RUS
-		ordertype = front
-		execution_type = careful
-	}	
-}
-
 AUH_offensive_on_RUS = {
 	allowed = {
 		OR = {
@@ -764,13 +708,8 @@ AUH_offensive_on_RUS = {
 					}
 				}
 			}
-			AND = {
-				RUS = {
-					is_ai = no
-				}
-				GER = {
-					has_idea = GER_focus_on_russian_front
-				}
+			GER = {
+				has_idea = GER_focus_on_russian_front
 			}
 			RUS = {
 				tag = SOV
@@ -780,10 +719,13 @@ AUH_offensive_on_RUS = {
 	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = front_control
-		tag = RUS
+		country_trigger = {
+			original_tag = RUS
+		}
 		ordertype = front
 		priority = 2000
-		execution_type = rush
+		ratio = 0
+		execute_order = yes
 	}
 	ai_strategy = {
 		type = front_control
@@ -792,7 +734,8 @@ AUH_offensive_on_RUS = {
 		}
 		ordertype = front
 		priority = 2000
-		execution_type = rush
+		ratio = 0
+		execute_order = yes
 	}
 }
 
@@ -1250,13 +1193,17 @@ AUS_zwolfte_isonzoschlacht = {
 		original_tag = AUS
 	}
 	enable = {
-		has_idea = GER_focus_on_italian_front
+		OR = {
+			has_idea = GER_focus_on_italian_front
+			has_idea = ITA_final_blow_idea_AUS
+		}
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = front_control
 		tag = ITA
 		ordertype = front
+		ratio = 0
 		execution_type = rush
 	}
 }
