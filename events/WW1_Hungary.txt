@@ -1,6 +1,5 @@
 add_namespace = ww1_hungary
 add_namespace = ww1_hungary_auh
-add_namespace = ww1_hun_revolution
 
 ## 1910 hungarian elections
 country_event = {
@@ -452,10 +451,10 @@ country_event = {
 						state = 70
 						state = 71
 						state = 73
-						state = 1271
 						state = 76
 						state = 82
 						state = 83
+						state = 1271
 						state = 84
 						state = 109
 						state = 147
@@ -996,6 +995,10 @@ country_event = {
 		hidden_effect = {
 			#complete_national_focus = HUN_from_the_ashes
 			#complete_national_focus = HUN_pandemonious_rebirth
+			AUH_release_HUN = yes
+			set_country_flag = HUN_load_aster_tree
+			load_focus_tree = hungary_postwar_focus
+			mark_focus_tree_layout_dirty = yes
 		}
 	}
 	option = {
@@ -1113,14 +1116,11 @@ country_event = {
 	immediate = {
 		set_country_flag = HUN_khuen_resigned_over_army_crisis
 		hidden_effect = {
-			promote_character = HUN_laszlo_luckacs
-			AUS = {
-				country_event = ww1_hungary.1301
-			}
-			country_event = {
-				id = ww1_hungary.24
-				days = 150
-			}
+			#promote_character = HUN_laszlo_luckacs
+			#country_event = {
+				#id = ww1_hungary.24
+				#days = 150
+			#}
 		}
 	}
 	option = {
@@ -1139,8 +1139,31 @@ country_event = {
 	title = ww1_hungary.13.t
 	desc = ww1_hungary.13.da
 	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = { 
+					HUN = {
+						NOT = {
+							has_country_leader = {
+								character = HUN_laszlo_luckacs
+							}
+						}
+					}
+				}
+				#HUN = {
+					#country_event = ww1_hungary.1302
+				#}
+			}
+		}
+	}
 	option = {
 		name = ww1_hungary.13.b
+		effect_tooltip = {
+			HUN = {
+				promote_character = HUN_laszlo_luckacs
+			}
+		}
 	}	
 }
 
@@ -1779,6 +1802,13 @@ country_event = {
 	picture = GFX_report_event_lukacs_sued
 	fire_only_once = no
 	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			AUS = {
+				country_event = ww1_hungary.26
+			}
+		}
+	}
 	option = {
 		name = ww1_hungary.26.a
 		trigger = {
@@ -1800,6 +1830,17 @@ country_event = {
 		name = ww1_hungary.26.b
 		trigger = {
 			tag = AUS
+		}
+		effect_tooltip = {
+			HUN = {
+				if = {
+					limit = { 
+						has_character = HUN_istvan_tisza
+					}
+					promote_character = HUN_istvan_tisza
+					retire_character = HUN_laszlo_luckacs
+				}
+			}
 		}
 	}
 }
@@ -3845,11 +3886,6 @@ country_event = {
 		hidden_effect = {
 			clr_country_flag = HUN_national_work_party_yes
 			complete_national_focus = HUN_a_blank_page
-			AUS = {
-				country_event = {
-					id = ww1_hungary.106
-				}
-			}
 		}
 	}
 	option = {
@@ -3894,8 +3930,25 @@ country_event = {
 	picture = GFX_report_event_tisza_elected_speaker
 	fire_only_once = yes
 	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			HUN = {
+				country_event = ww1_hungary.105
+			}
+		}
+	}
 	option = {
 		name = ww1_hungary.106.a
+		effect_tooltip = {
+			HUN = {
+				promote_character = HUN_moric_esterhazy
+				set_party_name = { #Silent code, not a compromise path
+					ideology = neutrality
+					long_name = HUN_esterhazy_gov
+					name = HUN_esterhazy_gov
+				}	
+			}
+		}
 	}
 }
 #Worrying Militarization of Factories
@@ -4035,5 +4088,295 @@ country_event = {
 	option = {
 		name = ww1_hungary.111.a
 		
+	}
+}
+#Ezterhazy's Resignation AUS event
+country_event = {
+	id = ww1_hungary.112
+	title = ww1_hungary.112.t
+	desc = ww1_hungary.112.d
+	#picture = GFX_report_event_generic_strike
+	fire_only_once = yes
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			HUN = {
+				country_event = ww1_hungary.113
+			}
+		}
+	}
+	option = {
+		name = ww1_hungary.112.a
+		effect_tooltip = {
+			HUN = {
+				promote_character = HUN_sandor_wekerle
+				#set_party_name = { 
+					#ideology = neutrality
+					#long_name = HUN_esterhazy_gov
+					#name = HUN_esterhazy_gov
+				#}	
+			}
+		}
+	}
+}
+#Ezterhazy's Resignation HUN event
+country_event = {
+	id = ww1_hungary.113
+	title = ww1_hungary.112.t
+	desc = ww1_hungary.112.d
+	#picture = GFX_report_event_generic_strike
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_hungary.113.a
+		complete_national_focus = HUN_the_veteran
+		promote_character = HUN_sandor_wekerle
+		activate_mission = HUN_werkele_mission
+		#set_party_name = { 
+			#ideology = neutrality
+			#long_name = HUN_esterhazy_gov
+			#name = HUN_esterhazy_gov
+		#}	
+	}
+}
+#Continueing Tisza Status Quo
+country_event = {
+	id = ww1_hungary.114
+	title = ww1_hungary.114.t
+	desc = ww1_hungary.114.d
+	picture = GFX_report_event_tisza_elected_speaker
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_hungary.114.a
+		add_stability = -0.05
+		remove_trait = {
+			character = HUN_istvan_tisza
+			slot = political_advisor
+			trait = HUN_evil_tisza
+		}
+		add_trait = {
+			character = HUN_istvan_tisza
+			slot = political_advisor
+			trait = HUN_iron_earl
+		}
+		hidden_effect = {
+			activate_advisor = HUN_istvan_tisza
+		}
+	}
+}
+#Negotiating a Suffrage Bill
+country_event = {
+	id = ww1_hungary.115
+	title = ww1_hungary.115.t
+	desc = ww1_hungary.115.d
+	#picture = GFX_report_event_tisza_elected_speaker
+	fire_only_once = yes
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			AUS = {
+				country_event = {
+					id = ww1_hungary.117
+					days = 112
+				}
+			}
+		}
+	}
+	option = {
+		name = ww1_hungary.115.a
+		AUS = {
+			country_event = ww1_hungary.115
+		}
+	}
+}
+country_event = {
+	id = ww1_hungary.116
+	title = ww1_hungary.116.t
+	desc = ww1_hungary.116.d
+	#picture = GFX_report_event_tisza_elected_speaker
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_hungary.116.a
+		
+	}
+}
+#Werkele Resigns! AUS
+country_event = {
+	id = ww1_hungary.117
+	title = ww1_hungary.117.t
+	desc = ww1_hungary.117.d
+	#picture = GFX_report_event_tisza_elected_speaker
+	fire_only_once = yes
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			HUN = {
+				country_event = ww1_hungary.118
+			}
+		}
+	}
+	option = {
+		name = ww1_hungary.117.a
+		
+	}
+}
+#Werkele Resigns! HUN
+country_event = {
+	id = ww1_hungary.118
+	title = ww1_hungary.117.t
+	desc = ww1_hungary.118.d
+	#picture = GFX_report_event_tisza_elected_speaker
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_hungary.117.a
+	}
+}
+#Appointing Archduke Joseph Augustus AUS
+country_event = {
+	id = ww1_hungary.119
+	title = ww1_hungary.119.t
+	desc = ww1_hungary.119.d
+	#picture = GFX_report_event_tisza_elected_speaker
+	fire_only_once = yes
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			HUN = {
+				country_event = ww1_hungary.120
+			}
+		}
+	}
+	option = {
+		name = ww1_hungary.119.a
+		effect_tooltip = {
+			HUN = {
+				promote_character = AUH_joseph_august_von_osterreich
+			}
+		}
+	}
+}
+country_event = {
+	id = ww1_hungary.120
+	title = ww1_hungary.120.t
+	desc = ww1_hungary.120.d
+	#picture = GFX_report_event_tisza_elected_speaker
+	fire_only_once = yes
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			retire_character = HUN_sandor_wekerle
+			AUH_joseph_august_von_osterreich = {
+				set_nationality = HUN
+				set_character_name = HUN_joseph_august
+				promote_character = semi_constitutional_monarchy
+			}
+			promote_character = AUH_joseph_august_von_osterreich
+			set_politics = {
+				ruling_party = neutrality
+				long_name = HUN_regency_party
+				name = HUN_regency_party
+				elections_allowed = no
+			}
+		}
+	}
+	option = {
+		name = ww1_hungary.120.a
+		effect_tooltip = {
+			promote_character = AUH_joseph_august_von_osterreich
+		}
+	}
+}
+#Choosing Hungarian PM (AUS Event)
+country_event = {
+	id = ww1_hungary.121
+	title = ww1_hungary.121.t
+	desc = ww1_hungary.121.d
+	#picture = GFX_report_event_tisza_elected_speaker
+	fire_only_once = yes
+	is_triggered_only = yes
+	immediate = {
+		
+	}
+	#Hadik (Suicide)
+	option = {
+		name = ww1_hungary.121.a
+		custom_effect_tooltip = historical_tt
+		complete_national_focus = AUS_appoint_hadik
+		effect_tooltip = {
+			HUN = {
+				promote_character = HUN_janos_hadik
+			}
+		}
+	}
+	#Karolyi (Suicide)
+	option = {
+		name = ww1_hungary.121.b
+		custom_effect_tooltip = dangerous_tt
+		complete_national_focus = AUS_appoint_karolyi
+		effect_tooltip = {
+			HUN = {
+				promote_character = HUN_mihaly_karolyi
+			}
+		}
+	}
+}
+#Budapest Police: Friends with Tisza?
+country_event = {
+	id = ww1_hungary.122
+	title = {
+		#H
+		text = ww1_hungary.122.ta
+		trigger = {
+			has_completed_focus = HUN_ally_budapest_police
+		}
+	}
+	desc = {
+		trigger = {
+			has_completed_focus = HUN_ally_budapest_police
+		}
+		text = ww1_hungary.122.da
+	}
+	title = {
+		text = ww1_hungary.122.tb
+		trigger = {
+			NOT = {
+				has_completed_focus = HUN_ally_budapest_police
+			}
+		}
+	}
+	desc = {
+		trigger = {
+			NOT = {
+				has_completed_focus = HUN_ally_budapest_police
+			}
+		}
+		text = ww1_hungary.122.db
+	}
+	picture = GFX_report_event_tisza_elected_speaker
+	fire_only_once = yes
+	is_triggered_only = yes
+	immediate = {
+		
+	}
+	#Allied
+	option = {
+		name = ww1_hungary.122.a
+		trigger = {
+			has_completed_focus = HUN_ally_budapest_police
+		}
+		custom_effect_tooltip = historical_tt
+	}
+	#Not Allied
+	option = {
+		name = ww1_hungary.122.b
+		trigger = {
+			NOT = {
+				has_completed_focus = HUN_ally_budapest_police
+			}
+		}
+		custom_effect_tooltip = dangerous_tt
 	}
 }

@@ -15,6 +15,7 @@ focus_tree = {
 	initial_show_position = { focus = HUN_aftermath_of_werkle }
 	#Shared Focus's with Austria
 	shared_focus = AUS_ratify_new_budget
+	shared_focus = AUS_HUN_werkele_suffrage_bill
 	#shared_focus = AUS_expand_womens_education
 	shared_focus = AUS_manfred_weiss_works_expansion
 	shared_focus = AUS_mavag_armored_trains
@@ -107,7 +108,7 @@ focus_tree = {
 	focus = {
 		id = HUN_croatian_electoral_law
 		icon = GFX_focus_generic_election
-		cost = 4.9
+		cost = 3
 		relative_position_id = HUN_national_work_party
 		x = 2
 		y = 0
@@ -151,7 +152,7 @@ focus_tree = {
 		relative_position_id = HUN_aftermath_of_werkle
 		x = 0
 		y = 2
-		cost = 4.9
+		cost = 3
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
 			FOCUS_FILTER_INTERNAL_AFFAIRS
@@ -237,7 +238,7 @@ focus_tree = {
 	focus = {
 		id = HUN_judgement_reforms
 		icon = GFX_focus_AUS_lawmaking_leniency
-		cost = 4.9
+		cost = 3
 		relative_position_id = HUN_compromise_gov
 		x = 1
 		y = 1
@@ -320,7 +321,7 @@ focus_tree = {
 	focus = {
 		id = HUN_benefit_business
 		icon = GFX_goal_generic_trade
-		cost = 4.4
+		cost = 3
 		relative_position_id = HUN_compromise_gov
 		x = 3
 		y = 1
@@ -361,7 +362,7 @@ focus_tree = {
 	focus = {
 		id = HUN_expand_womens_edu
 		icon = GFX_focus_SWE_education_reform
-		cost = 4
+		cost = 3.6
 		x = 1
 		y = 1
 		prerequisite = {
@@ -417,12 +418,37 @@ focus_tree = {
 			focus = HUN_national_work_party
 		}
 		completion_reward = { 
-			army_experience = 15
-			add_command_power = 15
-			custom_effect_tooltip = HUN_modify_army_tt
-			add_to_variable = {
-				HUN_recruitable_pop = 0.025
-				tooltip = recruitable_population_factor_tt
+			custom_effect_tooltip = HUN_nmp_party_auth_level.tt
+			if = {
+				limit = {
+					check_variable = {
+						HUN_national_work_party_authority_var < 100
+					}
+					check_variable = {
+						HUN_national_work_party_authority_var > 50
+					}
+				 }
+				army_experience = 15
+				add_command_power = 15
+				custom_effect_tooltip = HUN_modify_army_tt
+				add_to_variable = {
+					HUN_recruitable_pop = 0.025
+					tooltip = recruitable_population_factor_tt
+				}
+			}
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var > 175
+					}
+				}
+				army_experience = 30
+				add_command_power = 30
+				custom_effect_tooltip = HUN_modify_army_tt
+				add_to_variable = {
+				HUN_recruitable_pop = 0.05
+					tooltip = recruitable_population_factor_tt
+				}
 			}
 		}
 	 }
@@ -441,7 +467,15 @@ focus_tree = {
 			FOCUS_FILTER_STABILITY
 		}
 		available = {
-			has_country_flag = HUN_national_work_party_yes
+			hidden_trigger = {
+				has_country_flag = HUN_national_work_party_yes
+			}
+			check_variable = {
+				HUN_national_work_party_authority_var > 35
+			}
+			custom_trigger_tooltip = {
+				tooltip = HUN_nmp_has_35.tt
+			}
 		}
 		prerequisite = {
 			focus = HUN_national_work_party
@@ -476,7 +510,7 @@ focus_tree = {
 	focus = {
 		id = HUN_ally_budapest_police
 		icon = GFX_generic_police_state
-		cost = 4
+		cost = 1
 		relative_position_id = HUN_stronghanded_methods
 		x = -3
 		y = 1
@@ -510,7 +544,7 @@ focus_tree = {
 	focus = {
 		id = HUN_meddle_in_croat_serb_relations
 		icon = GFX_focus_YUG_dissolve_serbia
-		cost = 4.4
+		cost = 3
 		relative_position_id = HUN_stronghanded_methods
 		x = 1
 		y = 1
@@ -522,12 +556,7 @@ focus_tree = {
 		}
 		available = {
 			has_country_flag = HUN_national_work_party_yes
-			any_owned_state = {
-				OR = {
-					is_core_of = SER
-					is_core_of = CRO
-				}
-			}
+			has_dynamic_modifier = HUN_croatian_sabor
 			has_country_leader = {
 				character = HUN_karoly_khuen_hedervary
 				ruling_only = yes
@@ -559,7 +588,7 @@ focus_tree = {
 	focus = {
 		id = HUN_null_visa_requirements_for_serbs
 		icon = GFX_focus_invite_yugoslavia
-		cost = 4.9
+		cost = 4.4
 		relative_position_id = HUN_meddle_in_croat_serb_relations
 		x = 1
 		y = 1
@@ -574,6 +603,8 @@ focus_tree = {
 			NOT = {
 				has_war_with = SER
 			}
+			has_country_flag = HUN_national_work_party_yes
+			has_dynamic_modifier = HUN_croatian_sabor
 			has_country_leader = {
 				character = HUN_karoly_khuen_hedervary
 				ruling_only = yes
@@ -586,17 +617,67 @@ focus_tree = {
 			focus = HUN_tighten_grip_on_croat_ban
 		}
 		completion_reward = {
-			custom_effect_tooltip = HUN_modify_eco_tt
-			add_to_variable = {
-				var = HUN_eco_migration
-				value = 0.05
-				tooltip = monthly_population_tt
+			custom_effect_tooltip = HUN_nmp_party_auth_level.tt
+			#Historical
+			if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 175
+					}
+					check_variable = {
+						HUN_national_work_party_authority_var > 50
+					}
+				}
+				custom_effect_tooltip = HUN_modify_eco_tt
+				add_to_variable = {
+					var = HUN_eco_migration
+					value = 0.05
+					tooltip = monthly_population_tt
+				}
+				custom_effect_tooltip = HUN_modify_croation_sabor_tt
+				add_to_variable = {
+					var = HUN_croat_sabor_pp
+					value = 0.05
+					tooltip = political_power_factor_tt
+				}
 			}
-			custom_effect_tooltip = HUN_modify_croation_sabor_tt
-			add_to_variable = {
-				var = HUN_croat_sabor_pp
-				value = 0.05
-				tooltip = political_power_factor_tt
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var > 175
+					}
+				}
+				custom_effect_tooltip = HUN_modify_eco_tt
+				add_to_variable = {
+					var = HUN_eco_migration
+					value = 0.07
+					tooltip = monthly_population_tt
+				}
+				custom_effect_tooltip = HUN_modify_croation_sabor_tt
+				add_to_variable = {
+					var = HUN_croat_sabor_pp
+					value = 0.07
+					tooltip = political_power_factor_tt
+				}
+			}
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 50
+					}
+				}
+				custom_effect_tooltip = HUN_modify_eco_tt
+				add_to_variable = {
+					var = HUN_eco_migration
+					value = 0.02
+					tooltip = monthly_population_tt
+				}
+				custom_effect_tooltip = HUN_modify_croation_sabor_tt
+				add_to_variable = {
+					var = HUN_croat_sabor_pp
+					value = 0.02
+					tooltip = political_power_factor_tt
+				}
 			}
 			custom_effect_tooltip = empty_space_tt
 			unlock_decision_tooltip = HUN_serb_synod
@@ -626,7 +707,7 @@ focus_tree = {
 	focus = {
 		id = HUN_tighten_grip_on_croat_ban
 		icon = GFX_focus_AUH_invalidate_croatian_constitution
-		cost = 4.4
+		cost = 3
 		relative_position_id = HUN_stronghanded_methods
 		x = -1
 		y = 1
@@ -637,35 +718,99 @@ focus_tree = {
 			FOCUS_FILTER_INDUSTRY
 		}
 		available = {
+			has_country_flag = HUN_national_work_party_yes
+			has_dynamic_modifier = HUN_croatian_sabor
 			has_country_leader = {
 				character = HUN_karoly_khuen_hedervary
 				ruling_only = yes
 			}
-			has_country_flag = HUN_national_work_party_yes
 		}
 		prerequisite = {
 			focus = HUN_stronghanded_methods
 		}
 		completion_reward = {
+			custom_effect_tooltip = HUN_nmp_party_auth_level.tt
 			custom_effect_tooltip = HUN_modify_croation_sabor_tt
-			add_to_variable = {
-				HUN_croat_sabor_pp = 0.02
-				tooltip = political_power_factor_tt
-			}
-			add_to_variable = {
-				HUN_croat_pp_advisor = 0.05
-				tooltip = political_advisor_cost_factor_tt
-			}
-			575 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
+			#Historical
+			if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 175
+					}
+					check_variable = {
+						HUN_national_work_party_authority_var > 50
+					}
 				}
-				add_extra_state_shared_building_slots = 1
+				add_to_variable = {
+					HUN_croat_sabor_pp = 0.02
+					tooltip = political_power_factor_tt
+				}
+				add_to_variable = {
+					HUN_croat_pp_advisor = 0.05
+					tooltip = political_advisor_cost_factor_tt
+				}
+				575 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+					}
+					add_extra_state_shared_building_slots = 1
+				}
+				add_to_variable = {
+					HUN_national_work_party_authority_var = 15
+					tooltip = HUN_modify_national_work_party_tt
+				}
 			}
-			add_to_variable = {
-				HUN_national_work_party_authority_var = 15
-				tooltip = HUN_modify_national_work_party_tt
+			#Low Auth
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 50
+					}
+				}
+				add_to_variable = {
+					HUN_croat_sabor_pp = 0.01
+					tooltip = political_power_factor_tt
+				}
+				add_to_variable = {
+					HUN_croat_pp_advisor = 0.1
+					tooltip = political_advisor_cost_factor_tt
+				}
+				add_to_variable = {
+					HUN_national_work_party_authority_var = 10
+					tooltip = HUN_modify_national_work_party_tt
+				}
+			}
+			#High Auth
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var > 175
+					}
+				}
+				add_to_variable = {
+					HUN_croat_sabor_pp = 0.05
+					tooltip = political_power_factor_tt
+				}
+				add_to_variable = {
+					HUN_croat_pp_advisor = 0.02
+					tooltip = political_advisor_cost_factor_tt
+				}
+				add_to_variable = {
+					HUN_national_work_party_authority_var = 15
+					tooltip = HUN_modify_national_work_party_tt
+				}
+				575 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+					}
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+					}
+					add_extra_state_shared_building_slots = 2
+				}
 			}
 		 }
 	 }
@@ -684,8 +829,11 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		available = {
-			any_state = {
-				is_core_of = CRO
+			has_dynamic_modifier = HUN_croatian_sabor
+			has_country_flag = HUN_national_work_party_yes
+			has_country_leader = {
+				character = HUN_karoly_khuen_hedervary
+				ruling_only = yes
 			}
 		}
 		prerequisite = {
@@ -717,7 +865,7 @@ focus_tree = {
 	focus = {
 		id = HUN_whip_and_oat
 		icon = GFX_focus_generic_annex_country
-		cost = 4.9
+		cost = 4.4
 		relative_position_id = HUN_subdue_croatian_nationalism
 		x = 1
 		y = 1
@@ -731,6 +879,7 @@ focus_tree = {
 				character = HUN_karoly_khuen_hedervary
 				ruling_only = yes
 			}
+			has_country_flag = HUN_national_work_party_yes
 		}
 		prerequisite = {
 			focus = HUN_subdue_croatian_nationalism
@@ -1060,14 +1209,57 @@ focus_tree = {
 			}
 		}
 		completion_reward = { 
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.05
+			custom_effect_tooltip = HUN_nmp_party_auth_level.tt
+			#Historical
+			if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 175
+					}
+					check_variable = {
+						HUN_national_work_party_authority_var > 50
+					}
+				}
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.05
+				}
+				add_stability = 0.02
+				add_to_variable = {
+					HUN_national_work_party_authority_var = 15
+					tooltip = HUN_modify_national_work_party_tt
+				}
 			}
-			add_stability = 0.02
-			add_to_variable = {
-				HUN_national_work_party_authority_var = 15
-				tooltip = HUN_modify_national_work_party_tt
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var > 175
+					}
+				}
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.1
+				}
+				add_stability = 0.04
+				add_to_variable = {
+					HUN_national_work_party_authority_var = 25
+					tooltip = HUN_modify_national_work_party_tt
+				}
+			}
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 50
+					}
+				}
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.02
+				}
+				add_to_variable = {
+					HUN_national_work_party_authority_var = 10
+					tooltip = HUN_modify_national_work_party_tt
+				}
 			}
 		}
 	 }
@@ -1128,13 +1320,18 @@ focus_tree = {
 			}
 			NOT = {
 				AUS = {
-					has_completed_focus = AUS_prioritize_wellbeing_of_galacia
+					OR = {
+						has_completed_focus = AUS_prioritize_wellbeing_of_galacia
+						has_completed_focus = AUS_increase_the_police_in_galacia
+					}
 				}
 			}
 		}
 		bypass_if_unavailable = yes
 		prerequisite = {
 			focus = HUN_speaker_tisza
+		}
+		prerequisite = {
 			focus = HUN_assist_urbanization
 		}
 		select_effect = {
@@ -1222,7 +1419,7 @@ focus_tree = {
 	focus = {
 		id = HUN_tax_reform_of_get_year
 		icon = GFX_focus_generic_economic_profit
-		cost = 4.2
+		cost = 3
 		relative_position_id = HUN_accept_galacian_refugees
 		x = -1
 		y = 2
@@ -1239,22 +1436,71 @@ focus_tree = {
 			focus = HUN_lower_chamber
 		}
 		completion_reward = {
+			custom_effect_tooltip = HUN_nmp_party_auth_level.tt
 			custom_effect_tooltip = HUN_modify_eco_tt
-			add_to_variable = {
-				HUN_eco_effeciency_retention = 0.05
-				tooltip = line_change_production_efficiency_factor_tt
+			if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 175
+					}
+					check_variable = {
+						HUN_national_work_party_authority_var > 50
+					}
+				}
+				add_to_variable = {
+					HUN_eco_effeciency_retention = 0.05
+					tooltip = line_change_production_efficiency_factor_tt
+				}
+				add_to_variable = {
+					HUN_eco_lack_of_resources_penalty = -0.05
+					tooltip = production_lack_of_resource_penalty_factor_tt
+				}
+				add_to_variable = {
+					HUN_eco_consumer_good = -0.05
+					tooltip = consumer_goods_factor_tt
+				}
+				add_to_variable = {
+					HUN_eco_stab = -0.05
+					tooltip = stability_factor_tt
+				}
 			}
-			add_to_variable = {
-				HUN_eco_lack_of_resources_penalty = -0.05
-				tooltip = production_lack_of_resource_penalty_factor_tt
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var > 175
+					}
+				}
+				add_to_variable = {
+					HUN_eco_effeciency_retention = 0.05
+					tooltip = line_change_production_efficiency_factor_tt
+				}
+				add_to_variable = {
+					HUN_eco_lack_of_resources_penalty = -0.05
+					tooltip = production_lack_of_resource_penalty_factor_tt
+				}
+				add_to_variable = {
+					HUN_eco_consumer_good = -0.1
+					tooltip = consumer_goods_factor_tt
+				}
 			}
-			add_to_variable = {
-				HUN_eco_consumer_good = -0.05
-				tooltip = consumer_goods_factor_tt
-			}
-			add_to_variable = {
-				HUN_eco_stab = -0.05
-				tooltip = stability_factor_tt
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 50
+					}
+				}
+				add_to_variable = {
+					HUN_eco_effeciency_retention = 0.05
+					tooltip = line_change_production_efficiency_factor_tt
+				}
+				add_to_variable = {
+					HUN_eco_lack_of_resources_penalty = -0.05
+					tooltip = production_lack_of_resource_penalty_factor_tt
+				}
+				add_to_variable = {
+					HUN_eco_stab = -0.05
+					tooltip = stability_factor_tt
+				}
 			}
 		 }
 	 }
@@ -1262,7 +1508,7 @@ focus_tree = {
 	focus = {
 		id = HUN_development_of_cities_act_1912
 		icon = GFX_focus_generic_the_giant_wakes
-		cost = 4.2
+		cost = 3
 		relative_position_id = HUN_tax_reform_of_get_year
 		x = 1
 		y = 1
@@ -1278,18 +1524,71 @@ focus_tree = {
 			focus = HUN_tax_reform_of_get_year
 		}
 		completion_reward = {
-			activate_mission = HUN_police_reorg_mission
-			43 = {
-				add_extra_state_shared_building_slots = 1
+			custom_effect_tooltip = HUN_nmp_party_auth_level.tt
+			#Historical
+			if = {
+				limit = {
+					check_variable = {
+						HUN_national_work_party_authority_var < 175
+					}
+					check_variable = {
+						HUN_national_work_party_authority_var > 50
+					}
+				 }
+				activate_mission = HUN_police_reorg_mission
+				43 = {
+					add_extra_state_shared_building_slots = 1
+				}
+				custom_effect_tooltip = HUN_modify_eco_tt
+				add_to_variable = {
+					HUN_infrastructure_construction_speed = 0.1
+					tooltip = production_speed_infrastructure_factor_tt
+				}
+				add_to_variable = {
+					HUN_eco_migration = 0.02
+					tooltip = monthly_population_tt
+				}
 			}
-			custom_effect_tooltip = HUN_modify_eco_tt
-			add_to_variable = {
-				HUN_infrastructure_construction_speed = 0.1
-				tooltip = production_speed_infrastructure_factor_tt
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var > 175
+					}
+				}
+				activate_mission = HUN_police_reorg_mission
+				43 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				custom_effect_tooltip = HUN_modify_eco_tt
+				add_to_variable = {
+					HUN_infrastructure_construction_speed = 0.12
+					tooltip = production_speed_infrastructure_factor_tt
+				}
+				add_to_variable = {
+					HUN_eco_migration = 0.05
+					tooltip = monthly_population_tt
+				}
 			}
-			add_to_variable = {
-				HUN_eco_migration = 0.02
-				tooltip = monthly_population_tt
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 50
+					}
+				}
+				activate_mission = HUN_police_reorg_mission
+				43 = {
+					add_extra_state_shared_building_slots = 1
+				}
+				custom_effect_tooltip = HUN_modify_eco_tt
+				add_to_variable = {
+					HUN_infrastructure_construction_speed = 0.05
+					tooltip = production_speed_infrastructure_factor_tt
+				}
 			}
 		 }
 	}
@@ -1345,6 +1644,10 @@ focus_tree = {
 						}
 					}
 				}
+				country_event = {
+					id = ww1_hungary.122
+					days = 3
+				}
 			}
 		}
 		completion_reward = { 
@@ -1355,7 +1658,7 @@ focus_tree = {
 	focus = {
 		id = HUN_lower_chamber
 		icon = GFX_focus_generic_advanced_military_studies
-		cost = 3
+		cost = 2
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
 			FOCUS_FILTER_INTERNAL_AFFAIRS
@@ -1406,7 +1709,7 @@ focus_tree = {
 	focus = {
 		id = HUN_electoral_bill_1913
 		icon = GFX_focus_SWE_refuge_from_war
-		cost = 4.2
+		cost = 3
 		relative_position_id = HUN_speaker_tisza
 		x = 0
 		y = 3
@@ -1431,7 +1734,7 @@ focus_tree = {
 	focus = {
 		id = HUN_prepare_for_balkan_volatility
 		icon = GFX_TUR_balkan_war_experience
-		cost = 4.9
+		cost = 5
 		relative_position_id = HUN_pass_through_the_army_bill
 		x = 0
 		y = 3
@@ -1482,7 +1785,7 @@ focus_tree = {
 	focus = {
 		id = HUN_war_requirements_act
 		icon = GFX_focus_GER_demonstration_of_military_achievements
-		cost = 4.2
+		cost = 4
 		relative_position_id = HUN_prepare_for_balkan_volatility
 		x = 1
 		y = 1
@@ -1500,6 +1803,14 @@ focus_tree = {
 					has_war = yes
 				}
 			}
+			if = {
+				limit = { 
+					AUS_HUN_exists = yes
+				}
+				AUS = {
+					has_completed_focus = AUS_war_requirements_act
+				}
+			}
 		}
 		prerequisite = {
 			focus = HUN_prepare_for_balkan_volatility
@@ -1508,19 +1819,66 @@ focus_tree = {
 			focus = HUN_development_of_cities_act_1912
 		}
 		completion_reward = { 
+			custom_effect_tooltip = HUN_nmp_party_auth_level.tt
 			custom_effect_tooltip = HUN_modify_army_tt
-			add_to_variable = {
-				HUN_supply_consumption = -0.1
-				tooltip = supply_consumption_factor_tt
+			if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 175
+					}
+					check_variable = {
+						HUN_national_work_party_authority_var > 50
+					}
+				}
+				add_to_variable = {
+					HUN_supply_consumption = -0.1
+					tooltip = supply_consumption_factor_tt
+				}
+				add_to_variable = {
+					HUN_mobilization_speed = 0.05
+					tooltip = mobilization_speed_tt
+				}
+				custom_effect_tooltip = HUN_modify_eco_tt
+				add_to_variable = {
+					HUN_eco_mil_speed = 0.05
+					tooltip = production_speed_arms_factory_factor_tt
+				}
 			}
-			add_to_variable = {
-				HUN_mobilization_speed = 0.05
-				tooltip = mobilization_speed_tt
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var > 175
+					}
+				}
+					add_to_variable = {
+					HUN_supply_consumption = -0.1
+					tooltip = supply_consumption_factor_tt
+				}
+				add_to_variable = {
+					HUN_mobilization_speed = 0.1
+					tooltip = mobilization_speed_tt
+				}
+				custom_effect_tooltip = HUN_modify_eco_tt
+				add_to_variable = {
+					HUN_eco_mil_speed = 0.1
+					tooltip = production_speed_arms_factory_factor_tt
+				}
 			}
-			custom_effect_tooltip = HUN_modify_eco_tt
-			add_to_variable = {
-				HUN_eco_mil_speed = 0.05
-				tooltip = production_speed_arms_factory_factor_tt
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 50
+					}
+				}
+					add_to_variable = {
+					HUN_supply_consumption = -0.05
+					tooltip = supply_consumption_factor_tt
+				}
+				custom_effect_tooltip = HUN_modify_eco_tt
+				add_to_variable = {
+					HUN_eco_mil_speed = 0.05
+					tooltip = production_speed_arms_factory_factor_tt
+				}
 			}
 		}
 	 }
@@ -1528,7 +1886,7 @@ focus_tree = {
 	focus = {
 		id = HUN_emergency_powers_in_case_of_war
 		icon = GFX_focus_ETH_re-convene_the_parliament
-		cost = 4.2
+		cost = 4
 		relative_position_id = HUN_prepare_for_balkan_volatility
 		x = -1
 		y = 1
@@ -1559,19 +1917,51 @@ focus_tree = {
 			focus = HUN_prepare_for_balkan_volatility
 		}
 		completion_reward = { 
-			add_war_support = 0.05
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.03
+			custom_effect_tooltip = HUN_nmp_party_auth_level.tt
+			if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 175
+					}
+					check_variable = {
+						HUN_national_work_party_authority_var > 99
+					}
+				}
+				add_war_support = 0.05
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.03
+				}
+				custom_effect_tooltip = HUN_modify_army_tt
+				add_to_variable = {
+					HUN_mobilization_speed = 0.2
+					tooltip = mobilization_speed_tt
+				}
+				add_to_variable = {
+					HUN_national_work_party_authority_var = 15
+					tooltip = HUN_modify_national_work_party_tt
+				}
 			}
-			custom_effect_tooltip = HUN_modify_army_tt
-			add_to_variable = {
-				HUN_mobilization_speed = 0.2
-				tooltip = mobilization_speed_tt
-			}
-			add_to_variable = {
-				HUN_national_work_party_authority_var = 15
-				tooltip = HUN_modify_national_work_party_tt
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var > 175
+					}
+				}
+				add_war_support = 0.05
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.05
+				}
+				custom_effect_tooltip = HUN_modify_army_tt
+				add_to_variable = {
+					HUN_mobilization_speed = 0.2
+					tooltip = mobilization_speed_tt
+				}
+				add_to_variable = {
+					HUN_national_work_party_authority_var = 30
+					tooltip = HUN_modify_national_work_party_tt
+				}
 			}
 		}
 	}
@@ -1652,20 +2042,12 @@ focus_tree = {
 		}
 		available = {
 			has_country_flag = HUN_national_work_party_yes
-			has_country_leader = {
-				character = HUN_istvan_tisza
-				ruling_only = yes
-			}
 		}
 		prerequisite = {
 			focus = HUN_consolidate_nmp_party
 		}
 		completion_reward = {
-			add_political_power = 100
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.1
-			}
+			custom_effect_tooltip = HUN_nmp_party_auth_level.tt
 			if = {
 				limit = { 
 					has_country_leader = {
@@ -1681,6 +2063,30 @@ focus_tree = {
 							add = HUN_iron_earl2
 						}
 					}
+				}
+			}
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var > 50
+					}
+				}
+				add_political_power = 100
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.1
+				}
+			}
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 50
+					}
+				}
+				add_political_power = 25
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.05
 				}
 			}
 		 }
@@ -1834,18 +2240,65 @@ focus_tree = {
 			focus = HUN_consolidate_nmp_party
 		}
 		completion_reward = { 
-			custom_effect_tooltip = HUN_modify_eco_tt
-			add_to_variable = {
-				HUN_eco_migration = 0.05
-				tooltip = monthly_population_tt
+			custom_effect_tooltip = HUN_nmp_party_auth_level.tt
+			if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 175
+					}
+					check_variable = {
+						HUN_national_work_party_authority_var > 50
+					}
+				}
+				custom_effect_tooltip = HUN_modify_eco_tt
+				add_to_variable = {
+					HUN_eco_migration = 0.05
+					tooltip = monthly_population_tt
+				}
+				add_to_variable = {
+					HUN_eco_construction_speed = 0.1
+					tooltip = production_speed_buildings_factor_tt
+				}
+				add_to_variable = {
+					HUN_national_work_party_authority_var = 5
+					tooltip = HUN_modify_national_work_party_tt
+				}
 			}
-			add_to_variable = {
-				HUN_eco_construction_speed = 0.1
-				tooltip = production_speed_buildings_factor_tt
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var > 175
+					}
+				}
+				custom_effect_tooltip = HUN_modify_eco_tt
+				add_to_variable = {
+					HUN_eco_migration = 0.05
+					tooltip = monthly_population_tt
+				}
+				add_to_variable = {
+					HUN_eco_construction_speed = 0.15
+					tooltip = production_speed_buildings_factor_tt
+				}
+				add_to_variable = {
+					HUN_national_work_party_authority_var = 15
+					tooltip = HUN_modify_national_work_party_tt
+				}
 			}
-			add_to_variable = {
-				HUN_national_work_party_authority_var = 5
-				tooltip = HUN_modify_national_work_party_tt
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 50
+					}
+				}
+				custom_effect_tooltip = HUN_modify_eco_tt
+				add_to_variable = {
+					HUN_eco_migration = 0.05
+					tooltip = monthly_population_tt
+				}
+				add_to_variable = {
+					HUN_eco_construction_speed = 0.05
+					tooltip = production_speed_buildings_factor_tt
+				}
 			}
 		}
 	 }
@@ -2048,10 +2501,6 @@ focus_tree = {
 		}
 		available = {
 			has_country_flag = HUN_national_work_party_yes
-			has_country_leader = {
-				character = HUN_istvan_tisza
-				ruling_only = yes
-			}
 		}
 		prerequisite = {
 			focus = HUN_limit_the_right_to_assembly
@@ -2105,17 +2554,45 @@ focus_tree = {
 		prerequisite = {
 			focus = HUN_ban_scare_mongering
 		}
-		completion_reward = { 
-			add_to_variable = {
-				HUN_national_work_party_authority_var = 15
-				tooltip = HUN_modify_national_work_party_tt
+		completion_reward = {
+			custom_effect_tooltip = HUN_nmp_party_auth_level.tt 
+			if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var < 175
+					}
+					check_variable = {
+						HUN_national_work_party_authority_var > 50
+					}
+				}
+				add_to_variable = {
+					HUN_national_work_party_authority_var = 15
+					tooltip = HUN_modify_national_work_party_tt
+				}
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.1
+				}
+				add_war_support = 0.1
+				add_political_power = 75
 			}
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.1
+			else_if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var > 200
+					}
+				}
+				add_to_variable = {
+					HUN_national_work_party_authority_var = 30
+					tooltip = HUN_modify_national_work_party_tt
+				}
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.1
+				}
+				add_war_support = 0.1
+				add_political_power = 200
 			}
-			add_war_support = 0.1
-			add_political_power = 75
 		}
 	}
 	#Tisza's Civil Service reform
@@ -2212,18 +2689,15 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		available = {
-			if = {
-				limit = { 
-					has_completed_focus = HUN_constitutional_party
+			OR = {
+				has_country_leader = {
+					character = HUN_gyula_andrassy
 				}
-				has_global_flag = HUN_compromise_gov_in_charge
-				OR = {
-					has_country_leader = {
-						character = HUN_gyula_andrassy
-					}
-					has_country_leader = {
-						character = HUN_janos_hadik
-					}
+				has_country_leader = {
+					character = HUN_janos_hadik
+				}
+				has_country_leader = {
+					character = HUN_istvan_tisza
 				}
 			}
 			has_government = neutrality
@@ -2328,13 +2802,21 @@ focus_tree = {
 			focus = HUN_break_up_labour_movements
 		}
 		completion_reward = { 
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.05
+			custom_effect_tooltip = HUN_nmp_party_auth_level.tt
+			if = {
+				limit = { 
+					check_variable = {
+						HUN_national_work_party_authority_var > 150
+					}
+				}
+				add_popularity = {
+					ideology = neutrality
+					popularity = 0.05
+				}
+				add_political_power = 200
+				add_stability = -0.05
+				add_war_support = 0.05
 			}
-			add_political_power = 200
-			add_stability = -0.05
-			add_war_support = 0.05
 		}
 	}
 
@@ -3850,8 +4332,11 @@ focus_tree = {
 				limit = {
 					AUS_HUN_exists = yes
 				}
-				AUS = {
-					has_completed_focus = AUS_support_the_cartelization_of_industry
+				OR = {
+					AUS = {
+						has_completed_focus = AUS_support_the_cartelization_of_industry
+					}
+					has_country_flag = HUN_national_work_party_yes
 				}
 			}
 		}
@@ -4488,9 +4973,7 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		available = {
-			has_country_leader = {
-				character = HUN_karoly_khuen_hedervary
-			}
+			
 		}
 		prerequisite = {
 			focus = HUN_embrace_barons
@@ -4520,7 +5003,7 @@ focus_tree = {
 	focus = {
 		id = HUN_cinema_industry
 		icon = GFX_focus_generic_movie
-		cost = 4.9
+		cost = 5
 		relative_position_id = HUN_limited_worker_rights
 		x = 1
 		y = 1
@@ -6257,12 +6740,6 @@ focus_tree = {
 		relative_position_id = HUN_failure_of_treuga_dei
 		x = -2
 		y = 1
-		offset = {
-			x = 2
-			trigger = {
-				has_completed_focus = HUN_stand_with_tisza_gov
-			}
-		}
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
 			FOCUS_FILTER_INTERNAL_AFFAIRS
@@ -6295,12 +6772,6 @@ focus_tree = {
 		relative_position_id = HUN_stand_with_tisza_gov
 		x = 2
 		y = 1
-		offset = {
-			x = -1
-			trigger = {
-				has_completed_focus = HUN_stand_with_tisza_gov
-			}
-		}
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
 			FOCUS_FILTER_INDUSTRY
@@ -6472,12 +6943,6 @@ focus_tree = {
 		relative_position_id = HUN_finish_police_reorg
 		x = -1
 		y = 1
-		offset = {
-			trigger = {
-				has_completed_focus = HUN_a_blank_page
-			}
-			x = 1
-		}
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
 			FOCUS_FILTER_INDUSTRY
@@ -6570,13 +7035,6 @@ focus_tree = {
 		relative_position_id = HUN_diosgyor_steel_works
 		x = 1
 		y = 1
-		offset = {
-			trigger = {
-				has_completed_focus = HUN_a_blank_page
-			}
-			x = -1
-			y = -3
-		}
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
 			FOCUS_FILTER_INDUSTRY
@@ -6648,12 +7106,6 @@ focus_tree = {
 		relative_position_id = HUN_diosgyor_steel_works
 		x = -1
 		y = 1
-		offset = {
-			trigger = {
-				has_completed_focus = HUN_a_blank_page
-			}
-			x = 1
-		}
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
 			FOCUS_FILTER_POLITICAL
@@ -6741,12 +7193,6 @@ focus_tree = {
 		relative_position_id = HUN_national_coal_committee
 		x = 1
 		y = 1
-		offset = {
-			trigger = {
-				has_completed_focus = HUN_a_blank_page
-			}
-			x = -1
-		}
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
 			FOCUS_FILTER_INDUSTRY
@@ -6859,10 +7305,32 @@ focus_tree = {
 			}
 		 }
 	 }
-	 #Look for a way out
-	
-	 #The German Plan
-	 
+	 #Negotiate with Farmers Union
+	 focus = {
+		id = HUN_negotiate_w_farmers
+		icon = GFX_wip
+		cost = 2
+		relative_position_id = HUN_1917_agricultural_labor_decree
+		x = 0
+		y = 2
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+		}
+		available = {
+			has_war_with_major = yes
+			NOT = {
+				has_country_leader = {
+					character = HUN_istvan_tisza
+				}
+			}
+		}
+		prerequisite = {
+			focus = HUN_1917_agricultural_labor_decree
+		}
+		completion_reward = { }
+	 }
 	 #A Blank page
 	 focus = {
 		allow_branch = {
@@ -6870,16 +7338,11 @@ focus_tree = {
 		}
 		id = HUN_a_blank_page
 		icon = GFX_goal_generic_neutrality_focus
+		text_icon = joint_AUS_focus_style
 		cost = 0
 		relative_position_id = HUN_failure_of_treuga_dei
 		x = 4
 		y = 1
-		offset = {
-			trigger = {
-				has_completed_focus = HUN_a_blank_page
-			}
-			x = -3
-		}
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
 			FOCUS_FILTER_INTERNAL_AFFAIRS
@@ -6888,8 +7351,19 @@ focus_tree = {
 			FOCUS_FILTER_COMPLETED_BY_EVENT
 		}
 		available = {
-			hidden_trigger = {
-				always = no
+			if = {
+				limit = {
+					has_focus_tree = TGWR_hungary_focus
+				}
+				custom_trigger_tooltip = {
+					tooltip = only_austria_can
+					always = no
+				}
+				else = {
+					custom_trigger_tooltip = {
+						tooltip = only_austria_can
+					}
+				}
 			}
 		}
 		prerequisite = {
@@ -6899,7 +7373,7 @@ focus_tree = {
 			HUN_sandor_wekerle = {
 				clr_character_flag = out_of_comission_for_sickness
 			}
-			mark_focus_tree_layout_dirty = yes
+			activate_mission = HUN_esterhazy_mission
 		}
 	 }
 	 #Form a Hybrid Coalition
@@ -7010,6 +7484,28 @@ focus_tree = {
 			}
 		}
 	 }
+	 #Ease Militarization of Factories
+	 focus = {
+		id = HUN_ease_military_factors
+		icon = GFX_wip
+		cost = 2
+		relative_position_id = HUN_form_a_hybrid_coalition
+		x = 0
+		y = 1
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+		}
+		available = {
+			has_war_with_major = yes
+		}
+		prerequisite = {
+			focus = HUN_form_a_hybrid_coalition
+			focus = HUN_dissolve_parliament
+		}
+		completion_reward = { }
+	 }
 	 #Dissolve Parliament
 	 focus = {
 		allow_branch = {
@@ -7052,9 +7548,325 @@ focus_tree = {
 		}
 		completion_reward = { }
 	 }
-	
-	
-
+	 #Negotiate with Mining Unions
+	 focus = {
+		id = HUN_negotiate_w_miners
+		icon = GFX_wip
+		cost = 2
+		relative_position_id = HUN_dissolve_parliament
+		x = 0
+		y = 1
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL
+		}
+		available = {
+			NOT = {
+				has_country_leader = {
+					character = HUN_istvan_tisza
+				}
+			}
+			has_war_with_major = yes
+		}
+		prerequisite = {
+			focus = HUN_dissolve_parliament
+			focus = HUN_form_a_hybrid_coalition
+		}
+		completion_reward = { }
+	 }
+	 #The Veteran
+	 focus = {
+		id = HUN_the_veteran
+		icon = GFX_wip
+		text_icon = joint_AUS_focus_style
+		cost = 0
+		relative_position_id = HUN_a_blank_page
+		x = 6
+		y = 0
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL_CHARACTER
+			FOCUS_FILTER_POLITICAL
+		}
+		available = {
+			if = {
+				limit = {
+					has_focus_tree = TGWR_hungary_focus
+				}
+				custom_trigger_tooltip = {
+					tooltip = only_austria_can
+					always = no
+				}
+				else = {
+					custom_trigger_tooltip = {
+						tooltip = only_austria_can
+					}
+				}
+			}
+			has_country_leader = {
+				character = HUN_moric_esterhazy
+			}
+		}
+		prerequisite = {
+			focus = HUN_failure_of_treuga_dei
+		}
+		completion_reward = { }
+	 }
+	 #Key to Parliament
+	 focus = {
+		allow_branch = {
+			original_tag = HUN
+		}
+		id = HUN_key_to_parliament
+		icon = GFX_wip
+		cost = 3
+		relative_position_id = HUN_the_veteran
+		x = 0
+		y = 1
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
+		}
+		available = {
+			
+		}
+		bypass_if_unavailable = yes
+		prerequisite = {
+			focus = HUN_the_veteran
+		}
+		completion_reward = { 
+			if = {
+				limit = { 
+					NOT = {
+						has_global_flag = HUN_istvan_tisza_killed
+					}
+				}
+				country_event = ww1_hungary.114
+			}
+		}
+	 }
+	 #Sanitation Decree
+	 focus = {
+		id = HUN_sanatation_decree
+		icon = GFX_wip
+		cost = 5
+		relative_position_id = HUN_key_to_parliament
+		x = -1
+		y = 1
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INDUSTRY
+		}
+		available = {
+		}
+		prerequisite = {
+			focus = HUN_key_to_parliament
+		}
+		completion_reward = { 
+			custom_effect_tooltip = HUN_modify_eco_tt
+			add_to_variable = {
+				HUN_eco_stab = 0.04
+				tooltip = stability_factor_tt
+			}
+			add_to_variable = {
+				HUN_eco_migration = 0.04
+				tooltip = monthly_population_tt
+			}
+		}
+	 }
+	 #Military Exemption for Farmers
+	 focus = {
+		id = HUN_exempt_harvesters
+		icon = GFX_wip
+		cost = 5
+		relative_position_id = HUN_key_to_parliament
+		x = 1
+		y = 1
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INDUSTRY
+		}
+		available = {
+			has_war_with_major = yes
+		}
+		prerequisite = {
+			focus = HUN_key_to_parliament
+		}
+		completion_reward = { 
+			custom_effect_tooltip = HUN_modify_eco_tt
+			add_to_variable = {
+				HUN_eco_lack_of_resources_penalty = -0.05
+				tooltip = production_lack_of_resource_penalty_factor_tt
+			}
+			add_to_variable = {
+				HUN_eco_effeciency_max = 0.05
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+			custom_effect_tooltip = empty_space_tt
+			custom_effect_tooltip = HUN_modify_army_tt
+			add_to_variable = {
+				HUN_supply_consumption = -0.05
+				tooltip = supply_consumption_factor_tt
+			}
+		}
+	 }
+	 #The Middleman
+	 focus = {
+		id = HUN_the_middleman
+		icon = GFX_wip
+		text_icon = joint_AUS_focus_style
+		cost = 0
+		relative_position_id = HUN_the_veteran
+		x = 4
+		y = 0
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
+		}
+		available = {
+			if = {
+				limit = {
+					has_focus_tree = TGWR_hungary_focus
+				}
+				custom_trigger_tooltip = {
+					tooltip = only_austria_can
+					always = no
+				}
+				else = {
+					custom_trigger_tooltip = {
+						tooltip = only_austria_can
+					}
+				}
+			}
+			has_country_leader = {
+				character = HUN_sandor_wekerle
+			}
+		}
+		prerequisite = {
+			focus = HUN_failure_of_treuga_dei
+		}
+		completion_reward = { }
+	 }
+	 #The Inevitable
+	 focus = {
+		id = HUN_the_inevitable
+		icon = GFX_wip
+		text_icon = joint_AUS_focus_style
+		cost = 0
+		relative_position_id = HUN_the_veteran
+		x = 8
+		y = 0
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
+		}
+		available = {
+			if = {
+				limit = {
+					has_focus_tree = TGWR_hungary_focus
+				}
+				custom_trigger_tooltip = {
+					tooltip = only_austria_can
+					always = no
+				}
+				else = {
+					custom_trigger_tooltip = {
+						tooltip = only_austria_can
+					}
+				}
+			}
+			OR = {
+				has_country_leader = {
+					character = HUN_sandor_wekerle
+				}
+				has_country_leader = {
+					character = HUN_janos_hadik
+				}
+			}
+		}
+		prerequisite = {
+			focus = HUN_failure_of_treuga_dei
+		}
+		completion_reward = { }
+	 }
+	 #Aster Revolution
+	focus = {
+		id = HUN_aster_revolution_2
+		icon = GFX_focus_HUN_aster_revolution_walrus
+		cost = 0
+		relative_position_id = HUN_the_inevitable
+		x = 0
+		y = 2
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+		}
+		available = {
+			
+		}
+		prerequisite = {
+			focus = HUN_the_inevitable
+		}
+		completion_reward = { }
+	}
+	 #The Cursed
+	 focus = {
+		id = HUN_the_cursed
+		icon = GFX_wip
+		text_icon = joint_AUS_focus_style
+		cost = 0
+		relative_position_id = HUN_the_veteran
+		x = 12
+		y = 0
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
+		}
+		available = {
+			if = {
+				limit = {
+					has_focus_tree = TGWR_hungary_focus
+				}
+				custom_trigger_tooltip = {
+					tooltip = only_austria_can
+					always = no
+				}
+				else = {
+					custom_trigger_tooltip = {
+						tooltip = only_austria_can
+					}
+				}
+			}
+			OR = {
+				has_country_leader = {
+					character = HUN_sandor_wekerle
+				}
+				has_country_leader = {
+					character = HUN_janos_hadik
+				}
+			}
+		}
+		prerequisite = {
+			focus = HUN_failure_of_treuga_dei
+		}
+		completion_reward = { }
+	 }
 	 #Hazai's Leadership
 	 focus = {
 		id = HUN_hazai_leadership
@@ -7933,667 +8745,4 @@ focus_tree = {
 			}
 		}
 	 }
-	 #post war commie stuff
-	 focus = {
-		id = HUN_soviet_coup
-		icon = GFX_focus_HUN_soviet_coup
-		cost = 0
-		x = 20
-		y = 30
-		allow_branch = {
-			has_global_flag = has_had_communist_revolution_HUN
-		}
-		available = {
-			always = no
-		}
-		completion_reward = {	
-			effect_tooltip = {
-				set_politics = {
-					ruling_party = communism
-					elections_allowed = no
-				}	
-				promote_character = HUN_bela_kun
-			}	
-		}
-		search_filters = {
-			FOCUS_FILTER_COMPLETED_BY_EVENT FOCUS_FILTER_HISTORICAL
-		}
-	}
-	focus = {
-		id = HUN_crush_opposition
-		icon = GFX_focus_HUN_reinstate_the_lenin_boys
-		cost = 2
-		x = 0
-		y = 1
-		relative_position_id = HUN_soviet_coup
-		prerequisite = {
-			focus = HUN_soviet_coup
-		}
-		available = {
-			has_government = communism
-		}
-		completion_reward = {		
-			swap_ideas = {
-				remove_idea = HUN_anti_communist_opposition
-				add_idea = HUN_lenin_boys
-			}
-		}
-		ai_will_do = { 
-			base = 10 
-		}
-	}
-	focus = {
-		id = HUN_mass_socialization
-		icon = GFX_focus_communist_heavy_industry
-		cost = 2
-		x = 2
-		y = 1
-		relative_position_id = HUN_soviet_coup
-		prerequisite = {
-			focus = HUN_soviet_coup
-		}
-		available = {
-			has_government = communism
-		}
-		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					is_core_of = ROOT
-				}
-				prioritize = {
-					43
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-			add_ideas = HUN_socialist_economy
-		}
-		ai_will_do = { 
-			base = 10 
-		}
-	}
-	focus = {
-		id = HUN_collectivise_farming
-		icon = GFX_focus_agrarian_socialism
-		cost = 2
-		x = 1
-		y = 2
-		relative_position_id = HUN_soviet_coup
-		prerequisite = {
-			focus = HUN_mass_socialization
-		}
-		available = {
-			has_government = communism
-		}
-		completion_reward = {		
-			if = {
-				limit = {
-					has_idea = HUN_socialist_economy_union
-				}
-				swap_ideas = {
-					remove_idea = HUN_socialist_economy_union
-					add_idea = HUN_socialist_economy_final
-				}
-			}
-			else = {
-				swap_ideas = {
-					remove_idea = HUN_socialist_economy
-					add_idea = HUN_socialist_economy_collectivised
-				}
-			}
-			custom_effect_tooltip = HUN_has_taken_union_focus.tt
-			unlock_decision_tooltip = HUN_war_communism
-			custom_effect_tooltip = when_taken
-			effect_tooltip = {
-				add_stability = -0.1
-				if = {
-					limit = {
-						has_idea = HUN_socialist_economy_collectivised
-					}
-					swap_ideas = {
-						remove_idea = HUN_socialist_economy_collectivised
-						add_idea = HUN_socialist_economy_final
-					}
-				}
-				else = {
-					swap_ideas = {
-						remove_idea = HUN_socialist_economy
-						add_idea = HUN_socialist_economy_union
-					}
-				}
-			}
-		}
-		ai_will_do = { 
-			base = 10 
-		}
-	}
-	focus = {
-		id = HUN_union_decision_making
-		icon = GFX_focus_socialist_worker
-		cost = 2
-		x = 3
-		y = 2
-		relative_position_id = HUN_soviet_coup
-		prerequisite = {
-			focus = HUN_mass_socialization
-		}
-		available = {
-			has_government = communism
-		}
-		completion_reward = {		
-			if = {
-				limit = {
-					has_idea = HUN_socialist_economy_collectivised
-				}
-				swap_ideas = {
-					remove_idea = HUN_socialist_economy_collectivised
-					add_idea = HUN_socialist_economy_final
-				}
-			}
-			else = {
-				swap_ideas = {
-					remove_idea = HUN_socialist_economy
-					add_idea = HUN_socialist_economy_union
-				}
-			}
-			custom_effect_tooltip = HUN_has_taken_collectivise_focus.tt
-			unlock_decision_tooltip = HUN_war_communism
-			custom_effect_tooltip = when_taken
-			effect_tooltip = {
-				add_stability = -0.1
-				if = {
-					limit = {
-						has_idea = HUN_socialist_economy_collectivised
-					}
-					swap_ideas = {
-						remove_idea = HUN_socialist_economy_collectivised
-						add_idea = HUN_socialist_economy_final
-					}
-				}
-				else = {
-					swap_ideas = {
-						remove_idea = HUN_socialist_economy
-						add_idea = HUN_socialist_economy_union
-					}
-				}
-			}
-		}
-		ai_will_do = { 
-			base = 10 
-		}
-	}
-	focus = {
-		id = HUN_found_the_red_army
-		icon = GFX_focus_HUN_found_the_red_army
-		cost = 1
-		relative_position_id = HUN_soviet_coup
-		x = -2
-		y = 1
-		prerequisite = {
-			focus = HUN_soviet_coup
-		}
-		available = {
-			has_government = communism
-		}
-		completion_reward = {		
-			hidden_effect = {
-				division_template = {
-					name = "Milícia"
-					is_locked = yes
-					regiments = {
-						militia = {
-							x = 0
-							y = 0
-						}
-						militia = {
-							x = 0
-							y = 1
-						}
-						militia = {
-							x = 0
-							y = 2
-						}
-						militia = {
-							x = 0
-							y = 3
-						}
-					}
-				}
-				division_template = {
-					name = "Vörös Hadosztály"
-					is_locked = yes
-					regiments = {
-						infantry = {
-							x = 0
-							y = 0
-						}
-						infantry = {
-							x = 0
-							y = 1
-						}
-						infantry = {
-							x = 0
-							y = 2
-						}
-						infantry = {
-							x = 0
-							y = 3
-						}
-					}
-					support = {
-						engineer = {
-							x = 0
-							y = 1
-						}
-						field_gun = {
-							x = 0
-							y = 1
-						}
-						recon = {
-							x = 0
-							y = 2
-						}
-					}
-				}
-			}
-			43 = {
-				create_unit = {
-					division = "name = \"I Brigád\" division_template = \"Vörös Hadosztály\" start_experience_factor = 0.2 start_equipment_factor = 0.15"
-					owner = ROOT
-				}
-				create_unit = {
-					division = "name = \"II Brigád\" division_template = \"Vörös Hadosztály\" start_experience_factor = 0.2 start_equipment_factor = 0.15"
-					owner = ROOT
-				}
-				create_unit = {
-					division = "name = \"Munkás Milícia\" division_template = \"Milícia\" start_experience_factor = 0 start_equipment_factor = 0.1"
-					owner = ROOT
-					count = 2
-				}
-		    }
-			custom_effect_tooltip = empty_space_tt
-			unlock_decision_tooltip = HUN_found_the_international_brigade
-	 		custom_effect_tooltip = when_taken
-			custom_effect_tooltip = HUN_voros_division.tt
-			effect_tooltip = {
-				43 = {
-					create_unit = {
-						division = "name = \"80th Nemzetközi Brigád\" division_template = \"Vörös Hadosztály\" start_experience_factor = 0.3"
-						owner = ROOT
-					}
-				}
-			}
-		}
-		ai_will_do = { 
-			base = 10 
-		}
-	}
-	focus = {
-		id = HUN_conscript_factory_workers
-		icon = GFX_focus_army_is_ready
-		cost = 2
-		relative_position_id = HUN_soviet_coup
-		x = -3
-		y = 2
-		prerequisite = {
-			focus = HUN_found_the_red_army
-		}
-		available = {
-			has_government = communism
-		}
-		completion_reward = {	
-			custom_effect_tooltip = HUN_milicia_division.tt	
-			43 = {
-				create_unit = {
-					division = "name = \"Gyári Munkás Milícia\" division_template = \"Milícia\" start_experience_factor = 0 start_equipment_factor = 0.1"
-					owner = ROOT
-					count = 4
-					prioritize_location = 9660
-				}
-				create_unit = {
-					division = "name = \"Gyári Munkás Milícia\" division_template = \"Milícia\" start_experience_factor = 0 start_equipment_factor = 0.1"
-					owner = ROOT
-					count = 1
-					prioritize_location = 6751
-				}
-			}
-		}
-		ai_will_do = { 
-			base = 10 
-		}
-	}
-	focus = {
-		id = HUN_mass_recruitment
-		icon = GFX_focus_HUN_mass_recruitment
-		cost = 2
-		relative_position_id = HUN_soviet_coup
-		x = -1
-		y = 2
-		prerequisite = {
-			focus = HUN_found_the_red_army
-		}
-		available = {
-			has_government = communism
-		}
-		completion_reward = {
-			43 = {
-				create_unit = {
-					division = "name = \"Gyári Munkás Milícia\" division_template = \"Milícia\" start_experience_factor = 0.1 start_equipment_factor = 0.5"
-					owner = ROOT
-					count = 4
-					prioritize_location = 9660
-				}
-			}	
-			if = {
-				limit = {
-					NOT = {
-						has_idea = all_adults_serve
-						has_idea = scraping_the_barrel
-					}
-				}
-				add_ideas = all_adults_serve
-			}
-		}
-		ai_will_do = { 
-			base = 10 
-		}
-	}
-	focus = {
-		id = HUN_offensive_against_czechs
-		icon = GFX_focus_generic_attack_czechoslovakia
-		cost = 1
-		relative_position_id = HUN_soviet_coup
-		x = -2
-		y = 3
-		prerequisite = {
-			focus = HUN_found_the_red_army
-		}
-		available = {
-			has_government = communism
-			has_country_flag = HUN_czechs_making_moves
-		}
-		completion_reward = {		
-			hidden_effect = {
-				news_event = {
-					days = 1
-					id = ww1_romania.209
-				}
-			}
-			declare_war_on = {
-				target = CZE
-				type = take_core_state
-			}
-			activate_mission = HUN_capture_presov
-			custom_effect_tooltip = HUN_take_presov.tt
-			add_timed_idea = {
-				idea = HUN_czech_offensive
-				days = 50
-			}
-			custom_effect_tooltip = empty_space_tt
-			unlock_decision_tooltip = HUN_establish_slovak_soviet_republic
-			custom_effect_tooltip = when_taken
-			effect_tooltip = {
-				71 = {
-					set_state_owner_to = SLO
-				}
-				every_owned_state = {
-					limit = {
-						is_core_of = SLO
-						is_fully_controlled_by = HUN
-					}
-					transfer_state_to = SLO
-				}
-				SLO = {
-					set_politics = {
-						ruling_party = communism
-						elections_allowed = no 
-					}
-					set_capital = {
-						state = 71
-					}
-					set_cosmetic_tag = SLO_socialism
-				}
-				puppet = SLO
-			}
-		}
-		ai_will_do = { 
-			base = 100
-		}
-	}
-	focus = {
-		id = HUN_the_great_gambit
-		icon = GFX_focus_generic_attack_romania
-		cost = 2
-		relative_position_id = HUN_soviet_coup
-		x = -1
-		y = 4
-		prerequisite = {
-			focus = HUN_mass_recruitment
-		}
-		prerequisite = {
-			focus = HUN_offensive_against_czechs
-		}
-		available = {
-			has_government = communism
-			has_country_flag = HUN_preparing_rom_offensive
-		}
-		completion_reward = {		
-			custom_effect_tooltip = HUN_demarcations_broken.tt
-			clr_country_flag = HUN_preparing_rom_offensive
-			add_timed_idea = {
-				idea = HUN_desperate_rom_offensive
-				days = 50
-			}
-			hidden_effect = {
-				remove_ideas = HUN_armistice
-				ROM = {
-					remove_ideas = ROM_armistice
-				}
-			}
-			set_country_flag = HUN_rom_offensive
-		}
-		ai_will_do = { 
-			base = 100
-		}
-	}
-	 focus = {
-		allow_branch = {
-			original_tag = HUN
-		}
-		id = HUN_pin_all_hopes_on_russian_defeat
-		icon = GFX_focus_ger_strike_at_the_source
-		cost = 4
-		relative_position_id = HUN_hazai_leadership
-		x = 3
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_HISTORICAL
-			FOCUS_FILTER_POLITICAL
-		}
-		available = {
-			has_war_with = RUS
-			longest_war_length < 18
-		}
-		prerequisite = {
-			focus = HUN_hazai_leadership
-			focus = HUN_secure_the_state
-		}
-		bypass = {
-			is_in_faction_with = RUS
-		}
-		completion_reward = { 
-			add_days_mission_timeout = {
-				mission = HUN_great_war_discontent_mission
-				days = 50
-			}
-			custom_effect_tooltip = HUN_pin_all_hopes_on_russian_defeat.tt
-			activate_mission = HUN_pin_hope_on_russian_defeat_mission
-		}
-	 }
-	
-	
-	 
-}
-
-joint_focus = {
-	allow_branch = {
-		country_exists = BOS
-		AUS_HUN_exists = yes
-	}
-	id = HUN_bosnian_rail_expansion
-	icon = GFX_focus_PER_feat_of_engineering
-	text_icon = joint_HUN_BOS_focus_style
-	cost = 4
-	relative_position_id = HUN_develop_the_periphery
-	x = 0
-	y = 0
-	offset = {
-		trigger = {
-			original_tag = BOS
-		}
-		x = -3
-		y = 1
-	}
-	offset = {
-		trigger = {
-			has_focus_tree = TGWR_hungary_focus
-		}
-		x = 1
-		y = 1
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_INDUSTRY
-		FOCUS_FILTER_INTERNAL_AFFAIRS
-		#FOCUS_FILTER_POLITICAL
-		#FOCUS_FILTER_INTERNATIONAL_TRADE
-	}
-	available = {
-		has_tech = electric_railway
-		104 = {
-			OR = {
-				AND = {
-					is_owned_and_controlled_by = BOS
-					bosnia_is_AUS_subject = yes
-					AUS_HUN_exists = yes
-				}
-				is_owned_and_controlled_by = ROOT
-			}
-		}
-		BOS = {
-			has_completed_focus = BOS_third_times_the_charm
-		}
-	}
-	prerequisite = {
-		focus = HUN_prioritize_heartlands
-		focus = HUN_develop_the_periphery
-		focus = BOS_railway_bill
-	}
-	completion_reward_joint_originator = {
-		if = {
-			limit = {
-				has_focus_tree = TGWR_hungary_focus
-			}
-			add_tech_bonus = {
-				name = HUN_bosnian_rail_expansion
-				bonus = 0.5
-				category = train_tech
-				uses = 1
-			}
-			add_timed_idea = {
-				idea = HUN_bosnian_rail_expansion_idea_2
-				days = 400
-			}
-			if = {
-				limit = {
-					104 = {
-						NOT = {
-							is_owned_and_controlled_by = BOS
-						}
-					}
-				}
-				104 = {
-					add_dynamic_modifier = {
-						modifier = HUN_rail_state_bonus
-						days = 600
-					}
-				}
-			}
-		}
-		if = {
-			limit = {
-				has_focus_tree = bosnia_focus
-			}
-			add_timed_idea = {
-				idea = HUN_bosnian_rail_expansion_idea
-				days = 400
-			}
-			add_tech_bonus = {
-				name = HUN_bosnian_rail_expansion
-				bonus = 1
-				category = train_tech
-				uses = 1
-			}
-			104 = {
-				add_dynamic_modifier = {
-					modifier = HUN_rail_state_bonus
-					days = 750
-				}
-			}
-		}
-	}
-	completion_reward_joint_member = {
-		if = {
-			limit = {
-				has_focus_tree = TGWR_hungary_focus
-			}
-			add_tech_bonus = {
-				name = HUN_bosnian_rail_expansion
-				bonus = 0.5
-				category = train_tech
-				uses = 1
-			}
-			add_timed_idea = {
-				idea = HUN_bosnian_rail_expansion_idea_2
-				days = 400
-			}
-			if = {
-				limit = {
-					104 = {
-						NOT = {
-							is_owned_and_controlled_by = BOS
-						}
-					}
-				}
-				104 = {
-					add_dynamic_modifier = {
-						modifier = HUN_rail_state_bonus
-					}
-				}
-			}
-		}
-		if = {
-			limit = {
-				has_focus_tree = bosnia_focus
-			}
-			add_timed_idea = {
-				idea = HUN_bosnian_rail_expansion_idea
-				days = 400
-			}
-			add_opinion_modifier = {
-				target = HUN
-				modifier = medium_increase
-			}
-			add_tech_bonus = {
-				name = HUN_bosnian_rail_expansion
-				bonus = 1
-				category = train_tech
-				uses = 1
-			}
-		}
-	}
 }

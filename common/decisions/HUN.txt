@@ -1,5 +1,73 @@
 
 debug_decisions = {
+	HUN_load_aster_tree = {
+		allowed = {
+			original_tag = HUN
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			
+		}
+		complete_effect = {
+			set_country_flag = HUN_load_aster_tree
+			load_focus_tree = hungary_postwar_focus
+			mark_focus_tree_layout_dirty = yes
+		}
+		fire_only_once = no
+	}
+	HUN_unload_aster_tree = {
+		allowed = {
+			original_tag = HUN
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			has_country_flag = HUN_load_aster_tree
+		}
+		complete_effect = {
+			clr_country_flag = HUN_load_aster_tree
+			load_focus_tree = TGWR_hungary_focus
+			mark_focus_tree_layout_dirty = yes
+		}
+		fire_only_once = no
+	}
+	HUN_add_more_nmp_auth = {
+		allowed = {
+			original_tag = HUN
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			has_country_flag = HUN_national_work_party_yes
+		}
+		complete_effect = {
+			add_to_variable = {
+				HUN_national_work_party_authority_var = 50
+			}
+		}
+		fire_only_once = no
+	}
+	HUN_add_less_nmp_auth = {
+		allowed = {
+			original_tag = HUN
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			has_country_flag = HUN_national_work_party_yes
+		}
+		complete_effect = {
+			add_to_variable = {
+				HUN_national_work_party_authority_var = -50
+			}
+		}
+		fire_only_once = no
+	}
 	HUN_set_tisza_dead_flag = {
 		allowed = {
 			original_tag = HUN
@@ -1361,12 +1429,9 @@ HUN_habsburg_restoration = {
 				OR = {
 					state = 80
 					state = 88
-					state = 1268
-					state = 1269					
 					state = 89
 					state = 91
 					state = 237
-					state = 1270
 					state = 562
 					state = 867
 					state = 991
@@ -1395,12 +1460,9 @@ HUN_habsburg_restoration = {
 				limit = {
 					OR = {
 						state = 88
-						state = 1268
-						state = 1269						
 						state = 89
 						state = 91
 						state = 237
-						state = 1270
 						state = 562
 						state = 991
 					}
@@ -2366,10 +2428,12 @@ AUS_minorities_mechanic_HUN = {
 			}
 		}
 		available = {
-			has_global_flag = HUN_army_question_crisis_answered
-			custom_trigger_tooltip = {
-				tooltip = to_complete_HUN_army_crisis
+			OR = {
 				has_global_flag = HUN_army_question_crisis_answered
+				custom_trigger_tooltip = {
+					tooltip = to_complete_HUN_army_crisis
+					has_global_flag = HUN_army_question_crisis_answered
+				}
 			}
 		}
 		timeout_effect = {
@@ -2383,10 +2447,8 @@ AUS_minorities_mechanic_HUN = {
 						character = HUN_karoly_khuen_hedervary
 					}
 				}
-				HUN = {
-					country_event = {
-						id = ww1_hungary.1302
-					}
+				AUS = {
+					country_event = ww1_hungary.1301
 				}
 			}
 		}
@@ -2444,7 +2506,6 @@ AUS_minorities_mechanic_HUN = {
 		}
 		visible = {
 			tag = HUN
-			
 		}
 		cancel_trigger = {
 			OR = {
@@ -2644,6 +2705,65 @@ AUS_minorities_mechanic_HUN = {
 		}
 		timeout_effect = {
 			
+		}
+	}
+	HUN_esterhazy_mission = {
+		icon = GFX_decision_cat_generic_austria_hungary_icon 
+		is_good = no
+		days_mission_timeout = 65 
+		fire_only_once = yes
+		activation = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+		available = {
+			NOT = {
+				HUN = {
+					has_country_leader = {
+						character = HUN_moric_esterhazy
+					}
+				}
+			}
+		}
+		cancel_trigger = {
+			AUS_HUN_exists = no
+		}
+		timeout_effect = {
+			
+		}
+	}
+	HUN_werkele_mission = {
+		icon = GFX_decision_cat_generic_austria_hungary_icon 
+		is_good = no
+		days_mission_timeout = 400 
+		fire_only_once = yes
+		activation = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+		available = {
+			has_completed_focus = AUS_HUN_werkele_suffrage_bill
+			NOT = {
+				HUN = {
+					has_country_leader = {
+						character = HUN_sandor_wekerle
+					}
+				}
+			}
+			OR = {
+				has_completed_focus = HUN_sanatation_decree
+				has_completed_focus = HUN_exempt_harvesters
+			}
+		}
+		cancel_trigger = {
+			AUS_HUN_exists = no
+		}
+		timeout_effect = {
+			AUS = {
+				country_event = ww1_hungary.117
+			}
 		}
 	}
 }

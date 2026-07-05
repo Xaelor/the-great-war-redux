@@ -24,8 +24,9 @@ focus_tree = {
 	shared_focus = AUS_quell_political_violence_in_south
 	shared_focus = AUS_expand_the_UFAG
 	shared_focus = AUS_enforce_war_requirement_act_on_bosnia
+	shared_focus = AUS_HUN_werkele_suffrage_bill
 	continuous_focus_position = {
-		x = 50
+		x = -1000
 		y = 1866
 	}
 	initial_show_position = {
@@ -3562,6 +3563,7 @@ focus_tree = {
 		available = {
 			check_variable = {
 				AUS_kunschak_reform > 4
+				tooltip = has_completed_5_kunshak_stuff
 			}
 		}
 		completion_reward = {
@@ -5705,8 +5707,8 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = AUS_motor_industry
-		icon = GFX_focus_generic_truck
+		id = AUS_expand_resources
+		icon = GFX_focus_generic_mineral_prospecting
 		cost = 4
 		x = -1
 		y = 1
@@ -5716,28 +5718,11 @@ focus_tree = {
 		}
 		relative_position_id = AUS_invest_in_the_east
 		available = {
-			has_tech = coil_ignition
 		}
 		completion_reward = {
-			add_tech_bonus = {
-				name = AUS_motor_industry
-				category = motorized_equipment
-				uses = 1
-				ahead_reduction = 1
-			}
-			if = {
-				limit = {
-					has_dlc = "Arms Against Tyranny"
-				}
-				custom_effect_tooltip = available_industrial_concern
-				show_mio_tooltip = AUH_kuk_kraftfahrersatz_depot_organization
-				mio:AUH_kuk_kraftfahrersatz_depot_organization = {
-					add_mio_funds = 250
-				}
-			}
-			else = {
-				custom_effect_tooltip = available_designer
-				show_ideas_tooltip = AUH_kuk_kraftfahrersatz_depot
+			unlock_decision_tooltip = {
+				decision = AUS_mining_in_salzburg
+				show_effect_tooltip = yes
 			}
 		}
 		ai_will_do = {
@@ -6865,10 +6850,6 @@ focus_tree = {
 				tooltip = local_resources_factor_tt
 			}
 			custom_effect_tooltip = empty_space_tt
-			unlock_decision_tooltip = {
-				decision = AUS_mining_in_salzburg
-				show_effect_tooltip = yes
-			}
 		}
 		ai_will_do = {
 			base = 1
@@ -11007,8 +10988,13 @@ focus_tree = {
 		}
 		completion_reward = {
 			#horthy
-			custom_effect_tooltip = available_chief_of_navy
-			show_ideas_tooltip = HUN_miklos_horthy
+			if = {
+				limit = {
+					has_character = HUN_miklos_horthy
+				}
+				custom_effect_tooltip = available_chief_of_navy
+				show_ideas_tooltip = HUN_miklos_horthy
+			}
 		}
 		ai_will_do = {
 			base = 1
@@ -11090,6 +11076,14 @@ focus_tree = {
 			dockyard > 0
 		}
 		completion_reward = {
+			add_tech_bonus = {
+				name = AUS_naval_technical_military_committee
+				bonus = 1
+				uses = 1
+				category = cat_ship_light_battery
+				category = cat_ship_medium_battery
+				category = cat_ship_heavy_battery
+			}
 		}
 		ai_will_do = {
 			factor = 20
@@ -11846,10 +11840,149 @@ focus_tree = {
 			FOCUS_FILTER_HISTORICAL
 		}
 	}
+	focus = {
+		id = AUS_appoint_esterhazy
+		icon = GFX_wip
+		text_icon = joint_AUS_focus_style
+		cost = 0
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		relative_position_id = AUS_maintain_democracy
+		x = -4
+		y = 1
+		available = {
+			has_country_leader = {
+				character = AUH_karl_i
+			}
+			AUS_HUN_exists = yes
+		}
+		prerequisite = {
+			focus = AUS_maintain_democracy
+		}
+		completion_reward = { }
+	}
+	focus = {
+		id = AUS_appoint_werkle
+		icon = GFX_wip
+		text_icon = joint_AUS_focus_style
+		cost = 1
+		relative_position_id = AUS_appoint_esterhazy
+		x = -4
+		y = 0
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		available = {
+			has_country_leader = {
+				character = AUH_karl_i
+			}
+			AUS_HUN_exists = yes
+			HUN = {
+				has_country_leader = {
+					character = HUN_moric_esterhazy
+				}
+			}
+		}
+		prerequisite = {
+			focus = AUS_maintain_democracy
+		}
+		completion_reward = { }
+	}
+	focus = {
+		id = AUS_appoint_hadik
+		icon = GFX_wip
+		text_icon = joint_AUS_focus_style
+		cost = 1
+		relative_position_id = AUS_appoint_werkle
+		x = -4
+		y = 0
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		available = {
+			has_country_leader = {
+				character = AUH_karl_i
+			}
+			AUS_HUN_exists = yes
+			HUN = {
+				has_country_leader = {
+					character = HUN_sandor_wekerle
+				}
+			}
+		}
+		prerequisite = {
+			focus = AUS_maintain_democracy
+		}
+		completion_reward = { }
+	}
+	 focus = {
+		id = AUS_appoint_karolyi
+		icon = GFX_wip
+		text_icon = joint_AUS_focus_style
+		cost = 1
+		relative_position_id = AUS_appoint_hadik
+		x = -4
+		y = 0
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		available = {
+			has_country_leader = {
+				character = AUH_karl_i
+			}
+			AUS_HUN_exists = yes
+			HUN = {
+				OR = {
+					has_country_leader = {
+						character = HUN_sandor_wekerle
+					}
+					has_country_leader = {
+						character = HUN_janos_hadik
+					}
+				}
+			}
+		}
+		prerequisite = {
+			focus = AUS_maintain_democracy
+		}
+		completion_reward = { }
+	 }
+	 focus = {
+		id = AUS_appoint_tisza
+		icon = GFX_wip
+		text_icon = joint_AUS_focus_style
+		cost = 1
+		relative_position_id = AUS_appoint_hadik
+		x = -8
+		y = 0
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		available = {
+			has_country_leader = {
+				character = AUH_karl_i
+			}
+			AUS_HUN_exists = yes
+			HUN = {
+				OR = {
+					has_country_leader = {
+						character = HUN_sandor_wekerle
+					}
+					has_country_leader = {
+						character = HUN_janos_hadik
+					}
+				}
+			}
+		}
+		prerequisite = {
+			focus = AUS_maintain_democracy
+		}
+		completion_reward = { }
+	 }
 		focus = {
 		id = AUS_support_the_population
-				icon = GFX_focus_generic_population_growth
-
+		icon = GFX_focus_generic_population_growth
 		cost = 3
 		x = 0
 		y = 1
@@ -14269,14 +14402,14 @@ joint_focus = {
 		trigger = {
 			has_focus_tree = austria_tree
 		}
-		x = -2
-		y = 1
+		x = 6
+		y = 6
 	}
 	offset = {
 		trigger = {
 			has_focus_tree = TGWR_hungary_focus
 		}
-		x = 31
+		x = 22
 		y = 5
 	}
 	relative_position_id = AUS_new_customs_offices
@@ -14284,7 +14417,9 @@ joint_focus = {
 		AUS_HUN_exists = yes
 	}
 	prerequisite = {
-		focus = AUS_new_customs_offices
+		focus = AUS_open_up_the_country
+		focus = AUS_mantain_cheap_goods
+		focus = HUN_nationalize_oil_and_gas_fields
 	}
 	completion_reward = {
 		add_tech_bonus = {
@@ -15478,5 +15613,74 @@ joint_focus = {
 	}
 	ai_will_do = {
 		factor = 10
+	}
+}
+
+joint_focus = {
+	id = AUS_HUN_werkele_suffrage_bill
+	icon = GFX_wip
+	text_icon = joint_AUS_HUN_focus_style
+	cost = 3
+	x = 0
+	y = 0
+	offset = {
+		trigger = {
+			has_focus_tree = TGWR_hungary_focus
+		}
+		x = 0
+		y = 2
+	}
+	offset = {
+		trigger = {
+			has_focus_tree = austria_tree
+		}
+		x = -121
+		y = 2
+	}
+	available = {
+		AUS_has_HUN_state = yes
+		HUN = {
+			is_subject_of = AUS
+		}
+	}
+	search_filters = {
+		FOCUS_FILTER_HISTORICAL
+	}
+	relative_position_id = HUN_key_to_parliament
+	prerequisite = {
+		focus = HUN_key_to_parliament
+		focus = AUS_appoint_werkle
+	}
+	completion_reward_joint_originator = {
+		if = {
+			limit = {
+				has_focus_tree = austria_tree
+			}
+			HUN = {
+				country_event = ww1_hungary.115
+			}
+		}
+		if = {
+			limit = {
+				has_focus_tree = TGWR_hungary_focus
+			}
+			country_event = ww1_hungary.115
+		}
+	}
+	completion_reward_joint_member = {
+		if = {
+			limit = {
+				has_focus_tree = austria_tree
+			}
+			HUN = {
+				country_event = ww1_hungary.115
+			}
+		}
+		if = {
+			limit = {
+				has_focus_tree = TGWR_hungary_focus
+			}
+			country_event = ww1_hungary.115
+		}
 	}
 }

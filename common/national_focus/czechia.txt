@@ -14,8 +14,7 @@ focus_tree = {
 		y = 1866
 	}
 	initial_show_position = {
-		x = 0
-		y = 0
+		focus = CZE_long_awaited_autonomy
 	}
 	focus = {
 		id = CZE_long_awaited_autonomy
@@ -724,7 +723,6 @@ focus_tree = {
 		}
 		available = {
 			is_subject = yes
-			
 		}
 		completion_reward = {
 			add_political_power = 50
@@ -750,7 +748,6 @@ focus_tree = {
 		}
 		available = {
 			is_subject = yes
-			
 		}
 		completion_reward = {
 			custom_effect_tooltip = CZE_entente_help_in_the_revolt
@@ -791,27 +788,27 @@ focus_tree = {
 			}
 			custom_effect_tooltip = if_they_accept_newline_tt
 			effect_tooltip = {
-			CZE = {
-				if = {
-					limit = {
-						has_idea = CZE_duties_to_vienna
+				CZE = {
+					if = {
+						limit = {
+							has_idea = CZE_duties_to_vienna
+						}
+						swap_ideas = {
+							remove_idea = CZE_duties_to_vienna
+							add_idea = CZE_duties_to_vienna_minimum
+						}
 					}
-					swap_ideas = {
-					remove_idea = CZE_duties_to_vienna
-					add_idea = CZE_duties_to_vienna_minimum
-				}
-				}
-				if = {
-					limit = {
-						has_idea = CZE_duties_to_vienna_2
+					if = {
+						limit = {
+							has_idea = CZE_duties_to_vienna_2
+						}
+						swap_ideas = {
+							remove_idea = CZE_duties_to_vienna_2
+							add_idea = CZE_duties_to_vienna_minimum
+						}
 					}
-					swap_ideas = {
-					remove_idea = CZE_duties_to_vienna_2
-					add_idea = CZE_duties_to_vienna_minimum
-				}
 				}
 			}
-		}
 		}
 		ai_will_do = {
 			base = 1
@@ -864,7 +861,6 @@ focus_tree = {
 		}
 		available = {
 			is_subject = yes
-			
 		}
 		completion_reward = {
 			add_ideas = CZE_youth_program_idea_n
@@ -888,7 +884,6 @@ focus_tree = {
 		}
 		available = {
 			is_subject = yes
-			
 		}
 		completion_reward = {
 			custom_effect_tooltip = CZE_get_self_defense_workers
@@ -915,7 +910,6 @@ focus_tree = {
 		}
 		available = {
 			is_subject = yes
-			
 		}
 		completion_reward = {
 			custom_effect_tooltip = CZE_healthy_we_leave
@@ -982,7 +976,6 @@ focus_tree = {
 		}
 		available = {
 			is_subject = yes
-			
 		}
 		completion_reward = {
 			add_manpower = 25000
@@ -1009,7 +1002,6 @@ focus_tree = {
 		}
 		available = {
 			is_subject = yes
-			
 		}
 		completion_reward = {
 			swap_ideas = {
@@ -1254,11 +1246,7 @@ focus_tree = {
 		y = 5
 		relative_position_id = CZE_czech_statehood_party
 		available = {
-			NOT = {
-				is_subject = yes
-				is_puppet = yes
-			
-			}
+			is_subject = no
 		}
 		completion_reward = {
 		}
@@ -1430,32 +1418,6 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = CZE_birth
-		icon = GFX_generic_abolish_slavery
-		cost = 5
-		x = 30
-		y = 0
-		prerequisite = {
-		}
-		available = {
-			always = no
-		}
-		completion_reward = {
-			hidden_effect = {
-				country_event = {
-					id = ww1_czechoslovakia.1
-					days = 2
-				}
-			}
-		}
-		ai_will_do = {
-			base = 1
-		}
-		search_filters = {
-			FOCUS_FILTER_ARMY_REFORM
-		}
-	}
-	focus = {
 		id = CZE_city_on_a_shining_hill
 		icon = GFX_focus_PRC_urbanization
 		cost = 5
@@ -1493,7 +1455,6 @@ focus_tree = {
 			focus = CZE_city_on_a_shining_hill
 		}
 		available = {
-
 		}
 		completion_reward = {
 			1200 = {
@@ -1859,12 +1820,35 @@ focus_tree = {
 			FOCUS_FILTER_ARMY_REFORM
 		}
 	}
-	
+
+	focus = {
+		id = CZE_birth
+		icon = GFX_generic_abolish_slavery
+		cost = 0.3
+		x = 35
+		y = 0
+		prerequisite = {
+		}
+		available = {
+			always = no
+		}
+		completion_reward = {
+			hidden_effect = {
+				country_event = ww1_czechoslovakia.1
+			}
+		}
+		ai_will_do = {
+			base = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
 	focus = {
 		id = CZE_the_national_assembly
 		icon = GFX_generic_parliament
-		cost = 5
-		x = -1
+		cost = 2.2
+		x = 0
 		y = 1
 		prerequisite = {
 			focus = CZE_birth
@@ -1874,6 +1858,7 @@ focus_tree = {
 		relative_position_id = CZE_birth
 		completion_reward = {
 			country_event = ww1_czechoslovakia.2
+			custom_effect_tooltip = generic_skip_one_line_tt
 			custom_effect_tooltip = AUS_modify_fledge_republic_tt
 			add_to_variable = {
 				CZE_fle_pp = 0.05
@@ -1888,9 +1873,175 @@ focus_tree = {
 			base = 1
 		}
 		search_filters = {
-			FOCUS_FILTER_ARMY_REFORM
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_STABILITY
+			FOCUS_FILTER_HISTORICAL
 		}
 	}
-		
-	
+	focus = {
+		id = CZE_occupy_most
+		icon = GFX_focus_restore_order
+		cost = 2.2
+		x = 0
+		y = 1
+		prerequisite = {
+			focus = CZE_the_national_assembly
+		}
+		available = {
+		}
+		relative_position_id = CZE_the_national_assembly
+		completion_reward = {
+		}
+		ai_will_do = {
+			base = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_ANNEXATION
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CZE_ditch_the_noble_titles
+		icon = GFX_goal_tfv_sever_ties_with_uk
+		cost = 1.7
+		x = -1
+		y = 1
+		prerequisite = {
+			focus = CZE_occupy_most
+		}
+		mutually_exclusive = {
+			focus = CZE_keep_noble_titles
+		}
+		available = {
+		}
+		relative_position_id = CZE_occupy_most
+		completion_reward = {
+		}
+		ai_will_do = {
+			base = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CZE_keep_noble_titles
+		icon = GFX_focus_CZE_bohemia_crown
+		cost = 1.7
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = CZE_occupy_most
+		}
+		mutually_exclusive = {
+			focus = CZE_ditch_the_noble_titles
+		}
+		available = {
+		}
+		relative_position_id = CZE_occupy_most
+		completion_reward = {
+		}
+		ai_will_do = {
+			base = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+	}
+	focus = {
+		id = CZE_outlay_the_concepts_of_czechoslovakism
+		icon = GFX_focus_CZE_federative_republic
+		cost = 1.8
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = CZE_ditch_the_noble_titles
+			focus = CZE_keep_noble_titles
+		}
+		available = {
+		}
+		relative_position_id = CZE_ditch_the_noble_titles
+		completion_reward = {
+		}
+		ai_will_do = {
+			base = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CZE_create_the_czechoslovak_koruna
+		icon = GFX_focus_fra_devalue_the_franc #TODO: Replace with an icon of the 10 Kč 1919-1939 coin backside
+		cost = 9.3
+		x = 0
+		y = 1
+		prerequisite = {
+			focus = CZE_outlay_the_concepts_of_czechoslovakism
+		}
+		available = {
+		}
+		relative_position_id = CZE_outlay_the_concepts_of_czechoslovakism
+		completion_reward = {
+		}
+		ai_will_do = {
+			base = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CZE_support_womens_sufferage
+		icon = GFX_focus_PER_women_vote
+		cost = 5
+		x = -1
+		y = 1
+		prerequisite = {
+			focus = CZE_create_the_czechoslovak_koruna
+		}
+		mutually_exclusive = {
+			focus = CZE_only_men_shall_vote
+		}
+		available = {
+		}
+		relative_position_id = CZE_create_the_czechoslovak_koruna
+		completion_reward = {
+		}
+		ai_will_do = {
+			base = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CZE_only_men_shall_vote
+		icon = GFX_focus_usa_voter_registration_act
+		cost = 5
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = CZE_create_the_czechoslovak_koruna
+		}
+		mutually_exclusive = {
+			focus = CZE_support_womens_sufferage
+		}
+		available = {
+		}
+		relative_position_id = CZE_create_the_czechoslovak_koruna
+		completion_reward = {
+		}
+		ai_will_do = {
+			base = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+	}
+
 }
