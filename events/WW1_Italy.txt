@@ -204,6 +204,7 @@ country_event = {
 	picture = GFX_report_event_generic_conference
 	fire_only_once = yes
 	trigger = {
+		has_start_date < 1914.1.1
 		tag = ITA
 		has_global_flag = agadir_crisis
 		NOT = {
@@ -860,6 +861,7 @@ country_event = {
 	picture = GFX_report_event_ITA_democratic_parlament
 	fire_only_once = yes
 	trigger = {
+		has_start_date < 1914.1.1
 		NOT = {
 			has_government = communism
 		}
@@ -1736,6 +1738,7 @@ country_event = {
 	picture = GFX_report_event_election_vote
 	fire_only_once = yes
 	trigger = {
+		has_start_date < 1914.1.1
 		tag = ITA
 		date > 1913.10.18
 		has_completed_focus = ITA_ally_the_catholic_electoral_union
@@ -1812,6 +1815,7 @@ country_event = {
 	picture = GFX_report_event_ita_giolitti_elected
 	fire_only_once = yes
 	trigger = {
+		has_start_date < 1914.1.1
 		has_completed_focus = ITA_municipal_socialism
 		has_completed_focus = ITA_reassure_northern_business
 		tag = ITA
@@ -2650,25 +2654,50 @@ country_event = {
 		set_global_flag = libyan_crisis_resolved
 		set_global_flag = italo_turkish_war_ends
 		hidden_effect = {
-			white_peace = TUR
-			white_peace = LBA
-			every_country = {
-				limit = {
-					OR = {
-						is_ally_with = TUR
-						AND = {
-							tag = LBA
-							has_war_with = ITA
+			TUR = {
+				white_peace = ITA
+				ITA = {
+					every_allied_country = {
+						PREV.PREV = {
+							white_peace = PREV
 						}
 					}
 				}
-				white_peace = ITA
-			}
-			every_country = {
-				limit = {
-					is_ally_with = ITA
+				every_allied_country = {
+					white_peace = ITA
+					ITA = {
+						every_allied_country = {
+							PREV.PREV = {
+								white_peace = PREV
+							}
+						}
+					}
 				}
-				white_peace = TUR
+				every_owned_state = {
+					limit = {
+						region = 225
+					}
+					teleport_armies = {
+						limit = { original_tag = TUR }
+						to_state_array = owned_controlled_states
+					}
+				}
+				ottoman_minority_variable_check = yes
+			}
+			if = {
+				limit = { 
+					LBA = {
+						has_war_with = ITA
+					}
+				}
+				white_peace = ITA
+				ITA = {
+					every_allied_country = {
+						PREV.PREV = {
+							white_peace = PREV
+						}
+					}
+				}
 			}
 			# TUR = {
 			# 	diplomatic_relation = {
@@ -2691,73 +2720,75 @@ country_event = {
 					days = 5
 				}
 			}
-			every_state = {
-				limit = {
-					is_owned_by = TUR
-					has_state_flag = fallen_to_italy_ITA_TUR_war
-				}
-				transfer_state_to = ITA
-				add_claim_by = ITA
-				if = {
-					limit = { 
-						is_core_of = TUR 
+			TUR = {
+				every_owned_state = {
+					limit = {
+						has_state_flag = fallen_to_italy_ITA_TUR_war
 					}
-					remove_core_of = TUR
-					add_claim_by = TUR				
+					transfer_state_to = ITA
+					add_claim_by = ITA
+					if = {
+						limit = { 
+							is_core_of = TUR 
+						}
+						remove_core_of = TUR
+						add_claim_by = TUR				
+					}
 				}
 			}
 			if = {
 				limit = {
-					any_state = {
-						is_owned_by = TUR
-						has_state_flag = fallen_to_italy_ITA_TUR_war
+					TUR = {
+						any_owned_state = {
+							has_state_flag = fallen_to_italy_ITA_TUR_war
+						}
 					}
 				}
 				activate_mission = ITA_return_rhodes_mission
 			}
-			every_state = {
-				limit = {
-					is_owned_by = TUR
-					OR = {
-						state = 448
-						state = 450
-						state = 1060
-						state = 1157
-						state = 1156
-						state = 663
-						state = 1061
-					}
-				}
-				transfer_state_to = ITA
-				add_claim_by = ITA
-				if = {
-					limit = { 
-						is_core_of = TUR 
-					}
-					remove_core_of = TUR
-					add_claim_by = TUR				
-				}
-				if = {
+			TUR = {
+				every_owned_state = {
 					limit = {
-						has_resistance = yes
-						has_global_flag = libyan_compliance
+						OR = {
+							state = 448
+							state = 450
+							state = 1060
+							state = 1157
+							state = 1156
+							state = 663
+							state = 1061
+						}
 					}
-					add_compliance = 20
-				}
-			}
-			every_state = {
-				limit = {
-					is_owned_by = TUR
-					is_core_of = LBA
-				}
-				if = {
-					limit = { 
-						is_core_of = TUR 
+					transfer_state_to = ITA
+					add_claim_by = ITA
+					if = {
+						limit = { 
+							is_core_of = TUR 
+						}
+						remove_core_of = TUR
+						add_claim_by = TUR				
 					}
-					remove_core_of = TUR
-					add_claim_by = TUR				
+					if = {
+						limit = {
+							has_resistance = yes
+							has_global_flag = libyan_compliance
+						}
+						add_compliance = 20
+					}
 				}
-				transfer_state_to = LBA
+				every_owned_state = {
+					limit = {
+						is_core_of = LBA
+					}
+					if = {
+						limit = { 
+							is_core_of = TUR 
+						}
+						remove_core_of = TUR
+						add_claim_by = TUR				
+					}
+					transfer_state_to = LBA
+				}
 			}
 			LBA = {
 				add_opinion_modifier = {
@@ -2770,13 +2801,14 @@ country_event = {
 				    limit = {
 					    has_country_flag = TUR_italo_turkish_war_arab_minorities
 				    }
-			        every_state = {
-				        limit = {
-					        is_core_of = LBA
-					        has_state_flag = TUR_removed_libyan_minority
-				        }
-				        set_state_flag = TUR_arab_state
-			        }
+					LBA = {
+						every_core_state = {
+							limit = {
+								has_state_flag = TUR_removed_libyan_minority
+							}
+							set_state_flag = TUR_arab_state
+						}
+					}
 			    }
 			    #delete_unit_template_and_units = { division_template = "Trablusgarp Milisi" }
 				diplomatic_relation = {
@@ -2784,18 +2816,13 @@ country_event = {
 					relation = military_access
 					active = no
 				}
+				diplomatic_relation = {
+					country = LBA
+					relation = guarantee
+					active = no
+				}
 				country_event = { id = ww1_ottoman.138 days = 90 }
 			}
-			every_state = {
-				limit = {
-					region = 225
-				}
-				teleport_armies = {
-					limit = { original_tag = TUR }
-					to_state_array = owned_controlled_states
-				}
-			}
-			ottoman_minority_variable_check = yes
 		}
 	}
 	option = {
@@ -4823,9 +4850,11 @@ country_event = {
 		name = ww1_italy.189.diplomatic
 		trigger = {
 			NOT = {
-				has_global_flag = ITA_london_economic_pact
-				has_global_flag = ITA_london_stockpiles
-				has_global_flag = ITA_london_naval_agreement
+				AND = {
+					has_global_flag = ITA_london_economic_pact
+					has_global_flag = ITA_london_stockpiles
+					has_global_flag = ITA_london_naval_agreement
+				}
 			}
 		}
 		country_event = ww1_italy.448
@@ -7296,6 +7325,7 @@ country_event = {
 	fire_only_once = yes
 	trigger = {
 		original_tag = ITA
+		has_start_date < 1914.1.1
 		date > 1914.2.1
 		NOT = {
 			has_completed_focus = ITA_arise_workers_of_italy
@@ -8607,7 +8637,11 @@ country_event = {
 			tooltip = production_speed_industrial_complex_factor_tt
 		}
 		add_to_variable = {
-			ITA_ind_pp_cost = -0.07
+			ITA_ind_mil_speed = 0.1
+			tooltip = production_speed_industrial_complex_factor_tt
+		}
+		add_to_variable = {
+			ITA_ind_pp_cost = -0.05
 			tooltip = political_power_cost_tt
 		}
 	}
@@ -9181,7 +9215,7 @@ country_event = {
 		text = ww1_italy.341.d1
 		trigger = {
 			divisions_in_state = {
-				size > 1
+				size > 0
 				state = 244
 			}
 		}
@@ -9208,7 +9242,7 @@ country_event = {
 		name = ww1_italy.341.a
 		trigger = {
 			divisions_in_state = {
-				size > 1
+				size > 0
 				state = 244
 			}
 		}
@@ -11531,6 +11565,9 @@ country_event = {
 	#picture = GFX_cadorna 
 	fire_only_once = yes
 	is_triggered_only = yes
+	trigger = {
+		has_character = ITA_luigi_cadorna
+	}
 	option = {
 		name = ww1_italy.442.a
 		activate_advisor = ITA_luigi_cadorna
@@ -11729,7 +11766,13 @@ country_event = {
 				days = 90
 			}
 		}
-		
+		ai_chance = {
+			base = 50
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
 	}
 }
 
@@ -27261,9 +27304,6 @@ country_event = {
 			}
 			103 = {
 				transfer_state_to = SER
-			}
-			102 = {
-				transfer_state_to = ITA
 			}
 		}
 		SER = {

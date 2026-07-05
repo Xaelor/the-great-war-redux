@@ -120,6 +120,7 @@ country_event = {
 			}
 			communism < 0.5
 		}
+		has_focus_tree = generic_focus
 	}
 	immediate = {
 		set_country_flag = {
@@ -487,6 +488,12 @@ country_event = {
 	desc = ww1_generic.9.d
 	picture = GFX_report_event_spanish_flu
 	trigger = {
+		NOT = {
+			has_country_flag = spanish_flu_spreads
+		}
+		has_global_flag = spanish_flu
+		date > 1918.1.1
+		date < 1919.1.1
 		OR = {
 			AND = {
 				has_war = yes
@@ -506,12 +513,6 @@ country_event = {
 					always = no
 				}
 			}		
-		}
-		date > 1918.1.1
-		date < 1919.1.1
-		has_global_flag = spanish_flu
-		NOT = {
-			has_country_flag = spanish_flu_spreads
 		}
 	}
 	immediate = {
@@ -1347,18 +1348,10 @@ country_event = {
 
 	option = {
 		name = ww1_generic.35.a
-		trigger = {
-			NOT = { 
-				has_opinion = {
-					target = FROM
-					value = 150
-				}
-			}
-		}
 		ai_chance = {
-			factor = 20
+			base = 20
 			modifier = {
-				threat > 0.2
+				threat > 0.1
 				factor = 2
 			}
 			modifier = {
@@ -1386,15 +1379,21 @@ country_event = {
 	option = {
 		name = ww1_generic.35.b
 		ai_chance = {
-			factor = 30
+			base = 20
 			modifier = {
 				is_in_faction = yes
 				NOT = { is_in_faction_with = FROM }
 				factor = 2
 			}
 			modifier = {
-				threat < 0.2
+				threat < 0.1
 				factor = 2
+			}
+			modifier = {
+				original_tag = CHA
+				is_subject = yes
+				is_historical_focus_on = yes
+				factor = 0
 			}
 		}
 		effect_tooltip = { 
@@ -1475,6 +1474,14 @@ country_event = {
 				}
 			}
 			end_puppet = FROM
+		}
+		if = {
+			limit = {
+				FROM = {
+					is_in_faction_with = ROOT
+				}
+			}
+			remove_from_faction = FROM
 		}
 		ROOT = { 
 			create_wargoal = {
