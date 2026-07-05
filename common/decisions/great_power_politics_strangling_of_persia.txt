@@ -525,7 +525,7 @@ TGWR_great_power_politics = {
 	TUR_debug_transfer_western_persia = {
 		icon = generic_prepare_civil_war
 		allowed = {
-			original_tag = TUR
+			tag = TUR
 		}
 		visible = {
 			is_debug = yes
@@ -534,6 +534,7 @@ TGWR_great_power_politics = {
 		complete_effect = {
 			every_owned_state = {
 				limit = {
+					has_contested_owner = PER
 					OR = {
 						state = 419
 						state = 1212
@@ -543,22 +544,16 @@ TGWR_great_power_politics = {
 				}
 				if = {
 					limit = {
-						877 =  {
-							is_owned_by = RUS
-						}
+						NOT = { state = 1252 }					
+						877 =  { is_owned_by = RUS }
 					}
-					if = {
-						limit = {
-							state = 1252
-						}
-						transfer_state_to = PER
-					}
-					else = {
-						transfer_state_to = RUS
-					}
+					transfer_state_to = RUS
 				}
 				else = {
 					transfer_state_to = PER
+					hidden_effect = {
+						remove_contested_owner = PER
+					}				
 				}
 			}
 		}
@@ -651,7 +646,8 @@ TGWR_great_power_politics = {
 							state = 1250
 						}
 					}
-					transfer_state_to = RUS
+					transfer_state_to = PER
+					hidden_effect = { remove_contested_owner = PER }
 				}
 				every_owned_state = {
 					limit = { state = 1252 }
@@ -669,6 +665,7 @@ TGWR_great_power_politics = {
 						}
 					}
 					transfer_state_to = PER
+					hidden_effect = { remove_contested_owner = PER }
 				}
 			}
 		}
