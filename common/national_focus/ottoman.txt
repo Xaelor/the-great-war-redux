@@ -1615,7 +1615,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = TUR_fortify_our_shores
+		id = TUR_fortify_the_straits
 		icon = GFX_focus_generic_coastal_fort
 		cost = 5
 		search_filters = {
@@ -1625,242 +1625,160 @@ focus_tree = {
 		x = -2
 		y = 1
 		relative_position_id = TUR_bahriye_nezareti
-		complete_tooltip = {
-			custom_effect_tooltip = TUR_fortify_our_shores_tt
-			if = {
-				limit = { has_country_flag = TUR_fortify_our_shores1 }
-				347 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 2
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
-				}
+		available = {
+			OR = {
+				controls_state = 860
+				controls_state = 861
 			}
-			if = {
-				limit = { has_country_flag = TUR_fortify_our_shores2 }
-				860 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
-				}
-			}
-			if = {
-				limit = { has_country_flag = TUR_fortify_our_shores3 }
-				861 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
-				}
-			}
-			if = {
-				limit = { has_country_flag = TUR_fortify_our_shores4 }
-				345 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
-				}
-			}
-			if = {
-				limit = { has_country_flag = TUR_fortify_our_shores5 }
-				339 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
-				}
-			}
-			if = {
-				limit = { has_country_flag = TUR_fortify_our_shores6 }
-				553 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
-				}
-			}
-			if = {
-				limit = { has_country_flag = TUR_fortify_our_shores7 }
-				858 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
-				}
-			}
-			if = {
-				limit = { has_country_flag = TUR_fortify_our_shores8 }
-				454 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
-				}
+			any_enemy_country = {
+				is_major = yes
+				alliance_strength_ratio > 3
 			}
 		}
+		complete_tooltip = {
+			860 = {
+				add_dynamic_modifier = {
+					modifier = TUR_defence_in_dardanelles
+					scope = TUR
+					days = 365
+				}
+				if = {
+					limit = { ROOT = { has_country_flag = TUR_canakkale_gecilmez1 } }
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 849
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						instant_build = yes
+						province = 849
+					}
+				}
+			}
+			861 = {
+				add_dynamic_modifier = {
+					modifier = TUR_defence_in_dardanelles
+					scope = TUR
+					days = 365
+				}
+				if = {
+					limit = { ROOT = { has_country_flag = TUR_canakkale_gecilmez2 } }
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 6864
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						instant_build = yes
+						province = 6864
+					}
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 9887
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						instant_build = yes
+						province = 9887
+					}
+				}
+			}
+			activate_mission = TUR_holding_the_dardanelles
+			custom_effect_tooltip = TUR_fortify_the_straits_tt
+		}
 		completion_reward = {
-			custom_effect_tooltip = TUR_fortify_our_shores_tt
+			every_state = {
+				limit = {
+					OR = {
+						state = 860
+						state = 861
+					}
+				}
+				add_dynamic_modifier = { modifier = TUR_defence_in_dardanelles scope = TUR days = 365 }
+				if = {
+					limit = { ROOT = { controls_state = 860 } }
+					ROOT = { set_country_flag = TUR_canakkale_gecilmez1 }
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 849
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						instant_build = yes
+						province = 849
+					}
+				}
+				if = {
+					limit = { ROOT = { controls_state = 861 } }
+					ROOT = { set_country_flag = TUR_canakkale_gecilmez2 }
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 6864
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						instant_build = yes
+						province = 6864
+					}
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 9887
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						instant_build = yes
+						province = 9887
+					}
+				}
+			}
+			activate_mission = TUR_holding_the_dardanelles
+			custom_effect_tooltip = TUR_fortify_the_straits_tt
+			#add_to_variable = { TUR_aoabe_land_bunker_effectiveness_factor = 0.05 }
 			add_to_variable = { TUR_dh_coastal_bunker_effectiveness_factor = 0.1 }
-			if = {
-				limit = { controls_state = 347 }
-				set_country_flag = TUR_fortify_our_shores1
-				347 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 2
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
+		}
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 50
+				OR = {
+					860 = {
+						any_neighbor_state = {
+							controller = {
+								has_war_with = ROOT
+							}
+						}
+					}
+					861 = {
+						any_neighbor_state = {
+							controller = {
+								has_war_with = ROOT
+							}
 						}
 					}
 				}
 			}
-			if = {
-				limit = { controls_state = 860 }
-				set_country_flag = TUR_fortify_our_shores2
-				860 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
-				}
-			}
-			if = {
-				limit = { controls_state = 861 }
-				set_country_flag = TUR_fortify_our_shores3
-				861 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
-				}
-			}
-			if = {
-				limit = { controls_state = 345 }
-				set_country_flag = TUR_fortify_our_shores4
-				345 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
-				}
-			}
-			if = {
-				limit = { controls_state = 339 }
-				set_country_flag = TUR_fortify_our_shores5
-				339 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
-				}
-			}
-			if = {
-				limit = { controls_state = 553 }
-				set_country_flag = TUR_fortify_our_shores6
-				553 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
-				}
-			}
-			if = {
-				limit = { controls_state = 858 }
-				set_country_flag = TUR_fortify_our_shores7
-				858 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
-				}
-			}
-			if = {
-				limit = { controls_state = 454 }
-				set_country_flag = TUR_fortify_our_shores8
-				454 = {
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = {
-							all_provinces = yes
-							limit_to_naval_base = yes
-						}
-					}
+			modifier = {
+				add = 10
+				any_enemy_country = {
+					alliance_strength_ratio > 3
 				}
 			}
 		}
@@ -11798,7 +11716,7 @@ focus_tree = {
 				random_select_amount = 3
 				add_logistics = 1
 			}
-			unlock_decision_tooltip = TUR_adriatic_invasion
+			unlock_decision_tooltip = TUR_adriatic_invasion_decision
 			custom_effect_tooltip = effects_when_selected
 			effect_tooltip = {
 				every_state = {
@@ -11838,7 +11756,7 @@ focus_tree = {
 				random_select_amount = 3
 				add_planning = 1
 			}
-			unlock_decision_tooltip = TUR_balkan_push
+			unlock_decision_tooltip = TUR_balkan_push_decision
 			custom_effect_tooltip = effects_when_selected
 			effect_tooltip = {
 				every_state = {
@@ -11888,7 +11806,7 @@ focus_tree = {
 				random_select_amount = 3
 				add_planning = 1
 			}
-			unlock_decision_tooltip = TUR_schellendorfs_plan
+			unlock_decision_tooltip = TUR_schellendorfs_plan_decision
 			custom_effect_tooltip = effects_when_selected
 			effect_tooltip = {
 				every_state = {
@@ -11932,7 +11850,7 @@ focus_tree = {
 				random_select_amount = 3
 				add_logistics = 1
 			}
-			unlock_decision_tooltip = TUR_hafiz_hakkis_plan
+			unlock_decision_tooltip = TUR_hafiz_hakkis_plan_decision
 			custom_effect_tooltip = effects_when_selected
 			effect_tooltip = {
 				every_state = {
@@ -12310,479 +12228,6 @@ focus_tree = {
 			}
 		}
 		ai_will_do = { base = 30 }
-	}
-	focus = {
-		id = TUR_retreat_to_aleppo
-		icon = GFX_goal_generic_construct_military
-		cost = 2
-		search_filters = {
-			FOCUS_FILTER_HISTORICAL
-		}
-		prerequisite = {
-			focus = TUR_our_traditional_allies
-			focus = TUR_german_ottoman_alliance
-		}
-		x = -2
-		y = 0
-		relative_position_id = TUR_arrival_of_yildirim_army_group
-		available = {
-			OR = {
-				controls_state = 554
-				controls_state = 553
-				controls_state = 852
-			}
-		}
-		complete_tooltip = {
-			every_state = {
-				limit = {
-					OR = {
-						state = 554
-						state = 553
-						state = 852
-					}
-				}
-				add_dynamic_modifier = { modifier = TUR_reorganizing_in_aleppo scope = TUR days = 365 }
-			}
-			if = {
-				limit = { has_country_flag = TUR_retreat_to_aleppo1 }
-				add_ideas = TUR_desperate_defence_1
-			}
-			if = {
-				limit = { has_country_flag = TUR_retreat_to_aleppo2 }
-				swap_ideas = {
-					remove_idea = TUR_desperate_defence_1
-					add_idea = TUR_desperate_defence_2
-				}
-			}
-			if = {
-				limit = { has_country_flag = TUR_retreat_to_aleppo3 }
-				activate_mission = TUR_holding_aleppo
-			}
-			custom_effect_tooltip = TUR_retreat_to_aleppo_tt
-		}
-		completion_reward = {
-			every_state = {
-				limit = {
-					OR = {
-						state = 554
-						state = 553
-						state = 852
-					}
-				}
-				add_dynamic_modifier = { modifier = TUR_reorganizing_in_aleppo scope = TUR days = 365 }
-			}
-			if = {
-				limit = {
-					NOT = {
-						has_idea = TUR_desperate_defence_1
-						has_idea = TUR_desperate_defence_2
-						has_idea = TUR_desperate_defence_3
-					}
-				}
-				set_country_flag = TUR_retreat_to_aleppo1
-				add_ideas = TUR_desperate_defence_1
-			}
-			else_if = {
-				limit = {
-					has_idea = TUR_desperate_defence_1
-				}
-				set_country_flag = TUR_retreat_to_aleppo2
-				swap_ideas = {
-					remove_idea = TUR_desperate_defence_1
-					add_idea = TUR_desperate_defence_2
-				}
-			}
-			else = {
-				set_country_flag = TUR_retreat_to_aleppo2
-				swap_ideas = {
-					remove_idea = TUR_desperate_defence_2
-					add_idea = TUR_desperate_defence_3
-				}
-			}
-			if = {
-				limit = { any_enemy_country = { NOT = { has_country_flag = TUR_revolting_country } } }
-				set_country_flag = TUR_retreat_to_aleppo3
-				activate_mission = TUR_holding_aleppo
-			}
-			custom_effect_tooltip = TUR_retreat_to_aleppo_tt
-			add_to_variable = { TUR_aoabe_land_bunker_effectiveness_factor = 0.05 }
-		}
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 50
-				554 = {
-					any_neighbor_state = {
-						controller = {
-							has_war_with = ROOT
-						}
-					}
-				}
-			}
-		}
-	}
-	focus = {
-		id = TUR_hold_baghdad
-		icon = GFX_goal_generic_construct_military
-		cost = 2
-		search_filters = {
-			FOCUS_FILTER_HISTORICAL
-		}
-		prerequisite = {
-			focus = TUR_our_traditional_allies
-			focus = TUR_german_ottoman_alliance
-		}
-		x = 2
-		y = 0
-		relative_position_id = TUR_arrival_of_yildirim_army_group
-		available = { controls_state = 291 }
-		complete_tooltip = {
-			291 = {
-				add_dynamic_modifier = {
-					modifier = TUR_last_stance_in_baghdad
-					scope = TUR
-					days = 365
-				}
-				if = {
-					limit = { ROOT = { has_country_flag = TUR_hold_baghdad1 } }
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 12885
-					}
-					add_building_construction = {
-						type = bunker
-						level = 2
-						instant_build = yes
-						province = 2097
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 12046
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 12839
-					}
-				}
-			}
-			if = {
-				limit = { has_country_flag = TUR_hold_baghdad2 }
-				add_ideas = TUR_desperate_defence_1
-			}
-			if = {
-				limit = { has_country_flag = TUR_hold_baghdad3 }
-				swap_ideas = {
-					remove_idea = TUR_desperate_defence_1
-					add_idea = TUR_desperate_defence_2
-				}
-			}
-			if = {
-				limit = { has_country_flag = TUR_hold_baghdad4 }
-				activate_mission = TUR_holding_baghdad
-			}
-			custom_effect_tooltip = TUR_retreat_to_aleppo_tt
-		}
-		completion_reward = {
-			291 = {
-				add_dynamic_modifier = {
-					modifier = TUR_last_stance_in_baghdad
-					scope = TUR
-					days = 365
-				}
-				if = {
-					limit = { ROOT = { controls_state = 291 } }
-					ROOT = { set_country_flag = TUR_hold_baghdad1 }
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 12885
-					}
-					add_building_construction = {
-						type = bunker
-						level = 2
-						instant_build = yes
-						province = 2097
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 12046
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 12839
-					}
-				}
-			}
-			if = {
-				limit = {
-					NOT = {
-						has_idea = TUR_desperate_defence_1
-						has_idea = TUR_desperate_defence_2
-						has_idea = TUR_desperate_defence_3
-					}
-				}
-				set_country_flag = TUR_hold_baghdad1
-				add_ideas = TUR_desperate_defence_1
-			}
-			else_if = {
-				limit = { has_idea = TUR_desperate_defence_2 }
-				set_country_flag = TUR_hold_baghdad2
-				swap_ideas = {
-					remove_idea = TUR_desperate_defence_1
-					add_idea = TUR_desperate_defence_2
-				}
-			}
-			else = {
-				set_country_flag = TUR_hold_baghdad3
-				swap_ideas = {
-					remove_idea = TUR_desperate_defence_2
-					add_idea = TUR_desperate_defence_3
-				}
-			}
-			if = {
-				limit = { any_enemy_country = { NOT = { has_country_flag = TUR_revolting_country } } }
-				set_country_flag = TUR_hold_baghdad4
-				activate_mission = TUR_holding_baghdad
-			}
-			custom_effect_tooltip = TUR_retreat_to_aleppo_tt
-			add_to_variable = { TUR_aoabe_land_bunker_effectiveness_factor = 0.05 }
-		}
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 50
-				291 = {
-					any_neighbor_state = {
-						controller = {
-							has_war_with = ROOT
-						}
-					}
-				}
-			}
-		}
-	}
-	focus = {
-		id = TUR_canakkale_gecilmez
-		icon = GFX_focus_generic_coastal_fort
-		cost = 2
-		search_filters = {
-			FOCUS_FILTER_HISTORICAL
-		}
-		prerequisite = {
-			focus = TUR_our_traditional_allies
-			focus = TUR_german_ottoman_alliance
-		}
-		x = 4
-		y = 0
-		relative_position_id = TUR_arrival_of_yildirim_army_group
-		available = {
-			OR = {
-				controls_state = 860
-				controls_state = 861
-			}
-		}
-		complete_tooltip = {
-			860 = {
-				add_dynamic_modifier = {
-					modifier = TUR_defence_in_dardanelles
-					scope = TUR
-					days = 8095
-				}
-				if = {
-					limit = { ROOT = { has_country_flag = TUR_canakkale_gecilmez1 } }
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 849
-					}
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = 849
-					}
-				}
-			}
-			861 = {
-				add_dynamic_modifier = {
-					modifier = TUR_defence_in_dardanelles
-					scope = TUR
-					days = 8095
-				}
-				if = {
-					limit = { ROOT = { has_country_flag = TUR_canakkale_gecilmez2 } }
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 6864
-					}
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = 6864
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 9887
-					}
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = 9887
-					}
-				}
-			}
-			if = {
-				limit = { has_country_flag = TUR_canakkale_gecilmez3 }
-				add_ideas = TUR_desperate_defence_1
-			}
-			if = {
-				limit = { has_country_flag = TUR_canakkale_gecilmez4 }
-				swap_ideas = {
-					remove_idea = TUR_desperate_defence_1
-					add_idea = TUR_desperate_defence_2
-				}
-			}
-			if = {
-				limit = { has_country_flag = TUR_canakkale_gecilmez5 }
-				activate_mission = TUR_holding_the_dardanelles
-			}
-			custom_effect_tooltip = TUR_retreat_to_aleppo_tt
-		}
-		completion_reward = {
-			every_state = {
-				limit = {
-					OR = {
-						state = 860
-						state = 861
-					}
-				}
-				add_dynamic_modifier = { modifier = TUR_defence_in_dardanelles scope = TUR days = 8095 }
-				if = {
-					limit = { ROOT = { controls_state = 860 } }
-					ROOT = { set_country_flag = TUR_canakkale_gecilmez1 }
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 849
-					}
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = 849
-					}
-				}
-				if = {
-					limit = { ROOT = { controls_state = 861 } }
-					ROOT = { set_country_flag = TUR_canakkale_gecilmez2 }
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 6864
-					}
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = 6864
-					}
-					add_building_construction = {
-						type = bunker
-						level = 1
-						instant_build = yes
-						province = 9887
-					}
-					add_building_construction = {
-						type = coastal_bunker
-						level = 1
-						instant_build = yes
-						province = 9887
-					}
-				}
-			}
-			if = {
-				limit = {
-					NOT = {
-						has_idea = TUR_desperate_defence_1
-						has_idea = TUR_desperate_defence_2
-						has_idea = TUR_desperate_defence_3
-					}
-				}
-				set_country_flag = TUR_canakkale_gecilmez3
-				add_ideas = TUR_desperate_defence_1
-			}
-			else_if = {
-				limit = { has_idea = TUR_desperate_defence_1 }
-				set_country_flag = TUR_canakkale_gecilmez4
-				swap_ideas = {
-					remove_idea = TUR_desperate_defence_1
-					add_idea = TUR_desperate_defence_2
-				}
-			}
-			else = {
-				set_country_flag = TUR_canakkale_gecilmez4
-				swap_ideas = {
-					remove_idea = TUR_desperate_defence_2
-					add_idea = TUR_desperate_defence_3
-				}
-			}
-			if = {
-				limit = { any_enemy_country = { NOT = { has_country_flag = TUR_revolting_country } } }
-				set_country_flag = TUR_canakkale_gecilmez5
-				activate_mission = TUR_holding_the_dardanelles
-			}
-			custom_effect_tooltip = TUR_canakkale_gecilmez_tt
-			add_to_variable = { TUR_aoabe_land_bunker_effectiveness_factor = 0.05 }
-			add_to_variable = { TUR_dh_coastal_bunker_effectiveness_factor = 0.05 }
-		}
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 50
-				OR = {
-					860 = {
-						any_neighbor_state = {
-							controller = {
-								has_war_with = ROOT
-							}
-						}
-					}
-					861 = {
-						any_neighbor_state = {
-							controller = {
-								has_war_with = ROOT
-							}
-						}
-					}
-				}
-			}
-			modifier = {
-				add = 10
-				any_enemy_country = {
-					alliance_strength_ratio > 3
-				}
-			}
-		}
 	}
 	###ECONOMIC PATH###
 	###LIBERAL ECONOMY###

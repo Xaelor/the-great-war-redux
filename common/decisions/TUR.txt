@@ -731,7 +731,7 @@ TGWR_great_power_politics = {
 			set_country_flag = TUR_black_sea_raid_happened
 		}
 	}
-	TUR_schellendorfs_plan = {
+	TUR_schellendorfs_plan_decision = {
 		icon = GFX_decision_generic_pickelhaube
 		allowed = { tag = TUR }
 		days_remove = 720
@@ -882,7 +882,7 @@ TGWR_great_power_politics = {
 			}
 		}
 	}
-	TUR_hafiz_hakkis_plan = {
+	TUR_hafiz_hakkis_plan_decision = {
 		icon = generic_ottoman_officer
 		allowed = { tag = TUR }
 		days_remove = 720
@@ -971,7 +971,7 @@ TGWR_great_power_politics = {
 			}
 		}
 	}
-	TUR_adriatic_invasion = {
+	TUR_adriatic_invasion_decision = {
 		icon = GFX_decision_SWE_set_navy_budget
 		allowed = { tag = TUR }
 		days_remove = 720
@@ -1087,7 +1087,7 @@ TGWR_great_power_politics = {
 			}
 		}
 	}
-	TUR_balkan_push = {
+	TUR_balkan_push_decision = {
 		icon = generic_ottoman_officer
 		allowed = { tag = TUR }
 		days_remove = 720
@@ -1271,26 +1271,38 @@ TGWR_great_power_politics = {
 			}
 		}
 	}
-	TUR_holding_aleppo = {
+	TUR_holding_damascus = {
 		allowed = { original_tag = TUR }
 		icon = generic_civil_support
-		days_mission_timeout = 365
-		fire_only_once = no
+		days_mission_timeout = 780
+		fire_only_once = yes
 		is_good = no
 		available = { NOT = { controls_state = 554 } }
-		activation = { always = no }
+		activation = {
+			554 = {
+				any_neighbor_state = {
+					controller = {
+						is_major = yes
+						has_war_with = ROOT
+					}
+				}
+			}
+		}
 		timeout_effect = {
-			add_stability = 0.05
 			add_war_support = 0.05
-			add_political_power = 50
+			add_political_power = 25
+			add_to_variable = {
+				tooltip = TUR_government_stability_add_5
+				TUR_government_stability_var = 5
+			}
 			hidden_effect = { country_event = ottoman.92 }
 		}
 		complete_effect = {
-			add_war_support = -0.15
-			add_political_power = -50
-			every_state = {
-				limit = { has_dynamic_modifier = { modifier = TUR_reorganizing_in_aleppo scope = TUR } }
-				remove_dynamic_modifier = { modifier = TUR_reorganizing_in_aleppo scope = TUR }
+			add_war_support = -0.05
+			add_political_power = -25
+			add_to_variable = {
+				tooltip = TUR_government_stability_reduce_10
+				TUR_government_stability_var = -10
 			}
 			hidden_effect = { country_event = ottoman.93 }
 		}
@@ -1298,7 +1310,7 @@ TGWR_great_power_politics = {
 	TUR_holding_the_dardanelles = {
 		allowed = { original_tag = TUR }
 		icon = generic_civil_support
-		days_mission_timeout = 1095
+		days_mission_timeout = 780
 		fire_only_once = no
 		is_good = no
 		available = {
@@ -1307,14 +1319,21 @@ TGWR_great_power_politics = {
 		}
 		activation = { always = no }
 		timeout_effect = {
-			add_stability = 0.05
 			add_war_support = 0.05
-			add_political_power = 50
+			add_political_power = 25
+			add_to_variable = {
+				tooltip = TUR_government_stability_add_5
+				TUR_government_stability_var = 5
+			}
 			hidden_effect = { country_event = ottoman.94 }
 		}
 		complete_effect = {
-			add_war_support = -0.15
-			add_political_power = -50
+			add_war_support = -0.05
+			add_political_power = -25
+			add_to_variable = {
+				tooltip = TUR_government_stability_reduce_10
+				TUR_government_stability_var = -10
+			}
 			every_state = {
 				limit = { has_dynamic_modifier = { modifier = TUR_defence_in_dardanelles scope = TUR } }
 				remove_dynamic_modifier = { modifier = TUR_defence_in_dardanelles scope = TUR }
@@ -1325,23 +1344,35 @@ TGWR_great_power_politics = {
 	TUR_holding_baghdad = {
 		allowed = { original_tag = TUR }
 		icon = generic_civil_support
-		days_mission_timeout = 365
+		days_mission_timeout = 780
 		fire_only_once = no
 		is_good = no
 		available = { NOT = { controls_state = 291 } }
-		activation = { always = no }
+		activation = {
+			291 = {
+				any_neighbor_state = {
+					controller = {
+						is_major = yes
+						has_war_with = ROOT
+					}
+				}
+			}
+		}
 		timeout_effect = {
-			add_stability = 0.05
 			add_war_support = 0.05
-			add_political_power = 50
+			add_political_power = 25
+			add_to_variable = {
+				tooltip = TUR_government_stability_add_5
+				TUR_government_stability_var = 5
+			}
 			hidden_effect = { country_event = ottoman.96 }
 		}
 		complete_effect = {
-			add_war_support = -0.15
-			add_political_power = -50
-			every_state = {
-				limit = { has_dynamic_modifier = { modifier = TUR_last_stance_in_baghdad scope = TUR } }
-				remove_dynamic_modifier = { modifier = TUR_last_stance_in_baghdad scope = TUR }
+			add_war_support = -0.05
+			add_political_power = -25
+			add_to_variable = {
+				tooltip = TUR_government_stability_reduce_10
+				TUR_government_stability_var = -10
 			}
 			hidden_effect = { country_event = ottoman.97 }
 		}
