@@ -16,62 +16,64 @@ on_actions = {
 			}
 			if = {
 				limit = { has_start_date < 1911.01.01 }
-				if = {
-					limit = {
-						NOT = {
-							has_game_rule = {
-								rule = tur_fragmentation_status
-								option = TUR_FRAGMENTED
-							}
+				TUR = { every_owned_state = { set_state_flag = TUR_1910_starting_state } }
+			}
+			if = {
+				limit = {
+					has_start_date < 1911.01.01
+					NOT = {
+						has_game_rule = {
+							rule = tur_fragmentation_status
+							option = TUR_FRAGMENTED
 						}
 					}
-					553 = { set_demilitarized_zone = yes }
-					ALB = {
-						set_province_controller = 6953
-						set_province_controller = 6940
-					}
-					YEM = {
-						set_province_controller = 4924
-						set_province_controller = 9041
-						set_province_controller = 13366
-					}
-					ASR = {
-						set_province_controller = 10840
-						set_province_controller = 8073
-						set_province_controller = 1923
-					}
-					HJZ = {
-						set_province_controller = 5037
-						set_province_controller = 13360
-					}
-					TUR = {
-						#albania
-						set_province_controller = 6953
-						set_province_controller = 6940
-						set_province_controller = 3896
-						set_province_controller = 13274
-						set_province_controller = 867
-						set_province_controller = 11762
-						set_province_controller = 13499
-						#yemen
-						set_province_controller = 4924
-						set_province_controller = 9041
-						set_province_controller = 13366
-						#asir
-						set_province_controller = 10840
-						set_province_controller = 8073
-						set_province_controller = 1923
-						#hejaz
-						set_province_controller = 5037
-						set_province_controller = 13360
-					}
-					ALB = {
-						set_province_controller = 3896
-						set_province_controller = 13274
-						set_province_controller = 867
-						set_province_controller = 11762
-						set_province_controller = 13499
-					}
+				}
+				553 = { set_demilitarized_zone = yes }
+				ALB = {
+					set_province_controller = 6953
+					set_province_controller = 6940
+				}
+				YEM = {
+					set_province_controller = 4924
+					set_province_controller = 9041
+					set_province_controller = 13366
+				}
+				ASR = {
+					set_province_controller = 10840
+					set_province_controller = 8073
+					set_province_controller = 1923
+				}
+				HJZ = {
+					set_province_controller = 5037
+					set_province_controller = 13360
+				}
+				TUR = {
+					#albania
+					set_province_controller = 6953
+					set_province_controller = 6940
+					set_province_controller = 3896
+					set_province_controller = 13274
+					set_province_controller = 867
+					set_province_controller = 11762
+					set_province_controller = 13499
+					#yemen
+					set_province_controller = 4924
+					set_province_controller = 9041
+					set_province_controller = 13366
+					#asir
+					set_province_controller = 10840
+					set_province_controller = 8073
+					set_province_controller = 1923
+					#hejaz
+					set_province_controller = 5037
+					set_province_controller = 13360
+				}
+				ALB = {
+					set_province_controller = 3896
+					set_province_controller = 13274
+					set_province_controller = 867
+					set_province_controller = 11762
+					set_province_controller = 13499
 				}
 				654 = {
 					set_compliance = 37
@@ -194,10 +196,30 @@ on_actions = {
 					set_resistance = 5
 					set_compliance = 65
 				}
-				TUR = { every_owned_state = { set_state_flag = TUR_1910_starting_state } }
+				HJZ = { become_exiled_in = { target = SAU legitimacy = 0 } }
+				ASR = { become_exiled_in = { target = ASR legitimacy = 0 } }
+				YEM = { become_exiled_in = { target = NAJ legitimacy = 0 } }
 			}
 			if = {
-				limit = { has_start_date > 1914.01.01 }
+				limit = {
+					has_start_date > 1914.01.01
+					NOT = {
+						has_game_rule = {
+							rule = tur_fragmentation_status
+							option = TUR_FRAGMENTED
+						}
+					}
+				}
+				553 = { set_demilitarized_zone = yes }
+				HJZ = {
+					set_province_controller = 5037
+					set_province_controller = 13360
+				}
+				TUR = {
+					#hejaz
+					set_province_controller = 5037
+					set_province_controller = 13360
+				}
 				731 = {
 					set_resistance = 10
 					set_compliance = 40
@@ -218,6 +240,7 @@ on_actions = {
 					limit = { is_controlled_by = TUR }
 					remove_claim_by = BUL
 				}
+				HJZ = { become_exiled_in = { target = HJZ legitimacy = 0 } }
 			}
 		}
 	}
@@ -3529,7 +3552,12 @@ on_actions = {
 	on_before_peace_conference_start = {
 		effect = {
 			if = {
-				limit = { FROM = { has_country_flag = TUR_revolting_country } }
+				limit = {
+					FROM = {
+						has_country_flag = TUR_revolting_country
+						NOT = { is_government_in_exile = yes }
+					}
+				}
 				FROM = {
 					clr_country_flag = TUR_revolting_country
 					if = {
@@ -3540,7 +3568,12 @@ on_actions = {
 				ROOT = { annex_country = { target = FROM } }
 			}
 			if = {
-				limit = { ROOT = { has_country_flag = TUR_revolting_country } }
+				limit = {
+					ROOT = {
+						has_country_flag = TUR_revolting_country
+						NOT = { is_government_in_exile = yes }
+					}
+				}
 				ROOT = {
 					clr_country_flag = TUR_revolting_country
 					if = {
