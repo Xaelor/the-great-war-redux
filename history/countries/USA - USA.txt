@@ -1,19 +1,21 @@
 ﻿capital = 1032
 
+USA_faction_values = yes
+
 set_research_slots = 3
-set_stability = 0.69
+set_stability = 0.39
 set_war_support = 0.05
 set_convoys = 420
-set_variable = { var = senators_support value = 41 }
+set_variable = { var = senators_support value = 61 }
 set_variable = { var = senators_total value = 92 }
-set_variable = { var = representatives_support value = 198 }
+set_variable = { var = representatives_support value = 220 }
 set_variable = { var = representatives_total value = 391 }
 set_variable = { var = quorum_low value = 39 }
 set_variable = { var = quorum_medium value = 49 }
 set_variable = { var = quorum_high value = 58 }
-USA_recalc_congress_icon_frames = yes
 
-activate_mission = USA_tax_monthly_profit_mission
+
+USA_recalc_congress_icon_frames = yes
 
 set_global_flag = PANAMA_CANAL_IS_NOT_BUILT
 
@@ -68,12 +70,15 @@ recruit_character = USA_leonard_wood
 recruit_character = USA_eugene_v_debs
 recruit_character = USA_william_h_taft
 recruit_character = USA_william_joseph_simmons
+recruit_character = USA_dr_mcguigan
+recruit_character = USA_james_s_sherman
 
 recruit_character = USA_theodore_roosevelt
 recruit_character = USA_bill_haywood
 recruit_character = USA_woodrow_wilson
 recruit_character = USA_charles_evans_hughes
 recruit_character = USA_james_franklin_hanly
+recruit_character = USA_franklin_lane
 recruit_character = USA_john_pershing
 recruit_character = USA_charles_john_hexamerk
 recruit_character = USA_oscar_branch_colquitt
@@ -113,6 +118,7 @@ recruit_character = USA_robert_e_coontz
 recruit_character = USA_edward_house
 recruit_character = USA_mason_patrick
 recruit_character = USA_william_mitchell
+recruit_character = USA_william_mcadoo
 recruit_character = USA_william_jennings_bryan
 recruit_character = USA_oscar_w_underwood
 recruit_character = USA_john_rockefeller
@@ -126,6 +132,10 @@ recruit_character = USA_george_b_mcclellan
 recruit_character = USA_henry_ford
 recruit_character = USA_george_dewey
 recruit_character = USA_james_r_garfield
+recruit_character = USA_louis_brandeis
+recruit_character = USA_henry_stimson
+recruit_character = USA_james_wilson
+
 recruit_character = USA_charles_menoher
 recruit_character = USA_george_cortelyou
 recruit_character = USA_thomas_edison
@@ -170,7 +180,7 @@ recruit_character = USA_john_walter_christie
 		
 		#armor
 		
-		
+
 		#artillery
 		early_artillery = 1
 		basic_field_gun = 1
@@ -189,50 +199,70 @@ recruit_character = USA_john_walter_christie
 		aircraft_engine = 1
 		generator_battery = 1
 		basic_train = 1
-		basic_railways = 1
+        basic_railways = 1
    		construction0 = 1
    		powder_type_b = 1
-		
+		 
 	}
 
 	#add_breakthrough_progress = {
 	#	specialization = specialization_naval
 	#	value = 1.0
 	#}
+        
+	}
 	
 	set_popularities = {
-		democratic = 84
+		democratic = 95
 		fascism = 0
-		communism = 12
-		neutrality = 4
+		communism = 2
+		neutrality = 3
 	}
-	add_manpower = 80000
-	country_lock_all_division_template = yes
+	add_dynamic_modifier = {
+		modifier = USA_us_army
+	}
 	add_ideas = {
-		USA_idea_progressivism_era
-		USA_idea_defender_of_the_american_sphere
-		USA_idea_free_banking_era
-		USA_idea_wild_west_era
-		USA_idea_migrant_employment
-		USA_idea_union_activism
-		USA_idea_oil_monopoly
-		idea_naval_arms_race
-		USA_idea_neglected_military_budget
-		#Laws
-		undisturbed_isolation 
-		disarmed_nation 
-		free_trade 
+		USA_company_ventures_in_the_americas1
+		USA_mining_explosions
+		USA_poor_labour_rights
+		USA_alcoholism
+		USA_company_monopolies25
+		civilian_economy 
+		volunteer_only
+		export_focus
+		USA_consumer_based_economy
+		USA_unstable_banking_system
+		USA_us_constitution
+		USA_corrupted_politics
+	}
+	
+	
+	add_dynamic_modifier = {
+		modifier = USA_progressives_political_power
+	}
+	add_dynamic_modifier = {
+		modifier = USA_conservatives_political_power
 	}
 	#add_timed_idea = { idea = USA_idea_bank_panic days = 180 }
-
-	set_cosmetic_tag = USA_46
-	
-	if = {
-		limit = { has_start_date < 1914.1.1 }
-		news_event = { id = ww1_usa.173 days = 770 } #Great Erruption of 1912
-		USA_albert_mills = { unit_leader_event = { id = ww1_generic.38 days = 2332 }} #died in 1916.9.18
-		USA_thomas_b_howard = { unit_leader_event = { id = ww1_generic.39 days = 2293 }} #retired in 1916.8.10
+	377 = {
+		add_dynamic_modifier = { modifier = USA_wild_west }
 	}
+	376 = {
+		add_dynamic_modifier = { modifier = USA_wild_west }
+	}
+	382 = {
+		add_dynamic_modifier = { modifier = USA_wild_west }
+	}
+	380 = {
+		add_dynamic_modifier = { modifier = USA_wild_west }
+	}
+	381 = {
+		add_dynamic_modifier = { modifier = USA_wild_west }
+	}
+	383 = {
+		add_dynamic_modifier = { modifier = USA_wild_west }
+	}
+	set_cosmetic_tag = USA_46
 }
 
 1914.1.1 = {
@@ -257,79 +287,257 @@ recruit_character = USA_john_walter_christie
 	add_ideas = USA_idea_new_freedom
 	set_country_flag = USA_elections_1912_end
 
-	complete_national_focus = USA_reformist_progressivism
-	complete_national_focus = USA_international_conference_of_american_states
-	complete_national_focus = USA_great_white_fleet
-	complete_national_focus = USA_old_neutrality_act
-	complete_national_focus = USA_the_storm_is_coming
-	complete_national_focus = USA_border_war
-	complete_national_focus = USA_reorganize_army_corps
- 	complete_national_focus = USA_protect_the_south_america
-	complete_national_focus = USA_strike_central_america
-	complete_national_focus = USA_marine_forces
-	unlock_national_focus = USA_limited_support_of_mexican_revolution #Crashes the game
-	complete_national_focus = USA_protect_the_caribbean
-	complete_national_focus = USA_maneuver_divison
-	complete_national_focus = USA_federal_reserve
-	complete_national_focus = USA_aeronautical_divisions
-	complete_national_focus = USA_estate_tax
-	complete_national_focus = USA_underwood_tariff
-	complete_national_focus = USA_shotgun
-	complete_national_focus = USA_volunteer_act
-	complete_national_focus = USA_natural_bulwarks
-	complete_national_focus = USA_strike_caribbean_islands
-	complete_national_focus = USA_protest_diplomacy
 	
-	set_technology = {
-		scout_plane2 = 1
-		prewar_field_gun = 1
-		basic_howitzer = 1
-		infantry_weapons2 = 1
-		improved_infantry_weapons_2 = 1
-		basic_machine_guns = 1
-		tech_trucks = 1
-		
-		#armor
-		basic_armored_car = 1
-
-		#doctrines
-		#Air
-
-		#electronics
-		electrical_engineering = 1
-		radio = 1
-		analytical_engine = 1
-		generator_battery = 1
-		basic_cryptography = 1
-		basic_cryptanalysis = 1
-
-		#industry
-		early_machine_tools = 1
-		stainless_steel = 1
-		haber_process = 1
-		standard_gauge_railway = 1
-		machine_tools2 = 1
-		
-		fortification2 = 1
-		excavation1 = 1
-		excavation2 = 1
-		oil_production1 = 1
-		oil_production2 = 1
-		fuel_silos = 1
-		construction1 = 1
-		construction2 = 1
-		industrial_complex1 = 1
-		dispersed_industry = 1
-		dispersed_industry2 = 1
-		electric_railway = 1
-		coil_ignition = 1
-		double_base_propellant = 1
-	}
-
-	USA_albert_mills = { unit_leader_event = { id = ww1_generic.38 days = 827 }} #died in 1916.9.18
-	USA_thomas_b_howard = { unit_leader_event = { id = ww1_generic.39 days = 788 }} #retired in 1916.8.10
 }
 
+if = {
+	limit = {
+		NOT = { has_dlc = "Man the Guns" }
+	}
+
+	set_naval_oob = "USA_1910_naval_legacy"
+
+	set_technology = {
+		early_submarine = 1
+		early_destroyer = 1
+		basic_destroyer = 1
+		early_light_cruiser = 1
+		early_heavy_cruiser = 1
+		early_battleship = 1
+		early_battlecruiser = 1
+		electric_railway = 1
+		coil_ignition = 1
+        double_base_propellant = 1
+		transport = 1
+	}
+
+	# Dreadnoughts #
+	create_equipment_variant = {
+		name = "Florida Class"
+		type = battleship_1
+		parent_version = 0
+	}
+	create_equipment_variant = {
+		name = "Delaware Class"
+		type = battleship_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "South Carolina Class"
+		type = battleship_1
+		parent_version = 0
+		obsolete = yes
+	}
+	# Pre-Dreadnoughts #
+	create_equipment_variant = {
+		name = "Connecticut Class"
+		type = battleship_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Virginia Class"
+		type = battleship_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Maine Class"
+		type = battleship_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Illinois Class"
+		type = battleship_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Kearsarge Class"
+		type = battleship_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Iowa Class"
+		type = battleship_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Indiana Class"
+		type = battleship_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Mississippi Class"
+		type = battleship_1
+		parent_version = 0
+		obsolete = yes
+	}
+	# Heavy Cruisers #
+	create_equipment_variant = {
+		name = "Tennessee Class"
+		type = heavy_cruiser_1
+		parent_version = 0
+	}
+	create_equipment_variant = {
+		name = "Pennsylvania Class"
+		type = heavy_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Pennsylvania Class"
+		type = heavy_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Brooklyn Class"
+		type = heavy_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "New York Class"
+		type = heavy_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	# Protected Cruisers #
+	create_equipment_variant = {
+		name = "St. Louis Class"
+		type = light_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Denver Class"
+		type = light_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "New Orleans Class"
+		type = light_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Columbia Class"
+		type = light_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Cincinnati Class"
+		type = light_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Olympia Class"
+		type = light_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "San Fransisco Class"
+		type = light_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Baltimore Class"
+		type = light_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Chicago Class"
+		type = light_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Boston Class"
+		type = light_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Chao Ho Class"
+		type = light_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	# Scout Cruisers #
+	create_equipment_variant = {
+		name = "Chester Class"
+		type = light_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	# Unprotected Cruisers #
+	create_equipment_variant = {
+		name = "Montgomery Class"
+		type = light_cruiser_1
+		parent_version = 0
+		obsolete = yes
+	}
+	# Destroyers #
+	create_equipment_variant = {
+		name = "Paulding Class"
+		type = destroyer_2
+		parent_version = 0
+	}
+	create_equipment_variant = {
+		name = "Smith Class"
+		type = destroyer_2
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Truxtun Class"
+		type = destroyer_2
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Bainbridge Class"
+		type = destroyer_2
+		parent_version = 0
+		obsolete = yes
+	}
+	# Submarines #
+	create_equipment_variant = {
+		name = "D Class"
+		type = submarine_1
+		parent_version = 0
+	}
+	create_equipment_variant = {
+		name = "C Class"
+		type = submarine_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "B Class"
+		type = submarine_1
+		parent_version = 0
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Plunger Class"
+		type = submarine_1
+		parent_version = 0
+		obsolete = yes
+	}
+}
 if = {
 	limit = {
 		has_dlc = "Man the Guns"
@@ -338,80 +546,30 @@ if = {
 	set_naval_oob = "USA_1910_naval_mtg"
 
 	set_technology = {
-		# Light Ship Hulls
-		torpedo_boat_ship_hull_light = 1
-		gunboat_ship_hull_light = 1
+		basic_naval_mines = 1	
 		early_ship_hull_light = 1
 		basic_ship_hull_light = 1
-		
-		# Submarine Hulls
 		early_ship_hull_submarine = 1
-		
-		# Cruiser Hulls
-		victorian_ship_hull_cruiser = 1
 		early_ship_hull_cruiser = 1
 		basic_ship_hull_cruiser = 1
-		improved_ship_hull_cruiser = 1
-		
-		# Heavy Ship Hulls
-		ironclad_ship_hull_heavy = 1
-		pre_dreadnought_ship_hull_heavy = 1
 		early_ship_hull_heavy = 1
 		basic_ship_hull_heavy = 1
-		
-		# Engines
-		ironclad_coal_engine = 1
-		basic_coal_engine = 1
-		early_oil_engine = 1
-		
-		# Primary Armament
-		ironclad_artillery = 1
 		basic_battery = 1
 		basic_light_battery = 1
 		basic_medium_battery = 1
 		basic_heavy_battery = 1
-		
-		# Secondary Armament
-		
+		basic_torpedo = 1
+		sonar = 1
+		smoke_generator = 1
 		basic_secondary_battery = 1
 		improved_secondary_battery = 1
-		
-		# Torpedoes
-		early_torpedo_tubes = 1
-		basic_torpedo = 1
-		
-		# Armor
-		coastal_defense_ship_armor_scheme = 1
-		basic_armored_cruiser_armor_scheme = 1
-		improved_armored_cruiser_armor_scheme = 1
+		basic_cruiser_armor_scheme = 1
 		basic_heavy_armor_scheme = 1
-		
-		# Misc
-		basic_naval_mines = 1
-		
-		smoke_generator = 1
 		mtg_transport = 1
+		pre_dreadnoughts = 1
 	}
 
 	# Dreadnoughts #
-	create_equipment_variant = {
-		name = "Wyoming Class"
-		type = ship_hull_heavy_2
-		name_group = USA_BB_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_heavy_battery_2
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_1
-			fixed_ship_engine_slot = heavy_ship_engine_2
-			fixed_ship_secondaries_slot = ship_secondaries_2
-			fixed_ship_armor_slot = ship_armor_bb_1
-			front_1_custom_slot = ship_heavy_battery_2
-			mid_1_custom_slot = empty
-			mid_2_custom_slot = ship_torpedo_2
-			rear_1_custom_slot = empty
-		}
-	}
 	create_equipment_variant = {
 		name = "Florida Class"
 		type = ship_hull_heavy_1
@@ -421,12 +579,12 @@ if = {
 			fixed_ship_battery_slot = ship_heavy_battery_2
 			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_2
 			fixed_ship_armor_slot = ship_armor_bb_1
 			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_2
-			mid_2_custom_slot = empty
+			mid_1_custom_slot = empty
 			rear_1_custom_slot = empty
 		}
 	}
@@ -439,12 +597,12 @@ if = {
 			fixed_ship_battery_slot = ship_heavy_battery_2
 			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_2
 			fixed_ship_armor_slot = ship_armor_bb_1
 			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_2
-			mid_2_custom_slot = empty
+			mid_1_custom_slot = empty
 			rear_1_custom_slot = empty
 		}
 		obsolete = yes
@@ -457,13 +615,13 @@ if = {
 		modules = {
 			fixed_ship_battery_slot = ship_heavy_battery_2
 			fixed_ship_anti_air_slot = empty
-			
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bb_1
 			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_2
-			mid_2_custom_slot = empty
+			mid_1_custom_slot = empty
 			rear_1_custom_slot = empty
 		}
 		obsolete = yes
@@ -478,6 +636,7 @@ if = {
 			fixed_ship_battery_slot = ship_heavy_battery_2
 			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_2
 			fixed_ship_armor_slot = ship_armor_bb_1
@@ -496,6 +655,7 @@ if = {
 			fixed_ship_battery_slot = ship_heavy_battery_2
 			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_2
 			fixed_ship_armor_slot = ship_armor_bb_1
@@ -514,6 +674,7 @@ if = {
 			fixed_ship_battery_slot = ship_heavy_battery_2
 			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_2
 			fixed_ship_armor_slot = ship_armor_bb_1
@@ -532,6 +693,7 @@ if = {
 			fixed_ship_battery_slot = ship_heavy_battery_2
 			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_2
 			fixed_ship_armor_slot = ship_armor_bb_1
@@ -550,6 +712,7 @@ if = {
 			fixed_ship_battery_slot = ship_heavy_battery_2
 			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_2
 			fixed_ship_armor_slot = ship_armor_bb_1
@@ -568,6 +731,7 @@ if = {
 			fixed_ship_battery_slot = ship_heavy_battery_2
 			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bb_1
@@ -586,6 +750,7 @@ if = {
 			fixed_ship_battery_slot = ship_heavy_battery_2
 			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_2
 			fixed_ship_armor_slot = ship_armor_bb_1
@@ -597,13 +762,14 @@ if = {
 	}
 	create_equipment_variant = {
 		name = "Mississippi Class"
-		type = ship_hull_pre_dreadnought
+		type = ship_hull_heavy_1
 		name_group = USA_BB_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_heavy_battery_2
 			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_2
 			fixed_ship_armor_slot = ship_armor_bb_1
@@ -612,7 +778,7 @@ if = {
 			rear_1_custom_slot = empty
 		}
 	}
-	# Armored Cruisers #
+	# Heavy Cruisers #
 	create_equipment_variant = {
 		name = "Tennessee Class"
 		type = ship_hull_cruiser_1
@@ -620,9 +786,11 @@ if = {
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_medium_battery_2
+			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_light_cruiser_2
+			fixed_ship_armor_slot = ship_armor_cruiser_2
 			mid_1_custom_slot = ship_torpedo_1
 			rear_1_custom_slot = ship_light_medium_battery_2
 		}
@@ -635,9 +803,11 @@ if = {
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_medium_battery_2
+			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_light_cruiser_2
+			fixed_ship_armor_slot = ship_armor_cruiser_2
 			mid_1_custom_slot = ship_torpedo_1
 			rear_1_custom_slot = ship_light_medium_battery_2
 		}
@@ -650,9 +820,11 @@ if = {
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_medium_battery_2
+			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_light_cruiser_2
+			fixed_ship_armor_slot = ship_armor_cruiser_2
 			mid_1_custom_slot = ship_torpedo_1
 			rear_1_custom_slot = ship_light_medium_battery_1
 		}
@@ -665,33 +837,34 @@ if = {
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_medium_battery_2
+			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_light_cruiser_2
+			fixed_ship_armor_slot = ship_armor_cruiser_2
 			mid_1_custom_slot = ship_torpedo_1
 			rear_1_custom_slot = ship_light_battery_2
 		}
 		obsolete = yes
 	}
+	# Protected Cruisers #
 	create_equipment_variant = {
 		name = "St. Louis Class"
-		type = ship_hull_cruiser_2
+		type = ship_hull_cruiser_1
 		name_group = USA_CL_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_medium_battery_2
+			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_armored_cruiser_1
-			front_1_custom_slot = empty
+			fixed_ship_armor_slot = ship_armor_cruiser_2
 			mid_1_custom_slot = empty
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = ship_light_medium_battery_2
+			rear_1_custom_slot = ship_light_battery_1
 		}
 		obsolete = yes
 	}
-	# Protected Cruisers #
 	create_equipment_variant = {
 		name = "Denver Class"
 		type = ship_hull_cruiser_1
@@ -699,181 +872,215 @@ if = {
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_medium_battery_1
+			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_protected_cruiser_2
+			fixed_ship_armor_slot = ship_armor_cruiser_1
 			mid_1_custom_slot = empty
-			mid_2_custom_slot = empty
-			rear_1_custom_slot = ship_light_medium_battery_1
+			rear_1_custom_slot = ship_light_battery_1
 		}
 		obsolete = yes
 	}
 	create_equipment_variant = {
 		name = "New Orleans Class"
-		type = ship_hull_cruiser_0
+		type = ship_hull_cruiser_1
 		name_group = USA_CL_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_medium_battery_2
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_light_cruiser_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
 			mid_1_custom_slot = ship_torpedo_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
+			rear_1_custom_slot = ship_light_battery_2
 		}
 		obsolete = yes
 	}
 	create_equipment_variant = {
 		name = "Columbia Class"
-		type = ship_hull_cruiser_0
+		type = ship_hull_cruiser_1
 		name_group = USA_CL_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_medium_battery_2
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_light_cruiser_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
 			mid_1_custom_slot = ship_torpedo_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
+			rear_1_custom_slot = ship_light_battery_2
 		}
 		obsolete = yes
 	}
 	create_equipment_variant = {
 		name = "Cincinnati Class"
-		type = ship_hull_cruiser_0
+		type = ship_hull_cruiser_1
 		name_group = USA_CL_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_medium_battery_2
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_light_cruiser_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
 			mid_1_custom_slot = ship_torpedo_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
+			rear_1_custom_slot = ship_light_battery_2
 		}
 		obsolete = yes
 	}
 	create_equipment_variant = {
 		name = "Olympia Class"
-		type = ship_hull_cruiser_0
+		type = ship_hull_cruiser_1
 		name_group = USA_CL_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_medium_battery_2
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_light_cruiser_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
 			mid_1_custom_slot = ship_torpedo_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
+			rear_1_custom_slot = ship_light_battery_2
 		}
 		obsolete = yes
 	}
 	create_equipment_variant = {
 		name = "San Fransisco Class"
-		type = ship_hull_cruiser_0
+		type = ship_hull_cruiser_1
 		name_group = USA_CL_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_light_medium_battery_1
+			fixed_ship_battery_slot = ship_light_medium_battery_2
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
 			mid_1_custom_slot = empty
+			rear_1_custom_slot = ship_light_battery_1
 		}
 		obsolete = yes
 	}
 	create_equipment_variant = {
 		name = "Baltimore Class"
-		type = ship_hull_cruiser_0
+		type = ship_hull_cruiser_1
 		name_group = USA_CL_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_medium_battery_1
+			fixed_ship_battery_slot = ship_medium_battery_2
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
 			mid_1_custom_slot = empty
+			rear_1_custom_slot = ship_light_medium_battery_2
 		}
 		obsolete = yes
 	}
 	create_equipment_variant = {
 		name = "Chicago Class"
-		type = ship_hull_cruiser_0
+		type = ship_hull_cruiser_1
 		name_group = USA_CL_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_medium_battery_1
+			fixed_ship_battery_slot = ship_medium_battery_2
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
 			mid_1_custom_slot = empty
+			rear_1_custom_slot = ship_light_medium_battery_2
 		}
 		obsolete = yes
 	}
 	create_equipment_variant = {
 		name = "Boston Class"
-		type = ship_hull_cruiser_0
+		type = ship_hull_cruiser_1
 		name_group = USA_CL_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_medium_battery_0
+			fixed_ship_battery_slot = ship_medium_battery_2
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
 			mid_1_custom_slot = empty
+			rear_1_custom_slot = ship_light_medium_battery_2
 		}
 		obsolete = yes
 	}
 	create_equipment_variant = {
 		name = "Chao Ho Class"
-		type = ship_hull_cruiser_3
+		type = ship_hull_cruiser_1
 		name_group = USA_CL_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_light_medium_battery_2
-			fixed_ship_engine_slot = cruiser_ship_engine_2
-			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_protected_cruiser_2
-			mid_1_custom_slot = ship_torpedo_2
+			fixed_ship_battery_slot = ship_medium_battery_2
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
+			mid_1_custom_slot = empty
+			rear_1_custom_slot = ship_light_medium_battery_2
 		}
 		obsolete = yes
 	}
 	# Scout Cruisers #
 	create_equipment_variant = {
 		name = "Chester Class"
-		type = ship_hull_cruiser_0
+		type = ship_hull_cruiser_1
 		name_group = USA_CL_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_medium_battery_1
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_light_cruiser_1
+			fixed_ship_armor_slot = ship_armor_cruiser_1
 			mid_1_custom_slot = ship_torpedo_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
+			rear_1_custom_slot = ship_light_battery_1
 		}
 		obsolete = yes
 	}
 	# Unprotected Cruisers #
 	create_equipment_variant = {
 		name = "Montgomery Class"
-		type = ship_hull_cruiser_0
+		type = ship_hull_cruiser_1
 		name_group = USA_CL_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_medium_battery_2
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = empty #unprotected
+			fixed_ship_armor_slot = ship_armor_cruiser_1
 			mid_1_custom_slot = ship_torpedo_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
+			rear_1_custom_slot = ship_light_battery_2
 		}
 		obsolete = yes
 	}
 	# Destroyers #
 	create_equipment_variant = {
 		name = "Paulding Class"
-		type = ship_hull_light_1
+		type = ship_hull_light_2
 		name_group = USA_DD_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = empty
 			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = light_ship_engine_1
 			fixed_ship_torpedo_slot = ship_torpedo_1
@@ -883,12 +1090,13 @@ if = {
 	}
 	create_equipment_variant = {
 		name = "Smith Class"
-		type = ship_hull_light_1
+		type = ship_hull_light_2
 		name_group = USA_DD_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = empty
 			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = light_ship_engine_1
 			fixed_ship_torpedo_slot = ship_torpedo_1
@@ -899,12 +1107,13 @@ if = {
 	}
 	create_equipment_variant = {
 		name = "Truxtun Class"
-		type = ship_hull_light_1
+		type = ship_hull_light_2
 		name_group = USA_DD_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = empty
 			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = light_ship_engine_1
 			fixed_ship_torpedo_slot = ship_torpedo_1
@@ -915,12 +1124,13 @@ if = {
 	}
 	create_equipment_variant = {
 		name = "Bainbridge Class"
-		type = ship_hull_light_1
+		type = ship_hull_light_2
 		name_group = USA_DD_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = empty
 			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = light_ship_engine_1
 			fixed_ship_torpedo_slot = ship_torpedo_1
@@ -938,6 +1148,7 @@ if = {
 		modules = {
 			fixed_ship_torpedo_slot = ship_torpedo_sub_1
 			fixed_ship_engine_slot = sub_ship_engine_1
+			rear_1_custom_slot = empty
 		}
 	}
 	create_equipment_variant = {
@@ -948,6 +1159,7 @@ if = {
 		modules = {
 			fixed_ship_torpedo_slot = ship_torpedo_sub_1
 			fixed_ship_engine_slot = sub_ship_engine_1
+			rear_1_custom_slot = empty
 		}
 		obsolete = yes
 	}
@@ -959,6 +1171,7 @@ if = {
 		modules = {
 			fixed_ship_torpedo_slot = ship_torpedo_sub_1
 			fixed_ship_engine_slot = sub_ship_engine_1
+			rear_1_custom_slot = empty
 		}
 		obsolete = yes
 	}
@@ -970,6 +1183,7 @@ if = {
 		modules = {
 			fixed_ship_torpedo_slot = ship_torpedo_sub_1
 			fixed_ship_engine_slot = sub_ship_engine_1
+			rear_1_custom_slot = empty
 		}
 		obsolete = yes
 	}
