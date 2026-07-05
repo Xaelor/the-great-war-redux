@@ -2557,8 +2557,16 @@ focus_tree = {
 				focus = GER_introduce_new_tariff_laws
 		}
 		completion_reward = {
-			GER_josias_von_heeringen = {
-				remove_any_country_role_from_character = yes
+			if = {
+				limit = {
+					has_character = GER_josias_von_heeringen
+					GER_josias_von_heeringen = {
+						is_hired_as_advisor = yes
+					}
+				}
+				GER_josias_von_heeringen = {
+					remove_any_country_role_from_character = yes
+				}
 			}
 			activate_advisor = GER_erich_von_falkenhayn
 			unlock_decision_tooltip = GER_second_army_law_cen_reich
@@ -4332,7 +4340,17 @@ focus_tree = {
 		}
 		bypass = {
 			NOT = {
-				has_idea = GER_alfred_von_tirpitz
+				if = {
+					limit = { 
+						has_character = GER_alfred_von_tirpitz
+					}
+					GER_alfred_von_tirpitz = {
+						is_hired_as_advisor = yes
+					}
+				}
+				else = {
+					has_character = GER_alfred_von_tirpitz
+				}
 			}
 		}
 		prerequisite = {
@@ -4372,7 +4390,7 @@ focus_tree = {
 		y = 1
 		available = {
 			is_GER_a_monarchy = yes
-			enemies_naval_strength_ratio > 1.2
+			GER_enemy_blockade_north_sea = yes
 			NOT = { has_country_flag = great_war_loser }
 			if = {
 				limit = {
@@ -5022,7 +5040,7 @@ focus_tree = {
 			}
 		}
 		search_filters = {
-			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_HISTORICAL FOCUS_FILTER_COMPLETED_BY_EVENT
 		}
 	}
 	focus = {
@@ -5565,7 +5583,7 @@ focus_tree = {
 			}
 		}
 		search_filters = {
-			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_HISTORICAL FOCUS_FILTER_COMPLETED_BY_EVENT
 		}
 	}
 		focus = {
@@ -6386,7 +6404,7 @@ focus_tree = {
 			hidden_effect = { add_ideas = GER_idea_coalition_benefits }
 		}
 		search_filters = {
-			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_HISTORICAL FOCUS_FILTER_COMPLETED_BY_EVENT
 		}
 	}
 	focus = {
@@ -8425,6 +8443,12 @@ joint_focus = {
 		x = 29
 		y = 3
 		trigger = {
+			has_focus_tree = AUH_focus
+		}
+	}
+	joint_trigger = {
+		OR = {
+			has_focus_tree = german_focus
 			has_focus_tree = AUH_focus
 		}
 	}

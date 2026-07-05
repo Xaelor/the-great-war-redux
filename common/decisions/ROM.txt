@@ -518,7 +518,6 @@ political_actions = {
 								german_agent
 							}
 						}
-						#promote_leader = yes
 					}
 				}
 			}
@@ -578,14 +577,13 @@ ROM_kings_country_category = {
 		icon = GFX_decision_generic_monarchy
 		activation = {
 			original_tag = ROM
+			is_ai = no
 		}
 		available = {
-			hidden_trigger = {
-				is_ai = yes
-			}
-		}
-		cancel_trigger = {
 			OR = {
+				hidden_trigger = {
+					is_ai = yes
+				}
 				has_completed_focus = ROM_deal_with_the_liberal_king
 				has_completed_focus = ROM_the_house_always_wins
 				has_completed_focus = ROM_in_the_hall_of_the_mountain_king
@@ -620,6 +618,10 @@ ROM_kings_country_category = {
 			ROM_king_effect = yes
 		}
 		complete_effect = {
+			set_variable = {
+				kings_approval_of_government = 0
+			}
+			ROM_king_effect = yes
 		}
 	}
 	ROM_adopt_a_workers_right_plank = {
@@ -1184,17 +1186,16 @@ GER_great_war = {
 		}
 		target_trigger = {
 			FROM = {
-				owns_state = 78
 				controls_state = 78		
-				original_tag = UKR
-				has_country_flag = UKR_rumcherod
 				is_subject = yes
+				tag = RUC
 				NOT = {
 					is_in_faction_with = ENT
 					is_in_faction_with = GER
 				}
 			}
 		}
+		target_array = 78.owner
 		fire_only_once = yes
 		available = {
 			has_war = no
@@ -1325,6 +1326,10 @@ GER_great_war = {
 			has_global_flag = great_war
 			has_war_with = GER
 			surrender_progress > 0.4
+			NOT = {
+				has_active_mission = frankfurt_armistice_mission
+				has_active_mission = compiegne_armistice_mission
+			}
 			#fights_alone = yes
 			# ^ broken
 		}
@@ -1458,10 +1463,8 @@ GER_great_war = {
 			original_tag = ROM
 		}
 		icon = GFX_decision_generic_prepare_civil_war
-		target_trigger = {
-			FROM = {
-				tag = GER
-			}
+		targets = {
+			GER
 		}
 		available = {
 			is_subject = no
@@ -1876,10 +1879,8 @@ peace_deals = {
 		available = {
 			surrender_progress > 0.40
 		}
-		target_trigger = {
-			FROM = {
-				tag = HUn
-			}
+		targets = {
+			HUN
 		}
 		# target_root_trigger = {
 		# 	has_war_with = FROM
