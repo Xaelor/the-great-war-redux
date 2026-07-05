@@ -268,7 +268,7 @@ ideas = {
 			
 			modifier = {				
 				land_doctrine_cost_factor = -0.2
-				planning_speed = 0.10
+				planning_speed = 0.05
 				max_command_power = 10
 			}
 		}
@@ -280,8 +280,8 @@ ideas = {
 			removal_cost = -1
 			
 			modifier = {				
-				army_morale_factor = 0.1
-				army_org_factor = 0.1
+				army_morale_factor = 0.05
+				army_org_factor = 0.05
 			}
 		}
 		
@@ -307,8 +307,8 @@ ideas = {
 			removal_cost = -1
 			
 			modifier = {		
-				army_core_attack_factor = 0.3
-				army_core_defence_factor = 0.3
+				army_core_attack_factor = 0.2
+				army_core_defence_factor = 0.2
 				army_attack_factor = -0.1
 				army_defence_factor = -0.1
 				ai_focus_aggressive_factor = -1
@@ -613,6 +613,342 @@ ideas = {
 				mobilization_speed = 10
 			}
 		}
+		# KOMUCH IDEAS!
+		KOM_reactionary_opposition = {
+			picture = DEN_occupation_laws
+			removal_cost = -1
+			allowed = { always = no }
+			available = {
+				NOT = {
+					AND = {
+						is_subject_of = SOV
+
+					}
+				}	
+			}
+			modifier = {
+				political_power_factor = -0.10
+				army_morale_factor = -0.05
+				army_org_factor = 0.05
+				planning_speed = 0.10
+				party_popularity_stability_factor = -0.15
+				master_ideology_drift = -0.05
+				neutrality_drift = 0.004
+				fascism_drift = 0.003
+			}
+		}
+		KOM_lack_of_support = {
+			picture = ARG_subdue_dissension
+			removal_cost = -1
+			allowed = { always = no }
+			available = {
+				NOT = {
+					AND = {
+						has_government = communism
+						has_war = no
+					}
+				}	
+			}
+			modifier = {
+				conscription_factor = -0.30
+				stability_factor = -0.10
+				war_support_factor = -0.15
+				war_support_weekly = -0.0002
+				drift_defence_factor = -0.15
+				mobilization_speed = -0.20
+				
+			}
+		}
+		KOM_mobilisation_of_the_peoples_army = {
+			allowed = { always = no }
+			allowed_civil_war = { 
+				OR = {
+					has_government = democratic
+					has_government = communism
+				}		
+			}
+			picture = generic_war_preparation
+			available = {
+				has_capitulated = no
+			}
+			removal_cost = -1			
+			modifier = {
+				weekly_manpower = 5000
+				training_time_army_factor = -0.25
+				minimum_training_level = -0.25
+				command_power_gain_mult = 0.25
+				mobilization_speed = 2.5
+			}
+		}
+		# Transcapsian ideas
+		TRC_economic_meltdown = {
+			picture = generic_economic_crisis
+			removal_cost = -1
+			allowed = { always = no }
+			available = {
+				NOT = {
+					AND = {
+						has_government = communism
+					}
+				}	
+			}
+			modifier = {
+				stability_weekly = -0.002
+				production_speed_buildings_factor = -0.30
+				industrial_capacity_factory = -0.40
+				industrial_capacity_dockyard = -0.30
+				consumer_goods_factor = 0.25
+				trade_opinion_factor = -0.20
+				army_attack_factor = -0.20
+				army_defence_factor = -0.15
+				
+				
+			}
+		}
+		TRC_underdeveloped_region = {
+			picture = POL_the_peasants_strike
+			name = TRC_underdeveloped_region
+			removal_cost = -1
+			allowed = { always = no }
+			available = {
+				NOT = {
+					AND = {
+						has_government = communism
+					}
+				}	
+			}
+			modifier = {
+				production_speed_infrastructure_factor = -0.40
+				research_speed_factor = -0.20
+				monthly_population = 0.20
+				conscription_factor = -0.05
+				
+				
+				
+			}
+		}
+		TRC_british_support = {
+			picture = eng_guided_by_britain
+			name = TRC_british_support
+			removal_cost = -1
+			allowed = { always = no }
+			available = {
+				NOT = {
+					AND = {
+						has_war = no
+					}
+				}	
+			}
+			modifier = {
+				consumer_goods_factor = -0.15
+				surrender_limit = 0.20
+				master_ideology_drift = 0.20
+				weekly_manpower = 200
+				army_attack_factor = 0.10
+				army_defence_factor = 0.15
+				
+			}
+		}
+		# decossackization and inogorodnije
+		RCW_decossackization = {
+			picture = jap_the_unthinkable_option
+			name = RCW_decossackization
+			removal_cost = -1
+			allowed = { always = no }
+			available = {
+				has_government = communism
+			}
+			modifier = {
+				stability_weekly = -0.01
+				army_core_defence_factor = -0.10
+				army_core_attack_factor = -0.15
+				monthly_population = -0.40
+				weekly_manpower = -300
+				resistance_growth = 0.1
+				local_supplies = -0.30
+				conscription_factor = -0.45
+				
+				
+			}
+		}
+		RCW_inogorodnije_excluded = {
+			picture = COG_the_invisible_roof
+			removal_cost = -1
+			allowed = { always = no }
+			available = {
+				NOT = {
+					has_government = communism
+					
+				}	
+			}
+			modifier = {
+				political_power_factor = 0.05
+				stability_factor = -0.15
+				war_support_factor = 0.10
+				monthly_population = 0.20
+				conscription_factor = -0.30
+				consumer_goods_factor = 0.05
+				drift_defence_factor = 0.1
+				
+				
+				
+			}
+		}
+		RCW_inogorodnije_included = {
+			picture = COG_the_invisible_roof
+			removal_cost = -1
+			allowed = { always = no }
+			available = {
+				NOT = {
+					has_government = communism
+				}	
+			}
+			modifier = {
+				political_power_factor = -0.05
+				stability_factor = 0.05
+				war_support_factor = -0.10
+				monthly_population = 0.20
+				conscription_factor = -0.05
+				drift_defence_factor = 0.2
+				
+			}
+		}
+		RCW_army_supply_corruption = {
+			picture = chi_army_corruption
+			name = RCW_army_supply_corruption
+			removal_cost = -1
+			allowed = { always = no }
+			modifier = {
+				experience_loss_factor = 0.15
+				supply_consumption_factor = 0.1
+				out_of_supply_factor = -0.15
+				consumer_goods_factor = 0.05
+				
+			}
+		}
+		IZH_union_of_front_line_soldiers = {
+			picture = generic_officer
+			removal_cost = -1
+			allowed = { always = no }
+			modifier = {
+				stability_factor = -0.1
+				army_attack_factor = 0.05
+				army_defence_factor = 0.05
+			}
+		}
+		IZH_factory_country = {
+			removal_cost = -1
+			picture = man_five_year_plan_industry
+			allowed = { always = no }
+			available = {
+				controls_state = 399
+			}
+			modifier = {
+				consumer_goods_factor = 0.1
+				industrial_capacity_factory = 0.05
+				production_factory_efficiency_gain_factor = 0.1
+				production_factory_start_efficiency_factor = 0.1
+			}
+		}
+		RCW_lack_of_officers1 = {
+			name = RCW_lack_of_officers
+			picture = chi_incompetent_officers
+			removal_cost = -1
+			allowed = { always = no }
+			on_add = {
+				set_country_flag = RCW_lack_of_officers1
+			}
+			on_remove = {
+				if = {
+					limit = {
+						OR = {
+							has_country_leader_ideology = vanguardism
+							has_country_leader_ideology = revolutionary_socialism
+						}
+						has_SOV_army_idea = no
+					}
+					copy_SOV_army_idea = yes
+				}
+			}
+			available = {
+				NOT = {
+					has_country_leader_ideology = vanguardism
+					has_country_leader_ideology = revolutionary_socialism
+					has_idea = RCW_lack_of_officers2
+					has_idea = RCW_lack_of_officers3
+				}
+			}
+			modifier = {
+				army_org_factor = -0.15
+				army_org_regain = -0.15
+			}
+		}
+		RCW_lack_of_officers2 = {
+			name = RCW_lack_of_officers
+			picture = chi_incompetent_officers
+			removal_cost = -1
+			allowed = { always = no }
+			on_add = {
+				clr_country_flag = RCW_lack_of_officers1
+				set_country_flag = RCW_lack_of_officers2
+			}
+			on_remove = {
+				if = {
+					limit = {
+						OR = {
+							has_country_leader_ideology = vanguardism
+							has_country_leader_ideology = revolutionary_socialism
+						}
+						has_SOV_army_idea = no
+					}
+					copy_SOV_army_idea = yes
+				}
+			}
+			available = {
+				NOT = {
+					has_country_leader_ideology = vanguardism
+					has_country_leader_ideology = revolutionary_socialism
+					has_idea = RCW_lack_of_officers3
+				}
+			}
+			modifier = {
+				army_org_factor = -0.1
+				army_org_regain = -0.1
+			}
+		}
+		RCW_lack_of_officers3 = {
+			name = RCW_lack_of_officers
+			picture = chi_incompetent_officers
+			removal_cost = -1
+			allowed = { always = no }
+			on_add = {
+				clr_country_flag = RCW_lack_of_officers1
+				clr_country_flag = RCW_lack_of_officers2
+				set_country_flag = RCW_lack_of_officers3
+			}
+			on_remove = {
+				if = {
+					limit = {
+						OR = {
+							has_country_leader_ideology = vanguardism
+							has_country_leader_ideology = revolutionary_socialism
+						}
+						has_SOV_army_idea = no
+					}
+					copy_SOV_army_idea = yes
+				}
+			}
+			available = {
+				NOT = {
+					has_country_leader_ideology = vanguardism
+					has_country_leader_ideology = revolutionary_socialism
+				}
+			}
+			modifier = {
+				army_org_factor = -0.05
+				army_org_regain = -0.05
+			}
+		}
 		RCW_northern_russian_expedition_idea = {
 			picture = generic_war_preparation
 			removal_cost = -1
@@ -660,5 +996,16 @@ ideas = {
 				}
 			}		
 		}
+		FER_partisans = {
+			picture = generic_communist_army
+			removal_cost = -1
+			allowed = { always = no }
+			modifier = {
+				modifier_army_sub_unit_militia_attack_factor = 0.5
+				modifier_army_sub_unit_militia_defence_factor = 0.5
+				supply_consumption_factor = -0.2
+			}
+		}
+
     }
 }

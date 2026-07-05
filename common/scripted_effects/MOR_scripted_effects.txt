@@ -107,18 +107,19 @@ MOR_start_war_with_hostile_caids = {
 		set_technology = {
 			obsolete_infantry_weapons = 1
 		}
+		set_country_flag = MOR_concilliation_with_hostiles_caids
 		MOR = {
-			MOR_ahmed_al_hiba = {
+			MOR_mouha_ou_hammou_zayani = {
 				set_nationality = PREV.PREV
 				promote_character = absolute_monarchy
 				promote_character = reactionism
 			}
 		}
-		add_ideas = MOR_ahmed_al_hiba
 		reserve_dynamic_country = yes
 		set_country_flag = MOR_anti_french
-		set_cosmetic_tag = MOR_hibist
-		load_focus_tree = generic_focus
+		set_cosmetic_tag = MOR_zaian
+		set_country_flag = empty_focus
+		load_focus_tree = empty_focus
 		every_state = {
 			limit = {
 				is_core_of = MOR
@@ -144,13 +145,14 @@ MOR_start_war_with_hostile_caids = {
 				}
 				transfer_state_to = PREV.PREV
 			}
-		}
-		declare_war_on = {
-			target = MOR
-			type = annex_everything
+			declare_war_on = {
+				target = PREV
+				type = annex_everything
+			}
 		}
 		division_template = {
-			name = "Tribes"
+			name = "Harka"
+			override_model = middle_eastern_gfx_cavalry_entity
 			is_locked = yes
 			priority = 0
 			regiments = {
@@ -162,7 +164,7 @@ MOR_start_war_with_hostile_caids = {
 		}
 		290 = {
 			create_unit = {
-				division = "division_template = \"Tribes\" start_experience_factor = 0.1 start_equipment_factor = 0.3"
+				division = "division_template = \"Harka\" start_experience_factor = 0.1 start_equipment_factor = 0.3"
 				allow_spawning_on_enemy_provs = yes
 				prioritize_location = 7215
 				OWNER = PREV
@@ -171,14 +173,14 @@ MOR_start_war_with_hostile_caids = {
 		}
 		461 = {
 			create_unit = {
-				division = "division_template = \"Tribes\" start_experience_factor = 0.1 start_equipment_factor = 0.3"
+				division = "division_template = \"Harka\" start_experience_factor = 0.1 start_equipment_factor = 0.3"
 				allow_spawning_on_enemy_provs = yes
 				prioritize_location = 4097
 				OWNER = PREV
 				count = 1
 			}
 			create_unit = {
-				division = "division_template = \"Tribes\" start_experience_factor = 0.1 start_equipment_factor = 0.3"
+				division = "division_template = \"Harka\" start_experience_factor = 0.1 start_equipment_factor = 0.3"
 				allow_spawning_on_enemy_provs = yes
 				prioritize_location = 1079
 				OWNER = PREV
@@ -187,7 +189,7 @@ MOR_start_war_with_hostile_caids = {
 		}
 		1095 = {
 			create_unit = {
-				division = "division_template = \"Tribes\" start_experience_factor = 0.1 start_equipment_factor = 0.3"
+				division = "division_template = \"Harka\" start_experience_factor = 0.1 start_equipment_factor = 0.3"
 				allow_spawning_on_enemy_provs = yes
 				prioritize_location = 7908
 				OWNER = PREV
@@ -220,8 +222,6 @@ MOR_create_kingdom_of_tazeroualt = {
 			}
 			reserve_dynamic_country = yes
 			load_focus_tree = generic_focus
-			transfer_state = 1094
-			transfer_state = 807
 			set_popularities = {
 				neutrality = 100
 			}
@@ -229,28 +229,34 @@ MOR_create_kingdom_of_tazeroualt = {
 				ruling_party = neutrality
 				elections_allowed = no
 			}
-		}
-		every_state = {
-			limit = {
-				is_core_of = MOR
+			every_core_state = {
+				remove_core_of = PREV
 			}
-			remove_core_of = TAZ
-		}
+		}	
 		TAZ = {
 			add_state_core = 1094
 			add_state_core = 807
+			add_state_core = 1237
 		}
 	}
-	TAZ = {
-		transfer_state = 1094
-		transfer_state = 807
+	every_owned_state = {
+		limit = {
+			OR = {
+				state = 1094
+				state = 807
+				state = 1237
+			}
+		}
+		transfer_state_to = TAZ
 	}
+	TAZ = { get_current_government_type = yes }		
 	MOR = {
 		set_autonomy = {
 			target = TAZ
 			autonomy_state = autonomy_puppet
 		}
 	}
+	TAZ = { restore_previous_government_type = yes }
 }
 
 MOR_ahmed_al_hiba_rebellion = {
@@ -275,19 +281,44 @@ MOR_ahmed_al_hiba_rebellion = {
 					}
 				}
 			}
-			RMO = {
-				MOR = {
-					MOR_ahmed_al_hiba = {
-						set_nationality = RMO
-						promote_character = absolute_monarchy
-						promote_character = reactionism
+			GUD = {
+				MOR_ahmed_al_hiba = {
+					if = {
+						limit = { has_ideology = theocracy_ideology }
+						remove_country_leader_role = {
+							ideology = theocracy_ideology
+						}
+						add_country_leader_role = {
+							promote_leader = yes
+							country_leader = { 
+								ideology = absolute_monarchy
+								traits = { blue_sultan }
+							}
+						}
+					}
+					if = {
+						limit = { has_ideology = fundamentalism }
+						remove_country_leader_role = {
+							ideology = fundamentalism
+						}
+						add_country_leader_role = {
+							promote_leader = yes
+							country_leader = { 
+								ideology = reactionism
+								traits = { blue_sultan }
+							}
+						}
 					}
 				}
+				transfer_state = 1237
+
 				add_ideas = MOR_ahmed_al_hiba
-				# transfer_state = 1095
-				transfer_state = 1094
+				add_ideas = MOR_guerilla_warfare2
+				remove_ideas = GUD_uncertain_mission
+
 				division_template = {
-					name = "Chaouia Tribes"
+					name = "Chaouia Harka"
+					override_model = middle_eastern_gfx_cavalry_entity
 					regiments = {
 						irregular_cavalry = { x = 0 y = 0 }
 						irregular_cavalry = { x = 0 y = 1 }
@@ -296,69 +327,40 @@ MOR_ahmed_al_hiba_rebellion = {
 					}
 					is_locked = yes
 				}
-				1094 = {
+				1237 = {
 					create_unit = {
-						division = "name = \"Chaouia Tribes\" division_template = \"Chaouia Tribes\" start_experience_factor = 2.0 start_equipment_factor = 0.3"
-						owner = RMO
-						prioritize_location = 1102
+						division = "name = \"Chaouia Harka\" division_template = \"Chaouia Harka\" start_experience_factor = 2.0 start_equipment_factor = 0.3"
+						owner = GUD
+						prioritize_location = 1094
 						allow_spawning_on_enemy_provs = yes
 					}
 					create_unit = {
-						division = "name = \"Chaouia Tribes\" division_template = \"Chaouia Tribes\" start_experience_factor = 2.0 start_equipment_factor = 0.3"
-						owner = RMO
-						prioritize_location = 4102
+						division = "name = \"Chaouia Harka\" division_template = \"Chaouia Harka\" start_experience_factor = 2.0 start_equipment_factor = 0.3"
+						owner = GUD
+						prioritize_location = 1237
 						allow_spawning_on_enemy_provs = yes
 						count = 3
 					}
 				}
-				# division_template = {
-				# 	name = "Atlas Tribes"
-				# 	regiments = {
-				# 		irregular_infantry = { x = 0 y = 0 }
-				# 		irregular_infantry = { x = 0 y = 1 }
-				# 		irregular_infantry = { x = 1 y = 0 }
-				# 		irregular_infantry = { x = 1 y = 1 }
-				# 	}
-				# 	is_locked = yes
-				# }
-				# 1095 = {
-				# 	create_unit = {
-				# 		division = "name = \"Atlas Tribes\" division_template = \"Atlas Tribes\" start_experience_factor = 2.0 start_equipment_factor = 0.3"
-				# 		owner = RMO
-				# 		prioritize_location = 8046
-				# 		allow_spawning_on_enemy_provs = yes
-				# 		count = 4
-				# 	}
-				# }
-				declare_war_on = {
-					target = MOR
-					type = civil_war
-				}
 				MOR = {
-					OVERLORD = {
-						add_to_war = {
-							targeted_alliance = MOR
-							enemy = RMO
-						}
-					}				
+					declare_war_on = {
+						target = GUD
+						type = annex_everything
+					}
+					# OVERLORD = {
+					# 	add_to_war = {
+					# 		targeted_alliance = MOR
+					# 		enemy = GUD
+					# 	}
+					# }
 				}
 				add_equipment_to_stockpile = {
 					type = infantry_equipment_n1
 					amount = 1500
 				}
 				add_manpower = 10000
-				add_ideas = MOR_guerilla_warfare2
-				load_focus_tree = generic_focus
 				set_cosmetic_tag = MOR_hibist
 			}
-		}
-		MOR = {
-			set_province_controller = 1152
-			set_province_controller = 1207
-			set_province_controller = 10107
-			set_province_controller = 5046
-			set_province_controller = 4022
-			set_province_controller = 7908
 		}
 	}
 

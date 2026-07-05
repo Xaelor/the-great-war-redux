@@ -101,68 +101,6 @@ turanism_support = {
 	compliance_growth = 0.1
 	resistance_growth = -0.15
 }
-per_russian_sphere = {
-	enable = {
-		CONTROLLER = {
-			tag = PER
-			NOT = {
-				has_war_with = RUS
-			}	
-		}	
-	}
-	remove_trigger = { 
-		OR = {
-			NOT = { is_owned_by = PER }	
-			has_russian_civil_war = yes
-		}
-	}
-	icon = GFX_modifiers_PER_foreign_sphere
-
-	state_production_speed_buildings_factor = 0.10
-	state_resources_factor = -0.15
-	local_factories = -0.15
-}
-per_british_sphere = {
-	enable = {
-		CONTROLLER = {
-			tag = PER
-			NOT = {
-				has_war_with = ENG
-			}	
-		}	
-	}
-	remove_trigger = { 
-		OR = {
-			NOT = { is_owned_by = PER }
-			ENG = { has_civil_war = yes }
-		}
-	}
-	icon = GFX_modifiers_PER_foreign_sphere
-	
-	state_production_speed_buildings_factor = 0.10
-	state_resources_factor = -0.15
-	local_factories = -0.15
-}
-per_paramilitary_gendarmerie = {
-	enable = {
-		CONTROLLER = {
-			original_tag = PER	
-		}	
-	}
-	remove_trigger = { 
-		OR = {
-			NOT = { is_owned_by = PER }
-			PER = { has_civil_war = yes }
-		}
-	}
-	icon = GFX_modifiers_state_manpower
-	
-	local_org_regain = -0.05
-	army_speed_factor = -0.20
-	army_attack_factor = -0.10
-	army_defence_factor = -0.10
-	disable_strategic_redeployment_for_controller = 1
-}
 auh_assimilated_cisleitania = {
 	enable = {
 		CONTROLLER = {
@@ -473,10 +411,10 @@ AUH_OSB_debts = {
 	enable = { original_tag = AUS }
 	consumer_goods_expected_value = var:AUH_OSB_var
 }
-SIB_gold_reserve_dynamic_modifier = {
+RCW_gold_reserve_dynamic_modifier = {
 	icon = GFX_idea_SPR_seize_the_gold_reserves
 	enable = { original_tag = RUS }
-	consumer_goods_expected_value = var:SIB_gold_reserve_var
+	consumer_goods_expected_value = var:global.RCW_gold_reserve_var
 }
 SPR_independence_movements = {
 	enable = { 
@@ -501,26 +439,26 @@ SPR_independence_movements = {
 GRE_IFC_dynamic_modifier = {
 	icon = GFX_idea_gre_debt_to_the_ifc
 	enable = { original_tag = GRE }
-	consumer_goods_factor = var:GRE_IFC_var
-	country_resource_steel = GRE_IFC_country_resource_steel
-	country_resource_chromium = GRE_IFC_country_resource_chromium
-	production_speed_buildings_factor = GRE_IFC_production_speed_buildings_factor
-	production_speed_industrial_complex_factor = GRE_IFC_production_speed_industrial_complex_factor
-	production_speed_arms_factory_factor = GRE_IFC_production_speed_arms_factory_factor
-	industrial_capacity_factory = GRE_IFC_industrial_capacity_factory
-	industrial_capacity_dockyard = GRE_IFC_industrial_capacity_dockyard
+	consumer_goods_factor = var:global.GRE_IFC_var
+	country_resource_steel = global.GRE_IFC_country_resource_steel
+	country_resource_chromium = global.GRE_IFC_country_resource_chromium
+	production_speed_buildings_factor = global.GRE_IFC_production_speed_buildings_factor
+	production_speed_industrial_complex_factor = global.GRE_IFC_production_speed_industrial_complex_factor
+	production_speed_arms_factory_factor = global.GRE_IFC_production_speed_arms_factory_factor
+	industrial_capacity_factory = global.GRE_IFC_industrial_capacity_factory
+	industrial_capacity_dockyard = global.GRE_IFC_industrial_capacity_dockyard
 }
 GRE_political_turmoil_dynamic_modifier = {
 	icon = GFX_idea_GRE_goudi
     enable = { original_tag = GRE }
-	stability_factor = var:GRE_stability_var
-	political_power_factor = var:GRE_pp_var
+	stability_factor = var:global.GRE_stability_var
+	political_power_factor = var:global.GRE_pp_var
 }
 GRE_political_normality_dynamic_modifier = {
 	icon = GFX_idea_generic_pp_unity_bonus
     enable = { original_tag = GRE }
-	stability_factor = var:GRE_stability_var
-	political_power_factor = var:GRE_pp_var
+	stability_factor = var:global.GRE_stability_var
+	political_power_factor = var:global.GRE_pp_var
 }
 GRE_agrarian_society_dynamic_modifier = {
 	icon = GFX_idea_GRE_agrarian_society
@@ -2206,7 +2144,7 @@ ROM_national_opposition = {
 }
 ROM_romanian_economy_idea = { 
 	enable = { always = yes }
-	icon = GFX_idea_SOV_third_five_year_plan_military
+	icon = GFX_idea_GER_recovering_economy
 	industrial_capacity_factory = ROM_factory_output
 	production_speed_arms_factory_factor = ROM_mil_build_speed
 	production_speed_buildings_factor = ROM_build_speed
@@ -2231,6 +2169,10 @@ ROM_romanian_army_idea = {
 	experience_gain_army = ROM_army_xp
 	supply_consumption_factor = ROM_army_supply
 	land_mastery_gain_factor = ROM_army_land_mastery
+
+	#
+	unit_field_gun_brigade_design_cost_factor = ROM_arty_brigade_cost
+	unit_infantry_design_cost_factor = ROM_infantry_brigade_cost
 }
 ROM_occupation_costs = {
 	enable = { always = yes }
@@ -2809,21 +2751,13 @@ TUN_protected_sacred_places = {
 GEO_transcaucasia_modifier = {
 	enable = {
 		CONTROLLER = {
-			OR = {
-				has_cosmetic_tag = GEO_TSCN
-				has_cosmetic_tag = GEO_TSCN_commissariat
-				has_cosmetic_tag = GEO_TSCN_committee
-				has_cosmetic_tag = GEO_TSCN_communism
-			}
+			original_tag = COU
 		}
 	}
 	remove_trigger = {
 		owner = {
 			NOT = {
-				has_cosmetic_tag = GEO_TSCN
-				has_cosmetic_tag = GEO_TSCN_commissariat
-				has_cosmetic_tag = GEO_TSCN_committee
-				has_cosmetic_tag = GEO_TSCN_communism
+				original_tag = COU
 			}
 		}
 	}
@@ -3732,4 +3666,45 @@ SIA_french_sphere = {
 	state_production_speed_buildings_factor = 0.10
 	state_resources_factor = -0.15
 	local_factories = -0.15
+}
+
+PER_foreign_influence_modifier = {
+	icon = GFX_idea_per_foreign_interference
+
+	political_power_gain = PER_political_power_gain
+	consumer_goods_expected_value = PER_total_foreign_influence
+	min_export = PER_total_foreign_influence
+	civilian_intel_to_others = PER_civilian_intel_to_others
+	custom_modifier_tooltip = PER_foreign_influence_modifier_tt
+}
+
+PER_influence_in_persia_modifier = {
+	#icon = GFX_idea_per_foreign_interference
+	enable = {
+		any_country_with_original_tag = {
+			original_tag_to_check = PER
+			has_dynamic_modifier = PER_foreign_influence_modifier
+			NOT = { has_war_with = ROOT }
+		}
+	}
+	remove_trigger = {
+		OR = {
+			is_subject = yes
+			has_country_flag = great_war_loser
+		}
+	}
+	
+	political_power_gain = PER_political_power_gain
+	consumer_goods_factor = PER_consumer_goods_factor
+}	
+colonial_war = {
+	enable = {
+		is_in_colonial_war = yes
+	}
+	war_stability_factor = 0.2
+	war_support_factor = 1
+	mobilization_speed = -0.3
+	army_core_attack_factor = -0.1
+	army_core_defence_factor = -0.1
+	command_power_gain_mult = -0.5
 }

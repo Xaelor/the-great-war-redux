@@ -129,15 +129,6 @@ SIB_sov_front_only = {
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
-		type = front_control
-		tag = RUS
-		ratio = 0.7
-		
-		priority = 9999
-		ordertype = front
-		execution_type = balanced
-	}
-	ai_strategy = {
 		type = front_unit_request
 		tag = RUS
 		value = 9999
@@ -172,37 +163,6 @@ SIB_help_sra = {
 		type = front_unit_request
 		tag = RUS
 		value = 9999
-	}
-}
-
-KOM_initial_defense = {
-	allowed = {
-        tag = KOM
-	}
-	enable = {
-		has_war_with = SOV
-        SIB = {
-            has_army_manpower = {
-                size < 100000
-            }
-        }
-	}
-    abort = {
-		SIB = {
-            is_neighbor_of = KOM
-            has_army_manpower = {
-                size > 100000
-            }
-        }
-	}
-	ai_strategy = {
-		type = put_unit_buffers
-		ratio = 1
-		states = {
-			251
-			651
-		}
-		subtract_fronts_from_need = no
 	}
 }
 
@@ -427,11 +387,17 @@ RCW_special_role_ratio = {
 			tag = RSO
 			tag = TRC
 			tag = KOM
-			tag = SOV
+			tag = RUS
 			tag = FER
 		}
 	}
 	enable = {
+		if = {
+			limit = { 
+				tag = RUS
+			}
+			tag = SOV
+		}
 		is_in_russian_civil_war = yes
 	}
 	abort_when_not_enabled = yes
@@ -439,5 +405,56 @@ RCW_special_role_ratio = {
 		type = role_ratio
 		id = infantry_rcw
 		value = 100
+	}
+	ai_strategy = {
+		type = ignore_army_incompetence
+		value = 500
+	}
+}
+
+KOM_rush_kazan = {
+	allowed = {
+		tag = KOM
+	}
+	enable = {
+		has_active_mission = RCW_capture_the_gold_reserves
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = front_unit_request
+		state = 249
+		value = 1000
+	}
+	ai_strategy = {
+		type = front_control
+		state = 249
+		priority = 100
+		ordertype = front
+		execution_type = rush
+		manual_attack = yes
+		execute_order = yes
+	}
+	ai_strategy = {
+		type = garrison
+		value = -1000
+	}
+	ai_strategy = {
+		type = garrison_reinforcement_priority
+		value = -1000
+	}
+	ai_strategy = {
+		type = dont_defend_ally_borders
+		id = SIB
+		value = 1
+	}
+	ai_strategy = {
+		type = dont_defend_ally_borders
+		id = ORE
+		value = 1
+	}
+	ai_strategy = {
+		type = dont_defend_ally_borders
+		id = UCH
+		value = 1
 	}
 }
