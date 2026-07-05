@@ -320,22 +320,16 @@ armistice_effect = {
 					# in case there is soviet puppet, they annexes
 					if = {
 						limit = {
-							any_other_country = {
-								original_tag = PREV
-								OR = {
-									is_subject_of = SOV
-									is_in_faction_with = SOV
-								}
+							any_country_with_original_tag = {
+								original_tag_to_check = PREV
+								is_ally_with = SOV
 								exists = yes
 							}
 						}
-						random_other_country = {
+						random_country_with_original_tag = {
+							original_tag_to_check = PREV
 							limit = {
-								original_tag = PREV
-								OR = {
-									is_subject_of = SOV
-									is_in_faction_with = SOV
-								}
+								is_ally_with = SOV
 							}
 							annex_country = {
 								target = PREV
@@ -1506,6 +1500,7 @@ armistice_effect = {
 					OR = {
 						#state = 736
 						state = 1197
+						state = 1260
 						state = 1198
 						state = 1010
 						state = 163
@@ -1797,30 +1792,6 @@ armistice_effect = {
 			}
 		}
 	}
-	##### Ogaden returns ####
-	if = {
-		limit = {
-			SOM = {
-				owns_state = 657
-				has_country_flag = great_war_loser
-			}
-			ETH = {
-				owns_state = 271
-				NOT = {
-					has_country_flag = great_war_loser
-				}
-			}
-		}
-		ETH = {
-			transfer_state = 657
-		}
-		if = {
-			limit = {
-				SOM = { owns_state = 1039 }
-			}
-			ETH = { transfer_state = 1039 }
-		}
-	}
 	### ALBANIA ###
 	if = {
 		limit = {
@@ -1965,6 +1936,7 @@ armistice_effect = {
 					owns_state = 184
 					owns_state = 200
 					owns_state = 345
+					owns_state = 1255
 					owns_state = 757
 				}
 			}
@@ -1992,6 +1964,7 @@ armistice_effect = {
 						OR = {
 							state = 184
 							state = 345
+							state = 1255
 						}
 					}
 					transfer_state_to = PREV
@@ -2018,8 +1991,8 @@ armistice_effect = {
 			GRE = {
 				has_country_flag = GRE_national_defense_flag
 				has_country_flag = great_war_loser
-				any_other_country = {
-					original_tag = GRE
+				any_country_with_original_tag = {
+					original_tag_to_check = GRE
 					has_country_flag = GRE_monarchist_mainland_flag
 					exists = yes
 				}
@@ -2065,6 +2038,16 @@ armistice_effect = {
 					limit = { is_claimed_by = PREV }
 					remove_claim_by = PREV
 				}
+				every_state = {
+					limit = { has_contested_owner = PREV }
+					remove_contested_owner = PREV
+					if = {
+						limit = {
+							NOT = { is_owned_by = GRM }
+						}
+						add_contested_owner = GRM
+					}
+				}
 			}
 			if = {
 				limit = {
@@ -2092,8 +2075,8 @@ armistice_effect = {
 			THE = {
 				has_country_flag = GRE_national_defense_flag
 				has_country_flag = great_war_winner		
-				any_other_country = {
-					original_tag = GRE		
+				any_country_with_original_tag = {
+					original_tag_to_check = GRE
 					NOT = {
 						has_war_with = THE
 						has_country_flag = GRE_national_defense_flag
@@ -2252,14 +2235,8 @@ armistice_effect = {
 	#Transcaucasia
 	if = {
 		limit = {
-			GEO = {
+			CAU = {
 				has_country_flag = great_war_winner
-				OR = {
-					has_cosmetic_tag = GEO_TSCN
-					has_cosmetic_tag = GEO_TSCN_commissariat
-					has_cosmetic_tag = GEO_TSCN_committee
-					has_cosmetic_tag = GEO_TSCN_communism
-				}
 			}
 		}
 		if = {
@@ -2282,8 +2259,8 @@ armistice_effect = {
 							state = 1034
 						}
 					}
-					add_core_of = GEO
-					transfer_state_to = GEO
+					add_core_of = CAU
+					transfer_state_to = CAU
 				}
 			}
 		}
@@ -2300,26 +2277,29 @@ armistice_effect = {
 							state = 419
 							state = 877
 							state = 1212
+							state = 1245
+							state = 1250
+							state = 1251
 						}
 					}
-					transfer_state_to = GEO
+					transfer_state_to = CAU
 				}
 			}
 		}
 		else = {
 			every_state = {
 				limit = {
-					is_owned_by = GEO
+					is_owned_by = CAU
 					region = 116
 				}
-				remove_core_of = GEO
+				remove_core_of = CAU
 				transfer_state_to = PER
 			}
 		}
-		GEO = {
+		CAU = {
 			if = {
 				limit = {
-					has_cosmetic_tag = GEO_TSCN_commissariat
+					has_government = neutrality
 				}
 				country_event = {
 					id = ww1_georgia.2
@@ -2389,7 +2369,7 @@ armistice_effect = {
 			PER = {
 				any_enemy_country = {
 					original_tag = PER
-					has_country_flag = PER_gendarmerie_flag
+					has_country_flag = PER_defense_committee_flag
 					any_enemy_country = {
 						OR = {
 							has_country_flag = great_war_winner
@@ -2403,7 +2383,7 @@ armistice_effect = {
 			every_enemy_country = {
 				limit = {
 					original_tag = PER
-					has_country_flag = PER_gendarmerie_flag
+					has_country_flag = PER_defense_committee_flag
 				}
 				every_enemy_country = {
 					limit = {
@@ -2451,7 +2431,7 @@ armistice_effect = {
 				NOT = { has_country_flag = great_war_loser }
 				any_enemy_country = {
 					original_tag = PER
-					has_country_flag = PER_gendarmerie_flag
+					has_country_flag = PER_defense_committee_flag
 					NOT = {
 						has_war_with = ENG
 						has_war_with = RUS
@@ -2464,7 +2444,7 @@ armistice_effect = {
 			random_other_country = {
 				limit = {
 					original_tag = PER
-					has_country_flag = PER_gendarmerie_flag
+					has_country_flag = PER_defense_committee_flag
 				}
 				transfer_navy = {
 					target = PREV
@@ -2492,7 +2472,7 @@ armistice_effect = {
 		limit = {
 			country_exists = PER
 			has_global_flag = russian_revolution
-			has_global_flag = persian_gendarmerie_revolt
+			has_global_flag = PER_national_defense_committee
 			PER = {
 				NOT = {
 					has_country_flag = great_war_loser
@@ -2506,10 +2486,7 @@ armistice_effect = {
 							has_war_with = PER
 						}
 						OR = {
-							has_cosmetic_tag = GEO_TSCN
-							has_cosmetic_tag = GEO_TSCN_commissariat
-							has_cosmetic_tag = GEO_TSCN_committee
-							has_cosmetic_tag = GEO_TSCN_communism
+							original_tag = CAU
 							NOT = {
 								PREV = { is_core_of = PREV }
 							}
@@ -2523,10 +2500,7 @@ armistice_effect = {
 							has_war_with = PER
 						}
 						OR = {
-							has_cosmetic_tag = GEO_TSCN
-							has_cosmetic_tag = GEO_TSCN_commissariat
-							has_cosmetic_tag = GEO_TSCN_committee
-							has_cosmetic_tag = GEO_TSCN_communism
+							original_tag = CAU
 							NOT = {
 								PREV = { is_core_of = PREV }
 							}
@@ -2540,10 +2514,7 @@ armistice_effect = {
 							has_war_with = PER
 						}
 						OR = {
-							has_cosmetic_tag = GEO_TSCN
-							has_cosmetic_tag = GEO_TSCN_commissariat
-							has_cosmetic_tag = GEO_TSCN_committee
-							has_cosmetic_tag = GEO_TSCN_communism
+							original_tag = CAU
 							NOT = {
 								PREV = { is_core_of = PREV }
 							}
@@ -2557,10 +2528,7 @@ armistice_effect = {
 							has_war_with = PER
 						}
 						OR = {
-							has_cosmetic_tag = GEO_TSCN
-							has_cosmetic_tag = GEO_TSCN_commissariat
-							has_cosmetic_tag = GEO_TSCN_committee
-							has_cosmetic_tag = GEO_TSCN_communism
+							original_tag = CAU
 							NOT = {
 								PREV = { is_core_of = PREV }
 							}
@@ -2574,10 +2542,7 @@ armistice_effect = {
 							has_war_with = PER
 						}
 						OR = {
-							has_cosmetic_tag = GEO_TSCN
-							has_cosmetic_tag = GEO_TSCN_commissariat
-							has_cosmetic_tag = GEO_TSCN_committee
-							has_cosmetic_tag = GEO_TSCN_communism
+							original_tag = CAU
 							NOT = {
 								PREV = { is_core_of = PREV }
 							}
@@ -2591,10 +2556,49 @@ armistice_effect = {
 							has_war_with = PER
 						}
 						OR = {
-							has_cosmetic_tag = GEO_TSCN
-							has_cosmetic_tag = GEO_TSCN_commissariat
-							has_cosmetic_tag = GEO_TSCN_committee
-							has_cosmetic_tag = GEO_TSCN_communism
+							original_tag = CAU
+							NOT = {
+								PREV = { is_core_of = PREV }
+							}
+						}
+					}
+				}
+				1245 = {
+					owner = {
+						NOT = {
+							original_tag = PER
+							has_war_with = PER
+						}
+						OR = {
+							original_tag = CAU
+							NOT = {
+								PREV = { is_core_of = PREV }
+							}
+						}
+					}
+				}
+				1250 = {
+					owner = {
+						NOT = {
+							original_tag = PER
+							has_war_with = PER
+						}
+						OR = {
+							original_tag = CAU
+							NOT = {
+								PREV = { is_core_of = PREV }
+							}
+						}
+					}
+				}
+				1251 = {
+					owner = {
+						NOT = {
+							original_tag = PER
+							has_war_with = PER
+						}
+						OR = {
+							original_tag = CAU
 							NOT = {
 								PREV = { is_core_of = PREV }
 							}
@@ -2611,6 +2615,7 @@ armistice_effect = {
 					state = 421
 					state = 877
 					state = 1212
+					state = 1245
 				}
 				owner = {
 					NOT = {
@@ -2618,10 +2623,7 @@ armistice_effect = {
 						has_war_with = PER
 					}
 					OR = {
-						has_cosmetic_tag = GEO_TSCN
-						has_cosmetic_tag = GEO_TSCN_commissariat
-						has_cosmetic_tag = GEO_TSCN_committee
-						has_cosmetic_tag = GEO_TSCN_communism
+						tag = CAU
 						NOT = {
 							PREV = { is_core_of = PREV }
 						}
@@ -2630,9 +2632,9 @@ armistice_effect = {
 			}
 			if = {
 				limit = {
-					is_core_of = GEO
+					is_core_of = CAU
 				}
-				remove_core_of = GEO
+				remove_core_of = CAU
 			}
 			transfer_state_to = PER
 		}
@@ -2707,9 +2709,9 @@ armistice_effect = {
 				}
 			}
 		}
-		random_country = {
+		random_country_with_original_tag = {
+			original_tag_to_check = SAF
 			limit = {
-				original_tag = SAF
 				has_government = fascism
 			}
 			every_enemy_country = {
@@ -4129,21 +4131,9 @@ conference_effect = {
 						country_exists = TRP
 					}
 					TUR = {
-						set_autonomy = {
+						annex_country = {
 							target = TRP
-							autonomy_state = autonomy_tgwr_ottoman_emirate
-						}
-					}
-					TRP = {
-						set_politics = {
-							ruling_party = neutrality
-							elections_allowed = no
-						}
-						set_popularities = {
-							democratic = 0
-							fascism = 17
-							communism = 0
-							neutrality = 83
+							transfer_troops = no
 						}
 					}
 				}
@@ -4944,6 +4934,7 @@ conference_effect = {
 						region = 192
 
 						state = 766
+						state = 1263
 						state = 808
 						state = 91
 						state = 89
@@ -5251,6 +5242,36 @@ conference_effect = {
 		}
 		else = {
 			345 = { set_state_flag = dont_transfer }
+			1256 = { set_state_flag = dont_transfer }
+		}
+	}
+	if = {
+		limit = {
+			1255 = {
+				OWNER = {
+					has_country_flag = great_war_loser
+				}
+			}
+		}
+		if = {
+			limit = {
+				BUL = { has_country_flag = great_war_winner }
+				OR = {
+					BUL = { has_completed_focus = BUL_claim_salonika }
+					has_global_flag = greek_defeated_in_ww1
+				}
+			}
+			BUL = { transfer_state = 1255 }
+		}
+		else_if = {
+			limit = {
+				TUR = { has_country_flag = great_war_winner }
+				has_global_flag = greek_defeated_in_ww1
+			}
+			TUR = { transfer_state = 1255 }
+		}
+		else = {
+			1255 = { set_state_flag = dont_transfer }
 		}
 	}
 	if = {
@@ -5311,6 +5332,7 @@ conference_effect = {
 						state = 803
 						state = 1225
 						state = 1214
+						state = 1240
 						state = 1215
 					}
 				}
@@ -5396,14 +5418,14 @@ conference_effect = {
 	### GREECE ###
 	if = {
 		limit = {
-			any_country = {
-				original_tag = GRE
+			any_country_with_original_tag = {
+				original_tag_to_check = GRE
 				has_country_flag = great_war_loser
 			}
 		}
-		every_country = {
+		random_country_with_original_tag = {
+			original_tag_to_check = GRE
 			limit = {
-				original_tag = GRE
 				has_country_flag = great_war_loser
 			}
 			if = {

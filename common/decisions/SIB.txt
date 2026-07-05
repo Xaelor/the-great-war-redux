@@ -36,6 +36,30 @@ RUS_civil_war = {
 			}
 		}
 	}
+	SIB_capitulation_to_soviets = {
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		available = {
+			always = no
+		}
+		days_mission_timeout = 18
+		timeout_effect = {
+			effect_tooltip = {				
+				SOV = {
+					annex_country = {
+						target = ROOT
+					}
+				}
+			}
+			hidden_effect = {
+				force_capitulate = yes
+			}
+		}
+	}
 	SIB_looming_reactionary_revolt = {
 		icon = GFX_decision_revolt
 
@@ -68,6 +92,7 @@ RUS_civil_war = {
 								is_russian_tag = yes
 								NOT = {
 									original_tag = TBK
+									is_subject_of = TBK
 								}	
 							}	
 							OR = {
@@ -81,7 +106,9 @@ RUS_civil_war = {
 								state = 644
 							}
 						}
-						transfer_state_to = TBK
+						TBK = {
+							RCW_transfer_core_state_PREV = yes
+						}
 					}
 					TBK = {
 						random_owned_state = {
@@ -106,6 +133,7 @@ RUS_civil_war = {
 								is_russian_tag = yes
 								NOT = {
 									original_tag = TBK
+									is_subject_of = TBK
 								}
 							}	
 							OR = {
@@ -117,7 +145,9 @@ RUS_civil_war = {
 								state = 644
 							}
 						}
-						transfer_state_to = TBK
+						TBK = {
+							RCW_transfer_core_state_PREV = yes
+						}
 					}
 					TBK = {
 						random_owned_state = {
@@ -142,6 +172,7 @@ RUS_civil_war = {
 								is_russian_tag = yes
 								NOT = {
 									original_tag = TBK
+									is_subject_of = TBK
 								}
 							}	
 							OR = {
@@ -149,7 +180,9 @@ RUS_civil_war = {
 								state = 564
 							}
 						}
-						transfer_state_to = TBK
+						TBK = {
+							RCW_transfer_core_state_PREV = yes
+						}
 					}
 					TBK = {
 						random_owned_state = {
@@ -165,16 +198,14 @@ RUS_civil_war = {
 					remove_ideas = SIB_weak_monarchist_opposition 
 				}
 				TBK = {
+					set_cosmetic_tag = TBK_okraina
 					declare_war_on = {
 						target = ROOT
 						type = civil_war
 					}	
 				}
-				every_state = {
-					limit = {
-						is_core_of = ROOT
-					}
-					add_core_of = TBK
+				TBK = {
+					set_country_flag = RCW_can_core_states
 				}
 				if = {
 					limit = {
@@ -194,7 +225,10 @@ RUS_civil_war = {
 	RUS_purge_the_army = {
 		icon = GFX_decision_oppression
 		allowed = {
-			tag = SIB
+			OR = {
+				tag = SIB
+				tag = KOM
+			}			
 		}
 		cancel_trigger = {
 			NOT = {
@@ -305,21 +339,31 @@ RUS_civil_war = {
 	SIB_agrarian_reform = {
 		icon = GFX_decision_eng_trade_unions_support
 		allowed = {
-			tag = SIB
+			OR = {
+				tag = SIB
+				tag = KOM
+			}			
 		}
 		cancel_trigger = {
 			NOT = {
 				has_idea = SIB_red_partisans
+				has_idea = KOM_lack_of_support
 			}
 		}
 		available = {
-			has_idea = SIB_red_partisans
+			OR = {
+				has_idea = SIB_red_partisans
+				has_idea = KOM_lack_of_support			
+			}			
 		}
 		cost = 30
 		fire_only_once = no
 		days_remove = 30
 		visible = {
-			has_idea = SIB_red_partisans
+			OR = {
+				has_idea = SIB_red_partisans
+				has_idea = KOM_lack_of_support
+			}
 			has_completed_focus = SIB_legalize_black_partition
 		}
 		modifier = {
@@ -331,7 +375,14 @@ RUS_civil_war = {
 				limit = {
 					check_variable = { agrarian_reform_progress = 5 }
 				}
-				remove_ideas = SIB_red_partisans
+				if = {
+					limit = { has_idea = SIB_red_partisans }
+					remove_ideas = SIB_red_partisans
+				}
+				if = {
+					limit = { has_idea = KOM_lack_of_support }
+					remove_ideas = KOM_lack_of_support
+				}
 				add_stability = 0.15
 				add_political_power = 200
 			}
@@ -344,12 +395,12 @@ RUS_civil_war = {
 			}
 			if = {
 				limit = {
-					has_dynamic_modifier = { modifier = SIB_gold_reserve_dynamic_modifier }
+					has_dynamic_modifier = { modifier = RCW_gold_reserve_dynamic_modifier }
 				}
 				add_to_variable = {
-					var = SIB_gold_reserve_var
+					var = global.RCW_gold_reserve_var
 					value = 0.02
-					tooltip = SIB_add_02_to_var
+					tooltip = RCW_add_x_to_gold_reserve
 				}
 			}
 		}
@@ -489,7 +540,10 @@ RUS_civil_war = {
 	RUS_demand_recognition_FROM = {
 		icon = GFX_decision_generic_army_support	
 		allowed = {
-			tag = SIB
+			OR = {
+				tag = SIB
+				tag = KOM
+			}	
 		}
 		targets = {
 			SRA
@@ -548,11 +602,10 @@ RUS_civil_war = {
 			factor = 100
 			modifier = {
 				factor = 0.5
-				FROM = {				
-					any_other_country = {
-						is_actual_major = yes
-						has_guaranteed = PREV
-					}
+				any_other_country = {
+					is_actual_major = yes
+					has_guaranteed = FROM
+					NOT = { has_guaranteed = ROOT }
 				}
 			}
 			modifier = {
@@ -611,8 +664,20 @@ RUS_civil_war = {
 	RUS_attack_FROM = {
 		icon = GFX_decision_generic_ignite_civil_war	
 		allowed = {
-			tag = SIB
+			OR = {
+				tag = SIB
+				tag = KOM
+			}
 		}
+		target_trigger ={
+			FROM = {
+				is_subject = no	
+				NOT = {
+					has_government = democratic
+					has_government = communism
+				}
+			}
+		}	
 		targets = {
 			SRA
 			RSO
@@ -634,8 +699,7 @@ RUS_civil_war = {
 		visible = {
 			has_global_flag = russian_civil_war
 			has_completed_focus = SIB_finish_the_whites_off
-			FROM = { 
-				is_subject = no
+			FROM = {			
 				NOT = {
 					has_war_with = ROOT
 				}
@@ -644,8 +708,7 @@ RUS_civil_war = {
 						tag = TRC
 					}
 					NOT = {
-						has_government = neutrality
-						has_government = democratic
+						has_country_leader_ideology = authoritarian_democracy
 					}
 				}
 			}
@@ -670,12 +733,27 @@ RUS_civil_war = {
 		fire_only_once = yes
 		ai_will_do = {
 			factor = 100
+			modifier = {
+				factor = 0
+				OR = {
+					NOT = { is_neighbor_of = FROM }
+					is_in_faction_with = FROM
+					any_other_country = {
+						is_actual_major = yes
+						has_guaranteed = FROM
+						NOT = { has_guaranteed = ROOT }
+					}
+				}				
+			}
 		}
 	}
 	RUS_invite_FROM_to_federation = {
 		icon = GFX_decision_eng_trade_unions_support	
 		allowed = {
-			tag = SIB
+			OR = {
+				tag = SIB
+				tag = KOM
+			}
 		}
 		target_trigger ={
 			FROM = {
@@ -690,6 +768,7 @@ RUS_civil_war = {
 					original_tag = TRK
 					original_tag = KAZ
 					original_tag = KYR
+					original_tag = CAU
 				}	
 			}
 		}
@@ -752,7 +831,7 @@ SIB_import_weapons_category = {
 			GER			
 		}
 		target_root_trigger = {
-			has_dynamic_modifier = { modifier = SIB_gold_reserve_dynamic_modifier }
+			has_dynamic_modifier = { modifier = RCW_gold_reserve_dynamic_modifier }
 			OR = {
 				has_completed_focus = SIB_lobby_for_foreign_aid
 				has_completed_focus = SIB_support_from_entente
@@ -830,7 +909,7 @@ SIB_import_weapons_category = {
 					}
 				}
 			}
-			has_dynamic_modifier = { modifier = SIB_gold_reserve_dynamic_modifier }
+			has_dynamic_modifier = { modifier = RCW_gold_reserve_dynamic_modifier }
 			OR = {
 				has_completed_focus = SIB_lobby_for_foreign_aid
 				has_completed_focus = SIB_support_from_entente
@@ -880,7 +959,7 @@ SIB_import_weapons_category = {
 			GER			
 		}
 		target_root_trigger = {
-			has_dynamic_modifier = { modifier = SIB_gold_reserve_dynamic_modifier }
+			has_dynamic_modifier = { modifier = RCW_gold_reserve_dynamic_modifier }
 			OR = {
 				has_completed_focus = SIB_lobby_for_foreign_aid
 				has_completed_focus = SIB_support_from_entente
@@ -894,8 +973,8 @@ SIB_import_weapons_category = {
 		}
 		available = {
 			check_variable = {
-    			SIB_gold_reserve_var < -0.024
-				tooltip = SIB_has_more_than_024
+    			global.RCW_gold_reserve_var < -0.024
+				tooltip = RCW_has_more_than_x_gold_reserve
 			}
 			FROM = {
 				has_opinion = {
@@ -962,18 +1041,18 @@ SIB_import_weapons_category = {
 					}
 				}
 			}
-			has_dynamic_modifier = { modifier = SIB_gold_reserve_dynamic_modifier }
+			has_dynamic_modifier = { modifier = RCW_gold_reserve_dynamic_modifier }
 		}
 		complete_effect = {
 			set_country_flag = SIB_ongoing_infantry_import
 			if = {
 				limit = {
-					has_dynamic_modifier = { modifier = SIB_gold_reserve_dynamic_modifier }
+					has_dynamic_modifier = { modifier = RCW_gold_reserve_dynamic_modifier }
 				}
 				add_to_variable = {
-					var = SIB_gold_reserve_var
+					var = global.RCW_gold_reserve_var
 					value = 0.025
-					tooltip = SIB_add_05_to_var
+					tooltip = RCW_add_x_to_gold_reserve
 				}
 			}
 		}
@@ -981,7 +1060,7 @@ SIB_import_weapons_category = {
 			clr_country_flag = SIB_ongoing_infantry_import
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = 3000
+				amount = 1200
 				producer = FROM
 			}
 		}
@@ -1009,7 +1088,7 @@ SIB_import_weapons_category = {
 			GER			
 		}
 		target_root_trigger = {
-			has_dynamic_modifier = { modifier = SIB_gold_reserve_dynamic_modifier }
+			has_dynamic_modifier = { modifier = RCW_gold_reserve_dynamic_modifier }
 			OR = {
 				has_completed_focus = SIB_lobby_for_foreign_aid
 				has_completed_focus = SIB_support_from_entente
@@ -1023,8 +1102,8 @@ SIB_import_weapons_category = {
 		}
 		available = {
 			check_variable = {
-    			SIB_gold_reserve_var < -0.024
-				tooltip = SIB_has_more_than_024
+    			global.RCW_gold_reserve_var < -0.024
+				tooltip = RCW_has_more_than_x_gold_reserve
 			}
 			FROM = {
 				has_opinion = {
@@ -1091,18 +1170,18 @@ SIB_import_weapons_category = {
 					}
 				}
 			}
-			has_dynamic_modifier = { modifier = SIB_gold_reserve_dynamic_modifier }
+			has_dynamic_modifier = { modifier = RCW_gold_reserve_dynamic_modifier }
 		}
 		complete_effect = {
 			set_country_flag = SIB_ongoing_support_import
 			if = {
 				limit = {
-					has_dynamic_modifier = { modifier = SIB_gold_reserve_dynamic_modifier }
+					has_dynamic_modifier = { modifier = RCW_gold_reserve_dynamic_modifier }
 				}
 				add_to_variable = {
-					var = SIB_gold_reserve_var
+					var = global.RCW_gold_reserve_var
 					value = 0.025
-					tooltip = SIB_add_05_to_var
+					tooltip = RCW_add_x_to_gold_reserve
 				}
 			}
 		}
@@ -1110,7 +1189,7 @@ SIB_import_weapons_category = {
 			clr_country_flag = SIB_ongoing_support_import
 			add_equipment_to_stockpile = {
 				type = support_equipment
-				amount = 250
+				amount = 200
 				producer = FROM
 			}
 		}
@@ -1138,7 +1217,7 @@ SIB_import_weapons_category = {
 			GER			
 		}
 		target_root_trigger = {
-			has_dynamic_modifier = { modifier = SIB_gold_reserve_dynamic_modifier }
+			has_dynamic_modifier = { modifier = RCW_gold_reserve_dynamic_modifier }
 			OR = {
 				has_completed_focus = SIB_lobby_for_foreign_aid
 				has_completed_focus = SIB_support_from_entente
@@ -1152,8 +1231,8 @@ SIB_import_weapons_category = {
 		}
 		available = {
 			check_variable = {
-    			SIB_gold_reserve_var < -0.024
-				tooltip = SIB_has_more_than_024
+    			global.RCW_gold_reserve_var < -0.024
+				tooltip = RCW_has_more_than_x_gold_reserve
 			}
 			FROM = {
 				has_opinion = {
@@ -1220,18 +1299,18 @@ SIB_import_weapons_category = {
 					}
 				}
 			}
-			has_dynamic_modifier = { modifier = SIB_gold_reserve_dynamic_modifier }
+			has_dynamic_modifier = { modifier = RCW_gold_reserve_dynamic_modifier }
 		}
 		complete_effect = {
 			set_country_flag = SIB_ongoing_artillery_import
 			if = {
 				limit = {
-					has_dynamic_modifier = { modifier = SIB_gold_reserve_dynamic_modifier }
+					has_dynamic_modifier = { modifier = RCW_gold_reserve_dynamic_modifier }
 				}
 				add_to_variable = {
-					var = SIB_gold_reserve_var
+					var = global.RCW_gold_reserve_var
 					value = 0.025
-					tooltip = SIB_add_05_to_var
+					tooltip = RCW_add_x_to_gold_reserve
 				}
 			}
 		}
@@ -1304,7 +1383,7 @@ SIB_mobilize_volunteers_category = {
 				}
 				571 = {
 					create_unit = {
-						division = "name = \"1-ya Stepnaya Sibirskaya Strelkovaya Diviziya\" division_template = \"Sibirskaya Pekhotnaya Diviziya\" start_experience_factor = 0.5 start_equipment_factor = 1"
+						division = "name = \"1-ya Stepnaya Sibirskaya Strelkovaya Diviziya\" division_template = \"Sibirskaya Pekhotnaya Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 0.7"
 						owner = ROOT
 					}
 				}
@@ -1317,7 +1396,7 @@ SIB_mobilize_volunteers_category = {
 				}
 				403 = {
 					create_unit = {
-						division = "name = \"2-ya Stepnaya Sibirskaya Strelkovaya Diviziya\" division_template = \"Sibirskaya Pekhotnaya Diviziya\" start_experience_factor = 0.5 start_equipment_factor = 1"
+						division = "name = \"2-ya Stepnaya Sibirskaya Strelkovaya Diviziya\" division_template = \"Sibirskaya Pekhotnaya Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 0.7"
 						owner = ROOT
 					}
 				}
@@ -1330,7 +1409,7 @@ SIB_mobilize_volunteers_category = {
 				}
 				578 = {
 					create_unit = {
-						division = "name = \"1-ya Tomskaya Diviziya\" division_template = \"Sibirskaya Pekhotnaya Diviziya\" start_experience_factor = 0.5 start_equipment_factor = 1"
+						division = "name = \"1-ya Tomskaya Diviziya\" division_template = \"Sibirskaya Pekhotnaya Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 0.7"
 						owner = ROOT
 					}
 				}
@@ -1343,7 +1422,7 @@ SIB_mobilize_volunteers_category = {
 				}
 				570 = {
 					create_unit = {
-						division = "name = \"2-ya Tomskaya Diviziya\" division_template = \"Sibirskaya Pekhotnaya Diviziya\" start_experience_factor = 0.5 start_equipment_factor = 1"
+						division = "name = \"2-ya Tomskaya Diviziya\" division_template = \"Sibirskaya Pekhotnaya Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 0.7"
 						owner = ROOT
 					}
 				}
@@ -1356,7 +1435,7 @@ SIB_mobilize_volunteers_category = {
 				}
 				566 = {
 					create_unit = {
-						division = "name = \"3-ya Irkutskaya Diviziya\" division_template = \"Sibirskaya Pekhotnaya Diviziya\" start_experience_factor = 0.5 start_equipment_factor = 1"
+						division = "name = \"3-ya Irkutskaya Diviziya\" division_template = \"Sibirskaya Pekhotnaya Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 0.7"
 						owner = ROOT
 					}
 				}
@@ -1369,7 +1448,7 @@ SIB_mobilize_volunteers_category = {
 				}
 				572 = {
 					create_unit = {
-						division = "name = \"1-ya Uralskaya Diviziya\" division_template = \"Sibirskaya Pekhotnaya Diviziya\" start_experience_factor = 0.5 start_equipment_factor = 1"
+						division = "name = \"1-ya Uralskaya Diviziya\" division_template = \"Sibirskaya Pekhotnaya Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 0.7"
 						owner = ROOT
 						allow_spawning_on_enemy_provs = yes  
 					}
@@ -1380,7 +1459,10 @@ SIB_mobilize_volunteers_category = {
 	SIB_volunteers_of_constituent_assembly = {
 		icon = GFX_decision_generic_prepare_civil_war
 		allowed = {
-			tag = SIB
+			OR = {
+				tag = SIB
+				tag = KOM				
+			}		
 		}
 		available = {
 			controls_state = FROM
@@ -1411,7 +1493,7 @@ SIB_mobilize_volunteers_category = {
 		complete_effect = {
 			FROM = {
 				create_unit = {
-					division = "division_template = \"Diviziya Dobrovoltsev\" start_experience_factor = 0 start_equipment_factor = 0.7"
+					division = "division_template = \"Diviziya Dobrovoltsev\" start_experience_factor = 0 start_equipment_factor = 0.5"
 					owner = ROOT
 					allow_spawning_on_enemy_provs = yes
 				}

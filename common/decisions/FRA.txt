@@ -456,169 +456,8 @@ FRA_french_bop = {
 	}
 }
 
-FRA_situation_in_morocco = {
-	# FRA_situation_in_morocco = {
-	# 	icon = GFX_decision_generic_naval
-	# 	allowed = {
-	# 		original_tag = FRA
-	# 	}	
-	# 	cancel_trigger = {
-	# 		hidden_trigger = {
-	# 			OR = {
-	# 				is_subject = yes
-	# 				MOR = {
-	# 					OR = {
-	# 						exists = no
-	# 						is_subject = yes
-	# 						has_country_flag = FRA_has_annexed_morocco
-	# 					}
-	# 				}
-	# 				has_country_flag = great_war_loser 
-	# 				AND = {
-	# 					has_war = yes
-	# 					NOT = { has_idea = FRA_wadai_war }			
-	# 				}
-	# 				has_global_flag = FRA_MOR_war	
-	# 			}				
-	# 		}
-	# 	}
-	# 	target_trigger = {
-	# 		FROM = {
-	# 			tag = MOR
-	# 		}		
-	# 	}
-	# 	visible = {
-	# 		NOT = {
-	# 			has_global_flag = FRA_MOR_war	
-	# 		}
-	# 		NOT = {
-	# 			has_war_with = MOR
-	# 		}
-	# 	}
-	# 	fire_only_once = yes #it will not disappear otherwise
-	# 	selectable_mission = yes
-	# 	activation = {
-	# 		date > 1910.8.8
-	# 		is_subject = no 
-	# 		NOT = {
-	# 			has_global_flag = FRA_MOR_war	
-	# 		}
-	# 		MOR = {
-	# 			exists = yes
-	# 			is_subject = no
-	# 			NOT = {
-	# 				has_war_with = FRA
-	# 			}
-	# 			NOT = {
-	# 				has_country_flag = FRA_has_annexed_morocco
-	# 			}	
-	# 			NOT = { 
-	# 				has_country_flag = great_war_loser 
-	# 			}
-	# 		}		
-	# 		OR = {
-	# 			has_war = no
-	# 			has_idea = FRA_wadai_war					
-	# 		}			
-	# 	}
-	# 	days_mission_timeout = 380
-	# 	cost = 50
-	# 	ai_will_do = {
-	# 		factor = 0
-	# 		modifier = {
-	# 			date > 1911.4.20
-	# 			factor = 5
-	# 		}
-	# 		modifier = {
-	# 			date > 1911.5.5
-	# 			factor = 1000
-	# 		}
-	# 	}
-	# 	is_good = yes
-	# 	timeout_effect = {
-	# 		add_stability = -0.05
-	# 		MOR = {
-	# 			country_event =  {
-	# 				id = ww1_morocco.1
-	# 				hours = 3
-	# 			}
-	# 			set_country_flag = FRA_has_annexed_morocco
-	# 		}			
-	# 	}
-	# 	complete_effect = {
-	# 		MOR = {
-	# 			country_event =  {
-	# 				id = ww1_morocco.1
-	# 				hours = 3
-	# 			}
-	# 			set_country_flag = FRA_has_annexed_morocco
-	# 		}			
-	# 	}
-	# }
-	FRA_leave_MOR = {
-		allowed = {
-			original_tag = FRA
-		}
-		icon = GFX_decision_generic_prepare_civil_war
-		activation = {
-			has_war_with = MOR
-			any_owned_state = {
-				is_core_of = MOR
-			}
-			MOR = {
-				is_in_faction = no
-			}
-		}
-		available = {
-			has_war_with = MOR
-			MOR = {
-				has_full_control_of_state = 108
-				has_full_control_of_state = 462
-				has_full_control_of_state = 1093
-				has_full_control_of_state = 461
-				has_full_control_of_state = 1094
-				has_full_control_of_state = 290
-				has_full_control_of_state = 1137
-				has_full_control_of_state = 996
-			}
-		}
-		cancel_trigger = {
-			MOR = {
-				NOT = {
-					has_war_with = FRA
-				}
-			}
-		}
-		visible = {
-			has_war_with = MOR
-		}
-		ai_will_do = {
-			factor = 100
-		}
-		days_mission_timeout = 360
-		selectable_mission = yes
-		complete_effect = {
-			set_global_flag = FRA_MOR_moroccan_victory
-			MOR = {
-				country_event = {
-					id = ww1_morocco.31
-					hours = 6
-				}
-			}
-		}
-		timeout_effect = {
-			set_global_flag = FRA_MOR_moroccan_victory
-			MOR = {
-				country_event = {
-					id = ww1_morocco.32
-					hours = 6
-				}
-			}			
-		}
-	}
-}
-
-GER_great_war = {
+TGWR_great_power_politics = {
+	#great_power_politics_scramble_for_africa
 	FRA_pull_out_from_mali = {
 		icon = GFX_decision_eng_blackshirt_march
 		allowed = {
@@ -631,6 +470,7 @@ GER_great_war = {
 		# 	has_war_with = FROM
 		# }
 		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
 			has_war_with = VOL
 			NOT = {
 				has_global_flag = mali_war_end
@@ -687,6 +527,7 @@ GER_great_war = {
 			original_tag = FRA
 		}
 		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
 			NOT = {
 				tag = FRC
 			}
@@ -734,6 +575,9 @@ GER_great_war = {
 				id = TUN
 				value = 25
 			}
+			hidden_effect = {
+				add_command_power = -10
+			}		
 		}
 		remove_effect = {
 			set_country_flag = france_intervention_started
@@ -755,20 +599,13 @@ GER_great_war = {
 				original_tag = TUN
 			}
 		}
-		visible = {
+		cancel_trigger = {
 			hidden_trigger = {
-				OR = {
-					has_war_with = TUN
-					has_war_with = FRA
-				}
-				NOT = {
-					has_global_flag = france_tunisia_war_end
-				}
-				NOT = {
+				FRA = {
 					any_enemy_country = {
 						original_tag = FRA
 					}
-				}
+				}				
 			}
 		}
 		available = {
@@ -780,7 +617,6 @@ GER_great_war = {
 				has_global_flag = france_tunisia_war_end
 			}
 		}
-		cancel_if_not_visible = yes
 		fixed_random_seed = no
 		is_good = no
 		fire_only_once = yes
@@ -791,7 +627,15 @@ GER_great_war = {
 			}
 			set_country_flag = france_lost_tunisia
 		}
+		cancel_effect = {
+			hidden_effect = {
+				FRA = {
+					white_peace = TUN
+				}
+			}
+		}
 	}
+	#great_power_politics_great_war
 	FRA_send_janin_to_russia = {
 		icon = GFX_decision_fra_advisors
 		fire_only_once = no
@@ -799,6 +643,7 @@ GER_great_war = {
 			original_tag = FRA
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			NOT = { has_global_flag = great_war_ends }
 			FROM = {
 				exists = yes
@@ -818,22 +663,25 @@ GER_great_war = {
 			}
 			has_character = FRA_maurice_janin
 		}
+		target_root_trigger = {
+			has_character = FRA_maurice_janin
+		}
 		custom_cost_trigger = {
 			command_power > 9.9
 		}
 		custom_cost_text = decision_cost_CP_10
-		target_trigger = {
-			FROM = {
-				original_tag = RUS
-			}
+		targets = {
+			RUS
 		}
+		targets_dynamic = yes
 		available = {
-			any_other_country = {
-				OR = {
-					is_major = yes
-					tag = SOV
-				}	
-				has_war_with = FROM
+			FROM = {
+				any_enemy_country = {
+					OR = {
+						is_major = yes
+						tag = SOV
+					}
+				}
 			}
 			NOT = {
 				has_idea = idea_army_restrictions
@@ -848,21 +696,19 @@ GER_great_war = {
 			}
 		}
 		complete_effect = {
-			effect_tooltip = {
-				FRA_maurice_janin = {
-					set_nationality = FROM
+			FRA_maurice_janin = {
+				set_nationality = FROM
+				unit_leader_event = {
+					id = ww1_france.240
+					hours = 5
 				}
+			}
+			effect_tooltip = {			
 				FROM = { add_command_power = 25 }
 			}
 			hidden_effect = {
 				set_country_flag = FRA_janin_sent_to_russia
 				add_command_power = -10
-				FROM = {
-					country_event = {
-						id = ww1_france.240
-						hours = 5
-					}
-				}
 			}
 		}
 	}
@@ -876,8 +722,7 @@ GER_great_war = {
 			has_global_flag = FRA_capitulation_alone
 			tag = FRA
 			has_idea = FRA_interim_government
-			any_other_country = {
-				is_in_faction_with = ROOT
+			any_allied_country = {
 				has_war_with = GER
 			}
 			is_subject = no
@@ -917,6 +762,69 @@ GER_great_war = {
 		days_mission_timeout = 4
 		timeout_effect = {
 			country_event = ww1_france.311
+		}
+	}
+
+	FRA_leave_MOR = {
+		allowed = {
+			original_tag = FRA
+		}
+		icon = GFX_decision_generic_prepare_civil_war
+		activation = {
+			has_war_with = MOR
+			any_owned_state = {
+				is_core_of = MOR
+			}
+			MOR = {
+				is_in_faction = no
+			}
+		}
+		available = {
+			has_war_with = MOR
+			MOR = {
+				has_full_control_of_state = 108
+				has_full_control_of_state = 462
+				has_full_control_of_state = 1093
+				has_full_control_of_state = 461
+				has_full_control_of_state = 1094
+				has_full_control_of_state = 290
+				has_full_control_of_state = 1137
+				has_full_control_of_state = 996
+				has_full_control_of_state = 1237
+			}
+		}
+		cancel_trigger = {
+			MOR = {
+				NOT = {
+					has_war_with = FRA
+				}
+			}
+		}
+		visible = {
+			has_war_with = MOR
+		}
+		ai_will_do = {
+			factor = 100
+		}
+		days_mission_timeout = 360
+		selectable_mission = yes
+		complete_effect = {
+			set_global_flag = FRA_MOR_moroccan_victory
+			MOR = {
+				country_event = {
+					id = ww1_morocco.31
+					hours = 6
+				}
+			}
+		}
+		timeout_effect = {
+			set_global_flag = FRA_MOR_moroccan_victory
+			MOR = {
+				country_event = {
+					id = ww1_morocco.32
+					hours = 6
+				}
+			}			
 		}
 	}
 }
@@ -2172,9 +2080,6 @@ FRA_defense_of_france = {
 						has_cosmetic_tag = FRA_KINGDOM_legitimist
 						has_cosmetic_tag = FRA_THIRD_EMPIRE
 						has_cosmetic_tag = FRA_socialism
-						has_cosmetic_tag = FRA_socialism_not_commune
-						has_cosmetic_tag = FRA_socialism_syndicalist
-						has_cosmetic_tag = FRA_socialism_republic_of
 					}
 				}
 				set_cosmetic_tag = FRA_alt_blue
@@ -2796,8 +2701,8 @@ peace_deals = {
 		}
 		visible = {
 			NOT = {
-				any_country = {
-					exists = yes
+				any_country_with_original_tag = {
+					original_tag_to_check = FRA
 					has_country_flag = FRA_socialist_france_flag
 					is_subject = no
 				}
@@ -2860,12 +2765,13 @@ peace_deals = {
 			hidden_effect = {
 				if = {
 					limit = {
-						any_other_country = {
-							original_tag = FRA
+						any_country_with_original_tag = {
+							original_tag_to_check = FRA
 							is_subject_of = FROM
 						}
 					}
-					random_other_country = {
+					random_country_with_original_tag = {
+						original_tag_to_check = FRA
 						limit = {
 							original_tag = FRA
 							is_subject_of = FROM
@@ -2887,7 +2793,8 @@ peace_deals = {
 					if = {
 						limit = { 
 							NOT = {
-								any_country = {
+								any_country_with_original_tag = {
+									original_tag_to_check = FRA
 									has_cosmetic_tag = FRP
 								}
 								FROM = {
@@ -2984,8 +2891,8 @@ peace_deals = {
 				has_country_flag = FRA_nationalist_france_flag
 			}
 			NOT = {
-				any_other_country = {
-					original_tag = FRA
+				any_country_with_original_tag = {
+					original_tag_to_check = FRA
 					is_subject_of = FROM
 				}
 			}
@@ -3033,12 +2940,13 @@ peace_deals = {
 			hidden_effect = {	
 				if = {
 					limit = {
-						any_other_country = {
-							original_tag = FRA
+						any_country_with_original_tag = {
+							original_tag_to_check = FRA
 							is_subject_of = FROM
 						}
 					}
-					random_other_country = {
+					random_country_with_original_tag = {
+						original_tag_to_check = FRA
 						limit = {
 							original_tag = FRA
 							is_subject_of = FROM
@@ -3060,7 +2968,8 @@ peace_deals = {
 					if = {
 						limit = { 
 							NOT = {
-								any_country = {
+								any_country_with_original_tag = {
+									original_tag_to_check = FRA
 									has_cosmetic_tag = FRP
 								}
 								FROM = {
@@ -3328,183 +3237,6 @@ peace_deals = {
 	}
 }
 
-FRA_wadai_war = {
-	
-	FRA_wadai_war_timer = {
-		icon = generic_prepare_civil_war
-		days_mission_timeout = 800
-		allowed = {
-			original_tag = FRA
-		}
-		visible = {
-			hidden_trigger = {
-				has_war_with = CHA
-				NOT = {
-					has_global_flag = wadai_war_end
-				}
-			}
-		}
-		available = {
-			hidden_trigger = {
-				NOT = {
-					has_war_with = CHA
-				}
-				has_global_flag = wadai_war_end
-			}
-		}
-		cancel_if_not_visible = yes
-		fixed_random_seed = no
-		is_good = no
-		fire_only_once = yes
-		timeout_effect = {
-			add_war_support = -0.05
-			effect_tooltip = {
-				white_peace = CHA
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						has_subject = CHF
-					}
-					set_autonomy = {
-						target = CHF
-						autonomy_state = autonomy_free
-						end_civil_wars = no
-					}
-					CHF = {
-						leave_faction = yes
-						every_enemy_country = {
-							limit = {
-								NOT = {
-									original_tag = CHA
-								}
-							}
-							PREV = {
-								white_peace = PREV
-							}						
-						}
-					}
-				}
-				every_enemy_country = {
-					limit = {
-						OR = {
-							original_tag = CHA 
-							original_tag = MOR
-							original_tag = DAR
-							original_tag = LBA
-							original_tag = KUT
-						}
-					}
-					every_country = {
-						limit = {
-							OR = {
-								tag = ROOT
-								is_ally_with = ROOT
-							}
-							has_war_with = CHA
-						}
-						white_peace = PREV
-					}
-				}			
-				CHA = {
-					leave_faction = yes
-				}
-				remove_ideas = FRA_wadai_war
-				set_global_flag = wadai_war_end
-			}
-		}
-	}
-	FRA_pull_out_from_wadai = {
-		icon = GFX_decision_eng_blackshirt_march
-		allowed = {
-			original_tag = FRA
-		}
-		targets = {
-			CHA
-		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
-		visible = {
-			has_war_with = FROM
-			NOT = {
-				has_global_flag = wadai_war_end
-			}
-		}
-		complete_effect = {
-			add_war_support = -0.05
-			effect_tooltip = {
-				white_peace = CHA
-			}
-			hidden_effect = {
-				if = {
-					limit = {
-						has_subject = CHF
-					}
-					set_autonomy = {
-						target = CHF
-						autonomy_state = autonomy_free
-						end_civil_wars = no
-					}
-					CHF = {
-						leave_faction = yes
-						every_enemy_country = {
-							limit = {
-								NOT = {
-									original_tag = CHA
-								}
-							}
-							PREV = {
-								white_peace = PREV
-							}						
-						}
-					}				
-				}
-				every_enemy_country = {
-					limit = {
-						OR = {
-							original_tag = CHA 
-							original_tag = MOR
-							original_tag = DAR
-							original_tag = LBA
-							original_tag = KUT
-						}
-					}
-					every_country = {
-						limit = {
-							OR = {
-								tag = ROOT
-								is_ally_with = ROOT
-							}
-							has_war_with = CHA
-						}
-						white_peace = PREV
-					}
-				}
-				CHA = {
-					leave_faction = yes
-				}
-				remove_ideas = FRA_wadai_war
-				set_global_flag = wadai_war_end
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 500
-				any_enemy_country = {
-					is_major = yes
-				}
-			}
-			modifier = {
-				add = 500
-				date > 1912.6.6
-			}
-			
-		}
-	}
-}
 crisis = {
 	FRA_army_mutiny_crisis = {
 		icon = generic_civil_support

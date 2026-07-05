@@ -857,6 +857,7 @@ country_event = {
 					788
 					184
 					731
+					1256
 					454
 					756
 					757
@@ -1018,33 +1019,26 @@ country_event = {
 		mark_focus_tree_layout_dirty = yes
 		if = {
 			limit = {
-				NOT = {
-					has_completed_focus = TUR_legacy_of_the_4th_lancers
-				}
+				has_completed_focus = TUR_reaffirm_loyalty_of_the_army
 			}
-			if = {
-				limit = {
-					has_completed_focus = TUR_reaffirm_loyalty_of_the_army
-				}
-				complete_national_focus = TUR_elections_of_1912
-			}
-			set_country_flag = TUR_savior_officer_coup
-			add_popularity = {
-				ideology = democratic
-				popularity = 0.1
-			}
-			set_party_name = {
-				ideology = neutrality
-				long_name = TUR_saviour_officer
-				name = TUR_saviour_officer
-			}
-            TUR_ahmed_muhtar = {
-				add_country_leader_role = {
-					promote_leader = yes
-						country_leader = {
-						ideology = authoritarian_democracy
-						traits = { grand_vizier muhtar }
-					}
+			complete_national_focus = TUR_elections_of_1912
+		}
+		set_country_flag = TUR_savior_officer_coup
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.1
+		}
+		set_party_name = {
+			ideology = neutrality
+			long_name = TUR_saviour_officer
+			name = TUR_saviour_officer
+		}
+        TUR_ahmed_muhtar = {
+			add_country_leader_role = {
+				promote_leader = yes
+					country_leader = {
+					ideology = authoritarian_democracy
+					traits = { grand_vizier muhtar }
 				}
 			}
 		}
@@ -1061,15 +1055,6 @@ country_event = {
 #				hours = 89
 #			}
 #		}
-		if = {
-			limit = {
-				has_completed_focus = TUR_intervene_in_the_elections
-			}
-			country_event = {
-				id = ottoman.36
-				hours = 89
-			}
-		}
 		ai_chance = {
 			factor = 1
 		}
@@ -1299,11 +1284,6 @@ country_event = {
 							option = DEFAULT
 						}
 						is_historical_focus_on = yes
-					}
-					has_country_flag = TUR_AI_TUR_vatan_ve_hurriyet_cemiyeti_path
-					has_game_rule = {
-						rule = TUR_ai_behavior
-						option = TUR_VATAN_VE_HURRIYET_CEMIYETI
 					}
 					has_country_flag = TUR_AI_ENVERIST
 				}
@@ -1593,15 +1573,7 @@ country_event = {
 				}
 				hidden_effect = {
 					mark_focus_tree_layout_dirty = yes
-					unlock_national_focus = TUR_legacy_of_31_march
-					unlock_national_focus = TUR_choose_side
-					unlock_national_focus = TUR_harbiyeli
-					unlock_national_focus = TUR_reshape_the_army
-					unlock_national_focus = TUR_hurriyet_musavat_uhuvvet
-					unlock_national_focus = TUR_weaken_the_sultans_power
-					unlock_national_focus = TUR_coup_of_savior_officers
 					unlock_national_focus = TUR_ittihat_ve_terakki_victory
-					unlock_national_focus = TUR_empower_nazir_i_harbiye
 				}
 				set_country_flag = TUR_revolter_flag
 				set_cosmetic_tag =  TUR_revolter
@@ -2474,7 +2446,6 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_ottoman.53.a
-		activate_mission = TUR_berlin_baghdad_railway_mission
 		hidden_effect = {
 			if = {
 				limit = {
@@ -4085,9 +4056,8 @@ country_event = {
 			base = 0
 			modifier = {
 				add = 12
-				any_country = {
+				any_enemy_country = {
 					is_major = yes
-					has_war_with = ROOT
 				}
 			}
 			modifier = {
@@ -4294,46 +4264,6 @@ country_event = {
 	hidden = yes
 
 	immediate = {
-		random_list = {
-			30 = { # İttihatists secularize the army
-				activate_mission = TUR_secularize_the_army
-			}
-			30 = { # İttihatists ban Islamist newspapers
-				modifier = {
-					factor = 0
-					NOT = {
-						has_country_flag = TUR_volcan_enabled
-					}
-				}
-				activate_mission = TUR_ban_on_islamist_newspapers
-			}
-			100 = { # İttihatists crush the mutiny on the army
-				modifier = {
-					factor = 0
-					NOT = {
-						TUR = {
-							has_country_flag = TUR_yildiz_teskilati_staged_mutiny
-						}
-					}
-				}
-				activate_mission = TUR_crush_the_mutiny
-			}
-			30 = { # İttihatists holds parade in conservative villages
-				activate_mission = TUR_hold_parade_in_conservative_vilayets
-			}
-			30 = { # İttihatists forces şeyhülislam to support their policies
-				activate_mission = TUR_force_seyhulislam_to_support_our_policies
-			}
-			10 = { # İttihatists raids Yıldız Teşkilatı headquarters
-				activate_mission = TUR_raid_on_yildiz_teskilati_headquarters
-				modifier = {
-					factor = 0
-					NOT = {
-						has_completed_focus = TUR_revive_yildiz_teskilati
-					}
-				}
-			}
-		}
 	}
 }
 
@@ -4566,7 +4496,6 @@ country_event = {
 	option = {
 		name = ottoman.6.a
 		trigger = {
-			has_completed_focus = TUR_formulate_a_coup
 			NOT = {
 				has_global_flag = TUR_abdulhamid_ii_dead
 			}
@@ -4775,9 +4704,9 @@ country_event = {
 			}
 			modifier = {
 				add = 100
-				any_other_country = {
+				is_subject = yes
+				OVERLORD = {
 					is_major = yes
-					has_subject = PREV
 					NOT = { original_tag = TUR }
 				}
 			}
@@ -5146,9 +5075,9 @@ country_event = {
 			}
 			modifier = {
 				add = 100
-				any_other_country = {
+				is_subject = yes
+				OVERLORD = {
 					is_major = yes
-					has_subject = PREV
 					NOT = { original_tag = TUR }
 				}
 			}
@@ -5276,9 +5205,9 @@ country_event = {
 			}
 			modifier = {
 				add = 100
-				any_other_country = {
+				is_subject = yes
+				OVERLORD = {
 					is_major = yes
-					has_subject = PREV
 					NOT = { original_tag = TUR }
 				}
 			}
@@ -5402,9 +5331,9 @@ country_event = {
 			}
 			modifier = {
 				add = 100
-				any_other_country = {
+				is_subject = yes
+				OVERLORD = {
 					is_major = yes
-					has_subject = PREV
 					NOT = { original_tag = TUR }
 				}
 			}
@@ -5627,9 +5556,9 @@ country_event = {
 			}
 			modifier = {
 				add = 100
-				any_other_country = {
+				is_subject = yes
+				OVERLORD = {
 					is_major = yes
-					has_subject = PREV
 					NOT = { original_tag = TUR }
 				}
 			}
@@ -6268,15 +6197,7 @@ country_event = {
 					}
 					has_game_rule = {
 						rule = TUR_ai_behavior
-						option = TUR_VATAN_VE_HURRIYET_CEMIYETI
-					}
-					has_game_rule = {
-						rule = TUR_ai_behavior
 						option = HISTORICAL_TRIUMVIRATE
-					}
-					has_game_rule = {
-						rule = TUR_ai_behavior
-						option = TUR_FORM_A_LEFTIST_PARLIAMENT
 					}
 				}
 			}
@@ -6414,7 +6335,7 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
+				any_allied_country = {
 					is_in_faction_with = ROOT
 					OR = {
 						has_wargoal_against = FROM
@@ -6461,7 +6382,7 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
+				any_allied_country = {
 					is_in_faction_with = ROOT
 					OR = {
 						has_wargoal_against = FROM
@@ -6527,7 +6448,7 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
+				any_allied_country = {
 					is_in_faction_with = ROOT
 					OR = {
 						has_wargoal_against = FROM
@@ -6925,7 +6846,7 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
+				any_allied_country = {
 					is_in_faction_with = ROOT
 					OR = {
 						has_wargoal_against = FROM
@@ -6953,11 +6874,11 @@ country_event = {
 				NOT = {
 					has_wargoal_against = FROM
 					has_war_with = FROM
-					any_other_country = {
+					any_allied_country = {
 						is_in_faction_with = ROOT
 						has_wargoal_against = FROM
 					}
-					any_other_country = {
+					any_allied_country = {
 						is_in_faction_with = ROOT
 						has_war_with = FROM
 					}
@@ -7052,6 +6973,10 @@ country_event = {
 					set_nationality = TUR
 				}
 			}
+		}
+		add_power_balance_value = {
+			id = TUR_foreign_alignment
+			value = -0.2
 		}
 		set_country_flag = TUR_goeben_und_breslau
 		hidden_effect = {
@@ -7460,7 +7385,7 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
+				any_allied_country = {
 					is_in_faction_with = ROOT
 					OR = {
 						has_wargoal_against = FROM
@@ -7716,7 +7641,7 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
+				any_allied_country = {
 					is_in_faction_with = ROOT
 					OR = {
 						has_wargoal_against = FROM
@@ -7994,7 +7919,7 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
+				any_allied_country = {
 					is_in_faction_with = ROOT
 					OR = {
 						has_wargoal_against = FROM
@@ -8226,6 +8151,7 @@ country_event = {
 		effect_tooltip = {
 			TUR = {
 				transfer_state = 104
+				transfer_state = 1261
 			}
 		}
 		hidden_effect = {
@@ -8272,7 +8198,7 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
+				any_allied_country = {
 					is_in_faction_with = ROOT
 					OR = {
 						has_wargoal_against = FROM
@@ -8336,6 +8262,7 @@ country_event = {
 	option = {
 		name = ottoman.79.a
 		transfer_state = 104
+		transfer_state = 1261
 		add_political_power = 50
 		ai_chance = {
 			base = 5
@@ -8643,9 +8570,9 @@ country_event = {
 			}
 			modifier = {
 				add = 100
-				any_other_country = {
+				is_subject = yes
+				OVERLORD = {
 					is_major = yes
-					has_subject = PREV
 					NOT = { original_tag = TUR }
 				}
 			}
@@ -8797,7 +8724,7 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
+				any_allied_country = {
 					is_in_faction_with = ROOT
 					OR = {
 						has_wargoal_against = FROM
@@ -8983,15 +8910,7 @@ country_event = {
 					}
 					has_game_rule = {
 						rule = TUR_ai_behavior
-						option = TUR_VATAN_VE_HURRIYET_CEMIYETI
-					}
-					has_game_rule = {
-						rule = TUR_ai_behavior
 						option = HISTORICAL_TRIUMVIRATE
-					}
-					has_game_rule = {
-						rule = TUR_ai_behavior
-						option = TUR_FORM_A_LEFTIST_PARLIAMENT
 					}
 				}
 			}
@@ -9007,17 +8926,6 @@ country_event = { #liberal party elections
 	picture = GFX_report_event_liberal_party_elections
 	trigger = {
 		has_completed_focus = TUR_hurriyet_ve_itilaf_victory
-		if = {
-			limit = {
-				has_power_balance = {
-					id = TUR_conservative_liberal
-				}
-			}
-			is_power_balance_in_range = {
-				id = TUR_conservative_liberal
-				range > TUR_conservative_liberal_conservative_balanced
-			}
-		}
 		NOT = {
 			has_country_flag = TUR_conservatives_in_charge
 			has_country_flag = TUR_al_qahtaniya_empowered
@@ -9112,39 +9020,16 @@ country_event = { #socialist party elections
 	option = {
 		name = ottoman.99.a
 		promote_character = TUR_ali_ihsan_iloglu
-		if = {
-			limit = {
-				has_completed_focus = TUR_end_of_the_monarchy
-			}
-			add_country_leader_trait = TUR_chairman
-		}
-		else = {
-			add_country_leader_trait = grand_vizier
-		}
+		add_country_leader_trait = grand_vizier
 		add_country_leader_trait = TUR_ittihadist_socialist
 		ai_chance = {
 			base = 15
-			modifier = {
-				factor = 0
-				is_power_balance_side_active = {
-					id = TUR_leftist_coalition
-					side = TUR_leftist_coalition_internationalist
-				}
-			}
 		}
 	}
 	option = {
 		name = ottoman.99.b
 		promote_character = TUR_huseyin_hilmi
-		if = {
-			limit = {
-				has_completed_focus = TUR_end_of_the_monarchy
-			}
-			add_country_leader_trait = TUR_chairman
-		}
-		else = {
-			add_country_leader_trait = grand_vizier
-		}
+		add_country_leader_trait = grand_vizier
 		add_country_leader_trait = TUR_just_socialist
 		set_party_name = {
 			ideology = communism
@@ -9153,37 +9038,15 @@ country_event = { #socialist party elections
 		}
 		ai_chance = {
 			base = 15
-			modifier = {
-				factor = 0
-				is_power_balance_side_active = {
-					id = TUR_leftist_coalition
-					side = TUR_leftist_coalition_ittihadist
-				}
-			}
 		}
 	}
 	option = {
 		name = ottoman.99.c
 		promote_character = TUR_ethem_nejat
-		if = {
-			limit = {
-				has_completed_focus = TUR_end_of_the_monarchy
-			}
-			add_country_leader_trait = TUR_chairman
-		}
-		else = {
-			add_country_leader_trait = grand_vizier
-		}
+		add_country_leader_trait = grand_vizier
 		add_country_leader_trait = TUR_ittihadist_socialist
 		ai_chance = {
 			base = 15
-			modifier = {
-				factor = 0
-				is_power_balance_side_active = {
-					id = TUR_leftist_coalition
-					side = TUR_leftist_coalition_ittihadist
-				}
-			}
 		}
 	}
 	option = {
@@ -9195,15 +9058,7 @@ country_event = { #socialist party elections
 				add = refiknevzat2
 			}
 		}
-		if = {
-			limit = {
-				has_completed_focus = TUR_end_of_the_monarchy
-			}
-			add_country_leader_trait = TUR_chairman
-		}
-		else = {
-			add_country_leader_trait = grand_vizier
-		}
+		add_country_leader_trait = grand_vizier
 		add_country_leader_trait = TUR_just_socialist
 		set_party_name = {
 			ideology = communism
@@ -9212,13 +9067,6 @@ country_event = { #socialist party elections
 		}
 		ai_chance = {
 			base = 15
-			modifier = {
-				factor = 0
-				is_power_balance_side_active = {
-					id = TUR_leftist_coalition
-					side = TUR_leftist_coalition_ittihadist
-				}
-			}
 		}
 	}
 }
@@ -9259,6 +9107,7 @@ country_event = { #unintended consequences - macedonian resistance
 		hidden_effect = {
 			remove_state_core = 184
 			remove_state_core = 345
+			remove_state_core = 1255
 			every_controlled_state = {
 				limit = {
 					is_ottoman_macedonia_state = yes
@@ -9272,6 +9121,7 @@ country_event = { #unintended consequences - macedonian resistance
 		effect_tooltip = {
 			remove_state_core = 184
 			remove_state_core = 345
+			remove_state_core = 1255
 			every_controlled_state = {
 				limit = {
 					is_ottoman_macedonia_state = yes
@@ -9803,7 +9653,9 @@ country_event = { #unintended consequences - trade breaks down in macedonia
 				limit = {
 					OR = {
 						state = 345
+						state = 1255
 						state = 731
+						state = 1256
 					}
 					has_state_flag = TUR_greek_state
 				}
@@ -9818,7 +9670,9 @@ country_event = { #unintended consequences - trade breaks down in macedonia
 				limit = {
 					OR = {
 						state = 345
+						state = 1255
 						state = 731
+						state = 1256
 					}
 					has_state_flag = TUR_greek_state
 				}
@@ -9844,6 +9698,7 @@ country_event = { #unintended consequences - muslims missmanage greek trade
 				limit = {
 					OR = {
 						state = 826
+						state = 1257
 						state = 758
 						state = 187
 						state = 185
@@ -9872,6 +9727,7 @@ country_event = { #unintended consequences - muslims missmanage greek trade
 				limit = {
 					OR = {
 						state = 826
+						state = 1257
 						state = 758
 						state = 187
 						state = 185
@@ -9987,11 +9843,8 @@ country_event = { #islamist victory in elections
 	picture = GFX_report_event_conservative_victory
 	is_triggered_only = yes
 	trigger = {
+		always = no
 		has_completed_focus = TUR_pardon_conservatives
-		is_power_balance_in_range = {
-			id = TUR_conservative_liberal
-			range < TUR_conservative_liberal_conservative_balanced
-		}
 		NOT = {
 			has_country_flag = TUR_conservatives_in_charge
 			has_country_flag = TUR_al_qahtaniya_empowered
@@ -10120,10 +9973,6 @@ country_event = { #liberal victory in elections
 	is_triggered_only = yes
 	trigger = {
 		has_completed_focus = TUR_pardon_conservatives
-		is_power_balance_in_range = {
-			id = TUR_conservative_liberal
-			range > TUR_conservative_liberal_conservative_balanced
-		}
 		has_country_flag = TUR_said_i_nursi_path
 		NOT = {
 			has_country_flag = TUR_liberals_in_charge
@@ -10267,10 +10116,6 @@ country_event = { #sects mobilize
 	is_triggered_only = yes
 	trigger = {
 		has_completed_focus = TUR_pardon_conservatives
-		is_power_balance_in_range = {
-			id = TUR_conservative_liberal
-			range > TUR_conservative_liberal_conservative_balanced
-		}
 		has_country_flag = TUR_said_i_nursi_path
 	}
 	option = {
@@ -10293,10 +10138,6 @@ country_event = { #sects mobilize
 	is_triggered_only = yes
 	trigger = {
 		has_completed_focus = TUR_pardon_conservatives
-		is_power_balance_in_range = {
-			id = TUR_conservative_liberal
-			range > TUR_conservative_liberal_conservative_balanced
-		}
 		has_country_flag = TUR_said_i_nursi_path
 	}
 	option = {
@@ -10721,25 +10562,8 @@ country_event = { #population exchange between the ottomans disagreed
 	is_triggered_only = yes
 	option = {
 		name = ottoman.126.a
-		if = {
-			limit = {
-				has_completed_focus = TUR_population_exchange_with_greece2
-			}
-			unlock_decision_tooltip = TUR_deport_greeks
-			set_country_flag = TUR_deport_greeks_flag
-		}
-		else = {
-			add_opinion_modifier = {
-				target = FROM
-				modifier = TUR_refused_to_population_exchange
-			}
-			set_country_flag = TUR_population_exchange_with_greece_not
-			uncomplete_national_focus = {
-  				focus = TUR_population_exchange_with_greece
-  				uncomplete_children = no
-  				refund_political_power = no
-			}
-		}
+		unlock_decision_tooltip = TUR_deport_greeks
+		set_country_flag = TUR_deport_greeks_flag
 		ai_chance = {
 			base = 5
 		}
@@ -11039,25 +10863,11 @@ country_event = { #exchange christians with bulgaria disagreed
 	is_triggered_only = yes
 	option = {
 		name = ottoman.130.a
-		if = {
-			limit = {
-				has_completed_focus = TUR_exchange_christians_with_bulgaria2
-			}
-			unlock_decision_tooltip = TUR_deport_bulgarians
-			set_country_flag = TUR_deport_bulgarians_flag
+		add_opinion_modifier = {
+			target = FROM
+			modifier = TUR_refused_to_population_exchange
 		}
-		else = {
-			add_opinion_modifier = {
-				target = FROM
-				modifier = TUR_refused_to_population_exchange
-			}
-			set_country_flag = TUR_exchange_christians_with_bulgaria_not
-			uncomplete_national_focus = {
-  				focus = TUR_exchange_christians_with_bulgaria
-  				uncomplete_children = no
-  				refund_political_power = no
-			}
-		}
+		set_country_flag = TUR_exchange_christians_with_bulgaria_not
 		ai_chance = {
 			base = 5
 		}
@@ -11957,25 +11767,11 @@ country_event = { #relocate armenians disagreed
 	is_triggered_only = yes
 	option = {
 		name = ottoman.142.a
-		if = {
-			limit = {
-				has_completed_focus = TUR_relocate_armenians_to_the_east2
-			}
-			unlock_decision_tooltip = TUR_deport_armenians
-			set_country_flag = TUR_deport_armenians_flag
+		add_opinion_modifier = {
+			target = ARM
+			modifier = TUR_refused_to_population_exchange
 		}
-		else = {
-			add_opinion_modifier = {
-				target = ARM
-				modifier = TUR_refused_to_population_exchange
-			}
-			set_country_flag = TUR_relocate_armenians_to_the_east_not
-			uncomplete_national_focus = {
-  				focus = TUR_relocate_armenians_to_the_east
-  				uncomplete_children = no
-  				refund_political_power = no
-			}
-		}
+		set_country_flag = TUR_relocate_armenians_to_the_east_not
 		ai_chance = {
 			base = 5
 		}
@@ -12275,25 +12071,11 @@ country_event = { #georgians to georgia disagreed
 	is_triggered_only = yes
 	option = {
 		name = ottoman.146.a
-		if = {
-			limit = {
-				has_completed_focus = TUR_return_georgians_to_georgia2
-			}
-			unlock_decision_tooltip = TUR_deport_georgians
-			set_country_flag = TUR_deport_georgians_flag
+		add_opinion_modifier = {
+			target = GEO
+			modifier = TUR_refused_to_population_exchange
 		}
-		else = {
-			add_opinion_modifier = {
-				target = GEO
-				modifier = TUR_refused_to_population_exchange
-			}
-			set_country_flag = TUR_return_georgians_to_georgia_not
-			uncomplete_national_focus = {
-  				focus = TUR_return_georgians_to_georgia
-  				uncomplete_children = no
-  				refund_political_power = no
-			}
-		}
+		set_country_flag = TUR_return_georgians_to_georgia_not
 		ai_chance = {
 			base = 5
 		}
@@ -12552,16 +12334,6 @@ country_event = { #elections non-partisan
 	picture = GFX_report_event_iww_demonstration
 	trigger = {
 		has_completed_focus = TUR_handling_inner_party_factionalism
-		NOT = {
-			is_power_balance_in_range = {
-				id = TUR_inner_party_factionalism
-				range = TUR_inner_party_factionalism_hizb_i_terakki_absolute_control
-			}
-			is_power_balance_in_range = {
-				id = TUR_inner_party_factionalism
-				range = TUR_inner_party_factionalism_hizb_i_cedid_absolute_control
-			}
-		}
 	}
 	option = {
 		name = ottoman.151.a
@@ -12633,10 +12405,6 @@ country_event = { #elections hizb-i cedid
 	picture = GFX_report_event_iww_demonstration
 	trigger = {
 		has_completed_focus = TUR_handling_inner_party_factionalism
-		is_power_balance_in_range = {
-			id = TUR_inner_party_factionalism
-			range = TUR_inner_party_factionalism_hizb_i_cedid_absolute_control
-		}
 	}
 	option = {
 		name = ottoman.152.a
@@ -12662,10 +12430,6 @@ country_event = { #elections hizb-i terakki
 	picture = GFX_report_event_iww_demonstration
 	trigger = {
 		has_completed_focus = TUR_handling_inner_party_factionalism
-		is_power_balance_in_range = {
-			id = TUR_inner_party_factionalism
-			range = TUR_inner_party_factionalism_hizb_i_terakki_absolute_control
-		}
 	}
 	option = {
 		name = ottoman.153.a
@@ -12822,8 +12586,11 @@ country_event = { #economic collapse in_greece 3
 					}
 					OR = {
 						state = 345
+						state = 1255
 						state = 731
+						state = 1256
 						state = 826
+						state = 1257
 						state = 758
 						state = 187
 						state = 185
@@ -12850,8 +12617,11 @@ country_event = { #economic collapse in_greece 3
 					}
 					OR = {
 						state = 345
+						state = 1255
 						state = 731
+						state = 1256
 						state = 826
+						state = 1257
 						state = 758
 						state = 187
 						state = 185
@@ -13375,9 +13145,6 @@ country_event = { #asir rebellion
 			has_global_flag = asir_rebellion
 			country_exists = ASR
 			has_government = democratic
-			has_completed_focus = TUR_modern_islamism
-			has_completed_focus = TUR_power_of_the_caliph
-			has_completed_focus = TUR_for_the_good_of_the_arabs
 		}
 	}
 	picture = GFX_report_event_asir_rebellion
@@ -13420,10 +13187,6 @@ country_event = { #conservative party elections
 	is_triggered_only = yes
 	picture = GFX_report_event_conservative_party_elections
 	trigger = {
-		is_power_balance_in_range = {
-			id = TUR_conservative_liberal
-			range < TUR_conservative_liberal_conservative_balanced
-		}
 		has_country_flag = TUR_conservatives_in_charge
 		NOT = {
 			has_country_flag = TUR_al_qahtaniya_empowered
@@ -14287,17 +14050,6 @@ country_event = { #death of Mehmed said
 			remove_ideas = TUR_mehmed_said
 			add_ideas = TUR_said_halim
 		}
-		if = {
-			limit = {
-				has_power_balance = {
-					id = TUR_parliament_sultan
-				}
-			}
-			set_power_balance = {
-				id = TUR_parliament_sultan
-				left_side = TUR_parliament_sultan_said_halim
-			}
-		}
 		hidden_effect = {
 			retire_character = TUR_mehmed_said
 		}
@@ -14330,28 +14082,6 @@ country_event = { #said halim retires
 					large="gfx/leaders/TUR/TUR_mehmed_talat_pasa_empowered.png"
 				}
 			}				
-		}
-		if = {
-			limit = {
-				has_power_balance = {
-					id = TUR_army_civilian_struggle
-				}
-			}
-			add_power_balance_value = {
-				id = TUR_army_civilian_struggle
-				value = 0.5
-			}
-		}
-		if = {
-			limit = {
-				has_power_balance = {
-					id = TUR_anti_imperialist_revanchist_struggle
-				}
-			}
-			add_power_balance_value = {
-				id = TUR_anti_imperialist_revanchist_struggle
-				value = 0.2
-			}
 		}
 		ai_chance = {
 			base = 5
@@ -15481,15 +15211,7 @@ country_event = { #integration_of_economies
 	is_triggered_only = yes
 	option = {
 		name = ottoman.200.a
-		if = {
-			limit = {
-				has_completed_focus = TUR_further_integration_attempt
-			}
-			add_ideas = TUR_common_economic_zone2
-		}
-		else = {
-			add_ideas = TUR_common_economic_zone
-		}
+		add_ideas = TUR_common_economic_zone
 		hidden_effect = {
 			TUR = {
 				country_event = { id = ottoman.201 hours = 8 }
@@ -15584,15 +15306,7 @@ country_event = { #they accept
 		name = ottoman.201.a
 		effect_tooltip = {
 			FROM = {
-				if = {
-					limit = {
-						has_completed_focus = TUR_further_integration_attempt
-					}
-					add_ideas = TUR_common_economic_zone2
-				}
-				else = {
-					add_ideas = TUR_common_economic_zone
-				}
+				add_ideas = TUR_common_economic_zone
 			}
 		}
 		ai_chance = {
@@ -15668,7 +15382,7 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
+				any_allied_country = {
 					is_in_faction_with = ROOT
 					OR = {
 						has_wargoal_against = FROM
@@ -15772,9 +15486,8 @@ country_event = { #munition shortage
 				howitzer_equipment < -300
 			}
 		}
-		any_other_country = {
+		any_enemy_country = {
 			is_major = yes
-			has_war_with = TUR
 			OR = {
 				controls_state = 860
 				controls_state = 341
@@ -16019,15 +15732,6 @@ country_event = { #balkan war event
 			add_timed_idea = {
 				idea = TUR_idea_chaos_balkans
 				days = 15
-			}
-		}
-		if = {
-			limit = {
-				has_completed_focus = TUR_military_purges
-			}
-			add_timed_idea = {
-				idea = TUR_idea_chaos_balkans
-				days = 30
 			}
 		}
 		add_opinion_modifier = {
@@ -16321,14 +16025,21 @@ country_event = {
 			}
 			if = {
 				limit = {
-					owns_state = 877
-					PER = { owns_state = 1117 }
+					PER = {
+						exists = yes
+						NOT = {
+							has_war_with = ROOT
+						}
+					}
 				}
 				every_owned_state = {
 					limit = {
 						OR = {
 							state = 877
 							state = 420
+							state = 1251
+							state = 1250
+							state = 419
 						}
 					}
 					transfer_state_to = PER
@@ -16588,82 +16299,32 @@ country_event = {
 		}
 		if = {
 			limit = {
-				has_completed_focus = TUR_intervene_in_the_elections
-			}
-			clr_country_flag = TUR_yildiz_teskilati_election
-			set_politics = {
-				ruling_party = neutrality
-				elections_allowed = no
-				name = TUR_sultanate_party
-				long_name = TUR_sultanate_party
-			}
-			if = {
-				limit = {
-					date < 1914.1.10
-				}
-				promote_character = TUR_mehmed_said
-				TUR_remove_party_factionalism = yes
-			}
-			else = {
-				add_country_leader_role = {
-					character = TUR_said_halim
-					promote_leader = yes
-					country_leader = {
-						ideology = theocracy_ideology
-						traits = { TUR_conservative_politician grand_vizier }
-					}
-				}
-			}
-			effect_tooltip = {
-				TUR_remove_party_factionalism = yes
-			}
-			hidden_effect = {
-			 	every_character = {
-					TUR_remove_party_factionalism = yes
-				}
-			}
-			if = {
-				limit = {
-					has_idea = TUR_idea_liberal_revenge
-				}
-				remove_ideas = TUR_idea_liberal_revenge
-			}
-		}
-		if = {
-			limit = {
 				has_idea = TUR_government_without_majority
 			}
 			remove_ideas = TUR_government_without_majority
 		}
-		if = {
-			limit = {
-				NOT = {
-					has_completed_focus = TUR_intervene_in_the_elections
-				}
+		promote_character = TUR_mehmed_kamil
+		activate_mission = TUR_CUP_prepares_coup_mission
+		activate_mission = TUR_CUP_coup_averted
+		set_politics = {
+			ruling_party = democratic
+			elections_allowed = yes
+		}
+		set_country_flag = TUR_muhtar_deposed
+		hidden_effect = {
+			TUR_mahmud_sevket = {
+				promote_character = authoritarian_democracy
 			}
-			promote_character = TUR_mehmed_kamil
-			activate_mission = TUR_CUP_prepares_coup_mission
-			activate_mission = TUR_CUP_coup_averted
-			set_politics = {
-				ruling_party = democratic
-				elections_allowed = yes
-			}
-			set_country_flag = TUR_muhtar_deposed
-			hidden_effect = {
-				TUR_mahmud_sevket = {
-					promote_character = authoritarian_democracy
-				}
-			}
-			add_popularity = {
-				ideology = democratic
-				popularity = 0.05
-			}
-			add_stability = -0.05
-			set_party_name = {
-				ideology = neutrality
-				long_name = TUR_neutrality_party_long
-				name = TUR_neutrality_party
-			}
+		}
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.05
+		}
+		add_stability = -0.05
+		set_party_name = {
+			ideology = neutrality
+			long_name = TUR_neutrality_party_long
+			name = TUR_neutrality_party
 		}
 		set_country_flag = muhtar_pasa_resigns
 		mark_focus_tree_layout_dirty = yes
@@ -16722,8 +16383,6 @@ country_event = {
 			country_exists = YEM
 			has_government = communism
 			has_country_flag = daan_treaty_signed
-			has_completed_focus = TUR_alliances_with_imams_of_hejaz_and_yemen
-			has_completed_focus = TUR_for_the_good_of_the_arabs
 		}
 		owns_state = 293
 		has_global_flag = italo_turkish_war
@@ -16751,7 +16410,6 @@ country_event = {
 		has_start_date < 1914.1.1	
 		NOT = {
 			has_country_flag = itilaf_formed
-			has_completed_focus = TUR_trial_of_hif
 			has_country_flag = opposition_merges_into_itf
 			has_country_flag = TUR_national_movement_tag
 		}
@@ -16982,7 +16640,10 @@ country_event = {
 	option = {
 		name = ww1_ottoman.143.a
 		FROM = {
-			effect_tooltip = { transfer_state = 104 }
+			effect_tooltip = { 
+				transfer_state = 104 
+				transfer_state = 1261
+			}
 			country_event = {
 				id = ww1_ottoman.144
 				hours = 8
@@ -17060,6 +16721,7 @@ country_event = {
 	option = {
 		name = ww1_ottoman.144.a
 		transfer_state = 104
+		transfer_state = 1261
 	}
 }
 
@@ -17073,6 +16735,7 @@ country_event = {
 	option = {
 		name = ww1_ottoman.145.a
 		add_state_claim = 104
+		add_state_claim = 1261
 		if = {
 			limit = {
 				NOT = {
@@ -17084,7 +16747,7 @@ country_event = {
 			create_wargoal = {
 				target = FROM
 				type = take_claimed_state
-				generator = { 104 }
+				generator = { 104 1261 }
 			}
 		}
 	}
@@ -17195,21 +16858,12 @@ country_event = {
 					}
 					has_game_rule = {
 						rule = TUR_ai_behavior
-						option = TUR_EMPOWER_THE_SULTAN
-					}
-					has_game_rule = {
-						rule = TUR_ai_behavior
 						option = HISTORICAL_TRIUMVIRATE
-					}
-					has_game_rule = {
-						rule = TUR_ai_behavior
-						option = TUR_VATAN_VE_HURRIYET_CEMIYETI
 					}
 					has_game_rule = {
 						rule = TUR_ai_behavior
 						option = TUR_PROTECT_DEMOCRACY
 					}
-					has_country_flag = TUR_VATAN_VE_HURRIYET_CEMIYETI
 					has_country_flag = TUR_PROTECT_DEMOCRACY
 					has_country_flag = HISTORICAL_TRIUMVIRATE
 				}
@@ -17427,7 +17081,6 @@ country_event = {
 						owns_state = 1207
 						owns_state = 454
 						owns_state = 856
-						owns_state = 858
 					}
 				}
 				country_event = {
@@ -17444,7 +17097,6 @@ country_event = {
 					state = 1207
 					state = 454
 					state = 856
-					state = 858
 				}
 			}
 			add_core_of = PAL
@@ -18580,12 +18232,15 @@ country_event = {
 							state = 185
 							#state = 200
 							state = 345
+							state = 1255
 							state = 731
+							state = 1256
 							#state = 757
 							state = 758
 							state = 803
 							state = 1225
 							state = 826
+							state = 1257
 						}
 					}
 					185 = {
@@ -18636,6 +18291,7 @@ country_event = {
 						OR = {
 							state = 106
 							state = 203
+							state = 1258
 							state = 759
 							state = 760
 							state = 847

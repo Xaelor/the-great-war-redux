@@ -2344,3 +2344,80 @@ FRA_setup_german_monarch = {
 		communism = 5
 	}
 }
+
+FRA_send_kamerun_agadir_crisis = {
+	GER = {
+		if = {
+			limit = {
+				769 = {
+					is_owned_or_subject_PREV_trigger = yes
+				}
+			}
+			769 = {
+				transfer_state_to = FRA
+				add_core_of = CHA
+			}
+		}
+		country_event = {
+			id = ww1_agadir.6
+			days = 1
+		}
+	}
+	news_event = {
+		id = ww1_agadir.15
+		days = 3
+	}
+	if = {
+		limit = { 
+			has_global_flag = agadir_no_escalation
+		}
+		every_state = {
+			limit = {
+				is_owned_or_subject_trigger = yes
+				OR = {
+					state = 814
+					state = 1143
+					state = 815
+					state = 1144
+					state = 752
+					state = 772
+				}	
+			}
+			if = {
+				limit = {
+					country_exists = CMR
+				}
+				transfer_state_to = CMR
+			}
+			else = {
+				transfer_state_to = GER
+			}
+			add_core_of = CMR
+			add_claim_by = ROOT
+		}
+	}
+	else = {		
+		every_state = {
+			limit = {
+				is_owned_or_subject_trigger = yes
+				OR = {
+					state = 814
+					state = 1143
+					state = 815
+					state = 1144
+				}	
+			}
+			if = {
+				limit = {
+					country_exists = CMR
+				}
+				transfer_state_to = CMR
+			}
+			else = {
+				transfer_state_to = GER
+			}
+			add_core_of = CMR
+			add_claim_by = ROOT
+		}
+	}
+}

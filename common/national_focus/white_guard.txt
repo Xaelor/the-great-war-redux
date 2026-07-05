@@ -8,7 +8,10 @@ focus_tree = {
 			has_global_flag = october_revolution
 			NOT = {
 				tag = SOV
-				tag = SIB
+				AND = {
+					tag = SIB
+					has_country_flag = stay_as_siberia
+				}	
 				tag = SRA
 				tag = NWA
 			}	
@@ -87,7 +90,8 @@ focus_tree = {
 		completion_reward = {
 			hidden_effect = {
 				division_template = {
-					name = "Volunteer Regiment"
+					name = "Dobrovol'cheskiy Polk"
+					division_names_group = RUS_INF_07
 					priority = 2
 					regiments = {
 						infantry = { x = 0 y = 0 }
@@ -97,7 +101,8 @@ focus_tree = {
 					}
 				}
 				division_template = {
-					name = "Volunteer Cavalry Regiment"
+					name = "Dobrovol'cheskiy Kavaleriyskiy Polk"
+					division_names_group = RUS_CAV_04
 					priority = 1
 					regiments = {
 						cavalry = { x = 0 y = 0 }
@@ -461,7 +466,7 @@ focus_tree = {
 			hidden_effect = {
 				245 = {
 					create_unit = {
-						division = "name = \"Kornilovskiy polk\" division_template = \"Volunteer Regiment\" start_experience_factor = 2 start_equipment_factor = 0.2"
+						division = "name = \"Kornilovskiy polk\" division_template = \"Dobrovol'cheskiy Polk\" start_experience_factor = 2 start_equipment_factor = 0.2"
 						owner = DON
 						allow_spawning_on_enemy_provs = yes
 						prioritize_location = 3147
@@ -639,7 +644,13 @@ shared_focus = {
 			tag = URA
 		}
 		GFX_focus_KOMUCH_government = {
-			tag = KOM
+			OR = {
+				tag = KOM
+				tag = IZH
+			}
+		}
+		GFX_focus_SIB_government = {
+			tag = SIB
 		}
 		GFX_focus_RUS_duma = yes
 	}
@@ -1060,7 +1071,8 @@ shared_focus = {
 	}
 	completion_reward = {
 		army_experience = 25
-		add_command_power = 50	
+		add_command_power = 50
+		improve_RCW_lack_of_officers = yes
 	}
 	search_filters = {
 		FOCUS_FILTER_ARMY_XP
@@ -1160,6 +1172,7 @@ shared_focus = {
 		add_war_support = 0.1
 		army_experience = -20
 		add_command_power = -50
+		improve_RCW_lack_of_officers = yes
 	}
 	search_filters = {
 		FOCUS_FILTER_WAR_SUPPORT
@@ -1260,6 +1273,7 @@ shared_focus = {
 	completion_reward = {
 		army_experience = 20
 		add_command_power = 50
+		improve_RCW_lack_of_officers = yes
 	}
 	search_filters = {
 		FOCUS_FILTER_ARMY_XP
@@ -2289,6 +2303,7 @@ shared_focus = {
 				}
 			}
 		}
+		improve_RCW_lack_of_officers = yes
 	}
 	search_filters = {
 		FOCUS_FILTER_MANPOWER

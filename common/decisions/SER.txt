@@ -92,7 +92,10 @@ SER_black_hand_category = {
 				limit = { has_country_flag = greater_serbia_chosen }
 				set_cosmetic_tag = SER_empire
 			}
-			else = { set_cosmetic_tag = YUG }
+			else = { 
+				set_cosmetic_tag = YUG 
+				SER_YUG_regnal_number_change = yes
+			}
 		}
 	}
 	SER_integrate_balkan_nations = {
@@ -138,7 +141,7 @@ SER_black_hand_category = {
 				has_war = no
 				# you shouldn't able to merge albania
 				any_other_country = {
-					is_major = yes
+					is_actual_major = yes
 					NOT = { has_guaranteed = PREV }
 				}
 			}
@@ -1988,6 +1991,7 @@ peace_deals = {
 					surrender_progress > 0.4
 					BUL = {
 						controls_state = 203
+						controls_state = 1258
 						controls_state = 106
 						controls_state = 821
 						controls_state = 1213
@@ -2009,8 +2013,13 @@ peace_deals = {
 						345 = {
 							is_fully_controlled_by = BUL
 						}
-						731 = {
-							is_controlled_by = BUL
+						AND = {
+							731 = {
+								is_controlled_by = BUL
+							}
+							1256 = {
+								is_controlled_by = BUL
+							}
 						}
 					}
 				}
@@ -2019,23 +2028,22 @@ peace_deals = {
 	}
 }
 
-GER_great_war = {
+TGWR_great_power_politics = {
 	#invasion of Banat
 	SER_invade_BNT = { 
 		icon = generic_ignite_civil_war
 		allowed = {
 			original_tag = SER
 		}
-		target_trigger = {
-			FROM = {
-				original_tag = BNT
-				country_exists = FROM
-			}
+		targets = {
+			BNT
+		}
+		target_root_trigger = {
+			has_country_flag = great_war_winner
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			is_subject = no
-			has_country_flag = great_war_winner
-			country_exists = BNT
 		}
 		available = {
 			has_war = no
@@ -2085,7 +2093,6 @@ GER_great_war = {
 	}
 	SER_occupy_pecs = {
 		icon = GFX_decision_eng_blackshirt_march
-		name = SER_occupy_pecs
 		days_mission_timeout = 730
 		is_good = no
 		allowed = {
@@ -2134,16 +2141,17 @@ GER_great_war = {
 			}
 		}
 		targets = {
-			FRA
+			ENT
 			GER
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			is_faction_leader = yes
 			is_subject = no
 			has_global_flag = great_war
 			OR = {
 				has_war_together_with = GER
-				has_war_together_with = FRA
+				has_war_together_with = ENT
 			}
 		}
 		available = {
@@ -2152,9 +2160,8 @@ GER_great_war = {
 			}
 		}
 		complete_effect = {
-			every_other_country = {
+			every_allied_country = {
 				limit = {
-					is_in_faction_with = ROOT
 					is_subject = no
 				}
 				leave_faction = yes

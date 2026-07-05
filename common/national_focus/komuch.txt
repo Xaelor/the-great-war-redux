@@ -1,0 +1,186 @@
+focus_tree = {
+	id = komuch_focus
+	country = {
+		factor = 0
+		modifier = {
+			add = 10
+			tag = KOM
+		}
+	}
+	continuous_focus_position = {
+		x = 1400
+		y = 50
+	}
+		
+	reset_on_civilwar = no
+
+	initial_show_position = {
+		focus = KOM_consolidate_power
+	}
+
+	shared_focus = SIB_restore_all_russian_government
+	shared_focus = SIB_root_out_the_monarchists
+	shared_focus = AUH_hungarian_politics
+
+	focus = {
+		id = KOM_consolidate_power
+		icon = GFX_focus_KOMUCH_government
+		cost = 2
+		x = 7
+		y = 0
+		completion_reward = { 
+			unlock_decision_category_tooltip = RCW_terrtorial_management
+			set_country_flag = RCW_can_core_states
+			country_event = komuch.1
+		}
+	}
+	focus = {
+		id = KOM_mobilisation_of_the_peoples_army
+		icon = GFX_focus_generic_little_entente
+		cost = 3
+		prerequisite = {
+			focus = KOM_consolidate_power
+		}
+		x = -1
+		y = 1
+		relative_position_id = KOM_consolidate_power
+		completion_reward = { 
+			add_ideas = extensive_conscription
+			add_timed_idea = {
+				idea = KOM_mobilisation_of_the_peoples_army
+				days = 120
+			}
+			division_template = {
+				name = "Strelkoviy Polk"
+				regiments = { 
+					infantry = { x = 0 y = 0 }
+					infantry = { x = 0 y = 1 }
+					infantry = { x = 1 y = 0 }
+					infantry = { x = 1 y = 1 }
+				}
+				support = {
+					field_gun = { x = 0 y = 0 }
+				}
+			}
+			division_template = {
+				name = "Otryad Kappelya"
+				regiments = { 
+					infantry = { x = 0 y = 0 }
+					infantry = { x = 0 y = 1 }
+					infantry = { x = 0 y = 2 }
+					infantry = { x = 0 y = 3 }
+					infantry = { x = 1 y = 0 }
+					infantry = { x = 1 y = 1 }
+					infantry = { x = 1 y = 2 }
+					infantry = { x = 1 y = 3 }
+				}
+				support = {
+					field_gun = { x = 0 y = 0 }
+					recon = { x = 0 y = 1 }
+					howitzer = { x = 0 y = 2 }
+				}
+			}
+			251 = {
+				create_unit = {
+					division = "name = \"9-y Stavropolskiy Polk\" division_template = \"Strelkoviy Polk\" start_experience_factor = 0.2 start_equipment_factor = 0.8"
+					owner = ROOT
+				}
+				create_unit = {
+					division = "name = \"10-y Buguruslanskiy Polk\" division_template = \"Strelkoviy Polk\" start_experience_factor = 0.2 start_equipment_factor = 0.8"
+					owner = ROOT
+				}
+				create_unit = {
+					division = "name = \"11-y Buzulukskiy Polk\" division_template = \"Strelkoviy Polk\" start_experience_factor = 0.2 start_equipment_factor = 0.8"
+					owner = ROOT
+				}
+				create_unit = {
+					division = "name = \"12-y Bugulminskiy Polk\" division_template = \"Strelkoviy Polk\" start_experience_factor = 0.2 start_equipment_factor = 0.8"
+					owner = ROOT
+				}
+				create_unit = {
+					division = "name = \"Otryad Kappelya\" division_template = \"Otryad Kappelya\" start_experience_factor = 0.5 start_equipment_factor = 0.8"
+					owner = ROOT
+				}
+			}
+			set_division_template_lock = {
+				division_template = "Dobrovoltsi"
+				is_locked = no
+			}
+			random_owned_controlled_state = {
+				create_unit = {
+					division = "division_template = \"Dobrovoltsi\" start_experience_factor = 0"
+					count = 3
+					owner = ROOT
+				}
+			}
+		}
+	}
+	focus = {
+		id = KOM_form_the_governing_council
+		icon = GFX_focus_generic_self_management
+		cost = 5
+		prerequisite = {
+			focus = KOM_consolidate_power
+		}
+		x = 1
+		y = 1
+		relative_position_id = KOM_consolidate_power
+		completion_reward = {
+			add_political_power = 50
+			promote_character = RUS_yevgeniy_rogovskiy	
+		}
+	}
+	focus = {
+		id = KOM_contact_anti_bolshevik_forces
+		icon = GFX_focus_deal_with_russia
+		cost = 5
+		prerequisite = {
+			focus = KOM_form_the_governing_council
+		}
+		x = -1
+		y = 1
+		relative_position_id = KOM_form_the_governing_council
+		available = {
+			is_subject = no
+		}
+		bypass = {
+			NOT = {
+				any_other_country = {
+					OR = {
+						original_tag = ORE
+						original_tag = UCH
+						tag = SRA
+					}
+					is_subject = no
+					OR = {
+						is_in_faction = no
+						is_in_faction_with = ROOT
+					}
+					NOT = { has_war_with = ROOT }
+				}
+			}	
+		}
+		completion_reward = { 
+			every_other_country = {
+				limit = {
+					OR = {
+						original_tag = ORE
+						original_tag = UCH
+						tag = SRA
+					}
+					is_subject = no
+					OR = {
+						is_in_faction = no
+						is_in_faction_with = ROOT
+					}
+					NOT = { has_war_with = ROOT }
+				}
+				country_event = {
+					id = ww1_siberia.17
+					hours = 5
+					random_hours = 5
+				}
+			}
+		}
+	}
+}
