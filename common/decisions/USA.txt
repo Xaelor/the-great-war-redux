@@ -1,2463 +1,3907 @@
-political_actions = {
-	USA_rally_the_prohibitionists = {
-		visible = {
-			has_completed_focus = USA_american_reactionism
-			NOT = { has_government = neutrality }
-		}
-		cost = 25
-		days_re_enable = 35
-		remove_effect = {
-			add_stability = -0.02
-			add_popularity = { ideology = neutrality popularity = 0.03 }
-			add_popularity = { ideology = fascism popularity = 0.03 }
-		}
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				OR = {
-					neutrality > 0.5
-					democratic < 0.5
-					date > 1913.1.1
-				}
-				factor = 0
-			}
-		}
-	}
-	USA_cooperation_of_democrats_and_prohibitionists = {
-		visible = {
-			has_completed_focus = USA_american_reactionism
-			NOT = { has_government = neutrality }
-		}
-		cost = 25
-		days_re_enable = 35
-		remove_effect = {
-			add_popularity = { ideology = neutrality popularity = 0.02 }
-			add_popularity = { ideology = democratic popularity = -0.02 }
-		}
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				OR = {
-					neutrality > 0.5
-					democratic < 0.5
-					date > 1913.1.1
-				}
-				factor = 0
-			}
-		}
-	}
-	USA_police_raid_on_unions = {
-		visible = {
-			has_completed_focus = USA_american_reactionism
-			NOT = { has_government = communism }
-		}
-		days_re_enable = 35
-		remove_effect = {
-			add_stability = -0.02
-			add_popularity = { ideology = communism popularity = -0.02 }
-			add_popularity = { ideology = neutrality popularity = 0.02 }
-		}
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				has_stability < 0.30
-				factor = 0
-			}
-		}
-	}
-	USA_rally_the_unions = {
-		visible = {
-			has_completed_focus = USA_radicalism_era
-			NOT = { has_government = communism }
-		}
-		cost = 25
-		days_re_enable = 35
-		remove_effect = {
-			add_stability = -0.02
-			add_popularity = { ideology = communism popularity = 0.03 }
-			add_popularity = { ideology = democratic popularity = 0.03 }
-		}
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				OR = {
-					communism > 0.5
-					date > 1913.1.1
-				}
-				factor = 0
-			}
-		}
-	}
-	USA_pressure_on_reactionary_senators = {
-		visible = {
-			has_completed_focus = USA_radicalism_era
-			NOT = { has_government = communism }
-		}
-		cost = 25
-		days_re_enable = 35
-		remove_effect = {
-			add_popularity = { ideology = communism popularity = 0.02 }
-			add_popularity = { ideology = democratic popularity = -0.02 }
-		}
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				OR = {
-					communism > 0.5
-					date > 1913.1.1
-				}
-				factor = 0
-			}
-		}
-	}
-	USA_hunting_for_KKK = {
-		visible = {
-			has_completed_focus = USA_radicalism_era
-			NOT = { has_government = fascism }
-		}
-		days_re_enable = 35
-		remove_effect = {
-			add_stability = -0.02
-			add_popularity = { ideology = fascism popularity = -0.02 }
-			add_popularity = { ideology = communism popularity = 0.02 }
-		}
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				has_stability < 0.30
-				factor = 0
-			}
-		}
-	}
-}
-USA_interventionalism = {
-	USA_occupation_of_haiti = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = USA
-		}
-		targets = {
-			HAI
-		}
-		available = {
-			has_capitulated = no
-			is_subject = no
-			is_in_faction = no
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
-				}
-				is_in_faction = no
-			}
-			NOT = {
-				has_country_flag = banana_wars
-				has_idea = idea_great_depression
-			}
-			OR = {
-				AND = {
-					has_completed_focus = USA_expand_american_intervention
-					NOT = { has_global_flag = USA_intervention_limit_5 }
-				}
-				AND = {
-					NOT = { has_completed_focus = USA_expand_american_intervention }
-					NOT = { has_global_flag = USA_intervention_limit_3 }
-				}
-			}
-		}
-		cost = 75	
-		visible = {
-			NOT = { has_war_with = FROM }
-			has_completed_focus = USA_strike_caribbean_islands
-		}	
-		complete_effect = {
-			set_country_flag = { flag = banana_wars days = 90 value = 1 }
-		}
-		days_remove = 30
-		remove_effect = {
-			add_war_support = 0.02
-			FROM = { country_event = ww1_usa.6 }
-		}
-		highlight_states = {
-			highlight_states_trigger = {
-				is_owned_by = FROM
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 200
-			modifier = {
-				factor = 0
-				date < 1915.6.1
-			}
-			modifier = {
-				factor = 0
-				has_war_support > 0.75
-			}
-			modifier = {
-				factor = 0
-				has_stability < 0.20
-			}
-			modifier = {
-				factor = 0
-				has_civil_war = yes
-			}
-		}
-	}
-	USA_occupation_of_cuba = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = USA
-		}
-		targets = {
-			CUB
-		}
-		available = {
-			has_capitulated = no
-			is_subject = no
-			is_in_faction = no
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
-				}
-				is_in_faction = no
-			}
-			NOT = {
-				has_country_flag = banana_wars
-				has_idea = idea_great_depression
-			}
-			OR = {
-				AND = {
-					has_completed_focus = USA_expand_american_intervention
-					NOT = { has_global_flag = USA_intervention_limit_5 }
-				}
-				AND = {
-					NOT = { has_completed_focus = USA_expand_american_intervention }
-					NOT = { has_global_flag = USA_intervention_limit_3 }
-				}
-			}
-		}
-		cost = 75	
-		visible = {
-			NOT = { has_war_with = FROM }
-			has_completed_focus = USA_strike_caribbean_islands
-		}	
-		complete_effect = {
-			set_country_flag = { flag = banana_wars days = 90 value = 1 }
-		}
-		days_remove = 30
-		remove_effect = {
-			add_war_support = 0.02
-			FROM = { country_event = ww1_usa.6 }
-		}
-		highlight_states = {
-			highlight_states_trigger = {
-				is_owned_by = FROM
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 500
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-			}
-			modifier = {
-				factor = 0
-				FROM = { has_government = ROOT } 
-			}
-			modifier = {
-				factor = 0
-				has_civil_war = yes
-			}
-			modifier = {
-				factor = 0
-				has_war_support > 0.5
-			}
-		}
-	}
-	USA_occupation_of_dominicana = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = USA
-		}
-		targets = {
-			DOM
-		}
-		available = {
-			has_capitulated = no
-			is_subject = no
-			is_in_faction = no
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
-				}
-				is_in_faction = no
-			}
-			NOT = {
-				has_country_flag = banana_wars
-				has_idea = idea_great_depression
-			}
-			OR = {
-				AND = {
-					has_completed_focus = USA_expand_american_intervention
-					NOT = { has_global_flag = USA_intervention_limit_5 }
-				}
-				AND = {
-					NOT = { has_completed_focus = USA_expand_american_intervention }
-					NOT = { has_global_flag = USA_intervention_limit_3 }
-				}
-			}
-		}
-		cost = 75
-		visible = {
-			NOT = { has_war_with = FROM }
-			has_completed_focus = USA_strike_caribbean_islands
-		}	
-		complete_effect = {
-			set_country_flag = { flag = banana_wars days = 90 value = 1 }
-		}
-		days_remove = 30
-		remove_effect = {
-			add_war_support = 0.02
-			FROM = { country_event = ww1_usa.6 }
-		}
-		highlight_states = {
-			highlight_states_trigger = {
-				is_owned_by = FROM
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 200
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-			}
-			modifier = {
-				factor = 0
-				FROM = { has_government = ROOT } 
-			}
-			modifier = {
-				factor = 0
-				has_civil_war = yes
-			}
-			modifier = {
-				factor = 0
-				has_war_support > 0.5
-			}
-			modifier = {
-				factor = 0
-				has_stability < 0.20
-			}
-		}
-	}
-	# CENTRAL AMERICA
-	USA_occupation_of_nicaragua = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = USA
-		}
-		targets = {
-			NIC
-		}
-		available = {
-			is_subject = no
-			is_in_faction = no
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
-				}
-				is_in_faction = no
-			}
-			NOT = {
-				has_country_flag = banana_wars
-				has_idea = idea_great_depression
-			}
-			OR = {
-				AND = {
-					has_completed_focus = USA_expand_american_intervention
-					NOT = { has_global_flag = USA_intervention_limit_5 }
-				}
-				AND = {
-					NOT = { has_completed_focus = USA_expand_american_intervention }
-					NOT = { has_global_flag = USA_intervention_limit_3 }
-				}
-			}
-		}
-		cost = 75	
-		visible = {
-			NOT = { has_war_with = FROM }
-			has_completed_focus = USA_strike_central_america
-		}	
-		complete_effect = {
-			set_country_flag = { flag = banana_wars days = 90 value = 1 }
-		}
-		days_remove = 30
-		remove_effect = {
-			add_war_support = 0.02
-			FROM = { country_event = ww1_usa.6 }
-		}
-		highlight_states = {
-			highlight_states_trigger = {
-				is_owned_by = FROM
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 500
-			modifier = {
-				factor = 0
-				date < 1912.6.1
-			}
-			modifier = {
-				factor = 0
-				has_war_support > 0.75
-			}
-			modifier = {
-				factor = 0
-				has_civil_war = yes
-			}
-			modifier = {
-				factor = 0
-				has_stability < 0.20
-			}
-		}
-	}
-	USA_occupation_of_honduras = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = USA
-		}
-		targets = {
-			HON
-		}
-		available = {
-			is_subject = no
-			is_in_faction = no
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
-				}
-				is_in_faction = no
-			}
-			NOT = {
-				has_country_flag = banana_wars
-				has_idea = idea_great_depression
-			}
-			OR = {
-				AND = {
-					has_completed_focus = USA_expand_american_intervention
-					NOT = { has_global_flag = USA_intervention_limit_5 }
-				}
-				AND = {
-					NOT = { has_completed_focus = USA_expand_american_intervention }
-					NOT = { has_global_flag = USA_intervention_limit_3 }
-				}
-			}
-		}
-		cost = 75	
-		visible = {
-			NOT = { has_war_with = FROM }
-			has_completed_focus = USA_strike_central_america
-		}	
-		complete_effect = {
-			set_country_flag = { flag = banana_wars days = 90 value = 1 }
-		}
-		days_remove = 30
-		remove_effect = {
-			add_war_support = 0.02
-			FROM = { country_event = ww1_usa.6 }
-		}
-		highlight_states = {
-			highlight_states_trigger = {
-				is_owned_by = FROM
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 200
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-			}
-			modifier = {
-				factor = 0
-				FROM = { has_government = ROOT } 
-			}
-			modifier = {
-				factor = 0
-				has_civil_war = yes
-			}
-			modifier = {
-				factor = 0
-				has_war_support > 0.5
-			}
-			modifier = {
-				factor = 0
-				has_stability < 0.20
-			}
-		}
-	}
-	USA_occupation_of_salvador = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = USA
-		}
-		targets = {
-			ELS
-		}
-		available = {
-			is_subject = no
-			is_in_faction = no
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
-				}
-				is_in_faction = no
-			}
-			NOT = {
-				has_country_flag = banana_wars
-				has_idea = idea_great_depression
-			}
-			OR = {
-				AND = {
-					has_completed_focus = USA_expand_american_intervention
-					NOT = { has_global_flag = USA_intervention_limit_5 }
-				}
-				AND = {
-					NOT = { has_completed_focus = USA_expand_american_intervention }
-					NOT = { has_global_flag = USA_intervention_limit_3 }
-				}
-			}
-		}
-		cost = 75	
-		visible = {
-			NOT = { has_war_with = FROM }
-			has_completed_focus = USA_strike_central_america
-		}	
-		complete_effect = {
-			set_country_flag = { flag = banana_wars days = 90 value = 1 }
-		}
-		days_remove = 30
-		remove_effect = {
-			add_war_support = 0.02
-			FROM = { country_event = ww1_usa.6 }
-		}
-		highlight_states = {
-			highlight_states_trigger = {
-				is_owned_by = FROM
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 50
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-			}
-			modifier = {
-				factor = 0
-				FROM = { has_government = ROOT } 
-			}
-			modifier = {
-				factor = 0
-				has_civil_war = yes
-			}
-			modifier = {
-				factor = 0
-				has_war_support > 0.5
-			}
-			modifier = {
-				factor = 0
-				has_stability < 0.20
-			}
-		}
-	}
-	USA_occupation_of_guatemala = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = USA
-		}
-		targets = {
-			GUA
-		}
-		available = {
-			is_subject = no
-			is_in_faction = no
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
-				}
-				is_in_faction = no
-			}
-			NOT = {
-				has_country_flag = banana_wars
-				has_idea = idea_great_depression
-			}
-			OR = {
-				AND = {
-					has_completed_focus = USA_expand_american_intervention
-					NOT = { has_global_flag = USA_intervention_limit_5 }
-				}
-				AND = {
-					NOT = { has_completed_focus = USA_expand_american_intervention }
-					NOT = { has_global_flag = USA_intervention_limit_3 }
-				}
-			}
-		}
-		cost = 75	
-		visible = {
-			NOT = { has_war_with = FROM }
-			has_completed_focus = USA_strike_central_america
-		}	
-		complete_effect = {
-			set_country_flag = { flag = banana_wars days = 90 value = 1 }
-		}
-		days_remove = 30
-		remove_effect = {
-			add_war_support = 0.02
-			FROM = { country_event = ww1_usa.6 }
-		}
-		highlight_states = {
-			highlight_states_trigger = {
-				is_owned_by = FROM
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 50
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-			}
-			modifier = {
-				factor = 0
-				FROM = { has_government = ROOT } 
-			}
-			modifier = {
-				factor = 0
-				has_civil_war = yes
-			}
-			modifier = {
-				factor = 0
-				has_war_support > 0.5
-			}
-			modifier = {
-				factor = 0
-				has_stability < 0.20
-			}
-		}
-	}
-	USA_occupation_of_costa_rico = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = USA
-		}
-		targets = {
-			COS
-		}
-		available = {
-			is_subject = no
-			is_in_faction = no
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
-				}
-				is_in_faction = no
-			}
-			NOT = {
-				has_country_flag = banana_wars
-				has_idea = idea_great_depression
-			}
-			OR = {
-				AND = {
-					has_completed_focus = USA_expand_american_intervention
-					NOT = { has_global_flag = USA_intervention_limit_5 }
-				}
-				AND = {
-					NOT = { has_completed_focus = USA_expand_american_intervention }
-					NOT = { has_global_flag = USA_intervention_limit_3 }
-				}
-			}
-		}
-		cost = 75	
-		visible = {
-			NOT = { has_war_with = FROM }
-			has_completed_focus = USA_strike_central_america
-		}
-		complete_effect = {
-			set_country_flag = { flag = banana_wars days = 90 value = 1 }
-		}
-		days_remove = 30
-		remove_effect = {
-			add_war_support = 0.02
-			FROM = { country_event = ww1_usa.6 }
-		}
-		highlight_states = {
-			highlight_states_trigger = {
-				is_owned_by = FROM
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 50
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-			}
-			modifier = {
-				factor = 0
-				FROM = { has_government = ROOT } 
-			}
-			modifier = {
-				factor = 0
-				has_civil_war = yes
-			}
-			modifier = {
-				factor = 0
-				has_war_support > 0.5
-			}
-			modifier = {
-				factor = 0
-				has_stability < 0.20
-			}
-		}
-	}
-	USA_occupation_of_panama = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = USA
-		}
-		targets = {
-			PAN
-		}
-		available = {
-			is_subject = no
-			is_in_faction = no
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
-				}
-				is_in_faction = no
-			}
-			NOT = {
-				has_country_flag = banana_wars
-				has_idea = idea_great_depression
-			}
-			OR = {
-				AND = {
-					has_completed_focus = USA_expand_american_intervention
-					NOT = { has_global_flag = USA_intervention_limit_5 }
-				}
-				AND = {
-					NOT = { has_completed_focus = USA_expand_american_intervention }
-					NOT = { has_global_flag = USA_intervention_limit_3 }
-				}
-			}
-		}
-		cost = 75	
-		visible = {
-			NOT = { has_war_with = FROM }
-			has_completed_focus = USA_strike_central_america
-		}
-		complete_effect = {
-			set_country_flag = { flag = banana_wars days = 90 value = 1 }
-		}
-		days_remove = 30
-		remove_effect = {
-			add_war_support = 0.02
-			FROM = { country_event = ww1_usa.6 }
-		}
-		highlight_states = {
-			highlight_states_trigger = {
-				is_owned_by = FROM
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 50
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-			}
-			modifier = {
-				factor = 0
-				FROM = { has_government = ROOT } 
-			}
-			modifier = {
-				factor = 0
-				has_civil_war = yes
-			}
-			modifier = {
-				factor = 0
-				has_war_support > 0.5
-			}
-			modifier = {
-				factor = 0
-				has_stability < 0.20
-			}
-		}
-	}
-	# SOUTH AMERICA
-	USA_occupation_of_columbia = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = USA
-		}
-		targets = {
-			COL
-		}
-		available = {
-			is_subject = no
-			is_in_faction = no
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
-				}
-				is_in_faction = no
-			}
-			NOT = {
-				has_country_flag = banana_wars
-				has_idea = idea_great_depression
-			}
-			OR = {
-				AND = {
-					has_completed_focus = USA_expand_american_intervention
-					NOT = { has_global_flag = USA_intervention_limit_5 }
-				}
-				AND = {
-					NOT = { has_completed_focus = USA_expand_american_intervention }
-					NOT = { has_global_flag = USA_intervention_limit_3 }
-				}
-			}
-		}
-		cost = 100	
-		visible = {
-			NOT = { has_war_with = FROM }
-			has_completed_focus = USA_expand_american_intervention
-		}
-		complete_effect = {
-			set_country_flag = { flag = banana_wars days = 90 value = 1 }
-		}
-		days_remove = 45
-		remove_effect = {			
-			FROM = { country_event = ww1_usa.6 }
-		}
-		highlight_states = {
-			highlight_states_trigger = {
-				is_owned_by = FROM
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-			}
-			modifier = {
-				factor = 0
-				FROM = { has_government = ROOT } 
-			}
-			modifier = {
-				factor = 0
-				has_civil_war = yes
-			}
-			modifier = {
-				factor = 0
-				has_war_support > 0.5
-			}
-			modifier = {
-				factor = 0
-				has_stability < 0.20
-			}
-		}
-	}
-	USA_occupation_of_venezuela = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = USA
-		}
-		targets = {
-			VEN
-		}
-		available = {
-			is_subject = no
-			is_in_faction = no
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
-				}
-				is_in_faction = no
-			}
-			NOT = {
-				has_country_flag = banana_wars
-				has_idea = idea_great_depression
-			}
-			OR = {
-				AND = {
-					has_completed_focus = USA_expand_american_intervention
-					NOT = { has_global_flag = USA_intervention_limit_5 }
-				}
-				AND = {
-					NOT = { has_completed_focus = USA_expand_american_intervention }
-					NOT = { has_global_flag = USA_intervention_limit_3 }
-				}
-			}
-		}
-		cost = 100	
-		visible = {
-			NOT = { has_war_with = FROM }
-			has_completed_focus = USA_expand_american_intervention
-		}
-		complete_effect = {
-			set_country_flag = { flag = banana_wars days = 90 value = 1 }
-		}
-		days_remove = 45
-		remove_effect = {			
-			FROM = { country_event = ww1_usa.6 }
-		}
-		highlight_states = {
-			highlight_states_trigger = {
-				is_owned_by = FROM
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-			}
-			modifier = {
-				factor = 0
-				FROM = { has_government = ROOT } 
-			}
-			modifier = {
-				factor = 0
-				has_civil_war = yes
-			}
-			modifier = {
-				factor = 0
-				has_war_support > 0.5
-			}
-			modifier = {
-				factor = 0
-				has_stability < 0.20
-			}
-		}
-	}
-	USA_occupation_of_peru = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = USA
-		}
-		targets = {
-			PRU
-		}
-		available = {
-			is_subject = no
-			is_in_faction = no
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
-				}
-				is_in_faction = no
-			}
-			NOT = {
-				has_country_flag = banana_wars
-				has_idea = idea_great_depression
-			}
-			OR = {
-				AND = {
-					has_completed_focus = USA_expand_american_intervention
-					NOT = { has_global_flag = USA_intervention_limit_5 }
-				}
-				AND = {
-					NOT = { has_completed_focus = USA_expand_american_intervention }
-					NOT = { has_global_flag = USA_intervention_limit_3 }
-				}
-			}
-		}
-		cost = 100	
-		visible = {
-			NOT = { has_war_with = FROM }
-			has_completed_focus = USA_expand_american_intervention
-		}
-		complete_effect = {
-			set_country_flag = { flag = banana_wars days = 90 value = 1 }
-		}
-		days_remove = 45
-		remove_effect = {			
-			FROM = { country_event = ww1_usa.6 }
-		}
-		highlight_states = {
-			highlight_states_trigger = {
-				is_owned_by = FROM
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-			}
-			modifier = {
-				factor = 0
-				FROM = { has_government = ROOT } 
-			}
-			modifier = {
-				factor = 0
-				has_civil_war = yes
-			}
-			modifier = {
-				factor = 0
-				has_war_support > 0.5
-			}
-		}
-	}
-	USA_occupation_of_ecuador = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = USA
-		}
-		targets = {
-			ECU
-		}
-		available = {
-			is_subject = no
-			is_in_faction = no
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ROOT
-				}
-				is_in_faction = no
-			}
-			NOT = {
-				has_country_flag = banana_wars
-				has_idea = idea_great_depression
-			}
-			OR = {
-				AND = {
-					has_completed_focus = USA_expand_american_intervention
-					NOT = { has_global_flag = USA_intervention_limit_5 }
-				}
-				AND = {
-					NOT = { has_completed_focus = USA_expand_american_intervention }
-					NOT = { has_global_flag = USA_intervention_limit_3 }
-				}
-			}
-		}
-		cost = 100	
-		visible = {
-			NOT = { has_war_with = FROM }
-			has_completed_focus = USA_expand_american_intervention
-		}
-		complete_effect = {
-			set_country_flag = { flag = banana_wars days = 90 value = 1 }
-		}
-		days_remove = 45
-		remove_effect = {			
-			FROM = { country_event = ww1_usa.6 }
-		}
-		highlight_states = {
-			highlight_states_trigger = {
-				is_owned_by = FROM
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-			}
-			modifier = {
-				factor = 0
-				FROM = { has_government = ROOT } 
-			}
-			modifier = {
-				factor = 0
-				has_civil_war = yes
-			}
-			modifier = {
-				factor = 0
-				has_war_support > 0.5
-			}
-			modifier = {
-				factor = 0
-				has_stability < 0.20
-			}
-		}
-	}
-	#NOT INTERVENTION
-	USA_release_philippines = {
-		icon = eng_trade_unions_support
-		allowed = {
-			tag = USA
-		}
-		available = {
-			is_subject = no
-			has_capitulated = no
-			327 = { is_owned_and_controlled_by = ROOT }
-			623 = { is_owned_and_controlled_by = ROOT }
-			624 = { is_owned_and_controlled_by = ROOT }
-			625 = { is_owned_and_controlled_by = ROOT }
-			626 = { is_owned_and_controlled_by = ROOT }
-			627 = { is_owned_and_controlled_by = ROOT }
-			628 = { is_owned_and_controlled_by = ROOT }
-		}
-		visible = {
-			has_completed_focus = USA_fourteen_points
-			PHI = { exists = no }
-			any_owned_state = {
-				is_core_of = PHI
-			}
-			has_global_flag = interbellum
-		}
-		highlight_states = {
-			highlight_states_trigger = {
-				is_core_of = PHI
-			}
-		}
-		complete_effect = {
-			every_owned_state = {
-				limit = { is_core_of = PHI }
-				transfer_state_to = PHI
-			}
-			PHI = { set_country_flag = colony }
-			set_autonomy = {
-				target = PHI
-				autonomous_state = autonomy_tgwr_self_governing_colony
-				freedom_level = 0.10
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 50
-			modifier = {
-				factor = 0
-				date < 1934.7.1
-				NOT = { has_war_with = JAP }
-			}
-		}
-	}
-}
-USA_russian_intervention = {
-	USA_start_russian_intervention = {
-		name = JAP_start_siberian_intervention
-		icon = GFX_decision_generic_operation
+USA_conservative_opposition = {
+	USA_cons_campaign = {
+		icon = generic_ignite_civil_war
 		allowed = {
 			original_tag = USA
 		}
-		target_trigger = {
-			FROM = {
-				NOT = {
-					has_war_with = ROOT
-					has_government = communism
-					has_country_flag = usa_intervention_in_rcw
-				}			
-			}
+		activation = {
+			always = false
 		}
-		targets = {
-			RSO
-			SIB
-			CER
-			PRI
-		}
-		custom_cost_trigger = {
-			command_power > 9.9
-		}
-		custom_cost_text = decision_cost_CP_10
-		visible = {
-			country_exists = SOV
-			NOT = { 
-				has_government = communism 
-			}
-			FROM = {
-				if = {
-					limit = {
-						is_subject = yes
-					}
-					OVERLORD = {
-						OR = {
-							is_russian_tag = yes
-							tag = ROOT
-						}
-					}
-				}
-			}
-		}
+		priority = 100
 		available = {
-			FROM = {
-				any_controlled_state = {
-					is_coastal = yes
-					naval_base > 0
-				}
-			}
-		}
-		ai_will_do = {
-			base = 100
-			modifier = {
-				factor = 0
-				surrender_progress > 0
-			}
-		}
-		cancel_if_not_visible = yes
-		fire_only_once = yes
-		days_remove = 10
-		complete_effect = {
-			add_command_power = -10
-		}
-		remove_effect = {
-			FROM = {
-				set_country_flag = usa_intervention_in_rcw
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = large_increase
-				}
-			}
-			diplomatic_relation = {
-				country = FROM
-				relation = military_access
-				active = yes
-			}
-			add_opinion_modifier = {
-				target = FROM
-				modifier = large_increase
-			}
-			add_ai_strategy = {
-				type = protect
-				id = FROM
-				value = 100
-			}
-			add_ai_strategy = {
-				type = send_volunteers_desire
-				id = FROM
-				value = 100
-			}
-			add_ai_strategy = {
-				type = support
-				id = FROM
-				value = 100
-			}
-		}
-	}
-	USA_send_manpower_to_whites = {
-		name = JAP_send_manpower_to_siberia
-		icon = GFX_decision_generic_operation
-		allowed = {
-			original_tag = USA
-		}
-		target_trigger = {
-			FROM = {
-				is_russian_tag = yes
-				NOT = {
-					has_war_with = ROOT
-					has_government = communism
-				}
-				has_country_flag = usa_intervention_in_rcw
-			}
-		}
-		targets = {
-			RSO
-			SIB
-			CER
-			PRI
-		}
-		visible = {
-			NOT = {
-				has_government = communism 
-			}
-			FROM = {
-				if = {
-					limit = {
-						is_subject = yes
-					}
-					OVERLORD = {
-						OR = {
-							is_russian_tag = yes
-							tag = ROOT
-						}
-					}
-				}
-			}
-		}
-		available = {
-			has_manpower > 2999
-			FROM = { has_capitulated = no }
-		}
-		days_re_enable = 50
-		ai_will_do = {
-			base = 0
-		}
-		fire_only_once = no
-		complete_effect = {
-			army_experience = 5
-			add_manpower = -3000
-			FROM = { add_manpower = 3000 }
-		}
-	}
-	USA_send_rifles_to_whites = {
-		name = JAP_send_rifles_to_siberia
-		icon = ger_military_buildup
-		allowed = {
-			original_tag = USA
-		}
-		target_trigger = {
-			FROM = {
-				is_russian_tag = yes
-				NOT = {
-					has_war_with = ROOT
-					has_government = communism
-				}
-				has_country_flag = usa_intervention_in_rcw
-			}
-		}
-		targets = {
-			RSO
-			SIB
-			CER
-			PRI
-		}
-		available = {
-			FROM = { has_capitulated = no }
-		}
-		visible = {
-			NOT = {
-				has_government = communism 
-			}
-			FROM = {
-				if = {
-					limit = {
-						is_subject = yes
-					}
-					OVERLORD = {
-						OR = {
-							is_russian_tag = yes
-							tag = ROOT
-						}
-					}
-				}
-			}
-		}
-		fire_only_once = no
-		custom_cost_trigger = {
-			has_equipment = { infantry_equipment > 1999 }
-		}
-		custom_cost_text = 500_infantry_equipment_1
-		ai_will_do = {
-			base = 0
-		}
-		days_re_enable = 100
-		complete_effect = {
-			send_equipment = {
-				target = FROM
-				type = infantry_equipment
-				amount = 1000
-			}
-		}
-	}
-	USA_end_russian_intervention = {
-		name = JAP_end_siberian_intervention
-		icon = GFX_decision_eng_blackshirt_march
-		allowed = {
-			original_tag = USA
-		}
-		target_trigger = {
-			FROM = {
-				is_russian_tag = yes
-				has_country_flag = usa_intervention_in_rcw
-			}
-		}
-		complete_effect = {
-			FROM = {
-				clr_country_flag = usa_intervention_in_rcw
-				remove_opinion_modifier = {
-					target = ROOT
-					modifier = large_increase
-				}
-			}
-			diplomatic_relation = {
-				country = FROM
-				relation = military_access
-				active = no
-			}
-			diplomatic_relation = {
-				country = FROM
-				relation = guarantee
-				active = no
-			}
-			remove_opinion_modifier = {
-				target = FROM
-				modifier = large_increase
-			}
-			add_ai_strategy = {
-				type = protect
-				id = FROM
-				value = -100
-			}
-			add_ai_strategy = {
-				type = send_volunteers_desire
-				id = FROM
-				value = -100
-			}
-			add_ai_strategy = {
-				type = support
-				id = FROM
-				value = -100
-			}
-		}
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 100
-				OR = {
-					surrender_progress > 0
-					NOT = {
-						country_exists = SOV
-						FROM = {
-							any_controlled_state = {
-								is_coastal = yes
-								naval_base > 0
-							}
-						}
-					}
-					FROM = {
-						has_government = communism
-					}
-					has_government = communism
-				}			
-			}
-		}
-		fire_only_once = no
-	}
-}
-USA_civil_war_category = {
-	USA_civil_war_mission = {
-		icon = generic_assasination
-		allowed = { always = no }
-		available = {
-			OR = {
-				has_civil_war = yes
-				CSA = { exists = yes }
-			}
+			always = false
 		}
 		days_mission_timeout = 30
-		is_good = no
 		fire_only_once = yes
 		timeout_effect = {
-			set_global_flag = american_civil_war
-			if = {
-				limit = { has_global_flag = USA_anti_prohibition_cw }
-				country_event = { id = ww1_usa.41 }
+			activate_mission = USA_cons_campaign
+			add_to_variable = {
+				var = USA_progressive_republicans_midterm_popularity_1914
+				value = -1
 			}
-			if = {
-				limit = { has_global_flag = USA_anti_socialist_cw }
-				country_event = { id = ww1_usa.43 }
-			}
-			if = {
-				limit = { has_global_flag = USA_socialist_cw }
-				country_event = { id = ww1_usa.47 }
-			}
-			if = {
-				limit = { has_global_flag = USA_confederate_cw }
-				country_event = { id = ww1_usa.49 }
-			}
-			if = {
-				limit = { has_global_flag = USA_theocracy_cw }
-				country_event = { id = ww1_usa.51 }
-			}
-			if = {
-				limit = { has_global_flag = USA_republican_cw } 
-				country_event = { id = ww1_usa.53 }
-			}
-			if = {
-				limit = { has_global_flag = USA_democrat_cw }
-				country_event = { id = ww1_usa.55 }
-			} 
-			if = {
-				limit = { has_global_flag = USA_kkk_cw } #if you didn't create CSA, but complete Historical Revision
-				country_event = { id = ww1_usa.60 }
-			}
-			if = {
-				limit = { has_global_flag = USA_minutemen_cw } #if you didn't create RSA, but complete Minutemen Focus
-				country_event = { id = ww1_usa.62 }
-			}
-			if = {
-				limit = { has_global_flag = USA_anti_ancap_cw }
-				country_event = { id = ww1_usa.65 }
-			} 
-			hidden_effect = {
-				
-			}
+			custom_effect_tooltip = conservative_midterm_1914
+			add_political_power = -20
+		}
+		complete_effect = {
 		}
 	}
-	USA_red_terror = {
-		icon = generic_prepare_civil_war
+	USA_restrict_funding_to_conservatives = {
+		days_remove = 35
+		cost = 0
 		allowed = {
-			tag = USA
+			original_tag = USA
 		}
 		available = {
-			has_government = communism
 		}
 		visible = {
-			OR = {
-				has_war_with = CSA
-				has_war_with = USB
-			}
+			has_completed_focus = USA_centralization_of_washingtons_finances
 		}
+		complete_effect = {
+			add_to_variable = {
+				var = USA_progressive_republicans_midterm_popularity_1914
+				value = -1
+			}
+			custom_effect_tooltip = conservative_midterm_1914
+			add_political_power = 50
+		}
+	}
+	USA_undermine_conservative_attacks_with_money = {
+		days_remove = 50
 		cost = 50
-		days_remove = 30
-		remove_effect = {
-			add_war_support = 0.15
-			add_ideas = USA_idea_red_terror
-			USB = { add_stability = -0.15 }
-			CSA = { add_stability = -0.15 }
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		visible = {
+			has_completed_focus = USA_centralization_of_washingtons_finances
 		}
 		complete_effect = {
-			
+			add_days_mission_timeout = {
+				mission = USA_cons_campaign
+				days = 30
+			}
 		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 50
+	}
+	USA_concessions_to_cons = {
+		days_remove = 25
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		visible = {
+			has_completed_focus = USA_concessions_to_conservatives
+		}
+		complete_effect = {
+			add_days_mission_timeout = {
+				mission = USA_cons_campaign
+				days = 40
+			}
 		}
 	}
 }
-USA_wild_west = {
-	USA_fund_development_of_nevada = {
-		allowed = {
-            original_tag = USA
-        }
-		visible = {
-			OR = {
-				has_completed_focus = USA_federal_farm_loan_act
-				has_completed_focus = USA_farm_relief
-				has_completed_focus = USA_restore_american_feuds
-				has_completed_focus = USA_socialist_democracy
-				has_completed_focus = USA_american_autarky
-			}
-		}
-		highlight_states = {highlight_state_targets = { state = 379 }}
-        cost = 50
-        fire_only_once = yes
-		
-        available = {
-        }
-		days_remove = 90
-		remove_effect = {
-			379 = {
-				clr_state_flag = wild_west_state
-				remove_province_modifier = {
-					static_modifiers = { wild_west_province }
-					province = {
-						all_provinces = yes
-					}
-				}
-			}
-		}
-        ai_will_do = {
-			factor = 200
-			modifier = {
-				factor = 0
-				has_stability < 0.8
-				date < 1912.5.1
-			}
-		}
-	}
-	USA_fund_development_of_utah = {
-		allowed = {
-            original_tag = USA
-        }
-		visible = {
-			OR = {
-				has_completed_focus = USA_federal_farm_loan_act
-				has_completed_focus = USA_farm_relief
-				has_completed_focus = USA_restore_american_feuds
-				has_completed_focus = USA_socialist_democracy
-				has_completed_focus = USA_american_autarky
-			}
-		}
-        cost = 50
-        fire_only_once = yes
 
-        available = {
-        }
-		days_remove = 90
-		remove_effect = {
-			380 = {
-				clr_state_flag = wild_west_state
-				remove_province_modifier = {
-					static_modifiers = { wild_west_province }
-					province = {
-						all_provinces = yes
-					}
-				}
-			}
-		}
-		highlight_states = {highlight_state_targets = { state = 380 }}
-        ai_will_do = {
-			factor = 200
-			modifier = {
-				factor = 0
-				has_stability < 0.8
-				date < 1912.5.1
-			}
-		}
-	}
-	USA_fund_development_of_colorado = {
-		allowed = {
-            original_tag = USA
-        }
-		visible = {
-			OR = {
-				has_completed_focus = USA_federal_farm_loan_act
-				has_completed_focus = USA_farm_relief
-				has_completed_focus = USA_restore_american_feuds
-				has_completed_focus = USA_socialist_democracy
-				has_completed_focus = USA_american_autarky
-			}
-		}
-        cost = 50
-        fire_only_once = yes
-
-        available = {
-        }
-		days_remove = 90
-		remove_effect = {
-			382 = {
-				clr_state_flag = wild_west_state
-				remove_province_modifier = {
-					static_modifiers = { wild_west_province }
-					province = {
-						all_provinces = yes
-					}
-				}
-			}
-		}
-		highlight_states = {highlight_state_targets = { state = 382 }}
-        ai_will_do = {
-			factor = 200
-			modifier = {
-				factor = 0
-				has_stability < 0.8
-				date < 1912.5.1
-			}
-		}
-	}
-	USA_fund_development_of_new_mexico = {
-		allowed = {
-            original_tag = USA
-        }
-		visible = {
-			OR = {
-				has_completed_focus = USA_federal_farm_loan_act
-				has_completed_focus = USA_farm_relief
-				has_completed_focus = USA_restore_american_feuds
-				has_completed_focus = USA_socialist_democracy
-				has_completed_focus = USA_american_autarky
-			}
-		}
-        cost = 50
-        fire_only_once = yes
-
-        available = {
-        }
-		days_remove = 90
-		remove_effect = {
-			376 = {
-				clr_state_flag = wild_west_state
-				remove_province_modifier = {
-					static_modifiers = { wild_west_province }
-					province = {
-						all_provinces = yes
-					}
-				}
-			}
-		}
-		highlight_states = {highlight_state_targets = { state = 376 }}
-        ai_will_do = {
-			factor = 200
-			modifier = {
-				factor = 0
-				has_stability < 0.8
-				date < 1912.5.1
-			}
-		}
-	}
-	USA_fund_development_of_arizona = {
-		allowed = {
-            original_tag = USA
-        }
-		visible = {
-			OR = {
-				has_completed_focus = USA_federal_farm_loan_act
-				has_completed_focus = USA_farm_relief
-				has_completed_focus = USA_restore_american_feuds
-				has_completed_focus = USA_socialist_democracy
-				has_completed_focus = USA_american_autarky
-			}
-		}
-        cost = 50
-        fire_only_once = yes
-
-        available = {
-        }
-		days_remove = 90
-		remove_effect = {
-			377 = {
-				clr_state_flag = wild_west_state
-				remove_province_modifier = {
-					static_modifiers = { wild_west_province }
-					province = {
-						all_provinces = yes
-					}
-				}
-			}
-		}
-		highlight_states = {highlight_state_targets = { state = 377 }}
-        ai_will_do = {
-			factor = 200
-			modifier = {
-				factor = 0
-				has_stability < 0.8
-				date < 1912.5.1
-			}
-		}
-	}	
-}
-	#USA_fund_rangers_units = {
-	#icon = generic_prepare_civil_war
-	#USA_environmentalism_propaganda = {
-	#icon = eng_puppet_usa
-	#USA_raid_gunfighter_bands = {
-	#icon = generic_assasination
-	#USA_assimilation_program = {
-	#icon = hol_draw_up_staff_plans
-	#USA_crush_native_american_rebellion = {
-	#icon = hol_war_on_pacifism
-	#USA_indian_reogranization_act = {
-	#icon = eng_trade_unions_support
-	#USA_grazing_act = {
-	#icon = eng_trade_unions_support
-
-foreign_politics = {
-	USA_buy_virgin_islands = {
-		icon = GFX_decision_hol_attract_foreign_investors
-		allowed = {
-			tag = USA
-		}
-		available = {
-			is_subject = no
-			750 = {
-				owner = {
-					NOT = { has_war_with = ROOT }
-				}
-			}
-		}
-		cost = 25
-		visible = {
-			has_completed_focus = USA_protect_the_caribbean
-			NOT = { owns_state = 750 }
-		}
-		target_trigger = {
-			FROM = {
-				owns_state = 750
-			}
-		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 750
-			}
-		}
-		complete_effect = {
-			750 = {
-				owner = {
-					if = {
-						limit = {
-							ROOT = { has_war_with = GER }
-						}
-						country_event = {
-							id = ww1_denmark.2
-							hours = 3
-						}
-					}
-					else = {
-						country_event = {
-							id = ww1_usa.84
-							hours = 3
-						}
-					}
-				}
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				factor = 0
-				date < 1917.2.15
-			}
-		}
-	}
-	USA_buy_greenland = {
-		icon = GFX_decision_hol_attract_foreign_investors
-		allowed = {
-			tag = USA
-		}
-		available = {
-			is_subject = no
-			any_other_country = {
-				NOT = { has_war_with = ROOT }
-				has_full_control_of_state = 101
-			}
-		}
-		cost = 25
-		visible = {
-			NOT = {
-				has_idea = undisturbed_isolation
-				has_idea = isolation
-			}
-		}
-		complete_effect = {
-			every_other_country = {
-				limit = { has_full_control_of_state = 101 }
-				country_event = ww1_usa.89
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 0
-				any_other_country = {
-					has_full_control_of_state = 101
-					is_in_faction = no
-				}
-			}
-		}
-	}
-	USA_claim_696_690_693 = {
-		icon = GFX_decision_generic_operation
+USA_roosevelt_house = {
+	USA_moderates_expect_infrastructure_investments = {
+		icon = generic_ignite_civil_war
 		allowed = {
 			original_tag = USA
 		}
+		activation = {
+			has_completed_focus = USA_careful_construction_of_the_coalition
+		}
+		priority = 100
 		available = {
-			any_enemy_country = {
-				OR = {
-					owns_state = 690
-					owns_state = 693
-					owns_state = 696
-				}
-			}
+			has_completed_focus = USA_infrastructure_investment_act
 		}
-		ai_will_do = {
-			factor = 100
-		}
-		cost = 25
-		visible = {
-			any_enemy_country = {
-				OR = {
-					owns_state = 690
-					owns_state = 693
-					owns_state = 696
-				}
-			}
-		}
+		days_mission_timeout = 150
 		fire_only_once = yes
-		complete_effect = {
-			add_state_claim = 696
-			add_state_claim = 690
-			add_state_claim = 693
-		}
-	}
-	USA_claim_311 = {
-		icon = GFX_decision_generic_operation
-		allowed = {
-			original_tag = USA
-		}
-		available = {
-			any_enemy_country = {
-				owns_state = 311
-			}
-		}
-		ai_will_do = {
-			factor = 100
-		}
-		cost = 10
-		visible = {
-			any_enemy_country = {
-				owns_state = 311
-			}
-		}
-		fire_only_once = yes
-		complete_effect = {
-			add_state_claim = 311
-		}
-	}
-	USA_claim_695 = {
-		icon = GFX_decision_generic_operation
-		allowed = {
-			original_tag = USA
-		}
-		available = {
-			any_enemy_country = {
-				owns_state = 695
-			}
-		}
-		ai_will_do = {
-			factor = 100
-		}
-		cost = 10
-		visible = {
-			any_enemy_country = {
-				owns_state = 695
-			}
-		}
-		fire_only_once = yes
-		complete_effect = {
-			add_state_claim = 695
-		}
-	}
-	philippine_american_war = {
-		allowed = { tag = USA }
-		days_mission_timeout = 120
-		available = { 
-			PHI = {
-				surrender_progress > 0.8
-			}
-		}
-		activation = { has_war_with = PHI }
-		visible = { has_war_with = PHI }
-		selectable_mission = no
 		is_good = no
 		timeout_effect = {
-			USA = {
-				country_event = {
-					id = ww1_USA.130
-					days = 3
-				}	
+			add_to_variable = {
+				var = moderate_democrats_and_republicans_support
+				value = -30
+			}
+			add_to_variable = {
+				var = conservative_republican_support
+				value = -2
+			}
+			custom_effect_tooltip = failed_infra.tt
+			add_political_power = -20
+			USA_rh_refresh = yes
+		}
+		complete_effect = {
+			add_political_power = 15
+		}
+	}
+	USA_progressives_expect_reforms = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = pass_bill.tt
+				always = false
+			}
+		}
+		days_mission_timeout = 200
+		fire_only_once = yes
+		timeout_effect = {
+		}
+		complete_effect = {
+		}
+	}
+	USA_promise_immanent_reforms = {
+		fire_only_once = false
+		days_remove = 100
+		cost = 50
+		allowed = {
+			has_active_mission = USA_progressives_expect_reforms
+		}
+		available = {
+			has_active_mission = USA_progressives_expect_reforms
+		}
+		visible = {
+			has_active_mission = USA_progressives_expect_reforms
+		}
+		complete_effect = {
+			add_days_mission_timeout = {
+				mission = USA_progressives_expect_reforms
+				days = 50
+			}
+		}
+	}
+	USA_contain_coalitions_ambition = {
+		days_remove = 35
+		cost = 25
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		visible = {
+		}
+		complete_effect = {
+			add_to_variable = {
+				new_nationalism_ideology = -5
+			}
+			custom_effect_tooltip = progressives_shift_5_right.tt
+		}
+	}
+	USA_congressional_recalls_bill = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			has_completed_focus = USA_congressional_recalls
+		}
+		priority = 100
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = pass_bill.tt
+				always = false
+			}
+		}
+		days_mission_timeout = 35
+		fire_only_once = yes
+		timeout_effect = {
+			IF = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support > 217
+					}
+				}
+				custom_effect_tooltip = USA_recalls.tt
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support < 217
+					}
+				}
+				add_political_power = -20
+				country_event = ww1_USA_roosevelt.4
 			}
 		}
 		complete_effect = {
-			USA = {
-				annex_country = {
-					target = PHI
-					transfer_troops = no
+		}
+	}
+	USA_8_hour_railway_work_week_bill = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = pass_bill.tt
+				always = false
+			}
+		}
+		days_mission_timeout = 28
+		fire_only_once = yes
+		timeout_effect = {
+			IF = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support > 217
+					}
+				}
+				remove_mission = USA_impending_economic_shutdown
+				add_political_power = 20
+				add_to_variable = {
+					var = USA_new_nationalism_consumer_goods
+					value = 0.03
+				}
+				add_to_variable = {
+					var = USA_new_nationalism_stability
+					value = 0.02
+				}
+				custom_effect_tooltip = new_nationalism_railway
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support < 217
+					}
+				}
+				add_political_power = -20
+			}
+		}
+		complete_effect = {
+		}
+	}
+	USA_high_income_tax_law = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = pass_bill.tt
+				always = false
+			}
+		}
+		days_mission_timeout = 28
+		fire_only_once = yes
+		timeout_effect = {
+			IF = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support > 217
+					}
+				}
+				add_political_power = 20
+				add_to_variable = {
+					var = USA_new_nationalism_consumer_goods
+					value = -0.12
+				}
+				add_to_variable = {
+					var = USA_new_nationalism_stability
+					value = -0.02
+				}
+				add_to_variable = {
+					var = USA_new_nationalism_pp_percent
+					value = -0.05
+				}
+				custom_effect_tooltip = new_nationalism_high_tax
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support < 217
+					}
+				}
+				add_political_power = -50
+			}
+		}
+		complete_effect = {
+		}
+	}
+	USA_mary_jones_act = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = pass_bill.tt
+				always = false
+			}
+		}
+		days_mission_timeout = 35
+		fire_only_once = yes
+		timeout_effect = {
+			IF = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support > 217
+					}
+				}
+				remove_ideas = USA_mining_explosions2
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support < 217
+					}
+				}
+				add_political_power = -20
+			}
+		}
+		complete_effect = {
+		}
+	}
+	USA_federal_reserve_bill = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = pass_bill.tt
+				always = false
+			}
+		}
+		days_mission_timeout = 56
+		fire_only_once = yes
+		timeout_effect = {
+			IF = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support > 217
+					}
+				}
+				remove_ideas = USA_unstable_banking_system2
+				add_stability = 0.1
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support < 217
+					}
+				}
+				add_political_power = -20
+			}
+		}
+		complete_effect = {
+		}
+	}
+	USA_expand_insurance = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = pass_bill.tt
+				always = false
+			}
+		}
+		days_mission_timeout = 35
+		fire_only_once = yes
+		timeout_effect = {
+			IF = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support > 217
+					}
+				}
+				add_to_variable = {
+					USA_new_nationalism_monthly_pop = 10
+				}
+				add_to_variable = {
+					USA_new_nationalism_stability = 5
+				}
+				custom_effect_tooltip = expand_insurance.tt
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support < 217
+					}
+				}
+				add_political_power = -20
+			}
+		}
+		complete_effect = {
+		}
+	}
+	USA_national_bank_bill = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = pass_bill.tt
+				always = false
+			}
+		}
+		days_mission_timeout = 56
+		fire_only_once = yes
+		timeout_effect = {
+			IF = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support > 217
+					}
+				}
+				swap_ideas = {
+					remove_idea = USA_unstable_banking_system2
+					add_idea = USA_national_bank
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support < 217
+					}
+				}
+				add_political_power = -20
+			}
+		}
+		complete_effect = {
+		}
+	}
+	USA_keep_taxes_low = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = pass_bill.tt
+				always = false
+			}
+		}
+		days_mission_timeout = 28
+		fire_only_once = yes
+		timeout_effect = {
+			IF = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support > 217
+					}
+				}
+				add_political_power = 20
+				add_to_variable = {
+					var = USA_new_nationalism_consumer_goods
+					value = -0.05
+				}
+				add_to_variable = {
+					var = USA_new_nationalism_construction_speed
+					value = 0.05
+				}
+				custom_effect_tooltip = new_nationalism_high_tax
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support < 217
+					}
+				}
+				add_political_power = -50
+			}
+		}
+		complete_effect = {
+		}
+	}
+	USA_inheritance_tax_law = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = pass_bill.tt
+				always = false
+			}
+		}
+		days_mission_timeout = 36
+		fire_only_once = yes
+		timeout_effect = {
+			IF = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support > 217
+					}
+				}
+				add_political_power = 20
+				add_to_variable = {
+					var = USA_new_nationalism_consumer_goods
+					value = -0.15
+				}
+				custom_effect_tooltip = new_nationalism_inher_tax
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support < 217
+					}
+				}
+				add_political_power = -50
+			}
+		}
+		complete_effect = {
+		}
+	}
+	USA_minimum_wage_law = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = pass_bill.tt
+				always = false
+			}
+		}
+		days_mission_timeout = 56
+		fire_only_once = yes
+		timeout_effect = {
+			IF = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support > 217
+					}
+				}
+				custom_effect_tooltip = minimum_wage_pass.tt
+				add_to_variable = {
+					var = USA_new_nationalism_consumer_goods
+					value = 0.04
+				}
+				add_to_variable = {
+					var = USA_new_nationalism_stability
+					value = 0.08
+				}
+				add_to_variable = {
+					var = USA_new_nationalism_pp_percent
+					value = 0.05
+				}
+				add_to_variable = {
+					var = USA_new_nationalism_factory_output
+					value = 0.05
+				}
+				add_to_variable = {
+					var = USA_new_nationalism_production_eff_grow
+					value = 0.05
+				}
+				add_political_power = 50
+				custom_effect_tooltip = new_nationalism_high_tax
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support < 217
+					}
+				}
+				add_political_power = -50
+			}
+		}
+		complete_effect = {
+		}
+	}
+	USA_workers_compensation_law = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = pass_bill.tt
+				always = false
+			}
+		}
+		days_mission_timeout = 35
+		fire_only_once = yes
+		timeout_effect = {
+			IF = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support > 217
+					}
+				}
+				custom_effect_tooltip = workers_comp_pass.tt
+				add_to_variable = {
+					var = USA_new_nationalism_factory_output
+					value = 0.05
+				}
+				add_to_variable = {
+					var = USA_new_nationalism_production_eff_grow
+					value = 0.05
+				}
+				add_political_power = 50
+				custom_effect_tooltip = new_nationalism_high_tax
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						roosevelt_house_support < 217
+					}
+				}
+				add_political_power = -50
+			}
+		}
+		complete_effect = {
+		}
+	}
+	USA_passionate_reformist_speech = {
+		fire_only_once = yes
+		cost = 25
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_attract_progressive_defectors
+		}
+		complete_effect = {
+			add_to_variable = {
+				new_nationalist_ideology = 5
+			}
+			custom_effect_tooltip = progressives_shift_5_left.tt
+		}
+	}
+	USA_study_german_tactics = {
+		fire_only_once = yes
+		days = 365
+		custom_cost_trigger = {
+			command_power > 40
+		}
+		custom_cost_text = decision_cost_CP_40
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		visible = {
+			has_completed_focus = USA_establish_the_pentagon
+		}
+		complete_effect = {
+			add_command_power = -40
+		}
+		remove_effect = {
+			add_ideas = USA_knowledge_of_german_tactics
+		}
+	}
+}
+
+USA_trust_busting = {
+	USA_enforce_price_discrimination = {
+		days_remove = 50
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			OR = {
+				has_completed_focus = USA_sherman_anti_trust
+				has_completed_focus = USA_goldilocks_and_the_three_trusts
+				has_completed_focus = USA_mantain_the_party_line
+			}
+			check_variable = {
+				USA_price_discrimination_var < 3
+			}
+		}
+		complete_effect = {
+			add_to_variable = {
+				USA_price_discrimination_var = 1
+			}
+		}
+		remove_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_support_restructuring_of_the_economy = {
+		days_remove = 50
+		cost = 10
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_out_with_the_old_in_with_the_new
+			check_variable = {
+				USA_out_with < 8
+			}
+		}
+		complete_effect = {
+			add_to_variable = {
+				USA_out_with = 1
+			}
+		}
+		remove_effect = {
+			random_core_state = {
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+			add_to_variable = {
+				USA_new_nationalism_construction_speed = 0.01
+			}
+			custom_effect_tooltip = out_with_old_dec.tt
+		}
+	}
+	USA_protect_steel_industry = {
+		fire_only_once = yes
+		days_remove = 50
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_goldilocks_and_the_three_trusts
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			393 = {
+				add_resource = {
+					type = steel
+					amount = 12
+				}
+			}
+		}
+	}
+	USA_support_another_steel_gaint = {
+		fire_only_once = yes
+		days_remove = 50
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_concentration_in_industry
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			393 = {
+				add_resource = {
+					type = steel
+					amount = 20
+				}
+			}
+		}
+	}
+	USA_support_automobile_giants = {
+		fire_only_once = yes
+		days_remove = 50
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_concentration_in_industry
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			393 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			261 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	USA_new_company_merges = {
+		fire_only_once = yes
+		days_remove = 50
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_concentration_in_industry
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			358 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			361 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	USA_support_food_monopolies = {
+		fire_only_once = yes
+		days_remove = 50
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_concentration_in_industry
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			395 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			261 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	USA_backdoor_corporate_deals = {
+		fire_only_once = yes
+		days_remove = 50
+		cost = 0
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_goldilocks_and_the_three_trusts
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			add_political_power = 50
+		}
+	}
+	USA_protect_efficient_monopolies = {
+		fire_only_once = yes
+		days_remove = 50
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_goldilocks_and_the_three_trusts
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			394 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			395 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	USA_stop_monopoly_mergers = {
+		days_remove = 50
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			OR = {
+				has_completed_focus = USA_sherman_anti_trust
+				has_completed_focus = USA_goldilocks_and_the_three_trusts
+				has_completed_focus = USA_mantain_the_party_line
+			}
+			check_variable = {
+				USA_stop_monopoly_mergers_var < 3
+			}
+		}
+		complete_effect = {
+			add_to_variable = {
+				USA_stop_monopoly_mergers_var = 1
+			}
+		}
+		remove_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_destroy_holding_companies = {
+		days_remove = 50
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			OR = {
+				has_completed_focus = USA_sherman_anti_trust
+				has_completed_focus = USA_goldilocks_and_the_three_trusts
+				has_completed_focus = USA_mantain_the_party_line
+			}
+			check_variable = {
+				USA_destroy_holding_companies_var < 1
+			}
+		}
+		complete_effect = {
+			add_to_variable = {
+				USA_destroy_holding_companies_var = 1
+			}
+		}
+		remove_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_break_up_chemical_industy_trusts = {
+		fire_only_once = yes
+		cost = 25
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_mom_and_pop_shops
+		}
+		visible = {
+			has_completed_focus = USA_mom_and_pop_shops
+		}
+		complete_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_break_up_meat_trusts = {
+		fire_only_once = yes
+		cost = 25
+		visible = {
+			has_completed_focus = USA_mom_and_pop_shops
+		}
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_mom_and_pop_shops
+		}
+		complete_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_break_up_show_trusts = {
+		fire_only_once = yes
+		cost = 25
+		visible = {
+			has_completed_focus = USA_mom_and_pop_shops
+		}
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_mom_and_pop_shops
+		}
+		complete_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_break_up_agriculture_trusts = {
+		fire_only_once = yes
+		cost = 25
+		visible = {
+			has_completed_focus = USA_mom_and_pop_shops
+		}
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_mom_and_pop_shops
+		}
+		complete_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_ban_tying_companies = {
+		fire_only_once = yes
+		cost = 25
+		visible = {
+			has_completed_focus = USA_roll_out_new_regulations
+		}
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_roll_out_new_regulations
+		}
+		complete_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_ban_predatory_pricing = {
+		fire_only_once = yes
+		cost = 25
+		visible = {
+			has_completed_focus = USA_roll_out_new_regulations
+		}
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_roll_out_new_regulations
+		}
+		complete_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_raise_fines = {
+		fire_only_once = yes
+		cost = 25
+		visible = {
+			has_completed_focus = USA_roll_out_new_regulations
+		}
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_roll_out_new_regulations
+		}
+		complete_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_prevent_group_supplier_boycotts = {
+		fire_only_once = yes
+		cost = 25
+		visible = {
+			has_completed_focus = USA_roll_out_new_regulations
+		}
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_roll_out_new_regulations
+		}
+		complete_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_take_standard_oil_to_court = {
+		fire_only_once = yes
+		cost = 50
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_continue_trust_busting
+		}
+		complete_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_take_american_tabacco_company_to_court = {
+		fire_only_once = yes
+		cost = 50
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_continue_trust_busting
+		}
+		complete_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_fight_sugar_trusts = {
+		fire_only_once = yes
+		cost = 50
+		available = {
+			has_completed_focus = USA_continue_trust_busting
+		}
+		allowed = {
+			original_tag = USA
+		}
+		complete_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_fight_electric_trusts = {
+		fire_only_once = yes
+		cost = 50
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_continue_trust_busting
+		}
+		complete_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+	USA_file_against_us_steel = {
+		fire_only_once = yes
+		cost = 50
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_continue_trust_busting
+		}
+		complete_effect = {
+			USA_monopoly_reduction = yes
+		}
+	}
+}
+
+USA_wilson_roads = {
+	USA_develop_kentucky_roads = {
+		days_remove = 100
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		modifier = {
+			consumer_goods_factor = 0.15
+		}
+		visible = {
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			369 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	USA_develop_tennessee_roads = {
+		days_remove = 100
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		modifier = {
+			consumer_goods_factor = 0.15
+		}
+		visible = {
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			368 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	USA_develop_virginia_roads = {
+		days_remove = 100
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		modifier = {
+			consumer_goods_factor = 0.15
+		}
+		visible = {
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			362 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	USA_develop_north_dakota_roads = {
+		days_remove = 100
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		modifier = {
+			consumer_goods_factor = 0.15
+		}
+		visible = {
+			has_global_flag = USA_prog1road
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			362 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	USA_develop_montana_roads = {
+		days_remove = 100
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		modifier = {
+			consumer_goods_factor = 0.15
+		}
+		visible = {
+			has_global_flag = USA_prog2road
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			362 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	USA_develop_idaho_roads = {
+		days_remove = 100
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		modifier = {
+			consumer_goods_factor = 0.15
+		}
+		visible = {
+			has_global_flag = USA_prog3road
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			387 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	USA_mississippi_roads = {
+		days_remove = 100
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		modifier = {
+			consumer_goods_factor = 0.15
+		}
+		visible = {
+			has_global_flag = USA_conroad
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			370 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	USA_alabama_roads = {
+		days_remove = 100
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		modifier = {
+			consumer_goods_factor = 0.15
+		}
+		visible = {
+			has_global_flag = USA_conroad
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			367 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
 				}
 			}
 		}
 	}
 }
-TGWR_great_power_politics = {
-	#great_power_politics_great_war
-	USA_declare_neutrality = {
-		icon = GFX_decision_generic_industry
+
+USA_build_back_better_decisions = {
+	USA_alabama_farms = {
+		days_remove = 120
 		allowed = {
-			tag = USA
+			original_tag = USA
 		}
 		available = {
-			is_great_war_ongoing = yes
-			has_idea = isolation
+		}
+		modifier = {
+			consumer_goods_factor = 0.15
+		}
+		visible = {
+			has_completed_focus = USA_build_back_better_act
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			367 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	USA_georgia_farms = {
+		days_remove = 120
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		modifier = {
+			consumer_goods_factor = 0.15
+		}
+		visible = {
+			has_completed_focus = USA_build_back_better_act
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			367 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	USA_mississippi_farms = {
+		days_remove = 120
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		modifier = {
+			consumer_goods_factor = 0.15
+		}
+		visible = {
+			has_completed_focus = USA_build_back_better_act
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			367 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+}
+
+USA_wilsons_democratic_party = {
+	USA_midterms_wilson = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			has_completed_focus = USA_the_wilson_presidency
+		}
+		priority = 100
+		available = {
+			always = no
+		}
+		days_mission_timeout = 615
+		fire_only_once = yes
+		is_good = no
+		timeout_effect = {
+		}
+		complete_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						USA_wilson_midterms_support < -9
+					}
+				}
+				country_event = ww1_USA_wilson.30
+				custom_effect_tooltip = huge_midterm_loss
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						USA_wilson_midterms_support < 0
+					}
+					check_variable = {
+						USA_wilson_midterms_support > -6
+					}
+				}
+				country_event = ww1_USA_wilson.31
+				custom_effect_tooltip = midterm_losss
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						USA_wilson_midterms_support < 5
+					}
+					check_variable = {
+						USA_wilson_midterms_support > 0
+					}
+				}
+				country_event = ww1_USA_wilson.27
+				custom_effect_tooltip = midterm_win
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						USA_wilson_midterms_support > 5
+					}
+				}
+				country_event = ww1_USA_wilson.32
+				custom_effect_tooltip = midterm_hugewin
+			}
+		}
+	}
+	USA_modernizing_the_steel_belt = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			has_completed_focus = USA_the_wilson_presidency
+		}
+		priority = 100
+		available = {
+			393 = {
+				infrastructure > 5
+			}
+			261 = {
+				infrastructure > 5
+			}
+		}
+		days_mission_timeout = 614
+		fire_only_once = yes
+		is_good = yes
+		timeout_effect = {
+		}
+		complete_effect = {
+			add_to_variable = {
+				USA_wilson_midterms_support = 1
+			}
+			custom_effect_tooltip = help_wilson_1
+		}
+	}
+	USA_dont_leave_the_south_behind = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			has_completed_focus = USA_the_wilson_presidency
+		}
+		priority = 100
+		available = {
+			370 = {
+				infrastructure > 3
+			}
+			367 = {
+				infrastructure > 3
+			}
+		}
+		days_mission_timeout = 614
+		fire_only_once = yes
+		is_good = yes
+		timeout_effect = {
+		}
+		complete_effect = {
+			add_to_variable = {
+				USA_wilson_midterms_support = 1
+			}
+			custom_effect_tooltip = help_wilson_1
+		}
+	}
+	USA_great_basin_infra = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			has_completed_focus = USA_the_wilson_presidency
+		}
+		priority = 100
+		available = {
+			379 = {
+				infrastructure > 2
+			}
+			380 = {
+				infrastructure > 2
+			}
+		}
+		days_mission_timeout = 614
+		fire_only_once = yes
+		is_good = yes
+		timeout_effect = {
+		}
+		complete_effect = {
+			add_to_variable = {
+				USA_wilson_midterms_support = 1
+			}
+			custom_effect_tooltip = help_wilson_1
+		}
+	}
+	USA_west_coast_infra = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			has_completed_focus = USA_the_wilson_presidency
+		}
+		priority = 100
+		available = {
+			378 = {
+				infrastructure > 3
+			}
+			385 = {
+				infrastructure > 3
+			}
+			386 = {
+				infrastructure > 3
+			}
+		}
+		days_mission_timeout = 614
+		fire_only_once = yes
+		is_good = yes
+		timeout_effect = {
+		}
+		complete_effect = {
+			add_to_variable = {
+				USA_wilson_midterms_support = 1
+			}
+			custom_effect_tooltip = help_wilson_1
+		}
+	}
+	USA_infrastructure_in_the_plains = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			has_completed_focus = USA_the_wilson_presidency
+		}
+		priority = 100
+		available = {
+			384 = {
+				infrastructure > 1
+			}
+			381 = {
+				infrastructure > 1
+			}
+		}
+		days_mission_timeout = 614
+		fire_only_once = yes
+		is_good = yes
+		timeout_effect = {
+		}
+		complete_effect = {
+			add_to_variable = {
+				USA_wilson_midterms_support = 1
+			}
+			custom_effect_tooltip = help_wilson_1
+		}
+	}
+	USA_modern_mimal = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			has_completed_focus = USA_the_wilson_presidency
+		}
+		priority = 100
+		available = {
+			371 = {
+				infrastructure > 2
+			}
+			372 = {
+				infrastructure > 2
+			}
+			373 = {
+				infrastructure > 2
+			}
+			391 = {
+				infrastructure > 2
+			}
+			392 = {
+				infrastructure > 2
+			}
+		}
+		days_mission_timeout = 614
+		fire_only_once = yes
+		is_good = yes
+		timeout_effect = {
+		}
+		complete_effect = {
+			add_to_variable = {
+				USA_wilson_midterms_support = 1
+			}
+			custom_effect_tooltip = help_wilson_1
+		}
+	}
+	USA_modern_west_lake_michigain = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			has_completed_focus = USA_the_wilson_presidency
+		}
+		priority = 100
+		available = {
+			394 = {
+				infrastructure > 4
+			}
+			395 = {
+				infrastructure > 4
+			}
+			396 = {
+				infrastructure > 4
+			}
+		}
+		days_mission_timeout = 614
+		fire_only_once = yes
+		is_good = yes
+		timeout_effect = {
+		}
+		complete_effect = {
+			add_to_variable = {
+				USA_wilson_midterms_support = 1
+			}
+			custom_effect_tooltip = help_wilson_1
+		}
+	}
+	USA_drum_up_support_for_new_freedom = {
+		days_remove = 365
+		cost = 100
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		visible = {
+			has_completed_focus = USA_new_freedom
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			custom_effect_tooltip = 1_prog_level.tt
+			add_to_variable = {
+				var = USA_progressive_strength
+				value = 1
+			}
+		}
+	}
+	USA_tone_down_progressive_rhetoric = {
+		days_remove = 30
+		cost = 25
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		visible = {
+			has_completed_focus = USA_the_great_game
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			add_to_variable = {
+				var = USA_wilson_party_balance
+				value = -2
+				tooltip = wilshiri.tt
+			}
+		}
+	}
+	USA_rally_progressives = {
+		days_remove = 30
+		cost = 25
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		visible = {
+			has_completed_focus = USA_the_great_game
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			add_to_variable = {
+				var = USA_wilson_party_balance
+				value = 2
+				tooltip = wilshile.tt
+			}
+		}
+	}
+	USA_promises_to_strikers = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			has_completed_focus = USA_end_railway_strike
+		}
+		priority = 100
+		available = {
+			has_completed_focus = USA_new_rail_regulations
+		}
+		days_mission_timeout = 365
+		fire_only_once = yes
+		is_good = yes
+		timeout_effect = {
+			add_political_power = -80
+			add_stability = -0.08
+		}
+		complete_effect = {
+			add_stability = 0.02
+		}
+	}
+	USA_firmly_progressive_mission = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			check_variable = {
+				var = USA_wilson_party_balance
+				value = 10
+				compare = greater_than_or_equals
+			}
+		}
+		priority = 100
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = USA_not_firmly_progressive
+				always = false
+			}
+		}
+		days_mission_timeout = 365
+		fire_only_once = no
+		is_good = yes
+		cancel_trigger = {
+			check_variable = {
+				var = USA_wilson_party_balance
+				value = 10
+				compare = less_than
+			}
+		}
+		timeout_effect = {
+			add_political_power = -50
+			custom_effect_tooltip = 1_prog_level.tt
+			add_to_variable = {
+				var = USA_progressive_strength
+				value = 1
+			}
+			activate_mission = USA_firmly_progressive
+		}
+		complete_effect = {
+		}
+	}
+}
+
+foreign_influence = {
+	USA_exploit_nicaraguan = {
+		days_remove = 70
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		visible = {
+			has_country_flag = USA_madriz_gone
+			NOT = {
+				has_global_flag = USA_NO_MORE_EXPLOIT
+			}
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			add_to_variable = {
+				var = USA_nicaraguan_anger
+				value = 1
+				tooltip = rip_jose.tt
+			}
+			random_core_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			NIC = {
+				random_core_state = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+	USA_exploit_nicaraguan2 = {
+		days_remove = 70
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		visible = {
+			has_country_flag = USA_look_where_it_took_you
+			NOT = {
+				has_war_with = NIC
+			}
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			add_to_variable = {
+				var = USA_nicaraguan_anger
+				value = 1
+				tooltip = rip_jose.tt
+			}
+			random_core_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			NIC = {
+				random_core_state = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+	USA_loans_to_nicaragua = {
+		days_remove = 70
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		visible = {
+			has_country_flag = USA_look_where_it_took_you
+			NOT = {
+				has_war_with = NIC
+			}
+		}
+		complete_effect = {
+			NIC = {
+				add_ideas = USA_loans_to_nicaragua
+			}
+			add_to_variable = {
+				var = USA_nicaraguan_anger
+				value = 1
+				tooltip = rip_jose.tt
+			}
+		}
+		remove_effect = {
+			358 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		NIC = {
+			remove_ideas = USA_loans_to_nicaragua
+		}
+	}
+}
+
+USA_second_mexican_american_war = {
+	USA_war_apathy = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		is_good = no
+		activation = {
+			always = no
+		}
+		priority = 100
+		available = {
+			NOT = {
+				has_war_with = MEX
+			}
+		}
+		days_mission_timeout = 90
+		fire_only_once = yes
+		timeout_effect = {
+			USA_mexican_invasion_worsen = yes
+			activate_mission = USA_war_apathy
+		}
+		complete_effect = {
+			add_stability = 0.05
+		}
+	}
+	USA_the_mexican_blow = {
+		days_remove = 120
+		fire_only_once = yes
+		cost = 25
+		visible = {
+			has_war_with = MEX
+		}
+		available = {
+		}
+		remove_effect = {
+			add_stability = -0.1
+			add_political_power = -50
+			USA_mexican_invasion_worsen = yes
+		}
+		cancel_trigger = {
+			NOT = {
+				has_war_with = MEX
+			}
+		}
+		complete_effect = {
+			add_timed_idea = {
+				idea = USA_the_knockout_punch
+				days = 60
+			}
+		}
+	}
+	USA_pull_out_of_mexico = {
+		days_remove = 120
+		fire_only_once = yes
+		cost = 25
+		visible = {
+			has_war_with = MEX
+		}
+		available = {
+		}
+		remove_effect = {
+		}
+		complete_effect = {
+			every_country_with_original_tag = {
+				original_tag_to_check = MEX
+				white_peace = USA
+			}
+			remove_ideas = {
+				USA_mexican_quagmire_1
+				USA_mexican_quagmire_2
+				USA_mexican_quagmire_3
+				USA_mexican_quagmire_4
+				USA_mexican_quagmire_5
+				USA_mexican_quagmire_6
+				USA_mexican_quagmire_7
+				USA_mexican_quagmire_8
+				USA_mexican_quagmire_9
+				USA_mexican_quagmire_10
+			}
+		}
+	}
+}
+
+political_actions = {
+	USA_hoover_food = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			has_completed_focus = USA_herbert_hoover
+		}
+		priority = 100
+		available = {
 			has_war = no
 		}
-		visible = {
-			great_power_politics_great_war_visible = yes		
-			NOT = {
-				has_war_with = CSA
-				has_war_with = USB
+		days_mission_timeout = 90
+		timeout_effect = {
+			IF = {
+				limit = {
+					check_variable = {
+						USA_at_war_army_org < -0.01
+					}
+				}
+				add_to_variable = {
+					USA_at_war_stab = 0.05
+				}
+				add_to_variable = {
+					USA_at_war_factory_output = 0.05
+				}
+				add_to_variable = {
+					USA_at_war_war_support = 0.05
+				}
+				add_to_variable = {
+					USA_at_war_army_org_regain = 0.05
+				}
+				custom_effect_tooltip = food_hoover_front
+				activate_mission = USA_hoover_food
 			}
-			is_subject = no
+			else_if = {
+				limit = {
+					USA_at_war_army_org > -0.01
+				}
+				add_to_variable = {
+					USA_at_war_mobilization_speed = 0.05
+				}
+				activate_mission = USA_hoover_food
+				custom_effect_tooltip = hoover2_front
+			}
+		}
+		complete_effect = {
+			add_stability = 0.05
+		}
+	}
+	USA_sell_food = {
+		days_remove = 120
+		cost = 50
+		allowed = {
+			OR = {
+				original_tag = ITA
+				original_tag = ENG
+				original_tag = FRA
+			}
+		}
+		visible = {
+			USA = {
+				has_completed_focus = USA_increase_food_trade
+			}
+		}
+		available = {
+			NOT = {
+				has_global_flag = GER_unrestricted_sub
+			}
+		}
+		complete_effect = {
+		}
+		modifier = {
+			stability_weekly = 0.001
+			USA = {
+				consumer_goods_factor = -0.05
+			}
+		}
+	}
+	USA_sell_infantry = {
+		days_remove = 120
+		cost = 50
+		allowed = {
+			OR = {
+				original_tag = ITA
+				original_tag = ENG
+				original_tag = FRA
+				original_tag = RUS
+			}
+		}
+		visible = {
+			USA = {
+				has_completed_focus = USA_private_arms_contracts
+			}
+		}
+		available = {
+			NOT = {
+				has_global_flag = GER_unrestricted_sub
+			}
+		}
+		complete_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 1000
+				producer = USA
+			}
+		}
+		modifier = {
+			USA = {
+				consumer_goods_factor = -0.05
+			}
+		}
+	}
+	USA_sell_artillery = {
+		days_remove = 120
+		cost = 50
+		allowed = {
+			OR = {
+				original_tag = ITA
+				original_tag = ENG
+				original_tag = FRA
+				original_tag = RUS
+			}
+		}
+		visible = {
+			USA = {
+				has_completed_focus = USA_private_arms_contracts
+			}
+		}
+		available = {
+			NOT = {
+				has_global_flag = GER_unrestricted_sub
+			}
+		}
+		complete_effect = {
+			add_equipment_to_stockpile = {
+				type = artillery_equipment
+				amount = 150
+				producer = USA
+			}
+		}
+		modifier = {
+			USA = {
+				consumer_goods_factor = -0.05
+			}
+		}
+	}
+	USA_sell_medical_equipment = {
+		days_remove = 120
+		cost = 50
+		allowed = {
+			OR = {
+				original_tag = ITA
+				original_tag = ENG
+				original_tag = FRA
+				original_tag = RUS
+			}
+		}
+		visible = {
+			USA = {
+				has_completed_focus = USA_private_arms_contracts
+			}
+		}
+		available = {
+			NOT = {
+				has_global_flag = GER_unrestricted_sub
+			}
+		}
+		complete_effect = {
+			add_equipment_to_stockpile = {
+				type = support_equipment
+				amount = 150
+				producer = USA
+			}
+		}
+		modifier = {
+			USA = {
+				consumer_goods_factor = -0.05
+			}
+		}
+	}
+	USA_the_final_blow = {
+		days_remove = 80
+		fire_only_once = yes
+		cost = 50
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		complete_effect = {
+			country_event = ww1_USA.61
+		}
+	}
+	USA_army_reform = {
+		icon = generic_army_support
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_stinson_plan
+		}
+		visible = {
+			has_completed_focus = USA_stinson_plan
+			check_variable = {
+				USA_stinson_dec_take < 9
+			}
+		}
+		custom_cost_text = TUR_decision_cost_armyxp
+		custom_cost_trigger = {
+			has_army_experience > 29.99
+		}
+		days_remove = 30
+		ai_will_do = {
+			factor = 10
+		}
+		complete_effect = {
+			hidden_effect = {
+				army_experience = -30
+			}
+		}
+		remove_effect = {
+			add_to_variable = {
+				USA_stinson_dec_take = 1
+			}
+			add_to_variable = {
+				var = USA_army_speed_factor
+				value = 0.02
+			}
+			add_to_variable = {
+				var = USA_army_org_factor
+				value = 0.03
+			}
+			add_to_variable = {
+				var = USA_army_planning_factor
+				value = 0.02
+			}
+			add_to_variable = {
+				var = USA_army_recruit_pop_factor
+				value = 0.004
+			}
+			custom_effect_tooltip = USA_stinson_dec.tt
+		}
+	}
+	USA_impending_economic_shutdown = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			OR = {
+				has_completed_focus = USA_end_railway_strike
+				has_completed_focus = USA_8_hour_railway_work_week
+			}
+		}
+		days_mission_timeout = 150
+		fire_only_once = yes
+		is_good = no
+		timeout_effect = {
+			if = {
+				limit = {
+					has_completed_focus = USA_the_bull_moose_presidency
+				}
+				add_to_variable = {
+					var = moderate_democrats_and_republicans_support
+					value = -30
+				}
+				add_to_variable = {
+					var = conservative_republican_support
+					value = -2
+				}
+				custom_effect_tooltip = failed_infra.tt
+				add_political_power = -20
+			}
+			USA_rh_refresh = yes
+		}
+		complete_effect = {
+			add_political_power = 15
+		}
+	}
+	USA_designate_alaskan_land_for_reservation = {
+		icon = oil
+		allowed = {
+			original_tag = USA
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 463
+			}
+		}
+		available = {
+			has_completed_focus = USA_continue_teddies_nature_preserves
+		}
+		visible = {
+			has_completed_focus = USA_continue_teddies_nature_preserves
 		}
 		fire_only_once = yes
-		days_remove = 15
+		cost = 1
+		days_remove = 20
+		modifier = {
+			civilian_factory_use = 1
+		}
+		ai_will_do = {
+			factor = 10
+		}
 		remove_effect = {
-			add_political_power = 25
-			news_event = ww1_usa.18
-		}
-		cost = 0
-		ai_will_do = {
-			factor = 1000
-			modifier = {
-				factor = 0
-				NOT = { has_government = democratic }
+			hidden_effect = {
+				USA_progressive_loyalty_increase_effect = yes
+				USA_pp_refresh = yes
 			}
+			custom_effect_tooltip = USA_commies_support_taft
 		}
 	}
-	USA_ww1_sell_rifles = {
-		icon = GFX_decision_generic_industry
+	USA_strengthen_department_of_labour = {
+		icon = oil
 		allowed = {
-			tag = USA
-		}
-		available = {		
-			has_capitulated = no
-			FROM = {
-				has_capitulated = no
-				any_owned_state = {
-					is_coastal = yes
-					is_controlled_by = PREV
-				}
-			}
-		}
-		visible = {		
-			great_power_politics_great_war_visible = yes		
-		}
-		fire_only_once = no
-		custom_cost_trigger = {
-			has_equipment = { infantry_equipment > 1999 }
-		}
-		custom_cost_text = 2000_infantry_equipment_1
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				has_equipment = { infantry_equipment < 4000 }
-			}
-			modifier = {
-				factor = 0
-				surrender_progress > 0.01
-			}
-			modifier = {
-				factor = 0
-				has_opinion = {
-					target = FROM
-					value < -30
-				}
-			}
-			modifier = {
-				factor = 0
-				FROM = { surrender_progress > 0.90 }
-			}
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-				has_government = democratic
-				FROM = { 
-					OR = {
-						tag = RUS
-						tag = GER
-						tag = TUR
-						tag = AUS
-					}
-				 }
-			}
-		}
-		target_trigger = {
-			FROM = {
-				NOT = {
-					original_tag = ITA
-				}
-				NOT = {
-					has_country_flag = dont_want_usa_guns
-				}
-				is_major = yes
-				is_subject = no
-				NOT = {
-					has_war_with = ROOT
-				}
-				AND = {
-					OR = {
-						is_in_faction_with = ENT
-						is_in_faction_with = GER
-					}
-					has_war_with_major = yes
-				}
-			}
-		}
-		target_root_trigger = {
-			is_great_war_ongoing = yes
-			NOT = {
-				has_war_with = CSA
-				has_war_with = USB
-				has_government = communism
-			}
-			is_subject = no
-			has_civil_war = no
-			FROM = {
-				any_owned_state = {
-					is_coastal = yes
-				}
-			}
-		}
-		complete_effect = {
-			FROM = { country_event = ww1_usa.136 }
-		}
-		days_re_enable = 70
-	}
-	USA_ww1_sell_arts = {
-		icon = ger_military_buildup
-		allowed = {
-			tag = USA
+			original_tag = USA
 		}
 		visible = {
-			great_power_politics_great_war_visible = yes
+			has_completed_focus = USA_concessions_to_unions
 		}
-		available = {
-			has_capitulated = no
-			FROM = {
-				has_capitulated = no
-				any_owned_state = {
-					is_coastal = yes
-					is_controlled_by = PREV
-				}
-			}
-		}
-		fire_only_once = no
-		custom_cost_trigger = {
-			has_equipment = { field_gun_equipment > 100 }
-		}
-		custom_cost_text = 100_artillery_equipment_1
+		fire_only_once = yes
+		cost = 20
+		days_remove = 35
 		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				has_equipment = { field_gun_equipment < 1000 }
-			}
-			modifier = {
-				factor = 0
-				surrender_progress > 0.01
-			}
-			modifier = {
-				factor = 0
-				has_opinion = {
-					target = FROM
-					value < -30
-				}
-			}
-			modifier = {
-				factor = 0
-				FROM = { surrender_progress > 0.90 }
-			}
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-				has_government = democratic
-				FROM = { 
-					OR = {
-						tag = RUS
-						tag = GER
-						tag = TUR
-						tag = AUS
-					}
-				 }
-			}
+			factor = 10
 		}
-		target_trigger = {
-			FROM = {
-				NOT = {
-					original_tag = ITA
-				}
-				NOT = {
-					has_country_flag = dont_want_usa_guns
-				}
-				is_major = yes
-				is_subject = no
-				NOT = {
-					has_war_with = ROOT
-				}
-				AND = {
-					OR = {
-						is_in_faction_with = ENT
-						is_in_faction_with = GER
-					}
-					has_war_with_major = yes
-				}
+		remove_effect = {
+			add_popularity = {
+				ideology = communism
+				popularity = -0.02
 			}
+			add_stability = 0.05
+			USA_workers_rights_improve = yes
 		}
-		target_root_trigger = {
-			is_great_war_ongoing = yes
-			NOT = {
-				has_war_with = CSA
-				has_war_with = USB
-				has_government = communism
-			}
-			is_subject = no
-			has_civil_war = no
-			FROM = {
-				any_owned_state = {
-					is_coastal = yes
-				}
-			}
-		}
-		complete_effect = {
-			FROM = { country_event = ww1_usa.139 }
-		}
-		days_re_enable = 140
 	}
-	USA_ww1_sell_foods = {
-		icon = GFX_decision_generic_factory
+	USA_endorse_union_membership = {
+		icon = oil
 		allowed = {
-			tag = USA
+			original_tag = USA
 		}
 		visible = {
-			great_power_politics_great_war_visible = yes
+			has_completed_focus = USA_concessions_to_unions
+		}
+		fire_only_once = yes
+		cost = 40
+		days_remove = 35
+		ai_will_do = {
+			factor = 10
+		}
+		remove_effect = {
+			add_to_variable = {
+				var = USA_new_nationalism_pp_percent
+				value = 0.05
+			}
+			add_to_variable = {
+				var = USA_new_nationalism_factory_output
+				value = -0.05
+			}
+			custom_effect_tooltip = strong_union.tt
+		}
+	}
+	USA_unionization_of_michigan_suburbs = {
+		icon = oil
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_unionization_of_suburbia
+		}
+		fire_only_once = yes
+		cost = 20
+		days_remove = 35
+		ai_will_do = {
+			factor = 10
+		}
+		remove_effect = {
+			add_to_variable = {
+				var = USA_new_nationalism_pp_percent
+				value = 0.02
+			}
+			add_to_variable = {
+				var = USA_new_nationalism_factory_output
+				value = 0.02
+			}
+			add_to_variable = {
+				USA_new_nationalism_construction_speed = -0.02
+			}
+			custom_effect_tooltip = unionization.tt
+		}
+	}
+	USA_unionization_of_ohio_suburbs = {
+		icon = oil
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_unionization_of_suburbia
+		}
+		fire_only_once = yes
+		cost = 20
+		days_remove = 35
+		ai_will_do = {
+			factor = 10
+		}
+		remove_effect = {
+			add_to_variable = {
+				var = USA_new_nationalism_pp_percent
+				value = 0.02
+			}
+			add_to_variable = {
+				var = USA_new_nationalism_factory_output
+				value = 0.02
+			}
+			add_to_variable = {
+				USA_new_nationalism_construction_speed = -0.02
+			}
+			custom_effect_tooltip = unionization.tt
+		}
+	}
+	USA_unionization_of_illinoi_suburbs = {
+		icon = oil
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_unionization_of_suburbia
+		}
+		fire_only_once = yes
+		cost = 20
+		days_remove = 35
+		ai_will_do = {
+			factor = 10
+		}
+		remove_effect = {
+			add_to_variable = {
+				var = USA_new_nationalism_pp_percent
+				value = 0.02
+			}
+			add_to_variable = {
+				var = USA_new_nationalism_factory_output
+				value = 0.02
+			}
+			add_to_variable = {
+				USA_new_nationalism_construction_speed = -0.02
+			}
+			custom_effect_tooltip = unionization.tt
+		}
+	}
+	USA_unionization_of_wisconsin_suburbs = {
+		icon = oil
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_unionization_of_suburbia
+		}
+		fire_only_once = yes
+		cost = 20
+		days_remove = 35
+		ai_will_do = {
+			factor = 10
+		}
+		remove_effect = {
+			add_to_variable = {
+				var = USA_new_nationalism_pp_percent
+				value = 0.02
+			}
+			add_to_variable = {
+				var = USA_new_nationalism_factory_output
+				value = 0.02
+			}
+			add_to_variable = {
+				USA_new_nationalism_construction_speed = -0.02
+			}
+			custom_effect_tooltip = unionization.tt
+		}
+	}
+	USA_combat_socialism_in_unions = {
+		icon = oil
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_concessions_to_unions
+		}
+		fire_only_once = yes
+		cost = 20
+		days_remove = 35
+		ai_will_do = {
+			factor = 10
+		}
+		remove_effect = {
+			add_popularity = {
+				ideology = communism
+				popularity = -0.03
+			}
+			add_stability = 0.05
+			add_political_power = 20
+		}
+	}
+	USA_designate_californian_land_for_reservation = {
+		icon = oil
+		allowed = {
+			original_tag = USA
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 478
+			}
 		}
 		available = {
-			has_capitulated = no
-			NOT = { has_idea = USA_idea_sending_foods }
-			FROM = {
-				has_capitulated = no
-				any_owned_state = {
-					is_coastal = yes
-					is_controlled_by = PREV
-				}
-				NOT = { has_idea = USA_idea_food_supply }
-			}
+			has_completed_focus = USA_continue_teddies_nature_preserves
 		}
-		fire_only_once = no
-		custom_cost_trigger = {
-			num_of_civilian_factories_available_for_projects > 5
+		visible = {
+			has_completed_focus = USA_continue_teddies_nature_preserves
 		}
-		custom_cost_text = decision_cost_5_civ
+		fire_only_once = yes
+		cost = 1
+		days_remove = 20
+		modifier = {
+			civilian_factory_use = 1
+		}
 		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				num_of_civilian_factories_available_for_projects < 10
+			factor = 10
+		}
+		remove_effect = {
+			hidden_effect = {
+				USA_progressive_loyalty_increase_effect = yes
+				USA_pp_refresh = yes
 			}
-			modifier = {
-				factor = 0
-				surrender_progress > 0.01
-			}
-			modifier = {
-				factor = 0
-				has_opinion = {
-					target = FROM
-					value < -30
-				}
-			}
-			modifier = {
-				factor = 0
-				FROM = { surrender_progress > 0.90 }
-			}
-			modifier = {
-				factor = 0
-				FROM = { 
-					OR = {
-						tag = RUS
-						tag = GER
-						tag = TUR
-						tag = AUS
-					}
-				 }
+			custom_effect_tooltip = USA_commies_support_taft
+		}
+	}
+	USA_designate_montanian_land_for_reservation = {
+		icon = oil
+		allowed = {
+			original_tag = USA
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 388
 			}
 		}
-		target_trigger = {
-			FROM = {
-				NOT = {
-					original_tag = ITA
-				}
-				NOT = {
-					has_country_flag = dont_want_usa_guns
-				}
-				is_major = yes
-				is_subject = no
-				NOT = {
-					has_war_with = ROOT
-				}
-				AND = {
-					OR = {
-						is_in_faction_with = ENT
-						is_in_faction_with = GER
-					}
-					has_war_with_major = yes
+		available = {
+			has_completed_focus = USA_continue_teddies_nature_preserves
+		}
+		visible = {
+			has_completed_focus = USA_continue_teddies_nature_preserves
+		}
+		fire_only_once = yes
+		cost = 1
+		days_remove = 20
+		modifier = {
+			civilian_factory_use = 1
+		}
+		ai_will_do = {
+			factor = 10
+		}
+		remove_effect = {
+			hidden_effect = {
+				USA_progressive_loyalty_increase_effect = yes
+				USA_pp_refresh = yes
+			}
+			custom_effect_tooltip = USA_commies_support_taft
+		}
+	}
+	USA_develop_alaskan_oil = {
+		icon = oil
+		allowed = {
+			original_tag = USA
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 463
+			}
+		}
+		available = {
+			has_completed_focus = USA_general_withdraw_act
+		}
+		visible = {
+			has_completed_focus = USA_general_withdraw_act
+		}
+		fire_only_once = yes
+		cost = 1
+		days_remove = 20
+		modifier = {
+			civilian_factory_use = 1
+		}
+		ai_will_do = {
+			factor = 10
+		}
+		remove_effect = {
+			463 = {
+				set_state_flag = daqing_oil_developed_1
+			}
+			463 = {
+				add_resource = {
+					type = oil
+					amount = 11
 				}
 			}
 		}
-		target_root_trigger = {
-			is_great_war_ongoing = yes
+	}
+	USA_oppose_consumerism = {
+		icon = GFX_decision_generic_political_address
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_crush_consumerism
 			NOT = {
-				has_war_with = CSA
-				has_war_with = USB
-				has_government = communism
-			}
-			is_subject = no
-			has_civil_war = no
-			FROM = {
-				any_owned_state = {
-					is_coastal = yes
-				}
+				has_idea = USA_consumer_based_economy25
 			}
 		}
-		complete_effect = {
-			FROM = { country_event = ww1_usa.142 }
+		visible = {
+			has_completed_focus = USA_crush_consumerism
 		}
-		days_re_enable = 140
+		days_remove = 20
+		cost = 25
+		remove_effect = {
+			USA_consumer_economy_improve = yes
+		}
+	}
+	USA_speak_to_congress = {
+		icon = GFX_decision_generic_political_address
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_support_the_war_preparedness_campaign
+		}
+		visible = {
+			has_completed_focus = USA_support_the_war_preparedness_campaign
+		}
+		fire_only_once = yes
+		days_remove = 20
+		cost = 25
+		remove_effect = {
+			USA_consumer_economy_improve = yes
+		}
+	}
+	USA_important_of_deterrence = {
+		icon = GFX_decision_eng_propaganda_campaigns
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_support_the_war_preparedness_campaign
+		}
+		visible = {
+			has_completed_focus = USA_support_the_war_preparedness_campaign
+		}
+		fire_only_once = yes
+		days_remove = 20
+		cost = 25
+		remove_effect = {
+			USA_consumer_economy_improve = yes
+		}
+	}
+	USA_rally_politicians_on_war_preparedness = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			has_completed_focus = USA_support_the_war_preparedness_campaign
+		}
+		visible = {
+			has_completed_focus = USA_support_the_war_preparedness_campaign
+		}
+		fire_only_once = yes
+		days_remove = 20
+		cost = 25
+		remove_effect = {
+			USA_consumer_economy_improve = yes
+		}
 	}
 }
 
-economy_decisions = {
-	USA_build_hales_bar_dam = {
-		icon = GFX_decision_generic_construction
+USA_legitimate_business_in_latin_america = {
+	USA_legitimate_business_in_dominica = {
+		cost = 20
+		days_remove = 547
+		allowed = {
+			original_tag = USA
+		}
 		visible = {
-			has_start_date < 1914.1.1
-			368 = {
-				dam_hydroelectric < 1
-				is_owned_by = ROOT
-			}
+			has_completed_focus = USA_best_pullout_game_west_of_the_atlantic
 		}
 		available = {
-			controls_state = 368
 		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 368
-			}
-		}
-		modifier = {
-			civilian_factory_use = 1
-		}
-		fire_only_once = yes
-		days_remove = 365
-		remove_effect = {
-			368 = {
+		complete_effect = {
+			random_core_state = {
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
-					type = dam_hydroelectric
+					type = industrial_complex
 					level = 1
-					province = 1758
 					instant_build = yes
 				}
 			}
+			DOM = {
+				random_core_state = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
 		}
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 100
-				date > 1912.11.1
+		remove_effect = {
+		}
+	}
+	USA_legitimate_business_in_honduras = {
+		cost = 20
+		days_remove = 547
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_best_pullout_game_west_of_the_atlantic
+		}
+		available = {
+		}
+		complete_effect = {
+			random_core_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			HON = {
+				random_core_state = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+		remove_effect = {
+		}
+	}
+	USA_legitimate_business_in_cuba = {
+		cost = 20
+		days_remove = 547
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_best_pullout_game_west_of_the_atlantic
+		}
+		available = {
+		}
+		complete_effect = {
+			random_core_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			CUB = {
+				random_core_state = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+		remove_effect = {
+		}
+	}
+}
+
+USA_congress_investigation_of_the_army = {
+	USA_show_division_exercise_results = {
+		days_remove = 20
+		fire_only_once = yes
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_show_our_weakness
+		}
+		available = {
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			army_experience = 20
+		}
+	}
+	USA_reveal_equipment_quality_issues = {
+		days_remove = 20
+		cost = 20
+		fire_only_once = yes
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_show_our_weakness
+		}
+		available = {
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			USA_consumer_economy_improve = yes
+		}
+	}
+	USA_complain_about_equipment_deficts = {
+		days_remove = 20
+		cost = 20
+		fire_only_once = yes
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_show_our_weakness
+		}
+		available = {
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			USA_consumer_economy_improve = yes
+		}
+	}
+	USA_lobby_for_more_priority_to_army = {
+		days_remove = 70
+		custom_cost_trigger = {
+			command_power > 24
+		}
+		fire_only_once = yes
+		custom_cost_text = decision_cost_CP_25
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_show_our_weakness
+		}
+		available = {
+		}
+		complete_effect = {
+			add_command_power = -25
+		}
+		remove_effect = {
+			USA_consumer_economy_improve = yes
+		}
+	}
+}
+
+USA_william_bryan_foreign_policy = {
+	USA_treaty_with_el_salvador = {
+		custom_cost_trigger = {
+			has_war_support > 0.01
+		}
+		fire_only_once = yes
+		custom_cost_text = decision_cost_WS_3
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_pursue_world_peace
+		}
+		available = {
+		}
+		complete_effect = {
+			add_political_power = 20
+			add_stability = 0.02
+			add_threat = -1
+			ELS = {
+				add_political_power = 50
+				add_stability = 0.05
+			}
+			hidden_effect = {
+				add_war_support = -0.01
+			}
+		}
+		remove_effect = {
+		}
+	}
+	USA_disputes_commission = {
+		cost = 15
+		days_remove = 120
+		custom_cost_trigger = {
+			has_war_support > 0.01
+		}
+		custom_cost_text = decision_cost_WS_3
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_pursue_world_peace
+		}
+		available = {
+		}
+		complete_effect = {
+			add_political_power = 20
+			add_stability = 0.02
+			add_threat = -2
+			hidden_effect = {
+				add_war_support = -0.01
+			}
+		}
+		remove_effect = {
+		}
+	}
+}
+
+USA_exploiting_latin_america = {
+	USA_expand_business_in_latin_america = {
+		cost = 100
+		days_remove = 50
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			check_variable = {
+				USA_expl_fu1 < 5
+			}
+		}
+		complete_effect = {
+			add_to_variable = {
+				USA_expl_fu1 = 1
+			}
+		}
+		remove_effect = {
+			USA_more_fat_stacks_in_central_america = yes
+			CUB = {
+				add_stability = -0.15
+			}
+			HON = {
+				add_stability = -0.15
+			}
+			DOM = {
+				add_stability = -0.15
 			}
 		}
 	}
-	USA_build_medina_dam = {
-		icon = GFX_decision_generic_construction
+	USA_pull_out_of_dominica = {
+		cost = 20
+		days_remove = 70
+		allowed = {
+			original_tag = USA
+		}
 		visible = {
-			has_start_date < 1914.1.1
-			375 = {
-				dam < 1
-				is_owned_by = ROOT
-			}
+			has_completed_focus = USA_best_pullout_game_west_of_the_atlantic
 		}
 		available = {
-			controls_state = 375
-		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 375
+			NOT = {
+				has_global_flag = USA_dom_collapse
 			}
 		}
-		modifier = {
-			civilian_factory_use = 1
-		}
-		fire_only_once = yes
-		days_remove = 365
-		remove_effect = {
-			375 = {
+		complete_effect = {
+			358 = {
+				add_extra_state_shared_building_slots = 3
 				add_building_construction = {
-					type = dam
-					level = 1
-					province = 12782
+					type = industrial_complex
+					level = 3
 					instant_build = yes
 				}
 			}
 		}
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 100
-				date > 1912.5.1
+		remove_effect = {
+		}
+	}
+	USA_political_backing_to_honduras = {
+		cost = 20
+		days_remove = 56
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			NOT = {
+				has_global_flag = USA_hon_collapse
+			}
+		}
+		complete_effect = {
+			HON = {
+				add_stability = 0.05
+			}
+		}
+		remove_effect = {
+		}
+	}
+	USA_political_backing_to_cuba = {
+		days_remove = 56
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+			NOT = {
+				has_global_flag = USA_cub_collapse
+			}
+		}
+		complete_effect = {
+			CUB = {
+				add_stability = 0.05
+			}
+		}
+		remove_effect = {
+		}
+	}
+	USA_political_backing_to_dominica = {
+		cost = 20
+		days_remove = 56
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		complete_effect = {
+			DOM = {
+				add_stability = 0.05
+			}
+		}
+		remove_effect = {
+		}
+	}
+}
+
+USA_western_excavation = {
+	USA_develop_utah_tungsten_extraction = {
+		icon = GFX_decision_tungsten
+		days_remove = 100
+		fire_only_once = yes
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			OR = {
+				has_completed_focus = USA_resource_development_department
+				has_completed_focus = USA_the_resources_of_war
+			}
+		}
+		modifier = {
+			civilian_factory_use = 3
+		}
+		available = {
+			has_completed_focus = USA_resource_development_department
+		}
+		remove_effect = {
+			380 = {
+				add_resource = {
+					type = tungsten
+					amount = 25
+				}
 			}
 		}
 	}
-	USA_build_theodor_roosevelt_dam = {
-		icon = GFX_decision_generic_construction
+	USA_new_mexico_aluminium = {
+		icon = GFX_decision_aluminium
+		days_remove = 100
+		fire_only_once = yes
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
 		visible = {
-			has_start_date < 1914.1.1
-			377 = {
-				dam_hydroelectric < 1
-				is_owned_by = ROOT
-			}
-		}
-		available = {
-			controls_state = 377
-		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 377
+			OR = {
+				has_completed_focus = USA_resource_development_department
+				has_completed_focus = USA_the_resources_of_war
 			}
 		}
 		modifier = {
-			civilian_factory_use = 1
+			civilian_factory_use = 3
 		}
-		fire_only_once = yes
-		days_remove = 365
+		available = {
+			has_completed_focus = USA_resource_development_department
+		}
 		remove_effect = {
-			377 = {
-				add_building_construction = {
-					type = dam_hydroelectric
-					level = 1
-					province = 7747
-					instant_build = yes
+			376 = {
+				add_resource = {
+					type = aluminium
+					amount = 23
 				}
-			}
-		}
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 100
 			}
 		}
 	}
-	USA_build_keokuk_dam = {
-		icon = GFX_decision_generic_construction
+	USA_nevada_resource_extraction = {
+		icon = GFX_decision_steel
+		days_remove = 100
+		fire_only_once = yes
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
 		visible = {
-			has_start_date < 1914.1.1
-			395 = {
-				dam_hydroelectric < 1
-				is_owned_by = ROOT
-			}
-		}
-		available = {
-			controls_state = 395
-		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 395
+			OR = {
+				has_completed_focus = USA_resource_development_department
+				has_completed_focus = USA_the_resources_of_war
 			}
 		}
 		modifier = {
-			civilian_factory_use = 1
+			civilian_factory_use = 3
 		}
-		fire_only_once = yes
-		days_remove = 365
+		available = {
+			has_completed_focus = USA_resource_development_department
+		}
 		remove_effect = {
-			395 = {
-				add_building_construction = {
-					type = dam_hydroelectric
-					level = 1
-					province = 10393
-					instant_build = yes
+			379 = {
+				add_resource = {
+					type = tungsten
+					amount = 20
+				}
+				add_resource = {
+					type = aluminum
+					amount = 20
 				}
 			}
 		}
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 100
-				date > 1912.5.1
+	}
+	USA_california_aluminium = {
+		icon = GFX_decision_aluminium
+		days_remove = 100
+		fire_only_once = yes
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			OR = {
+				has_completed_focus = USA_resource_development_department
+				has_completed_focus = USA_the_resources_of_war
 			}
+		}
+		modifier = {
+			civilian_factory_use = 3
+		}
+		available = {
+			has_completed_focus = USA_resource_development_department
+		}
+		remove_effect = {
+			378 = {
+				add_resource = {
+					type = aluminium
+					amount = 26
+				}
+			}
+		}
+	}
+	USA_oregon_chromium_excavation = {
+		icon = GFX_decision_chromium
+		days_remove = 100
+		fire_only_once = yes
+		cost = 20
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			OR = {
+				has_completed_focus = USA_resource_development_department
+				has_completed_focus = USA_the_resources_of_war
+			}
+		}
+		modifier = {
+			civilian_factory_use = 3
+		}
+		available = {
+			has_completed_focus = USA_resource_development_department
+		}
+		remove_effect = {
+			385 = {
+				add_resource = {
+					type = chromium
+					amount = 28
+				}
+			}
+		}
+	}
+	USA_lease_utah_land_for_tungsten = {
+		icon = GFX_decision_tungsten
+		days_remove = 70
+		fire_only_once = yes
+		cost = 0
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_lease_lands_to_private_companies
+		}
+		available = {
+			has_completed_focus = USA_lease_lands_to_private_companies
+			NOT = {
+				has_global_flag = USA_lease_land_dec
+			}
+		}
+		complete_effect = {
+			set_global_flag = {
+				flag = USA_lease_land_dec
+				days = 70
+				value = 1
+			}
+		}
+		remove_effect = {
+			380 = {
+				add_resource = {
+					type = tungsten
+					amount = 15
+				}
+				add_political_power = 15
+			}
+		}
+	}
+	USA_lease_new_mexico_aluminium = {
+		icon = GFX_decision_aluminium
+		days_remove = 70
+		fire_only_once = yes
+		cost = 0
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_lease_lands_to_private_companies
+		}
+		available = {
+			has_completed_focus = USA_lease_lands_to_private_companies
+			NOT = {
+				has_global_flag = USA_lease_land_dec
+			}
+		}
+		complete_effect = {
+			set_global_flag = {
+				flag = USA_lease_land_dec
+				days = 70
+				value = 1
+			}
+		}
+		remove_effect = {
+			376 = {
+				add_resource = {
+					type = aluminium
+					amount = 16
+				}
+				add_political_power = 15
+			}
+		}
+	}
+	USA_lease_nevada_land_mining = {
+		icon = GFX_decision_steel
+		days_remove = 70
+		fire_only_once = yes
+		cost = 0
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_lease_lands_to_private_companies
+		}
+		available = {
+			has_completed_focus = USA_lease_lands_to_private_companies
+			NOT = {
+				has_global_flag = USA_lease_land_dec
+			}
+		}
+		complete_effect = {
+			set_global_flag = {
+				flag = USA_lease_land_dec
+				days = 70
+				value = 1
+			}
+		}
+		remove_effect = {
+			379 = {
+				add_resource = {
+					type = aluminum
+					amount = 16
+				}
+				add_resource = {
+					type = tungsten
+					amount = 16
+				}
+				add_political_power = 15
+			}
+		}
+	}
+	USA_lease_california_aluminium_plants = {
+		icon = GFX_decision_aluminium
+		days_remove = 70
+		fire_only_once = yes
+		cost = 0
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_lease_lands_to_private_companies
+		}
+		available = {
+			has_completed_focus = USA_lease_lands_to_private_companies
+			NOT = {
+				has_global_flag = USA_lease_land_dec
+			}
+		}
+		complete_effect = {
+			set_global_flag = {
+				flag = USA_lease_land_dec
+				days = 70
+				value = 1
+			}
+		}
+		remove_effect = {
+			378 = {
+				add_resource = {
+					type = aluminium
+					amount = 15
+				}
+				add_political_power = 15
+			}
+		}
+	}
+	USA_lease_oregon_land_for_mining = {
+		icon = GFX_decision_chromium
+		days_remove = 70
+		fire_only_once = yes
+		cost = 0
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_lease_lands_to_private_companies
+		}
+		available = {
+			has_completed_focus = USA_lease_lands_to_private_companies
+			NOT = {
+				has_global_flag = USA_lease_land_dec
+			}
+		}
+		complete_effect = {
+			set_global_flag = {
+				flag = USA_lease_land_dec
+				days = 70
+				value = 1
+			}
+		}
+		remove_effect = {
+			385 = {
+				add_resource = {
+					type = chromium
+					amount = 16
+				}
+				add_political_power = 15
+			}
+		}
+	}
+}
+
+USA_west_coast_urbanization = {
+	USA_urbanize_washington = {
+		icon = GFX_decision_generic_construction
+		days_remove = 100
+		fire_only_once = yes
+		cost = 50
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_urbanization_efforts_out_west
+		}
+		modifier = {
+			civilian_factory_use = 4
+		}
+		remove_effect = {
+			386 = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				increase_state_category = yes
+			}
+		}
+	}
+	USA_urbanize_oregon = {
+		icon = GFX_decision_generic_construction
+		days_remove = 100
+		fire_only_once = yes
+		cost = 50
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_urbanization_efforts_out_west
+		}
+		modifier = {
+			civilian_factory_use = 4
+		}
+		remove_effect = {
+			385 = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				set_state_category = urban
+			}
+		}
+	}
+	USA_urbanize_california = {
+		icon = GFX_decision_generic_construction
+		days_remove = 100
+		fire_only_once = yes
+		cost = 50
+		allowed = {
+			original_tag = USA
+		}
+		visible = {
+			has_completed_focus = USA_urbanization_efforts_out_west
+		}
+		modifier = {
+			civilian_factory_use = 4
+		}
+		remove_effect = {
+			378 = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				increase_state_category = yes
+			}
+		}
+	}
+}
+
+USA_roosevelt_klan = {
+	USA_invest_in_the_south = {
+		days_remove = 30
+		cost = 25
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
+		visible = {
+			has_completed_focus = USA_southern_investments
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			USA_klan_improve = yes
+		}
+	}
+	USA_invest_in_the_south_education = {
+		days_remove = 30
+		cost = 25
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
+		visible = {
+			has_completed_focus = USA_a_few_bad_apples
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			USA_klan_improve = yes
+		}
+	}
+	USA_enforce_klan_ban = {
+		days_remove = 30
+		cost = 25
+		allowed = {
+			original_tag = USA
+		}
+		available = {
+		}
+		visible = {
+			has_completed_focus = USA_raid_klan_sites
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			USA_klan_improve = yes
+		}
+	}
+	USA_klan_ban = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			always = false
+		}
+		days_mission_timeout = 25
+		fire_only_once = yes
+		timeout_effect = {
+			IF = {
+				limit = {
+					NOT = {
+						has_global_flag = USA_klan_ban_5_days
+					}
+				}
+				activate_mission = USA_klan_ban
+				USA_klan_improve = yes
+			}
+			IF = {
+				limit = {
+					has_global_flag = USA_klan_ban_5_days
+				}
+				activate_mission = USA_klan_strengthen_10
+				USA_klan_improve = yes
+			}
+		}
+		complete_effect = {
+		}
+	}
+	USA_klan_ban_5 = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			always = false
+		}
+		days_mission_timeout = 20
+		fire_only_once = yes
+		timeout_effect = {
+			activate_mission = USA_klan_ban_5
+			USA_klan_improve = yes
+		}
+		complete_effect = {
+		}
+	}
+	USA_klan_strengthen = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			always = false
+		}
+		days_mission_timeout = 30
+		fire_only_once = yes
+		timeout_effect = {
+			IF = {
+				limit = {
+					NOT = {
+						has_global_flag = USA_klan_root_cause_days
+					}
+				}
+				activate_mission = USA_klan_strengthen
+				USA_klan_decline = yes
+			}
+			IF = {
+				limit = {
+					has_global_flag = USA_klan_root_cause_days
+				}
+				activate_mission = USA_klan_strengthen_10
+				USA_klan_decline = yes
+			}
+		}
+		complete_effect = {
+		}
+	}
+	USA_klan_strengthen_10 = {
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			always = false
+		}
+		priority = 100
+		available = {
+			always = false
+		}
+		days_mission_timeout = 40
+		fire_only_once = yes
+		timeout_effect = {
+			activate_mission = USA_klan_strengthen_10
+			USA_klan_decline = yes
+		}
+		complete_effect = {
+		}
+	}
+	USA_mcguigan_anti_klan = {
+		fire_only_once = yes
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = USA
+		}
+		activation = {
+			USA_dr_mcguigan = {
+				is_hired_as_advisor = yes
+			}
+		}
+		priority = 100
+		available = {
+			always = false
+		}
+		days_mission_timeout = 45
+		fire_only_once = yes
+		timeout_effect = {
+			activate_mission = USA_mcguigan_anti_klan
+			USA_klan_improve = yes
+		}
+		complete_effect = {
+		}
+	}
+}
+
+USA_foreign_policy_category_roosevelt = {
+	USA_threaten_for_virgin_islands = {
+		icon = GFX_decision_generic_operation
+		days_remove = 15
+		fire_only_once = yes
+		cost = 15
+		available = {
+			750 = {
+				is_owned_and_controlled_by = DEN
+			}
+		}
+		visible = {
+			has_completed_focus = USA_re_assert_bigstick_diplomacy
+		}
+		remove_effect = {
+			DEN = {
+				country_event = {
+					id = ww1_USA.113
+				}
+			}
+		}
+	}
+	USA_demand_samoa = {
+		icon = GFX_decision_generic_operation
+		days_remove = 15
+		fire_only_once = yes
+		cost = 15
+		available = {
+			798 = {
+				is_owned_and_controlled_by = GER
+			}
+		}
+		visible = {
+			has_completed_focus = USA_re_assert_bigstick_diplomacy
+		}
+		remove_effect = {
+			DEN = {
+				country_event = {
+					id = ww1_USA.115
+				}
+			}
+		}
+	}
+	USA_purchase_greenland_decision = {
+		icon = GFX_decision_generic_operation
+		days_remove = 15
+		fire_only_once = yes
+		cost = 15
+		available = {
+			101 = {
+				is_owned_and_controlled_by = DEN
+			}
+		}
+		visible = {
+			has_completed_focus = USA_purchase_greenland
+		}
+		remove_effect = {
+			DEN = {
+				country_event = {
+					id = ww1_USA.115
+				}
+			}
+		}
+	}
+	USA_banana_wars_honduras_invade = {
+		icon = GFX_decision_generic_ignite_civil_war
+		days_remove = 25
+		fire_only_once = yes
+		cost = 20
+		available = {
+			country_exists = HON
+		}
+		visible = {
+			has_completed_focus = USA_the_banana_wars
+		}
+		remove_effect = {
+			declare_war_on = {
+				target = HON
+				type = puppet_wargoal_focus
+			}
+			add_war_support = -0.02
+		}
+	}
+	USA_banana_wars_cuba_invade = {
+		icon = GFX_decision_generic_ignite_civil_war
+		days_remove = 25
+		fire_only_once = yes
+		cost = 20
+		available = {
+			country_exists = CUB
+		}
+		visible = {
+			has_completed_focus = USA_the_banana_wars
+		}
+		remove_effect = {
+			declare_war_on = {
+				target = CUB
+				type = puppet_wargoal_focus
+			}
+			add_war_support = -0.02
+		}
+	}
+	USA_banana_wars_dominican_invade = {
+		icon = GFX_decision_generic_ignite_civil_war
+		days_remove = 25
+		fire_only_once = yes
+		cost = 20
+		available = {
+			country_exists = DOM
+		}
+		visible = {
+			has_completed_focus = USA_the_banana_wars
+		}
+		remove_effect = {
+			declare_war_on = {
+				target = DOM
+				type = puppet_wargoal_focus
+			}
+			add_war_support = -0.02
+		}
+	}
+}
+
+USA_clark_defeat_progressives = {
+	USA_enforce_whip = {
+		icon = GFX_decision_generic_ignite_civil_war
+		days_remove = 90
+		fire_only_once = yes
+		cost = 20
+		available = {
+			original_tag = usa
+		}
+		visible = {
+			has_completed_focus = USA_enforce_party_whip
+		}
+		complete_effect = {
+			add_to_variable = {
+				USA_democrat_unity = 5
+			}
+			custom_effect_tooltip = modify_dem_unity5
+		}
+		remove_effect = {
+			
 		}
 	}
 }
