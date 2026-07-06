@@ -2553,6 +2553,7 @@ focus_tree = {
 				has_global_flag = somaliland_campaign
 			}	
 		}
+		will_lead_to_war_with = SOM
 		completion_reward = {
 			set_global_flag = somaliland_campaign
 			declare_war_on = {
@@ -3929,6 +3930,17 @@ focus_tree = {
 				id = AMR
 				value = 1
 			}
+			if = {
+				limit = {
+					owns_state = 183
+					TUR = {
+						has_contested_owner = 183
+					}
+				}
+				183 = {
+					remove_contested_owner = TUR
+				}
+			}
 		}
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
@@ -4560,13 +4572,8 @@ focus_tree = {
 			has_subject = EGY
 		}
 		bypass = {
-			OR = {
-				NOT = {
-					has_subject = EGY
-				}
-				TUR = {
-					has_completed_focus = TUR_kick_the_british_out_of_egypt
-				}
+			NOT = {
+				has_subject = EGY
 			}
 		}
 		completion_reward = {
@@ -5577,15 +5584,9 @@ focus_tree = {
 				has_war_with = PER
 			}
 			PER = {
-				OR = {
-					has_idea = PER_idea_foreign_reliance
-					any_owned_state = {
-						has_dynamic_modifier = {
-							modifier = per_british_sphere
-						}
-					}
-				}
+				has_dynamic_modifier = PER_foreign_influence_modifier
 			}
+			check_variable = { ENG.PER_foreign_influence > 0.1 }
 		}
 		x = -2
 		y = 0
@@ -5593,16 +5594,6 @@ focus_tree = {
 		completion_reward = {
 			effect_tooltip = {
 				PER = {
-					add_ideas = PER_idea_nationalised_oil
-					every_subject_country = {
-						limit = {
-							OR = {
-								owns_state = 413
-								owns_state = 412
-							}
-						}
-						add_ideas = PER_idea_nationalised_oil
-					}
 					if = {
 						limit = {
 							OR = {
@@ -5635,6 +5626,24 @@ focus_tree = {
 								give_resource_rights = {
 									receiver = ENG
 									state = 412
+								}
+							}
+						}
+					}
+					if = {
+						limit = {
+							OR = {
+								owns_state = 1246
+								any_subject_country = {
+									owns_state = 1246
+								}
+							}			
+						}
+						1246 = {
+							OWNER = {
+								give_resource_rights = {
+									receiver = ENG
+									state = 1246
 								}
 							}
 						}

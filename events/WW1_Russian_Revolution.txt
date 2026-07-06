@@ -300,6 +300,31 @@ country_event = {
 					add_idea = RUS_threat_of_revolution3
 				}
 			}
+			if = {
+				limit = {
+					CAU = {
+						OR = {
+							is_subject_of = ROOT
+							exists = no
+						}					
+					}
+				}
+				CAU = {
+					set_cosmetic_tag = TSCN
+					set_politics = {
+						ruling_party = neutrality
+						elections_allowed = no
+						long_name = TSCN_committee_party_long
+						name = TSCN_committee_party 
+					}
+				}
+				DON = {
+					DON_vasiliy_kharlamov = {
+						set_nationality = CAU
+						promote_character = civilian_dictatorship
+					}
+				}
+			}
 			news_event = {
 				hours = 6
 				id = rusrevolt.5
@@ -859,6 +884,12 @@ country_event = {
 				RUS = {
 					end_puppet = PREV
 				}
+				DON = {
+					add_ideas = RCW_inogorodnije_excluded
+				}
+				KUB = {
+					add_ideas = RCW_inogorodnije_excluded
+				}
 				leave_faction = yes
 				clr_country_flag = protectorate
 			}
@@ -881,6 +912,7 @@ country_event = {
 						add_ideas = {
 							CER_harbin_soviet # should be added earlier
 							CER_nominal_concession
+							RCW_lack_of_officers1
 						}
 						load_focus_tree = white_guard_focus
 					}
@@ -1036,13 +1068,12 @@ country_event = {
 	}
 	option = {
 		name = rusrevolt.602.e
-		GEO = {
+		CAU = {
 			change_tag_from = ROOT
 		}
 		trigger = {
 			is_ai = no
-			GEO = {
-				has_cosmetic_tag = GEO_TSCN_committee
+			CAU = {
 				exists = yes
 				is_ai = yes
 			}
@@ -1919,13 +1950,20 @@ country_event = {
 	}
 	immediate = {
 		hidden_effect = {
-			SOV = {    
+			SOV = {
 				every_owned_state = {
 					limit = {
 						region = 150
 					}
+					every_country = {
+						limit = {
+							has_war_with = SOV
+							controls_state = PREV
+						}
+						RSO = { give_military_access = PREV }
+					}
 					RSO = {
-						safe_transfer_state_to = yes
+						RCW_transfer_core_state_PREV = yes
 					}
 				}
 			}
@@ -1943,12 +1981,9 @@ country_event = {
 				every_other_country = {
 					limit = {
 						OR = {
-							tag = FRA
-							is_in_faction_with = FRA
-							AND = {
-								original_tag = RUS
-								has_war_with = SOV
-							}
+							tag = ENT
+							is_in_faction_with = ENT
+							is_actual_major = yes
 						}
 						NOT = { has_government = communism }
 					}
@@ -1965,6 +2000,7 @@ country_event = {
 				}
 				add_ideas = {
 					RUS_russian_civil_war
+					RCW_lack_of_officers1
 				}
 				declare_war_on = {
 					target = SOV

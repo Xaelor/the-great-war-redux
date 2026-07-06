@@ -3,9 +3,7 @@ RUS_no_garrision = {
 		tag = RUS
 	}
 	enable = {
-		NOT = {
-			tag = SOV
-		}
+		always = yes
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
@@ -180,7 +178,7 @@ RUS_fight_TUR = {
 	ai_strategy = {
 		type = front_control
 		country_trigger = {
-			has_country_flag = PER_gendarmerie_flag
+			has_country_flag = PER_defense_committee_flag
 			has_war_with = FROM
 		}
 		ratio = 0.1
@@ -191,7 +189,7 @@ RUS_fight_TUR = {
 	ai_strategy = {
 		type = front_unit_request
 		country_trigger = {
-			has_country_flag = PER_gendarmerie_flag
+			has_country_flag = PER_defense_committee_flag
 			has_war_with = FROM
 			is_ai = yes
 		}
@@ -201,6 +199,44 @@ RUS_fight_TUR = {
 		type = dont_defend_ally_borders
 		id = ARB
 		value = 1
+	}
+}
+
+RUS_special_military_operation_in_PER = {
+	allowed = {
+		tag = RUS
+	}
+	enable = {
+		OR = {
+			AND = {
+				focus_progress = {
+					focus = RUS_ultimatum_to_persia
+					progress > 0
+				}
+				NOT = {
+					has_completed_focus = RUS_ultimatum_to_persia
+				}
+			}
+			has_active_mission = RUS_secure_tehran
+			has_active_mission = RUS_invasion_of_persia
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = prepare_for_war
+		id = PER
+		value = 1
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = PER
+		value = 100
+	}
+	ai_strategy = {
+		type = front_control
+		tag = PER
+		execution_type = rush
+		execute_order = yes
 	}
 }
 
@@ -1753,6 +1789,9 @@ RUS_danish_belts_are_dangerous = {
 		tag = RUS
 	}
 	enable = {
+		NOT = {
+			tag = SOV
+		}
 		has_war_with = GER
 	}
 	abort_when_not_enabled = yes
@@ -1773,6 +1812,9 @@ RUS_great_retreatment = {
 		GER = {
 			has_idea = GER_focus_on_russian_front
 		}
+		NOT = {
+			tag = SOV
+		}
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
@@ -1781,13 +1823,17 @@ RUS_great_retreatment = {
 		id = RUS
 		states = {
 			1202
+			1264
+			1265
 			87
 			98
 			10
 			90
 			1201
 			92
+			1262
 			766
+			1263
 			1017
 			189
 			951

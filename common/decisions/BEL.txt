@@ -1,4 +1,5 @@
-GER_great_war = {
+TGWR_great_power_politics = {
+	#great_power_politics_great_war
 	BEL_enact_the_war_plan = {
 		name = BEL_enact_the_war_plan
 		icon = GFX_decision_hol_draw_up_staff_plans
@@ -12,6 +13,7 @@ GER_great_war = {
 		}
 		visible = {
 			has_country_flag = BEL_war_plans_created
+			great_power_politics_great_war_visible = yes
 		}
 		available = {
 			has_war = yes
@@ -38,10 +40,8 @@ GER_great_war = {
 		ai_will_do = {
 			factor = 500
 		}
-		visible = {
-			is_in_faction = no
-			is_subject = no
-			has_country_flag = BEL_tripartite_security_meeting
+		visible = {		
+			great_power_politics_great_war_visible = yes
 		}
 		available = {
 			OR = {
@@ -50,11 +50,19 @@ GER_great_war = {
 				has_defensive_war = yes
 			}
 		}
-		cancel_trigger = {
-			always = no
+		targets = {
+			ENT
+		}
+		target_root_trigger = {
+			is_in_faction = no
+			is_subject = no
+			has_country_flag = BEL_tripartite_security_meeting
+			NOT = {
+				has_global_flag = great_war_ends
+			}
 		}
 		complete_effect = {
-			FRA = {
+			ENT = {
 				set_country_flag = {
 					flag = FRA_say_yes_to_BEL
 					days = 30
@@ -63,7 +71,7 @@ GER_great_war = {
 			}
 		}
 		remove_effect = {
-			FRA = {
+			ENT = {
 				country_event = {
 					id = generic.2
 				}
