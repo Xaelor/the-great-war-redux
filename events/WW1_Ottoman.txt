@@ -65,6 +65,9 @@ country_event = { #ottoman revolt
 					}
 					transfer_state = var:global.occupied_state
 					set_capital = { state = var:global.occupied_state remember_old_capital = no }
+					every_owned_state = {
+						set_state_controller_to = THIS
+					}
 					if = {
 						limit = { capital_scope = { ALB_is_kosovar_state = yes } }
 						set_cosmetic_tag = ALB_boletini_flag
@@ -84,6 +87,10 @@ country_event = { #ottoman revolt
 							promote_character = { character = ALB_isa_boletini ideology = warlordism }
 							promote_character = { character = ALB_isa_boletini ideology = stratocracy }
 						}
+						every_owned_state = {
+							limit = { ALB_is_kosovar_state = no }
+							transfer_state_to = var:global.occupier_country
+						}
 					}
 					if = {
 						limit = { capital_scope = { ALB_is_northern_state = yes } }
@@ -97,6 +104,10 @@ country_event = { #ottoman revolt
 						}
 						promote_character = { character = ALB_ded_gjo_luli ideology = warlordism }
 						promote_character = { character = ALB_ded_gjo_luli ideology = stratocracy }
+						every_owned_state = {
+							limit = { ALB_is_northern_state = no }
+							transfer_state_to = var:global.occupier_country
+						}
 					}
 					if = {
 						limit = { capital_scope = { ALB_is_central_state = yes } }
@@ -110,6 +121,10 @@ country_event = { #ottoman revolt
 						}
 						promote_character = { character = ALB_esad_toptani ideology = warlordism }
 						promote_character = { character = ALB_esad_toptani ideology = stratocracy }
+						every_owned_state = {
+							limit = { ALB_is_central_state = no }
+							transfer_state_to = var:global.occupier_country
+						}
 					}
 					if = {
 						limit = { capital_scope = { ALB_is_southern_state = yes } }
@@ -123,21 +138,12 @@ country_event = { #ottoman revolt
 						}
 						promote_character = { character = ALB_cerciz_topulli ideology = warlordism }
 						promote_character = { character = ALB_cerciz_topulli ideology = stratocracy }
-					}
-					set_temp_variable = { global.new_occupied_country = THIS }
-					if = {
-						limit = { is_government_in_exile = yes }
 						every_owned_state = {
-							limit = {
-								NOT = {
-									is_controlled_by = THIS
-									state = var:global.occupied_state
-								}
-							}
-							set_state_controller_to = controller
-							set_state_owner_to = var:global.occupier_country
+							limit = { ALB_is_southern_state = no }
+							transfer_state_to = var:global.occupier_country
 						}
 					}
+					set_temp_variable = { global.new_occupied_country = THIS }
 				}
 			}
 			else_if = {
@@ -1064,17 +1070,6 @@ country_event = { #ottoman revolt
 				}
 			}
 		}
-		var:global.new_occupied_country = {
-			set_temp_variable = { global.occupied_country = THIS }
-			if = {
-				limit = { NOT = { has_country_flag = TUR_ongoing_rebellion_days } }
-				set_country_flag = TUR_ongoing_rebellion_days
-			}
-			if = {
-				limit = { is_government_in_exile = yes }
-				end_exile = THIS
-			}
-		}
 		var:global.occupied_country = {
 			if = {
 				limit = { has_rule = can_join_factions }
@@ -1116,7 +1111,7 @@ country_event = { #ottoman revolt
 					}
 					to_state_array = owned_controlled_states
 				}
-				set_state_controller_to = var:global.occupied_country
+				transfer_state_to = var:global.occupied_country
 				# create resistance units, number is relative to size of industry
 				set_temp_variable = { num_units_to_create = 1 }
 				if = {
@@ -1188,7 +1183,7 @@ country_event = { #ottoman revolt
 					}
 				}
 			}
-			# create war if necesarry
+			#create war if necesarry
 			if = {
 				limit = {
 					OR = {
@@ -1209,6 +1204,20 @@ country_event = { #ottoman revolt
 					has_war_with = var:global.occupier_country
 				}
 				var:global.occupier_country = { country_event = { id = ottoman.7 days = 3 } }
+			}
+		}
+		var:global.new_occupied_country = {
+			set_temp_variable = { global.occupied_country = THIS }
+			if = {
+				limit = { NOT = { has_country_flag = TUR_ongoing_rebellion_days } }
+				set_country_flag = TUR_ongoing_rebellion_days
+			}
+			if = {
+				limit = { is_government_in_exile = yes }
+				random_country = {
+					limit = { is_hosting_exile = PREV }
+					end_exile = PREV
+				}
 			}
 		}
 		if = {

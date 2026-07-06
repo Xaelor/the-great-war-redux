@@ -2,10 +2,16 @@ debug_decisions = {
 	TUR_trigger_check = {
 		allowed = { always = yes }
 		available = {
-			ALB = { has_idea = ALB_decentralized_independence_movement }
+			ALB = { is_government_in_exile = yes }
 		}
 		complete_effect = {
-			every_core_state = { transfer_state_to = USA }
+			if = {
+				limit = { is_government_in_exile = yes }
+				random_country = {
+					limit = { is_hosting_exile = ROOT }
+					end_exile = ROOT
+				}
+			}
 		}
 		ai_will_do = { base = 0 }
 	}
