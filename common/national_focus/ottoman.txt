@@ -2958,6 +2958,102 @@ focus_tree = {
 		ai_will_do = { base = 30 }
 	}
 	focus = {
+		id = TUR_increase_customs_taxes
+		icon = GFX_goal_generic_trade
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_OTTOMAN_DEBT
+		}
+		prerequisite = { focus = TUR_our_place_in_the_world }
+		x = -2
+		y = 1
+		relative_position_id = TUR_our_place_in_the_world
+		available = {
+			has_war_with_major = no
+			NOT = {
+				has_completed_focus = TUR_german_ottoman_alliance
+				has_completed_focus = TUR_our_traditional_allies
+			}
+		}
+		complete_tooltip = {
+			if = {
+				limit = { has_country_flag = TUR_increase_customs_taxes }
+				TUR_remove_debt_2_ALL = yes
+				custom_effect_tooltip = empty_space
+				add_timed_idea = { idea = TUR_increased_customs_taxes2 days = 365 }
+			}
+			else = { add_timed_idea = { idea = TUR_increased_customs_taxes days = 365 } }
+			add_power_balance_value = {
+				id = TUR_foreign_alignment
+				value = 0.05
+			}
+		}
+		completion_reward = {
+			if = {
+				limit = { has_variable = opda_consumer_goods }
+				TUR_remove_debt_1_ALL = yes
+				custom_effect_tooltip = empty_space
+				add_timed_idea = { idea = TUR_increased_customs_taxes2 days = 365 }
+				set_country_flag = TUR_increase_customs_taxes
+			}
+			else = { add_timed_idea = { idea = TUR_increased_customs_taxes days = 365 } }
+			add_power_balance_value = {
+				id = TUR_foreign_alignment
+				value = 0.05
+			}
+		}
+		ai_will_do = {
+			base = 20
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+	}
+	focus = {
+		id = TUR_renegotiate_railway_permits
+		icon = GFX_focus_generic_railroad
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_OTTOMAN_DEBT
+		}
+		prerequisite = { focus = TUR_our_place_in_the_world }
+		x = 2
+		y = 1
+		relative_position_id = TUR_our_place_in_the_world
+		available = {
+			TUR_international_standing_firm = yes
+			has_completed_focus = TUR_intensify_railway_construction
+			custom_trigger_tooltip = {
+				tooltip = TUR_OPDA_trigger_tooltip
+				OR = {
+					has_idea = TUR_OPDA_idea
+					has_idea = TUR_OPD_idea
+					has_idea = TUR_OPD_idea_2
+					has_idea = TUR_OPD_idea_3
+				}
+			}
+			NOT = {
+				has_completed_focus = TUR_german_ottoman_alliance
+				has_completed_focus = TUR_our_traditional_allies
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = TUR_renegotiate_railway_permits_tt
+			unlock_decision_tooltip = TUR_construct_samsun_sivas_line
+			unlock_decision_tooltip = TUR_construct_trabzon_egin_line
+			unlock_decision_tooltip = TUR_construct_sivas_ergani_line
+			unlock_decision_tooltip = TUR_construct_harput_van_line
+		}
+		ai_will_do = {
+			base = 20
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+	}
+	focus = {
 		id = TUR_law_on_churches
 		icon = GFX_TUR_law_on_churches
 		cost = 5
@@ -10242,7 +10338,7 @@ focus_tree = {
 				compare = greater_than_or_equals
 				tooltip = TUR_has_influence_tt
 			}
-			TUR_international_standing_is_firm = yes
+			TUR_international_standing_firm = yes
 		}
 		complete_tooltip = {
 			every_state = {
@@ -10930,7 +11026,7 @@ focus_tree = {
 			FOCUS_FILTER_HISTORICAL
 		}
 		prerequisite = { focus = TUR_negotiations_with_france }
-		x = 1
+		x = -1
 		y = 1
 		relative_position_id = TUR_negotiations_with_france
 		available = {
@@ -10955,59 +11051,6 @@ focus_tree = {
 		ai_will_do = { base = 30 }
 	}
 	focus = {
-		id = TUR_increase_customs_taxes
-		icon = GFX_goal_generic_trade
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_OTTOMAN_DEBT
-		}
-		prerequisite = { focus = TUR_negotiations_with_france }
-		x = -1
-		y = 1
-		relative_position_id = TUR_negotiations_with_france
-		available = {
-			NOT = { has_completed_focus = TUR_german_ottoman_alliance }
-			has_war_with_major = no
-			country_exists = ENG
-		}
-		complete_tooltip = {
-			if = {
-				limit = { has_country_flag = TUR_increase_customs_taxes }
-				TUR_remove_debt_2_ALL = yes
-				custom_effect_tooltip = empty_space
-				add_timed_idea = { idea = TUR_increased_customs_taxes2 days = 365 }
-			}
-			else = { add_timed_idea = { idea = TUR_increased_customs_taxes days = 365 } }
-			add_power_balance_value = {
-				id = TUR_foreign_alignment
-				value = 0.05
-			}
-		}
-		completion_reward = {
-			if = {
-				limit = { has_variable = opda_consumer_goods }
-				TUR_remove_debt_1_ALL = yes
-				custom_effect_tooltip = empty_space
-				add_timed_idea = { idea = TUR_increased_customs_taxes2 days = 365 }
-				set_country_flag = TUR_increase_customs_taxes
-			}
-			else = {
-				add_timed_idea = { idea = TUR_increased_customs_taxes days = 365 }
-			}
-			add_power_balance_value = {
-				id = TUR_foreign_alignment
-				value = 0.05
-			}
-		}
-		ai_will_do = {
-			base = 20
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-			}
-		}
-	}
-	focus = {
 		id = TUR_ratify_anglo_ottoman_convention
 		icon = GFX_focus_convention
 		cost = 5
@@ -11016,8 +11059,8 @@ focus_tree = {
 			FOCUS_FILTER_INDUSTRY
 		}
 		prerequisite = { focus = TUR_negotiations_with_france }
-		x = 2
-		y = 2
+		x = 1
+		y = 1
 		relative_position_id = TUR_negotiations_with_france
 		available = {
 			any_state = {
@@ -11032,10 +11075,13 @@ focus_tree = {
 					}
 				}
 			}
+			NOT = {
+				has_completed_focus = TUR_german_ottoman_alliance
+				has_war_with = ENG
+			}
 		}
 		completion_reward = {
 			set_global_flag = anglo_ottoman_convention_kuwait_and_qatar
-			add_political_power = 30
 			remove_state_claim = 656
 			remove_state_claim = 885
 			remove_state_claim = 904
@@ -11099,10 +11145,74 @@ focus_tree = {
 				}
 			}
 			hidden_effect = { news_event = { id = ww1_ottoman.42 hours = 6 } }
+			add_to_variable = {
+				tooltip = TUR_international_standing_var_tt
+				TUR_international_standing_var = 10
+			}
 			add_power_balance_value = {
 				id = TUR_foreign_alignment
 				value = 0.15
 			}
+		}
+		ai_will_do = {
+			base = 30
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+	}
+	focus = {
+		id = TUR_repurchase_cyprus
+		icon = GFX_focus_GRE_purchase_cyprus
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = TUR_ratify_anglo_ottoman_convention }
+		x = 1
+		y = 1
+		relative_position_id = TUR_ratify_anglo_ottoman_convention
+		available = {
+			TUR_international_standing_healthy = yes
+			NOT = {
+				has_completed_focus = TUR_german_ottoman_alliance
+				has_war_with = ENG
+			}
+		}
+		completion_reward = {
+			
+		}
+		ai_will_do = {
+			base = 30
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+	}
+	focus = {
+		id = TUR_demand_the_return_of_egypt
+		icon = GFX_focus_PER_march_to_nile
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = TUR_ratify_anglo_ottoman_convention }
+		x = 0
+		y = 2
+		relative_position_id = TUR_ratify_anglo_ottoman_convention
+		available = {
+			TUR_international_standing_healthy = yes
+			NOT = {
+				has_completed_focus = TUR_german_ottoman_alliance
+				has_war_with = ENG
+			}
+		}
+		completion_reward = {
+			
 		}
 		ai_will_do = {
 			base = 30
