@@ -11176,13 +11176,82 @@ focus_tree = {
 		relative_position_id = TUR_ratify_anglo_ottoman_convention
 		available = {
 			TUR_international_standing_healthy = yes
+			has_contested_owner = 183
 			NOT = {
 				has_completed_focus = TUR_german_ottoman_alliance
-				has_war_with = ENG
+				183 = { controller = { has_war_with = ROOT } }
+			}
+		}
+		complete_tooltip = {
+			random_country = {
+				limit = { has_country_flag = TUR_repurchase_cyprus }
+				country_event = { id = ottoman.308 hours = 8 }
+				custom_effect_tooltip = if_they_accept_tt
+				effect_tooltip = {
+					ROOT = {
+						transfer_state = 183
+						remove_contested_owner = 183
+					}
+					if = {
+						limit = { ROOT = { has_dynamic_modifier = { modifier = TUR_OPDA } } }
+						TUR_add_debt_7_THIS = yes
+					}
+					else = {
+						ROOT = {
+							add_timed_idea = {
+								idea = TUR_purchase_of_cyprus
+								days = 780
+							}
+						}
+						THIS = {
+							add_timed_idea = {
+								idea = TUR_sale_of_cyprus
+								days = 780
+							}
+						}
+					}
+					add_power_balance_value = {
+						id = TUR_foreign_alignment
+						value = 0.1
+					}
+				}
 			}
 		}
 		completion_reward = {
-			
+			random_country = {
+				limit = { owns_state = 183 }
+				country_event = { id = ottoman.308 hours = 8 }
+				custom_effect_tooltip = if_they_accept_tt
+				effect_tooltip = {
+					ROOT = {
+						transfer_state = 183
+						remove_contested_owner = 183
+					}
+					if = {
+						limit = { ROOT = { has_dynamic_modifier = { modifier = TUR_OPDA } } }
+						TUR_add_debt_7_THIS = yes
+					}
+					else = {
+						ROOT = {
+							add_timed_idea = {
+								idea = TUR_purchase_of_cyprus
+								days = 780
+							}
+						}
+						THIS = {
+							add_timed_idea = {
+								idea = TUR_sale_of_cyprus
+								days = 780
+							}
+						}
+					}
+					add_power_balance_value = {
+						id = TUR_foreign_alignment
+						value = 0.1
+					}
+				}
+				set_country_flag = TUR_repurchase_cyprus
+			}
 		}
 		ai_will_do = {
 			base = 30
@@ -11195,7 +11264,7 @@ focus_tree = {
 	focus = {
 		id = TUR_demand_the_return_of_egypt
 		icon = GFX_focus_PER_march_to_nile
-		cost = 5
+		cost = 10
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 			FOCUS_FILTER_INDUSTRY
@@ -11206,13 +11275,132 @@ focus_tree = {
 		relative_position_id = TUR_ratify_anglo_ottoman_convention
 		available = {
 			TUR_international_standing_healthy = yes
+			EGY = {
+				is_subject = yes
+				has_idea = EGY_veiled_protectorate
+			}
 			NOT = {
 				has_completed_focus = TUR_german_ottoman_alliance
-				has_war_with = ENG
+				EGY = { overlord = { has_war_with = ROOT } }
 			}
 		}
 		completion_reward = {
-			
+			if = {
+				limit = { EGY = { is_subject = yes } }
+				random_country = {
+					limit = { has_subject = EGY }
+					country_event = { id = ottoman.311 hours = 8 }
+					custom_effect_tooltip = if_they_accept_tt
+					effect_tooltip = {
+						ROOT = {
+							set_autonomy = {
+								target = EGY
+								autonomous_state = autonomy_tgwr_real_union
+								end_wars = yes
+								end_civil_wars = yes
+							}
+						}
+						EGY = {
+							remove_ideas = EGY_veiled_protectorate
+							give_military_access = PREV
+						}
+						if = {
+							limit = {
+								OR = {
+									EGY = { owns_state = 447 }
+									ROOT = { owns_state = 447 }
+								}
+							}
+							447 = { transfer_state_to = PREV }
+						}
+						if = {
+							limit = { EGY = { has_contested_owner = 447 } }
+							EGY = { remove_contested_owner = 447 }
+						}
+						if = {
+							limit = { ROOT = { has_dynamic_modifier = { modifier = TUR_OPDA } } }
+							TUR_add_debt_20_THIS = yes
+						}
+						else = {
+							ROOT = {
+								add_timed_idea = {
+									idea = TUR_compensating_for_egyptian_investments
+									days = 780
+								}
+							}
+							THIS = {
+								add_timed_idea = {
+									idea = TUR_egyptian_capital_flow
+									days = 780
+								}
+							}
+						}
+						ROOT = {
+							add_power_balance_value = {
+								id = TUR_foreign_alignment
+								value = 0.2
+							}
+						}
+					}
+				}
+			}
+			else = {
+				ENG = {
+					country_event = { id = ottoman.311 hours = 8 }
+					custom_effect_tooltip = if_they_accept_tt
+					effect_tooltip = {
+						ROOT = {
+							set_autonomy = {
+								target = EGY
+								autonomous_state = autonomy_tgwr_real_union
+								end_wars = yes
+								end_civil_wars = yes
+							}
+						}
+						EGY = {
+							remove_ideas = EGY_veiled_protectorate
+							give_military_access = PREV
+						}
+						if = {
+							limit = {
+								OR = {
+									EGY = { owns_state = 447 }
+									ROOT = { owns_state = 447 }
+								}
+							}
+							447 = { transfer_state_to = PREV }
+						}
+						if = {
+							limit = { EGY = { has_contested_owner = 447 } }
+							EGY = { remove_contested_owner = 447 }
+						}
+						if = {
+							limit = { ROOT = { has_dynamic_modifier = { modifier = TUR_OPDA } } }
+							TUR_add_debt_20_THIS = yes
+						}
+						else = {
+							ROOT = {
+								add_timed_idea = {
+									idea = TUR_compensating_for_egyptian_investments
+									days = 780
+								}
+							}
+							THIS = {
+								add_timed_idea = {
+									idea = TUR_egyptian_capital_flow
+									days = 780
+								}
+							}
+						}
+						ROOT = {
+							add_power_balance_value = {
+								id = TUR_foreign_alignment
+								value = 0.2
+							}
+						}
+					}
+				}
+			}
 		}
 		ai_will_do = {
 			base = 30

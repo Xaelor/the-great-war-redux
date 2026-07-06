@@ -21056,7 +21056,7 @@ country_event = { #balkan customs union invitation
 			modifier = {
 				has_opinion = {
 					target = FROM
-					value < -0
+					value < 0
 				}
 				add = 5
 			}
@@ -21202,7 +21202,7 @@ country_event = { #balkan customs union invitation
 			modifier = {
 				has_opinion = {
 					target = FROM
-					value < -0
+					value < 0
 				}
 				add = 5
 			}
@@ -21458,7 +21458,7 @@ country_event = { #ask senusiyya to join the war yes
 	}
 }
 
-country_event = { #ask senusiyya to join the war np
+country_event = { #ask senusiyya to join the war no
 	id = ottoman.307
 	title = ottoman.307.t
 	desc = ottoman.307.desc
@@ -21466,6 +21466,495 @@ country_event = { #ask senusiyya to join the war np
 	picture = GFX_report_event_generic_sign_treaty1
 	option = {
 		name = ottoman.307.a
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #ottomans ask to purchase cyprus
+	id = ottoman.308
+	title = ottoman.308.t
+	desc = ottoman.308.desc
+	is_triggered_only = yes
+	picture = GFX_report_event_cyprus_convention
+	option = {
+		name = ottoman.308.a
+		FROM = {
+			effect_tooltip = {
+				transfer_state = 183
+				remove_contested_owner = 183
+			}
+			hidden_effect = { country_event = { id = ottoman.308 hours = 8 } }
+		}
+		effect_tooltip = {
+			if = {
+				limit = { FROM = { has_dynamic_modifier = { modifier = TUR_OPDA } } }
+				TUR_add_debt_7_ROOT = yes
+			}
+			else = {
+				FROM = {
+					add_timed_idea = {
+						idea = TUR_purchase_of_cyprus
+						days = 780
+					}
+				}
+				add_timed_idea = {
+					idea = TUR_sale_of_cyprus
+					days = 780
+				}
+			}
+			FROM = {
+				add_power_balance_value = {
+					id = TUR_foreign_alignment
+					value = 0.1
+				}
+			}
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value > 75
+				}
+				add = 5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value > 50
+				}
+				add = 5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value > 25
+				}
+				add = 5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value < -30
+				}
+				add = -10
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value < -60
+				}
+				add = -10
+			}
+			modifier = {
+				FROM = {
+					is_power_balance_in_range = {
+						id = TUR_foreign_alignment
+						range = TUR_central_powers_alignment
+					}
+				}
+				factor = 0
+			}
+		}
+	}
+	option = {
+		name = ottoman.308.b
+		FROM = {
+			effect_tooltip = {
+				add_power_balance_value = {
+					id = TUR_foreign_alignment
+					value = -0.1
+				}
+			}
+			hidden_effect = { country_event = { id = ottoman.310 hours = 8 } }
+		}
+		ai_chance = {
+			base = 10
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value > 90
+				}
+				add = -5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value < 0
+				}
+				add = 5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value < -25
+				}
+				add = 5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value < -50
+				}
+				add = 5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value < -75
+				}
+				add = 5
+			}
+			modifier = {
+				FROM = {
+					is_power_balance_in_range = {
+						id = TUR_foreign_alignment
+						range = TUR_entente_alignment
+					}
+				}
+				factor = 0
+			}
+		}
+	}
+}
+
+country_event = { #ottomans ask to purchase cyprus yes
+	id = ottoman.309
+	title = ottoman.309.t
+	desc = ottoman.309.desc
+	is_triggered_only = yes
+	picture = GFX_report_event_cyprus_convention
+	option = {
+		name = ottoman.309.a
+		transfer_state = 183
+		remove_contested_owner = 183
+		if = {
+			limit = { has_dynamic_modifier = { modifier = TUR_OPDA } }
+			TUR_add_debt_7_FROM = yes
+		}
+		else = {
+			add_timed_idea = {
+				idea = TUR_purchase_of_cyprus
+				days = 780
+			}
+			FROM = {
+				add_timed_idea = {
+					idea = TUR_sale_of_cyprus
+					days = 780
+				}
+			}
+		}
+		add_power_balance_value = {
+			id = TUR_foreign_alignment
+			value = 0.1
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #ottomans ask to purchase cyprus yes
+	id = ottoman.310
+	title = ottoman.310.t
+	desc = ottoman.310.desc
+	is_triggered_only = yes
+	picture = GFX_report_event_cyprus_convention
+	option = {
+		name = ottoman.310.a
+		add_power_balance_value = {
+			id = TUR_foreign_alignment
+			value = -0.1
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #ottomans demands egypt
+	id = ottoman.311
+	title = ottoman.311.t
+	desc = ottoman.311.desc
+	is_triggered_only = yes
+	picture = GFX_report_event_ottomans_occupy_egypt
+	option = {
+		name = ottoman.311.a
+		effect_tooltip = {
+			hidden_effect = { EGY = { get_current_government_type = yes } }
+			FROM = {
+				set_autonomy = {
+					target = EGY
+					autonomous_state = autonomy_tgwr_real_union
+					end_wars = yes
+					end_civil_wars = yes
+				}
+			}
+			hidden_effect = { EGY = { restore_previous_government_type = yes } }
+			EGY = {
+				remove_ideas = EGY_veiled_protectorate
+				give_military_access = ROOT
+			}
+			if = {
+				limit = {
+					OR = {
+						EGY = { owns_state = 447 }
+						FROM = { owns_state = 447 }
+					}
+				}
+				447 = { transfer_state_to = ROOT }
+			}
+			if = {
+				limit = { EGY = { has_contested_owner = 447 } }
+				EGY = { remove_contested_owner = 447 }
+			}
+			if = {
+				limit = { FROM = { has_dynamic_modifier = { modifier = TUR_OPDA } } }
+				TUR_add_debt_20_ROOT = yes
+			}
+			else = {
+				FROM = {
+					add_timed_idea = {
+						idea = TUR_compensating_for_egyptian_investments
+						days = 780
+					}
+				}
+				add_timed_idea = {
+					idea = TUR_egyptian_capital_flow
+					days = 780
+				}
+			}
+			FROM = {
+				add_power_balance_value = {
+					id = TUR_foreign_alignment
+					value = 0.2
+				}
+			}
+		}
+		hidden_effect = { FROM = { country_event = { id = ottoman.311 hours = 8 } } }
+		ai_chance = {
+			base = 5
+			modifier = {
+				strength_ratio = {
+					tag = FROM
+					ratio < 2
+				}
+				add = 10
+			}
+			modifier = {
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+				add = 10
+			}
+			modifier = {
+				strength_ratio = {
+					tag = FROM
+					ratio < 0.5
+				}
+				add = 30
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value > 75
+				}
+				add = 5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value > 75
+				}
+				add = 5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value > 50
+				}
+				add = 5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value > 25
+				}
+				add = 5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value < -30
+				}
+				add = -10
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value < -60
+				}
+				add = -10
+			}
+			modifier = {
+				FROM = {
+					is_power_balance_in_range = {
+						id = TUR_foreign_alignment
+						range = TUR_central_powers_alignment
+					}
+				}
+				factor = 0
+			}
+		}
+	}
+	option = {
+		name = ottoman.311.b
+		FROM = {
+			effect_tooltip = {
+				add_power_balance_value = {
+					id = TUR_foreign_alignment
+					value = -0.2
+				}
+			}
+			hidden_effect = { country_event = { id = ottoman.313 hours = 8 } }
+		}
+		ai_chance = {
+			base = 15
+			modifier = {
+				strength_ratio = {
+					tag = FROM
+					ratio < 1
+				}
+				add = 5
+			}
+			modifier = {
+				strength_ratio = {
+					tag = FROM
+					ratio < 0.7
+				}
+				add = 5
+			}
+			modifier = {
+				strength_ratio = {
+					tag = FROM
+					ratio < 0.5
+				}
+				add = 5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value > 90
+				}
+				add = -5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value < 0
+				}
+				add = 5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value < -25
+				}
+				add = 5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value < -50
+				}
+				add = 5
+			}
+			modifier = {
+				has_opinion = {
+					target = FROM
+					value < -75
+				}
+				add = 5
+			}
+			modifier = {
+				FROM = {
+					is_power_balance_in_range = {
+						id = TUR_foreign_alignment
+						range = TUR_entente_alignment
+					}
+				}
+				add = -5
+			}
+		}
+	}
+}
+
+country_event = { #ottomans demands egypt yes
+	id = ottoman.312
+	title = ottoman.312.t
+	desc = ottoman.312.desc
+	is_triggered_only = yes
+	picture = GFX_report_event_ottomans_occupy_egypt
+	option = {
+		name = ottoman.312.a
+		hidden_effect = { EGY = { get_current_government_type = yes } }
+		set_autonomy = {
+			target = EGY
+			autonomous_state = autonomy_tgwr_real_union
+			end_wars = yes
+			end_civil_wars = yes
+		}
+		hidden_effect = { EGY = { restore_previous_government_type = yes } }
+		EGY = {
+			remove_ideas = EGY_veiled_protectorate
+			give_military_access = FROM
+		}
+		if = {
+			limit = {
+				OR = {
+					EGY = { owns_state = 447 }
+					ROOT = { owns_state = 447 }
+				}
+			}
+			447 = { transfer_state_to = FROM }
+		}
+		if = {
+			limit = { EGY = { has_contested_owner = 447 } }
+			EGY = { remove_contested_owner = 447 }
+		}
+		if = {
+			limit = { has_dynamic_modifier = { modifier = TUR_OPDA } }
+			TUR_add_debt_20_ROOT = yes
+		}
+		else = {
+			add_timed_idea = {
+				idea = TUR_compensating_for_egyptian_investments
+				days = 780
+			}
+			FROM = {
+				add_timed_idea = {
+					idea = TUR_egyptian_capital_flow
+					days = 780
+				}
+			}
+		}
+		add_power_balance_value = {
+			id = TUR_foreign_alignment
+			value = 0.2
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #ottomans demands egypt yes
+	id = ottoman.313
+	title = ottoman.313.t
+	desc = ottoman.313.desc
+	is_triggered_only = yes
+	picture = GFX_report_event_ottomans_occupy_egypt
+	option = {
+		name = ottoman.313.a
+		add_power_balance_value = {
+			id = TUR_foreign_alignment
+			value = -0.2
+		}
 		ai_chance = { base = 100 }
 	}
 }
