@@ -29,10 +29,10 @@ SER_cry_in_serbian = {
 			is_in_faction_with = THE
 			is_subject = yes
 			FRA = {
-				AND = {
-					is_in_faction_with = ROOT
-					owns_state = 345
-				}	
+				is_in_faction_with = ROOT
+				any_controlled_state = {
+					has_state_flag = french_salonika
+				}
 			}
 		}
 	}
@@ -114,6 +114,11 @@ SER_full_focus_on_austrians = {
 		value = -500
 	}
 	ai_strategy = {
+		type = dont_defend_ally_borders
+		id = MNT
+		value = 1
+	}
+	ai_strategy = {
 		type = front_unit_request
 		tag = MNT
 		value = -500
@@ -140,7 +145,12 @@ SER_big_army_before_ww1 = {
 		has_army_manpower = {
 			size < 230000
 		}
-		has_war = no #no stockpile problems
+		AND = {
+			has_war = no
+			NOT = {
+				has_global_flag = july_crisis_alert
+			}
+		}
 	}
 	abort_when_not_enabled = yes
 

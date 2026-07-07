@@ -1031,17 +1031,24 @@
 				limit = {
 					tag = TUR
 				}
-				country_event = ottoman.42
-				country_event = ottoman.45
-				country_event = ottoman.38
-				country_event = ottoman.118
-				country_event = ottoman.119
-				country_event = ottoman.151
-				country_event = ottoman.152
-				country_event = ottoman.153
-				country_event = ottoman.98
-				country_event = ottoman.164
-				country_event = ottoman.170
+				if = {
+					limit = { 
+						has_completed_focus = TUR_legacy_of_the_4th_lancers
+					}
+					country_event = ottoman.38
+				}
+				else = {					
+					country_event = ottoman.42
+					country_event = ottoman.45
+					country_event = ottoman.118
+					country_event = ottoman.119
+					country_event = ottoman.151
+					country_event = ottoman.152
+					country_event = ottoman.153
+					country_event = ottoman.98
+					country_event = ottoman.164
+					country_event = ottoman.170
+				}
 			}			
 			else_if = { ### Serbia ###
 				limit = {
@@ -2283,15 +2290,15 @@
 				}
 				if = {
 					limit = {
-						any_other_country = {
+						any_country_with_original_tag = {
+							original_tag_to_check = FRA
 							is_subject_of = GER
-							original_tag = FRA
 						}
 					}
-					random_other_country = {
+					random_country_with_original_tag = {
+						original_tag_to_check = FRA
 						limit = {
 							is_subject_of = GER
-							original_tag = FRA
 						}
 						annex_country = {
 							target = ROOT
@@ -2301,7 +2308,8 @@
 				else_if = {
 					limit = {
 						NOT = {
-							any_country = {
+							any_country_with_original_tag = {
+								original_tag_to_check = FRA
 								has_cosmetic_tag = FRP
 							}
 							GER = {
@@ -3746,15 +3754,15 @@
 				}
 				if = {
 					limit = {
-						any_other_country = {
+						any_country_with_original_tag = {
+							original_tag_to_check = FRA
 							is_subject_of = GER
-							original_tag = FRA
 						}
 					}
-					random_other_country = {
+					random_country_with_original_tag = {
+						original_tag_to_check = FRA
 						limit = {
 							is_subject_of = GER
-							original_tag = FRA
 						}
 						annex_country = {
 							target = ROOT
@@ -3764,7 +3772,8 @@
 				else_if = {
 					limit = {
 						NOT = {
-							any_country = {
+							any_country_with_original_tag = {
+								original_tag_to_check = FRA
 								has_cosmetic_tag = FRP
 							}
 							GER = {
@@ -4619,6 +4628,19 @@
 					modifier = SIA_french_sphere
 				}
 			}
+			#Occupation of Tabriz
+			419 = {
+				set_compliance = 20
+				set_resistance = 25
+			}
+			877 = {
+				set_compliance = 5
+				set_resistance = 45
+			}
+			1212 = {
+				set_compliance = 15
+				set_resistance = 30
+			}
 			#Occupation Laws
 			## Fix occupation laws on startup
 			random_country = {
@@ -5080,8 +5102,6 @@
 						40 = { GER = { } }
 					}
 				}
-				
-				activate_mission = GER_election1
 			}
 			HOL = {
 				if = {
@@ -5833,15 +5853,38 @@
 				limit = { 
 					tag = SIB
 					has_war_with = SOV
-					has_country_leader = {
-						character = RUS_alexander_kolchak
+				}
+				if = {
+					limit = {
+						has_country_leader = {
+							character = RUS_alexander_kolchak
+						}
+						NOT = {
+							has_global_flag = kolchak_dead
+						}
 					}
-					NOT = {
-						has_global_flag = kolchak_dead
+					news_event = ww1_siberia.101
+				}
+				else = {
+					if = {
+						limit = {
+							SOV = {
+								has_subject = FER
+							}
+						}
+						every_owned_state = {
+							limit = {
+								OR = {
+									region = 148
+									state = 563
+									state = 564
+								}
+							}
+							transfer_state_to = FER
+						}
 					}
 				}
-				news_event = ww1_siberia.101
-			}	
+			}
 			# Post War Whites	
 			if = {
 				limit = {
@@ -6303,8 +6346,8 @@
 			if = {
 				limit = {
 					tag = JAP
-					any_other_country = {
-						original_tag = JAP
+					any_country_with_original_tag = {
+						original_tag_to_check = JAP
 						has_war_with = PREV
 						has_country_leader = {
 							character = JAP_tokugawa_iesato
@@ -6698,62 +6741,6 @@
 			}
 			if = {
 				limit = {
-					original_tag = PER
-					FROM = {
-						original_tag = PER
-						has_country_flag = PER_gendarmerie_flag
-					}
-				}
-				FROM = {
-					transfer_navy = {
-						target = ROOT
-					}
-					every_enemy_country = {
-						ROOT = {
-							add_to_war = {
-								targeted_alliance = FROM
-								enemy = PREV
-							}
-						}
-					}
-				}
-				annex_country = {
-					target = FROM
-				}
-				set_politics = {
-					ruling_party = fascism
-					elections_allowed = no
-				}
-				add_popularity = {
-					ideology = fascism
-					popularity = 0.35
-				}
-				create_country_leader = {
-					name = PER_persian_central_government
-					picture = "gfx/leaders/PER/PER_gendarmerie.png"					
-					ideology = stratocracy
-				}
-				add_ideas = standing_alone
-				set_country_flag = PER_gendarmerie_flag
-				clear_all_relations = yes
-				change_tag_from = FROM
-			}
-			if = {
-				limit = {
-					original_tag = PER
-					has_country_flag = PER_gendarmerie_flag
-				}
-				transfer_navy = {
-					target = PER
-				}
-				PER = {
-					annex_country = {
-						target = ROOT
-					}
-				}
-			}
-			if = {
-				limit = {
 					original_tag = JAP
 					FROM = {
 						original_tag = GER
@@ -7077,8 +7064,9 @@
 							}
 							transfer_state = 330
 							transfer_state = 982
-							transfer_state = 1128
-							transfer_state = 1129
+							transfer_state = 983
+							transfer_state = 1228
+							transfer_state = 1229
 							drop_cosmetic_tag = yes
 							retire_character = RUS_roman_ungern_sternberg
 							retire_character = TBK_boris_rezukhin
@@ -8372,10 +8360,7 @@
 				FROM = {
 					every_character = {
 						limit = {
-							OR = {
-								can_be_country_leader = yes
-								is_unit_leader = yes	
-							}
+							is_generic_character = no
 						}
 						set_nationality = ROOT
 					}
@@ -8545,12 +8530,79 @@
 					original_tag = PER
 				}
 				set_capital = { state = 266 }
+				FROM = {
+					every_character = {
+						limit = {
+							is_generic_character = no
+						}
+						set_nationality = ROOT
+					}
+				}
+				if = {
+					limit = {
+						NOT = { has_government = communism }						
+					}
+					PER_mirza_kuchik_khan = {
+						promote_character = religious_communism
+					}
+					PER_soleyman_eskandari = {
+						promote_character = reformist_socialism
+					}				
+				}
+				if = {
+					limit = {
+						NOT = { has_government = democratic }						
+					}
+					PER_soleyman_eskandari = {
+						promote_character = social_democracy
+					}				
+				}
+				if = {
+					limit = {
+						NOT = { has_government = fascism }						
+					}
+					PER_nezam_us_saltaneh = {
+						promote_character = stratocracy
+					}				
+				}
+				else_if = {
+					limit = {
+						has_country_leader = {
+							character = PER_nezam_us_saltaneh
+						}
+					}
+					remove_ideas = standing_alone
+					set_politics = {
+						ruling_party = neutrality
+						name = PER_fascism_party
+						long_name = PER_fascism_party
+						elections_allowed = yes
+					}
+					add_popularity = {
+						ideology = fascism
+						popularity = -0.2
+					}
+					PER_nezam_us_saltaneh = {
+						if = {
+							limit = { has_ideology = authoritarian_democracy }
+							promote_character = authoritarian_democracy
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = authoritarian_democracy
+								}
+							}
+						}
+					}
+				}
 				if = {
 					limit = {
 						ARB = {
 							OR = {
 								is_subject = no
-								is_subject_of = PER
+								is_subject_of = FROM
 							}
 							OR = {
 								is_in_faction = no
@@ -8568,7 +8620,6 @@
 						get_current_government_type = yes
 					}
 					PER = {
-						set_capital = { state = 266 }
 						set_autonomy = {
 							target = ARB
 							autonomous_state = autonomy_integrated_puppet
@@ -8727,6 +8778,7 @@
 					FROM = {
 						every_character = { 
 							limit = {
+								is_generic_character = no
 								OR = {
 									is_character = ITA_leonida_bissolati
 									is_character = ITA_ivanoe_bonomi
@@ -9005,8 +9057,7 @@
 					state = 126
 				}
 			}
-			# British Civil War
-			if = {
+			else_if = {
 				limit = {
 					tag = GBR
 					FROM = { tag = UOB }
@@ -9060,7 +9111,7 @@
 				}
 			}
 			# Chinese Second Revolution
-			if = {
+			else_if = {
 				limit = {
 					tag = CHI
 					FROM = {
@@ -9112,7 +9163,7 @@
 					days = 280
 				}
 			}
-			if = {
+			else_if = {
 				limit = {
 					tag = CHR
 					FROM = { tag = CHI }

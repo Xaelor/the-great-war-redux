@@ -6298,22 +6298,7 @@ country_event = {
 	desc = ww1_romania.192.d
 	picture = GFX_report_event_generic_sign_treaty1
 	is_triggered_only = yes
-	option = {
-		name = ww1_romania.192.a
-		set_global_flag = ROM_belgrade_armistice
-		if = {
-			limit = {
-				original_tag = ROM
-			}
-			custom_effect_tooltip = ROM_armistice.tt
-			unlock_decision_tooltip = ROM_break_the_belgrade_armistice
-		}
-		if = {
-			limit = {
-				original_tag = HUN
-			}
-			custom_effect_tooltip = HUN_armistice.tt
-		}
+	immediate = {
 		hidden_effect = {
 			ROM = {
 				add_ideas = ROM_armistice
@@ -6356,6 +6341,23 @@ country_event = {
 					}
 				}
 			}
+		}
+	}
+	option = {
+		name = ww1_romania.192.a
+		set_global_flag = ROM_belgrade_armistice
+		if = {
+			limit = {
+				original_tag = ROM
+			}
+			custom_effect_tooltip = ROM_armistice.tt
+			unlock_decision_tooltip = ROM_break_the_belgrade_armistice
+		}
+		if = {
+			limit = {
+				original_tag = HUN
+			}
+			custom_effect_tooltip = HUN_armistice.tt
 		}
 	}
 }
@@ -6406,20 +6408,7 @@ country_event = {
 			}
 		}
 	}
-	option = {
-		name = ww1_romania.195.a
-		if = {
-			limit = {
-				original_tag = ROM
-			}
-			custom_effect_tooltip = ROM_armistice.tt
-		}
-		if = {
-			limit = {
-				original_tag = HUN
-			}
-			custom_effect_tooltip = HUN_armistice.tt
-		}
+	immediate = {
 		hidden_effect = {
 			ROM = {
 				add_ideas = ROM_armistice
@@ -6498,6 +6487,21 @@ country_event = {
 			}
 		}
 	}
+	option = {
+		name = ww1_romania.195.a
+		if = {
+			limit = {
+				original_tag = ROM
+			}
+			custom_effect_tooltip = ROM_armistice.tt
+		}
+		if = {
+			limit = {
+				original_tag = HUN
+			}
+			custom_effect_tooltip = HUN_armistice.tt
+		}
+	}
 }
 #hungary notified of new entente demarcation line
 country_event = {
@@ -6568,10 +6572,7 @@ country_event = {
 	desc = ww1_romania.197.d
 	is_triggered_only = yes
 	picture = GFX_report_event_romanian_soldiers
-	option = { #enforce the line ourselves
-		name = ww1_romania.197.a
-		set_global_flag = ROM_vix_note_rejected
-		custom_effect_tooltip = ROM_demarcations_broken.tt
+	immediate = {
 		hidden_effect = {
 			remove_ideas = ROM_armistice
 			every_state = {
@@ -6592,6 +6593,11 @@ country_event = {
 				remove_ideas = HUN_armistice
 			}
 		}
+	}
+	option = { #enforce the line ourselves
+		name = ww1_romania.197.a
+		set_global_flag = ROM_vix_note_rejected
+		custom_effect_tooltip = ROM_demarcations_broken.tt
 	}
 }
 #hungarian army collapses under romanian offensive
@@ -7156,5 +7162,58 @@ country_event = {
 				}
 			}
 		}
+	}
+}
+#polish romanian alliance
+country_event = {
+	id = ww1_romania.213
+	title = ww1_romania.213.t
+	desc = ww1_romania.213.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_sign_treaty1
+	option = {
+		name = ww1_romania.213.a
+		ai_chance = {
+			base = 100
+			modifier = {
+				has_same_ideology = yes
+				factor = 2
+			}
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 2
+			}
+		}
+		ROOT = {
+			give_guarantee = ROM
+		}
+		ROM = {
+			give_guarantee = ROOT
+			country_event = {
+				id = ww1_romania.214
+				days = 1
+			}
+		}
+	}
+	option = {
+		name = ww1_romania.213.b
+		ai_chance = {
+			base = 0
+			modifier = {
+				has_same_ideology = no
+				add = 5
+			}
+		}
+	}
+}
+#poland accepts
+country_event = {
+	id = ww1_romania.214
+	title = ww1_romania.214.t
+	desc = ww1_romania.214.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_sign_treaty1
+	option = {
+		name = ww1_romania.214.a
 	}
 }
