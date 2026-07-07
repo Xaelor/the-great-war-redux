@@ -1143,3 +1143,54 @@ news_event = {
 		}
 	}
 }
+
+country_event = { #ottoman victory in italo turkish war
+	id = ww1_italianturkish.23
+	title = ww1_italianturkish.23.t
+	desc = ww1_italianturkish.23.desc
+	is_triggered_only = yes
+	option = {
+		name = ww1_italianturkish.23.a
+		TUR_remove_debt_60_ITA = yes
+		add_timed_idea = {
+			idea = ITA_reparations_to_war2
+			days = 720
+		}
+		add_to_variable = {
+			tooltip = TUR_international_standing_var_tt
+			TUR_international_standing_var = 20
+		}
+		ai_chance = { factor = 100 }
+	}
+}
+
+country_event = { #ottoman defeat in italo turkish war
+	id = ww1_italianturkish.24
+	title = ww1_italianturkish.24.t
+	desc = ww1_italianturkish.24.desc
+	is_triggered_only = yes
+	option = {
+		name = ww1_italianturkish.24.a
+		effect_tooltip = {
+			every_state = {
+				limit = { has_state_flag = Libya_transfer_to_italy }
+				transfer_state_to = ITA
+			}
+			every_state = {
+				limit = { has_state_flag = Libya_transfer_to_senusiyya }
+				transfer_state_to = LBA
+			}
+			every_state = {
+				limit = { has_state_flag = TUR_trablusgarp }
+				remove_core_of = TUR
+			}
+			every_state = {
+				limit = { has_state_flag = dodecanese_transfer_to_italy }
+				transfer_state_to = ITA
+				add_contested_owner = TUR
+			}
+		}
+		TUR_reload_minority_values = yes
+		ai_chance = { factor = 100 }
+	}
+}

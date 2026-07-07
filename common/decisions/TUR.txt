@@ -11029,6 +11029,468 @@ TUR_millet_system = {
 }
 
 peace_deals = {
+	TUR_the_clock_is_ticking = {
+		name = ITA_the_clock_is_ticking
+		icon = GFX_decision_generic_nationalism
+		allowed = { original_tag = TUR }
+		fire_only_once = yes
+		is_good = no
+		days_mission_timeout = 550
+		selectable_mission = yes
+		activation = {
+			#has_war_with = ITA
+			#has_global_flag = italo_turkish_war
+			#NOT = {
+			#	has_global_flag = libyan_crisis_resolved
+			#	has_global_flag = no_more_libya_for_you
+			#	has_start_date > 1914.1.1
+			#}
+			always = yes
+		}
+		cancel_trigger = {
+			OR = {
+				ITA = { ITA_controls_every_libyan_state = yes }
+				custom_trigger_tooltip = {
+					tooltip = ITA_won_against_ottomans_tt
+					has_global_flag = ITA_won_against_ottomans
+				}
+			}
+		}
+		timeout_effect = {
+			white_peace = ITA
+			every_allied_country = { white_peace = ITA }
+			effect_tooltip = {
+				if = {
+					limit = { has_war_with = LBA }
+					ITA = { white_peace = LBA }
+				}
+			}
+			if = {
+				limit = { has_military_access_to = LBA }
+				diplomatic_relation = {
+					country = LBA
+					relation = military_access
+					active = no
+				}
+			}
+			if = {
+				limit = { gives_military_access_to = LBA }
+				LBA = {
+					diplomatic_relation = {
+						country = TUR
+						relation = military_access
+						active = no
+					}
+				}
+			}
+			TUR = {
+				country_event = { id = ww1_italianturkish.23 hours = 8 }
+				hidden_effect = {
+					if = {
+						limit = { has_template = "Libyan Irregulars" }
+						delete_unit_template_and_units = { division_template = "Libyan Irregulars" }
+					}
+				}
+			}
+		}
+		complete_effect = {
+			white_peace = ITA
+			every_allied_country = { white_peace = ITA }
+			effect_tooltip = {
+				if = {
+					limit = { has_war_with = LBA }
+					ITA = { white_peace = LBA }
+				}
+			}
+			if = {
+				limit = { has_military_access_to = LBA }
+				diplomatic_relation = {
+					country = LBA
+					relation = military_access
+					active = no
+				}
+			}
+			if = {
+				limit = { gives_military_access_to = LBA }
+				LBA = {
+					diplomatic_relation = {
+						country = TUR
+						relation = military_access
+						active = no
+					}
+				}
+			}
+			TUR = {
+				country_event = { id = ww1_italianturkish.24 hours = 8 }
+				hidden_effect = {
+					if = {
+						limit = { has_template = "Libyan Irregulars" }
+						delete_unit_template_and_units = { division_template = "Libyan Irregulars" }
+					}
+				}
+			}
+			effect_tooltip = {
+				every_state = {
+					limit = {
+						is_owned_by = TUR
+						has_state_flag = TUR_trablusgarp
+						OR = {
+							is_controlled_by = ITA
+							is_coastal = yes
+						}
+					}
+					transfer_state_to = ITA
+				}
+				every_state = {
+					limit = {
+						is_owned_by = TUR
+						is_core_of = LBA
+						OR = {
+							NOT = { is_controlled_by = ITA }
+							is_coastal = no
+							NOT = { has_state_flag = TUR_trablusgarp }
+						}
+					}
+					transfer_state_to = LBA
+				}
+			}
+			every_state = {
+				limit = { has_state_flag = TUR_trablusgarp }
+				remove_core_of = TUR
+			}
+			if = {
+				limit = { war_length_with = { tag = ROOT months < 1 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_30
+					TUR_government_stability_var = -30
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 2 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_28
+					TUR_government_stability_var = -28
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 3 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_26
+					TUR_government_stability_var = -26
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 4 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_24
+					TUR_government_stability_var = -24
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 5 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_22
+					TUR_government_stability_var = -22
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 6 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_20
+					TUR_government_stability_var = -20
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 7 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_18
+					TUR_government_stability_var = -18
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 8 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_16
+					TUR_government_stability_var = -16
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 9 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_14
+					TUR_government_stability_var = -14
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 10 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_12
+					TUR_government_stability_var = -12
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 11 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_10
+					TUR_government_stability_var = -10
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 12 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_8
+					TUR_government_stability_var = -8
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 13 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_6
+					TUR_government_stability_var = -6
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 14 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_4
+					TUR_government_stability_var = -4
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 15 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_2
+					TUR_government_stability_var = -2
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+		}
+		cancel_effect = {
+			effect_tooltip = {
+				white_peace = ITA
+				if = {
+					limit = { has_war_with = LBA }
+					ITA = { white_peace = LBA }
+				}
+			}
+			TUR = {
+				country_event = { id = ww1_italianturkish.24 hours = 8 }
+				hidden_effect = {
+					if = {
+						limit = { has_template = "Libyan Irregulars" }
+						delete_unit_template_and_units = { division_template = "Libyan Irregulars" }
+					}
+				}
+			}
+			effect_tooltip = {
+				every_state = {
+					limit = {
+						is_owned_by = TUR
+						has_state_flag = TUR_trablusgarp
+						OR = {
+							is_controlled_by = ITA
+							is_coastal = yes
+						}
+					}
+					transfer_state_to = ITA
+				}
+				every_state = {
+					limit = {
+						is_owned_by = TUR
+						is_core_of = LBA
+						OR = {
+							NOT = { is_controlled_by = ITA }
+							is_coastal = no
+							NOT = { has_state_flag = TUR_trablusgarp }
+						}
+					}
+					transfer_state_to = LBA
+				}
+			}
+			every_state = {
+				limit = { has_state_flag = TUR_trablusgarp }
+				remove_core_of = TUR
+			}
+			if = {
+				limit = { any_owned_state = { has_state_flag = fallen_to_italy_ITA_TUR_war } }
+				effect_tooltip = {
+					every_owned_state = {
+						limit = { has_state_flag = fallen_to_italy_ITA_TUR_war }
+						transfer_state_to = ITA
+						if = {
+							limit = { NOT = { is_claimed_by = ITA } }
+							add_contested_owner = TUR
+						}
+					}
+					activate_mission = ITA_return_ottoman_islands_mission
+				}
+			}
+			if = {
+				limit = { war_length_with = { tag = ROOT months < 1 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_30
+					TUR_government_stability_var = -30
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 2 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_28
+					TUR_government_stability_var = -28
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 3 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_26
+					TUR_government_stability_var = -26
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 4 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_24
+					TUR_government_stability_var = -24
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 5 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_22
+					TUR_government_stability_var = -22
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 6 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_20
+					TUR_government_stability_var = -20
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 7 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_18
+					TUR_government_stability_var = -18
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 8 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_16
+					TUR_government_stability_var = -16
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 9 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_14
+					TUR_government_stability_var = -14
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 10 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_12
+					TUR_government_stability_var = -12
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 11 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_10
+					TUR_government_stability_var = -10
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 12 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_8
+					TUR_government_stability_var = -8
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 13 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_6
+					TUR_government_stability_var = -6
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 14 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_4
+					TUR_government_stability_var = -4
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+			else_if = {
+				limit = { war_length_with = { tag = ROOT months < 15 } }
+				add_to_variable = {
+					tooltip = TUR_government_stability_reduce_2
+					TUR_government_stability_var = -2
+				}
+				TUR_government_stability_calculate = yes
+				custom_effect_tooltip = TUR_dont_surrender_too_early_tt
+			}
+		}
+	}
 	TUR_sue_for_peace_ITA = {
 		icon = GFX_decision_eng_trade_unions_support
 		allowed = { tag = TUR }
