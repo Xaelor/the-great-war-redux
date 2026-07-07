@@ -4237,8 +4237,8 @@ country_event = {
 		has_country_flag = FRA_nationalist_france
 		is_subject = no
 		has_war = no
-		any_other_country = {
-			original_tag = FRA
+		any_country_with_original_tag = {
+			original_tag_to_check = FRA
 			is_subject_of = GER
 		}
 	}
@@ -6291,7 +6291,8 @@ country_event = {
 		tag = GER
 		has_character = GER_maximilian_von_spee
 		has_war_with = ENG
-		enemies_naval_strength_ratio > 1.2
+		#enemies_naval_strength_ratio > 1.2
+		GER_enemy_blockade_north_sea = yes
 		any_owned_state = {
 			is_on_continent = asia
 			any_other_country = {
@@ -6501,8 +6502,7 @@ country_event = {
 				add = 5
 				OR = {
 					is_neighbor_of = FROM
-					any_other_country = {
-						is_neighbor_of = ROOT
+					any_neighbor_country = {
 						is_subject_of = FROM
 					}
 				}
@@ -7360,12 +7360,15 @@ country_event = {
 		NOT = {
 			has_war_with = RUS
 			has_war_with = SOV
-			country_exists = BLR
+			country_exists = BPR
 		}
 	}
 	mean_time_to_happen = { days = 45 }
 	option = {
 		name = ww1_germany.167.a
+		trigger = {
+			is_GER_a_monarchy = yes
+		}
 		add_named_threat = {
 			threat = 5
 			name = ww1_germany.167.tt
@@ -7380,74 +7383,71 @@ country_event = {
 				}
 			}
 			remove_claim_by = ROOT
-			transfer_state_to = BLR
+			BPR = {
+				transfer_state = PREV #transfer_state_to breaks when a dynamic countries exist
+			}
 		}
-		puppet = BLR
+		puppet = BPR
+		BPR = {
+			setup_BLR_WHR = yes
+		}
 		hidden_effect = {
-			BLR = {
-				every_state = {
-					limit = {
-						has_contested_owner = PREV
-					}
-					remove_contested_owner = PREV
+			every_state = {
+				limit = {
+					has_contested_owner = BPR
 				}
-				set_politics = {
-					ruling_party = neutrality
-					long_name = BLR_hohenzollern_party 
-					name = BLR_hohenzollern_party
-					elections_allowed = no
-				}
-				set_popularities = {
-					democratic = 23
-					fascism = 10
-					communism = 5
-					neutrality = 62
-				}
-				set_cosmetic_tag = BLR_WHR
-				if = {
-					limit = {
-						ROOT = {
-							is_GER_a_monarchy = yes
-						}
-					}
-					if = {
-						limit = { date < 1929.4.20 }
-						BLR_genrikh = {
-							add_country_leader_role = {
-								promote_leader = yes
-								country_leader = {
-									ideology = semi_constitutional_monarchy
-									traits = { german_agent foreign_leader }
-								}
-							}
-						}
-						GER = {
-							GER_albert_wilhelm_heinrich = {
-								set_character_name = BLR_genrikh
-								set_nationality = BLR
-							}
-						}
-					}	
-					else = {
-						BLR_uladzimir = {
-							add_country_leader_role = {
-								promote_leader = yes
-								country_leader = {
-									ideology = semi_constitutional_monarchy
-								}
-							}
-						}
-						GER = {
-							retire_character = GER_albert_wilhelm_heinrich
-						}
-					}
-				}
+				remove_contested_owner = BPR
 			}
 		}
 		ai_chance = { base = 10 }
 	}
 	option = {
 		name = ww1_germany.167.b
+		every_owned_state = {
+			limit = {
+				is_core_of = BLR
+				NOT = {
+					is_core_of = ROOT
+					state = 913
+				}
+			}
+			remove_claim_by = ROOT
+			BPR = {
+				transfer_state = PREV  #transfer_state_to breaks when a dynamic countries exist
+			}
+		}
+		puppet = BPR	
+		hidden_effect = {
+			BPR = {
+				set_politics = {
+					ruling_party = democratic
+				}
+				promote_character = {
+					character = BLR_vaclau_lastouski
+					ideology = social_democracy
+				}
+				promote_character = {
+					character = BLR_vaclau_lastouski
+					ideology = authoritarian_democracy
+				}
+				set_popularities = {
+					fascism = 2
+					communism = 41
+					democratic = 4
+					neutrality = 53
+				}
+			}
+			every_state = {
+				limit = {
+					has_contested_owner = BPR
+				}
+				remove_contested_owner = BPR
+			}
+		}
+		ai_chance = { base = 15 }
+	}
+	option = {
+		name = ww1_germany.167.c
 		trigger = {
 			any_other_country = {
 				is_russian_tag = yes
@@ -7644,7 +7644,7 @@ country_event = {
 		days = 0
 	}
 	option = {
-		name = ww1_germany.167.b
+		name = ww1_germany.167.c
 		trigger = {
 			any_other_country = {
 				is_russian_tag = yes
@@ -7715,11 +7715,6 @@ country_event = {
 				}
 			}
 		}
-		add_named_threat = {
-			threat = 5
-			name = ww1_germany.169.tt
-		}
-		add_stability = -0.05
 		every_owned_state = {
 			limit = {
 				OR = {
@@ -7739,30 +7734,10 @@ country_event = {
 				}
 			}
 		}
-		ai_chance = { base = 0 }
+		ai_chance = { base = 10 }
 	}
 	option = {
 		name = ww1_germany.168.c
-		trigger = {
-			952 = {
-				owner = {
-					is_russian_tag = no
-					is_subject_of = ROOT
-				}
-			}
-			204 = {
-				owner = {
-					is_russian_tag = no
-					is_subject_of = ROOT
-				}
-			}
-			NOT = {
-				NWA = {
-					exists = yes
-					NOT = { has_war_with = ROOT }
-				}
-			}
-		}
 		add_named_threat = {
 			threat = 5
 			name = ww1_germany.169.tt
@@ -7786,15 +7761,25 @@ country_event = {
 				}
 			}
 		}
-		913 = {
-			remove_claim_by = ROOT
+		if = {
+			limit = {
+				owns_state = 913
+			}
+			remove_state_claim = 913
 			204 = {
 				owner = {
-					transfer_state = PREV.PREV
+					transfer_state = 913
 				}
 			}
 		}
-		ai_chance = { base = 0 }
+		ai_chance = {
+			base = 5 
+			modifier = {
+				factor = 4
+				has_subject = BPR
+				country_exists = BRS
+			}
+		}
 	}
 }
 
@@ -9465,7 +9450,10 @@ country_event = {
 		add_war_support = -0.05
 		if = {
 			limit = {
-				has_idea = GER_josias_von_heeringen
+				has_character = GER_josias_von_heeringen
+				GER_josias_von_heeringen = {
+					is_hired_as_advisor = yes
+				}
 			}
 			GER_josias_von_heeringen = {
 				remove_any_country_role_from_character = yes
@@ -12241,65 +12229,67 @@ country_event = {
 	}
 }
 
+
+# TOO UNSTABLE EVENT ON HISTORICAL, ships are still bugged and sometimes somehow cant perform missions when actually assigned on them, if ai controls the fleet
+# will be returned as soon as it will be fixed
 # Cracks in the Iron Ring
-country_event = {
-	id = ww1_germanrework.143
-	title = ww1_germanrework.143.t
-	desc = ww1_germanrework.143.d
-	picture = GFX_report_event_british_blockade
-	fire_only_once = yes
-	trigger = {
-		tag = GER
-		is_great_war_ongoing = yes
-		has_capitulated = no
-		has_war_with_major = yes
-		enemies_naval_strength_ratio < 1.3
-		NOT = {
-			enemies_naval_strength_ratio < 1
-			has_war_with = USA
-		}
-		OR = {
-			has_idea = GER_famine
-			has_idea = GER_food_shortages
-			has_active_mission = GER_mission_famine_timer
-			has_active_mission = GER_mission_food_shortages_timer
-		}
-	}
-	option = {
-		name = ww1_germanrework.143.a
-		if = {
-			limit = {
-				has_idea = GER_famine
-			}
-			swap_ideas = {
-				remove_idea = GER_famine
-				add_idea = GER_food_shortages
-			}
-			activate_mission = GER_mission_famine_timer
-		}
-		else_if = {
-			limit = {
-				has_active_mission = GER_mission_famine_timer
-			}
-			add_days_mission_timeout = {
-				mission = GER_mission_famine_timer 
-				days = 200 
-			}
-		}
-		else_if = {
-			limit = {
-				has_active_mission = GER_mission_food_shortages_timer
-			}
-			add_days_mission_timeout = {
-				mission = GER_mission_food_shortages_timer
-				days = 180
-			}
-		}
-		add_stability = 0.02
-		add_war_support = 0.03
-		add_political_power = 15
-	}
-}
+#country_event = {
+#	id = ww1_germanrework.143
+#	title = ww1_germanrework.143.t
+#	desc = ww1_germanrework.143.d
+#	picture = GFX_report_event_british_blockade
+#	fire_only_once = yes
+#	trigger = {
+#		tag = GER
+#		is_great_war_ongoing = yes
+#		has_capitulated = no
+#		has_war_with_major = yes
+#		has_naval_control = 173 # lets count as partly breakthrough of the blockade
+#		NOT = {
+#			has_war_with = USA
+#		}
+#		OR = {
+#			has_idea = GER_famine
+#			has_idea = GER_food_shortages
+#			has_active_mission = GER_mission_famine_timer
+#			has_active_mission = GER_mission_food_shortages_timer
+#		}
+#	}
+#	option = {
+#		name = ww1_germanrework.143.a
+#		if = {
+#			limit = {
+#				has_idea = GER_famine
+#			}
+#			swap_ideas = {
+#				remove_idea = GER_famine
+#				add_idea = GER_food_shortages
+#			}
+#			activate_mission = GER_mission_famine_timer
+#		}
+#		else_if = {
+#			limit = {
+#				has_active_mission = GER_mission_famine_timer
+#			}
+#			add_days_mission_timeout = {
+#				mission = GER_mission_famine_timer 
+#				days = 200 
+#			}
+#		}
+#		else_if = {
+#			limit = {
+#				has_active_mission = GER_mission_food_shortages_timer
+#			}
+#			add_days_mission_timeout = {
+#				mission = GER_mission_food_shortages_timer
+#				days = 180
+#			}
+#		}
+#		add_stability = 0.02
+#		add_war_support = 0.03
+#		add_political_power = 15
+#	}
+#}
 
 # Blockade shattered
 country_event = {
@@ -12333,7 +12323,8 @@ country_event = {
 			}
 			OR = {
 				ENG = { has_capitulated = yes }
-				enemies_naval_strength_ratio < 1
+				#enemies_naval_strength_ratio < 1
+				naval_dominance_north_sea = yes
 			}					
 		}
 	}
@@ -12341,8 +12332,18 @@ country_event = {
 		name = ww1_germanrework.144.a
 		custom_effect_tooltip = GER_blockade_broken_tt
 		hidden_effect = {
-			remove_ideas = GER_famine
-			remove_ideas = GER_food_shortages
+			if = {
+				limit = {
+					has_idea = GER_famine
+				}
+				remove_ideas = GER_famine
+			}
+			if = {
+				limit = { 
+					has_idea = GER_food_shortages
+				}
+				remove_ideas = GER_food_shortages
+			}
 		}
 		add_stability = 0.05
 		add_war_support = 0.05
@@ -13153,7 +13154,7 @@ country_event = {
 		deactivate_advisor = GER_theobald_von_bethmann_hollweg
 		activate_advisor = GER_georg_michaelis
 		add_ideas = GER_1912_conservative_federal_budget
-		set_country_flag = GER_conservative_1912_budget_passed_in_reichstag
+		set_country_flag = GER_conservative_1912_budget_passed
 	}
 	option = {
 		name = ww1_germanrework.172.a
@@ -13166,7 +13167,7 @@ country_event = {
 		deactivate_advisor = GER_georg_michaelis
 		activate_advisor = GER_georg_von_hertling
 		add_ideas = GER_1912_conservative_federal_budget
-		set_country_flag = GER_conservative_1912_budget_passed_in_reichstag
+		set_country_flag = GER_conservative_1912_budget_passed
 	}
 	option = {
 		name = ww1_germanrework.172.a
@@ -13184,7 +13185,7 @@ country_event = {
 		}
 		#kaiser force a konservativ budget
 		add_ideas = GER_1912_conservative_federal_budget
-		set_country_flag = GER_conservative_1912_budget_passed_in_reichstag
+		set_country_flag = GER_conservative_1912_budget_passed
 	}
 }
 
@@ -14173,9 +14174,9 @@ country_event = {
 				remove_country_leader_role = {
 					ideology = social_democracy
 				}
-				remove_country_leader_role = {
-					ideology = reformist_socialism
-				}
+				#remove_country_leader_role = {
+				#	ideology = reformist_socialism
+				#}
 			}
 		}
 	}

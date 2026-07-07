@@ -406,7 +406,7 @@ focus_tree = {
 	focus = {
 		id = GER_consolidate_pacific_holdings
 		icon = GFX_focus_GER_expand_pacific_holdings
-		cost = 5
+		cost = 4
 		relative_position_id = GER_a_new_colonial_secretary
 		x = -2
 		y = 1
@@ -595,7 +595,7 @@ focus_tree = {
 	focus = {
 		id = GER_musterkolonie_kiautschou
 		icon = GFX_focus_generic_infiltration
-		cost = 5
+		cost = 4
 		relative_position_id = GER_consolidate_pacific_holdings
 		x = 1
 		y = 1
@@ -646,7 +646,7 @@ focus_tree = {
 	focus = {
 		id = GER_forge_the_pacific_network
 		icon = GFX_focus_GER_sentinels_of_the_pacific
-		cost = 5
+		cost = 4
 		relative_position_id = GER_consolidate_pacific_holdings
 		x = -1
 		y = 1
@@ -661,6 +661,9 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
+			add_state_claim = 635 # New Caledonia
+			add_state_claim = 634 # Solomon Islands
+			add_state_claim = 641 # Tahiti
 			add_tech_bonus = {
 				name = GER_forge_the_pacific_network
 				category = radio_tech
@@ -2554,8 +2557,16 @@ focus_tree = {
 				focus = GER_introduce_new_tariff_laws
 		}
 		completion_reward = {
-			GER_josias_von_heeringen = {
-				remove_any_country_role_from_character = yes
+			if = {
+				limit = {
+					has_character = GER_josias_von_heeringen
+					GER_josias_von_heeringen = {
+						is_hired_as_advisor = yes
+					}
+				}
+				GER_josias_von_heeringen = {
+					remove_any_country_role_from_character = yes
+				}
 			}
 			activate_advisor = GER_erich_von_falkenhayn
 			unlock_decision_tooltip = GER_second_army_law_cen_reich
@@ -3016,6 +3027,11 @@ focus_tree = {
   					17
   				}
   			}
+			add_ai_strategy = {
+				type = declare_war
+				id = FRA
+				value = 200
+			}
 			if = {
 				limit = { 
 					RUS = {
@@ -3031,6 +3047,11 @@ focus_tree = {
 						1204
 						1203
 					}
+				}
+				add_ai_strategy = {
+					type = declare_war
+					id = RUS
+					value = 200
 				}
 			}
   		}
@@ -4319,7 +4340,17 @@ focus_tree = {
 		}
 		bypass = {
 			NOT = {
-				has_idea = GER_alfred_von_tirpitz
+				if = {
+					limit = { 
+						has_character = GER_alfred_von_tirpitz
+					}
+					GER_alfred_von_tirpitz = {
+						is_hired_as_advisor = yes
+					}
+				}
+				else = {
+					has_character = GER_alfred_von_tirpitz
+				}
 			}
 		}
 		prerequisite = {
@@ -4327,10 +4358,7 @@ focus_tree = {
 			focus = GER_fund_blohm_voss
 		}
 		completion_reward = {
-			swap_ideas = {
-				add_idea = GER_idea_naval_arms_race2
-				remove_idea = GER_idea_naval_arms_race
-			}
+			add_ideas = GER_idea_high_seas_fleet
 			add_doctrine_cost_reduction = {
 				name = GER_tirpitz_grand_fleet
 				cost_reduction = 0.5
@@ -4362,7 +4390,7 @@ focus_tree = {
 		y = 1
 		available = {
 			is_GER_a_monarchy = yes
-			enemies_naval_strength_ratio > 1.2
+			GER_enemy_blockade_north_sea = yes
 			NOT = { has_country_flag = great_war_loser }
 			if = {
 				limit = {
@@ -5012,7 +5040,7 @@ focus_tree = {
 			}
 		}
 		search_filters = {
-			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_HISTORICAL FOCUS_FILTER_COMPLETED_BY_EVENT
 		}
 	}
 	focus = {
@@ -5555,7 +5583,7 @@ focus_tree = {
 			}
 		}
 		search_filters = {
-			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_HISTORICAL FOCUS_FILTER_COMPLETED_BY_EVENT
 		}
 	}
 		focus = {
@@ -5729,7 +5757,19 @@ focus_tree = {
 			focus = GER_organise_fresh_offensives
 		}
 		completion_reward = {
-			increase_conscription = yes
+			if = {
+				limit = { 
+					OR = {
+						has_idea = service_by_requirement
+						has_idea = all_adults_serve
+						has_idea = scraping_the_barrel
+					}
+				}
+				add_political_power = 105
+			}
+			else = {
+				increase_conscription = yes
+			}
 		}
 		ai_will_do = {
 			factor = 10
@@ -6364,7 +6404,7 @@ focus_tree = {
 			hidden_effect = { add_ideas = GER_idea_coalition_benefits }
 		}
 		search_filters = {
-			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_HISTORICAL FOCUS_FILTER_COMPLETED_BY_EVENT
 		}
 	}
 	focus = {
@@ -8016,12 +8056,6 @@ focus_tree = {
 				}
 				remove_ideas = GER_idea_naval_arms_race
 			}
-			if = {
-				limit = {
-					has_idea = GER_idea_naval_arms_race2
-				}
-				remove_ideas = GER_idea_naval_arms_race2
-			}
 			hidden_effect = {
 				add_ideas = MTG_washington_naval_treaty_adherent
 				set_global_flag = MTG_naval_treaty_signatories
@@ -8409,6 +8443,12 @@ joint_focus = {
 		x = 29
 		y = 3
 		trigger = {
+			has_focus_tree = AUH_focus
+		}
+	}
+	joint_trigger = {
+		OR = {
+			has_focus_tree = german_focus
 			has_focus_tree = AUH_focus
 		}
 	}

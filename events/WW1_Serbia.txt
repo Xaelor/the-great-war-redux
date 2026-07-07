@@ -2162,15 +2162,17 @@ country_event = {
 		days = 2
 	}
 	trigger = {
+		OR = {
+			tag = ROM
+			tag = SER
+		}
+		is_subject = no
 		NOT = {
 			has_global_flag = ROM_SER_secret_alliance_war_trigger
 		}
 		has_global_flag = ROM_SER_secret_alliance_against_AUH
-		any_other_country = {
-			OR = {
-				tag = ROM
-				tag = SER
-			}
+		any_country_of = {
+			target = { ROM SER }
 			has_war_with = AUS
 		}
 		NOT = {
@@ -2178,12 +2180,7 @@ country_event = {
 			has_war_with = SER
 			has_war_with = ROM
 			has_global_flag = treaty_of_bucharest_1918
-		}
-		OR = {
-			tag = ROM
-			tag = SER
-		}
-		is_subject = no
+		}	
 	}
 	immediate = {
 		set_global_flag = ROM_SER_secret_alliance_war_trigger
@@ -3168,6 +3165,31 @@ country_event = {
 			target = AUS
 			type = take_core_state
 		}
+		add_ai_strategy = {
+			type = declare_war
+			id = AUS
+			value = 200
+		}
+		if = {
+			limit = {
+				BOS = {
+					is_subject_of = AUS
+				}
+			}
+			create_wargoal = {
+				target = BOS
+				type = take_core_state
+			}
+			add_ai_strategy = {
+				type = declare_war
+				id = BOS
+				value = 200
+			}
+		}
+		add_timed_idea = {
+			idea = SER_strike_against_austria_idea
+			days = 100
+		}
 		country_event = {
 			id = ww1_serbia.135
 			days = 2
@@ -3224,9 +3246,29 @@ country_event = {
 			type = take_core_state
 		}
 		add_ai_strategy = {
-			type = prepare_for_war
-			id = SER
-			value = 100
+			type = declare_war
+			id = AUS
+			value = 200
+		}
+		if = {
+			limit = {
+				BOS = {
+					is_subject_of = AUS
+				}
+			}
+			create_wargoal = {
+				target = BOS
+				type = take_core_state
+			}
+			add_ai_strategy = {
+				type = declare_war
+				id = BOS
+				value = 200
+			}
+		}
+		add_timed_idea = {
+			idea = SER_strike_against_austria_idea
+			days = 100
 		}
 	}
 }
@@ -3397,7 +3439,7 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_serbia.139.a
-		custom_effect_tooltip = GAME_OVER_TT
+		custom_effect_tooltip = GAME_OVER_TT	
 		FROM = {
 			annex_country = {
 				target = CRO
@@ -3451,6 +3493,12 @@ country_event = {
 					}
 					add_claim_by = PREV
 				}
+			}
+		}
+		if = {
+			limit = { has_character = AUH_dragutin_prica }
+			AUH_dragutin_prica = {
+				set_nationality = FROM
 			}
 		}
 	}
@@ -3726,44 +3774,83 @@ country_event = {
 	picture = GFX_report_event_generic_army
 	fire_only_once = yes
 	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			AUS = {
+				if = {
+					limit = {
+						has_war_with = BOS
+					}
+					if = {
+						limit = {
+							has_subject = HUN
+						}
+						BOS = {
+							clear_all_relations = yes
+							
+							PREV = {
+								set_autonomy = {
+									target = PREV
+									autonomy_state = autonomy_tgwr_condominium
+									freedom_level = 0.1
+								}
+							}
+							set_politics = {
+								ruling_party = neutrality
+								elections_allowed = yes 
+							}
+							set_popularities = {
+								fascism = 6
+								communism = 0
+								democratic = 36
+								neutrality = 58
+							}
+
+							add_ideas = AUH_condominium
+						}
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						original_tag = AUS
+						is_ally_with = AUS
+					}
+					has_war_with = BLL
+				}
+				every_other_country = {
+					limit = {
+						OR = {
+							tag = BLL
+							is_ally_with = BLL
+						}
+					}
+					set_country_flag = austria_vs_balkan_league_loser
+					white_peace = PREV
+				}
+				BLL = {
+					dismantle_faction = yes
+				}
+				every_state = {
+					limit = {
+						OWNER = {
+							has_country_flag = austria_vs_balkan_league_loser
+						}
+						OR = {
+							is_claimed_by = PREV
+							is_core_of = PREV
+						}
+					}
+					transfer_state_to = PREV
+				}
+			}
+		}
+	}
 	option = {
 		name = ww1_serbia.144.a
 		ai_chance = {
 			base = 50
-		}
-		every_country = {
-			limit = {
-				OR = {
-					original_tag = AUS
-					is_ally_with = AUS
-				}
-				has_war_with = BLL
-			}
-			every_other_country = {
-				limit = {
-					OR = {
-						tag = BLL
-						is_ally_with = BLL
-					}
-				}
-				set_country_flag = austria_vs_balkan_league_loser
-				white_peace = PREV
-			}
-			BLL = {
-				dismantle_faction = yes
-			}
-			every_state = {
-				limit = {
-					OWNER = {
-						has_country_flag = austria_vs_balkan_league_loser
-					}
-					OR = {
-						is_claimed_by = PREV
-						is_core_of = PREV
-					}
-				}
-				transfer_state_to = PREV
-			}
 		}
 		if = {
 			limit = {
@@ -3776,40 +3863,40 @@ country_event = {
 				transfer_troops = no
 			}
 		}
-		if = {
-			limit = {
-				NOT = {
-					has_war_with = ALB
-				}
-			}
-			if = {
-				limit = {
-					ALB = {
-						exists = no
-					}
-				}
-				puppet = ALB
-			}
-			every_state = {
-				limit = {
-					OWNER = {
-						has_country_flag = austria_vs_balkan_league_loser
-					}
-					is_core_of = ALB
-				}
-				transfer_state_to = ALB
-			}
-		}
-		if = {
-			limit = {
-				BUL = {
-					exists = yes
-					is_subject = no
-					has_country_flag = austria_vs_balkan_league_loser
-				}
-			}
-			puppet = BUL
-		}
+		# if = {
+		# 	limit = {
+		# 		NOT = {
+		# 			has_war_with = ALB
+		# 		}
+		# 	}
+		# 	if = {
+		# 		limit = {
+		# 			ALB = {
+		# 				exists = no
+		# 			}
+		# 		}
+		# 		puppet = ALB
+		# 	}
+		# 	every_state = {
+		# 		limit = {
+		# 			OWNER = {
+		# 				has_country_flag = austria_vs_balkan_league_loser
+		# 			}
+		# 			is_core_of = ALB
+		# 		}
+		# 		transfer_state_to = ALB
+		# 	}
+		# }
+		# if = {
+		# 	limit = {
+		# 		BUL = {
+		# 			exists = yes
+		# 			is_subject = no
+		# 			has_country_flag = austria_vs_balkan_league_loser
+		# 		}
+		# 	}
+		# 	puppet = BUL
+		# }
 		if = {
 			limit = {
 				SER = {
@@ -3819,30 +3906,75 @@ country_event = {
 				}
 			}
 			puppet = SER
+			SER = {
+				AUH_puppet_SER = yes
+			}
 		}
 		if = {
 			limit = {
-				is_in_faction_with = TUR
 				TUR = {
 					is_subject = no
-				}
-				GRE = {
-					exists = yes
-					is_subject = no
-					has_country_flag = austria_vs_balkan_league_loser
+					has_capitulated = no
 				}
 			}
 			TUR = {
-				puppet = GRE
+				annex_country = {
+					target = SMS
+				}
+				annex_country = {
+					target = IKR
+				}
+				set_autonomy = {
+					target = CRE
+					autonomy_state = autonomy_satellite
+					freedom_level = 0.8
+				}
+			}
+			if = {
+				limit = {
+					GRE = {
+						exists = yes
+						is_subject = no
+						has_country_flag = austria_vs_balkan_league_loser
+					}
+				}
+				TUR = {
+					transfer_state = 185
+				}
+			}
+			if = {
+				limit = {
+					BUL = {
+						exists = yes
+						is_subject = no
+						has_country_flag = austria_vs_balkan_league_loser
+					}
+				}
+				TUR = {
+					transfer_state = 212
+				}
+			}
+			if = {
+				limit = {
+					SER = {
+						exists = yes
+						is_subject = no
+						has_country_flag = austria_vs_balkan_league_loser
+					}
+				}
+				TUR = {
+					transfer_state = 821
+					transfer_state = 876
+				}
 			}
 		}
 	}
-	option = {
-		name = ww1_serbia.144.b
-		ai_chance = {
-			base = 0
-		}
-	}
+	# option = {
+	# 	name = ww1_serbia.144.b
+	# 	ai_chance = {
+	# 		base = 0
+	# 	}
+	# }
 }
 
 #if balkan alliance beat the austria, special peace conference

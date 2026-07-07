@@ -569,7 +569,6 @@ GER_release_UBD = {
 		limit = {
 			OR = {
 				is_owned_by = RUS
-				is_owned_by = SOV
 				is_owned_by = GER
 			}
 			OR = {
@@ -665,49 +664,63 @@ GER_release_UBD = {
 	}
 }
 GER_release_COU = {
-	every_state = {
+	if = {
 		limit = {
-			OR = {
-				is_owned_by = RUS
-				is_owned_by = SOV
-				is_owned_by = GER
+			any_state = {
+				is_core_of = COU
+				OR = {
+					is_owned_by = RUS
+					is_owned_by = GER
+				}
 			}
-			is_core_of = COU
 		}
-		transfer_state_to = COU
-		remove_russian_claims = yes
-		remove_russian_cores = yes
-	}
-	puppet = COU
-	hidden_effect = {
-		set_global_flag = COU_released
-		COU = {
-			if = {
-				limit = {
-					GER = {
-						is_GER_a_monarchy = yes
+		clr_country_flag = COU_should_be_released
+		every_state = {
+			limit = {
+				OR = {
+					is_owned_by = RUS
+					is_owned_by = GER
+				}
+				is_core_of = COU
+			}
+			transfer_state_to = COU
+			remove_russian_claims = yes
+			remove_russian_cores = yes
+		}
+		puppet = COU
+		hidden_effect = {
+			set_global_flag = COU_released
+			COU = {
+				if = {
+					limit = {
+						GER = {
+							is_GER_a_monarchy = yes
+						}
+					}
+					set_politics = {
+						ruling_party = neutrality
+						elections_allowed = no
+					}
+					set_popularities = {
+						democratic = 25
+						communism = 22
+						neutrality = 53
 					}
 				}
-				set_politics = {
-					ruling_party = neutrality
-					elections_allowed = no
-				}
-				set_popularities = {
-					democratic = 25
-					communism = 22
-					neutrality = 53
-				}
+				set_country_flag = released_by_germany
+				inherit_technology = GER
+				delete_obsolete_russian_templates = yes
 			}
-			set_country_flag = released_by_germany
-			inherit_technology = GER
-			delete_obsolete_russian_templates = yes
-		}
-		if = {
-			limit = {
-				GER = { has_idea = RUS_idea_armistice_cp }
+			if = {
+				limit = {
+					GER = { has_idea = RUS_idea_armistice_cp }
+				}
+				COU = { add_ideas = RUS_idea_armistice_cp }
 			}
-			COU = { add_ideas = RUS_idea_armistice_cp }
 		}
+	}
+	else = {
+		set_country_flag = COU_should_be_released
 	}
 }
 
@@ -1054,6 +1067,14 @@ clear_all_relations = {
 		}
 	}
 	every_other_country = {
+		limit = { has_market_access_with = PREV }
+		diplomatic_relation = {
+			country = PREV
+			relation = market_access_rights
+			active = no
+		}
+	}
+	every_other_country = {
 		limit = {
 			PREV = { has_wargoal_against = PREV }
 		}
@@ -1340,6 +1361,38 @@ clear_relations_with_PREV = {
 			country = PREV
 			relation = military_access
 			active = no
+		}
+	}
+	if = {
+		limit = { has_market_access_with = PREV }
+		diplomatic_relation = {
+			country = PREV
+			relation = market_access_rights
+			active = no
+		}
+	}
+	if = {
+		limit = { has_non_aggression_pact_with = PREV }
+		diplomatic_relation = {
+			country = PREV
+			relation = non_aggression_pact
+			active = no
+		}
+	}
+	if = {
+		limit = { has_wargoal_against = PREV }
+		remove_wargoal = {
+			type = all
+			target = PREV
+		}
+	}
+	if = {
+		limit = { PREV = { has_wargoal_against = PREV } }
+		PREV = {
+			remove_wargoal = {
+				type = all
+				target = PREV
+			}
 		}
 	}
 }
@@ -1720,7 +1773,10 @@ clear_iskolata = {
 				fascism = 0
 				communism = 20
 			}
-			remove_ideas = standing_alone
+			remove_ideas = {
+				standing_alone
+				SOV_idea_red_guard
+			}	
 		}
 	}
 }
@@ -3285,28 +3341,28 @@ set_up_syrian_monarchs = {
 }
 remove_all_tech_templates = {
 	if = {
-		limit = { has_template = "Marine Division" }
-		delete_unit_template_and_units = { division_template = "Marine Division" }
+		limit = { has_template = "Marines" }
+		delete_unit_template_and_units = { division_template = "Marines" }
 	}
 	if = {
-		limit = { has_template = "Mountaineer Division" }
-		delete_unit_template_and_units = { division_template = "Mountaineer Division" }
+		limit = { has_template = "Mountaineer-Division" }
+		delete_unit_template_and_units = { division_template = "Mountaineer-Division" }
 	}
 	if = {
-		limit = { has_template = "Motorized Division" }
-		delete_unit_template_and_units = { division_template = "Motorized Division" }
+		limit = { has_template = "Motorized-Division" }
+		delete_unit_template_and_units = { division_template = "Motorized-Division" }
 	}
 	if = {
-		limit = { has_template = "Armoured Division" }
-		delete_unit_template_and_units = { division_template = "Armoured Division" }
+		limit = { has_template = "Armored-Division" }
+		delete_unit_template_and_units = { division_template = "Armored-Division" }
 	}
 	if = {
-		limit = { has_template = "Medium Armor Division" }
-		delete_unit_template_and_units = { division_template = "Medium Armor Division" }
+		limit = { has_template = "Medium Tank Division" }
+		delete_unit_template_and_units = { division_template = "Medium Tank Division" }
 	}
 	if = {
-		limit = { has_template = "Heavy Armor Division" }
-		delete_unit_template_and_units = { division_template = "Heavy Armor Division" }
+		limit = { has_template = "Heavy Tank Division" }
+		delete_unit_template_and_units = { division_template = "Heavy Tank Division" }
 	}
 }
 remove_all_AI_templates = {
@@ -4804,4 +4860,173 @@ clear_all_ledgers = {
         limit = { has_idea = bureau_of_ordnance_spirit }
         remove_ideas = bureau_of_ordnance_spirit
     }
+}
+
+update_superevents = {
+	set_variable_to_random = global.superevent_update
+}
+clear_superevents = {
+	clr_country_flag = se_test
+	clr_country_flag = se_great_war
+	clr_country_flag = SE_war_of_the_worlds
+	clr_country_flag = SE_great_depression
+	clr_country_flag = SE_eng_republic
+	clr_country_flag = SE_eng_kitchener
+	clr_country_flag = SE_eng_george_v
+	clr_country_flag = SE_eng_imperial_federation
+	clr_country_flag = SE_fra_socialist
+	clr_country_flag = SE_fra_orleanist
+	clr_country_flag = SE_fra_bonapartist
+	clr_country_flag = SE_fra_legitimist
+	clr_country_flag = SE_fra_national_syndicalist
+	clr_country_flag = SE_fra_victory
+	clr_country_flag = SE_rus_victory_great_war
+	clr_country_flag = SE_rus_victory_great_war_republic
+	clr_country_flag = SE_rus_february_revolution
+	clr_country_flag = SE_rus_october_revolution
+	clr_country_flag = SE_rus_civil_war_winner_white
+	clr_country_flag = SE_rus_civil_war_winner_white_siberia
+	clr_country_flag = SE_rus_civil_war_winner_white_volunteer_army
+	clr_country_flag = SE_rus_civil_war_winner_red
+	clr_country_flag = SE_rus_civil_war_winner_eser
+	clr_country_flag = SE_mex_revolution
+	clr_country_flag = SE_chi_xinhai_revolution
+	clr_country_flag = SE_chi_warlord_era
+	clr_country_flag = SE_bul_bw2_winner
+	clr_country_flag = SE_ger_nazi
+	clr_country_flag = SE_rus_savinkov_revolution
+	clr_country_flag = SE_battle_of_verdun
+	clr_country_flag = SE_eng_fall_of_america
+	clr_country_flag = SE_ger_civil_war
+	clr_country_flag = SE_ger_victory
+	clr_country_flag = SE_gre_schism
+	clr_country_flag = SE_burning_of_smyrna
+	clr_country_flag = SE_balkan_war_1
+	clr_country_flag = SE_balkan_war_2
+	clr_country_flag = SE_gre_byzantium
+	clr_country_flag = SE_greeko_turkish_war
+	clr_country_flag = SE_balkan_fed
+	clr_country_flag = SE_arab_revolt
+}
+
+AI_give_heavy_tank_template = {
+	if = {
+		limit = { 
+			tag = ENG
+		}
+		division_template = {
+			name = "ENG AI Heavy Tank"
+			regiments = { 
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 0 y = 3 }
+				infantry = { x = 0 y = 4 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+				infantry = { x = 1 y = 3 }
+				infantry = { x = 1 y = 4 }
+				field_gun_brigade = { x = 2 y = 0 }
+				field_gun_brigade = { x = 2 y = 1 }
+				heavy_armor = { x = 3 y = 0 }
+			}
+			support = {
+				recon = { x = 0 y = 0 }
+				engineer = { x = 0 y = 1 }
+				maintenance_company = { x = 0 y = 2 }
+				logistics_company = { x = 0 y = 3 }							
+			}
+		}
+	}
+	else_if = {
+		limit = { 
+			tag = FRA
+		}
+		division_template = {
+			name = "FRA AI Heavy Tank"
+			regiments = { 
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 0 y = 3 }
+				infantry = { x = 0 y = 4 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+				infantry = { x = 1 y = 3 }
+				field_gun_brigade = { x = 2 y = 0 }
+				field_gun_brigade = { x = 2 y = 1 }
+				heavy_armor = { x = 3 y = 0 }
+			}
+			support = {
+				recon = { x = 0 y = 0 }
+				engineer = { x = 0 y = 1 }
+				maintenance_company = { x = 0 y = 2 }
+				logistics_company = { x = 0 y = 3 }							
+			}
+		}
+	}	
+}
+
+AI_give_medium_tank_template = {
+	if = {
+		limit = { 
+			tag = FRA
+		}
+		division_template = {
+			name = "FRA AI Medium Tank"
+			regiments = { 
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 0 y = 3 }
+				infantry = { x = 0 y = 4 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+				infantry = { x = 1 y = 3 }
+				field_gun_brigade = { x = 2 y = 0 }
+				field_gun_brigade = { x = 2 y = 1 }
+				medium_armor = { x = 3 y = 0 }
+			}
+			support = {
+				recon = { x = 0 y = 0 }
+				engineer = { x = 0 y = 1 }
+				maintenance_company = { x = 0 y = 2 }
+				logistics_company = { x = 0 y = 3 }							
+			}
+		}
+	}	
+}
+
+AI_give_light_tank_template = {
+	if = {
+		limit = { 
+			tag = FRA
+		}
+		division_template = {
+			name = "FRA AI Light Tank"
+			regiments = { 
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 0 y = 3 }
+				infantry = { x = 0 y = 4 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+				infantry = { x = 1 y = 3 }
+				field_gun_brigade = { x = 2 y = 0 }
+				field_gun_brigade = { x = 2 y = 1 }
+				light_armor = { x = 3 y = 0 }
+			}
+			support = {
+				recon = { x = 0 y = 0 }
+				engineer = { x = 0 y = 1 }
+				maintenance_company = { x = 0 y = 2 }
+				logistics_company = { x = 0 y = 3 }							
+			}
+		}
+	}	
 }

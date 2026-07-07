@@ -510,15 +510,14 @@ focus_tree = {
 		x = 1
 		y = 1
 		available = {
-			NOT = {
-				hidden_trigger = {
+			custom_trigger_tooltip = {
+				tooltip = SER_pig_war.tt
+				NOT = {
 					OR = {
 						has_idea = SER_idea_pig_war
 						has_idea = SER_idea_pig_war_1
 					}
 				}
-				has_idea = SER_idea_pig_war
-				has_war_with = AUS
 			}
 		}
 		prerequisite = {
@@ -1285,6 +1284,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SER_antagonize_the_king
+		dynamic = yes
 		icon = GFX_focus_rom_abdicate
 		cost = 5
 		prerequisite = {
@@ -2669,6 +2669,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SER_the_king_reign
+		dynamic = yes
 		icon = GFX_focus_POL_complete_april_constitution
 		cost = 10
 		relative_position_id = SER_the_regency_question
@@ -3353,17 +3354,21 @@ focus_tree = {
 		}
 		available = {
 			BOS = {
-				exists = no
+				OR = {
+					exists = no
+					AND = {
+						has_capitulated = yes
+						NOT = { has_war_with = ROOT }
+					}
+					AND = {
+						is_subject = yes
+						NOT = { is_subject_of = ROOT }
+					}
+				}
 			}
-			NOT = {
-				has_country_flag = SER_yugoslavia_formed
-			}
-			NOT = {
-				owns_state = 104
-			}
-			NOT = {
-				has_completed_focus = SER_Solun_process
-			}
+			NOT = { has_country_flag = SER_yugoslavia_formed }
+			NOT = { owns_state = 104 }
+			NOT = { has_completed_focus = SER_Solun_process }
 		}
 		completion_reward = {
 			104 = {
@@ -3493,30 +3498,8 @@ focus_tree = {
 	focus = {
 		id = SER_the_final_countdown
 		icon = GFX_focus_the_final_countdown
-		cost = 12
+		cost = 5
 		cancelable = no
-		select_effect = {
-			set_global_flag = SER_is_ploting_against_franze_joseph_instead			## franz ferdinand will not die when this focus is picked
-			country_event = {
-				id = ww1_serbia.112
-				days = 5
-			}
-			country_event = {
-				id = ww1_serbia.113
-				days = 20
-			}
-			AUS = {
-				##trouble in lemberg
-				country_event = {
-					id = ww1_serbia.114
-					days = 30
-				}
-			}
-			country_event = {
-				id = ww1_serbia.115
-				days = 50
-			}
-		}
 		x = -1
 		y = 1
 		relative_position_id = SER_ensure_russian_support
@@ -3536,12 +3519,32 @@ focus_tree = {
 				has_global_flag = AUH_franz_joseph_i_retired
 				has_global_flag = AUH_franz_ferdinand_killed_in_sarajevo
 			}
-			AUS = {
-				has_character = AUH_franz_joseph_i
-			}
+			AUS = { has_character = AUH_franz_joseph_i }
 		}
 		will_lead_to_war_with = AUS
 		completion_reward = {
+			hidden_effect = {
+				set_global_flag = SER_is_ploting_against_franze_joseph_instead			## franz ferdinand will not die when this focus is picked
+				country_event = {
+					id = ww1_serbia.112
+					days = 5
+				}
+				country_event = {
+					id = ww1_serbia.113
+					days = 20
+				}
+				AUS = {
+					##trouble in lemberg
+					country_event = {
+						id = ww1_serbia.114
+						days = 30
+					}
+				}
+				country_event = {
+					id = ww1_serbia.115
+					days = 50
+				}
+			}
 			custom_effect_tooltip = SER_attack_AUH_plan
 		}
 		search_filters = {
@@ -5348,6 +5351,9 @@ focus_tree = {
 				has_capitulated = yes
 			}
 		}
+		bypass = {
+			has_capitulated = yes
+		}
 		completion_reward = {
 			add_ideas = SER_idea_exodus
 			if = {
@@ -5371,9 +5377,55 @@ focus_tree = {
 					set_country_flag = FRA_exiled_serbian_forces
 				}
 			}
+			hidden_effect = {
+				add_equipment_to_stockpile = {
+					type = convoy
+					amount = 100
+				}
+			}
+		}
+		bypass_effect = {
+			add_ideas = SER_idea_exodus
+			if = {
+				limit = {
+					has_completed_focus = SER_treaty_with_Albania
+					ALB = {
+						has_war = no
+						is_subject = no
+						has_country_leader = {
+							character = ALB_essad_pasha_toptani
+						}
+					}
+				}
+				country_event = ww1_albania.8
+				custom_effect_tooltip = which_will_give_tt
+				event_option_tooltip = ww1_serbia.8.a
+			}
+			if = {
+				limit = {
+					has_war_together_with = FRA
+				}
+				FRA = {
+					set_country_flag = FRA_exiled_serbian_forces
+				}
+			}
+			hidden_effect = {
+				add_equipment_to_stockpile = {
+					type = convoy
+					amount = 100
+				}
+			}		
 		}
 		ai_will_do = {
-			factor = 1000
+			base = 0
+			modifier = {
+				add = 10000
+				OR = {
+					surrender_progress > 0.8
+					has_war_with = BUL
+					has_capitulated = yes
+				}
+			}
 		}
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
@@ -5395,8 +5447,8 @@ focus_tree = {
 		available = {
 			has_capitulated = yes
 			has_war = yes
-			any_other_country = {
-				original_tag = GRE
+			any_country_with_original_tag = {
+				original_tag_to_check = GRE
 				owns_state = 187
 				controls_state = 187
 				is_subject = no
@@ -6333,6 +6385,14 @@ focus_tree = {
 					}
 					add_core_of = ROOT
 				}
+				CRO = {
+					if = {
+						limit = { has_character = AUH_dragutin_prica }
+						AUH_dragutin_prica = {
+							set_nationality = ROOT
+						}
+					}
+				}
 			}
 			custom_effect_tooltip = if_they_refuse_tt
 			effect_tooltip = {
@@ -6359,7 +6419,7 @@ focus_tree = {
 	focus = {
 		id = SER_our_darkest_hours
 		text = BUL_our_darkest_hours
-		icon = GFX_focus_generic_major_war
+		icon = GFX_goal_generic_major_war
 		cost = 10
 		x = 24
 		y = 6
@@ -6375,7 +6435,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SER_Misic_coup
-		icon = GFX_focus_generic_coup
+		icon = GFX_focus_generic_advanced_military_studies
 		cost = 5
 		x = 3
 		y = 1

@@ -8,6 +8,7 @@ armistice_effect = {
 			limit = {
 				has_global_flag = frankfurt_armistice
 				has_country_flag = member_of_central_powers
+				NOT = { has_country_flag = member_of_entente }
 			}
 			clr_country_flag = great_war_loser
 			set_country_flag = great_war_winner
@@ -16,6 +17,7 @@ armistice_effect = {
 			limit = {
 				has_global_flag = compiegne_armistice
 				has_country_flag = member_of_entente
+				NOT = { has_country_flag = member_of_central_powers }
 			}
 			clr_country_flag = great_war_loser
 			set_country_flag = great_war_winner
@@ -318,22 +320,16 @@ armistice_effect = {
 					# in case there is soviet puppet, they annexes
 					if = {
 						limit = {
-							any_other_country = {
-								original_tag = PREV
-								OR = {
-									is_subject_of = SOV
-									is_in_faction_with = SOV
-								}
+							any_country_with_original_tag = {
+								original_tag_to_check = PREV
+								is_ally_with = SOV
 								exists = yes
 							}
 						}
-						random_other_country = {
+						random_country_with_original_tag = {
+							original_tag_to_check = PREV
 							limit = {
-								original_tag = PREV
-								OR = {
-									is_subject_of = SOV
-									is_in_faction_with = SOV
-								}
+								is_ally_with = SOV
 							}
 							annex_country = {
 								target = PREV
@@ -588,8 +584,8 @@ armistice_effect = {
 					limit = {
 						GER = {
 							OR = {
-								owns_state = 94
 								owns_state = 194
+								owns_state = 1233
 							}
 						}
 					}
@@ -597,15 +593,39 @@ armistice_effect = {
 						every_owned_state = {
 							limit = {
 								OR = {
-									state = 94
 									state = 194
+									state = 1233
 								}
 							}
-							241 = {
+							206 = {
 								owner = {
 									transfer_state = PREV.PREV
 								}
 							}
+						}
+					}
+				}
+				if = {
+					limit = {
+						GER = {
+							owns_state = 241
+						}
+					}
+					204 = {
+						owner = {
+							transfer_state = 241
+						}
+					}
+				}
+				if = {
+					limit = {
+						GER = {
+							owns_state = 94
+						}
+					}
+					95 = {
+						owner = {
+							transfer_state = 94
 						}
 					}
 				}
@@ -981,7 +1001,6 @@ armistice_effect = {
 				OR = {
 					has_state_flag = TUR_no_longer_armenia_core_tt
 					state = 787
-					state = 789
 					state = 806
 					state = 939
 					state = 353
@@ -1630,6 +1649,7 @@ armistice_effect = {
 						OR = {
 							state = 1206
 							state = 1205
+							state = 1230
 						}
 					}
 					transfer_state_to = USA
@@ -1655,6 +1675,7 @@ armistice_effect = {
 					OR = {
 						state = 1205
 						state = 1206
+						state = 1230
 					}
 				}
 				transfer_state_to = FRA
@@ -1991,8 +2012,8 @@ armistice_effect = {
 			GRE = {
 				has_country_flag = GRE_national_defense_flag
 				has_country_flag = great_war_loser
-				any_other_country = {
-					original_tag = GRE
+				any_country_with_original_tag = {
+					original_tag_to_check = GRE
 					has_country_flag = GRE_monarchist_mainland_flag
 					exists = yes
 				}
@@ -2011,6 +2032,9 @@ armistice_effect = {
 					}
 				}
 				every_character = {
+					limit = {
+						is_generic_character = no
+					}
 					set_nationality = GRM
 				}
 				transfer_navy = {
@@ -2062,8 +2086,8 @@ armistice_effect = {
 			THE = {
 				has_country_flag = GRE_national_defense_flag
 				has_country_flag = great_war_winner		
-				any_other_country = {
-					original_tag = GRE		
+				any_country_with_original_tag = {
+					original_tag_to_check = GRE
 					NOT = {
 						has_war_with = THE
 						has_country_flag = GRE_national_defense_flag
@@ -2298,26 +2322,57 @@ armistice_effect = {
 			}
 		}
 	}
-	### Revert Armistice of Salonika ###
+	### Armistice of Salonika Aftermath ###
 	if = {
 		limit = {
 			has_global_flag = salonika_armistice
 			BUL = {
 				is_subject = yes
-				OVERLORD = {
-					has_country_flag = great_war_loser
-				}
 			}
 		}
 		BUL = {
-			OVERLORD = {
-				end_puppet = PREV
-			}
 			if = {
 				limit = {
-					has_idea = idea_army_restrictions
+					OVERLORD = {
+						has_country_flag = great_war_loser
+					}
 				}
-				remove_ideas = idea_army_restrictions
+				set_country_flag = great_war_winner
+				clr_country_flag = great_war_loser
+				if = {
+					limit = {
+						has_global_flag = versailles_treaty
+					}
+					clr_country_flag = member_of_central_powers
+					set_country_flag = member_of_entente
+				}
+				else = {
+					clr_country_flag = member_of_central_powers
+					set_country_flag = member_of_entente
+				}
+				if = {
+					limit = {
+						has_idea = idea_army_restrictions
+					}
+					remove_ideas = idea_army_restrictions
+				}
+			}
+			else = {
+				clr_country_flag = great_war_winner
+				if = {
+					limit = {
+						has_global_flag = versailles_treaty
+					}
+					set_country_flag = member_of_central_powers
+					clr_country_flag = member_of_entente
+				}
+				else = {
+					set_country_flag = member_of_central_powers
+					clr_country_flag = member_of_entente
+				}
+			}
+			OVERLORD = {
+				end_puppet = PREV
 			}
 		}
 	}
@@ -2409,6 +2464,9 @@ armistice_effect = {
 					target = PREV
 				}
 				every_character = {
+					limit = {
+						is_generic_character = no
+					}
 					set_nationality = PREV
 				}
 				PREV = {
@@ -2643,9 +2701,9 @@ armistice_effect = {
 				}
 			}
 		}
-		random_country = {
+		random_country_with_original_tag = {
+			original_tag_to_check = SAF
 			limit = {
-				original_tag = SAF
 				has_government = fascism
 			}
 			every_enemy_country = {
@@ -3422,11 +3480,12 @@ conference_effect = {
 					state = 1187
 					state = 1188
 					state = 1209
+					state = 793
 				}
 			}
 			transfer_state_to = FRA
 			add_contested_owner = GER
-		}	
+		}
 	}
 	### GERMANY ###
 	if = {
@@ -3572,43 +3631,33 @@ conference_effect = {
 				}
 				GER = {
 					puppet = HOL
+					HOL = {
+						set_politics = {
+							ruling_party = fascism
+							elections_allowed = no
+						}
+						set_popularities = {
+							fascism = 38
+							democratic = 20
+							communism = 20
+							neutrality = 22
+						}
+						HOL_cornelis_snijders = {
+							promote_character = stratocracy
+						}
+						set_party_name = {
+							ideology = fascism
+							long_name = HOL_stratocracy_party
+							name = HOL_stratocracy_party
+						}
+					}
 					if = {
 						limit = {
 							is_GER_a_monarchy = yes
 						}
-						HOL = {
-							LUX = {
-								LUX_marieadelaide = {
-									set_nationality = HOL 
-									if = {
-										limit = {
-											has_ideology = semi_constitutional_monarchy_reserve
-										}
-										promote_character = semi_constitutional_monarchy_reserve
-										else = {
-											add_country_leader_role = {
-												promote_leader = yes
-												country_leader = {
-													ideology = semi_constitutional_monarchy_reserve
-													traits = { inexperienced_monarch foreign_leader }
-												}
-											}
-										}
-									}
-								}	
-							}
-							set_politics = {
-								ruling_party = neutrality
-								elections_allowed = no
-								long_name = LUX_neutrality_party_long
-								name = LUX_neutrality_party
-							}
-							set_popularities = {
-								democratic = 28
-								fascism = 0
-								communism = 14
-								neutrality = 58
-							}
+						country_event = {
+							id = ww1_holland.15
+							days = 40
 						}
 					}
 				}
@@ -3703,7 +3752,7 @@ conference_effect = {
 			# 	}
 			# }
 			if = {
-				limit = {
+				limit = {				
 					BLR = {
 						has_country_flag = great_war_loser
 					}
@@ -3711,72 +3760,15 @@ conference_effect = {
 				GER = {
 					puppet = BLR
 				}
-				BLR = {
-					set_politics = {
-						ruling_party = neutrality
-						long_name = BLR_hohenzollern_party 
-						name = BLR_hohenzollern_party
-						elections_allowed = no
+				if = {
+					limit = {
+						GER = {
+							is_GER_a_monarchy = yes
+							has_character = GER_albert_wilhelm_heinrich
+						}
 					}
-					set_popularities = {
-						democratic = 23
-						fascism = 10
-						communism = 5
-						neutrality = 62
-					}
-					set_cosmetic_tag = BLR_WHR
-					if = {
-						limit = {
-							GER = {
-								is_GER_a_monarchy = yes
-							}	
-						}
-						if = {
-							limit = {
-								date < 1929.4.20
-							}
-							BLR_genrikh = {
-								if = {
-									limit = { has_ideology = semi_constitutional_monarchy }
-									promote_character = semi_constitutional_monarchy
-								}
-								else = {
-									add_country_leader_role = {
-										country_leader = {
-											ideology = semi_constitutional_monarchy
-											traits = { german_agent }
-										}
-										promote_leader = yes
-									}
-								}
-							}
-							GER = {
-								GER_albert_wilhelm_heinrich = {
-									set_character_name = BLR_genrikh
-									set_nationality = BLR
-								}
-							}
-						}
-						else = {
-							BLR_uladzimir = {
-								if = {
-									limit = { has_ideology = semi_constitutional_monarchy }
-									promote_character = semi_constitutional_monarchy
-								}
-								else = {
-									add_country_leader_role = {
-										country_leader = {
-											ideology = semi_constitutional_monarchy
-											traits = { german_agent }
-										}
-										promote_leader = yes
-									}
-								}
-							}
-							GER = {
-								retire_character = GER_albert_wilhelm_heinrich
-							}
-						}
+					BLR = {
+						setup_BLR_WHR = yes
 					}
 				}
 			}
@@ -3805,6 +3797,8 @@ conference_effect = {
 								state = 204
 								state = 194
 								state = 95
+								state = 1233
+								state = 241
 							}							
 						}
 						transfer_state_to = BLR
@@ -3825,6 +3819,8 @@ conference_effect = {
 									state = 204
 									state = 194
 									state = 95
+									state = 1233
+									state = 241
 								}							
 							}
 							transfer_state_to = BLR
@@ -3843,12 +3839,6 @@ conference_effect = {
 									country_exists = RUS
 								}
 								transfer_state_to = RUS
-							}
-							else_if = {
-								limit = {
-									country_exists = SOV
-								}
-								transfer_state_to = SOV
 							}
 						}
 					}
@@ -5400,14 +5390,14 @@ conference_effect = {
 	### GREECE ###
 	if = {
 		limit = {
-			any_country = {
-				original_tag = GRE
+			any_country_with_original_tag = {
+				original_tag_to_check = GRE
 				has_country_flag = great_war_loser
 			}
 		}
-		every_country = {
+		random_country_with_original_tag = {
+			original_tag_to_check = GRE
 			limit = {
-				original_tag = GRE
 				has_country_flag = great_war_loser
 			}
 			if = {
@@ -5510,6 +5500,9 @@ conference_effect = {
 						}
 					}
 					every_character = {
+						limit = {
+							is_generic_character = no
+						}
 						set_nationality = GRE
 					}
 					transfer_navy = {
@@ -5707,23 +5700,24 @@ conference_effect = {
 				}
 			}
 			ALB = {
-				if = {
-					limit = {
-						owns_state = 870
-					}
-					random_other_country = {
-						limit = {
-							owns_state = 105
-						}
-						transfer_state = 870
-					}
-					if = {
-						limit = {
-							NOT = { has_country_flag = great_war_loser }
-						}
-						870 = { add_contested_owner = ALB }
-					}
-				}
+				# no sources
+				#if = {
+				#	limit = {
+				#		owns_state = 870
+				#	}
+				#	random_other_country = {
+				#		limit = {
+				#			owns_state = 105
+				#		}
+				#		transfer_state = 870
+				#	}
+				#	if = {
+				#		limit = {
+				#			NOT = { has_country_flag = great_war_loser }
+				#		}
+				#		870 = { add_contested_owner = ALB }
+				#	}
+				#}
 				if = {
 					limit = {
 						OR = {
@@ -5753,11 +5747,14 @@ conference_effect = {
 					}
 				}
 			}
+			ALB = { get_current_government_type = yes }
 			ITA = {
-				annex_country = {
+				set_autonomy = {
 					target = ALB
+					autonomy_state = autonomy_integrated_puppet
 				}
 			}
+			ALB = { restore_previous_government_type = yes }
 		}
 	}
 	### QUEBEC ###

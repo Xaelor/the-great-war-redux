@@ -1030,10 +1030,16 @@ TUR_breakdown_of_economic_infrastructure_2 = {
 }
 
 TUR_local_cooperation_with_the_enemy = {
-	enable = { is_controlled_by = TUR }
-	remove_trigger = {
-		NOT = {
+	enable = {
+		ROOT = {
 			is_controlled_by = TUR
+		}
+	}
+	remove_trigger = {
+		ROOT = {
+			NOT = {
+				is_controlled_by = TUR
+			}
 		}
 	}
 	icon = GFX_modifiers_TUR_local_cooperation_with_the_enemy
@@ -1253,6 +1259,14 @@ generic_local_famine = {
 	local_supplies_for_controller = -0.25
 	resistance_target = 0.5
 	compliance_growth = -0.5
+}
+
+AUS_local_famine = {
+	enable = { always = yes }
+	icon = GFX_modifiers_RAJ_famine_state
+	recruitable_population_factor = -0.1
+	resistance_target = 0.1
+	compliance_growth = -0.2
 }
 
 ALB_ICC_support = {
@@ -1665,10 +1679,9 @@ FRA_anti_french_resistance_mid = {
 	icon = GFX_modifiers_generic_resistance
 	recruitable_population_factor = -0.25
 	local_supplies_for_controller = -0.25
-	attrition_for_controller = 0.25
 	resistance_target = 0.25
 	compliance_growth = -0.25
-	required_garrison_factor = 0.5
+	required_garrison_factor = 0.2
 }
 
 FRA_colonial_conscription = {
@@ -1750,7 +1763,7 @@ FRA_michel_defensive_plan = {
 
 FRA_voie_sacree_modifier = {
 	enable = {
-		CONTROLLER = {
+		controller = {
 			OR = {
 				tag = FRA
 				is_ally_with = FRA
@@ -1760,7 +1773,7 @@ FRA_voie_sacree_modifier = {
 	remove_trigger = {
 		OR = {
 			has_global_flag = great_war_ends
-			owner = {
+			controller = {
 				NOT = {
 					tag = FRA
 					is_ally_with = FRA
@@ -1769,7 +1782,7 @@ FRA_voie_sacree_modifier = {
 		}
 	}
 	icon = GFX_modifiers_generic_supply
-	local_supplies_for_controller = 0.20
+	local_supplies_for_controller = 0.1
 }
 
 FRA_joffre_offensive_plan = {
@@ -1860,28 +1873,6 @@ tuaregs_revolt = {
 	resistance_target = 0.75
 	compliance_growth = -0.75
 	required_garrison_factor = 2
-}
-
-ITA_social_revolution_modifier = {
-	enable = {
-		always = yes
-	}
-	icon = ICE_general_strike
-	production_speed_buildings_factor = ITA_revolution_prod_speed_var
-	stability_factor = ITA_revolution_stability_var
-	drift_defence_factor = ITA_revolution_drift_def_var
-	political_power_factor = ITA_revolution_pol_power_var
-	global_building_slots = ITA_revolution_building_slots_var
-	monthly_population = ITA_revolution_monthy_pop_var
-	production_factory_max_efficiency_factor = ITA_revolution_prod_eff_cap_var
-	production_factory_efficiency_gain_factor = ITA_revolution_prod_eff_speed_var
-	industrial_capacity_factory = ITA_revolution_factory_output_var
-	production_factory_start_efficiency_factor = ITA_revolution_factory_base_eff_var
-	line_change_production_efficiency_factor = ITA_revolution_prod_retention_var
-	#industrial_capacity_factory = ITA_revolution_mil_output_var
-	research_speed_factor = ITA_revolution_research_speed_var
-	communism_drift = ITA_revolution_socialist_drift_var
-	# WHAT IS THIS
 }
 
 ITA_southern_question_idea = {
@@ -1995,6 +1986,7 @@ ITA_italian_army = {
 	air_superiority_efficiency = ITA_air_sup_var
 	air_close_air_support_org_damage_factor = ITA_cas_org_damage
 	ace_effectiveness_factor = ITA_ace_utility
+	land_mastery_gain_factor = ITA_army_land_mastery_gain_factor
 }
 
 
@@ -2027,6 +2019,7 @@ ITA_army_preperations = {
 	experience_gain_army_factor = ITA_preperation_experience_var
 	army_org_regain = ITA_preperation_org_var
 	heat_attrition_factor = ITA_preperation_heat_var
+	land_mastery_gain_factor = ITA_libya_preparation_land_mastery
 	naval_damage_factor = ITA_preperation_naval_attack_var
 	amphibious_invasion = ITA_army_preperations_amphibious_invasion
 	amphibious_invasion_defence = ITA_army_preperations_amphibious_invasion_defence
@@ -2091,7 +2084,10 @@ ITA_ottoman_islands_bombed = {
 	icon = GFX_modifiers_generic_resistance
 	attrition_for_controller = 0.15
 	local_supplies = -1
-	local_org_regain = -0.5
+	army_attack_factor = -0.15
+	army_defence_factor = -0.15
+	dig_in_speed_factor = -0.5
+	max_dig_in_factor = -0.5
 }
 
 ITA_aus_shell = {
@@ -2234,6 +2230,7 @@ ROM_romanian_army_idea = {
 	equipment_capture_factor = ROM_stealing 
 	experience_gain_army = ROM_army_xp
 	supply_consumption_factor = ROM_army_supply
+	land_mastery_gain_factor = ROM_army_land_mastery
 }
 ROM_occupation_costs = {
 	enable = { always = yes }
@@ -2380,7 +2377,7 @@ ROM_khotyn_uprising = {
 # }
 RUS_armistice_effect = {
 	enable = {
-		OWNER = {
+		controller = {
 			OR = {
 				has_idea = RUS_idea_armistice_cp
 				has_idea = RUS_idea_armistice_rus
@@ -2388,7 +2385,7 @@ RUS_armistice_effect = {
 		}
 	}
 	remove_trigger = {
-		OWNER = {
+		controller = {
 			NOT = {
 				has_idea = RUS_idea_armistice_cp
 				has_idea = RUS_idea_armistice_rus
@@ -2404,13 +2401,10 @@ RUS_armistice_effect = {
 }
 HUN_demarcation_line = {
 	enable = {
-		OR = {
-			is_controlled_by = ROM
-			is_controlled_by = HUN
-		}
+		always = yes
 	}
 	remove_trigger = {
-		OWNER = {
+		controller = {
 			NOT = {
 				original_tag = ROM
 				original_tag = HUN
@@ -2543,7 +2537,7 @@ GER_productional_efficiency = {
 	resistance_decay = -0.15
 	resistance_growth = 0.15
 	resistance_target = 0.1
-	local_factory_sabotage = 0.25
+	local_factory_sabotage = 0.02
 	enemy_army_speed_factor = 0.15
 	army_speed_factor_for_controller = -0.05
 	local_building_slots_factor = 0.5
@@ -3078,11 +3072,6 @@ PUPPET_FRA_french_judiciary_system = {
 
 GER_movement_war = {
 	enable = { always = yes }
-	remove_trigger = { 
-		CONTROLLER = {
-			has_war_with = BEL
-		}
-	}
 	icon = GFX_modifiers_state_manpower
 	enemy_army_speed_factor = 0.25
 	max_dig_in_factor = -0.75
@@ -3507,11 +3496,11 @@ LBA_tribal_resistance = {
 	icon = GFX_modifiers_tur_traditionalist_sedition
 	recruitable_population_factor = -0.25
 	local_supplies_for_controller = -0.2
-	resistance_target = 0.15
-	resistance_growth = 0.25
+	resistance_target = 0.1
+	resistance_growth = 0.15
 	compliance_growth = -0.35
 	local_intel_to_enemies = 0.4
-	required_garrison_factor = 0.15
+	required_garrison_factor = 0.1
 	army_speed_factor_for_controller = -0.05
 }
 
@@ -3658,8 +3647,8 @@ unknown_lands = {
 	icon = GFX_unplanned_offensive
 
 	custom_modifier_tooltip = unknown_lands_tt
-	army_attack_factor = -0.15
-	army_defence_factor = -0.1
+	army_attack_factor = -0.1
+	army_defence_factor = -0.05
 	local_supply_impact_factor = 0.1
 }
 unknown_lands_2 = {
@@ -3680,8 +3669,8 @@ unknown_lands_2 = {
 	}
 	icon = GFX_unplanned_offensive
 
-	army_attack_factor = -0.15
-	army_defence_factor = -0.1
+	army_attack_factor = -0.1
+	army_defence_factor = -0.05
 	local_supply_impact_factor = 0.1
 }
 
