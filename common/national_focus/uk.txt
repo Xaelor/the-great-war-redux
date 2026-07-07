@@ -4572,13 +4572,8 @@ focus_tree = {
 			has_subject = EGY
 		}
 		bypass = {
-			OR = {
-				NOT = {
-					has_subject = EGY
-				}
-				TUR = {
-					has_completed_focus = TUR_kick_the_british_out_of_egypt
-				}
+			NOT = {
+				has_subject = EGY
 			}
 		}
 		completion_reward = {
@@ -5400,7 +5395,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ENG_expand_Ship
-		icon = GFX_goal_placeholder
+		icon = GFX_focus_generic_shipyard
 		cost = 10
 		prerequisite = {
 			focus = ENG_Kingdom_Eternal
@@ -5588,15 +5583,9 @@ focus_tree = {
 				has_war_with = PER
 			}
 			PER = {
-				OR = {
-					has_idea = PER_idea_foreign_reliance
-					any_owned_state = {
-						has_dynamic_modifier = {
-							modifier = per_british_sphere
-						}
-					}
-				}
+				has_dynamic_modifier = PER_foreign_influence_modifier
 			}
+			check_variable = { ENG.PER_foreign_influence > 0.1 }
 		}
 		x = -2
 		y = 0
@@ -5604,17 +5593,6 @@ focus_tree = {
 		completion_reward = {
 			effect_tooltip = {
 				PER = {
-					add_ideas = PER_idea_nationalised_oil
-					every_subject_country = {
-						limit = {
-							OR = {
-								owns_state = 413
-								owns_state = 1246
-								owns_state = 412
-							}
-						}
-						add_ideas = PER_idea_nationalised_oil
-					}
 					if = {
 						limit = {
 							OR = {
@@ -6161,13 +6139,9 @@ focus_tree = {
 joint_focus = {
 	id = ENG_GER_haldane_mission
 	icon = {
-		trigger = { has_focus_tree = german_focus }
-		value = GFX_focus_chi_british_cooperation
+		GFX_focus_chi_british_cooperation = { has_focus_tree = german_focus }
+		GFX_focus_deal_with_german_empire = yes
 	}
-	icon = {
-		value = GFX_focus_deal_with_german_empire
-	}
-	icon = GFX_focus_chi_british_cooperation
 	text_icon = joint_ENG_GER_focus_style
 	cost = 2
 	x = 0

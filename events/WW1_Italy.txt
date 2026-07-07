@@ -204,6 +204,7 @@ country_event = {
 	picture = GFX_report_event_generic_conference
 	fire_only_once = yes
 	trigger = {
+		has_start_date < 1914.1.1
 		tag = ITA
 		has_global_flag = agadir_crisis
 		NOT = {
@@ -860,6 +861,7 @@ country_event = {
 	picture = GFX_report_event_ITA_democratic_parlament
 	fire_only_once = yes
 	trigger = {
+		has_start_date < 1914.1.1
 		NOT = {
 			has_government = communism
 		}
@@ -1736,6 +1738,7 @@ country_event = {
 	picture = GFX_report_event_election_vote
 	fire_only_once = yes
 	trigger = {
+		has_start_date < 1914.1.1
 		tag = ITA
 		date > 1913.10.18
 		has_completed_focus = ITA_ally_the_catholic_electoral_union
@@ -1812,6 +1815,7 @@ country_event = {
 	picture = GFX_report_event_ita_giolitti_elected
 	fire_only_once = yes
 	trigger = {
+		has_start_date < 1914.1.1
 		has_completed_focus = ITA_municipal_socialism
 		has_completed_focus = ITA_reassure_northern_business
 		tag = ITA
@@ -4846,9 +4850,11 @@ country_event = {
 		name = ww1_italy.189.diplomatic
 		trigger = {
 			NOT = {
-				has_global_flag = ITA_london_economic_pact
-				has_global_flag = ITA_london_stockpiles
-				has_global_flag = ITA_london_naval_agreement
+				AND = {
+					has_global_flag = ITA_london_economic_pact
+					has_global_flag = ITA_london_stockpiles
+					has_global_flag = ITA_london_naval_agreement
+				}
 			}
 		}
 		country_event = ww1_italy.448
@@ -7319,6 +7325,7 @@ country_event = {
 	fire_only_once = yes
 	trigger = {
 		original_tag = ITA
+		has_start_date < 1914.1.1
 		date > 1914.2.1
 		NOT = {
 			has_completed_focus = ITA_arise_workers_of_italy
@@ -8632,7 +8639,11 @@ country_event = {
 			tooltip = production_speed_industrial_complex_factor_tt
 		}
 		add_to_variable = {
-			ITA_ind_pp_cost = -0.07
+			ITA_ind_mil_speed = 0.1
+			tooltip = production_speed_industrial_complex_factor_tt
+		}
+		add_to_variable = {
+			ITA_ind_pp_cost = -0.05
 			tooltip = political_power_cost_tt
 		}
 	}
@@ -11757,7 +11768,13 @@ country_event = {
 				days = 90
 			}
 		}
-		
+		ai_chance = {
+			base = 50
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
 	}
 }
 

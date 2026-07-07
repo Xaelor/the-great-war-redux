@@ -6,7 +6,7 @@ NDefines.NAI.ENTRENCHMENT_WEIGHT = 10.0					-- AI should favour units with less 
 
 NDefines.NAI.LAND_COMBAT_GUIDE_DISTANCE = 0.0			-- Distance within whch we'll care a bit more about sending planes regardless of whether our boiz are dying
 
-NDefines.NAI.CANCEL_COMBAT_MIN_DURATION_HOURS = 36		-- Only allow cancelling (normal) combat if at least <value> hours have passed
+NDefines.NAI.CANCEL_COMBAT_MIN_DURATION_HOURS = 48		-- Only allow cancelling (normal) combat if at least <value> hours have passed
 
 NDefines.NAI.UNIT_ASSIGNMENT_TERRAIN_IMPORTANCE = 1								-- Terrain score for units are multiplied by this when the AI is deciding which front they should be assigned to
 	
@@ -18,9 +18,7 @@ NDefines.NAI.PLAN_ACTIVATION_SUPERIORITY_AGGRO = 5 --default 1.0		-- How aggress
 	--planning
 NDefines.NAI.AI_FRONT_MOVEMENT_FACTOR_FOR_READY = 0.3
 
-NDefines.NAI.MIN_PLAN_VALUE_TO_MICRO_INACTIVE = 0.15 --default 0.2				-- The AI will not consider members of groups which plan is not activated AND evaluates lower than this.
-	
-NDefines.NAI.MAX_UNITS_FACTOR_AREA_ORDER = 1.75 --default 1.0					-- Factor for max number of units to assign to area defense orders
+NDefines.NAI.MAX_UNITS_FACTOR_AREA_ORDER = 0.75 --default 1.0					-- Factor for max number of units to assign to area defense orders
 NDefines.NAI.DESIRED_UNITS_FACTOR_AREA_ORDER = 0.7	--default^			-- Factor for desired number of units to assign to area defense orders
 NDefines.NAI.MIN_UNITS_FACTOR_AREA_ORDER = 0.4	--default^^				-- Factor for min number of units to assign to area defense orders
 
@@ -42,7 +40,7 @@ NDefines.NMilitary.PLAN_MIN_AUTOMATED_EMPTY_POCKET_SIZE = 15			 -- The battle pl
 NDefines.NAI.POCKET_DISTANCE_MAX = 50000
 NDefines.NAI.MICRO_POCKET_SIZE = 6						-- Pockets with a size equal to or lower than this will be mocroed by the AI, for efficiency.
 
-NDefines.NMilitary.FRONTLINE_EXPANSION_FACTOR = 0.8  -- was 0.6,				-- When attacking along a frontline, how much should units spread out as they advance. 0.0 means head (more or less) directly to the drawn frontline, with no distractions
+NDefines.NMilitary.FRONTLINE_EXPANSION_FACTOR = 0.6  -- was 0.6,				-- When attacking along a frontline, how much should units spread out as they advance. 0.0 means head (more or less) directly to the drawn frontline, with no distractions
 
 --------------------------------------------------------------------------------------------------------------
 -- GAMEPLAY
@@ -138,20 +136,16 @@ NDefines.NAI.REVISITED_PROV_BOOST_FACTOR = 10                            			-- W
 
 NDefines.NAI.CANCEL_COMBAT_DISADVANTAGE_RATIO = 1.5             					-- If the enemy's advantage ratio over us during (normal) combat is more than <value>, allow canceling the attack
 
-NDefines.NAI.PLAN_ATTACK_DEPTH_FACTOR = 0.7											-- Factor applied to size or enemy being attacked
+NDefines.NAI.PLAN_ATTACK_DEPTH_FACTOR = 0.5											-- Factor applied to size or enemy being attacked
 
 NDefines.NAI.PLAN_MIN_SIZE_FOR_FALLBACK = 100000					                -- A country with less provinces than this will not draw fallback plans  but rather station their troops along the front
 
 NDefines.NAI.RECON_PLANES_NAVAL = 0.1
 NDefines.NAI.RECON_PLANES_LAND_COMBAT = 25
 
-NDefines.NAI.LOW_PRIO_TEMPLATE_BONUS_FOR_GARRISONS = 300000
-NDefines.NAI.LOW_PRIO_TEMPLATE_PENALTY_FOR_FRONTS = 300000
+NDefines.NAI.LOW_PRIO_TEMPLATE_BONUS_FOR_GARRISONS = 5000
+NDefines.NAI.LOW_PRIO_TEMPLATE_PENALTY_FOR_FRONTS = 1500
 NDefines.NAITheatre.AI_THEATRE_SUPPLY_CRISIS_LIMIT = 0.25
-
-NDefines.NAI.DESPERATE_AI_MIN_UNIT_ASSIGN_TO_ESCAPE = 1					-- AI will assign at least this amount of units to break from desperate situations
-
-NDefines.NAI.DESPERATE_AI_WEAK_UNIT_STR_LIMIT = 0.99					-- ai will increase number of units assigned to break from desperate situations when units are start falling lower than this str limit
 
 NDefines.NAI.FORT_LEVEL_TO_CONSIDER_HIGHLY_FORTIFIED = 4							-- Provinces above this level of fortification will be considered highly fortified by plan evaluation
 NDefines.NAI.FORTIFIED_RATIO_TO_CONSIDER_A_FRONT_FORTIFIED = 0.25 					-- ai will consider a front fortified if this ratio of provinces has fort
@@ -186,13 +180,13 @@ NDefines.NAI.MAX_SCREEN_TASKFORCES_FOR_CONVOY_DEFENSE_MAX_CONVOY_THREAT = 500 --
 -- AIR AI
 --------------------------------------------------------------------------------------------------------------
 NDefines.NAI.WANTED_MAX_FUEL_BUFFER_IN_DAYS_FOR_AIR_MAX_CONSUMPTION  = 2
-NDefines.NAI.LAND_COMBAT_FIGHTERS_PER_PLANE = 1.2
-NDefines.NAI.LAND_COMBAT_AIR_SUPERIORITY_IMPORTANCE = 2.0 							-- Strategic importance of air superiority ( amount of enemy planes in area )
+NDefines.NAI.LAND_COMBAT_FIGHTERS_PER_PLANE = 1
+NDefines.NAI.LAND_COMBAT_AIR_SUPERIORITY_IMPORTANCE = 0.8 							-- Strategic importance of air superiority ( amount of enemy planes in area )
 
 NDefines.NAI.MAX_FUEL_CONSUMPTION_RATIO_FOR_AIR_TRAINING = 1
 
-NDefines.NAI.LAND_COMBAT_OUR_ARMIES_AIR_IMPORTANCE = 25
-NDefines.NAI.LAND_COMBAT_OUR_COMBATS_AIR_IMPORTANCE = 100
+NDefines.NAI.LAND_COMBAT_OUR_ARMIES_AIR_IMPORTANCE = 20
+NDefines.NAI.LAND_COMBAT_OUR_COMBATS_AIR_IMPORTANCE = 150
 
 NDefines.NAI.DAYS_BETWEEN_AIR_PRIORITIES_UPDATE = 4
 
@@ -220,7 +214,8 @@ NDefines.NAI.NAVAL_IMPORTANCE_SCALE = 0.5 --0.65						-- Naval total importance 
 --- Land Defines
 NDefines.NMilitary.PLAN_PORVINCE_PORT_BASE_IMPORTANCE = 18.0		-- Added importance for area defense province with a port
 NDefines.NMilitary.PLAN_PORVINCE_PORT_LEVEL_FACTOR = 0.5			-- Bonus factor for port level
-NDefines.NAI.MAIN_ENEMY_FRONT_IMPORTANCE = 3.0			-- How much extra focus the AI should put on who it considers to be its current main enemy.
+NDefines.NAI.MAIN_ENEMY_FRONT_IMPORTANCE = 1.5			-- How much extra focus the AI should put on who it considers to be its current main enemy.
+NDefines.NAI.EASY_TARGET_FRONT_IMPORTANCE = 1.0
 NDefines.NAI.AREA_DEFENSE_BASE_IMPORTANCE = 5.0					-- Area defense order base importance value (used for determining order of troop selections) default 1
 NDefines.NAI.AREA_DEFENSE_CIVIL_WAR_IMPORTANCE = 5.0				-- Area defense order importance value when a country is in a civil war as target or revolter. vanilla 10000 lolwut?? am I missing something here :
 NDefines.NMilitary.PLAN_PORVINCE_RESISTANCE_BASE_IMPORTANCE = 150.0 -- Used when calculating the calue of defense area provinces for the battle plan system (factored by resistance level) vanilla 10.0
@@ -263,25 +258,25 @@ NDefines.NAI.DIPLOMACY_ACCEPT_ATTACHE_OPINION_TRASHHOLD = 0
 NDefines.NAI.ASSIGN_TANKS_TO_WAR_FRONT = 10
 NDefines.NAI.ASSIGN_TANKS_TO_NON_WAR_FRONT = 0.1
 
-NDefines.NAI.AIFC_UPDATE_FREQUENCY_DAYS = 5
-NDefines.NAI.AIFC_MAX_NR_FRONTS = 3
+NDefines.NAI.AIFC_UPDATE_FREQUENCY_DAYS = 7
+NDefines.NAI.AIFC_MAX_NR_FRONTS = 4
 NDefines.NAI.AIFC_UNIT_RATIO_BASE = 0.18
 NDefines.NAI.AIFC_CA_DIVISIONS_PER_PROVINCE = 3
 NDefines.NAI.AIFC_ACTIVATE_AVG_ORG_RATIO_THRESHOLD = 0.2
 NDefines.NAI.AIFC_ACTIVATE_IN_POSITION_RATIO_THRESHOLD = 0.5
-NDefines.NAI.AIFC_TARGET_SUPPLY_HUB_BASE_SCORE = 30.0
+NDefines.NAI.AIFC_TARGET_SUPPLY_HUB_BASE_SCORE = 20.0
 NDefines.NAI.AIFC_TARGET_NAVAL_BASE_BASE_SCORE = 10.0
 NDefines.NAI.AIFC_TARGET_NAVAL_BASE_SCORE_PER_LEVEL = 1.5
 NDefines.NAI.AIFC_REFRESH_NEED_PER_DAY = 1.2
-NDefines.NAI.AIFC_REFRESH_NEED_SUPPLY_FACTOR_PER_DAY = 1.2
-NDefines.NAI.AIFC_FRESHNESS_ADD_ON_PROGRESS = 25.0
+NDefines.NAI.AIFC_REFRESH_NEED_SUPPLY_FACTOR_PER_DAY = 1.4
+NDefines.NAI.AIFC_FRESHNESS_ADD_ON_PROGRESS = 22.0
 
 NDefines.NAI.AIFC_PATH_COST_TRN_MOUNTAINS = 3
 NDefines.NAI.AIFC_PATH_COST_TRN_MARSH = 3
 NDefines.NAI.AIFC_PATH_COST_TRN_PLAINS = 0.7
 NDefines.NAI.AIFC_PATH_COST_TRN_FOREST = 1.1
 NDefines.NAI.AIFC_PATH_COST_TRN_HILLS = 1.2
-NDefines.NAI.AIFC_PATH_COST_TRN_URBAN = 0.9
+NDefines.NAI.AIFC_PATH_COST_TRN_URBAN = 1
 NDefines.NAI.AIFC_PATH_COST_PER_FORT_LEVEL = 0.3
 NDefines.NAI.AIFC_PATH_COST_ADJ_RIVER = 1.5
 NDefines.NAI.AIFC_PATH_COST_ADJ_RIVER_LARGE = 2.5
@@ -294,8 +289,8 @@ NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_ARMOR = 80.0
 NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_SOFT_ATTACK = 15.0
 NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_BREAKTHROUGH = 25.0
 NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_HARD_ATTACK = 0.0
-NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_DEFENSE = -0.1
-NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_ENTRENCHMENT = -0.1
+NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_DEFENSE = 0
+NDefines.NAI.AIFC_UNIT_OFFENSIVE_SCORE_FACTOR_ENTRENCHMENT = 0
 
 NDefines.NAI.BUILDING_TARGETS_BUILDING_PRIORITIES = {
 	'air_base',
