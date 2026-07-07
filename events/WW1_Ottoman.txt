@@ -1082,10 +1082,9 @@ country_event = { #ottoman revolt
 				limit = {
 					NOT = {
 						original_tag = ALB
-						has_country_flag = created_civil_war_template
+						has_template = "Rebels"
 					}
 				}
-				set_country_flag = created_civil_war_template
 				division_template = {
 					name = "Rebels"
 					is_locked = yes
@@ -1095,7 +1094,6 @@ country_event = { #ottoman revolt
 					}
 				}
 			}
-			#clear_temp_array = checked_neighbours
 			every_state = {
 				limit = {
 					state = var:global.occupied_state
@@ -1140,7 +1138,7 @@ country_event = { #ottoman revolt
 					add_to_temp_variable = { num_units_to_create = 1 } 
 				}
 				if = {
-					limit = { var:global.occupied_country = { original_tag = ALB } }
+					limit = { var:global.new_occupied_country = { original_tag = ALB } }
 					if = {
 						limit = { var:global.occupier_country = { has_completed_focus = TUR_iron_fist_of_the_empire } }
 						for_loop_effect = {
@@ -1148,6 +1146,7 @@ country_event = { #ottoman revolt
 							create_unit = {
 								division = "division_template = \"Kryengritësit Shqiptarë\" start_experience_factor = 0.4 start_equipment_factor = 0.5"
 								owner = var:global.new_occupied_country
+								allow_spawning_on_enemy_provs = yes
 							}
 						}
 					}
@@ -1157,18 +1156,20 @@ country_event = { #ottoman revolt
 							create_unit = {
 								division = "division_template = \"Kryengritësit Shqiptarë\" start_experience_factor = 0.6 start_equipment_factor = 0.7"
 								owner = var:global.new_occupied_country
+								allow_spawning_on_enemy_provs = yes
 							}
 						}
 					}
 				}
 				else = {
 					if = {
-						limit = { var:global.occupier_country = { has_completed_focus = TUR_iron_fist_of_the_empire } }
+						limit = { var:global.new_occupied_country = { has_completed_focus = TUR_iron_fist_of_the_empire } }
 						for_loop_effect = {
 							end = num_units_to_create
 							create_unit = {
 								division = "division_template = \"Rebels\" start_experience_factor = 0.4 start_equipment_factor = 0.5"
 								owner = var:global.new_occupied_country
+								allow_spawning_on_enemy_provs = yes
 							}
 						}
 					}
@@ -1178,6 +1179,7 @@ country_event = { #ottoman revolt
 							create_unit = {
 								division = "division_template = \"Rebels\" start_experience_factor = 0.6 start_equipment_factor = 0.7"
 								owner = var:global.new_occupied_country
+								allow_spawning_on_enemy_provs = yes
 							}
 						}
 					}
