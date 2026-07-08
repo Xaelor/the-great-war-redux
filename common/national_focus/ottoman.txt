@@ -2930,7 +2930,7 @@ focus_tree = {
 			FOCUS_FILTER_HISTORICAL
 			FOCUS_FILTER_BALANCE_OF_POWER
 		}
-		x = 54
+		x = 55
 		y = 0
 		#bypass = {
 		#	custom_trigger_tooltip = {
@@ -3761,10 +3761,10 @@ focus_tree = {
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
-			FOCUS_FILTER_STABILITY
+			FOCUS_FILTER_INDUSTRY
 		}
 		prerequisite = { focus = TUR_foreign_loan_negotiations }
-		x = 12
+		x = 14
 		y = 1
 		relative_position_id = TUR_foreign_loan_negotiations
 		completion_reward = {
@@ -3808,7 +3808,6 @@ focus_tree = {
 		relative_position_id = TUR_intensify_railway_construction
 		available = {
 			TUR_international_standing_firm = yes
-			has_completed_focus = TUR_intensify_railway_construction
 			custom_trigger_tooltip = {
 				tooltip = TUR_OPDA_trigger_tooltip
 				OR = {
@@ -3844,13 +3843,32 @@ focus_tree = {
 		icon = GFX_focus_generic_train
 		cost = 5
 		search_filters = {
-			FOCUS_FILTER_HISTORICAL
-			FOCUS_FILTER_STABILITY
+			FOCUS_FILTER_INDUSTRY
 		}
 		prerequisite = { focus = TUR_intensify_railway_construction }
+		mutually_exclusive = { focus = TUR_rely_on_motorized_supplies }
 		x = 0
 		y = 2
 		relative_position_id = TUR_intensify_railway_construction
+		available = {
+			OR = {
+				NOT = {
+					custom_trigger_tooltip = {
+						tooltip = TUR_OPDA_trigger_tooltip
+						OR = {
+							has_idea = TUR_OPDA_idea
+							has_idea = TUR_OPD_idea
+							has_idea = TUR_OPD_idea_2
+							has_idea = TUR_OPD_idea_3
+						}
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = TUR_OPDA_value_trigger_tooltip_below_15
+					check_variable = { opda_consumer_goods < 0.15 }
+				}
+			}
+		}
 		completion_reward = {
 			custom_effect_tooltip = TUR_favor_domestic_projects_tt
 			if = {
@@ -3866,6 +3884,15 @@ focus_tree = {
 			}
 			unlock_decision_tooltip = TUR_construct_kutahya_balikesir_line
 			unlock_decision_tooltip = TUR_connect_antalya_to_karahisar
+			unlock_decision_tooltip = TUR_construct_zonguldak_kirikkale_line
+			unlock_decision_tooltip = TUR_construct_adapazari_amasya_line
+			unlock_decision_tooltip = TUR_construct_harput_mus_line
+			unlock_decision_tooltip = TUR_construct_mus_van_line
+			unlock_decision_tooltip = TUR_connect_erzincan_to_siirt
+			unlock_decision_tooltip = TUR_construct_adana_malatya_line
+			unlock_decision_tooltip = TUR_construct_malatya_diyarbakir_line
+			unlock_decision_tooltip = TUR_construct_diyarbakir_cizre_line
+			unlock_decision_tooltip = TUR_construct_ankara_yozgat_line
 			if = {
 				limit = { has_country_flag = TUR_construct_ankara_kayseri_line_domestic }
 				unlock_decision_tooltip = TUR_construct_ankara_kayseri_line_domestic
@@ -3878,6 +3905,7 @@ focus_tree = {
 			else = { unlock_decision_tooltip = TUR_construct_yozgat_sivas_line }
 			unlock_decision_tooltip = TUR_construct_sivas_erzurum_line
 			unlock_decision_tooltip = TUR_construct_sivas_samsun_line
+			unlock_decision_tooltip = TUR_construct_basra_kuwait_line
 			hidden_effect = {
 				if = {
 					limit = { has_idea = TUR_orc }
@@ -3887,6 +3915,66 @@ focus_tree = {
 					}
 				}
 			}
+		}
+		ai_will_do = {
+			base = 35
+		}
+	}
+	focus = {
+		id = TUR_a_railway_through_the_dessert
+		icon = GFX_goal_generic_construct_infrastructure
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = TUR_favor_domestic_projects }
+		x = 0
+		y = 1
+		relative_position_id = TUR_favor_domestic_projects
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = has_railway_connection_kostantiniyye_baghdad
+				NOT = {
+					has_railway_connection = {
+						start_province = 9833
+						target_province = 2097
+					}
+				}
+			}
+			can_build_railway = {
+				start_province = 9833
+				target_province = 2097
+				build_only_on_allied = yes
+			}
+			num_of_civilian_factories_available_for_projects > 9
+		}
+		completion_reward = {
+			set_variable = { global.TUR_berlin_baghdad_railway_variable_domestic = 1 }
+			activate_mission = TUR_berlin_baghdad_railway_phase_1_domestic
+			custom_effect_tooltip = berlin_baghdad_railway_desc_tt
+			unlock_decision_tooltip = TUR_extend_the_bagdad_railway
+			unlock_decision_tooltip = TUR_construct_nusaybin_ergani_line
+			add_ideas = TUR_railway_project_costs
+			custom_effect_tooltip = TUR_railway_project_costs_instant_desc
+		}
+		ai_will_do = {
+			base = 35
+		}
+	}
+	focus = {
+		id = TUR_rely_on_motorized_supplies
+		icon = GFX_focus_SOV_the_road_of_life
+		cost = 5
+		search_filters = {
+		}
+		prerequisite = { focus = TUR_foreign_loan_negotiations }
+		mutually_exclusive = { focus = TUR_favor_domestic_projects }
+		x = -2
+		y = 2
+		relative_position_id = TUR_intensify_railway_construction
+		available = { has_equipment = { motorized_equipment > 999 } }
+		completion_reward = {
+			add_ideas = TUR_motorized_supply_lines
 		}
 		ai_will_do = {
 			base = 35
@@ -3968,10 +4056,10 @@ focus_tree = {
 			FOCUS_FILTER_INDUSTRY
 			FOCUS_FILTER_OTTOMAN_DEBT
 		}
-		prerequisite = { focus = TUR_foreign_loan_negotiations focus = TUR_our_place_in_the_world }
-		x = 10
-		y = 0
-		relative_position_id = TUR_draft_the_new_land_law
+		prerequisite = { focus = TUR_our_place_in_the_world }
+		x = 0
+		y = 1
+		relative_position_id = TUR_our_place_in_the_world
 		available = {
 			is_puppet = no
 		}
@@ -19250,7 +19338,7 @@ joint_focus = {
 	x = 0
 	y = 0
 	offset = {
-		x = 58
+		x = 60
 		y = 4
 		trigger = { has_focus_tree = ottoman_focus_tree }
 	}
