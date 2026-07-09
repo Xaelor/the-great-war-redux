@@ -3892,19 +3892,19 @@ focus_tree = {
 			unlock_decision_tooltip = TUR_construct_adana_malatya_line
 			unlock_decision_tooltip = TUR_construct_malatya_diyarbakir_line
 			unlock_decision_tooltip = TUR_construct_diyarbakir_cizre_line
-			unlock_decision_tooltip = TUR_construct_ankara_yozgat_line
 			if = {
 				limit = { has_country_flag = TUR_construct_ankara_kayseri_line_domestic }
 				unlock_decision_tooltip = TUR_construct_ankara_kayseri_line_domestic
 			}
 			else = { unlock_decision_tooltip = TUR_construct_ankara_yozgat_line }
 			if = {
-				limit = { has_country_flag = TUR_construct_ankara_kayseri_line }
+				limit = { has_country_flag = TUR_construct_ankara_kayseri_line_domestic }
 				unlock_decision_tooltip = TUR_construct_kayseri_sivas_line
 			}
 			else = { unlock_decision_tooltip = TUR_construct_yozgat_sivas_line }
-			unlock_decision_tooltip = TUR_construct_sivas_erzurum_line
 			unlock_decision_tooltip = TUR_construct_sivas_samsun_line
+			unlock_decision_tooltip = TUR_connect_ulukisla_to_kayseri
+			unlock_decision_tooltip = TUR_construct_sivas_erzurum_line
 			unlock_decision_tooltip = TUR_construct_basra_kuwait_line
 			hidden_effect = {
 				if = {
@@ -11765,6 +11765,110 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = TUR_demand_the_lost_caucasian_territories
+		icon = GFX_goal_demand_sudetenland
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_OTTOMAN_DEBT
+		}
+		prerequisite = { focus = TUR_german_bailout focus = TUR_german_trade_dependency }
+		x = 1
+		y = 1
+		relative_position_id = TUR_german_trade_dependency
+		available = {
+			NOT = {
+				has_completed_focus = TUR_our_traditional_allies
+				has_war_with = GER
+			}
+			country_exists = GER
+			any_country = {
+				OR = {
+					original_tag = ARM
+					original_tag = GEO
+					original_tag = AZR
+					original_tag = CAU
+				}
+				exists = yes
+				is_subject = no
+				OR = {
+					owns_state = 855
+					owns_state = 816
+					owns_state = 806
+				}
+			}
+		}
+		bypass = {
+			owns_state = 855
+			owns_state = 816
+			owns_state = 806
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					any_country = {
+						OR = {
+							original_tag = ARM
+							original_tag = GEO
+							original_tag = AZR
+							original_tag = CAU
+						}
+						exists = yes
+						is_subject = no
+						OR = {
+							owns_state = 855
+							owns_state = 816
+							owns_state = 806
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						OR = {
+							original_tag = ARM
+							original_tag = GEO
+							original_tag = AZR
+							original_tag = CAU
+						}
+						exists = yes
+						is_subject = no
+						OR = {
+							owns_state = 855
+							owns_state = 816
+							owns_state = 806
+						}
+					}
+					country_event = { id = ottoman.314 hours = 8 }
+				}
+			}
+			else = {
+				every_possible_country = {
+					limit = {
+						OR = {
+							original_tag = ARM
+							original_tag = GEO
+						}
+					}
+					country_event = { id = ottoman.314 hours = 8 }
+				}
+			}
+			custom_effect_tooltip = if_they_accept_tt
+			effect_tooltip = {
+				every_state = {
+					limit = {
+						OR = {
+							state = 855
+							state = 816
+							state = 806
+						}
+					}
+					transfer_state_to = ROOT
+				}
+			}
+		}
+		ai_will_do = { base = 30 }
+	}
+	focus = {
 		id = TUR_our_traditional_allies
 		icon = GFX_focus_consolidate_entente
 		cost = 5
@@ -11919,8 +12023,8 @@ focus_tree = {
 		ai_will_do = { base = 30 }
 	}
 	focus = {
-		id = TUR_entente_bailouts
-		icon = GFX_focus_generic_treaty
+		id = TUR_bailout_for_contribution
+		icon = GFX_bag_of_money
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_OTTOMAN_DEBT
@@ -11929,17 +12033,34 @@ focus_tree = {
 		x = 3
 		y = 2
 		relative_position_id = TUR_our_traditional_allies
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TUR_OPDA_trigger_tooltip
+				OR = {
+					has_idea = TUR_OPDA_idea
+					has_idea = TUR_OPD_idea
+					has_idea = TUR_OPD_idea_2
+					has_idea = TUR_OPD_idea_3
+				}
+			}
+			any_allied_country = {
+				custom_trigger_tooltip = {
+					tooltip = TUR_OPDA_value_trigger_tooltip_0_less
+					check_variable = { opda_consumer_goods < 0 }
+				}
+			}
+		}
 		complete_tooltip = {
-			custom_effect_tooltip = TUR_entente_bailouts_tt
+			custom_effect_tooltip = TUR_bailout_for_contribution_tt
 			every_country = {
-				limit = { has_country_flag = TUR_entente_bailouts1 }
+				limit = { has_country_flag = TUR_bailout_for_contribution1 }
 				country_event = { id = ottoman.56 hours = 8 }
 				custom_effect_tooltip = if_they_accept_tt
 				effect_tooltip = { TUR_remove_debt_8_TARGET = yes }
 			}
 		}
 		completion_reward = {
-			custom_effect_tooltip = TUR_entente_bailouts_tt
+			custom_effect_tooltip = TUR_bailout_for_contribution_tt
 			every_country = {
 				limit = {
 					is_major = yes
@@ -11953,25 +12074,7 @@ focus_tree = {
 				country_event = { id = ottoman.56 hours = 8 }
 				custom_effect_tooltip = if_they_accept_tt
 				effect_tooltip = { TUR_remove_debt_8_TARGET = yes }
-				set_country_flag = TUR_entente_bailouts1
-			}
-			if = {
-				limit = { NOT = { is_in_faction_with = FRA } }
-				every_country = {
-					limit = {
-						is_major = yes
-						NOT = { tag = TUR }
-						is_in_faction_with = FRA
-						custom_trigger_tooltip = {
-							tooltip = debt_less_than_0
-							check_variable = { opda_consumer_goods < 0 }
-						}
-					}
-					country_event = { id = ottoman.56 hours = 8 }
-					custom_effect_tooltip = if_they_accept_tt
-					effect_tooltip = { effect_tooltip = { TUR_remove_debt_8_TARGET = yes } }
-					set_country_flag = TUR_entente_bailouts1
-				}
+				set_country_flag = TUR_bailout_for_contribution1
 			}
 		}
 		ai_will_do = { base = 30 }
@@ -12399,7 +12502,7 @@ focus_tree = {
 	}
 	focus = {
 		id = TUR_german_high_command
-		icon = GFX_focus_GER_appease_the_wehrmacht
+		icon = GFX_focus_ger_return_of_the_kaiser
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_ARMY_XP
@@ -14345,6 +14448,17 @@ focus_tree = {
 				}
 			}
 			custom_effect_tooltip = TUR_reinforce_the_eastern_border_tt2
+			if = {
+				limit = { has_country_flag = TUR_construct_ankara_kayseri_line_domestic }
+				custom_effect_tooltip = TUR_reinforce_the_eastern_border_tt3
+			}
+			else = { custom_effect_tooltip = TUR_reinforce_the_eastern_border_tt4 }
+			if = {
+				limit = { has_country_flag = TUR_construct_ankara_kayseri_line_domestic }
+				custom_effect_tooltip = TUR_reinforce_the_eastern_border_tt5
+			}
+			else = { custom_effect_tooltip = TUR_reinforce_the_eastern_border_tt6 }
+			custom_effect_tooltip = TUR_reinforce_the_eastern_border_tt7
 			set_variable = { TUR_railway_privatization_speed_east = 35 }
 		}
 		ai_will_do = { base = 30 }

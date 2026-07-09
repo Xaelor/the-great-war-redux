@@ -1752,16 +1752,16 @@ country_event = { #saviour officer Coup
 		}
 		TUR_government_stability_calculate = yes
 		TUR_government_popularity_calculate = yes
-		if = {
-			limit = { has_country_flag = TUR_sue_for_peace_ITA_ongoing }
-			remove_decision = TUR_sue_for_peace_ITA
-			remove_targeted_decision = {
-				target = ITA
-				decision = TUR_sue_for_peace_ITA
-			}
-			clr_country_flag = TUR_sue_for_peace_ITA_ongoing
-			clear_variable = TUR_sue_for_peace_ITA_days
-		}
+#		if = {
+#			limit = { has_country_flag = TUR_sue_for_peace_ITA_ongoing }
+#			remove_decision = TUR_sue_for_peace_ITA
+#			remove_targeted_decision = {
+#				target = ITA
+#				decision = TUR_sue_for_peace_ITA
+#			}
+#			clr_country_flag = TUR_sue_for_peace_ITA_ongoing
+#			clear_variable = TUR_sue_for_peace_ITA_days
+#		}
 		if = {
 			limit = { has_country_flag = TUR_sue_for_peace_BLL_ongoing }
 			remove_targeted_decision = {
@@ -2233,16 +2233,16 @@ country_event = { #raid on sublime porte
 		}
 		TUR_government_stability_calculate = yes
 		TUR_government_popularity_calculate = yes
-		if = {
-			limit = { has_country_flag = TUR_sue_for_peace_ITA_ongoing }
-			remove_decision = TUR_sue_for_peace_ITA
-			remove_targeted_decision = {
-				target = ITA
-				decision = TUR_sue_for_peace_ITA
-			}
-			clr_country_flag = TUR_sue_for_peace_ITA_ongoing
-			clear_variable = TUR_sue_for_peace_ITA_days
-		}
+#		if = {
+#			limit = { has_country_flag = TUR_sue_for_peace_ITA_ongoing }
+#			remove_decision = TUR_sue_for_peace_ITA
+#			remove_targeted_decision = {
+#				target = ITA
+#				decision = TUR_sue_for_peace_ITA
+#			}
+#			clr_country_flag = TUR_sue_for_peace_ITA_ongoing
+#			clear_variable = TUR_sue_for_peace_ITA_days
+#		}
 		if = {
 			limit = { has_country_flag = TUR_sue_for_peace_BLL_ongoing }
 			remove_targeted_decision = {
@@ -21937,7 +21937,7 @@ country_event = { #ottomans demands egypt yes
 	title = ottoman.313.t
 	desc = ottoman.313.desc
 	is_triggered_only = yes
-	picture = GFX_report_event_ottomans_occupy_egypt
+	picture = GFX_report_event_cauc
 	option = {
 		name = ottoman.313.a
 		add_power_balance_value = {
@@ -21945,5 +21945,125 @@ country_event = { #ottomans demands egypt yes
 			value = -0.2
 		}
 		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #ottomans demand caucasus
+	id = ottoman.314
+	title = ottoman.314.t
+	desc = ottoman.314.desc
+	is_triggered_only = yes
+	picture = GFX_report_event_caucasus_islamic_army
+	option = {
+		name = ottoman.314.a
+		effect_tooltip = {
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 855
+						state = 816
+						state = 806
+					}
+				}
+				transfer_state_to = FROM
+			}
+		}
+		hidden_effect = { FROM = { country_event = { id = ottoman.315 hours = 6 } } }
+		ai_chance = {
+			base = 20
+			modifier = {
+				any_country = {
+					is_major = yes
+					OR = {
+						is_in_faction_with = ROOT
+						has_guaranteed = ROOT
+					}
+				}
+				factor = 0
+			}
+		}
+	}
+	option = {
+		name = ottoman.314.b
+		custom_effect_tooltip = ottoman.314.tt
+		FROM = {
+			effect_tooltip = {
+				declare_war_on = {
+					target = ROOT
+					type = take_core_state
+				}
+			}
+			hidden_effect = { country_event = { id = ottoman.316 hours = 6 } }
+		}
+		ai_chance = {
+			base = 5
+			modifier = {
+				any_country = {
+					is_major = yes
+					OR = {
+						is_in_faction_with = ROOT
+						has_guaranteed = ROOT
+					}
+				}
+				factor = 0
+			}
+		}
+	}
+}
+
+country_event = { #ottomans demand caucasus yes
+	id = ottoman.315
+	title = ottoman.315.t
+	desc = ottoman.315.desc
+	is_triggered_only = yes
+	picture = GFX_report_event_caucasus_islamic_army
+	option = {
+		name = ottoman.315.a
+		FROM = {
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 855
+						state = 816
+						state = 806
+					}
+				}
+				transfer_state_to = ROOT
+			}
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #ottomans demand caucasus no
+	id = ottoman.316
+	title = ottoman.316.t
+	desc = ottoman.316.desc
+	is_triggered_only = yes
+	picture = GFX_report_event_caucasus_islamic_army
+	option = {
+		trigger = { NOT = { has_non_aggression_pact_with = FROM } }
+		name = ottoman.316.a
+		declare_war_on = {
+			target = FROM
+			type = take_core_state
+		}
+		ai_chance = {
+			base = 20
+			modifier = {
+				any_country = {
+					is_major = yes
+					OR = {
+						is_in_faction_with = FROM
+						has_guaranteed = FROM
+					}
+				}
+				factor = 0
+			}
+		}
+	}
+	option = {
+		name = ottoman.316.b
+		ai_chance = { base = 5 }
 	}
 }
