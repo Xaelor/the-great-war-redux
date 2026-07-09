@@ -725,7 +725,7 @@
 		}
 		bypass = {
 		}
-		cost = 5
+		cost = 3
 		prerequisite = {
 			focus = RAJ_ordnance_factory_board
 		}
@@ -767,7 +767,7 @@
 		}
 		bypass = {
 		}
-		cost = 5
+		cost = 3
 		prerequisite = {
 			focus = RAJ_ordnance_factory_board
 		}
@@ -809,7 +809,7 @@
 		}
 		bypass = {
 		}
-		cost = 5
+		cost = 3
 		prerequisite = {
 			focus = RAJ_ordnance_factory_board
 		}
@@ -851,7 +851,7 @@
 		}
 		bypass = {
 		}
-		cost = 5
+		cost = 3
 		prerequisite = {
 			focus = RAJ_ordnance_factory_board
 		}
@@ -989,8 +989,17 @@
 			add_to_variable = {
 				RAJ_deindustrialisation_dynamic_resources_factor = 0.025
 			}
-			custom_effect_tooltip = available_industrial_concern
-			show_ideas_tooltip = RAJ_bengal_iron_and_steel_company
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+
+				else = {
+					custom_effect_tooltip = available_industrial_concern
+					show_ideas_tooltip = RAJ_bengal_iron_and_steel_company
+				}
+			}
+			
 		}
 		ai_will_do = {
 			factor = 1
@@ -1425,23 +1434,17 @@
 		y = 2
 		relative_position_id = RAJ_indian_army_act
 		available = {
-			has_war_with_major = yes
+			always = no
 		}
 		bypass = {
+			has_global_flag = great_war
 		}
-		cost = 5
+		cost = 0
 		prerequisite = {
 			focus = RAJ_indianisation_of_the_officer_corps
 			focus = RAJ_pursue_kitchener_reforms
 		}
 		completion_reward = {
-			custom_effect_tooltip = RAJ_the_grand_war_reward
-			add_to_variable = {
-				RAJ_indian_army_dynamic_attrition = -0.15
-			}
-			add_to_variable = {
-				RAJ_indian_army_dynamic_org = 0.1
-			}
 		}
 		ai_will_do = {
 			factor = 1
@@ -1496,6 +1499,16 @@
 			focus = RAJ_reorganise_the_chain_of_command
 		}
 		completion_reward = {
+			custom_effect_tooltip = RAJ_indian_army_reward
+			add_to_variable = {
+				RAJ_indian_army_dynamic_attrition = -0.15
+				tooltip = attrition_tt
+			}
+			add_to_variable = {
+				RAJ_indian_army_dynamic_org = 0.1
+				tooltip = army_org_factor_tt
+			}
+			custom_effect_tooltip = empty_space_tt
 			army_experience = 15
 			capital_scope = {
 				create_unit = {
@@ -1621,9 +1634,10 @@
 		}
 		continue_if_invalid = yes
 		completion_reward = {
-			unlock_decision_tooltip = RAJ_empower_the_ghq_decision
-			custom_effect_tooltip = when_taken
-			custom_effect_tooltip = RAJ_empower_the_ghq_reward
+			unlock_decision_tooltip = {
+				decision = RAJ_empower_the_ghq_decision
+				show_effect_tooltip = yes
+			}
 		}
 		ai_will_do = {
 			factor = 1
@@ -4460,7 +4474,7 @@
 		id = RAJ_legacy_of_the_harappan
 		icon = GFX_goal_generic_loans
 		x = -1
-		y = 6
+		y = 2
 		prerequisite = {
 			focus = RAJ_dhamrai_hardinge_school
 		}
@@ -4469,7 +4483,7 @@
 		bypass = {
 		}
 		cost = 4
-		relative_position_id = RAJ_economic_stabilization
+		relative_position_id = RAJ_dhamrai_hardinge_school
 		completion_reward = {
 			add_stability = 0.05
 			add_timed_idea = {
@@ -4482,26 +4496,30 @@
 		id = RAJ_nationalization_of_the_oligarchs
 		icon = GFX_goal_generic_loans
 		x = 1
-		y = 6
+		y = 2
 		prerequisite = {
 			focus = RAJ_dhamrai_hardinge_school
 		}
 		cost = 5
-		relative_position_id = RAJ_economic_stabilization
+		relative_position_id = RAJ_dhamrai_hardinge_school
 		available = {
 		}
 		bypass = {
 		}
 		completion_reward = {
 			438 = {
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
 			add_stability = 0.05
-			add_political_power = -200
+			add_timed_idea = {
+				idea = RAJ_unhappy_oligarchy
+				days = 120
+			}
 		}
 	}
 }
