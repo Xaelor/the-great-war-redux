@@ -1488,46 +1488,6 @@ RUS_embrace_monopolies = {
 		}
 	}
 }
-RUS_calculate_credit_score = {
-	custom_effect_tooltip = RUS_calculate_credit_score_tt
-	set_variable = { RUS_credit_score_var = num_of_available_civilian_factories }
-	divide_variable = { RUS_credit_score_var = num_of_civilian_factories }
-	if = {
-		limit = {
-			RUS_vladimir_kokovtsov = {
-				is_part_of_the_cabinet = yes
-			}
-		}
-		multiply_variable = { RUS_credit_score_var = 1.15 }
-	}
-	if = {
-		limit = {
-			has_war_with_major = yes
-		}
-		multiply_variable = { RUS_credit_score_var = 0.5 }
-	}
-}
-RUS_calculate_debt = {
-	set_variable = { RUS_national_debt_var = RUS_foreign_debt_var }
-	add_to_variable = { RUS_national_debt_var = RUS_internal_debt_var }
-	clamp_variable = {
-		var = RUS_national_debt_var
-		min = 0
-	}
-	hidden_effect = {
-		RUS_calculate_credit_score = yes
-	}
-}
-RUS_modify_foreign_debt = {
-	custom_effect_tooltip = RUS_modify_foreign_debt_and_resources_tt
-	add_to_variable = { RUS_foreign_debt_var = RUS_modify_foreign_debt_var }
-	RUS_calculate_debt = yes
-}
-RUS_modify_internal_debt = {
-	custom_effect_tooltip = RUS_modify_internal_debt_tt
-	add_to_variable = { RUS_internal_debt_var = RUS_modify_internal_debt_var }
-	RUS_calculate_debt = yes
-}
 start_revolution_in_finland = {
 	RUS = {
 		set_country_flag = RUS_incoming_revolution_in_finland_flag

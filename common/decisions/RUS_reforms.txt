@@ -1,8 +1,153 @@
 RUS_reforms_decision_category = {
+	RUS_agrarian_reform_progress = {
+		icon = GFX_decision_hol_draw_up_staff_plans
+		allowed = { tag = RUS }
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+		visible = {
+			has_agrarian_question = yes
+		}
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
+		complete_effect = {
+			custom_effect_tooltip = RUS_for_every_20_progress_tt
+			effect_tooltip = {
+				RUS_improve_agrarian_question = yes
+			}
+			custom_effect_tooltip = RUS_when_the_reform_is_complete_tt
+			effect_tooltip = {
+				add_days_mission_timeout = {
+					mission = RUS_whirlwinds_of_danger_mission
+					days = 360
+				}
+			}
+		}
+	}
+	RUS_labour_reform_progress = {
+		icon = GFX_decision_generic_wreckers
+		allowed = { tag = RUS }
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+		visible = {
+			has_labour_question = yes
+		}
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
+		complete_effect = {
+			custom_effect_tooltip = RUS_when_the_reform_is_complete_tt
+			effect_tooltip = {
+				add_days_mission_timeout = {
+					mission = RUS_whirlwinds_of_danger_mission
+					days = 360
+				}
+			}
+		}
+	}
+	RUS_education_reform_progress = {
+		icon = GFX_decision_generic_research
+		allowed = { tag = RUS }
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+		visible = {
+			has_illiteracy = yes
+		}
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
+		complete_effect = {
+			custom_effect_tooltip = RUS_for_every_20_progress_tt
+			effect_tooltip = {
+				RUS_improve_illiteracy = yes
+			}
+		}
+	}
+	RUS_zemstvo_reform_progress = {
+		icon = GFX_decision_generic_consumer_goods
+		allowed = { tag = RUS }
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+		visible = {
+			has_authoritarian_zemstvo = yes
+		}
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
+		complete_effect = {
+			custom_effect_tooltip = RUS_when_the_reform_is_complete_tt
+			effect_tooltip = {
+				add_days_mission_timeout = {
+					mission = RUS_whirlwinds_of_danger_mission
+					days = 180
+				}
+			}
+		}
+	}
+	RUS_police_reform_progress = {
+		icon = GFX_decision_generic_arrest
+		allowed = { tag = RUS }
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+		visible = {
+			NOT = {
+				has_idea = RUS_complete_police_reform
+			}
+		}
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
+		complete_effect = {
+			custom_effect_tooltip = RUS_when_the_reform_is_complete_tt
+			effect_tooltip = {
+				add_days_mission_timeout = {
+					mission = RUS_whirlwinds_of_danger_mission
+					days = 180
+				}
+			}
+		}
+	}
+	RUS_railway_modernization_progress = {
+		icon = GFX_decision_generic_train
+		allowed = { tag = RUS }
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+		visible = {
+			has_idea = RUS_inadequate_railway_system
+		}
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
+	}
 	RUS_agrarian_reform_decision = {
 		icon = GFX_decision_eng_trade_unions_support
 		allowed = { original_tag = RUS }
 		available = {
+			num_of_available_civilian_factories > 1
 			check_variable = { 
 				RUS_agrarian_reform_progress < 100
 				tooltip = RUS_not_100_agrarian_reform_progress
@@ -18,47 +163,13 @@ RUS_reforms_decision_category = {
 			has_revolution = no
 		}
 		remove_effect = {
-			set_temp_variable = { RUS_add_agrarian_reform_progress_var = 1 }
-			if = {
-				limit = {
-					RUS_pyotr_stolypin = {
-						is_hired_as_advisor = yes
-					}
-				}
-				add_to_temp_variable = { RUS_add_agrarian_reform_progress_var = 1 }
-			}
-			if = {
-				limit = {
-					RUS_alexander_krivoshein = {
-						is_hired_as_advisor = yes
-					}
-				}
-				add_to_temp_variable = { RUS_add_agrarian_reform_progress_var = 1 }
-			}
-			if = {
-				limit = {
-					has_country_flag = RUS_law_on_peasant_land_ownership_passed_in_sc
-				}
-				add_to_temp_variable = { RUS_add_agrarian_reform_progress_var = 1 }
-			}
-			if = {
-				limit = {
-					has_country_flag = RUS_law_on_land_management_passed_in_sc
-				}
-				add_to_temp_variable = { RUS_add_agrarian_reform_progress_var = 1 }
-			}
-			if = {
-				limit = {
-					has_country_flag = RUS_law_on_state_agricultural_bank_passed_in_sc
-				}
-				add_to_temp_variable = { RUS_add_agrarian_reform_progress_var = 1 }
-			}
+			set_temp_variable = { RUS_add_agrarian_reform_progress_var = 5 }
 			RUS_add_agrarian_reform_progress = yes
 		}
 		days_remove = 180
 		modifier = {
-			political_power_cost = 0.1
-			consumer_goods_factor = 0.05
+			political_power_cost = 0.15
+			consumer_goods_factor = 0.15
 		}
 		cost = 25
 	}
@@ -66,6 +177,7 @@ RUS_reforms_decision_category = {
 		icon = GFX_decision_eng_trade_unions_support
 		allowed = { original_tag = RUS }
 		available = {
+			num_of_available_civilian_factories > 2
 			check_variable = { 
 				RUS_education_reform_progress < 100
 				tooltip = RUS_not_100_education_reform_progress
@@ -81,37 +193,13 @@ RUS_reforms_decision_category = {
 			has_revolution = no
 		}
 		remove_effect = {
-			set_temp_variable = { RUS_add_education_reform_progress_var = 1 }
-			if = {
-				limit = {
-					has_country_flag = RUS_rules_of_private_education_institutions_passed_in_sc
-				}
-				add_to_temp_variable = { RUS_add_education_reform_progress_var = 1 }
-			}
-			if = {
-				limit = {
-					has_country_flag = RUS_law_on_secular_primary_schooling_passed_in_sc
-				}
-				add_to_temp_variable = { RUS_add_education_reform_progress_var = 1 }
-			}
-			if = {
-				limit = {
-					has_country_flag = RUS_law_on_higher_primary_schools_passed_in_sc
-				}
-				add_to_temp_variable = { RUS_add_education_reform_progress_var = 1 }
-			}
-			if = {
-				limit = {
-					has_country_flag = RUS_law_on_universal_primary_schooling_passed_in_sc
-				}
-				add_to_temp_variable = { RUS_add_education_reform_progress_var = 1 }
-			}
+			set_temp_variable = { RUS_add_education_reform_progress_var = 5 }
 			RUS_add_education_reform_progress = yes
 		}
 		days_remove = 180
 		modifier = {
-			consumer_goods_factor = 0.05
-			civilian_factory_use = 1
+			consumer_goods_factor = 0.15
+			civilian_factory_use = 3
 		}
 		cost = 25
 	}
@@ -134,15 +222,7 @@ RUS_reforms_decision_category = {
 			has_revolution = no
 		}
 		remove_effect = {
-			set_temp_variable = { RUS_add_police_reform_progress_var = 7 }
-			if = {
-				limit = {
-					RUS_nikolay_maklakov = {
-						is_hired_as_advisor = yes
-					}
-				}
-				add_to_temp_variable = { RUS_add_police_reform_progress_var = 1 }
-			}
+			set_temp_variable = { RUS_add_police_reform_progress_var = 10 }
 			RUS_add_police_reform_progress = yes
 		}
 		days_remove = 180
@@ -180,7 +260,7 @@ RUS_reforms_decision_category = {
 		icon = GFX_decision_hol_attract_foreign_investors
 		allowed = { original_tag = RUS }
 		available = {
-			
+			num_of_available_civilian_factories > 1
 		}
 		visible = {
 			has_labour_question = yes
@@ -1898,6 +1978,9 @@ RUS_reforms_decision_category = {
 		}
 		on_map_mode = map_and_decisions_view 
 		days_remove = 180
+		available = {
+			num_of_available_civilian_factories > 2
+		}
 		visible = {
 			has_revolution = no
 			any_character = {
@@ -1987,6 +2070,9 @@ RUS_reforms_decision_category = {
 				}
 			}
 		}
+		available = {
+			num_of_available_civilian_factories > 2
+		}
 		modifier = {
 			consumer_goods_factor = 0.15
 			civilian_factory_use = 3
@@ -2057,6 +2143,9 @@ RUS_reforms_decision_category = {
 				}
 			}
 		}
+		available = {
+			num_of_available_civilian_factories > 0
+		}
 		modifier = {
 			consumer_goods_factor = 0.05
 			civilian_factory_use = 1
@@ -2112,6 +2201,9 @@ RUS_reforms_decision_category = {
 					level < 4
 				}
 			}
+		}
+		available = {
+			num_of_available_civilian_factories > 0
 		}
 		modifier = {
 			consumer_goods_factor = 0.05
@@ -2169,6 +2261,9 @@ RUS_reforms_decision_category = {
 				}
 			}
 		}
+		available = {
+			num_of_available_civilian_factories > 0
+		}
 		modifier = {
 			consumer_goods_factor = 0.05
 			civilian_factory_use = 1
@@ -2225,6 +2320,9 @@ RUS_reforms_decision_category = {
 				}
 			}
 		}
+		available = {
+			num_of_available_civilian_factories > 0
+		}
 		modifier = {
 			consumer_goods_factor = 0.05
 			civilian_factory_use = 1
@@ -2280,6 +2378,9 @@ RUS_reforms_decision_category = {
 				has_country_flag = RUS_built_tsaritsyn_gun_factory
 			}
 		}
+		available = {
+			num_of_available_civilian_factories > 2
+		}
 		modifier = {
 			consumer_goods_factor = 0.15
 			civilian_factory_use = 3
@@ -2332,6 +2433,9 @@ RUS_reforms_decision_category = {
 			NOT = {
 				has_country_flag = RUS_built_plane_factories_in_saint_petersburg
 			}
+		}
+		available = {
+			num_of_available_civilian_factories > 1
 		}
 		modifier = {
 			consumer_goods_factor = 0.1
@@ -2386,6 +2490,9 @@ RUS_reforms_decision_category = {
 				has_country_flag = RUS_built_anatra_factory
 			}
 		}
+		available = {
+			num_of_available_civilian_factories > 0
+		}
 		modifier = {
 			consumer_goods_factor = 0.05
 			civilian_factory_use = 1
@@ -2438,6 +2545,9 @@ RUS_reforms_decision_category = {
 			NOT = {
 				has_country_flag = RUS_built_dux_factory
 			}
+		}
+		available = {
+			num_of_available_civilian_factories > 0
 		}
 		modifier = {
 			consumer_goods_factor = 0.05
