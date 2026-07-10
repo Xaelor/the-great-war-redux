@@ -1041,10 +1041,16 @@ TUR_breakdown_of_economic_infrastructure_2 = {
 }
 
 TUR_local_cooperation_with_the_enemy = {
-	enable = { is_controlled_by = TUR }
-	remove_trigger = {
-		NOT = {
+	enable = {
+		ROOT = {
 			is_controlled_by = TUR
+		}
+	}
+	remove_trigger = {
+		ROOT = {
+			NOT = {
+				is_controlled_by = TUR
+			}
 		}
 	}
 	icon = GFX_modifiers_TUR_local_cooperation_with_the_enemy
@@ -1264,6 +1270,14 @@ generic_local_famine = {
 	local_supplies_for_controller = -0.25
 	resistance_target = 0.5
 	compliance_growth = -0.5
+}
+
+AUS_local_famine = {
+	enable = { always = yes }
+	icon = GFX_modifiers_RAJ_famine_state
+	recruitable_population_factor = -0.1
+	resistance_target = 0.1
+	compliance_growth = -0.2
 }
 
 ALB_ICC_support = {
@@ -1760,7 +1774,7 @@ FRA_michel_defensive_plan = {
 
 FRA_voie_sacree_modifier = {
 	enable = {
-		CONTROLLER = {
+		controller = {
 			OR = {
 				tag = FRA
 				is_ally_with = FRA
@@ -1770,7 +1784,7 @@ FRA_voie_sacree_modifier = {
 	remove_trigger = {
 		OR = {
 			has_global_flag = great_war_ends
-			owner = {
+			controller = {
 				NOT = {
 					tag = FRA
 					is_ally_with = FRA
@@ -1779,7 +1793,7 @@ FRA_voie_sacree_modifier = {
 		}
 	}
 	icon = GFX_modifiers_generic_supply
-	local_supplies_for_controller = 0.20
+	local_supplies_for_controller = 0.1
 }
 
 FRA_joffre_offensive_plan = {
@@ -1983,6 +1997,7 @@ ITA_italian_army = {
 	air_superiority_efficiency = ITA_air_sup_var
 	air_close_air_support_org_damage_factor = ITA_cas_org_damage
 	ace_effectiveness_factor = ITA_ace_utility
+	land_mastery_gain_factor = ITA_army_land_mastery_gain_factor
 }
 
 
@@ -2015,6 +2030,7 @@ ITA_army_preperations = {
 	experience_gain_army_factor = ITA_preperation_experience_var
 	army_org_regain = ITA_preperation_org_var
 	heat_attrition_factor = ITA_preperation_heat_var
+	land_mastery_gain_factor = ITA_libya_preparation_land_mastery
 	naval_damage_factor = ITA_preperation_naval_attack_var
 	amphibious_invasion = ITA_army_preperations_amphibious_invasion
 	amphibious_invasion_defence = ITA_army_preperations_amphibious_invasion_defence
@@ -2225,6 +2241,7 @@ ROM_romanian_army_idea = {
 	equipment_capture_factor = ROM_stealing 
 	experience_gain_army = ROM_army_xp
 	supply_consumption_factor = ROM_army_supply
+	land_mastery_gain_factor = ROM_army_land_mastery
 }
 ROM_occupation_costs = {
 	enable = { always = yes }
@@ -2371,7 +2388,7 @@ ROM_khotyn_uprising = {
 # }
 RUS_armistice_effect = {
 	enable = {
-		OWNER = {
+		controller = {
 			OR = {
 				has_idea = RUS_idea_armistice_cp
 				has_idea = RUS_idea_armistice_rus
@@ -2379,7 +2396,7 @@ RUS_armistice_effect = {
 		}
 	}
 	remove_trigger = {
-		OWNER = {
+		controller = {
 			NOT = {
 				has_idea = RUS_idea_armistice_cp
 				has_idea = RUS_idea_armistice_rus
@@ -2398,7 +2415,7 @@ HUN_demarcation_line = {
 		always = yes
 	}
 	remove_trigger = {
-		OWNER = {
+		controller = {
 			NOT = {
 				original_tag = ROM
 				original_tag = HUN
@@ -3066,11 +3083,6 @@ PUPPET_FRA_french_judiciary_system = {
 
 GER_movement_war = {
 	enable = { always = yes }
-	remove_trigger = { 
-		CONTROLLER = {
-			has_war_with = BEL
-		}
-	}
 	icon = GFX_modifiers_state_manpower
 	enemy_army_speed_factor = 0.25
 	max_dig_in_factor = -0.75
