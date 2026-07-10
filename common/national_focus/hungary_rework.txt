@@ -167,6 +167,12 @@ focus_tree = {
 		prerequisite = {
 			focus = HUN_national_work_party
 		}
+		bypass = {
+			has_country_leader = {
+				character = HUN_karoly_khuen_hedervary
+			}
+			has_country_flag = HUN_1910_elections_done
+		}
 		completion_reward = { }
 	}
 	focus = {
@@ -236,6 +242,11 @@ focus_tree = {
 	}
 	#Compromise Government
 	focus = {
+		allow_branch = {
+			NOT = {
+				has_completed_focus = HUN_consolidate_nmp_party
+			}
+		}
 		id = HUN_compromise_gov
 		icon = GFX_focus_NOR_approach_kretsen
 		cost = 0
@@ -990,6 +1001,12 @@ focus_tree = {
 		prerequisite = {
 			focus = HUN_national_work_party
 		}
+		bypass = {
+			has_country_leader = {
+				character = HUN_laszlo_luckacs
+			}
+			has_country_flag = HUN_1910_elections_done
+		}
 		completion_reward = { 
 			custom_effect_tooltip = HUN_lukacs_transition_autocomplete.tt
 		}
@@ -1016,6 +1033,12 @@ focus_tree = {
 		}
 		prerequisite = {
 			focus = HUN_national_work_party
+		}
+		bypass = {
+			has_country_leader = {
+				character = HUN_istvan_tisza
+			}
+			has_country_flag = HUN_1910_elections_done
 		}
 		completion_reward = { }
 	}
@@ -1316,7 +1339,9 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 		available = {
-			
+			hidden_trigger = {
+				always = no
+			}
 		}
 		prerequisite = {
 			focus = HUN_lukacs_transition
@@ -2171,7 +2196,7 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		available = {
-			has_country_flag = HUN_national_work_party_yes
+			
 		}
 		prerequisite = {
 			focus = HUN_consolidate_nmp_party
@@ -2341,7 +2366,7 @@ focus_tree = {
 	focus = {
 		id = HUN_appoint_jankovich
 		icon = GFX_focus_generic_university_1
-		cost = 4.9
+		cost = 5
 		relative_position_id = HUN_a_good_man_works
 		x = 1
 		y = 1
@@ -2775,12 +2800,6 @@ focus_tree = {
 		relative_position_id = HUN_break_up_labour_movements
 		x = -1
 		y = 1
-		offset = {
-			x = -1
-			trigger = {
-				has_completed_focus = HUN_consolidate_nmp_party
-			}
-		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 			FOCUS_FILTER_INTERNAL_AFFAIRS
@@ -2944,103 +2963,6 @@ focus_tree = {
 			custom_effect_tooltip = when_taken
 			custom_effect_tooltip = HUN_attract_to_the_party.tt
 			custom_effect_tooltip = HUN_attract_to_the_party.ttt
-		}
-	}
-	#Minority Focus's for Constitutional Party Path
-	focus = {
-		id = HUN_constitutional_minority_branch
-		icon = GFX_focus_HUN_the_lands_of_the_crown_of_saint_stephen
-		cost = 3
-		relative_position_id = HUN_constitutional_party
-		x = -12
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_LOYALTY
-			FOCUS_FILTER_INTERNAL_AFFAIRS
-			FOCUS_FILTER_POLITICAL
-		}
-		available = {
-			has_global_flag = HUN_compromise_gov_in_charge
-			hidden_trigger = {
-				NOT = {
-					has_country_flag = HUN_national_work_party_yes
-				}
-			}
-		}
-		prerequisite = {
-			focus = HUN_constitutional_party
-		}
-		completion_reward = { }
-	}
-	#Reconcile Croatia
-	focus = {
-		id = HUN_reconcile_croatia
-		icon = GFX_focus_YUG_banovina_of_croatia
-		cost = 3
-		relative_position_id = HUN_constitutional_minority_branch
-		x = 1
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_LOYALTY
-			FOCUS_FILTER_INTERNAL_AFFAIRS
-			FOCUS_FILTER_POLITICAL
-		}
-		available = {
-			has_global_flag = HUN_compromise_gov_in_charge
-			has_dynamic_modifier = HUN_croatian_sabor
-		}
-		prerequisite = {
-			focus = HUN_constitutional_minority_branch
-		}
-		completion_reward = { }
-	}
-	#Negotiate with the Romanian Party
-	focus = {
-		id = HUN_negotiate_with_romanian_party
-		icon = GFX_focus_ROM_flag
-		cost = 3
-		relative_position_id = HUN_constitutional_minority_branch
-		x = -1
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_INTERNAL_AFFAIRS
-			FOCUS_FILTER_POLITICAL
-		}
-		available = {
-			has_global_flag = HUN_compromise_gov_in_charge
-			any_owned_state = {
-				is_core_of = HUN
-			}
-		}
-		prerequisite = {
-			focus = HUN_constitutional_minority_branch
-		}
-		completion_reward = { }
-	}
-	#Negotiate with Slovak Party
-	focus = {
-		id = HUN_negotiate_with_slovak_party
-		icon = GFX_focus_AUH_integrate_slovakia
-		cost = 3
-		relative_position_id = HUN_negotiate_with_romanian_party
-		x = 1
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_INTERNAL_AFFAIRS
-			FOCUS_FILTER_POLITICAL
-		}
-		available = {
-			has_global_flag = HUN_compromise_gov_in_charge
-			any_owned_state = {
-				is_core_of = SLO
-			}
-		}
-		prerequisite = {
-			focus = HUN_negotiate_with_romanian_party
-			focus = HUN_reconcile_croatia
-		}
-		completion_reward = { 
-			#decision to secure investment by Austria for Pozsony if you have Szell or Wlassics
 		}
 	}
 	#The Kings Right-Hand Man -Kalman Szell Path
@@ -3460,8 +3382,8 @@ focus_tree = {
 		icon = GFX_focus_GER_customs_union
 		cost = 5
 		relative_position_id = HUN_funnel_funds_into_industry
-		x = 1
-		y = 1
+		x = 0
+		y = 2
 		search_filters = {
 			FOCUS_FILTER_INTERNAL_AFFAIRS
 			FOCUS_FILTER_POLITICAL
@@ -3508,7 +3430,7 @@ focus_tree = {
 		icon = GFX_focus_ger_bulwark_against_bolshevism
 		cost = 3
 		relative_position_id = HUN_funnel_funds_into_industry
-		x = 4
+		x = 1
 		y = 1
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -3537,7 +3459,7 @@ focus_tree = {
 		icon = GFX_focus_generic_diplomatic_treaty
 		cost = 3
 		relative_position_id = HUN_calm_the_socialist_push
-		x = -2
+		x = 1
 		y = 1
 		search_filters = {
 			FOCUS_FILTER_INTERNAL_AFFAIRS
@@ -3568,7 +3490,7 @@ focus_tree = {
 		icon = GFX_wip
 		cost = 5
 		relative_position_id = HUN_oa_cooperate_with_karyoli
-		x = -1
+		x = -2
 		y = 1
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -3649,6 +3571,8 @@ focus_tree = {
 		}
 		prerequisite = {
 			focus = HUN_befriend_county_elites
+		}
+		prerequisite = {
 			focus = HUN_thrust_state_rails
 		}
 		completion_reward = { }
