@@ -2198,80 +2198,97 @@ country_event = {
 				generator = {788 451 200 756 849 759 106 203 1258 184 757 345 1255 225 731 1256 1140 1141 1213}
 			}
 		}
-	}
-	option = {
-		name = ww1_bulgaria.64.a
-		trigger = {
-			NOT = {
-				has_war_with = BLL
-			}
-		}
-		ai_chance = { base = 0 }
-		every_owned_state = {
-			limit = {
-				OR = {
-					is_claimed_by = FROM
-					is_core_of = FROM
-				}
-			}
-			transfer_state_to = FROM
-		}
-		every_owned_state = {
-			limit = {
-				OR = {
-					region = 24
-					region = 14
-					region = 25
-					region = 26
-				}
-			}
-			set_demilitarized_zone = yes
-		}
-		set_truce = {
-			target = FROM
-			days = 365
-		}
-		set_global_flag = lone_liberator_victorious
 		hidden_effect = {
-			if = {
-				limit = {
-					NOT = { has_global_flag = TUR_surrender_1st_balkan_war }
-				}
-				every_other_country = {
-					limit = {
-						OR = {
-							tag = SER
-							tag = GRE
-							tag = MNT
-						}
-						is_subject = no
-						NOT = {
-							has_war_with = ROOT
-						}
-						ROOT = {
-							any_owned_state = {
-								OR = {
-									is_core_of = PREV.PREV
-									is_claimed_by = PREV.PREV
-								}
-								OR = {
-									region = 24
-									region = 14
-									region = 25
-									region = 26
-								}
-							}
-						}
-					}
-					country_event = {
-						id = ww1_balkan.22
-						hours = 10
-						random_hours = 10
-					}
+			RUS = {
+				country_event = {
+					id = ww1_firstbalkan.119
+					hours = 10
 				}
 			}
 		}
 	}
+	# option = {
+	# 	name = ww1_bulgaria.64.a
+	# 	trigger = {
+	# 		NOT = {
+	# 			has_war_with = BLL
+	# 		}
+	# 	}
+	# 	ai_chance = { base = 0 }
+	# 	every_owned_state = {
+	# 		limit = {
+	# 			OR = {
+	# 				is_claimed_by = FROM
+	# 				is_core_of = FROM
+	# 			}
+	# 			NOT = {
+	# 				state = 200
+	# 				state = 341
+	# 				state = 345
+	# 				state = 756
+	# 				state = 860
+	# 				state = 1018
+	# 				state = 1256
+	# 			}
+	# 		}
+	# 		transfer_state_to = FROM
+	# 	}
+	# 	every_owned_state = {
+	# 		limit = {
+	# 			OR = {
+	# 				region = 24
+	# 				region = 14
+	# 				region = 25
+	# 				region = 26
+	# 			}
+	# 		}
+	# 		set_demilitarized_zone = yes
+	# 	}
+	# 	set_truce = {
+	# 		target = FROM
+	# 		days = 365
+	# 	}
+	# 	set_global_flag = lone_liberator_victorious
+	# 	hidden_effect = {
+	# 		if = {
+	# 			limit = {
+	# 				NOT = { has_global_flag = TUR_surrender_1st_balkan_war }
+	# 			}
+	# 			every_other_country = {
+	# 				limit = {
+	# 					OR = {
+	# 						tag = SER
+	# 						tag = GRE
+	# 						tag = MNT
+	# 					}
+	# 					is_subject = no
+	# 					NOT = {
+	# 						has_war_with = ROOT
+	# 					}
+	# 					ROOT = {
+	# 						any_owned_state = {
+	# 							OR = {
+	# 								is_core_of = PREV.PREV
+	# 								is_claimed_by = PREV.PREV
+	# 							}
+	# 							OR = {
+	# 								region = 24
+	# 								region = 14
+	# 								region = 25
+	# 								region = 26
+	# 							}
+	# 						}
+	# 					}
+	# 				}
+	# 				country_event = {
+	# 					id = ww1_balkan.22
+	# 					hours = 10
+	# 					random_hours = 10
+	# 				}
+	# 			}
+	# 		}
+	# 	}
+	# }
 }
 
 # Armistice of Salonika
@@ -2578,6 +2595,31 @@ country_event = {
 			ideology = democratic
 			long_name = BUL_democratic_party
 			name = BUL_democratic_party
+		}
+	}
+}
+
+# Lone Liberator is Losing
+country_event = {
+	id = ww1_bulgaria.74
+	title = ww1_bulgaria.74.t
+	desc = ww1_bulgaria.74.d
+	picture = GFX_report_event_bul_troops_macedonia
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_bulgaria.74.a
+		white_peace = BUL
+		add_political_power = 40
+		army_experience = 50
+		set_truce = {
+			target = BUL
+			days = 365
+		}
+		add_opinion_modifier = {
+			target = FROM
+			modifier = HOI4TGW_Opinion_diplomats_malus
+			days = 365
 		}
 	}
 }
