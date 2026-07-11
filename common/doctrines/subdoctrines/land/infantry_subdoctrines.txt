@@ -1,3 +1,168 @@
+bite_and_hold = {
+    track = ww1_infantry
+    name = SUBDOCTRINE_BITE_AND_HOLD
+    description = SUBDOCTRINE_BITE_AND_HOLD_DESC
+    icon = GFX_trench_warfare_medium
+
+    xp_cost = 250
+    xp_type = army
+
+    available = {
+        always = yes
+    }
+    # visible = {
+    #     has_doctrine = industrial_warfare
+    # }
+
+    ai_will_do = {
+        base = 0
+    }
+     # EFFECTS
+    #OTHER BASE REWARDS
+    dig_in_speed_factor = 0.15
+    engineer = {
+        battalion_mult = {
+            category = category_light_infantry
+            entrenchment = 0.3
+            add = yes
+        }
+        battalion_mult = {
+            category = category_machine_gun
+            entrenchment = 0.6
+            add = yes
+        }
+    }
+
+    rewards = {
+        limited_objective_attacks = {
+            category_light_infantry = {
+                soft_attack = 0.1
+                breakthrough = 0.05
+                max_organisation = 2
+            }
+        }
+        trench_consolidation = {
+            dig_in_speed_factor = 0.1
+            org_loss_at_low_org_factor = -0.15
+            army_org_regain = 0.1
+        }
+        counter_attack_plan = {
+            coordination_bonus = 0.05
+            category_light_infantry = {
+                defense = 0.1
+                max_organisation = 3
+            }
+        }
+        sapping_operations = {
+            category_light_infantry = {
+                breakthrough = 0.05
+            }
+            field_hospital = {
+                casualty_trickleback = 0.1
+            }
+        }
+        sustained_offensive = {
+            army_attack_speed_factor = 0.25
+            category_light_infantry = {
+                soft_attack = 0.1
+                breakthrough = 0.1
+                max_organisation = 2
+            }
+        }
+
+    }
+}
+defense_in_depth = {
+    track = ww1_infantry
+    name = SUBDOCTRINE_DEFENSE_IN_DEPTH
+    description = SUBDOCTRINE_DEFENSE_IN_DEPTH_DESC
+    icon = GFX_defence_in_depth_medium
+
+    xp_cost = 250
+    xp_type = army
+
+    available = {
+        always = yes
+    }
+    # visible = {
+    #     has_doctrine = industrial_warfare
+    # }
+
+    ai_will_do = {
+        base = 1
+        modifier = {
+            factor = 95
+            original_tag = GER
+        }
+    }
+
+    #OTHER BASE REWARDS
+    dig_in_speed_factor = 0.15
+    engineer = {
+        battalion_mult = {
+            category = category_light_infantry
+            entrenchment = 0.3
+            add = yes
+        }
+        battalion_mult = {
+            category = category_machine_gun
+            entrenchment = 0.6
+            add = yes
+        }
+    }
+
+    rewards = {
+        reserve_trenches = {
+            engineer = {
+                battalion_mult = {
+                    category = category_light_infantry
+                    entrenchment = 0.25
+                    add = yes
+                }
+            }
+            dig_in_speed_factor = 0.1
+            enable_tactic = tactic_delay
+        }
+        machine_gun_nests = {
+            engineer = {
+                battalion_mult = {
+                    category = category_machine_gun
+                    entrenchment = 0.5
+                    add = yes
+                }
+            }
+            dig_in_speed_factor = 0.15
+            production_speed_bunker_factor = 0.15
+        }
+        elastic_defense = {
+            engineer = {
+                battalion_mult = {
+                    category = category_light_infantry
+                    entrenchment = 0.25
+                    add = yes
+                }
+            }
+            enable_tactic = tactic_elastic_defense
+        }
+        gegenstoss = {
+            category_light_infantry = {
+                soft_attack = 0.1
+            }
+            category_artillery = {
+                soft_attack = 0.1
+            }
+        }
+        defense_in_depth_doctrine = {
+            category_light_infantry = {
+                defense = 0.1
+            }
+            category_machine_gun = {
+                soft_attack = 0.2
+            }
+        }
+
+    }
+}
 mobile_infantry = {
     track = infantry
     name = SUBDOCTRINE_MOBILE_INFANTRY
@@ -12,7 +177,15 @@ mobile_infantry = {
     }
 
     ai_will_do = { 
-        base = 0
+        base = 1
+        modifier = {
+            factor = 95
+            original_tag = GER
+        }
+        modifier = {
+            factor = 0.5
+            is_major = no
+        }
     
     }
 
@@ -78,12 +251,13 @@ defensive_postures = {
         modifier = {
             factor = 95
             OR = {
-            original_tag = ENG
-            original_tag = AST
-            original_tag = NZL
-            original_tag = CAN
-            original_tag = SAF
-            original_tag = ITA
+                original_tag = ENG
+                original_tag = AST
+                original_tag = NZL
+                original_tag = CAN
+                original_tag = SAF
+                original_tag = ITA
+                original_tag = FIN
             }
         }
     }
@@ -188,7 +362,7 @@ large_unit_tactics = {
                 max_organisation = 10
                 soft_attack = 0.1
             }
-            army_morale = 0.2
+            army_morale = 0.1
             
         }
         motorization_initiative = {
@@ -235,14 +409,14 @@ assault_infantry = {
     # EFFECTS
 
     #OTHER BASE REWARDS
-    field_gun = {   
+    howitzer = {   
         soft_attack = 0.1
     }
 
     rewards = {
         low_echelon_fire_support = {
         #1
-            field_gun = {
+            howitzer = {
                 battalion_mult = {
                     category = category_light_infantry
                     soft_attack = 0.2
@@ -404,7 +578,8 @@ mounted_infantry = {
             }
 
         
-}        beasts_of_war = {
+        }        
+        beasts_of_war = {
             category_cavalry = {
                 maximum_speed = 0.5 
                 max_strength = 0.05 
@@ -414,7 +589,7 @@ mounted_infantry = {
             }
         }
         limbered_combat_support = {
-            field_gun_brigade = {
+            howitzer_brigade = {
                 maximum_speed = 0.5
             }
             anti_tank_brigade = {
@@ -423,7 +598,7 @@ mounted_infantry = {
             anti_air_brigade = {
                 maximum_speed = 0.5
             }
-            howitzer_brigade = {
+            rocket_artillery_brigade = {
                 maximum_speed = 0.5
             }
         }
@@ -450,8 +625,13 @@ commandos = {
 
     ai_will_do = { base = 0 }
     enable_tactic = tactic_infantry_charge
-    category_light_infantry = {
-        max_strength = 0.15
+    
+    logistics_company = {
+        battalion_mult = {
+            category = category_light_infantry
+            max_strength = 5
+            add = yes
+        }
     }
 
     # EFFECTS
@@ -464,7 +644,13 @@ commandos = {
             }
             field_hospital = {
                 casualty_trickleback = 0.05
-            }  
+            }
+            helicopter_brigade = {
+                casualty_trickleback = 0.05
+            }
+             helicopter_field_hospital = {
+                casualty_trickleback = 0.05
+            }           
 
         }
         security_zone_operations = {
@@ -473,6 +659,13 @@ commandos = {
                 battalion_mult = {
                     category = category_all_infantry
                     defense = 0.1
+                }
+            }
+            logistics_company = {
+                battalion_mult = {
+                 category = category_vehicle_infantry
+                 max_strength = 5
+                 add = yes
                 }
             }
             category_vehicle_infantry = {
@@ -681,7 +874,7 @@ peoples_war = {
         #2
             mastery = 50
             category_light_infantry = {
-                default_morale = 0.2
+                default_morale = 0.1
             }
             militia = {
                 equipment_capture_factor = 0.01
@@ -690,7 +883,7 @@ peoples_war = {
         quick_decision_offensive_warfare = {
         #3
             militia = {
-               initiative = 0.2
+               initiative = 0.01
                max_organisation = 10
                breakthrough = 0.2
             }
@@ -760,7 +953,7 @@ great_war_infantry = {
             }
         }
         centralized_artillery_control = {
-            field_gun = {
+            howitzer = {
                 soft_attack = 0.1
                 battalion_mult = {
                     category = category_light_infantry
