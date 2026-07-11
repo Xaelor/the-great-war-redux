@@ -1,5 +1,6 @@
 ﻿add_namespace = ww1_persia
 add_namespace = ww1_persia_rework
+add_namespace = ww1_absolutist_revolts
 add_namespace = ww1_per_rus_strangling
 add_namespace = ww1_per_tur_strangling
 add_namespace = ww1_per_generic
@@ -166,10 +167,6 @@ country_event = {
 	}
 	mean_time_to_happen = {
 		days = 365
-		modifier = {
-			factor = 0.1
-			has_global_flag = rus_eng_partition_of_persia
-		}
 	}
 	option = {
 		name = ww1_persia.5.a
@@ -217,7 +214,7 @@ country_event = {
 					PER_mohammad_taqi_pessian = {
 						set_nationality = PREV.PREV
 					}
-					delete_unit_template_and_units = {
+					delete_unit = {
 						division_template = "Žāndārmirī-ye Daulatī"
 						disband = no
 					}
@@ -319,31 +316,48 @@ country_event = {
 		}
 		hidden_effect = {
 			PRG = {
+				copy_PER_base_ideas = yes
+				set_variable = { PER_irregulars_cap = PER.PER_irregulars_cap }
+				set_division_template_cap = { 
+					division_template = "Nīrū-ye Eshāyer"
+					division_cap = PER_irregulars_cap
+				}
 				if = {
 					limit = {
-						NOT = { has_template = "Žāndārmirī-ye Daulatī" }
-					}
-					division_template = {
-						name = "Žāndārmirī-ye Daulatī"
-						is_locked = yes
-						regiments = {
-							militia = { x = 0 y = 0 }
+						check_variable = {
+						 	PER.PER_recruited_gendarmerie > 0
 						}
 					}
-				}			
-				set_division_template_cap = { 
-					division_template = "Žāndārmirī-ye Daulatī" 
-					division_cap = PER.PER_gendarmerie_cap
-				}
-				capital_scope = {
-					create_unit = {
-						division = "division_template = \"Žāndārmirī-ye Daulatī\" start_experience_factor = 0.2 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_1 = { owner = \"ENG\" }}" 
-						owner = PRG
-						count = PER.PER_gendarmerie_cap
-						allow_spawning_on_enemy_provs = yes
+					set_variable = {
+						PER_recruited_gendarmerie = PER.PER_recruited_gendarmerie
 					}
-				}
-			}
+					if = {
+						limit = {
+							NOT = { has_template = "Žāndārmirī-ye Daulatī" }
+						}
+						division_template = {
+							name = "Žāndārmirī-ye Daulatī"
+							is_locked = yes
+							regiments = {
+								militia = { x = 0 y = 0 }
+							}
+						}
+					}
+					set_division_template_cap = {
+						division_template = "Žāndārmirī-ye Daulatī" 
+						division_cap = global.PER_gendarmerie_cap
+					}
+					capital_scope = {
+						create_unit = {
+							division = "division_template = \"Žāndārmirī-ye Daulatī\" start_experience_factor = 0.2 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_1 = { owner = \"ENG\" }}" 
+							owner = PRG
+							count = PER_recruited_gendarmerie
+							allow_spawning_on_enemy_provs = yes
+						}
+					}
+					set_variable = { PER.PER_recruited_gendarmerie = 0 }
+				}				
+			}			
 			set_global_flag = PER_national_defense_committee
 			news_event = {
 				id = ww1_persia.8
@@ -1375,6 +1389,115 @@ country_event = {
 		add_manpower = -30
 	}
 }
+### Absolutist Revolts ###
+#Revolt of Salar al-Daula
+country_event = {
+	id = ww1_absolutist_revolts.1
+	title = ww1_absolutist_revolts.1.t
+	desc = ww1_absolutist_revolts.1.d
+	
+	picture = GFX_report_event_PER_abulfath_mirza_salar_al_daula
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = ww1_absolutist_revolts.1.a
+		effect_tooltip = {
+			PRS = {
+				declare_war_on = { target = ROOT type = civil_war }
+				activate_mission = PRS_enter_tehran
+			}	
+		}
+	}
+	option = {
+		name = ww1_absolutist_revolts.1.b
+		PRS = {
+			effect_tooltip = {
+				declare_war_on = { target = ROOT type = civil_war }
+				activate_mission = PRS_enter_tehran
+			}
+			change_tag_from = ROOT
+		}
+		trigger = {
+			is_ai = no
+		}
+	}
+}
+#Revolt of Mohammad Ali Shah
+country_event = {
+	id = ww1_absolutist_revolts.2
+	title = ww1_absolutist_revolts.2.t
+	desc = ww1_absolutist_revolts.2.d
+	
+	picture = GFX_report_event_PER_mohammad_ali_shah
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = ww1_absolutist_revolts.2.a
+		effect_tooltip = {
+			PEX = {
+				declare_war_on = { target = ROOT type = civil_war }
+				activate_mission = PEX_enter_tehran
+			}	
+		}
+	}
+	option = {
+		name = ww1_absolutist_revolts.2.b
+		PEX = {
+			effect_tooltip = {
+				declare_war_on = { target = ROOT type = civil_war }
+				activate_mission = PEX_enter_tehran
+			}
+			change_tag_from = ROOT
+		}
+		trigger = {
+			is_ai = no
+		}
+	}
+}
+#Salar al-Daula Collapse
+country_event = {
+	id = ww1_absolutist_revolts.3
+	title = ww1_absolutist_revolts.3.t
+	desc = ww1_absolutist_revolts.3.d
+	
+	picture = GFX_report_event_PER_abulfath_mirza_salar_al_daula
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = ww1_absolutist_revolts.3.a
+		effect_tooltip = {
+			PRS = {
+				force_capitulate = yes
+			}	
+		}
+	}
+}
+#Mohammad Ali Shah Collapse
+country_event = {
+	id = ww1_absolutist_revolts.4
+	title = ww1_absolutist_revolts.4.t
+	desc = ww1_absolutist_revolts.4.d
+	
+	picture = GFX_report_event_PER_mohammad_ali_shah
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = ww1_absolutist_revolts.3.a
+		effect_tooltip = {
+			PEX = {
+				force_capitulate = yes
+			}	
+		}
+	}
+}
 
 #First Ultimatum
 country_event = {
@@ -2025,7 +2148,7 @@ country_event = {
 	
 	option = {
 		name = ww1_per_generic.1.a
-		add_political_power = -50
+		add_political_power = -10
 		FROM = {
 			add_to_variable = {
 				PER_available_funds = 1
@@ -2051,10 +2174,6 @@ country_event = {
 			modifier = {
 				has_political_power < 10
 				factor = 0
-			}
-			modifier = {
-				has_political_power < 50
-				factor = 0.5
 			}
 		}
 	}
@@ -2141,13 +2260,15 @@ country_event = {
 			custom_effect_tooltip = PER_cossack_regiment_station_tt
 		}	
 		add_to_variable = { 
-			PER.PER_cossack_cap = 1
+			global.PER_cossack_cap = 1
 			tooltip = PER_increase_cossack_cap_tt
 		}
-		set_division_template_cap = { 
-			division_template = "Ataryād-e Qazāqkhāneh" 
-			division_cap = PER.PER_cossack_cap
-		}
+		hidden_effect = {
+			set_division_template_cap = { 
+				division_template = "Ataryād-e Qazāqkhāneh" 
+				division_cap = global.PER_cossack_cap
+			}
+		}		
 	}
 	after = {
 		clear_global_event_target = PER_cossack_regiment_station
