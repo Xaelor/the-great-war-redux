@@ -7509,7 +7509,7 @@ focus_tree = {
 		id = AUS_suppress_the_terrorists
 		icon = GFX_focus_generic_conspiracy
 		cost = 4
-		x = 4
+		x = 3
 		y = 3
 		allow_branch = {
 			has_focus_tree = austria_tree
@@ -7555,7 +7555,7 @@ focus_tree = {
 		id = AUS_premptive_strike
 		icon = GFX_goal_generic_occupy_states_ongoing_war
 		cost = 4
-		x = 5
+		x = 4
 		y = 4
 		allow_branch = {
 			has_focus_tree = austria_tree
@@ -15053,6 +15053,12 @@ joint_focus = {
 	cost = 4
 	x = -1
 	y = 1
+	offset = {
+		trigger = {
+			has_focus_tree = bosnia_focus
+		}
+		x = -1
+	}
 	prerequisite = {
 		focus = AUS_rachet_on_bosnia
 	}
@@ -15189,6 +15195,12 @@ joint_focus = {
 	cost = 4
 	x = 1
 	y = 1
+	offset = {
+		trigger = {
+			has_focus_tree = bosnia_focus
+		}
+		x = -1
+	}
 	prerequisite = {
 		focus = AUS_rachet_on_bosnia
 	}
@@ -15280,17 +15292,17 @@ joint_focus = {
 	icon = GFX_focus_NOR_broken_gun_policies
 	text_icon = joint_AUS_focus_style
 	cost = 4
-	x = -1
+	x = -2
 	y = 2
 	offset = {
 		trigger = {
 			has_focus_tree = bosnia_focus
 		}
-		x = 0
+		x = 1
 	}
-	prerequisite = {
-		focus = AUS_citizenship_for_muslims
-	}
+	#prerequisite = {
+	#	focus = AUS_citizenship_for_muslims
+	#}
 	prerequisite = {
 		focus = AUS_invest_in_bosnian_schools
 	}
@@ -15351,11 +15363,8 @@ joint_focus = {
 			}
 			BOS_update_austria_relations = yes
 			add_stability = 0.05
-			add_political_power = 50
-			add_stability = 0.1
 			add_political_power = 100
 			remove_ideas = BOS_south_slavic_terrorism
-			add_stability = 0.05
 			add_to_variable = {
 				global.BOS_austria_relations = 3
 				tooltip = BOS_austria_relations_tt
@@ -15375,9 +15384,8 @@ joint_focus = {
 			limit = {
 				has_focus_tree = bosnia_focus
 			}
-			add_stability = 0.1
-			add_political_power = 100
 			add_stability = 0.05
+			add_political_power = 100
 			add_to_variable = {
 				global.BOS_austria_relations = 3
 				tooltip = BOS_austria_relations_tt
@@ -15393,18 +15401,88 @@ joint_focus = {
 		FOCUS_FILTER_LOYALTY
 	}
 }
-
 joint_focus = {
-	id = AUS_enforce_war_requirement_act_on_bosnia
-	icon = GFX_focus_beiyang_army_regulations
-	cost = 2
-	x = 1
+	id = AUS_ferdinand_v_imperial_court
+	icon = GFX_focus_generic_court
+	text_icon = joint_AUS_focus_style
+	cost = 4
+	x = 0
 	y = 2
 	offset = {
 		trigger = {
 			has_focus_tree = bosnia_focus
 		}
-		x = -1
+		x = 1
+	}
+	prerequisite = {
+		focus = AUS_rachet_on_bosnia
+	}
+	relative_position_id = AUS_rachet_on_bosnia
+	available = {
+		bosnia_is_AUS_subject = yes
+		NOT = {
+			has_global_flag = AUH_franz_ferdinand_killed_in_sarajevo
+			has_global_flag = AUH_franz_ferdinand_killed
+		}
+		if = {
+			limit = {
+				has_focus_tree = bosnia_focus
+			}
+			custom_trigger_tooltip = {
+				tooltip = only_austria_can
+				always = no
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = only_austria_can
+				}
+			}
+		}
+	}
+	completion_reward_joint_originator = {
+		if = {
+			limit = {
+				has_focus_tree = austria_tree
+			}
+			custom_effect_tooltip = AUS_unlocks_ff_not_die
+		}
+		if = {
+			limit = {
+				has_focus_tree = bosnia_focus
+			}
+			AUS = {
+				custom_effect_tooltip = AUS_unlocks_ff_not_die
+			}
+		}
+	}
+	completion_reward_joint_member = {
+	}
+	ai_will_do = {
+		base = 0
+		modifier = {
+			add = 1000
+			has_game_rule = {
+				rule = franz_ferdinand_fate
+				option = FRANZ_FERDINAND_SURVIVES
+			}
+		}
+	}
+	search_filters = {
+		FOCUS_FILTER_LOYALTY
+	}
+}
+
+joint_focus = {
+	id = AUS_enforce_war_requirement_act_on_bosnia
+	icon = GFX_focus_beiyang_army_regulations
+	cost = 2
+	x = 0
+	y = 2
+	offset = {
+		trigger = {
+			has_focus_tree = bosnia_focus
+		}
+		x = 1
 	}
 	text_icon = joint_AUS_BOS_focus_style
 	prerequisite = {

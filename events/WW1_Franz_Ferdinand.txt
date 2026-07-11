@@ -12,6 +12,7 @@ country_event = {
 	fire_only_once = yes
 	timeout_days = 1
 	trigger = {
+		has_global_flag = ff_assassination_planned_dev
 		tag = AUS
 		has_crisis = no
 		is_subject = no
@@ -43,47 +44,12 @@ country_event = {
 	}
 	option = {
 		name = ww1_sarajevo.1.a #no extra security
-		effect_tooltip = {
-			random_list = {
-				50 = {
-					country_event = { id = ww1_sarajevo.2 hours = 1 }	 #Franz Ferdinand Survived the First Attempt
-				}
-				50 = {
-					country_event = { id = ww1_sarajevo.4 hours = 1 }	 #Franz Ferdinand Died from the bombing
-				}
-			}	
-		}
-		hidden_effect = {
-			random_list = {
-				50 = {
-					country_event = { id = ww1_sarajevo.2 hours = 1 }	 #Franz Ferdinand Survived the First Attempt
-					modifier = {
-						factor = 0
-						has_game_rule = {
-							rule = franz_ferdinand_fate
-							option = FRANZ_FERDINAND_DIES
-						}
-					}
-				}
-				50 = {
-					country_event = { id = ww1_sarajevo.4 hours = 1 }	 #Franz Ferdinand Died from the bombing
-					modifier = {
-						factor = 0
-						OR = {
-							has_game_rule = {
-								rule = franz_ferdinand_fate
-								option = FRANZ_FERDINAND_SURVIVES
-							}
-							AND = {
-								is_historical_focus_on = yes
-								has_game_rule = {
-									rule = franz_ferdinand_fate
-									option = DEFAULT
-								}
-							}
-						}				
-					}
-				}
+		random_list = {
+			50 = {
+				country_event = { id = ww1_sarajevo.2 hours = 1 }	 #Franz Ferdinand Survived the First Attempt
+			}
+			50 = {
+				country_event = { id = ww1_sarajevo.4 hours = 1 }	 #Franz Ferdinand Died from the bombing
 			}
 		}
 		trigger = {
@@ -101,6 +67,9 @@ country_event = {
 					has_idea = SER_idea_black_hand4
 					has_idea = SER_idea_black_hand5
 					has_idea = SER_idea_black_hand6
+					NOT = {
+						has_completed_focus = SER_Solunski_proces
+					}
 				}
 			}
 			104 = {
@@ -155,36 +124,13 @@ country_event = {
 					}
 				}
 				has_global_flag = SER_is_ploting_against_franze_joseph_instead
+				SER = {
+					has_completed_focus = SER_Solunski_proces
+				}
 			}
 		}
 		ai_chance = {
 			base = 100
-
-		}	
-	}
-	option = {
-		name = ww1_sarajevo.1.b #extra security
-		country_event = { id = ww1_sarajevo.7 hours = 1 }
-		add_command_power = -20
-		ai_chance = {
-			base = 20
-			modifier = {
-				factor = 0
-				OR = {
-					has_game_rule = {
-						rule = franz_ferdinand_fate
-						option = FRANZ_FERDINAND_DIES
-					}
-					AND = {
-						is_historical_focus_on = yes
-						has_game_rule = {
-							rule = franz_ferdinand_fate
-							option = DEFAULT
-						}
-					}
-				}	
-			}
-			
 		}	
 	}
 }
@@ -217,6 +163,10 @@ country_event = {
 	}
 	option = {
 		name = ww1_sarajevo.2.b #leave
+		trigger = {
+			always = no
+			#disabled by austria rework! very sad. thank you for your attention to this matter! -DAG
+		}
 		AUH_franz_ferdinand = {
 			add_country_leader_trait = assassination_survivor
 		}
@@ -286,40 +236,6 @@ country_event = {
 	option = {
 		name = ww1_sarajevo.3.a #continue the program
 		country_event = { id = ww1_sarajevo.6 hours = 1 }	 #Franz Ferdinand died on the planned route
-		# effect_tooltip = { # made this a guarantee death option for these who want him dead
-		# 	random_list = {
-		# 		70 = {
-		# 			country_event = { id = ww1_sarajevo.6 hours = 1 }	 #Franz Ferdinand died on the planned route
-		# 		}
-		# 		30 = {
-		# 			country_event = { id = ww1_sarajevo.9 hours = 1 }	 #Franz Ferdinand survived again
-		# 		}
-		# 	}	
-		# }
-		# hidden_effect = {
-		# 	random_list = {
-		# 		70 = {
-		# 			country_event = { id = ww1_sarajevo.6 hours = 1 }	 #Franz Ferdinand died on the planned route
-		# 			modifier = {
-		# 				factor = 0
-		# 				has_game_rule = {
-		# 					rule = franz_ferdinand_fate
-		# 					option = FRANZ_FERDINAND_DIES
-		# 				}
-		# 			}
-		# 		}
-		# 		30 = {
-		# 			country_event = { id = ww1_sarajevo.9 hours = 1 }	 #Franz Ferdinand survived again
-		# 			modifier = {
-		# 				factor = 0
-		# 				has_game_rule = {
-		# 					rule = franz_ferdinand_fate
-		# 					option = FRANZ_FERDINAND_SURVIVES
-		# 				}				
-		# 			}
-		# 		}
-		# 	}
-		# }
 		ai_chance = {
 			base = 10
 			modifier = {
@@ -341,50 +257,8 @@ country_event = {
 	}
 	option = {
 		name = ww1_sarajevo.3.b #visit the hospital
-		effect_tooltip = {
-			random_list = {
-				50 = {
-					country_event = { id = ww1_sarajevo.10 hours = 1 }	 #Franz Ferdinand visisted the hospital
-				}
-				50 = {
-					country_event = { id = ww1_sarajevo.5 hours = 1 }	 #Franz Ferdinand took the wrong turn and died - historical
-				}
-			}	
-		}
-		hidden_effect = {
-			random_list = {
-				50 = {
-					country_event = { id = ww1_sarajevo.10 hours = 1 }	  #Franz Ferdinand visisted the hospital
-					modifier = {
-						factor = 0
-						OR = {
-							has_game_rule = {
-								rule = franz_ferdinand_fate
-								option = FRANZ_FERDINAND_DIES
-							}
-							AND = {
-								is_historical_focus_on = yes
-								has_game_rule = {
-									rule = franz_ferdinand_fate
-									option = DEFAULT
-								}
-							}
-							
-						}					
-					}
-				}
-				50 = {
-					country_event = { id = ww1_sarajevo.5 hours = 1 }	 #Franz Ferdinand took the wrong turn and died - historical
-					modifier = {
-						factor = 0
-						has_game_rule = {
-							rule = franz_ferdinand_fate
-							option = FRANZ_FERDINAND_SURVIVES
-						}				
-					}
-				}
-			}
-		}
+		country_event = { id = ww1_sarajevo.5 hours = 1 }	 #Franz Ferdinand took the wrong turn and died - historical
+		
 		ai_chance = {
 			base = 50
 		}	
@@ -746,7 +620,18 @@ news_event = {
 country_event = {
 	id = ww1_franzferdinand.2
 	title = ww1_franzferdinand.2.t
-	desc = ww1_franzferdinand.2.d
+	desc = {
+		text = ww1_franzferdinand.2.d
+		trigger = {
+			has_global_flag = ff_assassination_planned_dev
+		}
+	}
+	desc = {
+		text = ww1_franzferdinand.2.d2
+		trigger = {
+			has_global_flag = franz_ferdinand_skips_sarajevo
+		}
+	}
 	picture = COUNTRY_hoi4tgw_report_austria_hungary
 	fire_only_once = yes
 	is_triggered_only = yes
@@ -818,7 +703,18 @@ country_event = {
 country_event = {
 	id = ww1_franzferdinand.3
 	title = ww1_franzferdinand.3.t
-	desc = ww1_franzferdinand.3.d
+	desc = {
+		text = ww1_franzferdinand.3.d
+		trigger = {
+			has_global_flag = ff_assassination_planned_dev
+		}
+	}
+	desc = {
+		text = ww1_franzferdinand.3.d2
+		trigger = {
+			has_global_flag = franz_ferdinand_skips_sarajevo
+		}
+	}
 	picture = GFX_report_event_generic_read_write
 	is_triggered_only = yes
 	fire_only_once = yes
@@ -1337,11 +1233,132 @@ country_event = {
 	picture = GFX_report_event_tisza_july_crisis
 	is_triggered_only = yes
 	fire_only_once = yes
+	timeout_days = 10
+	immediate = {
+		hidden_effect = {
+			## TRIGGER BOTH FRANZ FERDINAND AND OSKAR POTIOREK's ASSASSINATION, BUT A FLAG SET HERE WILL ONLY TRIGGER ONE OF THEM.
+			if = {
+				limit = {
+					has_start_date < 1914.1.1
+				}
+				country_event = {
+					id = ww1_franz_austria_rework.6
+					days = 12
+					hours = 21
+				}
+				country_event = {
+					id = ww1_sarajevo.1
+					days = 12
+					hours = 21
+				}
+				else = {
+
+				}
+			}
+		}
+	}
+	trigger = {
+		tag = AUS
+		has_crisis = no
+		is_subject = no
+		has_war = no
+		has_character = AUH_franz_ferdinand
+		NOT = {
+			has_country_leader = {
+				character = AUH_franz_ferdinand
+			}
+		}
+		NOT = {
+			has_global_flag = AUH_franz_ferdinand_killed
+			has_global_flag = AUH_franz_ferdinand_killed_in_sarajevo
+			has_global_flag = great_war
+			has_cosmetic_tag = AUS_HRE
+		}
+		104 = { #where sarajevo is
+			owner = {
+				OR = {
+					tag = ROOT
+					is_subject_of = ROOT
+					AND = {
+						is_subject_of = HUN
+						HUN = { is_subject_of = ROOT }
+					}
+				}
+			}
+		}
+	}
 	option = {
 		name = ww1_franz_austria_rework.5.a
 		custom_effect_tooltip = historical_tt
+		set_global_flag = ff_assassination_planned_dev
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = ww1_franz_austria_rework.5.b
+		trigger = {
+			has_completed_focus = AUS_franz_ferdinand
+		}
+		set_global_flag = franz_ferdinand_skips_sarajevo
+
 		ai_chance = {
 			base = 100
+		}
+	}
+}
+
+### OSKAR POTIOREK dies since FRANZ FERDINAND did not attend
+country_event = {
+	id = ww1_franz_austria_rework.6
+	title = ww1_franz_austria_rework.6.t
+	desc = ww1_franz_austria_rework.6.d
+	picture = GFX_report_event_tisza_july_crisis
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	trigger = {
+		has_global_flag = franz_ferdinand_skips_sarajevo
+		has_crisis = no
+		is_subject = no
+		has_war = no
+		has_character = AUH_franz_ferdinand
+		NOT = {
+			has_country_leader = {
+				character = AUH_franz_ferdinand
+			}
+		}
+		NOT = {
+			has_global_flag = AUH_franz_ferdinand_killed
+			has_global_flag = AUH_franz_ferdinand_killed_in_sarajevo
+			has_global_flag = ff_assassination_planned_dev
+			has_global_flag = great_war
+			has_cosmetic_tag = AUS_HRE
+		}
+		104 = { #where sarajevo is
+			owner = {
+				OR = {
+					tag = ROOT
+					is_subject_of = ROOT
+					AND = {
+						is_subject_of = HUN
+						HUN = { is_subject_of = ROOT }
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = ww1_franz_austria_rework.6.a
+		set_global_flag = sarajevo_rework_flag
+		retire_character = AUH_oskar_potiorek
+		hidden_effect = {
+			BOS = {
+				retire_character = BOS_oskar_potiorek
+			}
+		}
+		ai_chance = {
+			base = 1
 		}
 	}
 }
