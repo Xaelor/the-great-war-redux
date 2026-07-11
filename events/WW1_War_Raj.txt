@@ -478,6 +478,9 @@ country_event = {
 		tag = RAJ
 		is_subject_of = ENG
 		has_war_with = GER
+		RIN = {
+			exists = no
+		}
     }
     option = {
 		name = ww1_war_raj.7.a
@@ -486,10 +489,19 @@ country_event = {
 	option = {
 		name = ww1_war_raj.7.b
 		custom_effect_tooltip = RAJ_form_the_berlin_committee
-
 		hidden_effect = {
 			RIN = {
-				set_state_owner = 440
+				every_state = {
+					limit = {
+						is_owned_and_controlled_by = RAJ
+						OR = {
+							state = 440
+							state = 445
+							state = 442
+						}		
+					}
+					transfer_state_to = RIN
+				}
 				GER = { add_to_faction = RIN }
 				become_exiled_in = {
 					target = GER
@@ -499,6 +511,13 @@ country_event = {
 					type = take_core_state
 				}
 				change_tag_from = RAJ
+				load_focus_tree = {
+					tree = raj_focus
+					copy_completed_from = RAJ
+				}
+				set_country_flag = can_complete_RAJ_focus_6767
+				clr_country_flag = pandemonium_occurred
+
 			}
 			RAJ = {
 				every_core_state = {
