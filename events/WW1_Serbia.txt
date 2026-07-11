@@ -2162,15 +2162,17 @@ country_event = {
 		days = 2
 	}
 	trigger = {
+		OR = {
+			tag = ROM
+			tag = SER
+		}
+		is_subject = no
 		NOT = {
 			has_global_flag = ROM_SER_secret_alliance_war_trigger
 		}
 		has_global_flag = ROM_SER_secret_alliance_against_AUH
-		any_other_country = {
-			OR = {
-				tag = ROM
-				tag = SER
-			}
+		any_country_of = {
+			target = { ROM SER }
 			has_war_with = AUS
 		}
 		NOT = {
@@ -2178,12 +2180,7 @@ country_event = {
 			has_war_with = SER
 			has_war_with = ROM
 			has_global_flag = treaty_of_bucharest_1918
-		}
-		OR = {
-			tag = ROM
-			tag = SER
-		}
-		is_subject = no
+		}	
 	}
 	immediate = {
 		set_global_flag = ROM_SER_secret_alliance_war_trigger
@@ -3442,7 +3439,7 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_serbia.139.a
-		custom_effect_tooltip = GAME_OVER_TT
+		custom_effect_tooltip = GAME_OVER_TT	
 		FROM = {
 			annex_country = {
 				target = CRO
@@ -3496,6 +3493,12 @@ country_event = {
 					}
 					add_claim_by = PREV
 				}
+			}
+		}
+		if = {
+			limit = { has_character = AUH_dragutin_prica }
+			AUH_dragutin_prica = {
+				set_nationality = FROM
 			}
 		}
 	}
