@@ -227,7 +227,7 @@ TGWR_great_power_politics = {
 				}
 				#NEW 1905
 				else = {
-					country_event = ww1_russia_revolution.1
+					country_event = ww1_russia_revolution.100
 					set_global_flag = new_1905
 				}
 			}
@@ -257,4 +257,125 @@ TGWR_great_power_politics = {
 }
 #REVOLUTION DURING PEACETIME/NEW 1905
 TGWR_great_power_politics = {
+
+	#gflg: new_1905
+
+	launch_new_1905 = {
+		allowed = {
+			tag = RUS
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			country_event = ww1_russia_revolution.100
+			set_global_flag = new_1905
+		}
+	}
+
+	RUS_crack_down_on_revolution_in_state = {
+
+		icon = GFX_decision_generic_form_nation
+
+		allowed = {
+			original_tag = RUS
+		}
+
+		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
+			has_global_flag = new_1905
+		}
+
+		available = {
+			army_manpower_in_state = {
+				amount > 8000
+				state = FROM
+			}
+		}
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_controlled_by = ROOT
+				has_dynamic_modifier = RUS_revolutionary_activity
+			}
+		}
+
+		on_map_mode = map_only
+
+		custom_cost_text = cp_15_cost
+		custom_cost_trigger = {
+			command_power > 14.99
+		}
+
+		days_remove = 30
+
+		remove_effect = {
+			FROM = {
+				remove_dynamic_modifier = {
+					modifier = RUS_revolutionary_activity
+				}
+			}
+		}
+
+	}
+
+	RUS_revolution_spreads_to_217_and_578 = {
+
+		icon = GFX_decision_generic_civil_support
+
+		allowed = {
+			original_tag = RUS
+		}
+
+		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
+			has_global_flag = new_1905
+		}
+
+		activation = {
+			always = no
+		}
+
+		is_good = no
+
+		days_mission_timeout = 12
+
+		remove_effect = {
+			custom_effect_tooltip = ww1_russia_revolution.101.a.tt
+		}
+
+	}
+
+	RUS_revolution_spreads_to_ukraine = {
+
+		icon = GFX_decision_generic_civil_support
+
+		allowed = {
+			original_tag = RUS
+		}
+
+		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
+			has_global_flag = new_1905
+		}
+
+		activation = {
+			always = no
+		}
+
+		is_good = no
+
+		days_mission_timeout = 11
+
+		remove_effect = {
+			custom_effect_tooltip = ww1_russia_revolution.102.a.tt
+		}
+
+	}
+
 }
