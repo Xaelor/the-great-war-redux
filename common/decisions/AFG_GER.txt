@@ -1,0 +1,718 @@
+GER_afghan_expeditions = {
+	GER_send_an_expedition_to_afghanistan = {
+		icon = GFX_decision_eng_blackshirt_march
+		cost = 25
+		fire_only_once = no
+
+		target_trigger = {
+			FROM = {
+				tag = AFG
+			}
+		}
+		allowed = {
+			tag = GER
+		}
+		available = {
+			is_ally_with = TUR
+		}
+		visible = {
+            NOT = { has_global_flag = GER_has_active_mission_in_kabul }
+			NOT = { has_country_flag = GER_an_expedition_is_underway }
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_global_flag = great_war_ends
+					is_in_faction_with = AFG
+					NOT = {
+						has_war_with = ENG
+						has_war_with = RAJ
+					}
+					AFG = {
+						OR = {
+							exists = no
+							has_war = yes
+						}
+					}
+				}
+			}
+		}
+		complete_effect = {
+			hidden_effect = {
+				if = {
+					limit = { is_historical_focus_on = yes }
+					if = {
+						limit = { NOT = { has_country_flag = GER_first_expedition_failed } }
+						country_event = {
+							id = ww1_afghanistan.1
+							days = 10 # should be 236 when merged with Master
+							random_hours = 12
+						}
+					}
+					else = {
+						country_event = {
+							id = ww1_afghanistan.2
+							days = 10
+							random_hours = 12
+						}
+					}
+				}
+				else = {
+					random_list = {
+						50 = {
+							modifier = {
+								factor = 0
+								has_country_flag = GER_first_expedition_failed
+							}
+							country_event = {
+								id = ww1_afghanistan.1
+								days = 10 # should be 236 when merged with Master
+								random_hours = 12
+							}
+						}
+						50 = {
+							country_event = {
+								id = ww1_afghanistan.2
+								days = 10
+								random_hours = 12
+							}
+						}
+					}
+				}
+			}
+			custom_effect_tooltip = GER_send_an_expedition_to_afghanistan_reward
+			set_country_flag = GER_an_expedition_is_underway
+		}
+	}
+    GER_stir_anti_british_sentiment = {
+		icon = GFX_decision_eng_propaganda_campaigns
+        days_remove = 35
+		cost = 25
+		fire_only_once = no
+
+		target_trigger = {
+			FROM = {
+				tag = AFG
+			}
+		}
+		allowed = {
+			always = yes
+		}
+		available = {
+			has_global_flag = GER_has_active_mission_in_kabul
+		}
+		visible = {
+			OR = {
+				original_tag = GER
+				AND = {
+					original_tag = TUR
+					is_ally_with = GER
+				}
+			}
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_global_flag = great_war_ends
+					is_in_faction_with = AFG
+					NOT = {
+						has_war_with = ENG
+						has_war_with = RAJ
+					}
+					AFG = {
+						OR = {
+							exists = no
+							has_war = yes
+						}
+					}
+				}
+			}
+		}
+		remove_effect = {
+            add_to_variable = {
+                var = global.AFG_german_influence
+                value = 5
+                tooltip = AFG_GER_add_5_influence
+            }
+
+            if = {
+                limit = {
+                    check_variable = { global.AFG_german_influence > 100 }
+                }
+                set_variable = {
+                    global.AFG_german_influence = 100
+                }
+            }
+		}
+	}
+	TUR_mobilize_the_faithful = {
+		icon = GFX_decision_eng_propaganda_campaigns
+        days_remove = 70
+		cost = 10
+		fire_only_once = no
+
+		target_trigger = {
+			FROM = {
+				tag = AFG
+			}
+		}
+		allowed = {
+			always = yes
+		}
+		available = {
+			has_global_flag = GER_has_active_mission_in_kabul
+			has_country_flag = TUR_jihad_declared
+		}
+		visible = {
+			original_tag = TUR
+			is_ally_with = GER
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_global_flag = great_war_ends
+					is_in_faction_with = AFG
+					NOT = {
+						has_war_with = ENG
+						has_war_with = RAJ
+					}
+					AFG = {
+						OR = {
+							exists = no
+							has_war = yes
+						}
+					}
+				}
+			}
+		}
+		remove_effect = {
+            add_to_variable = {
+                var = global.AFG_german_influence
+                value = 5
+                tooltip = AFG_GER_add_5_influence
+            }
+
+            if = {
+                limit = {
+                    check_variable = { global.AFG_german_influence > 100 }
+                }
+                set_variable = {
+                    global.AFG_german_influence = 100
+                }
+            }
+		}
+	}
+	GER_meet_with_nasrullah_khan = {
+		icon = GFX_decision_generic_political_discourse
+        days_remove = 35
+		cost = 25
+		fire_only_once = no
+
+		target_trigger = {
+			FROM = {
+				tag = AFG
+			}
+		}
+		allowed = {
+		}
+		available = {
+			has_global_flag = GER_has_active_mission_in_kabul
+			AFG = {
+				NOT = { has_country_flag = AFG_emir_limited_germany_options }
+			}
+		}
+		visible = {
+			original_tag = GER
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_global_flag = great_war_ends
+					is_in_faction_with = AFG
+					NOT = {
+						has_war_with = ENG
+						has_war_with = RAJ
+					}
+					AFG = {
+						OR = {
+							exists = no
+							has_war = yes
+						}
+					}
+				}
+			}
+		}
+		remove_effect = {
+            add_to_variable = {
+                var = global.AFG_german_influence
+                value = 5
+                tooltip = AFG_GER_add_5_influence
+            }
+
+            if = {
+                limit = {
+                    check_variable = { global.AFG_german_influence > 100 }
+                }
+                set_variable = {
+                    global.AFG_german_influence = 100
+                }
+            }
+		}
+	}
+	GER_meet_with_amanullah_khan = {
+		icon = GFX_decision_generic_political_discourse
+        days_remove = 35
+		cost = 25
+		fire_only_once = no
+
+		target_trigger = {
+			FROM = {
+				tag = AFG
+			}
+		}
+		allowed = {
+		}
+		available = {
+			has_global_flag = GER_has_active_mission_in_kabul
+			AFG = {
+				NOT = { has_country_flag = AFG_emir_limited_germany_options }
+			}
+		}
+		visible = {
+			original_tag = GER
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_global_flag = great_war_ends
+					is_in_faction_with = AFG
+					NOT = {
+						has_war_with = ENG
+						has_war_with = RAJ
+					}
+					AFG = {
+						OR = {
+							exists = no
+							has_war = yes
+						}
+					}
+				}
+			}
+		}
+		remove_effect = {
+            add_to_variable = {
+                var = global.AFG_german_influence
+                value = 5
+                tooltip = AFG_GER_add_5_influence
+            }
+
+            if = {
+                limit = {
+                    check_variable = { global.AFG_german_influence > 100 }
+                }
+                set_variable = {
+                    global.AFG_german_influence = 100
+                }
+            }
+		}
+	}
+	GER_draft_the_afghan_german_friendship_treaty = {
+		icon = GFX_decision_eng_trade_unions_support
+        days_remove = 35
+		cost = 100
+		fire_only_once = yes
+
+		target_trigger = {
+			FROM = {
+				tag = AFG
+			}
+		}
+		allowed = {
+		}
+		available = {
+			has_global_flag = GER_has_active_mission_in_kabul
+			custom_trigger_tooltip = {
+				tooltip = AFG_german_influence_50		
+				check_variable = { AFG_german_influence > 49 }
+			}
+		}
+		visible = {
+			original_tag = GER
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_global_flag = great_war_ends
+					is_in_faction_with = AFG
+					NOT = {
+						has_war_with = ENG
+						has_war_with = RAJ
+					}
+					AFG = {
+						OR = {
+							exists = no
+							has_war = yes
+						}
+					}
+				}
+			}
+		}
+		remove_effect = {
+            AFG = {
+				country_event = {
+					id = ww1_afghanistan.3
+				}
+			}
+		}
+	}
+	GER_accept_nashrullah_proposal = {
+        icon = GFX_decision_eng_trade_unions_support
+		days_remove = 7
+        cost = 200
+        fire_only_once = yes
+
+        target_trigger = {
+            FROM = {
+                tag = AFG
+            }
+        }
+        allowed = {
+        }
+        available = {
+            has_global_flag = GER_has_active_mission_in_kabul
+			check_variable = {
+				AFG_german_influence = 100
+			}
+        }
+        visible = {
+            original_tag = GER
+			has_global_flag = AFG_habibullah_remained_neutral
+        }
+        cancel_trigger = {
+            hidden_trigger = {
+                OR = {
+                    has_global_flag = great_war_ends
+                    is_in_faction_with = AFG
+                    NOT = {
+                        has_war_with = ENG
+                        has_war_with = RAJ
+                    }
+                    AFG = {
+                        OR = {
+                            exists = no
+                            has_war = yes
+                        }
+                    }
+                }
+            }
+        }
+        remove_effect = {
+			AFG = {
+				country_event = {
+					id = ww1_afghanistan.6
+					days = 2
+				}
+			}
+        }
+    }
+
+	# England Decision
+	ENG_reduce_anti_british_sentiment = {
+		icon = GFX_decision_eng_propaganda_campaigns
+        days_remove = 35
+		cost = 25
+		fire_only_once = no
+
+		target_trigger = {
+			FROM = {
+				tag = AFG
+			}
+		}
+		allowed = {
+		}
+		available = {
+			has_global_flag = GER_has_active_mission_in_kabul
+			custom_trigger_tooltip = {
+				tooltip = AFG_german_influence_greater_than_0		
+				check_variable = { AFG_german_influence > 0 }
+			}
+		}
+		visible = {
+			original_tag = ENG
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_global_flag = great_war_ends
+					NOT = { is_in_faction_with = AFG }
+					NOT = {
+						GER = {
+							has_war_with = ENG
+							has_war_with = RAJ
+						}
+					}
+					AFG = {
+						OR = {
+							exists = no
+							has_war = yes
+						}
+					}
+				}
+			}
+		}
+		remove_effect = {
+            add_to_variable = {
+                var = global.AFG_german_influence
+                value = -5
+                tooltip = AFG_GER_remove_5_influence
+            }
+
+            if = {
+                limit = {
+                    check_variable = { global.AFG_german_influence < 0 }
+                }
+                set_variable = {
+                    global.AFG_german_influence = 0
+                }
+            }
+		}
+	}
+	ENG_finance_habibullah_khan_regime = {
+		icon = GFX_decision_generic_fundraising
+        days_remove = 35
+		cost = 10
+		fire_only_once = no
+
+		target_trigger = {
+			FROM = {
+				tag = AFG
+			}
+		}
+		allowed = {
+		}
+		available = {
+			has_global_flag = GER_has_active_mission_in_kabul
+			AFG = {
+				has_country_leader = {
+					character = AFG_habibullah_khan
+					ruling_only = yes
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = AFG_german_influence_greater_than_0		
+				check_variable = { AFG_german_influence > 0 }
+			}
+		}
+		visible = {
+			original_tag = ENG
+		}
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_global_flag = great_war_ends
+					NOT = { is_in_faction_with = AFG }
+					NOT = {
+						GER = {
+							has_war_with = ENG
+							has_war_with = RAJ
+						}
+					}
+					AFG = {
+						OR = {
+							exists = no
+							has_war = yes
+						}
+					}
+				}
+			}
+		}
+		remove_effect = {
+            add_to_variable = {
+                var = global.AFG_german_influence
+                value = -5
+                tooltip = AFG_GER_remove_5_influence
+            }
+
+            if = {
+                limit = {
+                    check_variable = { global.AFG_german_influence < 0 }
+                }
+                set_variable = {
+                    global.AFG_german_influence = 0
+                }
+            }
+		}
+	}
+	# Afghanistan decision
+	AFG_reduce_anti_british_sentiment = {
+		icon = GFX_decision_eng_propaganda_campaigns
+        days_remove = 35
+		cost = 50
+		fire_only_once = no
+
+		allowed = {
+		}
+		available = {
+			has_global_flag = GER_has_active_mission_in_kabul
+			custom_trigger_tooltip = {
+				tooltip = AFG_german_influence_greater_than_0		
+				check_variable = { AFG_german_influence > 0 }
+			}
+		}
+		visible = {
+			original_tag = AFG
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_global_flag = great_war_ends
+					NOT = {
+						GER = {
+							has_war_with = ENG
+							has_war_with = RAJ
+						}
+					}
+					AFG = {
+						OR = {
+							exists = no
+							has_war = yes
+						}
+					}
+				}
+			}
+		}
+		remove_effect = {
+            add_to_variable = {
+                var = global.AFG_german_influence
+                value = -5
+                tooltip = AFG_GER_remove_5_influence
+            }
+
+            if = {
+                limit = {
+                    check_variable = { global.AFG_german_influence < 0 }
+                }
+                set_variable = {
+                    global.AFG_german_influence = 0
+                }
+            }
+		}
+	}
+	AFG_purge_pro_german_officials = {
+		icon = GFX_decision_generic_political_discourse
+        days_remove = 35
+		cost = 25
+		fire_only_once = no
+
+		allowed = {
+		}
+		available = {
+			has_global_flag = GER_has_active_mission_in_kabul
+			custom_trigger_tooltip = {
+				tooltip = AFG_german_influence_greater_than_0		
+				check_variable = { AFG_german_influence > 0 }
+			}
+		}
+		visible = {
+			original_tag = AFG
+		}
+		modifier = {
+			consumer_goods_factor = 0.75
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_global_flag = great_war_ends
+					NOT = {
+						GER = {
+							has_war_with = ENG
+							has_war_with = RAJ
+						}
+					}
+					AFG = {
+						OR = {
+							exists = no
+							has_war = yes
+						}
+					}
+				}
+			}
+		}
+		remove_effect = {
+            add_to_variable = {
+                var = global.AFG_german_influence
+                value = -5
+                tooltip = AFG_GER_remove_5_influence
+            }
+
+            if = {
+                limit = {
+                    check_variable = { global.AFG_german_influence < 0 }
+                }
+                set_variable = {
+                    global.AFG_german_influence = 0
+                }
+            }
+		}
+	}
+	AFG_prevent_germany_from_meeting_habibullah_khan_relatives = {
+		icon = GFX_decision_generic_political_discourse
+		cost = 200
+		fire_only_once = yes
+		
+		allowed = {
+		}
+		available = {
+			has_global_flag = GER_has_active_mission_in_kabul
+		}
+		visible = {
+			original_tag = AFG
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_global_flag = great_war_ends
+					NOT = {
+						GER = {
+							has_war_with = ENG
+							has_war_with = RAJ
+						}
+					}
+					AFG = {
+						OR = {
+							exists = no
+							has_war = yes
+						}
+					}
+				}
+			}
+		}
+		remove_effect = {
+            set_country_flag = AFG_emir_limited_germany_options
+			custom_effect_tooltip = AFG_prevent_germany_from_meeting_habibullah_khan_relatives_reward
+		}
+	}
+	AFG_amanullah_secure_power = {
+		icon = GFX_decision_eng_blackshirt_march
+		allowed = {
+			tag = AFG
+		}
+		days_mission_timeout = 7
+		activation = {
+			has_country_leader = AFG_nasirullah_husain
+		}
+		available = {
+		}
+		visible = {
+			always = yes
+		}
+		fire_only_once = yes
+		is_good = no
+		complete_effect = {
+			country_event = ww1_afghanistan.7
+		}
+	}
+}
