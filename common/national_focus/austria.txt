@@ -16,23 +16,16 @@ focus_tree = {
 
 	#shortcuts
 	shortcut = {
-		#name AUH_stabilize_the_empire_shortcut
-		name = inner_politics_tree_shortcut
-		target = AUH_stabilize_the_empire 
-		scroll_wheel_factor = 0.33
+		#name AUH_wargames_shortcut
+		name = AUH_wargames
+		target = AUH_wargames 
+		scroll_wheel_factor = 0.49
 	}
 
 	shortcut = {
-		#name AUH_industrial_expansion_shortcut
-		name = economic_tree_shortcut
-		target = AUH_industrial_expansion 
-		scroll_wheel_factor = 1
-	}
-
-	shortcut = {
-		#name AUH_reinforce_Gemeinsame_Armee_shortcut
-		name = army_tree_shortcut
-		target = AUH_reinforce_Gemeinsame_Armee 
+		#name AUH_reorganise_the_Luftfahrtruppen_shortcut
+		name = air_tree_shortcut
+		target = AUH_reorganise_the_Luftfahrtruppen 
 		scroll_wheel_factor = 1
 	}
 
@@ -44,17 +37,24 @@ focus_tree = {
 	}
 
 	shortcut = {
-		#name AUH_reorganise_the_Luftfahrtruppen_shortcut
-		name = air_tree_shortcut
-		target = AUH_reorganise_the_Luftfahrtruppen 
+		#name AUH_reinforce_Gemeinsame_Armee_shortcut
+		name = army_tree_shortcut
+		target = AUH_reinforce_Gemeinsame_Armee 
 		scroll_wheel_factor = 1
 	}
 
 	shortcut = {
-		#name AUH_wargames_shortcut
-		name = AUH_wargames
-		target = AUH_wargames 
-		scroll_wheel_factor = 0.49
+		#name AUH_industrial_expansion_shortcut
+		name = economic_tree_shortcut
+		target = AUH_industrial_expansion 
+		scroll_wheel_factor = 1
+	}
+
+	shortcut = {
+		#name AUH_stabilize_the_empire_shortcut
+		name = inner_politics_tree_shortcut
+		target = AUH_stabilize_the_empire 
+		scroll_wheel_factor = 0.9
 	}
 	
 	###########
@@ -65,6 +65,8 @@ focus_tree = {
 	shared_focus = AUH_hungarian_aluminium_production
 	shared_focus = AUH_croatian_industrialisation
 	shared_focus = AUH_hungarian_universal_franchise
+
+	shared_focus = GER_propose_joint_military_exercises
 
 
 	############################################################################
@@ -442,6 +444,11 @@ focus_tree = {
 			focus = AUH_invalidate_croatian_constitution
 		}
 		relative_position_id = AUH_integration_of_southern_croatia
+		available = {
+			109 = {
+				is_owned_or_subject_trigger = yes
+			}
+		}
 		completion_reward = {	
 			custom_effect_tooltip = AUH_spawn_3_guards_divisions_to_zagreb
 			hidden_effect = {
@@ -775,13 +782,25 @@ focus_tree = {
 			}
 		}
 		relative_position_id = AUH_integration_of_southern_croatia
-		completion_reward = {	
+		completion_reward = {
 			BOS = {
 				swap_ideas = {
 					remove_idea = BOS_south_slavic_terrorism
 					add_idea = BOS_south_slavic_terrorism2
 					days = 720
 				}
+			}
+			if = {
+				limit = {
+					has_character = AUH_franz_ferdinand
+					NOT = {
+						has_country_leader = {
+							character = AUH_franz_ferdinand
+						}						
+					}
+				}
+				custom_effect_tooltip = AUH_prevent_ferdinand_assasination
+				custom_effect_tooltip = empty_space_tt
 			}
 			unlock_decision_tooltip = BOS_suspend_bosnian_diet
 			set_country_flag = AUH_suppress_slav_opposition
@@ -808,9 +827,31 @@ focus_tree = {
 		relative_position_id = AUH_suppress_slav_opposition
 		completion_reward = {
 			custom_effect_tooltip = AUH_balkan_expansion_tt
-			add_state_claim = 105
-			add_state_claim = 761
-			add_state_claim = 848
+			if = {
+				limit = { 
+					CRO = {
+						exists = no
+					}
+				}
+				add_state_claim = 105
+				add_state_claim = 760
+				add_state_claim = 761
+				add_state_claim = 848
+				add_state_claim = 1205
+			}
+			if = {
+				limit = { 
+					has_subject = CRO
+				}
+				CRO = {
+					add_state_claim = 105
+					add_state_claim = 760
+					add_state_claim = 761
+					add_state_claim = 848
+					add_state_claim = 1205
+					add_war_support = 0.1
+				}
+			}
 			add_war_support = 0.10
 		}
 		ai_will_do = { factor = 10 }
@@ -855,12 +896,13 @@ focus_tree = {
 				has_country_flag = AUH_racism_ban
 			}
 			any_state = {
-				is_controlled_by = ROOT
+				is_controlled_by_ROOT_or_subject = yes
 				OR = {
 					is_core_of = POL
 					is_core_of = SER
 					is_core_of = MNT
 					is_core_of = UKR
+					is_core_of = WUK
 				}
 			}
 			NOT = {
@@ -901,13 +943,13 @@ focus = {
 	y = 0
 	available = {
 		custom_trigger_tooltip = {
-			tooltip = AUH_franz_ferdinand_i_is_ruler
+			tooltip = AUH_franz_ferdinands_ruler
 			OR = {
 				has_country_leader = {
 					character = AUH_karl_i
 				}
 				has_country_leader = {
-					character = AUH_franz_ferdinand_i
+					character = AUH_franz_ferdinand
 				}
 			}
 		}	
@@ -915,7 +957,7 @@ focus = {
 	# allow_branch = {
 	# 	OR = {
 	# 		has_country_leader = {
-	# 			character = AUH_franz_ferdinand_i
+	# 			character = AUH_franz_ferdinand
 	# 			ruling_only = yes
 	# 		}
 	# 		has_country_leader = {
@@ -925,25 +967,39 @@ focus = {
 	# 		is_debug = yes
 	# 	}
 	# }
+	offset = {
+		x = 3
+		y = 0
+		trigger = {
+			has_game_rule = {
+				rule = obsolete_focus_branches_visibility
+				option = HIDE
+			}
+			has_global_flag = AUH_franz_ferdinand_killed
+			NOT = {
+				has_idea = AUH_corruption
+			}
+		}
+	}
 	bypass = {
 		OR = {
 			has_country_leader = {
 				character = AUH_karl_i
 			}
 			has_country_leader = {
-				character = AUH_franz_ferdinand_i
+				character = AUH_franz_ferdinand
 			}
 		}
 	}
 	search_filters = {
-		FOCUS_FILTER_INTERNAL_AFFAIRS
+		FOCUS_FILTER_INTERNAL_AFFAIRS FOCUS_FILTER_COMPLETED_BY_EVENT
 	}
 	relative_position_id = AUH_stabilize_the_empire
 	# prerequisite = {
 	# 	focus = AUH_army_question_statemate
 	# }
 	completion_reward = {
-		custom_effect_tooltip = AUH_franz_ferdinand_i_is_ruler
+		custom_effect_tooltip = AUH_franz_ferdinands_ruler
 	}
 	ai_will_do = { factor = 10 }
 }
@@ -960,7 +1016,7 @@ focus = {
 				character = AUH_karl_i
 			}
 			has_country_leader = {
-				character = AUH_franz_ferdinand_i
+				character = AUH_franz_ferdinand
 			}
 		}
 		has_subject = HUN
@@ -979,6 +1035,20 @@ focus = {
 	}
 	prerequisite = {
 		focus = AUH_hungarian_politics
+	}
+	offset = {
+		x = -3
+		y = 0
+		trigger = {
+			has_game_rule = {
+				rule = obsolete_focus_branches_visibility
+				option = HIDE
+			}
+			has_global_flag = AUH_franz_ferdinand_killed
+			NOT = {
+				has_idea = AUH_corruption
+			}
+		}
 	}
 	# bypass = {
 	# 	NOT = {
@@ -1024,10 +1094,10 @@ focus = {
 				}					
 			}
 			else_if = {
-				limit = { has_idea = HUN_franz_ferdinand_i }
+				limit = { has_idea = HUN_franz_ferdinand }
 				swap_ideas = {
-					remove_idea = HUN_franz_ferdinand_i 
-					add_idea = HUN_franz_ferdinand_i_2
+					remove_idea = HUN_franz_ferdinand 
+					add_idea = HUN_franz_ferdinand_2
 				}
 			}
 			add_autonomy_score = {
@@ -1059,11 +1129,18 @@ focus = {
 	y = 1
 	available = {
 		has_country_leader = {
-			character = AUH_franz_ferdinand_i
+			character = AUH_franz_ferdinand
 		}
 		has_subject = HUN
 		HUN = {
 			has_government = neutrality
+		}
+	}
+	bypass = {
+		HUN = {
+			has_country_leader = {
+				character = AUH_joseph_august_von_osterreich
+			}
 		}
 	}
 	search_filters = {
@@ -1077,25 +1154,14 @@ focus = {
 		focus = AUH_hungarian_universal_franchise
 	}
 	completion_reward = {
-		HUN = {
-			if = {
-				limit = {
-					has_character = AUH_joseph_august_von_osterreich
-				}
-				promote_character = AUH_joseph_august_von_osterreich
-				else = {
-					every_possible_country = {
-						limit = {
-							has_character = AUH_joseph_august_von_osterreich
-						}
-						AUH_joseph_august_von_osterreich = {
-							set_nationality = HUN
-							set_character_name = HUN_joseph_august
-							promote_character = semi_constitutional_monarchy
-						}
-					}
-				}
+		AUS = {
+			AUH_joseph_august_von_osterreich = {
+				set_nationality = HUN
+				set_character_name = HUN_joseph_august
+				promote_character = semi_constitutional_monarchy
 			}
+		}	
+		HUN = {
 			set_party_name = {
 				ideology = neutrality
 				long_name = HUN_viceroy_council_party_long
@@ -1134,14 +1200,14 @@ focus = {
 			OR = {
 				has_idea = AUH_corruption
 				NOT = {
-					has_global_flag = kis_franzferdinand_murdered
+					has_global_flag = AUH_franz_ferdinand_killed
 				}
 			}	
 		}
 	}
 	available = {
 		has_country_leader = {
-			character	= AUH_franz_ferdinand_i
+			character	= AUH_franz_ferdinand
 		}
 	}
 	search_filters = {
@@ -1168,7 +1234,7 @@ focus = {
 	y = 1
 	available = {
 		has_country_leader = {
-			character	= AUH_franz_ferdinand_i
+			character	= AUH_franz_ferdinand
 		}
 	}
 	prerequisite = {
@@ -1192,8 +1258,8 @@ focus = {
 				value = 0
 			}
 		}
-		add_dynamic_modifier = { modifier = AUH_corruption }
 		hidden_effect = {
+			add_dynamic_modifier = { modifier = AUH_corruption }
 			add_ideas = AUH_corruption
 		}
 	}
@@ -1208,7 +1274,7 @@ focus = {
 # 	y = 1
 # 	available = {
 # 		has_country_leader = {
-# 			character	= AUH_franz_ferdinand_i
+# 			character	= AUH_franz_ferdinand
 # 		}
 # 	}
 # 	bypass = {
@@ -1256,7 +1322,7 @@ focus = {
 	y = 1
 	available = {
 		has_country_leader = {
-			character	= AUH_franz_ferdinand_i
+			character	= AUH_franz_ferdinand
 		}
 	}
 	bypass = {
@@ -1274,6 +1340,7 @@ focus = {
 	}
 	completion_reward = {
 		custom_effect_tooltip = AUH_new_lobbying_decisions
+		set_country_flag = AUH_new_lobbying_decisions
 	}
 	ai_will_do = { factor = 25 }
 }
@@ -1288,7 +1355,7 @@ focus = {
 	available = {
 		has_idea = AUH_corruption
 		has_country_leader = {
-			character	= AUH_franz_ferdinand_i
+			character	= AUH_franz_ferdinand
 		}
 	}
 	search_filters = {
@@ -1346,7 +1413,7 @@ focus = {
 	available = {
 		has_idea = AUH_corruption
 		has_country_leader = {
-			character	= AUH_franz_ferdinand_i
+			character	= AUH_franz_ferdinand
 		}
 	}
 	search_filters = {
@@ -1395,7 +1462,7 @@ focus = {
 	available = {
 		has_idea = AUH_corruption
 		has_country_leader = {
-			character	= AUH_franz_ferdinand_i
+			character	= AUH_franz_ferdinand
 		}
 	}
 	bypass_if_unavailable = yes
@@ -1409,14 +1476,9 @@ focus = {
 	}
 	completion_reward = {
 		custom_effect_tooltip = AUH_corruption_reduction_4
-		custom_effect_tooltip = AUH_corruption_can_be_negative
-		subtract_from_variable = {
-			var = AUH_corruption_var
-			value = 0.04
-		}
 		add_to_variable = {
 			var = AUH_corruption_var
-			value = 0.04
+			value = -0.04
 		}
 		set_variable = {
 			var = AUH_corruption_var_plain
@@ -1439,7 +1501,7 @@ focus = {
 	available = {
 		has_idea = AUH_corruption
 		has_country_leader = {
-			character	= AUH_franz_ferdinand_i
+			character	= AUH_franz_ferdinand
 		}
 	}
 	bypass_if_unavailable = yes
@@ -1468,7 +1530,12 @@ focus = {
 		OR = {
 			has_idea = AUH_debts
 			AND = {
-				has_idea = AUH_corruption
+				OR = {
+					has_idea = AUH_corruption
+					has_dynamic_modifier = {
+						modifier = AUH_corruption
+					}
+				}
 				check_variable = {
 					AUH_corruption_var_plain > 10
 				}
@@ -1527,7 +1594,7 @@ focus = {
 	available = {
 		has_war = no
 		has_country_leader = {
-			character = AUH_franz_ferdinand_i
+			character = AUH_franz_ferdinand
 		}
 		NOT = { has_country_flag = austria_promised_autonomy }
 		NOT = {
@@ -1643,6 +1710,20 @@ focus = {
 	relative_position_id = AUH_true_personality_amidst_the_inanity
 	prerequisite = {
 		focus = AUH_true_personality_amidst_the_inanity
+	}
+	offset = {
+		x = -3
+		y = 0
+		trigger = {
+			has_game_rule = {
+				rule = obsolete_focus_branches_visibility
+				option = HIDE
+			}
+			has_global_flag = AUH_franz_ferdinand_killed
+			NOT = {
+				has_idea = AUH_corruption
+			}
+		}
 	}
 	completion_reward = {
 		country_event = {
@@ -1852,7 +1933,7 @@ focus = {
 			limit = { has_global_flag = great_war }
 			has_global_flag = great_war_ends
 			OR = {
-				has_global_flag = versallies_treaty
+				has_global_flag = versailles_treaty
 				has_global_flag = frankfurt_treaty
 			}
 		}
@@ -1864,40 +1945,17 @@ focus = {
 		}
 		NOT = {
 			has_global_flag = AUH_lose_against_hungary
-			HUN = {
-				exists = yes
-				NOT = {
-					is_puppet_of = AUS
-				}
-			}
-			CZE = {
-				exists = yes
-				NOT = {
-					is_puppet_of = AUS
-				}
-			}
-			GAL = {
-				exists = yes
-				NOT = {
-					is_puppet_of = AUS
-				}
-			}
-			CRO = {
-				exists = yes
-				NOT = {
-					is_puppet_of = AUS
-				}
-			}
-			BOS = {
-				exists = yes
-				NOT = {
-					is_puppet_of = AUS
-				}
-			}
+			has_subject = CRO
 		}
 	}
 	bypass = {
-		has_completed_focus = AUH_federalist_reform
+		OR = {
+			has_completed_focus = AUH_federalist_reform
+			AND = {
+				has_subject = CRO
+				has_subject = HUN
+			}
+		}
 	}
 	search_filters = {
 		FOCUS_FILTER_STABILITY
@@ -1997,7 +2055,7 @@ focus = {
 # 				character = AUH_karl_i
 # 			}
 # 			has_country_leader = {
-# 				character = AUH_franz_ferdinand_i
+# 				character = AUH_franz_ferdinand
 # 			}
 # 		}
 # 	}
@@ -2051,10 +2109,14 @@ focus = {
 	id = AUH_renegotiate_1879_treaty
 	icon = GFX_focus_align_germany
 	cost = 5
-	x = -2
+	x = -4
 	y = 1
 	available = {
 		is_subject = no
+		has_civil_war = no
+		NOT = {
+			has_war_with = HUN
+		}
 		OR = {
 			is_in_faction = no
 			is_in_faction_with = GER
@@ -2077,12 +2139,19 @@ focus = {
 	search_filters = {
 		FOCUS_FILTER_POLITICAL
 	}
-	relative_position_id = AUH_economic_liberisation
+	relative_position_id = AUH_reign_of_liberalism
 	prerequisite = {
 		# focus = AUH_renew_foreign_policy
 		focus = AUH_economic_liberisation
 	}
 	completion_reward = {
+		if = {
+			limit = { 
+				has_idea = standing_alone
+			}
+			remove_ideas = standing_alone
+		}
+		
 		if = {
 			limit = {
 				NOT = { is_in_faction_with = GER }
@@ -2188,7 +2257,7 @@ focus = {
 				character = AUH_karl_i
 			}
 			has_country_leader = {
-				character = AUH_franz_ferdinand_i
+				character = AUH_franz_ferdinand
 			}
 		}
 	}
@@ -2221,30 +2290,34 @@ focus = {
 			}
 			leave_faction = yes
 		}
-		diplomatic_relation = {
-			country = GER
-			relation = guarantee
-			active = no
-	    }
-		diplomatic_relation = {
-			country = ITA
-			relation = guarantee
-			active = no
-	    }
-		hidden_effect = {
-			GER = {
+		every_other_country = {
+			limit = { 
+				is_guaranteed_by = ROOT 
+				NOT = {
+					original_tag = LIE
+				}
+			}
+			ROOT = {
 				diplomatic_relation = {
-					country = ROOT
+					country = PREV
 					relation = guarantee
 					active = no
 				}
 			}
-			ITA = {
-				diplomatic_relation = {
-					country = ROOT
-					relation = guarantee
-					active = no
+		}
+		every_other_country = {
+			limit = { 
+				has_guaranteed = ROOT 
+				OR = {
+					original_tag = GER
+					original_tag = ITA
+					original_tag = ROM
 				}
+			}
+			diplomatic_relation = {
+				country = PREV
+				relation = guarantee
+				active = no
 			}
 		}
 	}
@@ -2557,6 +2630,8 @@ focus = {
 		focus = AUH_self_defence_doctrines
 	}
 	completion_reward = {
+		add_political_power = 50
+		add_stability = 0.05
 		add_ideas = neutrality_idea
 		
 	}
@@ -2755,7 +2830,7 @@ focus = {
 				}
 			}
 			support = {
-				artillery = {
+				field_gun = {
 					x = 0
 					y = 0
 				}
@@ -2957,7 +3032,7 @@ focus = {
 		add_tech_bonus = {
 			name = AUH_post_war_experience
 			bonus = 1
-			category = artillery
+			category = cat_artillery
 			uses = 1
 		}
 	}
@@ -3724,16 +3799,13 @@ focus = {
 
 	focus = {
 		id = AUH_industrial_expansion
-		icon = GFX_focus_AUH_country
+		icon = GFX_focus_AUS_empire_map
 		cost = 10
 		x = 18
 		y = 0
 		relative_position_id = AUH_stabilize_the_empire
 		available = {
 			4 = {
-				is_controlled_by_ROOT_or_subject = yes
-			}
-			43 = {
 				is_controlled_by_ROOT_or_subject = yes
 			}
 			75 = {
@@ -3756,7 +3828,7 @@ focus = {
 					instant_build = yes
 				}
 			}
-			43 = {
+			4 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
@@ -3827,6 +3899,14 @@ focus = {
 				uses = 1
 			}
 			69 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			9 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
@@ -3927,11 +4007,26 @@ focus = {
 			39 = {
 				is_owned_or_subject_trigger = yes
 			}
+			can_build_railway = {
+				path = {
+					11542 9429 583 13347 421 3414 3583 9567 13205 9427
+				}
+			}
 			75 = {
 				is_owned_or_subject_trigger = yes
 			}
+			can_build_railway = {
+				path = {
+					3569 11511 9539 9692
+				}
+			}
 			9 = {
 				is_owned_or_subject_trigger = yes
+			}
+			can_build_railway = {
+				path = {
+					673 11618 9630 11598 9598
+				}		
 			}
 		}
 		search_filters = {
@@ -3948,13 +4043,13 @@ focus = {
 			}
 			build_railway = {
 				path = {
-					11542 9429 583 421 3414 3583 9567 13205 9427
+					11542 9429 583 13347 421 3414 3583 4859 9567 13205 9412 9427
 				}
 				level = 2
 			}
 			build_railway = {
 				path = {
-					3569 11511 9692
+					3569 11511 9539 9692
 				}
 				level = 2
 			}
@@ -3990,19 +4085,23 @@ focus = {
 		}
 		bypass_if_unavailable = yes
 		completion_reward = {
+			add_resource = {
+				type = steel
+				amount = 7
+				state = 75
+			}
 			75 = {
-				add_resource = {
-					type = steel
-					amount = 7
-				}
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
 					level = 1
 					instant_build = yes
 				}
+			}
+			75 = {
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
-					type = infrastructure
+					type = industrial_complex
 					level = 1
 					instant_build = yes
 				}
@@ -4013,7 +4112,7 @@ focus = {
 
 	focus = {
 		id = AUH_improve_trento_supply_administration
-		icon = GFX_goal_generic_construction
+		icon = GFX_focus_generic_reinforcing_the_supply_network
 		cost = 5
 		x = 0
 		y = 1
@@ -4045,7 +4144,7 @@ focus = {
 
 	focus = {
 		id = AUH_skoda_works
-		icon = GFX_goal_generic_construct_mil_factory
+		icon = GFX_focus_generic_military_industry
 		cost = 10
 		x = -1
 		y = 1
@@ -4291,7 +4390,7 @@ focus = {
 			add_tech_bonus = {
 				name = AUH_organise_artillery_brigades
 				bonus = 1
-				category = artillery
+				category = cat_artillery
 				uses = 1
 			}
 		}
@@ -4666,7 +4765,7 @@ focus = {
 						x = 4
 						y = 0
 					}
-					artillery_brigade = {
+					field_gun_brigade = {
 						x = 3
 						y = 1
 					}
@@ -4785,7 +4884,7 @@ focus = {
 						x = 4
 						y = 0
 					}
-					artillery_brigade = {
+					field_gun_brigade = {
 						x = 4
 						y = 1
 					}
@@ -4797,10 +4896,13 @@ focus = {
 			hidden_effect = {
 				random_owned_controlled_state = {
 					limit = {
-						is_core_of = UKR
+						OR = {
+							is_core_of = WUK
+							is_core_of = UKR
+						}					
 					}
 					create_unit = {
-						division = "name = \"Ukrainski sichovi striltsi\" division_template = \"Ukrainski sichovi striltsi\" start_experience_factor = 0.1 start_equipment_factor = 0.9"
+						division = "name = \"Ukrainski Sichovi Striltsi\" division_template = \"Ukrainski Sichovi Striltsi\" start_experience_factor = 0.1 start_equipment_factor = 0.9"
 						owner = ROOT
 					}
 				}
@@ -4817,7 +4919,7 @@ focus = {
 		y = 2
 		relative_position_id = AUH_armored_cars
 		prerequisite = {
-			focus = AUH_armored_cars
+			focus = GER_propose_joint_military_exercises
 		}
 		prerequisite = {
 			focus = AUH_national_mobilisation
@@ -4833,7 +4935,7 @@ focus = {
 				bonus = 1
 				uses = 1
 				ahead_reduction = 1
-				category = radar_tech
+				category = radio_tech
 				category = armor
 				category = air_equipment
 			}
@@ -4905,7 +5007,7 @@ focus = {
 					}
 				}
 				support = {
-					artillery = {
+					field_gun = {
 						x = 0
 						y = 0
 					}
@@ -5182,10 +5284,12 @@ focus = {
 			FOCUS_FILTER_NAVY_XP
 		}
 		completion_reward = {
+			unlock_decision_tooltip = AUS_blockade_italy
+			unlock_decision_tooltip = AUS_shell_venice
 			navy_experience = 25
-			add_tech_bonus = {
+			add_doctrine_cost_reduction = {
 				name = AUH_expand_pula_base
-				bonus = 1
+				cost_reduction = 1
 				uses = 2
 				category = naval_doctrine
 			}
@@ -5534,9 +5638,9 @@ focus = {
 		}
 		completion_reward = {
 			air_experience = 25
-			add_tech_bonus = {
+			add_doctrine_cost_reduction = {
 				name = AUH_prepare_the_great_war_of_sky
-				bonus = 1
+				cost_reduction = 1
 				uses = 2
 				category = air_doctrine
 			}
@@ -5655,22 +5759,20 @@ focus = {
 	joint_focus = {
 		id = AUH_hungarian_politics
 		icon = GFX_focus_AUH_support_hungary
-		text_icon = NORDIC_focus_style
+		text_icon = joint_AUS_HUN_focus_style
 		cost = 5
 		x = -6
 		y = 1
 		offset = {
-			x = 3
+			x = 25
 			trigger = {
 				tag = HUN
 			}
 		}
 		available = {
-			HUN = {
-				OR = {
-					exists = no
-					is_subject_of = AUS
-				}
+			OR = {
+				is_subject_of = AUS
+				has_subject = HUN
 			}
 		}
 		search_filters = {
@@ -5711,7 +5813,7 @@ focus = {
 	joint_focus = {
 		id = AUH_integrate_slovakia
 		icon = GFX_focus_AUH_integrate_slovakia
-		text_icon = NORDIC_focus_style
+		text_icon = joint_AUS_HUN_focus_style
 		cost = 10
 		x = 2
 		y = 1
@@ -5720,6 +5822,10 @@ focus = {
 			focus = AUH_hungarian_politics
 		}
 		available = {
+			OR = {
+				is_subject_of = AUS
+				has_subject = HUN
+			}
 			any_state = {
 				is_controlled_by_ROOT_or_subject = yes
 				is_core_of = SLO			
@@ -5765,7 +5871,7 @@ focus = {
 						}
 					}
 					support = {
-						artillery = {
+						field_gun = {
 							x = 0
 							y = 0
 						}
@@ -5808,7 +5914,7 @@ focus = {
 	joint_focus = {
 		id = AUH_erase_romanian_nationalism
 		icon = GFX_focus_AUH_erase_romanian_nationalism
-		text_icon = NORDIC_focus_style
+		text_icon = joint_AUS_HUN_focus_style
 		cost = 10
 		x = 0
 		y = 1
@@ -5817,47 +5923,17 @@ focus = {
 		}
 		available = {
 			OR = {
-				84 = {
-					is_controlled_by_ROOT_or_subject = yes
-				}
-				778 = {
-					is_controlled_by_ROOT_or_subject = yes
-				}
-				76 = {
-					is_controlled_by_ROOT_or_subject = yes
-				}
-				82 = {
-					is_controlled_by_ROOT_or_subject = yes
-				}
-				80 = {
-					is_controlled_by_ROOT_or_subject = yes
-				}
+				is_subject_of = AUS
+				has_subject = HUN
+			}
+			any_state = {
+				is_core_of = TRA
+				NOT = { state = 778 }
+				is_controlled_by_ROOT_or_subject = yes
 			}
 		}
 		bypass = {
-			OR = {
-				TRA = {
-					exists = yes
-				}
-				AND = {
-					84 = {
-						is_core_of = ROOT
-					}
-					778 = {
-						is_core_of = ROOT
-					}
-					76 = {
-						is_core_of = ROOT
-					}
-					82 = {
-						is_core_of = ROOT
-					}
-					80 = {
-						is_core_of = ROOT
-					}
-				}
-			}
-			
+			country_exists = TRA
 		}
 		relative_position_id = AUH_integrate_slovakia
 		search_filters = {
@@ -5900,14 +5976,20 @@ focus = {
 							}
 						}
 						support = {
-							artillery = {
+							field_gun = {
 								x = 0
 								y = 0
 							}
 						}
 					}
 				}
-				76 = {
+				random_state = {
+					limit = {
+						is_core_of = TRA
+						NOT = { state = 778 }
+						is_controlled_by_ROOT_or_subject = yes
+					}
+					prioritize = { 76 }
 					create_unit = {
 						division = "name = \"1. Garda Nationala\" division_template = \"Garda Nationala\" start_experience_factor = 0.2 start_equipment_factor = 1"
 						owner = AUS
@@ -5919,23 +6001,9 @@ focus = {
 				}
 			}
 			HUN = {
-				every_state = {
-					limit = {
-						has_state_flag = AUH_ROM_state
-					}
-					if = {
-						limit = {
-							OR = {
-								region = 27
-								state = 866
-								state = 868
-							}
-						}
-						add_core_of = HUN
-					}
-					add_core_of = ROOT
-				}
-				custom_effect_tooltip = AUH_core_romania
+				add_political_power = 150
+				add_stability = 0.05
+				#custom_effect_tooltip = AUH_core_romania
 			}					
 		}
 		ai_will_do = { 
@@ -5946,13 +6014,17 @@ focus = {
 	joint_focus = {
 		id = AUH_invalidate_croatian_constitution
 		icon = GFX_focus_AUH_invalidate_croatian_constitution
-		text_icon = NORDIC_focus_style
+		text_icon = joint_AUS_HUN_focus_style
 		cost = 8
 		x = 4
 		y = 1
 		available = {
-			109 = {
-				is_controlled_by_ROOT_or_subject = yes
+			OR = {
+				is_subject_of = AUS
+				has_subject = HUN
+			}
+			HUN = {
+				owns_state = 109
 			}
 		}
 		bypass = {
@@ -5990,15 +6062,12 @@ focus = {
 	joint_focus = {
 		id = AUH_army_question_statemate
 		icon = GFX_focus_AUH_the_army_question
-		text_icon = NORDIC_focus_style
+		text_icon = joint_AUS_focus_style
 		cost = 8
 		x = 0
 		y = 1
 		available = {
-			any_state = {
-				is_core_of = HUN
-				is_controlled_by_ROOT_or_subject = yes
-			}
+			has_subject = HUN
 		}
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
@@ -6009,24 +6078,40 @@ focus = {
 		}
 		relative_position_id = AUH_hungarian_politics
 		completion_reward_joint_originator = {
-			HUN = {
-				if = {
-					limit = {
-						has_country_leader = {
-							character = HUN_karoly_khuen_hedervary
-						}
-					}
-					promote_character = HUN_laszlo_luckacs
-				}			
-			}
-			AUS = {
+			if = {
+				limit = { tag = AUS }
 				custom_effect_tooltip = AUH_unlock_military_focuses	
 				country_event = {
 					id = ww1_auh.57
 					hours = 36
 				}
 			}
-			
+			else_if = {
+				limit = {
+					has_country_leader = {
+						character = HUN_karoly_khuen_hedervary
+					}
+				}
+				promote_character = HUN_laszlo_luckacs
+			}		
+		}
+		completion_reward_joint_member = {
+			if = {
+				limit = { tag = AUS }
+				custom_effect_tooltip = AUH_unlock_military_focuses	
+				country_event = {
+					id = ww1_auh.57
+					hours = 36
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_leader = {
+						character = HUN_karoly_khuen_hedervary
+					}
+				}
+				promote_character = HUN_laszlo_luckacs
+			}	
 		}
 		ai_will_do = { 
 			factor = 75
@@ -6036,14 +6121,14 @@ focus = {
 	joint_focus = {
 		id = AUH_act_of_protection
 		icon = GFX_focus_POL_beck_ribbentrop
-		text_icon = NORDIC_focus_style
+		text_icon = joint_AUS_HUN_focus_style
 		cost = 8
 		x = 0
 		y = 1
 		available = {
-			any_state = {
-				is_core_of = HUN
-				is_controlled_by_ROOT_or_subject = yes
+			OR = {
+				is_subject_of = AUS
+				has_subject = HUN
 			}
 		}
 		prerequisite = {
@@ -6065,11 +6150,15 @@ focus = {
 	joint_focus = {
 		id = AUH_Tiszas_Silent_Coup
 		icon = GFX_goal_tfv_saf_anti_colonialist_crusade
-		text_icon = NORDIC_focus_style
+		text_icon = joint_AUS_HUN_focus_style
 		cost = 8
 		x = 0
 		y = 1
 		allow_branch = {
+			OR = {
+				is_subject_of = AUS
+				has_subject = HUN
+			}
 			if = {
 				limit = {
 					has_game_rule = {
@@ -6088,6 +6177,9 @@ focus = {
 			}
 		}
 		available = {
+			AUS = {
+				has_subject = HUN
+			}
 			HUN = {
 				has_country_flag = HUN_1910_elections_NMP
 			}
@@ -6148,15 +6240,15 @@ focus = {
 	joint_focus = {
 		id = AUH_subvert_hungarian_parliament
 		icon = GFX_focus_generic_monarchy_1
-		text_icon = NORDIC_focus_style
+		text_icon = joint_AUS_HUN_focus_style
 		cost = 8
 		x = 1
 		y = 1
 		available = {
 			has_war = yes
-			any_state = {
-				is_core_of = HUN
-				is_controlled_by_ROOT_or_subject = yes
+			OR = {
+				is_subject_of = AUS
+				has_subject = HUN
 			}
 			HUN = {
 				has_country_leader = {
@@ -6192,7 +6284,7 @@ focus = {
 	joint_focus = {
 		id = AUH_silence_the_labour_movements
 		icon = GFX_focus_control_economy
-		text_icon = NORDIC_focus_style
+		text_icon = joint_AUS_HUN_focus_style
 		cost = 8
 		x = -1
 		y = 1
@@ -6200,9 +6292,9 @@ focus = {
 			NOT = {
 				has_country_flag = AUH_racism_ban
 			}
-			any_state = {
-				is_core_of = HUN
-				is_controlled_by_ROOT_or_subject = yes
+			OR = {
+				is_subject_of = AUS
+				has_subject = HUN
 			}
 			HUN = {
 				has_country_leader = {
@@ -6232,9 +6324,9 @@ focus = {
 	joint_focus = {
 		id = AUH_magyarisation
 		icon = GFX_focus_HUN_coat_of_arms
-		text_icon = NORDIC_focus_style
+		text_icon = joint_AUS_HUN_focus_style
 		cost = 10
-		x = 0
+		x = 1
 		y = 1
 		# bypass = {
 		# 	NOT = {
@@ -6243,20 +6335,23 @@ focus = {
 		# 	}
 		# }
 		available = {
-			is_subject = no
+			OR = {
+				is_subject_of = AUS
+				has_subject = HUN
+			}
 			AUS = {
 				NOT = {
 					has_country_leader = {
-						character = AUH_franz_ferdinand_i
+						character = AUH_franz_ferdinand
 					}
 				}
 			}		
 		}
 		prerequisite = {
-			focus = AUH_Tiszas_Silent_Coup
+			focus = AUH_erase_romanian_nationalism
 		}
 		prerequisite = {
-			focus = AUH_erase_romanian_nationalism
+			focus = AUH_act_of_protection
 		}
 		relative_position_id = AUH_erase_romanian_nationalism
 		completion_reward_joint_originator = {
@@ -6277,13 +6372,20 @@ focus = {
 	joint_focus = {
 		id = AUH_the_new_croatian_constituation
 		icon = GFX_focus_YUG_banovina_of_croatia
-		text_icon = NORDIC_focus_style
+		text_icon = joint_AUS_HUN_focus_style
 		cost = 10
 		x = 0
 		y = 3
 		available = {
-			109 = {
-				is_controlled_by_ROOT_or_subject = yes
+			OR = {
+				is_subject_of = AUS
+				has_subject = HUN
+			}
+			HUN = {
+				owns_state = 109
+			}
+			NOT = {
+				country_exists = CRO
 			}
 		}
 		prerequisite = {
@@ -6313,11 +6415,11 @@ joint_focus = {
 	id = AUH_hungarian_aluminium_production
 	icon = GFX_focus_generic_aluminum
 	cost = 10
-	text_icon = NORDIC_focus_style
+	text_icon = joint_AUS_HUN_focus_style
 	x = 2
 	y = 1
 	offset = {
-		y = 0
+		x = -18
 		trigger = {
 			tag = HUN
 		}
@@ -6373,12 +6475,12 @@ joint_focus = {
 joint_focus = {
 	id = AUH_croatian_industrialisation
 	icon = GFX_focus_SOV_organize_wreckers
-	text_icon = NORDIC_focus_style
+	text_icon = joint_AUS_HUN_focus_style
 	cost = 10
 	x = 4
 	y = 1
 	offset = {
-		x = -4
+		x = -22
 		y = 1
 		trigger = {
 			tag = HUN
@@ -6394,7 +6496,14 @@ joint_focus = {
 			is_controlled_by_ROOT_or_subject = yes
 			is_core_of = CRO
 		}
-		has_completed_focus = AUH_invalidate_croatian_constitution
+		if = {
+			limit = {
+				HUN = {
+					is_subject_of = AUS
+				}
+			}
+			has_completed_focus = AUH_invalidate_croatian_constitution
+		}
 	}
 	search_filters = {
 		FOCUS_FILTER_INDUSTRY
@@ -6432,7 +6541,7 @@ joint_focus = {
 joint_focus = {
 	id = AUH_electrify_the_countryside
 	icon = GFX_focus_generic_land_reclamation
-	text_icon = NORDIC_focus_style
+	text_icon = joint_AUS_HUN_focus_style
 	cost = 5
 	x = 0
 	y = 1
@@ -6489,7 +6598,7 @@ joint_focus = {
 joint_focus = {
 	id = AUH_modernisation_of_slovakia
 	icon = GFX_focus_generic_industry_3
-	text_icon = NORDIC_focus_style
+	text_icon = joint_AUS_HUN_focus_style
 	cost = 10
 	x = 0
 	y = 1
@@ -6524,7 +6633,7 @@ joint_focus = {
 			}
 			add_extra_state_shared_building_slots = 1
 			add_building_construction = {
-				type = industrial_complex
+				type = infrastructure
 				level = 1
 				instant_build = yes
 			}
@@ -6567,7 +6676,7 @@ joint_focus = {
 joint_focus = {
 	id = AUH_mavag_gyarak
 	icon = GFX_goal_generic_construct_mil_factory
-	text_icon = NORDIC_focus_style
+	text_icon = joint_AUS_HUN_focus_style
 	cost = 10
 	x = -1
 	y = 1
@@ -6625,23 +6734,38 @@ joint_focus = {
 				level = 1
 				instant_build = yes
 			}
-		}
-		custom_effect_tooltip = available_designer
-		show_ideas_tooltip = mavag
-		
+		}	
 	}
+	completion_reward = {
+		if = {
+			limit = { 
+				NOT = { has_completed_focus = HUN_mavag_gyarak }
+			}
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = mavag
+		}
+		IF = {
+			limit = {
+				has_dlc = "Arms Against Tyranny"
+			}
+			mio:HUN_mavag_organization  = {
+				add_mio_funds = 1000
+			}
+		}
+	}
+	
 	ai_will_do = { factor = 100 }
 }
 
 joint_focus = {
 	id = AUH_hungarian_universal_franchise
 	icon = GFX_focus_generic_treaty
-	text_icon = NORDIC_focus_style
+	text_icon = joint_AUS_HUN_focus_style
 	cost = 10
 	x = 1
 	y = 1
 	offset = {
-		x = 2
+		x = 24
 		y = 0
 		trigger = {
 			tag = HUN
@@ -6730,9 +6854,9 @@ joint_focus = {
 			}		
 			if = {
 				limit = {
-					has_idea = HUN_compromise_government3
+					has_idea = HUN_minority_government3
 				}
-				remove_ideas = HUN_compromise_government3
+				remove_ideas = HUN_minority_government3
 			}
 			add_popularity = {
 				ideology = communism

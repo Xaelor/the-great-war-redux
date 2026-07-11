@@ -62,13 +62,13 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 	option = {
 		name = ww1_usa.2.b
 		ai_chance = {
-			factor = 0
+			base = 0
 		}
 		add_opinion_modifier = {
 			target = ENG
@@ -152,7 +152,7 @@ country_event = {
 	option = {
 		name = ww1_usa.3.a
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -189,7 +189,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -209,7 +209,7 @@ news_event = {
 			}
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 	option = {
@@ -218,7 +218,7 @@ news_event = {
 			tag = USA
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 }
@@ -234,7 +234,7 @@ country_event = {
 		# Accept
 		name = ww1_usa.6.a
 		ai_chance = {
-			factor = 50
+			base = 50
 			modifier = {
 				OR = {
 					original_tag = COL
@@ -313,7 +313,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 15
+			base = 15
 			modifier = {
 				is_in_faction = yes
 				factor = 10
@@ -351,7 +351,7 @@ country_event = {
 			target = FROM
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -364,21 +364,44 @@ country_event = {
 	picture = GFX_report_event_iww_demonstration
 	is_triggered_only = yes
 	option = {
-		name = ww1_usa.8.a
+		name = ww1_usa.8.ven
+		trigger = {
+			FROM = {
+				original_tag = VEN
+			}
+		}
 		create_wargoal = {
 			type = annex_everything
 			target = FROM
 			# expire = 90
 		}
 		ai_chance = {
-			factor = 50
+			base = 50
+		}
+	}
+	option = {
+		name = ww1_usa.8.a
+		trigger = {
+			FROM = {
+				NOT = {
+					original_tag = VEN
+				}
+			}
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = FROM
+			# expire = 90
+		}
+		ai_chance = {
+			base = 50
 		}
 	}
 	option = {
 		name = ww1_usa.8.b
 		add_war_support = -0.1
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -413,7 +436,7 @@ news_event = {
 			}
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 	option = {
@@ -422,7 +445,7 @@ news_event = {
 			tag = USA
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 }
@@ -452,7 +475,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 	option = {
@@ -467,7 +490,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 25
+			base = 25
 		}
 	}
 }
@@ -497,7 +520,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 25
+			base = 25
 		}
 	}
 	option = {
@@ -512,7 +535,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 }
@@ -571,7 +594,7 @@ country_event = {
 		add_stability = -0.15
 		add_political_power = -200
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -633,7 +656,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -644,7 +667,7 @@ country_event = {
 	id = ww1_usa.14
 	title = ww1_usa.14.t
 	desc = ww1_usa.14.d
-	picture = GFX_report_event_election_vote
+	picture = GFX_report_event_usa_election_generic
 	is_triggered_only = yes
 	immediate = {
 		set_country_flag = USA_elections_1912_2
@@ -666,10 +689,7 @@ country_event = {
 				#Progressive Party
 			}
 		}
-		if = {
-			limit = {
-				has_completed_focus = USA_gold_reserve
-			}
+		else = {
 			hidden_effect = {
 				country_event = {
 					id = ww1_usa.16
@@ -679,30 +699,30 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 35
+			base = 35
 		}
 	}
 	option = {
 		name = ww1_usa.14.b
 		set_country_flag = roosevelt_candidate
-		if = {
-			limit = {
-				NOT = {
-					has_completed_focus = USA_gold_reserve
-				}
-			}
-			hidden_effect = {
-				country_event = {
-					id = ww1_usa.15
-					days = 10
-				}
-				#Progressive Party
-			}
-		}
-		if = {
-			limit = {
-				has_completed_focus = USA_gold_reserve
-			}
+		# if = {
+		# 	limit = {
+		# 		NOT = {
+		# 			has_completed_focus = USA_gold_reserve
+		# 		}
+		# 	}
+		# 	hidden_effect = {
+		# 		country_event = {
+		# 			id = ww1_usa.15
+		# 			days = 10
+		# 		}
+		# 		#Progressive Party
+		# 	}
+		# }
+		# if = {
+		# 	limit = {
+		# 		has_completed_focus = USA_gold_reserve
+		# 	}
 			hidden_effect = {
 				country_event = {
 					id = ww1_usa.16
@@ -710,13 +730,13 @@ country_event = {
 				}
 				#Single candidate
 			}
-		}
+		# }
 		ai_chance = {
 			modifier = {
 				is_historical_focus_on = yes
 				factor = 0
 			}
-			factor = 5
+			base = 5
 		}
 	}
 }
@@ -769,7 +789,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -817,7 +837,7 @@ country_event = {
 			#Debates
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -848,7 +868,7 @@ country_event = {
 			#Progressive Party
 		}
 		ai_chance = {
-			factor = 25
+			base = 25
 		}
 	}
 }
@@ -870,7 +890,7 @@ news_event = {
 			}
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 	option = {
@@ -879,7 +899,7 @@ news_event = {
 			tag = USA
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 }
@@ -913,7 +933,7 @@ country_event = {
 			#Prohibition Party
 		}
 		ai_chance = {
-			factor = 25
+			base = 25
 		}
 	}
 }
@@ -945,7 +965,7 @@ country_event = {
 			#Prohibitionist Demonstrations
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -976,7 +996,7 @@ country_event = {
 			#General Strike
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -1046,7 +1066,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 75
+			base = 75
 		}
 	}
 	option = {
@@ -1062,7 +1082,7 @@ country_event = {
 			#Debates
 		}
 		ai_chance = {
-			factor = 25
+			base = 25
 			modifier = {
 				factor = 0
 				is_historical_focus_on = yes
@@ -1136,7 +1156,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 95
+			base = 95
 		}
 	}
 	option = {
@@ -1153,7 +1173,7 @@ country_event = {
 			#Debates
 		}
 		ai_chance = {
-			factor = 5
+			base = 5
 		}
 	}
 }
@@ -1188,7 +1208,7 @@ country_event = {
 			#Senate Crisis
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -1245,7 +1265,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -1298,7 +1318,7 @@ country_event = {
 			set_country_flag = roosevelt_won_debates
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -1318,7 +1338,7 @@ country_event = {
 		name = ww1_usa.27.a
 		set_country_flag = wilson_won_debates
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -1338,7 +1358,7 @@ country_event = {
 		name = ww1_usa.28.a
 		add_political_power = 50
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -1361,7 +1381,7 @@ country_event = {
 			days = 180
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -1401,7 +1421,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -1424,7 +1444,7 @@ country_event = {
 			news_event = ww1_usa.33
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 	option = {
@@ -1433,7 +1453,7 @@ country_event = {
 		clr_country_flag = progressive_party
 		set_country_flag = taft_candidate
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 }
@@ -1465,7 +1485,7 @@ country_event = {
 			news_event = ww1_usa.34
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -1480,7 +1500,7 @@ news_event = {
 	option = {
 		name = ww1_usa.33.a
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 }
@@ -1495,7 +1515,7 @@ news_event = {
 	option = {
 		name = ww1_usa.34.a
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 }
@@ -1506,6 +1526,7 @@ country_event = {
 	id = ww1_usa.35
 	title = ww1_usa.35.t
 	desc = ww1_usa.35.d
+	picture = GFX_report_event_usa_election_generic
 	trigger = {
 		tag = USA
 		date > 1912.11.4
@@ -1525,7 +1546,7 @@ country_event = {
 	option = {
 		name = ww1_usa.35.a
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 		trigger = {
 			neutrality > 0.5
@@ -1542,7 +1563,7 @@ country_event = {
 	option = {
 		name = ww1_usa.35.b
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 		trigger = {
 			neutrality < 0.5
@@ -1573,6 +1594,7 @@ country_event = {
 	id = ww1_usa.36
 	title = ww1_usa.35.t
 	desc = ww1_usa.36.d
+	picture = GFX_report_event_usa_election_generic
 	trigger = {
 		tag = USA
 		date > 1912.11.4
@@ -1592,7 +1614,7 @@ country_event = {
 	option = {
 		name = ww1_usa.36.a
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 		trigger = {
 			communism > 0.49
@@ -1611,7 +1633,7 @@ country_event = {
 	option = {
 		name = ww1_usa.36.b
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 		trigger = {
 			communism < 0.5
@@ -1655,6 +1677,7 @@ country_event = {
 	id = ww1_usa.37
 	title = ww1_usa.35.t
 	desc = ww1_usa.37.d
+	picture = GFX_report_event_usa_election_generic
 	mean_time_to_happen = {
 		days = 0
 	}
@@ -1671,7 +1694,7 @@ country_event = {
 	option = {
 		name = ww1_usa.37.a
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 		USA_woodrow_wilson = {
 			promote_character = social_liberalism
@@ -1690,7 +1713,7 @@ country_event = {
 	option = {
 		name = ww1_usa.37.b
 		ai_chance = {
-			factor = 100
+			base = 100
 			modifier = {
 				is_historical_focus_on = yes
 				factor = 0
@@ -1715,6 +1738,7 @@ country_event = {
 	id = ww1_usa.38
 	title = ww1_usa.35.t
 	desc = ww1_usa.38.d
+	picture = GFX_report_event_usa_election_generic
 	mean_time_to_happen = {
 		days = 0
 	}
@@ -1731,7 +1755,7 @@ country_event = {
 	option = {
 		name = ww1_usa.38.a
 		ai_chance = {
-			factor = 30
+			base = 30
 		}
 		USA_woodrow_wilson = {
 			promote_character = social_liberalism
@@ -1750,7 +1774,7 @@ country_event = {
 	option = {
 		name = ww1_usa.38.b
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 		promote_character = USA_theodore_roosevelt
 		add_ideas = USA_idea_new_nationalism
@@ -1808,7 +1832,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 90
+			base = 90
 		}
 	}
 	option = {
@@ -1819,7 +1843,7 @@ country_event = {
 			popularity = 0.05
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 			modifier = {
 				is_in_faction = yes
 				factor = 0
@@ -1865,7 +1889,7 @@ country_event = {
 			activate_mission = USA_civil_war_mission
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -1904,6 +1928,15 @@ country_event = {
 						}
 					}
 					release = HAW
+				}
+				if = {
+					limit = {
+						owns_state = 686
+						NOT = {
+							686 = { is_core_of = USA }
+						}
+					}
+					release = PUE
 				}
 			}
 			every_owned_state = {
@@ -1950,6 +1983,8 @@ country_event = {
 				transfer_units_fraction = {
 					target = USB
 					size = 0.5
+					target_organization = 1
+					source_organization = 1
 					stockpile_ratio = 0.45
 					army_ratio = 0.45
 					navy_ratio = 0.55
@@ -2031,7 +2066,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -2069,7 +2104,7 @@ country_event = {
 			activate_mission = USA_civil_war_mission
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -2108,6 +2143,15 @@ country_event = {
 						}
 					}
 					release = HAW
+				}
+				if = {
+					limit = {
+						owns_state = 686
+						NOT = {
+							686 = { is_core_of = USA }
+						}
+					}
+					release = PUE
 				}
 			}
 			CSA = {
@@ -2174,6 +2218,8 @@ country_event = {
 				transfer_units_fraction = {
 					target = CSA
 					size = 0.35
+					target_organization = 1
+					source_organization = 1
 					stockpile_ratio = 0.25
 					army_ratio = 0.35
 					navy_ratio = 0.15
@@ -2187,15 +2233,17 @@ country_event = {
 				}
 				USA_william_joseph_simmons = {
 					set_nationality = CSA
-					promote_character = fundamentalism
+					promote_character = ultranationalism
 				}
 				USA_woodrow_wilson = {
 					set_nationality = CSA
-					promote_character = social_liberal
+					promote_character = social_liberalism
 				}
 				transfer_units_fraction = {
 					target = USB
 					size = 0.45
+					target_organization = 1
+					source_organization = 1
 					stockpile_ratio = 0.35
 					army_ratio = 0.45
 					navy_ratio = 0.15
@@ -2271,7 +2319,11 @@ country_event = {
 						USA_theodore_roosevelt = {
 							set_nationality = USB
 							promote_character = social_democracy
-						}				
+						}	
+						USA_charles_young = {
+							set_nationality = USB
+							set_character_flag = unit_leader_available
+						}	
 					}
 				}
 			}
@@ -2319,7 +2371,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -2477,7 +2529,7 @@ country_event = {
 			activate_mission = USA_civil_war_mission
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -2518,6 +2570,15 @@ country_event = {
 					}
 					release = HAW
 				}
+				if = {
+					limit = {
+						owns_state = 686
+						NOT = {
+							686 = { is_core_of = USA }
+						}
+					}
+					release = PUE
+				}
 			}
 			USB = {
 				inherit_technology = USA
@@ -2552,6 +2613,8 @@ country_event = {
 				transfer_units_fraction = {
 					target = USB
 					size = 0.4
+					target_organization = 1
+					source_organization = 1
 					stockpile_ratio = 0.65
 					army_ratio = 0.5
 					navy_ratio = 1
@@ -2579,6 +2642,14 @@ country_event = {
 				add_popularity = {
 					ideology = communism
 					popularity = 0.2
+				}
+				hidden_effect = {
+					every_state = {
+						teleport_armies = {
+							limit = { tag = PREV }
+							to_state_array = PREV.owned_controlled_states
+						}
+					}
 				}
 			}
 			USB = {
@@ -2643,7 +2714,11 @@ country_event = {
 							USA_theodore_roosevelt = {
 								set_nationality = USB
 								promote_character = social_democracy
-							}				
+							}
+							USA_charles_young = {
+								set_nationality = USB
+								set_character_flag = unit_leader_available
+							}			
 						}
 						add_popularity = {
 							ideology = communism
@@ -2707,7 +2782,7 @@ country_event = {
 			add_ideas = USA_idea_great_revolution
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -2731,7 +2806,7 @@ country_event = {
 			activate_mission = USA_civil_war_mission
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -2772,6 +2847,15 @@ country_event = {
 					}
 					release = HAW
 				}
+				if = {
+					limit = {
+						owns_state = 686
+						NOT = {
+							686 = { is_core_of = USA }
+						}
+					}
+					release = PUE
+				}
 			}
 			USB = {
 				inherit_technology = USA
@@ -2803,6 +2887,8 @@ country_event = {
 				transfer_units_fraction = {
 					target = USB
 					size = 0.35
+					target_organization = 1
+					source_organization = 1
 					stockpile_ratio = 0.65
 					army_ratio = 0.6
 					navy_ratio = 1
@@ -2826,7 +2912,7 @@ country_event = {
 					popularity = 0.2
 				}
 				USA_william_joseph_simmons = {
-					promote_character = fundamentalism
+					promote_character = ultranationalism
 				}
 			}
 			USB = {
@@ -2880,6 +2966,10 @@ country_event = {
 							set_nationality = USB
 							promote_character = social_democracy
 						}
+						USA_charles_young = {
+							set_nationality = USB
+							set_character_flag = unit_leader_available
+						}
 					}
 				}
 			}
@@ -2914,7 +3004,7 @@ country_event = {
 			add_civil_war_target = USB
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -2938,7 +3028,7 @@ country_event = {
 			activate_mission = USA_civil_war_mission
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -2978,6 +3068,15 @@ country_event = {
 						}
 					}
 					release = HAW
+				}
+				if = {
+					limit = {
+						owns_state = 686
+						NOT = {
+							686 = { is_core_of = USA }
+						}
+					}
+					release = PUE
 				}
 			}
 			every_country = {
@@ -3031,6 +3130,8 @@ country_event = {
 				transfer_units_fraction = {
 					target = USB
 					size = 0.35
+					target_organization = 1
+					source_organization = 1
 					stockpile_ratio = 0.65
 					army_ratio = 0.6
 					navy_ratio = 1
@@ -3056,11 +3157,11 @@ country_event = {
 				USA_eugene_w_chafin = {
 					add_country_leader_role = {
 						country_leader = {
-							ideology = fundamentalism
+							ideology = reactionism
 							traits = { prohibitionist }
 						}
 					}
-					promote_character = fundamentalism
+					promote_character = reactionism
 				}
 			}
 			USB = {
@@ -3109,7 +3210,11 @@ country_event = {
 						USA_theodore_roosevelt = {
 							set_nationality = USB
 							promote_character = social_democracy
-						}				
+						}	
+						USA_charles_young = {
+							set_nationality = USB
+							set_character_flag = unit_leader_available
+						}			
 					}
 					set_party_name = {
 						ideology = democratic
@@ -3136,7 +3241,7 @@ country_event = {
 			add_civil_war_target = USB
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -3174,7 +3279,7 @@ country_event = {
 			activate_mission = USA_civil_war_mission
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -3214,6 +3319,15 @@ country_event = {
 						}
 					}
 					release = HAW
+				}
+				if = {
+					limit = {
+						owns_state = 686
+						NOT = {
+							686 = { is_core_of = USA }
+						}
+					}
+					release = PUE
 				}
 			}
 			every_country = {
@@ -3270,6 +3384,8 @@ country_event = {
 				transfer_units_fraction = {
 					target = USB
 					size = 0.35
+					target_organization = 1
+					source_organization = 1
 					stockpile_ratio = 0.5
 					army_ratio = 0.4
 					navy_ratio = 0.4
@@ -3328,7 +3444,11 @@ country_event = {
 						USA_theodore_roosevelt = {
 							set_nationality = USB
 							promote_character = social_democracy
-						}				
+						}	
+						USA_charles_young = {
+							set_nationality = USB
+							set_character_flag = unit_leader_available
+						}			
 					}
 					add_popularity = {
 						ideology = communism
@@ -3350,7 +3470,7 @@ country_event = {
 			add_civil_war_target = USB
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -3393,7 +3513,7 @@ country_event = {
 			activate_mission = USA_civil_war_mission
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -3433,6 +3553,15 @@ country_event = {
 						}
 					}
 					release = HAW
+				}
+				if = {
+					limit = {
+						owns_state = 686
+						NOT = {
+							686 = { is_core_of = USA }
+						}
+					}
+					release = PUE
 				}
 			}
 			every_country = {
@@ -3489,6 +3618,8 @@ country_event = {
 				transfer_units_fraction = {
 					target = USB
 					size = 0.35
+					target_organization = 1
+					source_organization = 1
 					stockpile_ratio = 0.5
 					army_ratio = 0.4
 					navy_ratio = 0.4
@@ -3548,7 +3679,7 @@ country_event = {
 			add_civil_war_target = USB
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -3642,6 +3773,8 @@ country_event = {
 				transfer_units_fraction = {
 					target = CSA
 					size = 0.1
+					target_organization = 1
+					source_organization = 1
 					stockpile_ratio = 0.15
 					army_ratio = 0.25
 					navy_ratio = 0.1
@@ -3757,10 +3890,10 @@ country_event = {
 				USA_third_continental_congress = {
 					add_country_leader_role = {
 						country_leader = {
-							ideology = libertarianism
+							ideology = classical_liberalism
 						}
 					}
-					promote_character = libertarianism
+					promote_character = classical_liberalism
 				}
 			}
 		}
@@ -3768,7 +3901,7 @@ country_event = {
 	option = {
 		name = ww1_usa.58.a
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -3819,7 +3952,7 @@ country_event = {
 			activate_mission = USA_civil_war_mission
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -3859,6 +3992,15 @@ country_event = {
 						}
 					}
 					release = HAW
+				}
+				if = {
+					limit = {
+						owns_state = 686
+						NOT = {
+							686 = { is_core_of = USA }
+						}
+					}
+					release = PUE
 				}
 			}
 			every_country = {
@@ -3919,6 +4061,8 @@ country_event = {
 				transfer_units_fraction = {
 					target = USB
 					size = 0.5
+					target_organization = 1
+					source_organization = 1
 					stockpile_ratio = 0.5
 					army_ratio = 0.6
 					navy_ratio = 0.9
@@ -3992,7 +4136,11 @@ country_event = {
 						USA_theodore_roosevelt = {
 							set_nationality = USB
 							promote_character = social_democracy
-						}				
+						}	
+						USA_charles_young = {
+							set_nationality = USB
+							set_character_flag = unit_leader_available
+						}			
 					}
 					add_popularity = {
 						ideology = communism
@@ -4014,7 +4162,7 @@ country_event = {
 			add_civil_war_target = USB
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -4065,7 +4213,7 @@ country_event = {
 			activate_mission = USA_civil_war_mission
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -4105,6 +4253,15 @@ country_event = {
 						}
 					}
 					release = HAW
+				}
+				if = {
+					limit = {
+						owns_state = 686
+						NOT = {
+							686 = { is_core_of = USA }
+						}
+					}
+					release = PUE
 				}
 			}
 			USB = {
@@ -4153,6 +4310,8 @@ country_event = {
 				transfer_units_fraction = {
 					target = USB
 					size = 0.5
+					target_organization = 1
+					source_organization = 1
 					stockpile_ratio = 0.5
 					army_ratio = 0.6
 					navy_ratio = 0.9
@@ -4166,25 +4325,22 @@ country_event = {
 					}
 				}
 				set_cosmetic_tag = USA_CSA_only_color
-				every_possible_country = {
-					limit = { has_character = USA_douglas_macarthur }
+				USA = {
 					USA_douglas_macarthur = {
 						set_nationality = PREV.PREV
-					}
-				}
-				USA_douglas_macarthur = {
-					if = {
-						limit = { has_ideology = authoritarian_democracy }
-						promote_character = authoritarian_democracy
-					}
-					else = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = authoritarian_democracy
+						if = {
+							limit = { has_ideology = authoritarian_democracy }
+							promote_character = authoritarian_democracy
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = authoritarian_democracy
+								}
 							}
 						}
-					}
+					}	
 				}
 				add_popularity = {
 					ideology = neutrality
@@ -4247,7 +4403,11 @@ country_event = {
 						USA_theodore_roosevelt = {
 							set_nationality = USB
 							promote_character = social_democracy
-						}				
+						}	
+						USA_charles_young = {
+							set_nationality = USB
+							set_character_flag = unit_leader_available
+						}			
 					}
 					add_popularity = {
 						ideology = communism
@@ -4286,7 +4446,7 @@ country_event = {
 			add_civil_war_target = USB
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -4353,25 +4513,22 @@ country_event = {
 					popularity = 0.7
 				}
 				set_cosmetic_tag = USA_1776
-				every_possible_country = {
-					limit = { has_character = USA_douglas_macarthur }
+				USA = {
 					USA_douglas_macarthur = {
 						set_nationality = PREV.PREV
-					}
-				}
-				USA_douglas_macarthur = {
-					if = {
-						limit = { has_ideology = authoritarian_democracy }
-						promote_character = authoritarian_democracy
-					}
-					else = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = authoritarian_democracy
+						if = {
+							limit = { has_ideology = authoritarian_democracy }
+							promote_character = authoritarian_democracy
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = authoritarian_democracy
+								}
 							}
 						}
-					}
+					}	
 				}
 				set_party_name = {
 					ideology = neutrality
@@ -4381,45 +4538,51 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
 
-# ANTI-ANCAP CIVIL WAR
+# 1911 Austin Dam Failure
 ###########################
 country_event = {
+	id = ww1_usa.64
 	title = ww1_usa.64.t
 	desc = ww1_usa.64.d
-	id = ww1_usa.64
-	picture = GFX_report_event_generic_battle
+	picture = GFX_report_event_generic_flooded
 	fire_only_once = yes
 	trigger = {
-		tag = USA
-		has_stability < 0.5
-		has_completed_focus = USA_dont_tread_on_me
-		has_government = democratic
-		democratic < 0.9
-		has_country_flag = USA_elections_1912_end
-		NOT = {
-			has_global_flag = USA_cw_triggered
+		360 = {
+			is_controlled_by = ROOT
+			dam > 0
 		}
-	}
-	immediate = {
-		set_global_flag = USA_anti_ancap_cw
-		set_global_flag = USA_cw_triggered
+		date > 1911.9.1
+		has_start_date < 1914.1.1
 	}
 	mean_time_to_happen = {
-		days = 7
+		days = 30
 	}
 	option = {
 		name = ww1_usa.64.a
-		USA = {
-			activate_mission = USA_civil_war_mission
+		360 = {
+			add_manpower = -78
+			damage_building = {
+				type = industrial_complex
+				damage = 0.10
+			}
+			damage_building = {
+				type = infrastructure
+				damage = 0.10
+			}
+			add_province_modifier = {
+				static_modifiers = { flooded }
+				province = {
+					id = 9836
+				}
+				days = 200
+			}
 		}
-		ai_chance = {
-			factor = 10
-		}
+		add_political_power = -50
 	}
 }
 
@@ -4459,6 +4622,15 @@ country_event = {
 					}
 					release = HAW
 				}
+				if = {
+					limit = {
+						owns_state = 686
+						NOT = {
+							686 = { is_core_of = USA }
+						}
+					}
+					release = PUE
+				}
 			}
 			USB = {
 				inherit_technology = USA
@@ -4489,6 +4661,8 @@ country_event = {
 				transfer_units_fraction = {
 					target = USB
 					size = 0.5
+					target_organization = 1
+					source_organization = 1
 					stockpile_ratio = 0.45
 					army_ratio = 0.6
 					navy_ratio = 0.9
@@ -4574,7 +4748,7 @@ country_event = {
 			add_civil_war_target = USB
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -4616,7 +4790,7 @@ country_event = {
 	option = {
 		name = ww1_usa.67.a
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 		add_stability = -0.02
 		add_popularity = {
@@ -4662,7 +4836,7 @@ country_event = {
 	option = {
 		name = ww1_usa.68.a
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 		add_popularity = {
 			ideology = neutrality
@@ -4707,7 +4881,7 @@ country_event = {
 	option = {
 		name = ww1_usa.69.a
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 		add_stability = -0.01
 		add_popularity = {
@@ -4751,7 +4925,7 @@ country_event = {
 	option = {
 		name = ww1_usa.71.a
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 		add_stability = -0.01
 		add_popularity = {
@@ -4794,7 +4968,7 @@ country_event = {
 	option = {
 		name = ww1_usa.72.a
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 		add_stability = -0.02
 	}
@@ -4833,7 +5007,7 @@ country_event = {
 	option = {
 		name = ww1_usa.73.a
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 		add_equipment_to_stockpile = {
 			type = infantry_equipment
@@ -4866,7 +5040,7 @@ country_event = {
 		name = ww1_usa.74.a
 		add_ideas = USA_idea_corporatocracy
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -4904,7 +5078,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -4929,7 +5103,7 @@ country_event = {
 		name = ww1_usa.76.a
 		add_ideas = USA_idea_bootlegging
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -5025,7 +5199,7 @@ country_event = {
 		add_political_power = -25
 		clr_country_flag = usa_strike
 		ai_chance = {
-			factor = 5
+			base = 5
 			modifier = {
 				has_completed_focus = USA_radicalism_era
 				factor = 10
@@ -5060,7 +5234,7 @@ country_event = {
 		add_stability = -0.02
 		clr_country_flag = usa_strike
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -5081,7 +5255,7 @@ country_event = {
 		add_political_power = -25
 		clr_country_flag = usa_strike
 		ai_chance = {
-			factor = 5
+			base = 5
 			modifier = {
 				has_completed_focus = USA_radicalism_era
 				factor = 10
@@ -5097,7 +5271,7 @@ country_event = {
 		add_stability = -0.02
 		clr_country_flag = usa_strike
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -5118,7 +5292,7 @@ country_event = {
 		add_political_power = -25
 		clr_country_flag = usa_strike
 		ai_chance = {
-			factor = 5
+			base = 5
 			modifier = {
 				has_completed_focus = USA_radicalism_era
 				factor = 10
@@ -5156,7 +5330,7 @@ country_event = {
 		}
 		clr_country_flag = usa_strike
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -5177,7 +5351,7 @@ country_event = {
 		add_political_power = -25
 		clr_country_flag = usa_strike
 		ai_chance = {
-			factor = 5
+			base = 5
 			modifier = {
 				has_completed_focus = USA_radicalism_era
 				factor = 10
@@ -5199,7 +5373,7 @@ country_event = {
 		add_stability = -0.02
 		clr_country_flag = usa_strike
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -5220,7 +5394,7 @@ country_event = {
 		add_political_power = -25
 		clr_country_flag = usa_strike
 		ai_chance = {
-			factor = 5
+			base = 5
 			modifier = {
 				has_completed_focus = USA_radicalism_era
 				factor = 25
@@ -5241,7 +5415,7 @@ country_event = {
 		add_stability = -0.02
 		clr_country_flag = usa_strike
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -5285,7 +5459,7 @@ news_event = {
 			}
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 	option = {
@@ -5294,7 +5468,7 @@ news_event = {
 			tag = USA
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 }
@@ -5314,7 +5488,7 @@ country_event = {
 			transfer_state = 750
 		}
 		ai_chance = {
-			factor = 75
+			base = 75
 		}
 	}
 	option = {
@@ -5327,7 +5501,7 @@ country_event = {
 				factor = 0
 				is_historical_focus_on = yes
 			}
-			factor = 25
+			base = 25
 		}
 	}
 }
@@ -5344,7 +5518,7 @@ country_event = {
 		name = ww1_usa.85.a
 		add_political_power = 25
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -5372,7 +5546,7 @@ country_event = {
 			set_country_flag = USA_sent_warning
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 			modifier = {
 				has_idea_with_trait = compassionate_gentleman
 				has_political_power > 30
@@ -5387,7 +5561,7 @@ country_event = {
 		}
 		add_political_power = -25
 		ai_chance = {
-			factor = 50
+			base = 50
 		}
 	}
 }
@@ -5410,7 +5584,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 0
+			base = 0
 		}
 	}
 	option = {
@@ -5421,55 +5595,55 @@ country_event = {
 			modifier = diplomatic_protest
 		}
 		ai_chance = {
-			factor = 50
+			base = 50
 		}
 	}
 }
 
 # LUSITANIA
 ##################
-country_event = {
-	title = ww1_usa.88.t
-	desc = ww1_usa.88.d
-	id = ww1_usa.88
-	picture = GFX_report_event_panay_incident
-	fire_only_once = yes
-	trigger = {
-		tag = USA
-		NOT = {
-			has_war_with = GER
-		}
-		NOT = {
-			has_war_with = ENG
-		}
-		ENG = {
-			has_war_with = GER
-		}
-		has_government = democratic
-		GER = {
-			has_completed_focus = GER_american_campaign
-			has_war_with = ENG
-		}
-	}
-	mean_time_to_happen = {
-		days = 10
-	}
-	option = {
-		name = ww1_usa.88.a
-		add_war_support = 0.02
-		set_country_flag = USA_lusitania_sank
-		GER = {
-			add_opinion_modifier = {
-				target = USA
-				modifier = unrestricted_submarine_warfare
-			}
-		}
-		news_event = ww1_usa.100
-		ai_chance = {
-			factor = 100
-		}
-	}
-}
+# country_event = {
+# 	title = ww1_usa.88.t
+# 	desc = ww1_usa.88.d
+# 	id = ww1_usa.88
+# 	picture = GFX_report_event_panay_incident
+# 	fire_only_once = yes
+# 	trigger = {
+# 		tag = USA
+# 		NOT = {
+# 			has_war_with = GER
+# 		}
+# 		NOT = {
+# 			has_war_with = ENG
+# 		}
+# 		ENG = {
+# 			has_war_with = GER
+# 		}
+# 		has_government = democratic
+# 		GER = {
+# 			has_completed_focus = GER_american_campaign
+# 			has_war_with = ENG
+# 		}
+# 	}
+# 	mean_time_to_happen = {
+# 		days = 10
+# 	}
+# 	option = {
+# 		name = ww1_usa.88.a
+# 		add_war_support = 0.02
+# 		set_country_flag = USA_lusitania_sank
+# 		GER = {
+# 			add_opinion_modifier = {
+# 				target = USA
+# 				modifier = unrestricted_submarine_warfare
+# 			}
+# 		}
+# 		news_event = ww1_usa.100
+# 		ai_chance = {
+# 			factor = 100
+# 		}
+# 	}
+# }
 
 # GREENLAND
 ##################
@@ -5486,7 +5660,7 @@ country_event = {
 			transfer_state = 101
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 	option = {
@@ -5499,7 +5673,7 @@ country_event = {
 				factor = 0
 				is_historical_focus_on = yes
 			}
-			factor = 25
+			base = 25
 		}
 	}
 }
@@ -5514,7 +5688,7 @@ country_event = {
 		name = ww1_usa.90.a
 		add_political_power = 25
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -5542,7 +5716,7 @@ country_event = {
 			set_country_flag = USA_sent_warning
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 }
@@ -5573,11 +5747,42 @@ country_event = {
 	option = {
 		name = ww1_usa.92.a		#Democrats
 		trigger = {
-			has_character = USA_woodrow_wilson
+			has_country_leader = {
+				character = USA_woodrow_wilson
+			}
 		}
 		news_event = ww1_usa.149
 		ai_chance = {
-			factor = 49
+			base = 49
+			modifier = {
+				factor = 0.5
+				OR = {
+					has_war_with = GER
+					has_war_with = FRA
+					has_war_with = ENG
+					has_war_with = RUS
+				}
+			}
+		}
+	}
+	option = {
+		name = ww1_usa.92.a		#Democrats - Alternative
+		trigger = {
+			NOT = {
+				has_country_leader = {
+					character = USA_woodrow_wilson
+				}
+			}
+		}
+		promote_character = USA_champ_clark
+		set_party_name = {
+			ideology = democratic
+			long_name = USA_democratic_party
+			name = USA_democratic_party
+		}
+		news_event = ww1_usa.169
+		ai_chance = {
+			base = 40
 		}
 	}
 	option = {
@@ -5597,9 +5802,12 @@ country_event = {
 		}
 		news_event = ww1_usa.150
 		ai_chance = {
-			factor = 46
+			base = 46
 			modifier = {
 				is_historical_focus_on = yes
+				has_country_leader = {
+					character = USA_woodrow_wilson
+				}
 				factor = 0
 			}
 		}
@@ -5618,9 +5826,12 @@ country_event = {
 		}
 		news_event = ww1_usa.151
 		ai_chance = {
-			factor = 49
+			base = 49
 			modifier = {
 				is_historical_focus_on = yes
+				has_country_leader = {
+					character = USA_woodrow_wilson
+				}
 				factor = 0
 			}
 		}
@@ -5653,14 +5864,14 @@ country_event = {
 	option = {
 		name = ww1_usa.93.a
 		ai_chance = {
-			factor = 65
+			base = 65
 		}
 	}
 	option = {
 		name = ww1_usa.93.b		#New candidate
 		promote_character = USA_james_franklin_hanly
 		ai_chance = {
-			factor = 35
+			base = 35
 		}
 	}
 }
@@ -5704,7 +5915,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 25
+			base = 25
 		}
 	}
 	option = {
@@ -5718,7 +5929,7 @@ country_event = {
 			promote_character = authoritarian_democracy
 		}
 		ai_chance = {
-			factor = 75
+			base = 75
 		}
 	}
 }
@@ -5771,7 +5982,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 65
+			base = 65
 		}
 	}
 }
@@ -5818,7 +6029,7 @@ country_event = {
 			white_peace = CAN
 		}
 		ai_chance = {
-			factor = 20
+			base = 20
 			modifier = {
 				factor = 0.5
 				NOT = {
@@ -5841,7 +6052,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 5
+			base = 5
 		}
 	}
 }
@@ -5859,7 +6070,7 @@ country_event = {
 		name = ww1_usa.97.a
 		add_political_power = 100
 		ai_chance = {
-			factor = 20
+			base = 20
 		}
 	}
 }
@@ -5880,7 +6091,7 @@ country_event = {
 			target = CAN
 		}
 		ai_chance = {
-			factor = 5
+			base = 5
 		}
 	}
 }
@@ -5903,7 +6114,7 @@ news_event = {
 			}
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 	option = {
@@ -5915,57 +6126,57 @@ news_event = {
 			}
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 }
 
-news_event = {
-	title = ww1_usa.88.t
-	desc = ww1_usa.88.d
-	id = ww1_usa.100
-	picture = GFX_news_event_panay_incident
-	major = yes
-	is_triggered_only = yes
-	option = {
-		name = ww1_usa.100.a
-		trigger = {
-			NOT = {
-				tag = USA
-			}
-			NOT = {
-				tag = ENG
-			}
-			NOT = {
-				tag = GER
-			}
-		}
-		ai_chance = {
-			factor = 1
-		}
-	}
-	option = {
-		name = ww1_usa.100.b
-		trigger = {
-			OR = {
-				tag = USA
-				tag = ENG
-			}
-		}
-		ai_chance = {
-			factor = 1
-		}
-	}
-	option = {
-		name = ww1_usa.100.c
-		trigger = {
-			tag = GER
-		}
-		ai_chance = {
-			factor = 1
-		}
-	}
-}
+# news_event = {
+# 	title = ww1_usa.88.t
+# 	desc = ww1_usa.88.d
+# 	id = ww1_usa.100
+# 	picture = GFX_news_event_panay_incident
+# 	major = yes
+# 	is_triggered_only = yes
+# 	option = {
+# 		name = ww1_usa.100.a
+# 		trigger = {
+# 			NOT = {
+# 				tag = USA
+# 			}
+# 			NOT = {
+# 				tag = ENG
+# 			}
+# 			NOT = {
+# 				tag = GER
+# 			}
+# 		}
+# 		ai_chance = {
+# 			factor = 1
+# 		}
+# 	}
+# 	option = {
+# 		name = ww1_usa.100.b
+# 		trigger = {
+# 			OR = {
+# 				tag = USA
+# 				tag = ENG
+# 			}
+# 		}
+# 		ai_chance = {
+# 			factor = 1
+# 		}
+# 	}
+# 	option = {
+# 		name = ww1_usa.100.c
+# 		trigger = {
+# 			tag = GER
+# 		}
+# 		ai_chance = {
+# 			factor = 1
+# 		}
+# 	}
+# }
 
 # PANAMA CANAL - NEWS
 ############################
@@ -6002,11 +6213,24 @@ country_event = {
 		add_political_power = 25
 		custom_effect_tooltip = ww1_usa.102.tt
 		clr_global_flag = PANAMA_CANAL_IS_NOT_BUILT
+		IF = {
+			limit = {
+				has_dlc = "Gotterdammerung" 
+			}
+			685 = {
+				add_building_construction = {
+				 	type = canal_panama
+				 	level = 1
+				 	instant_build = yes
+				 	province =  7617
+				}
+			}
+		}	
 		hidden_effect = {
 			news_event = ww1_usa.101
 		}
 		ai_chance = {
-			factor = 5
+			base = 5
 		}
 	}
 }
@@ -6046,13 +6270,13 @@ country_event = {
 			country_event = ww1_usa.104
 		}
 		ai_chance = {
-			factor = 5
+			base = 5
 		}
 	}
 	option = {
 		name = ww1_usa.103.b
 		ai_chance = {
-			factor = 0
+			base = 0
 		}
 	}
 }
@@ -6078,7 +6302,7 @@ country_event = {
 			hidden_effect = { CAN = { drop_cosmetic_tag = yes } }
 			set_autonomy = {
 				target = CAN
-				autonomous_state = autonomy_dominion
+				autonomous_state = autonomy_satellite
 				freedom_level = 0.2
 			}
 		}
@@ -6093,7 +6317,7 @@ country_event = {
 			}
 			set_autonomy = {
 				target = QBC
-				autonomous_state = autonomy_dominion
+				autonomous_state = autonomy_satellite
 				freedom_level = 0.2
 			}
 		}
@@ -6128,7 +6352,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 5
+			base = 5
 		}
 	}
 }
@@ -6148,7 +6372,7 @@ country_event = {
 		}
 		add_stability = -0.05
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 	option = {
@@ -6157,7 +6381,7 @@ country_event = {
 			has_stability < 0.5
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 		}
 	}
 }
@@ -6185,7 +6409,7 @@ country_event = {
 		name = ww1_usa.106.a
 		remove_ideas = USA_idea_oil_monopoly
 		ai_chance = {
-			factor = 5
+			base = 5
 		}
 	}
 	option = {
@@ -6198,7 +6422,7 @@ country_event = {
 			remove_idea = USA_idea_oil_monopoly
 		}
 		ai_chance = {
-			factor = 25
+			base = 25
 		}
 	}
 }
@@ -6213,24 +6437,48 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_usa.107.a
-		every_country = {
+		every_enemy_country = {
 			limit = {
-				has_war_with = LIB
+				NOT = {
+					has_war_with = USA
+				}
 			}
 			white_peace = LIB
 		}
 		USA = {
 			set_autonomy = {
 				target = LIB
-				autonomous_state = autonomy_colony
+				autonomous_state = autonomy_wtt_imperial_subject
 				freedom_level = 0.2
+			}
+		}
+		add_country_leader_role = {
+			character = LIB_sydney_cloman
+			promote_leader = yes
+			country_leader = { 
+				ideology = colonial_government
+			}
+		}
+		set_politics = {
+			ruling_party = neutrality
+			long_name = USA_neutrality_party
+			name = USA_neutrality_party
+			elections_allowed = no
+		}
+		hidden_effect = {
+			set_popularities = {
+				democratic = 16
+				fascism = 21
+				communism = 0
+				neutrality = 63
 			}
 		}
 		add_state_claim = 700
 		add_state_claim = 779
 		add_state_claim = 780
+		add_state_claim = 1136
 		ai_chance = {
-			factor = 90
+			base = 90
 			modifier = {
 				factor = 0.1
 				is_in_faction = yes
@@ -6246,7 +6494,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -6273,7 +6521,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 75
+			base = 75
 		}
 	}
 	option = {
@@ -6282,7 +6530,7 @@ country_event = {
 			country_event = ww1_usa.109
 		}
 		ai_chance = {
-			factor = 25
+			base = 25
 		}
 	}
 }
@@ -6302,7 +6550,7 @@ country_event = {
 			target = ENG
 		}
 		ai_chance = {
-			factor = 75
+			base = 75
 		}
 	}
 }
@@ -6334,7 +6582,7 @@ country_event = {
 		}
 		set_global_flag = north_american_union
 		ai_chance = {
-			factor = 95
+			base = 95
 		}
 	}
 	option = {
@@ -6354,7 +6602,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 5
+			base = 5
 		}
 	}
 }
@@ -6392,13 +6640,13 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 95
+			base = 95
 		}
 	}
 	option = {
 		name = ww1_usa.111.b
 		ai_chance = {
-			factor = 5
+			base = 5
 		}
 	}
 }
@@ -6420,7 +6668,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 5
+			base = 5
 		}
 	}
 	option = {
@@ -6440,7 +6688,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 95
+			base = 95
 		}
 	}
 }
@@ -6516,7 +6764,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 5
+			base = 5
 		}
 	}
 }
@@ -6536,7 +6784,7 @@ country_event = {
 			days = 720
 		}
 		ai_chance = {
-			factor = 5
+			base = 5
 		}
 	}
 }
@@ -6571,7 +6819,7 @@ country_event = {
 		name = ww1_usa.116.a
 		remove_ideas = USA_idea_migrant_employment
 		ai_chance = {
-			factor = 5
+			base = 5
 		}
 	}
 }
@@ -6783,7 +7031,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -6857,7 +7105,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 10
+			base = 10
 		}
 	}
 }
@@ -6911,7 +7159,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 25
+			base = 25
 		}
 	}
 }
@@ -6930,12 +7178,12 @@ country_event = {
 			hidden_effect = { MEX = { drop_cosmetic_tag = yes } }
 			set_autonomy = {
 				target = MEX
-				autonomous_state = autonomy_dominion
+				autonomous_state = autonomy_satellite
 				freedom_level = 0.2
 			}
 		}
 		ai_chance = {
-			factor = 5
+			base = 5
 		}
 	}
 	option = {
@@ -6947,7 +7195,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			factor = 25
+			base = 25
 		}
 	}
 }
@@ -6988,7 +7236,7 @@ country_event = {
 		}
 		#timer
 		ai_chance = {
-			factor = 25
+			base = 25
 		}
 	}
 }
@@ -7014,7 +7262,7 @@ country_event = {
 		}
 		add_war_support = 0.1
 		ai_chance = {
-			factor = 25
+			base = 25
 		}
 	}
 	option = {
@@ -7024,7 +7272,7 @@ country_event = {
 		}
 		add_war_support = -0.1
 		ai_chance = {
-			factor = 25
+			base = 25
 		}
 	}
 }
@@ -7049,7 +7297,7 @@ country_event = {
 		}
 		add_war_support = -0.05
 		ai_chance = {
-			factor = 25
+			base = 25
 		}
 	}
 }
@@ -7075,7 +7323,7 @@ country_event = {
 		add_war_support = 0.05
 		add_political_power = 50
 		ai_chance = {
-			factor = 25
+			base = 25
 		}
 	}
 }
@@ -7163,15 +7411,26 @@ country_event = {
 			every_owned_state = {
 				limit = {
 					is_core_of = PHI
-					NOT = { is_core_of = PHI }
+					OR = {
+						state = 626
+						state = 627
+						state = 628
+						state = 327
+					}
 				}
 				transfer_state_to = PHI
 			}
-			PHI = {
-				transfer_state = 626
-				transfer_state = 627
-				transfer_state = 628
-				transfer_state = 327
+			PHI = {	
+				set_politics = {
+					ruling_party = fascism
+					elections_allowed = no
+				}
+				set_popularities = {
+					democratic = 45
+					fascism = 35
+					communism = 6
+					neutrality = 14
+				}
 				division_template = {
 					name = "Milisya ng Pilipinas"
 					regiments = {
@@ -7201,54 +7460,68 @@ country_event = {
 						}
 					}
 				}
-				327 = {
+				random_owned_state = {
+					prioritize = { 387 }
 					create_unit = {
 						division = "name = \"Milisya ng Pilipinas\" division_template = \"Milisya ng Pilipinas\" start_experience_factor = 0.5"
 						owner = PHI
+						allow_spawning_on_enemy_provs = yes
 					}
 					create_unit = {
 						division = "name = \"Milisya ng Pilipinas\" division_template = \"Milisya ng Pilipinas\" start_experience_factor = 0.5"
 						owner = PHI
+						allow_spawning_on_enemy_provs = yes
 					}
 					create_unit = {
 						division = "name = \"Milisya ng Pilipinas\" division_template = \"Milisya ng Pilipinas\" start_experience_factor = 0.5"
 						owner = PHI
+						allow_spawning_on_enemy_provs = yes
 					}
 					create_unit = {
 						division = "name = \"Milisya ng Pilipinas\" division_template = \"Milisya ng Pilipinas\" start_experience_factor = 0.5"
 						owner = PHI
+						allow_spawning_on_enemy_provs = yes
 					}
 					create_unit = {
 						division = "name = \"Milisya ng Pilipinas\" division_template = \"Milisya ng Pilipinas\" start_experience_factor = 0.5"
 						owner = PHI
+						allow_spawning_on_enemy_provs = yes
 					}
 					create_unit = {
 						division = "name = \"Milisya ng Pilipinas\" division_template = \"Milisya ng Pilipinas\" start_experience_factor = 0.5"
 						owner = PHI
-					}
-				}
-				627 = {
-					create_unit = {
-						division = "name = \"Milisya ng Pilipinas\" division_template = \"Milisya ng Pilipinas\" start_experience_factor = 0.5"
-						owner = PHI
-					}
-					create_unit = {
-						division = "name = \"Milisya ng Pilipinas\" division_template = \"Milisya ng Pilipinas\" start_experience_factor = 0.5"
-						owner = PHI
-					}
-					create_unit = {
-						division = "name = \"Milisya ng Pilipinas\" division_template = \"Milisya ng Pilipinas\" start_experience_factor = 0.5"
-						owner = PHI
+						allow_spawning_on_enemy_provs = yes
 					}
 				}
-				628 = {
+				random_owned_state = {
+					prioritize = { 627 }
 					create_unit = {
 						division = "name = \"Milisya ng Pilipinas\" division_template = \"Milisya ng Pilipinas\" start_experience_factor = 0.5"
 						owner = PHI
+						allow_spawning_on_enemy_provs = yes
 					}
 					create_unit = {
 						division = "name = \"Milisya ng Pilipinas\" division_template = \"Milisya ng Pilipinas\" start_experience_factor = 0.5"
 						owner = PHI
+						allow_spawning_on_enemy_provs = yes
+					}
+					create_unit = {
+						division = "name = \"Milisya ng Pilipinas\" division_template = \"Milisya ng Pilipinas\" start_experience_factor = 0.5"
+						owner = PHI
+						allow_spawning_on_enemy_provs = yes
+					}
+				}
+				random_owned_state = {
+					prioritize = { 628 }
+					create_unit = {
+						division = "name = \"Milisya ng Pilipinas\" division_template = \"Milisya ng Pilipinas\" start_experience_factor = 0.5"
+						owner = PHI
+						allow_spawning_on_enemy_provs = yes
+					}
+					create_unit = {
+						division = "name = \"Milisya ng Pilipinas\" division_template = \"Milisya ng Pilipinas\" start_experience_factor = 0.5"
+						owner = PHI
+						allow_spawning_on_enemy_provs = yes
 					}
 				}
 				add_ideas = standing_alone	
@@ -7282,7 +7555,7 @@ country_event = {
 					}
 				}
 				support = {
-					artillery = {
+					field_gun = {
 						x = 0
 						y = 0
 					}
@@ -7292,7 +7565,15 @@ country_event = {
 					}
 				}
 			}
-			623 = {
+			random_state = {
+				limit = {
+					is_core_of = PHI
+					OR = {
+						is_owned_by = PHI
+						is_owned_by = ROOT
+					}
+				}
+				prioritize = { 623 }
 				create_unit = {
 					division = "name = \"American Overseas Philippine Division\" division_template = \"Infantry Division in the Philippines\" start_experience_factor = 0.5"
 					owner = USA
@@ -7304,7 +7585,15 @@ country_event = {
 					allow_spawning_on_enemy_provs = yes
 				}
 			}
-			624 = {
+			random_state = {
+				limit = {
+					is_core_of = PHI
+					OR = {
+						is_owned_by = PHI
+						is_owned_by = ROOT
+					}
+				}
+				prioritize = { 624 }
 				create_unit = {
 					division = "name = \"American Overseas Philippine Division\" division_template = \"Infantry Division in the Philippines\" start_experience_factor = 0.5"
 					owner = USA
@@ -7321,7 +7610,15 @@ country_event = {
 					allow_spawning_on_enemy_provs = yes
 				}
 			}
-			625 = {
+			random_state = {
+				limit = {
+					is_core_of = PHI
+					OR = {
+						is_owned_by = PHI
+						is_owned_by = ROOT
+					}
+				}
+				prioritize = { 625 }
 				create_unit = {
 					division = "name = \"American Overseas Philippine Division\" division_template = \"Infantry Division in the Philippines\" start_experience_factor = 0.5"
 					owner = USA
@@ -7391,7 +7688,7 @@ country_event = {
 	option = {
 		name = ww1_usa.130.a
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 		PHI = {
 			transfer_state = 623
@@ -7439,71 +7736,9 @@ country_event = {
 	#mean_time_to_happen = { days = 0 }
 	option = {
 		name = ww1_usa.132.a
-			if = {
-				limit = {
-					FRA = {
-						has_war_with = GER
-						OR = {
-							has_government = USA
-							has_government = neutrality
-						}
-					}
-				}
-				USA = {
-					add_to_war = { 
-						targeted_alliance = FRA 
-						enemy = GER 
-						hostility_reason = topple_government
-					}	
-				}
-				else_if = {
-					limit = {
-						any_country = {
-							is_major = yes
-							has_war_with = GER
-							has_civil_war = no
-							has_capitulated = no				
-							OR = {
-								has_government = USA
-								has_government = neutrality
-							}
-						}
-					}
-					random_country = {
-						limit = {
-							is_major = yes
-							has_war_with = GER
-							has_civil_war = no
-							has_capitulated = no
-							OR = {
-								has_government = USA
-								has_government = neutrality
-							}	
-
-						}
-						USA = {
-							add_to_war = { 
-								targeted_alliance = PREV 
-								enemy = GER 
-								hostility_reason = topple_government
-							}	
-						}					
-					}
-					else = {
-						create_wargoal = {
-							type = topple_government
-							target = GER
-						}
-						add_ai_strategy = {
-							type = declare_war
-							id = GER
-							value = 200
-						}
-					}
-				}
-			}			
+		join_great_war_against_GER = yes		
 		ai_chance = {
-			factor = 100
+			base = 100
 			modifier = {
 				factor = 0
 				has_war_with = FRA
@@ -7569,7 +7804,7 @@ country_event = {
 	desc = ww1_usa.133.t
 	picture = GFX_report_event_military_planning
 	trigger = {
-		has_global_flag = great_war
+		is_great_war_ongoing = yes
 		USA = {
 			has_war_with = GER
 		}
@@ -7587,7 +7822,6 @@ country_event = {
 		has_civil_war = no
 		is_in_faction = no
 		NOT = {
-			has_global_flag = great_war_ends
 			has_country_flag = american_campaign
 			has_idea = MEX_mexican_civil_war
 			original_tag = MEX
@@ -7608,10 +7842,7 @@ country_event = {
 				add_to_faction = ROOT
 			}
 		}
-		add_to_war = {
-			targeted_alliance = USA
-			enemy = GER
-		}
+		join_great_war_against_GER = yes
 		ai_chance = {
 			base = 0
 			modifier = {
@@ -7659,10 +7890,9 @@ country_event = {
 	picture = GFX_report_event_generic_ruins
 	trigger = {
 		tag = USA
-		has_global_flag = great_war
+		is_great_war_ongoing = yes
 		NOT = {
 			has_government = communism
-			has_global_flag = great_war_ends
 			is_in_faction_with = GER
 			is_in_faction_with = FRA
 		}
@@ -7757,7 +7987,7 @@ country_event = {
 		add_political_power = -75
 		FROM = { country_event = ww1_usa.137 }
 		ai_chance = {
-			factor = 100
+			base = 100
 			modifier = {
 				factor = 0
 				stockpile_ratio = {
@@ -7828,7 +8058,7 @@ country_event = {
 		effect_tooltip = {
 			FROM = {
 				send_equipment = {
-					type = artillery_equipment
+					type = field_gun_equipment
 					amount = 100
 					target = ROOT
 				}
@@ -7840,11 +8070,11 @@ country_event = {
 		add_political_power = -200
 		FROM = { country_event = ww1_usa.140 }
 		ai_chance = {
-			factor = 100
+			base = 100
 			modifier = {
 				factor = 0
 				stockpile_ratio = {
-					archetype = artillery_equipment
+					archetype = field_gun_equipment
 					ratio > 0.5
 				}
 			}
@@ -7880,7 +8110,7 @@ country_event = {
 		name = ww1_usa.137.a
 		send_equipment = {
 			target = FROM
-			type = artillery_equipment
+			type = field_gun_equipment
 			amount = 100
 		}
 		add_political_power = 120
@@ -7926,20 +8156,20 @@ country_event = {
 		}
 		if = {
 			limit = {
-				has_active_mission = GER_mission_famine_timer_early
+				has_active_mission = GER_mission_food_shortages_timer
 			}
 			add_days_mission_timeout = {
-				mission = GER_mission_famine_timer_early
+				mission = GER_mission_food_shortages_timer
 				days = 100
 			}
 		}
 		add_political_power = -100
 		FROM = { country_event = ww1_usa.143 }
 		ai_chance = {
-			factor = 100
+			base = 100
 			modifier = {
 				factor = 0
-				num_of_available_civilian_factories > 10
+				num_of_civilian_factories_available_for_projects > 10
 			}
 			modifier = {
 				factor = 0
@@ -8046,7 +8276,7 @@ country_event = {
 			add_resistance = 10
 		}
 		ai_chance = {
-			factor = 1
+			base = 1
 			modifier = {
 				factor = 0
 				NOT = { has_government = fascism }
@@ -8094,7 +8324,28 @@ news_event = {
 news_event = {
 	id = ww1_usa.149
 	title = ww1_usa.149.t
-	desc = ww1_usa.149.d
+	desc = {
+		text = ww1_usa.149.d
+		trigger = {
+			NOT = {
+				has_war_with = GER
+				has_war_with = FRA
+				has_war_with = ENG
+				has_war_with = RUS
+			}
+		}
+	}
+	desc = {
+		text = ww1_usa.149.d_war
+		trigger = {
+			OR = {
+				has_war_with = GER
+				has_war_with = FRA
+				has_war_with = ENG
+				has_war_with = RUS
+			}
+		}
+	}
 	picture = GFX_news_event_wilson_1916_election_victory
 	major = yes
 	is_triggered_only = yes
@@ -8202,7 +8453,7 @@ country_event = {
 		}
 		news_event = ww1_usa.156
 		ai_chance = {
-			factor = 34
+			base = 34
 			modifier = {
 				is_historical_focus_on = yes
 				factor = 0
@@ -8229,7 +8480,7 @@ country_event = {
 		}
 		news_event = ww1_usa.155
 		ai_chance = {
-			factor = 60
+			base = 60
 		}
 	}
 	option = { #Republicans - Charles Hughes (Available if he wins 1916 Election)
@@ -8241,7 +8492,7 @@ country_event = {
 		name = ww1_usa.154.c
 		news_event = ww1_usa.171
 		ai_chance = {
-			factor = 60
+			base = 60
 		}
 	}
 }
@@ -8355,7 +8606,7 @@ country_event = {
 		}
 		news_event = ww1_usa.167
 		ai_chance = {
-			factor = 49
+			base = 49
 			modifier = {
 				is_historical_focus_on = yes
 				factor = 0
@@ -8371,7 +8622,7 @@ country_event = {
 		}
 		news_event = ww1_usa.170
 		ai_chance = {
-			factor = 29
+			base = 29
 			modifier = {
 				is_historical_focus_on = yes
 				factor = 0
@@ -8391,7 +8642,7 @@ country_event = {
 		}
 		news_event = ww1_usa.160
 		ai_chance = {
-			factor = 54
+			base = 54
 		}
 	}
 	option = { #Progressives - Robert M. La Follette (historical candidate)
@@ -8401,7 +8652,8 @@ country_event = {
 				has_country_leader = {
 					character = USA_calvin_coolidge
 				}	
-			}	
+			}
+			has_country_flag = progressive_party
 		}
 		set_party_name = {
 			ideology = democratic
@@ -8414,7 +8666,7 @@ country_event = {
 		}
 		news_event = ww1_usa.168
 		ai_chance = {
-			factor = 17
+			base = 17
 			modifier = {
 				is_historical_focus_on = yes
 				factor = 0
@@ -8476,7 +8728,7 @@ country_event = {
 		}
 		news_event = ww1_usa.162
 		ai_chance = {
-			factor = 41
+			base = 41
 			modifier = {
 				is_historical_focus_on = yes
 				factor = 0
@@ -8492,7 +8744,7 @@ country_event = {
 		name = ww1_usa.161.e
 		news_event = ww1_usa.172
 		ai_chance = {
-			factor = 41
+			base = 41
 			modifier = {
 				is_historical_focus_on = yes
 				factor = 0
@@ -8512,25 +8764,25 @@ country_event = {
 		}
 		news_event = ww1_usa.163
 		ai_chance = {
-			factor = 58
+			base = 58
 		}
 	}
-	option = { #Progressives - Robert M. La Follette (Re-Election if he wins 1924)
-		name = ww1_usa.161.c
-		trigger = {
-			has_country_leader = {
-				character = USA_robert_m_la_follette
-			}
-		}
-		news_event = ww1_usa.169
-		ai_chance = {
-			factor = 50
-			modifier = {
-				is_historical_focus_on = yes
-				factor = 0
-			}
-		}
-	}
+	# option = { #Progressives - Robert M. La Follette (Re-Election if he wins 1924) he died in 1925
+	# 	name = ww1_usa.161.c
+	# 	trigger = {
+	# 		has_country_leader = {
+	# 			character = USA_robert_m_la_follette
+	# 		}
+	# 	}
+	# 	news_event = ww1_usa.169
+	# 	ai_chance = {
+	# 		base = 50
+	# 		modifier = {
+	# 			is_historical_focus_on = yes
+	# 			factor = 0
+	# 		}
+	# 	}
+	# }
 }
 #Al Smith Elected
 news_event = {
@@ -8578,20 +8830,25 @@ country_event = {
 	mean_time_to_happen = {
 		days = 7
 	}
+	immediate = {
+		USA_franklin_delano_roosevelt = {
+			set_portraits = { civilian = { large = "gfx/leaders/USA/USA_Franklin_D_Roosevelt_1930s.png" } }
+		}
+	}
 	option = { #Democrats - Franklin Delano Roosevelt (historical)
 		name = ww1_usa.164.a
 		set_party_name = {
 			ideology = democratic
 			long_name = USA_democratic_party
 			name = USA_democratic_party
-		}
+		}	
 		promote_character = {
 			character = USA_franklin_delano_roosevelt
 			ideology = social_liberalism
 		}
 		news_event = ww1_usa.165
 		ai_chance = {
-			factor = 51
+			base = 51
 		}
 	}
 	option = { #Republicans - Herbert Hoover (historical candidate)
@@ -8608,7 +8865,7 @@ country_event = {
 		}
 		news_event = ww1_usa.166
 		ai_chance = {
-			factor = 49
+			base = 49
 			modifier = {
 				is_historical_focus_on = yes
 				factor = 0
@@ -8664,12 +8921,12 @@ news_event = {
 		name = ww1_usa.168.a
 	}
 }
-#Robert M. La Follette wins 1928 Re-Election
+#Champ Clark wins 1916 Election
 news_event = {
 	id = ww1_usa.169
 	title = ww1_usa.169.t
 	desc = ww1_usa.169.d
-	picture = GFX_news_event_follette_election_victory
+	picture = GFX_news_event_clark_election_victory
 	major = yes
 	is_triggered_only = yes
 	option = {
@@ -8710,5 +8967,72 @@ news_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_usa.172.a
+	}
+}
+
+#The Great Erruption of 1912
+news_event = {
+	id = ww1_usa.173
+	title = ww1_usa.173.t
+	desc = ww1_usa.173.d
+	picture = GFX_news_event_volcano
+	major = yes
+	is_triggered_only = yes
+	trigger = {
+		has_start_date < 1914.1.1
+	}
+	option = {
+		name = ww1_usa.173.c
+	}
+}
+
+#Wilsons Stroke
+country_event = {
+	id = ww1_usa.174
+	title = ww1_usa.174.t
+	desc = ww1_usa.174.d
+	picture = GFX_report_event_wilson_stroke
+	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 330
+	}
+	trigger = {
+		original_tag = USA
+		has_country_leader = {
+			character = USA_woodrow_wilson
+		}
+		has_completed_focus = USA_fourteen_points
+		has_country_flag = great_war_winner
+		NOT = {
+			has_war_with = GER
+		}
+	}
+	immediate = {
+		hidden_effect = {
+			USA_woodrow_wilson = {
+				add_country_leader_trait = USA_wilson_stroked
+			}
+		}
+	}
+	option = {
+		name =  ww1_usa.174.a
+		custom_effect_tooltip = historical_tt
+		ai_chance = {
+			base = 999
+		}
+	}
+	option = {
+		name =  ww1_usa.174.b
+		ai_chance = {
+			base = 0
+		}
+		add_political_power = -75
+		hidden_effect = {
+			retire_character = USA_woodrow_wilson
+			promote_character = USA_thomas_r_marshall
+			USA_thomas_r_marshall = {
+				add_country_leader_trait = assassination_survivor
+			}
+		}
 	}
 }

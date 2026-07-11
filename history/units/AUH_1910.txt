@@ -3,7 +3,7 @@
 
 division_template = {
 	name = "Infanterietruppendivision"	# Austrian Common Army Infantry
-	
+	template_counter = 109
 	division_names_group = AUH_INF_01
 	
 	regiments = {
@@ -23,11 +23,15 @@ division_template = {
 		infantry = { x = 3 y = 1 }
 		infantry = { x = 3 y = 2 }
 		infantry = { x = 3 y = 3 }
-		artillery_brigade = { x = 4 y = 0 }
+		field_gun_brigade = { x = 4 y = 0 }
+	}
+	regimental_support = {
+		machine_gun_company = { x = 0 y = 0 }
 	}
 	support = {
-		engineer = { x = 0 y = 0 }	
-		artillery = { x = 0 y = 1 }
+		engineer = { x = 0 y = 0 }
+		howitzer = { x = 0 y = 1 }
+		machine_gun = { x = 0 y = 2 }
 	}
 }
 
@@ -35,8 +39,9 @@ create_colonial_division_template = {
   	subject = HUN
 	division_template = {
 		name = "Ungarische Infanterietruppendivision"	# Hungarian Common Army Infantry
+		template_counter = 109
 		division_names_group = AUH_INF_01
-	
+		
 		regiments = {
 			infantry = { x = 0 y = 0 }
 			infantry = { x = 0 y = 1 }
@@ -54,17 +59,22 @@ create_colonial_division_template = {
 			infantry = { x = 3 y = 1 }
 			infantry = { x = 3 y = 2 }
 			infantry = { x = 3 y = 3 }
-			artillery_brigade = { x = 4 y = 0 }
+			field_gun_brigade = { x = 4 y = 0 }
 		}
+	regimental_support = {
+		machine_gun_company = { x = 0 y = 0 }
+	}
 		support = {
-			engineer = { x = 0 y = 0 }
+			engineer = { x = 0 y = 0 }	
+			field_gun = { x = 0 y = 1 }
+			machine_gun = { x = 0 y = 2 }
 		}
 	}
 }
 
 division_template = {
 	name = "Landwehr Infanterietruppendivision"	# Austrian Landwehr Infantry
-	
+	template_counter = 109
 	division_names_group = AUH_INF_01
 	
 	regiments = {
@@ -80,10 +90,14 @@ division_template = {
 		infantry = { x = 3 y = 0 }
 		infantry = { x = 3 y = 1 }
 		infantry = { x = 3 y = 2 }
-		artillery_brigade = { x = 4 y = 0 }
+		field_gun_brigade = { x = 4 y = 0 }
+	}
+	regimental_support = {
+		machine_gun_company = { x = 0 y = 0 }
 	}
 	support = {
 		engineer = { x = 0 y = 0 }
+		howitzer = { x = 0 y = 1 }
 	}
 }
 
@@ -95,11 +109,11 @@ division_template = {
 	regiments = {
 		cavalry = { x = 0 y = 0 }
 		cavalry = { x = 0 y = 1 }
-		cavalry = { x = 0 y = 2 }
-		cavalry = { x = 0 y = 3 }
+		cavalry = { x = 1 y = 0 }
+		cavalry = { x = 1 y = 1 }
 	}
 	support = {
-		artillery = { x = 0 y = 0 }	
+		field_gun = { x = 0 y = 0 }	
 	}
 }
 
@@ -113,8 +127,8 @@ create_colonial_division_template = {
 		regiments = {
 			cavalry = { x = 0 y = 0 }
 			cavalry = { x = 0 y = 1 }
-			cavalry = { x = 0 y = 2 }
-			cavalry = { x = 0 y = 3 }
+			cavalry = { x = 1 y = 0 }
+			cavalry = { x = 1 y = 1 }
 		}
 	}
 }
@@ -151,11 +165,15 @@ division_template = {
 		mountaineers = { x = 3 y = 1 }
 		mountaineers = { x = 3 y = 2 }
 		mountaineers = { x = 3 y = 3 }
-		artillery_brigade = { x = 4 y = 0 }
+		field_gun_brigade = { x = 4 y = 0 }
+	}
+	regimental_support = {
+		machine_gun_company = { x = 0 y = 0 }
 	}
 	support = {
 		engineer = { x = 0 y = 0 }
-		artillery = { x = 0 y = 1 }		
+		howitzer = { x = 0 y = 1 }
+		machine_gun = { x = 0 y = 2 }
 	}
 }
 
@@ -399,7 +417,7 @@ units = {
 		start_experience_factor=0.2
 		start_equipment_factor = 1
 	}
-	division= { 
+	division= {
 		division_name = {
 			is_name_ordered = yes
 			name_order = 26
@@ -408,6 +426,15 @@ units = {
 		division_template="Landwehr Infanterietruppendivision"
 		start_experience_factor=0.2
 		start_equipment_factor = 1
+		officer = {
+            name = AUH_johann_ritter_von_friedel
+            portraits = {
+                army = {
+                    large = "gfx/leaders/AUH/AUH_Johann_Ritter_von_Friedel.png"
+                    small = "gfx/interface/ideas/AUH/idea_AUH_Johann_Ritter_von_Friedel.png"
+                }
+            }
+        }
 	}
 	division= { 
 		division_name = {
@@ -751,10 +778,20 @@ instant_effect = {
 			type = infantry_equipment_1
 			creator = "AUS"
 		}
-		requested_factories = 6
+		requested_factories = 4
 		progress = 0.1
 		efficiency = 50	
 		industrial_manufacturer = mio:AUH_osterreichische_waffenfabriksgesellschaft_organization
+	}
+	add_equipment_production = {
+		equipment = {
+			type = machine_gun_equipment_0
+			creator = "AUS"
+		}
+		requested_factories = 1
+		progress = 0.1
+		efficiency = 50
+		industrial_manufacturer = mio:AUH_kuk_munitionsfabrik_wollersdorf_organization
 	}
 	add_equipment_production = {
 		equipment = {
@@ -768,10 +805,20 @@ instant_effect = {
 	}
 	add_equipment_production = {
 		equipment = {
-			type = artillery_equipment_1
+			type = field_gun_equipment_1
 			creator = "AUS"
 		}
-		requested_factories = 4
+		requested_factories = 2
+		progress = 0.1
+		efficiency = 50
+		industrial_manufacturer = mio:CZE_skoda_works_organization
+	}
+	add_equipment_production = {
+		equipment = {
+			type = howitzer_equipment_1
+			creator = "AUS"
+		}
+		requested_factories = 1
 		progress = 0.1
 		efficiency = 50
 		industrial_manufacturer = mio:CZE_skoda_works_organization
@@ -784,5 +831,6 @@ instant_effect = {
 		requested_factories = 1
 		progress = 0.1
 		efficiency = 50
+		industrial_manufacturer = mio:HUN_mavag_organization
 	}
 }

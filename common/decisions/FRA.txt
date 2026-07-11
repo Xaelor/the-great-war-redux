@@ -1,4 +1,24 @@
 debug_decisions = {
+	get_charron_now = {
+		allowed = {
+			OR = {
+				tag = FRA
+				tag = ENG
+				tag = RUS
+			}
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			complete_special_project = {
+				project = sp:sp_land_early_armored_car
+			}
+		}
+	}
 	init_loyalties = {
 		allowed = {
 			tag = FRA
@@ -116,96 +136,152 @@ debug_decisions = {
 			custom_effect_tooltip = party_coalition_gain_loyalty
 		}
 	}
-}
-FRA_ai_only_decision = {
-	FRA_emergency_mobilization = {
+	restore_napoleon = {
 		allowed = {
 			tag = FRA
 		}
 		available = {
-			is_ai = yes
-			date > 1914.5.10
-			is_historical_focus_on = yes
-			has_start_date < 1914.1.1	
-			NOT = {
-				has_country_flag = FRA_emergency_mobilization
-			}
+			is_ai = no
 		}
 		visible = {
-			is_ai = yes
+			is_debug = yes
 		}
-		fire_only_once = no
-		ai_will_do = {
-			factor = 1000
-		}
+		fire_only_once = yes
 		complete_effect = {
-			set_country_flag = FRA_emergency_mobilization
-			division_template = {
-				name = "Division d'Infanterie"	
-				division_names_group = FRA_INF_01
-				regiments = {
-					infantry = { x = 0 y = 0 }
-					infantry = { x = 0 y = 1 }
-					infantry = { x = 0 y = 2 }
-					infantry = { x = 1 y = 0 }
-					infantry = { x = 1 y = 1 }
-					infantry = { x = 1 y = 2 }
-					infantry = { x = 2 y = 0 }
-					infantry = { x = 2 y = 1 }
-					infantry = { x = 2 y = 2 }
-					infantry = { x = 3 y = 0 }
-					infantry = { x = 3 y = 1 }
-					infantry = { x = 3 y = 2 }
-					artillery_brigade = { x = 3 y = 3 }
-				}
-				support = {
-					recon = { x = 0 y = 0 }
-					engineer = { x = 0 y = 1 }
-				}
+			set_country_flag = FRA_allow_bourbon_visit
+			set_cosmetic_tag = FRA_THIRD_EMPIRE
+			set_politics = {
+				ruling_party = neutrality
+				long_name = FRA_house_of_bonapart_party
+				name = FRA_house_of_bonapart_party
+				elections_allowed = no
 			}
-			if = {
-				limit = {
-					has_army_manpower = {
-						size < 1500000
+			FRA_napoleon_v = {
+				set_nationality = ROOT
+				set_character_name = FRA_napoleon_v
+				set_portraits = {
+					civilian={
+						large="gfx/leaders/FRA/FRA_Napoleon_V.png"
+						small="gfx/interface/ideas/FRA/idea_FRA_napoleon.png"
 					}
 				}
-				24 = {
-					create_unit = {
-						division = "division_template = \"Division d'Infanterie\"	start_experience_factor = 0.1	start_equipment_factor = 0.1"
-						owner = FRA
-						allow_spawning_on_enemy_provs = no
-						count = 14
+				if = {
+					limit = {
+						has_ideology = semi_constitutional_monarchy
+					}
+					promote_character = semi_constitutional_monarchy
+				}
+				else = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = semi_constitutional_monarchy
+							traits = { bonaparte_legacy empire_builder }
+						}
 					}
 				}
 			}
-			if = {
-				limit = {
-					has_army_manpower = {
-						size < 1400000
-					}
+			hidden_effect = {
+				remove_french_presidents = yes
+				news_event = {
+					id = ww1_france.30
+					hours = 3
 				}
-				24 = {
-					create_unit = {
-						division = "division_template = \"Division d'Infanterie\"	start_experience_factor = 0.1	start_equipment_factor = 0.1"
-						owner = FRA
-						allow_spawning_on_enemy_provs = no
-						count = 14
+			}
+		}
+	}
+	restore_orleans = {
+		allowed = {
+			tag = FRA
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
+		fire_only_once = yes
+		complete_effect = {
+			set_country_flag = FRA_allow_orleans_visit
+			set_cosmetic_tag = FRA_KINGDOM
+			set_politics = {
+				ruling_party = neutrality
+				long_name = FRA_orleans_house_party_long
+				name = FRA_orleans_house_party
+				elections_allowed = no
+			}
+			FRA_philippe_viii = {
+				set_nationality = ROOT
+				set_character_name = FRA_philippe_viii
+				if = {
+					limit = {
+						has_ideology = semi_constitutional_monarchy_reserve
+					}
+					promote_character = semi_constitutional_monarchy_reserve
+				}
+				else = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = semi_constitutional_monarchy_reserve
+							traits = { duke_of_orleans }
+						}
 					}
 				}
 			}
-			if = {
-				limit = {
-					has_army_manpower = {
-						size < 1200000
+			hidden_effect = {
+				remove_french_presidents = yes
+				news_event = {
+					id = ww1_france.30
+					hours = 3
+				}
+			}
+		}
+	}
+	restore_bourbons = {
+		allowed = {
+			tag = FRA
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
+		fire_only_once = yes
+		complete_effect = {
+			set_country_flag = FRA_allow_bourbon_visit
+			set_cosmetic_tag = FRA_KINGDOM_legitimist
+			set_politics = {
+				ruling_party = neutrality
+				long_name = FRA_legitimist_party_long
+				name = FRA_legitimist_party
+				elections_allowed = no
+			}
+			FRA_jacques_i = {
+				set_nationality = ROOT
+				set_character_name = FRA_jacques_i
+				if = {
+					limit = {
+						has_ideology = absolute_monarchy
+					}
+					promote_character = absolute_monarchy
+				}
+				else = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = absolute_monarchy
+							traits = { legitimate_heir }
+						}
 					}
 				}
-				24 = {
-					create_unit = {
-						division = "division_template = \"Division d'Infanterie\"	start_experience_factor = 0.1	start_equipment_factor = 0.1"
-						owner = FRA
-						allow_spawning_on_enemy_provs = no
-						count = 14
-					}
+			}
+			hidden_effect = {
+				remove_french_presidents = yes
+				news_event = {
+					id = ww1_france.30
+					hours = 3
 				}
 			}
 		}
@@ -381,104 +457,104 @@ FRA_french_bop = {
 }
 
 FRA_situation_in_morocco = {
-	FRA_situation_in_morocco = {
-		icon = GFX_decision_generic_naval
-		allowed = {
-			original_tag = FRA
-		}	
-		cancel_trigger = {
-			hidden_trigger = {
-				OR = {
-					is_subject = yes
-					MOR = {
-						OR = {
-							exists = no
-							is_subject = yes
-							has_country_flag = FRA_has_annexed_morocco
-						}
-					}
-					has_country_flag = great_war_loser 
-					AND = {
-						has_war = yes
-						NOT = { has_idea = FRA_wadai_war }			
-					}
-					has_global_flag = FRA_MOR_war	
-				}				
-			}
-		}
-		target_trigger = {
-			FROM = {
-				tag = MOR
-			}		
-		}
-		visible = {
-			NOT = {
-				has_global_flag = FRA_MOR_war	
-			}
-			NOT = {
-				has_war_with = MOR
-			}
-		}
-		fire_only_once = yes #it will not disappear otherwise
-		selectable_mission = yes
-		activation = {
-			date > 1910.8.8
-			is_subject = no 
-			NOT = {
-				has_global_flag = FRA_MOR_war	
-			}
-			MOR = {
-				exists = yes
-				is_subject = no
-				NOT = {
-					has_war_with = FRA
-				}
-				NOT = {
-					has_country_flag = FRA_has_annexed_morocco
-				}	
-				NOT = { 
-					has_country_flag = great_war_loser 
-				}
-			}		
-			OR = {
-				has_war = no
-				has_idea = FRA_wadai_war					
-			}			
-		}
-		days_mission_timeout = 380
-		cost = 50
-		ai_will_do = {
-			factor = 0
-			modifier = {
-				date > 1911.4.20
-				factor = 5
-			}
-			modifier = {
-				date > 1911.5.5
-				factor = 1000
-			}
-		}
-		is_good = yes
-		timeout_effect = {
-			add_stability = -0.05
-			MOR = {
-				country_event =  {
-					id = ww1_morocco.1
-					hours = 3
-				}
-				set_country_flag = FRA_has_annexed_morocco
-			}			
-		}
-		complete_effect = {
-			MOR = {
-				country_event =  {
-					id = ww1_morocco.1
-					hours = 3
-				}
-				set_country_flag = FRA_has_annexed_morocco
-			}			
-		}
-	}
+	# FRA_situation_in_morocco = {
+	# 	icon = GFX_decision_generic_naval
+	# 	allowed = {
+	# 		original_tag = FRA
+	# 	}	
+	# 	cancel_trigger = {
+	# 		hidden_trigger = {
+	# 			OR = {
+	# 				is_subject = yes
+	# 				MOR = {
+	# 					OR = {
+	# 						exists = no
+	# 						is_subject = yes
+	# 						has_country_flag = FRA_has_annexed_morocco
+	# 					}
+	# 				}
+	# 				has_country_flag = great_war_loser 
+	# 				AND = {
+	# 					has_war = yes
+	# 					NOT = { has_idea = FRA_wadai_war }			
+	# 				}
+	# 				has_global_flag = FRA_MOR_war	
+	# 			}				
+	# 		}
+	# 	}
+	# 	target_trigger = {
+	# 		FROM = {
+	# 			tag = MOR
+	# 		}		
+	# 	}
+	# 	visible = {
+	# 		NOT = {
+	# 			has_global_flag = FRA_MOR_war	
+	# 		}
+	# 		NOT = {
+	# 			has_war_with = MOR
+	# 		}
+	# 	}
+	# 	fire_only_once = yes #it will not disappear otherwise
+	# 	selectable_mission = yes
+	# 	activation = {
+	# 		date > 1910.8.8
+	# 		is_subject = no 
+	# 		NOT = {
+	# 			has_global_flag = FRA_MOR_war	
+	# 		}
+	# 		MOR = {
+	# 			exists = yes
+	# 			is_subject = no
+	# 			NOT = {
+	# 				has_war_with = FRA
+	# 			}
+	# 			NOT = {
+	# 				has_country_flag = FRA_has_annexed_morocco
+	# 			}	
+	# 			NOT = { 
+	# 				has_country_flag = great_war_loser 
+	# 			}
+	# 		}		
+	# 		OR = {
+	# 			has_war = no
+	# 			has_idea = FRA_wadai_war					
+	# 		}			
+	# 	}
+	# 	days_mission_timeout = 380
+	# 	cost = 50
+	# 	ai_will_do = {
+	# 		factor = 0
+	# 		modifier = {
+	# 			date > 1911.4.20
+	# 			factor = 5
+	# 		}
+	# 		modifier = {
+	# 			date > 1911.5.5
+	# 			factor = 1000
+	# 		}
+	# 	}
+	# 	is_good = yes
+	# 	timeout_effect = {
+	# 		add_stability = -0.05
+	# 		MOR = {
+	# 			country_event =  {
+	# 				id = ww1_morocco.1
+	# 				hours = 3
+	# 			}
+	# 			set_country_flag = FRA_has_annexed_morocco
+	# 		}			
+	# 	}
+	# 	complete_effect = {
+	# 		MOR = {
+	# 			country_event =  {
+	# 				id = ww1_morocco.1
+	# 				hours = 3
+	# 			}
+	# 			set_country_flag = FRA_has_annexed_morocco
+	# 		}			
+	# 	}
+	# }
 	FRA_leave_MOR = {
 		allowed = {
 			original_tag = FRA
@@ -489,14 +565,20 @@ FRA_situation_in_morocco = {
 			any_owned_state = {
 				is_core_of = MOR
 			}
+			MOR = {
+				is_in_faction = no
+			}
 		}
 		available = {
 			has_war_with = MOR
 			MOR = {
 				has_full_control_of_state = 108
 				has_full_control_of_state = 462
+				has_full_control_of_state = 1093
 				has_full_control_of_state = 461
+				has_full_control_of_state = 1094
 				has_full_control_of_state = 290
+				has_full_control_of_state = 1137
 				has_full_control_of_state = 996
 			}
 		}
@@ -542,13 +624,14 @@ GER_great_war = {
 		allowed = {
 			original_tag = FRA
 		}
-		target_trigger = {
-			FROM = {
-				tag = MLI
-			}
+		targets = {
+			VOL
 		}
+		# target_root_trigger = {
+		# 	has_war_with = FROM
+		# }
 		visible = {
-			has_war_with = MLI
+			has_war_with = VOL
 			NOT = {
 				has_global_flag = mali_war_end
 			}
@@ -558,20 +641,25 @@ GER_great_war = {
 				limit = {
 					OR = {
 						tag = ROOT
-						is_in_faction_with = ROOT
-						is_subject_of = ROOT
+						is_ally_with = ROOT
 					}
-					has_war_with = MLI
+					has_war_with = VOL
 				}
-				white_peace = MLI
+				white_peace = VOL
 			}
 			set_global_flag = mali_war_end
-			MLI = {
-				transfer_state = 779
-				transfer_state = 780
-			}
+			# every_owned_state = {
+			# 	limit = {
+			# 		OR = {
+			# 			is_core_of = VOL
+			# 			is_core_of = GHA
+			# 			is_core_of = IVO
+			# 		}
+			# 	}
+			# 	transfer_state_to = MLI 
+			# }
 			hidden_effect = {
-				MLI = {
+				VOL = {
 					leave_faction = yes
 				}
 			}
@@ -585,7 +673,7 @@ GER_great_war = {
 			}
 			modifier = {
 				add = 500
-				MLI = {
+				VOL = {
 					controls_state = 779
 					controls_state = 780
 				}
@@ -599,16 +687,16 @@ GER_great_war = {
 			original_tag = FRA
 		}
 		visible = {
-			NOT = { has_country_flag = great_war_loser }
-			FROM = {
-				exists = yes
-				NOT = {
-					is_subject_of = ROOT
-				}
+			NOT = {
+				tag = FRC
+			}
+			NOT = { 
+				has_country_flag = great_war_loser
+				has_subject = FROM
 			}
 		}
 		custom_cost_trigger = {
-			command_power > 9
+			command_power > 9.9
 		}
 		custom_cost_text = decision_cost_CP_10
 		target_trigger = {
@@ -616,6 +704,11 @@ GER_great_war = {
 				original_tag = TUN
 			}
 		}
+		# target_root_trigger = {
+		# 	NOT = {
+		# 		has_subject = FROM
+		# 	}
+		# }
 		available = {
 			TUN = {
 				has_war = no
@@ -671,6 +764,11 @@ GER_great_war = {
 				NOT = {
 					has_global_flag = france_tunisia_war_end
 				}
+				NOT = {
+					any_enemy_country = {
+						original_tag = FRA
+					}
+				}
 			}
 		}
 		available = {
@@ -721,7 +819,7 @@ GER_great_war = {
 			has_character = FRA_maurice_janin
 		}
 		custom_cost_trigger = {
-			command_power > 9
+			command_power > 9.9
 		}
 		custom_cost_text = decision_cost_CP_10
 		target_trigger = {
@@ -778,8 +876,7 @@ GER_great_war = {
 			has_global_flag = FRA_capitulation_alone
 			tag = FRA
 			has_idea = FRA_interim_government
-			any_other_country = {
-				is_in_faction_with = ROOT
+			any_allied_country = {
 				has_war_with = GER
 			}
 			is_subject = no
@@ -794,7 +891,7 @@ GER_great_war = {
 					AND = {
 						surrender_progress > 0.01
 						OR = {
-							has_idea =  ger_famine
+							has_idea =  GER_famine
 							surrender_progress > 0.05
 						}
 						OR = {
@@ -833,7 +930,7 @@ FRA_railway_guns = {
 		}
 		days_re_enable = 180
 		custom_cost_trigger = {
-			command_power > 49
+			command_power > 49.9
 			num_of_civilian_factories > 5
 		}
 		custom_cost_text = decision_cost_CP_50_5_civ
@@ -983,7 +1080,7 @@ FRA_fortifications = {
 			original_tag = FRA
 		}
 		custom_cost_trigger = {
-			command_power > 25
+			command_power > 24.9
 		}
 		custom_cost_text = decision_cost_CP_25
 		available = {
@@ -1032,7 +1129,7 @@ FRA_fortifications = {
 			original_tag = FRA
 		}
 		custom_cost_trigger = {
-			command_power > 25
+			command_power > 24.9
 		}
 		custom_cost_text = decision_cost_CP_25
 		available = {
@@ -1081,7 +1178,7 @@ FRA_fortifications = {
 			original_tag = FRA
 		}
 		custom_cost_trigger = {
-			command_power > 25
+			command_power > 24.9
 		}
 		custom_cost_text = decision_cost_CP_25
 		available = {
@@ -1130,7 +1227,7 @@ FRA_fortifications = {
 			original_tag = FRA
 		}
 		custom_cost_trigger = {
-			command_power > 25
+			command_power > 24.9
 		}
 		custom_cost_text = decision_cost_CP_25
 		available = {
@@ -1179,7 +1276,7 @@ FRA_fortifications = {
 			original_tag = FRA
 		}
 		custom_cost_trigger = {
-			command_power > 25
+			command_power > 24.9
 		}
 		custom_cost_text = decision_cost_CP_25
 		available = {
@@ -1228,7 +1325,7 @@ FRA_fortifications = {
 			original_tag = FRA
 		}
 		custom_cost_trigger = {
-			command_power > 25
+			command_power > 24.9
 		}
 		custom_cost_text = decision_cost_CP_25
 		available = {
@@ -1277,7 +1374,7 @@ FRA_fortifications = {
 			original_tag = FRA
 		}
 		custom_cost_trigger = {
-			command_power > 25
+			command_power > 24.9
 		}
 		custom_cost_text = decision_cost_CP_25
 		available = {
@@ -1326,7 +1423,7 @@ FRA_fortifications = {
 			original_tag = FRA
 		}
 		custom_cost_trigger = {
-			command_power > 25
+			command_power > 24.9
 		}
 		custom_cost_text = decision_cost_CP_25
 		available = {
@@ -1374,13 +1471,11 @@ FRA_fortifications = {
 			original_tag = FRA
 		}
 		custom_cost_trigger = {
-			command_power > 25
+			command_power > 24.9
 		}
 		custom_cost_text = decision_cost_CP_25
 		available = {
-			17 = {
-				is_owned_and_controlled_by = ROOT
-			}
+			controls_province = 5291
 		}
 		visible = {
 			tag = FRA
@@ -1388,7 +1483,7 @@ FRA_fortifications = {
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
 			highlight_provinces = {
-				3560
+				5291
 			}
 			highlight_color_while_active = 1
 		}
@@ -1403,7 +1498,7 @@ FRA_fortifications = {
 						type = bunker
 						level = 2
 						instant_build = yes
-						province = 3560
+						province = 5291
 					}
 				}
 			}
@@ -1423,7 +1518,7 @@ FRA_fortifications = {
 			original_tag = FRA
 		}
 		custom_cost_trigger = {
-			command_power > 25
+			command_power > 24.9
 		}
 		custom_cost_text = decision_cost_CP_25
 		available = {
@@ -1437,7 +1532,7 @@ FRA_fortifications = {
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
 			highlight_provinces = {
-				3560
+				5291
 			}
 			highlight_color_while_active = 1
 		}
@@ -1450,7 +1545,7 @@ FRA_fortifications = {
 						type = bunker
 						level = 2
 						instant_build = yes
-						province = 3560
+						province = 5291
 					}
 				}
 			}
@@ -1463,6 +1558,103 @@ FRA_fortifications = {
 		}
 	}
 
+	FRA_salbert_fort = {
+		icon = GFX_decision_generic_fort
+		cost = 20
+		fire_only_once = yes
+		days_remove = 30
+		allowed = {
+			original_tag = FRA
+		}
+		custom_cost_trigger = {
+			command_power > 24.9
+		}
+		custom_cost_text = decision_cost_CP_25
+		available = {
+			864 = {
+				is_owned_and_controlled_by = ROOT
+			}
+		}
+		visible = {
+			tag = FRA
+		}
+		on_map_mode = map_and_decisions_view
+		highlight_states = {
+			highlight_provinces = {
+				2923
+			}
+			highlight_color_while_active = 1
+		}
+		
+		remove_effect = {
+			custom_effect_tooltip = FRA_salbert_fort_text
+			hidden_effect = {
+				864 = {
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 2923
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 2
+		}
+		complete_effect = {
+			add_command_power = -25
+		}
+	}
+
+	FRA_roppe_fort = {
+		icon = GFX_decision_generic_fort
+		cost = 20
+		fire_only_once = yes
+		days_remove = 30
+		allowed = {
+			original_tag = FRA
+		}
+		custom_cost_trigger = {
+			command_power > 14.9
+		}
+		custom_cost_text = decision_cost_CP_15
+		available = {
+			864 = {
+				is_owned_and_controlled_by = ROOT
+			}
+		}
+		visible = {
+			tag = FRA
+		}
+		on_map_mode = map_and_decisions_view
+		highlight_states = {
+			highlight_provinces = {
+				2923
+			}
+			highlight_color_while_active = 1
+		}
+		
+		remove_effect = {
+			custom_effect_tooltip = FRA_roppe_fort_text
+			hidden_effect = {
+				864 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 2923
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 2
+		}
+		complete_effect = {
+			add_command_power = -15
+		}
+	}
 }
 
 #battle of france
@@ -1535,6 +1727,36 @@ FRA_defense_of_france = {
 					has_equipment = {
 						light_tank_chassis > 1850
 					}
+					AND = {
+						check_variable = { num_equipment_in_armies@light_tank_chassis > 925 }
+						has_equipment = {
+							light_tank_chassis > 925
+						}
+					}
+					AND = {
+						check_variable = { num_equipment_in_armies@light_tank_chassis > 1295 }
+						has_equipment = {
+							light_tank_chassis > 555
+						}
+					}
+					AND = {
+						check_variable = { num_equipment_in_armies@light_tank_chassis > 1480 }
+						has_equipment = {
+							light_tank_chassis > 370
+						}
+					}
+					AND = {
+						check_variable = { num_equipment_in_armies@light_tank_chassis > 1665 }
+						has_equipment = {
+							light_tank_chassis > 185
+						}
+					}
+					AND = {
+						check_variable = { num_equipment_in_armies@light_tank_chassis > 1757 }
+						has_equipment = {
+							light_tank_chassis > 93
+						}
+					}
 				}
 			}
 		}
@@ -1594,11 +1816,11 @@ FRA_defense_of_france = {
 		visible = {
 			tag = FRA
 			has_civil_war = no
+			is_great_war_ongoing = yes
 			NOT = {
 				any_enemy_country = {
 					original_tag = FRA
 				}
-				has_global_flag = great_war_ends
 				capital_scope = {
 					state = 19
 				}
@@ -1633,8 +1855,7 @@ FRA_defense_of_france = {
 				factor = 0
 			}
 			modifier = {
-				has_global_flag = great_war
-				NOT = { has_global_flag = great_war_ends }
+				is_great_war_ongoing = yes
 				factor = 0
 			}
 		}
@@ -1674,12 +1895,17 @@ FRA_defense_of_france = {
 		available = {
 			custom_trigger_tooltip = {
 				tooltip = FRA_not_hold_verdun
-				NOT = { controls_province = 3546 }
+				NOT = { controls_province = 5291 }
 			}
 		}
 
 		cancel_trigger = {
-			has_war = no
+			OR = {
+				has_war = no
+				any_enemy_country = {
+					original_tag = FRA
+				}
+			}		
 		}
 
 		days_mission_timeout = 400
@@ -1687,7 +1913,7 @@ FRA_defense_of_france = {
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
 			highlight_provinces = {
-				3546
+				5291
 			}
 			highlight_color_while_active = 1
 		}
@@ -1696,15 +1922,14 @@ FRA_defense_of_france = {
 		activation = {
 			has_war = yes
 			has_civil_war = no
-			controls_province = 3546
+			controls_province = 5291
 			any_enemy_country = {
 				OR = {
-					controls_province = 2900
 					controls_province = 3560
-					controls_province = 5291
+					controls_province = 11328
+					controls_province = 11516
+					controls_province = 11488
 					controls_province = 6545
-					controls_province = 9472
-					controls_province = 13011
 				}
 			}
 		}
@@ -1756,7 +1981,7 @@ FRA_defense_of_france = {
 			any_enemy_country = {
 				OR = {
 					controls_province = 11502
-					controls_province = 3629
+					controls_province = 1346
 					controls_province = 521
 					controls_province = 5291
 					controls_province = 11488
@@ -1809,13 +2034,9 @@ FRA_defense_of_france = {
 			controls_province = 11506
 			any_enemy_country = {
 				OR = {
-					controls_province = 6585
 					controls_province = 9523
 					controls_province = 9534
-					controls_province = 9561
-					controls_province = 9725
-					controls_province = 11491
-					controls_province = 11518
+					controls_province = 6962
 				}
 			}
 		}
@@ -1939,8 +2160,8 @@ FRA_defense_of_france = {
 			}
 			set_party_name = {
 				ideology = neutrality
-				long_name = FRA_junta_fascist
-				name = FRA_junta_fascist
+				long_name = FRA_junta_party
+				name = FRA_junta_party
 			}
 			# monarchy stays
 			if = {
@@ -2132,7 +2353,7 @@ FRA_defense_of_france = {
 			original_tag = FRA
 		}
 		available = {
-			33 = {
+			23 = {
 				is_owned_and_controlled_by = ROOT
 			}
 		}
@@ -2142,14 +2363,14 @@ FRA_defense_of_france = {
 		}
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
-			highlight_state_targets = { state = 33 } 
+			highlight_state_targets = { state = 23 } 
 			highlight_color_while_active = 1
 		}
 		ai_will_do = {
 			factor = 100
 		}
 		remove_effect = {
-			33 = {
+			23 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = arms_factory
@@ -2197,6 +2418,367 @@ FRA_defense_of_france = {
 		}
 	}
 
+	FRA_form_escadrille_bl1 = {
+		icon = GFX_decision_generic_merge_plant_aircraft
+		cost = 20
+		fire_only_once = yes
+		days_remove = 70
+		allowed = {
+			original_tag = FRA
+		}
+		available = {
+			
+		}
+		visible = {
+			tag = FRA
+			has_country_flag = FRA_aeronotique_militaire
+		}
+		ai_will_do = {
+			factor = 0
+		}
+		remove_effect = {
+			create_equipment_variant = {
+				name = "Blériot I"
+				type = scout_plane_equipment_1
+				allow_without_tech = yes
+			}
+			add_equipment_to_stockpile = {
+				type = scout_plane_equipment_1
+				producer = FRA
+				amount = 6
+				variant_name = "Blériot I"
+			}
+		}
+	}
+	FRA_form_escadrille_bl2 = {
+		icon = GFX_decision_generic_merge_plant_aircraft
+		cost = 20
+		fire_only_once = yes
+		days_remove = 70
+		allowed = {
+			original_tag = FRA
+		}
+		available = {
+			
+		}
+		visible = {
+			tag = FRA
+			has_country_flag = FRA_aeronotique_militaire
+		}
+		ai_will_do = {
+			factor = 0
+		}
+		remove_effect = {
+			create_equipment_variant = {
+				name = "Blériot I"
+				type = scout_plane_equipment_1
+				allow_without_tech = yes
+			}
+			add_equipment_to_stockpile = {
+				type = scout_plane_equipment_1
+				producer = FRA
+				amount = 6
+				variant_name = "Blériot I"
+			}
+		}
+	}
+	FRA_form_escadrille_bl3 = {
+		icon = GFX_decision_generic_merge_plant_aircraft
+		cost = 20
+		fire_only_once = yes
+		days_remove = 70
+		allowed = {
+			original_tag = FRA
+		}
+		available = {
+			
+		}
+		visible = {
+			tag = FRA
+			has_country_flag = FRA_aeronotique_militaire
+		}
+		ai_will_do = {
+			factor = 100
+		}
+		remove_effect = {
+			create_equipment_variant = {
+				name = "Blériot I"
+				type = scout_plane_equipment_1
+				allow_without_tech = yes
+			}
+			add_equipment_to_stockpile = {
+				type = scout_plane_equipment_1
+				producer = FRA
+				amount = 6
+				variant_name = "Blériot I"
+			}
+		}
+	}
+	FRA_form_escadrille_hf1 = {
+		icon = GFX_decision_generic_merge_plant_aircraft
+		cost = 20
+		fire_only_once = yes
+		days_remove = 70
+		allowed = {
+			original_tag = FRA
+		}
+		available = {
+			
+		}
+		visible = {
+			tag = FRA
+			has_country_flag = FRA_aeronotique_militaire
+		}
+		ai_will_do = {
+			factor = 100
+		}
+		remove_effect = {
+			create_equipment_variant = {
+				name = "HF 1"
+				type = scout_plane_equipment_1
+				allow_without_tech = yes
+			}
+			add_equipment_to_stockpile = {
+				type = scout_plane_equipment_1
+				producer = FRA
+				amount = 6
+				variant_name = "HF 1"
+			}
+		}
+	}
+	FRA_form_escadrille_hf2 = {
+		icon = GFX_decision_generic_merge_plant_aircraft
+		cost = 20
+		fire_only_once = yes
+		days_remove = 70
+		allowed = {
+			original_tag = FRA
+		}
+		available = {
+			
+		}
+		visible = {
+			tag = FRA
+			has_country_flag = FRA_aeronotique_militaire
+		}
+		ai_will_do = {
+			factor = 0
+		}
+		remove_effect = {
+			create_equipment_variant = {
+				name = "HF 1"
+				type = scout_plane_equipment_1
+				allow_without_tech = yes
+			}
+			add_equipment_to_stockpile = {
+				type = scout_plane_equipment_1
+				producer = FRA
+				amount = 6
+				variant_name = "HF 1"
+			}
+		}
+	}
+	FRA_form_escadrille_mf1 = {
+		icon = GFX_decision_generic_merge_plant_aircraft
+		cost = 20
+		fire_only_once = yes
+		days_remove = 70
+		allowed = {
+			original_tag = FRA
+		}
+		available = {
+			
+		}
+		visible = {
+			tag = FRA
+			has_country_flag = FRA_aeronotique_militaire
+		}
+		ai_will_do = {
+			factor = 0
+		}
+		remove_effect = {
+			create_equipment_variant = {
+				name = "MF 1"
+				type = scout_plane_equipment_1
+				allow_without_tech = yes
+			}
+			add_equipment_to_stockpile = {
+				type = scout_plane_equipment_1
+				producer = FRA
+				amount = 6
+				variant_name = "MF 1"
+			}
+		}
+	}
+
+	FRA_form_escadrille_mf2 = {
+		icon = GFX_decision_generic_merge_plant_aircraft
+		cost = 20
+		fire_only_once = yes
+		days_remove = 70
+		allowed = {
+			original_tag = FRA
+		}
+		available = {
+			
+		}
+		visible = {
+			tag = FRA
+			has_country_flag = FRA_aeronotique_militaire
+		}
+		ai_will_do = {
+			factor = 100
+		}
+		remove_effect = {
+			create_equipment_variant = {
+				name = "MF 1"
+				type = scout_plane_equipment_1
+				allow_without_tech = yes
+			}
+			add_equipment_to_stockpile = {
+				type = scout_plane_equipment_1
+				producer = FRA
+				amount = 6
+				variant_name = "MF 1"
+			}
+		}
+	}
+
+	FRA_form_escadrille_mf5 = {
+		icon = GFX_decision_generic_merge_plant_aircraft
+		cost = 20
+		fire_only_once = yes
+		days_remove = 70
+		allowed = {
+			original_tag = FRA
+		}
+		available = {
+			
+		}
+		visible = {
+			tag = FRA
+			has_country_flag = FRA_aeronotique_militaire
+		}
+		ai_will_do = {
+			factor = 100
+		}
+		remove_effect = {
+			create_equipment_variant = {
+				name = "MF 1"
+				type = scout_plane_equipment_1
+				allow_without_tech = yes
+			}
+			add_equipment_to_stockpile = {
+				type = scout_plane_equipment_1
+				producer = FRA
+				amount = 6
+				variant_name = "MF 1"
+			}
+		}
+	}
+
+	FRA_form_escadrille_d4 = {
+		icon = GFX_decision_generic_merge_plant_aircraft
+		cost = 20
+		fire_only_once = yes
+		days_remove = 70
+		allowed = {
+			original_tag = FRA
+		}
+		available = {
+			
+		}
+		visible = {
+			tag = FRA
+			has_country_flag = FRA_aeronotique_militaire
+		}
+		ai_will_do = {
+			factor = 100
+		}
+		remove_effect = {
+			create_equipment_variant = {
+				name = "D4"
+				type = scout_plane_equipment_1
+				allow_without_tech = yes
+			}
+			add_equipment_to_stockpile = {
+				type = scout_plane_equipment_1
+				producer = FRA
+				amount = 6
+				variant_name = "D4"
+			}
+		}
+	}
+	#Marie Charles Duval plan
+	FRA_duval_plan = {
+		icon = GFX_decision_generic_merge_plant_aircraft
+		fire_only_once = yes
+		allowed = {
+			original_tag = FRA
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = FRA_fighters_1000
+				OR = {
+					check_variable = { num_deployed_planes_with_type@fighter_equipment > 999 }
+					has_equipment = {
+						fighter_equipment > 999
+					}
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = FRA_bombers_500
+				OR = {
+					check_variable = { num_deployed_planes_with_type@tac_bomber_equipment > 499 }
+					has_equipment = {
+						tac_bomber_equipment > 499
+					}
+				}
+			}
+		}
+		visible = {
+			tag = FRA
+		}
+		activation = {
+			always = no
+		}
+		is_good = no
+		days_mission_timeout = 720
+		timeout_effect = {
+			if = {
+				limit = {
+					OR = {
+						check_variable = { num_deployed_planes_with_type@fighter_equipment > 999 }
+						has_equipment = {
+							fighter_equipment > 999
+						}
+					}
+				}
+				custom_effect_tooltip = FRA_we_have_enough_fighters
+				else = {
+					if = {
+						limit = {
+							OR = {
+								check_variable = { num_deployed_planes_with_type@tac_bomber_equipment > 499 }
+								has_equipment = {
+									tac_bomber_equipment > 499
+								}
+							}
+						}
+						custom_effect_tooltip = FRA_we_have_enough_bombers
+						else = {
+							add_war_support = -0.15
+						}
+					}
+				}
+			}
+			
+		}
+		complete_effect = {
+			add_stability = 0.10
+		}
+	}
+
 }
 peace_deals = {
 	NFA_sue_for_peace_GER = {
@@ -2213,8 +2795,8 @@ peace_deals = {
 		}
 		visible = {
 			NOT = {
-				any_country = {
-					exists = yes
+				any_country_with_original_tag = {
+					original_tag_to_check = FRA
 					has_country_flag = FRA_socialist_france_flag
 					is_subject = no
 				}
@@ -2244,23 +2826,46 @@ peace_deals = {
 				}
 			}
 		}
-		target_trigger = {
-			FROM = {
-				tag = GER
-			}
+		targets = {
+			GER
 		}
+		# target_root_trigger = {
+		# 	has_war_with = FROM
+		# }
 		complete_effect = {
-			custom_effect_tooltip = NFA_third_franco_german_war_tt
+			custom_effect_tooltip = NFA_third_franco_german_war_tt	
+			every_owned_state = {
+				limit = {
+					is_controlled_by = FRC
+				}
+				transfer_state_to = FRC
+			}
 			white_peace = FROM
+			every_enemy_country = {
+				limit = {
+					NOT = { 
+						has_war_with = GER 
+						civilwar_target = ROOT
+						AND = {
+							original_tag = FRA
+							has_government = communism
+						}
+					}
+				}
+				ROOT = {
+					white_peace = PREV
+				}
+			}
 			hidden_effect = {
 				if = {
 					limit = {
-						any_other_country = {
-							original_tag = FRA
+						any_country_with_original_tag = {
+							original_tag_to_check = FRA
 							is_subject_of = FROM
 						}
 					}
-					every_other_country = {
+					random_country_with_original_tag = {
+						original_tag_to_check = FRA
 						limit = {
 							original_tag = FRA
 							is_subject_of = FROM
@@ -2274,9 +2879,25 @@ peace_deals = {
 					GER = {
 						set_autonomy = {
 							target = PREV
-							autonomous_state = autonomy_dominion
+							autonomous_state = autonomy_satellite
+							end_civil_wars = no
+							end_wars = no
 						}
 					}
+					if = {
+						limit = { 
+							NOT = {
+								any_country_with_original_tag = {
+									original_tag_to_check = FRA
+									has_cosmetic_tag = FRP
+								}
+								FROM = {
+									has_government = communism
+								}
+							}	
+						}
+						FRA_setup_german_government = yes
+					}			
 				}
 				every_country = {
 					limit = {
@@ -2295,31 +2916,10 @@ peace_deals = {
 										OR = {
 											state = 29
 											state = 865
+											state = 33
 										}
 									}
 									transfer_state_to = PREV
-								}
-								if = {
-									limit = {
-										has_cosmetic_tag = BEL_burgundy
-									}
-									every_state = {
-										limit = {
-											OR = {
-												is_owned_by = FROM
-												is_owned_by = PREV.PREV.PREV
-											}
-											OR = {
-												state = 17
-												state = 863
-												state = 21
-												state = 735
-												state = 761
-												state = 834
-											}
-										}
-										transfer_state_to = PREV
-									}
 								}
 							}
 						}
@@ -2346,95 +2946,11 @@ peace_deals = {
 								state = 700
 								state = 701
 								state = 780
+								state = 1136
 								state = 779
 							}
 						}
 						transfer_state_to = FROM
-					}
-					create_country_leader = {
-						name = "GER_erich_ludendorff"
-						picture = "gfx/leaders/GER/GER_erich_ludendorff.png"
-						ideology = stratocracy
-						traits = { foreign_leader german_agent }
-					}
-					create_country_leader = {
-						name = "FRA_gouvernement_provisoire"
-						picture = "gfx/leaders/FRA/FRA_provisional_government.png"
-						ideology = authoritarian_democracy
-						traits = { german_agent }
-					}
-					create_country_leader = {
-						name = "FRA_gouvernement_provisoire"
-						picture = "gfx/leaders/FRA/FRA_provisional_government.png"
-						ideology = conservatism
-						traits = { german_agent }
-					}
-					set_party_name = {
-						ideology = democratic
-						long_name = NFA_fascism_party_long
-						name = NFA_fascism_party
-					}
-					set_party_name = {
-						ideology = neutrality
-						long_name = NFA_fascism_party_long
-						name = NFA_fascism_party
-					}
-					set_party_name = {
-						ideology = fascism
-						long_name = GER_fascism_party_long
-						name = GER_fascism_party
-					}
-					set_cosmetic_tag = FRP
-					if = {
-						limit = {
-							FROM = {
-								OR = {
-									has_government = neutrality
-									has_idea = GER_idea_wilhelm_ii
-								}
-							}
-						}
-						create_country_leader = {
-							name = "FRA_victoire"
-							picture = "gfx/leaders/GER/GER_Victoria_Louise.png"
-							ideology = personalistic_dictatorship
-							female = yes
-							traits = {
-								victoria_iii
-								foreign_leader
-								german_agent
-							}
-						}
-						set_party_name = {
-							ideology = neutrality
-							long_name = GER_neutrality_party
-							name = GER_neutrality_party
-						}
-						set_politics = {
-							ruling_party = neutrality
-							elections_allowed = no
-						}
-						set_popularities = {
-							democratic = 14
-							neutrality = 52
-							fascism = 34
-							communism = 10
-						}
-					}
-					else_if = {
-						limit = {
-							NOT = { has_government = communism }
-						}
-						set_politics = {
-							ruling_party = fascism
-							elections_allowed = no
-						}
-						set_popularities = {
-							democratic = 30
-							neutrality = 32
-							fascism = 38
-							communism = 10
-						}
 					}
 				}
 			}
@@ -2442,13 +2958,15 @@ peace_deals = {
 				FROM = {
 					set_autonomy = {
 						target = ROOT
-						autonomy_state = autonomy_dominion
+						autonomy_state = autonomy_satellite
+						end_civil_wars = no
+						end_wars = no
 					}
 				}
 			}
 		}
 	}
-	FRC_sue_for_peace_NFA = {
+	FRC_sue_for_peace_GER = {
 		icon = GFX_decision_SWI_consolidate_council_power
 		allowed = {
 			original_tag = FRA
@@ -2462,14 +2980,13 @@ peace_deals = {
 			}
 			has_country_flag = FRA_socialist_france_flag
 			has_war_with = FROM
-			any_other_country = {
+			any_enemy_country = {
 				original_tag = FRA
 				has_country_flag = FRA_nationalist_france_flag
-				has_war_with = PREV
 			}
 			NOT = {
-				any_other_country = {
-					original_tag = FRA
+				any_country_with_original_tag = {
+					original_tag_to_check = FRA
 					is_subject_of = FROM
 				}
 			}
@@ -2488,10 +3005,12 @@ peace_deals = {
 				has_capitulated = no
 			}
 		}
-		target_trigger = {
-			FROM = {
-				tag = FROM
-			}
+		targets = {
+			GER
+		}
+		target_root_trigger = {
+			has_country_flag = FRA_socialist_france_flag
+			# has_war_with = FROM
 		}
 		complete_effect = {
 			every_owned_state = {
@@ -2500,96 +3019,123 @@ peace_deals = {
 				}
 				transfer_state_to = NFA
 			}
+			white_peace = FROM
 			every_enemy_country = {
-				white_peace = ROOT
+				limit = {
+					NOT = { 
+						has_war_with = GER
+						civilwar_target = ROOT
+					}
+				}
+				ROOT = {
+					white_peace = PREV
+				}
 			}
-			effect_tooltip = {
-				FROM = { puppet = ROOT }
-			}
-			hidden_effect = {
-				create_country_leader = {
-					name = "GER_erich_ludendorff"
-					picture = "gfx/leaders/GER/GER_erich_ludendorff.png"
-					ideology = stratocracy
-					traits = { foreign_leader german_agent }
-				}
-				create_country_leader = {
-					name = "FRA_gouvernement_provisoire"
-					picture = "gfx/leaders/FRA/FRA_provisional_government.png"
-					ideology = authoritarian_democracy
-					traits = { german_agent }
-				}
-				create_country_leader = {
-					name = "FRA_gouvernement_provisoire"
-					picture = "gfx/leaders/FRA/FRA_provisional_government.png"
-					ideology = conservatism
-					traits = { german_agent }
-				}
-				set_party_name = {
-					ideology = democratic
-					long_name = NFA_fascism_party_long
-					name = NFA_fascism_party
-				}
-				set_party_name = {
-					ideology = neutrality
-					long_name = NFA_fascism_party_long
-					name = NFA_fascism_party
-				}
-				set_party_name = {
-					ideology = fascism
-					long_name = GER_fascism_party_long
-					name = GER_fascism_party
-				}
-				set_cosmetic_tag = FRP
+			hidden_effect = {	
 				if = {
 					limit = {
-						FROM = {
-							OR = {
-								has_government = neutrality
-								has_idea = GER_idea_wilhelm_ii
+						any_country_with_original_tag = {
+							original_tag_to_check = FRA
+							is_subject_of = FROM
+						}
+					}
+					random_country_with_original_tag = {
+						original_tag_to_check = FRA
+						limit = {
+							original_tag = FRA
+							is_subject_of = FROM
+						}
+						annex_country = {
+							target = PREV
+						}
+					}
+				}
+				else = {
+					GER = {
+						set_autonomy = {
+							target = PREV
+							autonomous_state = autonomy_satellite
+							end_civil_wars = no
+							end_wars = no
+						}
+					}
+					if = {
+						limit = { 
+							NOT = {
+								any_country_with_original_tag = {
+									original_tag_to_check = FRA
+									has_cosmetic_tag = FRP
+								}
+								FROM = {
+									has_government = communism
+								}
+							}	
+						}
+						FRA_setup_german_government = yes
+					}			
+				}
+				every_country = {
+					limit = {
+						original_tag = FRA
+						is_subject_of = GER
+					}
+					34 = {
+						owner = {
+							if = {
+								limit = {
+									is_subject_of = FROM
+								}
+								every_state = {
+									limit = {
+										is_owned_by = PREV.PREV.PREV
+										OR = {
+											state = 29
+											state = 865
+											state = 33
+										}
+									}
+									transfer_state_to = PREV
+								}
 							}
 						}
 					}
-					create_country_leader = {
-						name = "FRA_victoire"
-						picture = "gfx/leaders/GER/GER_Victoria_Louise.png"
-						ideology = personalistic_dictatorship
-						female = yes
-						traits = {
-							victoria_iii
-							foreign_leader
-							german_agent
+					every_state = {
+						limit = {
+							is_on_continent = europe
+							is_core_of = PREV
+							is_owned_by = FROM
+							NOT = {
+								is_core_of = FROM
+								state = 863
+								state = 864
+							}
 						}
+						transfer_state_to = PREV
 					}
-					set_party_name = {
-						ideology = neutrality
-						long_name = GER_neutrality_party
-						name = GER_neutrality_party
-					}
-					set_politics = {
-						ruling_party = neutrality
-						elections_allowed = no
-					}
-					set_popularities = {
-						democratic = 14
-						neutrality = 52
-						fascism = 34
-						communism = 10
+					every_owned_state = {
+						limit = {
+							OR = {
+								state = 863
+								state = 864
+								state = 272
+								state = 700
+								state = 701
+								state = 780
+								state = 1136
+								state = 779
+							}
+						}
+						transfer_state_to = FROM
 					}
 				}
-				else_if = {
-					limit = {
-						NOT = { has_government = communism }
-					}
-					set_politics = {
-						ruling_party = fascism
-						elections_allowed = no
-					}
-					set_popularities = {
-						democratic = 30
-						neutrality = 32
-						fascism = 38
-						communism = 10
+			}
+			effect_tooltip = {
+				FROM = {
+					set_autonomy = {
+						target = ROOT
+						autonomy_state = autonomy_satellite
+						end_civil_wars = no
+						end_wars = no
 					}
 				}
 			}
@@ -2609,10 +3155,7 @@ peace_deals = {
 				has_global_flag = FRA_three_side_civil_war
 			}
 			has_country_flag = FRA_nationalist_france_flag
-			any_other_country = {
-				has_country_flag = FRA_socialist_france_flag
-				has_war_with = PREV
-			}
+			has_war_with = FROM
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -2657,6 +3200,10 @@ peace_deals = {
 				has_country_flag = FRA_socialist_france_flag
 			}
 		}
+		target_root_trigger = {
+			has_country_flag = FRA_nationalist_france_flag
+			# has_war_with = FROM
+		}
 		complete_effect = {
 			country_event = ww1_france.24
 		}
@@ -2673,11 +3220,7 @@ peace_deals = {
 		}
 		visible = {
 			has_global_flag = FRA_three_side_civil_war
-			any_other_country = {
-				has_war_with = ROOT
-				original_tag = FRA
-			}
-			original_tag = FRA
+			has_war_with = FROM
 		}
 		fire_only_once = no
 		ai_will_do = {
@@ -2685,6 +3228,30 @@ peace_deals = {
 			modifier = {
 				add = 1000
 				surrender_progress > 0.40
+				NOT = {
+					has_global_flag = FRA_three_side_civil_war
+				}
+			}
+			modifier = {
+				add = 1000
+				surrender_progress > 0.30
+				longest_war_length > 8
+				NOT = {
+					has_global_flag = FRA_three_side_civil_war
+				}
+			}
+			modifier = {
+				add = 1000
+				surrender_progress > 0.25
+				longest_war_length > 14
+				NOT = {
+					has_global_flag = FRA_three_side_civil_war
+				}
+			}
+			modifier = {
+				add = 1000
+				surrender_progress > 0.20
+				longest_war_length > 24
 				NOT = {
 					has_global_flag = FRA_three_side_civil_war
 				}
@@ -2715,14 +3282,51 @@ peace_deals = {
 				has_global_flag = FRA_three_side_civil_war
 				surrender_progress > 0.8
 			}
+			modifier = {
+				add = 1000 #its over guys
+				has_global_flag = FRA_three_side_civil_war
+				surrender_progress > 0.6
+				longest_war_length > 8
+			}
+			modifier = {
+				add = 1000 #its over guys
+				has_global_flag = FRA_three_side_civil_war
+				surrender_progress > 0.5
+				longest_war_length > 14
+			}
+			modifier = {
+				add = 1000 #its over guys
+				has_global_flag = FRA_three_side_civil_war
+				surrender_progress > 0.45
+				longest_war_length > 24
+			}
+			modifier = {
+				add = 1000 #its over guys
+				has_global_flag = FRA_three_side_civil_war
+				surrender_progress > 0.35
+				longest_war_length > 28
+			}
 		}
 		target_trigger = {
 			FROM = {
 				original_tag = FRA
 			}
 		}
+		target_root_trigger = {
+			has_global_flag = FRA_three_side_civil_war
+		}
 		complete_effect = {
 			country_event = ww1_france.331
+			every_enemy_country = {
+				limit = {
+					has_country_flag = FRC_civil_war_intervention
+				}
+				white_peace = FROM
+			}
+			add_equipment_to_stockpile = {
+				type = convoy
+				amount = 50
+			}
 		}
 	}
 }
@@ -2784,17 +3388,27 @@ FRA_wadai_war = {
 						}
 					}
 				}
-				every_country = {
+				every_enemy_country = {
 					limit = {
 						OR = {
-							tag = ROOT
-							is_in_faction_with = ROOT
-							is_subject_of = ROOT
+							original_tag = CHA 
+							original_tag = MOR
+							original_tag = DAR
+							original_tag = LBA
+							original_tag = KUT
 						}
-						has_war_with = CHA
 					}
-					white_peace = CHA
-				}
+					every_country = {
+						limit = {
+							OR = {
+								tag = ROOT
+								is_ally_with = ROOT
+							}
+							has_war_with = CHA
+						}
+						white_peace = PREV
+					}
+				}			
 				CHA = {
 					leave_faction = yes
 				}
@@ -2808,13 +3422,14 @@ FRA_wadai_war = {
 		allowed = {
 			original_tag = FRA
 		}
-		target_trigger = {
-			FROM = {
-				tag = CHA
-			}
+		targets = {
+			CHA
 		}
+		# target_root_trigger = {
+		# 	has_war_with = FROM
+		# }
 		visible = {
-			has_war_with = CHA
+			has_war_with = FROM
 			NOT = {
 				has_global_flag = wadai_war_end
 			}
@@ -2848,16 +3463,26 @@ FRA_wadai_war = {
 						}
 					}				
 				}
-				every_country = {
+				every_enemy_country = {
 					limit = {
 						OR = {
-							tag = ROOT
-							is_in_faction_with = ROOT
-							is_subject_of = ROOT
+							original_tag = CHA 
+							original_tag = MOR
+							original_tag = DAR
+							original_tag = LBA
+							original_tag = KUT
 						}
-						has_war_with = CHA
 					}
-					white_peace = CHA
+					every_country = {
+						limit = {
+							OR = {
+								tag = ROOT
+								is_ally_with = ROOT
+							}
+							has_war_with = CHA
+						}
+						white_peace = PREV
+					}
 				}
 				CHA = {
 					leave_faction = yes
@@ -2871,9 +3496,8 @@ FRA_wadai_war = {
 			base = 0
 			modifier = {
 				add = 500
-				any_country = {
+				any_enemy_country = {
 					is_major = yes
-					has_war_with = ROOT
 				}
 			}
 			modifier = {
@@ -3195,10 +3819,11 @@ foreign_politics = {
 		fire_only_once = yes
 		cost = 100
 		days_remove = 5
-		target_trigger = {
-			FROM = {
-				tag = MLT
-			}
+		targets = {
+			MLT
+		}
+		target_root_trigger = {
+			has_country_flag = FRA_nationalist_france_flag
 		}
 		ai_will_do = {
 			factor = 100
@@ -3234,11 +3859,13 @@ interwar_decisions = {
 		allowed = {
 			original_tag = FRA
 		}
-		target_trigger = {
-			FROM = {
-				tag = SYR
-			}	
-		}	
+		targets = {
+			SYR
+		}
+		target_root_trigger = {
+			has_global_flag = interbellum
+			has_country_flag = great_war_winner
+		}
 		available = {
 			has_capitulated = no
 		}
@@ -3257,6 +3884,8 @@ interwar_decisions = {
 			NOT = {
 				has_country_flag = franco_syrian_war
 				has_country_flag = franco_syrian_war_end
+				has_global_flag = sykes_picot_lawrence
+				has_global_flag = sykes_picot_mcmahon
 			}	
 		}
 		war_with_on_remove = SYR
@@ -3359,8 +3988,7 @@ interwar_decisions = {
 						limit = {
 							OR = {
 								tag = FRA
-								is_in_faction_with = FRA
-								is_subject_of = FRA
+								is_ally_with = FRA
 							}
 						}
 						white_peace = PREV
@@ -3388,185 +4016,7 @@ interwar_decisions = {
 		is_good = no
 	}
 }
-FRC_interwar_internationale_category = {
-	FRC_internationale = {
-		icon = GFX_decision_SOV_the_stalin_constitution
-		allowed = {
-			original_tag = FRA
-		}
-		available = {
-			is_subject = no
-			has_war = no
-			is_in_faction = no
-		}
-		visible = {
-			has_country_flag = FRA_socialist_france_flag
-			has_government = communism
-			is_faction_leader = no
-			has_global_flag = interbellum
-		}
-		fire_only_once = yes
-		cost = 100
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 1000
-				any_other_country = {
-					OR = {
-						original_tag = ENG
-						original_tag = ITA
-						original_tag = GER
-						original_tag = BAY
-					}
-					has_government = communism
-				}
-			}
-		}
-		complete_effect = {
-			create_faction = internationale
-			hidden_effect = {
-				news_event = {
-					id = news.173
-					hours = 3
-				}
-			}
-		}
-	}
-	FRC_interwar_invite_in_internationale = {
-		icon = GFX_decision_SOV_the_stalin_constitution
-		allowed = {
-			original_tag = FRA
-		}
-		available = {
-			has_war = no
-			is_faction_leader = yes
-			FROM = {
-				has_war = no
-			}
-		}
-		visible = {
-			has_government = communism
-			is_faction_leader = yes
-			has_global_flag = interbellum
-			OR = {
-				AND = {
-					original_tag = BAY
-					has_global_flag = prussian_blue
-					has_government = communism
-					NOT = {
-						country_exists = GER
-					}
-				}
-				AND = {
-					original_tag = FRA
-					has_country_flag = FRA_socialist_france_flag
-				}
-			}
-			has_country_flag = FRA_socialist_france_flag
-		}
-		target_trigger = {
-			FROM = {
-				OR = {
-					original_tag = FRA
-					original_tag = ENG
-					original_tag = ITA
-					tag = GER
-					tag = BAY
-					AND = {
-						tag = HUN
-						has_war = no
-					}
-				}
-				has_government = communism
-				NOT = {
-					has_country_leader_ideology = market_socialism
-					has_country_flag = FRA_nationalist_france_flag
-					has_country_flag = ENG_nationalist_britain_flag
-				}
-				is_subject = no
-				is_in_faction = no
-			}
-		}
-		fire_only_once = yes
-		cost = 25
-		complete_effect = {
-			if = {
-				limit = {
-					FROM = {
-						has_country_flag = ENG_socialist_britain_flag
-					}
-				}
-				FROM = {
-					if = {
-						limit = {
-							is_ai = yes
-						}
-						add_ai_strategy = {
-							type = alliance
-							id = ROOT
-							value = 200
-						}
-					}
-					country_event = ww1_england.175
-				}
-				else = {
-					FROM = {
-						hidden_effect = {
-							if = {
-								limit = {
-									is_ai = yes
-									OR = {
-										original_tag = FRA
-										original_tag = ENG
-										original_tag = BAY
-										original_tag = HUN
-									}
-								}
-								add_ai_strategy = {
-									type = alliance
-									id = ROOT
-									value = 200
-								}
-							}
-							if = {
-								limit = {
-									is_historical_focus_on = no
-									is_ai = yes
-								}
-								random_list = {
-									4 = {
-										add_ai_strategy = {
-											type = alliance
-											id = ROOT
-											value = 200
-										}
-									}
-									6 = {
-									}
-								}
-							}
-						}
-						country_event = generic.5
-					}
-				}
-			}
-		}
-		ai_will_do = {
-			base = 0 
-			modifier = {
-				add = 100
-				FROM = {
-					OR = {
-						original_tag = FRA
-						original_tag = ENG
-						original_tag = BAY
-						original_tag = HUN
-					}
-				}
-			}
-		}
-	}
-}
+
 
 prestigious_projects = {
 	FRC_valois_seize_the_power = {
@@ -3647,6 +4097,180 @@ prestigious_projects = {
 			set_capital = { state = 16 }
 		}
 	}
+	FRA_decision_expand_AOF = {
+		name = FRA_decision_expand_FROM
+		icon = GFX_decision_generic_operation
+		allowed = { original_tag = FRA }
+		target_trigger = {
+			FROM = {
+				is_subject_of = ROOT
+				has_country_flag = AOF
+			}
+		}
+		target_root_trigger = {
+			has_global_flag = AOF
+		}
+		available = {
+			has_subject = AOF
+		}
+		visible = {
+			has_global_flag = AOF
+			is_subject = no
+			has_subject = AOF
+			NOT = { has_country_flag = great_war_loser }
+			OR = {
+				any_state = {
+					OWNER = { 
+						OR = {
+							tag = ROOT
+							is_subject_of = ROOT
+						}
+						has_civil_war = no	
+						NOT = { 
+							has_country_flag = AOF
+							has_country_flag = protectorate 
+						}
+					}
+					OR = {
+						region = 226
+						region = 140
+						is_core_of = SEN
+						is_core_of = MRT
+						is_core_of = MLI
+						is_core_of = VOL
+						is_core_of = NGR
+					}
+				}
+				any_subject_country = {
+					has_civil_war = no
+					NOT = {
+						has_country_flag = protectorate
+					}
+					OR = {
+						original_tag = SEN
+						original_tag = MRT
+						original_tag = MLI
+						original_tag = VOL
+						original_tag = NGR
+						original_tag = GNA
+						original_tag = IVO
+						original_tag = DAH
+						original_tag = TOG
+						original_tag = FUJ
+						original_tag = GAM
+						original_tag = GNB
+						original_tag = SIE
+						original_tag = LIB
+						original_tag = GHA
+						original_tag = NGA
+					}
+				}
+			}
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					is_subject = yes
+					NOT = { has_subject = AOF }
+				}
+			}	
+		}	
+		cancel_effect = {
+			add_political_power = 10
+		}
+		cost = 10
+		days_remove = 5
+		days_re_enable = 5
+		ai_will_do = {
+			factor = 100
+		}
+		remove_effect = {
+			create_AOF = yes
+		}
+	}
+	FRA_decision_expand_AEF = {
+		name = FRA_decision_expand_FROM
+		icon = GFX_decision_generic_operation
+		allowed = { original_tag = FRA }
+		target_trigger = {
+			FROM = {
+				is_subject_of = ROOT
+				has_country_flag = AEF
+			}
+		}
+		target_root_trigger = {
+			has_global_flag = AEF
+		}
+		available = {
+			has_subject = AEF
+		}
+		visible = {
+			has_global_flag = AEF
+			is_subject = no
+			has_subject = AEF
+			NOT = { has_country_flag = great_war_loser }
+			OR = {
+				any_state = {
+					OWNER = { 	
+						OR = {
+							tag = ROOT
+							is_subject_of = ROOT
+						}
+						has_civil_war = no	
+						NOT = { 
+							has_country_flag = AEF
+							has_country_flag = protectorate 
+						}
+					}
+					OR = {
+						region = 183
+						region = 184
+						region = 227
+						is_core_of = CHA
+						is_core_of = CAR
+						is_core_of = RCG
+					}
+				}
+				any_subject_country = {
+					has_civil_war = no
+					NOT = {
+						has_country_flag = protectorate
+					}
+					OR = {
+						original_tag = CHA
+						original_tag = CAR
+						original_tag = RCG
+						original_tag = GAB
+						original_tag = CMR
+						original_tag = KUT
+						original_tag = COG
+						original_tag = EQG
+						original_tag = KOG
+					}
+				}
+			}
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					is_subject = yes
+					NOT = { has_subject = AEF }
+				}
+			}	
+		}	
+		cancel_effect = {
+			add_political_power = 10
+		}
+		cost = 10
+		days_remove = 5
+		days_re_enable = 5
+		ai_will_do = {
+			factor = 100
+		}
+		remove_effect = {
+			create_AEF = yes
+		}
+	}
 }
 
 FRA_french_civil_war_category = {
@@ -3654,12 +4278,17 @@ FRA_french_civil_war_category = {
 		icon = ger_military_buildup
 		allowed = {
 			NOT = { original_tag = FRA }
+			OR = {
+				is_european_tag_no_constant = yes
+				is_usa_tag = yes
+			}		
 		}
 		visible = {
 			has_global_flag = french_civil_war
-			any_country = {
-				has_country_flag = FRA_socialist_france_flag
-				has_war_with = NFA
+			FROM = {
+				any_enemy_country = {
+					has_country_flag = FRA_socialist_france_flag
+				}
 			}
 			NOT = { has_country_flag = supported_french_civil_war }
 		}
@@ -3686,8 +4315,11 @@ FRA_french_civil_war_category = {
 				}
 			}
 		}
-		target_trigger = {
-			FROM = { tag = NFA }
+		targets = {
+			NFA
+		}
+		target_root_trigger = {
+			has_global_flag = french_civil_war
 		}
 		complete_effect = {
 			set_country_flag = supported_french_civil_war
@@ -3706,12 +4338,17 @@ FRA_french_civil_war_category = {
 		icon = ger_military_buildup
 		allowed = {
 			NOT = { original_tag = FRA }
+			OR = {
+				is_european_tag_no_constant = yes
+				is_usa_tag = yes
+			}		
 		}
 		visible = {
 			has_global_flag = french_civil_war
-			any_country = {
-				has_country_flag = FRA_socialist_france_flag
-				has_war_with = NFA
+			FROM = {
+				any_enemy_country = {
+					has_country_flag = FRA_nationalist_france_flag
+				}
 			}
 			NOT = { has_country_flag = supported_french_civil_war }
 		}
@@ -3738,8 +4375,11 @@ FRA_french_civil_war_category = {
 				}
 			}
 		}
-		target_trigger = {
-			FROM = { tag = FRC }
+		targets = {
+			FRC
+		}
+		target_root_trigger = {
+			has_global_flag = french_civil_war
 		}
 		complete_effect = {
 			set_country_flag = supported_french_civil_war
@@ -3786,24 +4426,22 @@ FRA_french_army = {
 political_actions = {
 	generic_provide_humanitarian_help = {
 		allowed = {
-			always = yes
+			OR = {
+				tag = MOR
+				tag = FRA
+				tag = ENG
+			}
 		}
 		icon = GFX_decision_hol_exchange_intelligence_data
 		days_remove = 14
 		state_target = yes
-		custom_cost_text = TUR_decision_cost_15commandpower
-		custom_cost_trigger = {
-			command_power > 14.99
-		}
         target_trigger = {
             FROM = {
 				is_owned_and_controlled_by = ROOT
 				has_dynamic_modifier = { modifier = sahel_local_famine }
 			}
         }
-		complete_effect = {
-			add_command_power = -15
-		}
+		cost = 15
 		remove_effect = {
 			FROM = {
 				remove_dynamic_modifier = { modifier = sahel_local_famine }
@@ -3842,18 +4480,21 @@ FRA_weapon_seller = {
 					has_country_flag = has_refused_french_weapons
 					has_country_flag = FRA_is_buying_60_renault_tanks
 				}
-				OR = {
-					tag = POL
-					tag = ROM
-					tag = YUG
-					tag = BEL
-					tag = USA
-					tag = SER
-					tag = ITA
-					tag = RUS
-					tag = ENG
-				}
 			}
+		}
+		targets = {
+			POL
+			ROM
+			SER
+			BEL
+			USA
+			SER
+			ITA
+			RUS
+			ENG
+		}
+		target_root_trigger = {
+			has_country_flag = FRA_maintain_war_industry
 		}
 		available = {
 			ROOT = {

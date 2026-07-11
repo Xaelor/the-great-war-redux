@@ -16,10 +16,8 @@ GER_great_war = {
 			original_tag = BRA
 		}
 		days_remove = 5
-		target_trigger = {
-			FROM = {
-				tag = FRA
-			}
+		targets = {
+			FRA
 		}
 		remove_effect = {
 			add_manpower = -86
@@ -643,7 +641,7 @@ BRA_military_interventions_category = {
 					BRA = {	is_ai = no}
 				}
 				divisions_in_state = {
-					state = 498	
+					state = 1075	
 					size > 1
 				}
 			}	
@@ -654,14 +652,14 @@ BRA_military_interventions_category = {
 				BRA = {	is_ai = no}
 			}			
 			divisions_in_state = {
-				state = 498	
+				state = 1075	
 				size < 2
 			}
 		}
 
 		highlight_states = {
 		highlight_state_targets = {
-			state = 498	
+			state = 1075	
 		}
 		}
         cancel_if_not_visible = yes
@@ -712,7 +710,7 @@ BRA_military_interventions_category = {
 					BRA = {	is_ai = no}
 				}
 				divisions_in_state = {
-					state = 498	
+					state = 1074	
 					size > 1
 				}
 			}	
@@ -723,15 +721,15 @@ BRA_military_interventions_category = {
 				BRA = {	is_ai = no}
 			}			
 			divisions_in_state = {
-				state = 498	
+				state = 1074	
 				size < 2
 			}
 		}
         cancel_if_not_visible = yes
 		highlight_states = {
-		highlight_state_targets = {
-			state = 498	
-		}
+			highlight_state_targets = {
+				state = 1074	
+			}
 		}
 
 		ai_will_do = {
@@ -791,15 +789,15 @@ BRA_military_interventions_category = {
 				BRA = {	is_ai = no}
 			}			
 			divisions_in_state = {
-				state = 498	
+				state = 1077	
 				size < 1
 			}
 		}
         cancel_if_not_visible = yes
 		highlight_states = {
-		highlight_state_targets = {
-			state = 498	
-		}
+			highlight_state_targets = {
+				state = 1077
+			}
 		}
 
 		ai_will_do = {
@@ -973,10 +971,11 @@ operations = {
     BRA_reincorporate_riograndense_republic = {
 		icon = GFX_decision_generic_ignite_civil_war
 	    
-		target_trigger = {
-			FROM = {
-				tag = RGS
-			}
+		targets = {
+			RGS
+		}
+		target_root_trigger = {
+			has_country_flag = BRA_rio_grande_seceds
 		}
 		fire_only_once = yes
 	
@@ -1039,8 +1038,7 @@ BRA_spreading_revolution_category = {
 					is_on_continent = south_america
 				}
 				NOT = {has_government = communism}
-				NOT = { is_subject_of = ROOT }
-				NOT = { is_in_faction_with = ROOT }
+				NOT = { is_ally_with = ROOT }
 				NOT = { has_war_with = ROOT }
 				OR = {
 					original_tag = VEN
@@ -1055,6 +1053,9 @@ BRA_spreading_revolution_category = {
 					original_tag = RGS
 				}
 			}
+		}
+		target_root_trigger = {
+			has_completed_focus = BRA_spread_the_revolution
 		}
 
 		days_re_enable = 500
@@ -1094,9 +1095,8 @@ BRA_spreading_revolution_category = {
 				capital_scope = {
 					is_on_continent = south_america
 				}
-                NOT = {has_government = communism}				
-				NOT = { is_subject_of = ROOT }
-				NOT = { is_in_faction_with = ROOT }
+                NOT = {has_government = communism}
+				NOT = { is_ally_with = ROOT }
 				NOT = { has_war_with = ROOT }
 				OR = {
 					original_tag = VEN
@@ -1112,13 +1112,17 @@ BRA_spreading_revolution_category = {
 				}
 			}
 		}
+		target_root_trigger = {
+			has_completed_focus = BRA_spread_the_revolution
+		}
 
 		fire_only_once = yes
 
 		visible = {
-			has_completed_focus = BRA_spread_the_revolution
 			has_government = communism
-			tag = BRA
+		}
+		target_root_trigger = {
+			has_completed_focus = BRA_spread_the_revolution
 		}
 
 		remove_effect = {

@@ -17,9 +17,6 @@ ideas = {
 				conversion_cost_mil_to_civ_factor = 0.25
 				generate_wargoal_tension = 1.00
 				join_faction_tension = 0.20
-				lend_lease_tension = 0.5
-				send_volunteers_tension = 0.5
-				guarantee_tension = 0.75
 				max_fuel_factor = -0.35
 				fuel_gain_factor = -0.5
 				agency_upgrade_time = 0.5
@@ -30,6 +27,7 @@ ideas = {
 				industrial_capacity_factory = -0.95
 				industrial_capacity_dockyard = -0.95
 				custom_modifier_tooltip = interwar_recovery_tt
+				factory_energy_consumption = -0.3
 			}	
 			allowed_to_remove = {
 				OR = {
@@ -109,9 +107,6 @@ ideas = {
 				conversion_cost_mil_to_civ_factor = 0.25
 				generate_wargoal_tension = 1.00
 				join_faction_tension = 0.20
-				lend_lease_tension = 0.5
-				send_volunteers_tension = 0.5
-				guarantee_tension = 0.75
 				max_fuel_factor = -0.35
 				fuel_gain_factor = -0.5
 				agency_upgrade_time = 0.5
@@ -122,6 +117,7 @@ ideas = {
 				industrial_capacity_dockyard = -0.90
 				production_factory_max_efficiency_factor = -0.50
 				production_factory_efficiency_gain_factor = -0.80
+				factory_energy_consumption = -0.3
 			}	
 			allowed_to_remove = {
 				any_enemy_country = {
@@ -198,6 +194,7 @@ ideas = {
 				fuel_gain_factor = -0.6
 				agency_upgrade_time = 1.0
 				conscription_factor = -0.1
+				factory_energy_consumption = -0.3
 			}
 			
 			allowed_to_remove = {
@@ -280,6 +277,7 @@ ideas = {
 				max_fuel_factor = -0.35
 				fuel_gain_factor = -0.5
 				agency_upgrade_time = 0.8
+				factory_energy_consumption = -0.3
 			}
 			allowed_to_remove = {
 				OR = {
@@ -294,6 +292,10 @@ ideas = {
 						has_completed_focus = USA_revision_of_the_military_budget
 						has_completed_focus = USA_arms_tax
 					}
+				}
+				if = {
+					limit = { original_tag = TRP }
+					NOT = { has_idea = TRP_unrecognized_republic }
 				}
 			}
 			on_add = {
@@ -413,6 +415,7 @@ ideas = {
 				conversion_cost_mil_to_civ_factor = 0.3
 				max_fuel_factor = -0.25
 				fuel_gain_factor = -0.4
+				factory_energy_consumption = -0.3
 			}
 			
 			default = yes
@@ -517,18 +520,32 @@ ideas = {
 						tooltip = has_government_vanguardism_tt
 						has_country_leader_ideology = vanguardism
 					}
-				}	
+					if = {
+						limit = {
+							tag = GER
+							has_focus_tree = german_focus
+							is_GER_a_monarchy = yes
+						}
+						AND = {
+							has_war = yes
+							OR = {
+								has_completed_focus = GER_regulating_the_war_economy
+								has_completed_focus = GER_war_socialism
+							}
+						}						
+						else = {
+							hidden_trigger = {
+								always = no
+							}
+						}
+					}
+				}
 				NOT = {
 					has_country_flag = cant_change_from_civilian_economy
 				}
 				hidden_trigger = {
-					OR = {
-						threat > 0.10
-						has_government = fascism
-						has_country_leader_ideology = vanguardism
-						NOT = {
-							has_idea = FRA_wadai_war
-						}		
+					NOT = {
+						has_idea = FRA_wadai_war
 					}	
 				}
 				if = {
@@ -549,7 +566,7 @@ ideas = {
 					OR = {
 						has_war = yes
 						NOT = {
-							has_idea = LUX_minor_army
+							has_idea = LUX_london_treaty
 						}
 					}
 					if = {
@@ -627,6 +644,7 @@ ideas = {
 				production_speed_industrial_complex_factor = -0.1
 				production_speed_arms_factory_factor = -0.1
 				fuel_gain_factor = -0.25
+				factory_energy_consumption = -0.15
 			}
 			
 			cancel_if_invalid = no
@@ -662,10 +680,15 @@ ideas = {
 					custom_trigger_tooltip = {
 						tooltip = has_government_vanguardism_tt
 						has_country_leader_ideology = vanguardism
-					}
-				}
+					}						
+				}		
 				NOT = {
 					has_country_flag = cant_change_from_civilian_economy
+				}
+				hidden_trigger = {
+					NOT = {
+						has_idea = FRA_wadai_war
+					}
 				}
 				if = {
 					limit = { original_tag = ENG } 
@@ -673,18 +696,15 @@ ideas = {
 						threat > 0.5
 						has_global_flag = great_war
 					}	
-				}	
-				hidden_trigger = {
-					OR = {
-						threat > 0.25
-						has_government = fascism
-						has_country_leader_ideology = vanguardism
-						NOT = {
-							has_idea = FRA_wadai_war
-						}		
-					}	
 				}
-				if = {
+				#else_if = {
+				#	limit = {
+				#		tag = GER
+				#		is_GER_a_monarchy = yes
+				#	}
+				#	has_war = yes
+				#}
+				else_if = {
 					limit = {
 						has_completed_focus = TUR_strengthen_the_national_economy
 					}
@@ -693,7 +713,7 @@ ideas = {
 						has_idea = interwar_recovery
 					}
 				}	
-				if = {
+				else_if = {
 					limit = { has_idea = SRA_marching_army }
 					NOT = { has_idea = SRA_marching_army }
 				}
@@ -702,7 +722,7 @@ ideas = {
 					OR = {
 						has_war = yes
 						NOT = {
-							has_idea = LUX_minor_army
+							has_idea = LUX_london_treaty
 						}
 					}
 					if = {
@@ -810,22 +830,32 @@ ideas = {
 				
 				has_war = yes
 				has_war_support > 0.5
-				OR = {
-					threat > 0.4
-					has_government = fascism
-					custom_trigger_tooltip = {
-						tooltip = has_government_vanguardism_tt
-						has_country_leader_ideology = vanguardism
+				if = {
+					limit = {
+						tag = GER
+						has_focus_tree = german_focus
+						is_GER_a_monarchy = yes
 					}
+					has_completed_focus = GER_war_socialism			
 				}
-				NOT = {
-					has_country_flag = cant_change_from_civilian_economy
-				}
+				else = {
+					OR = {
+						threat > 0.4
+						has_government = fascism
+						custom_trigger_tooltip = {
+							tooltip = has_government_vanguardism_tt
+							has_country_leader_ideology = vanguardism
+						}						
+					}
+				}		
 				any_enemy_country = {
 					ic_ratio = {
 						tag = ROOT 
 						ratio > 0.4
 					}
+				}
+				NOT = {
+					has_country_flag = cant_change_from_civilian_economy
 				}
 				if = {
 					limit = { original_tag = ENG }
@@ -859,7 +889,7 @@ ideas = {
 					OR = {
 						has_war = yes
 						NOT = {
-							has_idea = LUX_minor_army
+							has_idea = LUX_london_treaty
 						}
 					}
 					if = {
@@ -957,6 +987,7 @@ ideas = {
 				production_speed_arms_factory_factor = 0.2
 				conversion_cost_civ_to_mil_factor= -0.2
 				conversion_cost_mil_to_civ_factor = -0.2
+				factory_energy_consumption = 0.25
 			}
 			
 			cancel_if_invalid = no
@@ -984,6 +1015,24 @@ ideas = {
 			available = {
 				has_war = yes
 				has_war_support > 0.8
+				if = {
+					limit = {
+						tag = GER
+						has_focus_tree = german_focus
+						is_GER_a_monarchy = yes
+					}
+					has_completed_focus = GER_war_socialism
+				}
+				else = {
+					OR = {
+						threat > 0.5
+						has_government = fascism
+						custom_trigger_tooltip = {
+							tooltip = has_government_vanguardism_tt
+							has_country_leader_ideology = vanguardism
+						}				
+					}
+				}		
 				any_enemy_country = {
 					ic_ratio = {
 						tag = ROOT
@@ -1025,7 +1074,7 @@ ideas = {
 					OR = {
 						has_war = yes
 						NOT = {
-							has_idea = LUX_minor_army
+							has_idea = LUX_london_treaty
 						}
 					}
 					if = {
@@ -1124,6 +1173,7 @@ ideas = {
 				production_speed_arms_factory_factor = 0.3
 				conversion_cost_civ_to_mil_factor= -0.3
 				conversion_cost_mil_to_civ_factor = -0.3
+				factory_energy_consumption = 0.5
 			}
 			
 			cancel_if_invalid = no
@@ -1238,7 +1288,7 @@ ideas = {
 						original_tag = ITA				
 					}
 					NOT = {
-						has_idea = idea_ITA_moderate_protectionism		
+						has_idea = ITA_trade_wars	
 					}			
 				}	
 				else_if = {
@@ -1258,33 +1308,45 @@ ideas = {
 					}
 				}		
 			}
+
+			cancel = {
+				if = {
+					limit = {
+						original_tag = GER
+						ENG = {
+							NOT = {
+								has_country_flag = great_war_loser
+							}
+							is_major = yes
+						}					
+					}
+					has_war_with = ENG			
+				}
+				else_if = {
+					limit = {
+						original_tag = RUS
+						FRA = {
+							NOT = {
+								has_country_flag = great_war_loser
+							}
+							is_major = yes
+						}					
+					}
+					has_war_with = FRA
+				}
+				else_if = {
+					limit = {
+						original_tag = ITA				
+					}
+					has_idea = ITA_trade_wars
+				}
+				else = {
+					always = no
+				}
+			}
 			
 			ai_will_do = {
-				factor = 50
-				modifier = {
-					check_variable = { resource@steel > 0 }
-					add = resource@steel
-				}
-				modifier = {
-					check_variable = { resource@oil > 0 }
-					add = resource@oil
-				}
-				modifier = {
-					check_variable = { resource@rubber > 0 }
-					add = resource@rubber
-				}
-				modifier = {
-					check_variable = { resource@aluminium > 0 }
-					add = resource@aluminium
-				}
-				modifier = {
-					check_variable = { resource@tungsten > 0 }
-					add = resource@tungsten
-				}
-				modifier = {
-					check_variable = { resource@chromium > 0 }
-					add = resource@chromium
-				}
+				factor = 1
 				modifier = {
 					has_war = yes
 					factor = 0
@@ -1385,43 +1447,7 @@ ideas = {
 			cancel_if_invalid = no
 			
 			ai_will_do = {
-				factor = 40
-				modifier = {
-					check_variable = { resource_produced@steel > 0 }
-
-					subtract_from_temp_variable = { steel_deficit = resource@steel }
-					add = steel_deficit
-				}
-				modifier = {
-					check_variable = { resource_produced@oil > 0 }
-
-					subtract_from_temp_variable = { oil_deficit = resource@oil }
-					add = oil_deficit
-				}
-				modifier = {
-					check_variable = { resource_produced@rubber > 0 }
-
-					subtract_from_temp_variable = { rubber_deficit = resource@rubber }
-					add = rubber_deficit
-				}
-				modifier = {
-					check_variable = { resource_produced@aluminium > 0 }
-
-					subtract_from_temp_variable = { aluminium_deficit = resource@aluminium }
-					add = aluminium_deficit
-				}
-				modifier = {
-					check_variable = { resource_produced@tungsten > 0 }
-
-					subtract_from_temp_variable = { tungsten_deficit = resource@tungsten }
-					add = tungsten_deficit
-				}
-				modifier = {
-					check_variable = { resource_produced@chromium > 0 }
-
-					subtract_from_temp_variable = { chromium_deficit = resource@chromium }
-					add = chromium_deficit
-				}
+				factor = 1
 				modifier = {
 					has_war = yes
 					has_idea = free_trade
@@ -1521,7 +1547,7 @@ ideas = {
 			cancel_if_invalid = no
 
 			ai_will_do = {
-				factor = 20
+				factor = 1
 				modifier = {
 					factor = 0
 					is_major = no
@@ -1535,44 +1561,15 @@ ideas = {
 					}
 				}
 				modifier = {
+					add = 1500
+
+					# revert from closed_economy if we have large allies
+					has_idea = closed_economy
+					has_large_ally_not_pick_closed_economy = yes
+				}
+				modifier = {
 					factor = 0
 					tag = SRA
-				}
-				modifier = {
-					check_variable = { resource_produced@steel > 0 }
-
-					subtract_from_temp_variable = { steel_deficit = resource@steel }
-					add = steel_deficit
-				}
-				modifier = {
-					check_variable = { resource_produced@oil > 0 }
-
-					subtract_from_temp_variable = { oil_deficit = resource@oil }
-					add = oil_deficit
-				}
-				modifier = {
-					check_variable = { resource_produced@rubber > 0 }
-
-					subtract_from_temp_variable = { rubber_deficit = resource@rubber }
-					add = rubber_deficit
-				}
-				modifier = {
-					check_variable = { resource_produced@aluminium > 0 }
-
-					subtract_from_temp_variable = { aluminium_deficit = resource@aluminium }
-					add = aluminium_deficit
-				}
-				modifier = {
-					check_variable = { resource_produced@tungsten > 0 }
-
-					subtract_from_temp_variable = { tungsten_deficit = resource@tungsten }
-					add = tungsten_deficit
-				}
-				modifier = {
-					check_variable = { resource_produced@chromium > 0 }
-
-					subtract_from_temp_variable = { chromium_deficit = resource@chromium }
-					add = chromium_deficit
 				}
 			}
 
@@ -1637,10 +1634,15 @@ ideas = {
 						has_idea = war_economy
 						has_idea = tot_economic_mobilisation
 						if = {
-							limit = { has_idea = TUR_economic_etatism }
+							limit = {
+								original_tag = TUR
+							}
 							has_idea = TUR_economic_etatism
 						}
-					}
+						else = {
+							hidden_trigger = { always = no } #NEED TO HAVE AN ALWAYS AS AN END STATEMENT IF URE USING AN IF ELSE IN AN OR STATEMENT OTHERWISE THE EVALUATION BREAKS!!
+						}					
+					}	
 				}
 				if = {
 					limit = {
@@ -1686,7 +1688,7 @@ ideas = {
 					NOT = {
 						has_idea = AUH_condominium
 					}
-				}	
+				}
 			}
 			
 			modifier = {
@@ -1745,7 +1747,14 @@ ideas = {
 			cancel_if_invalid = no
 
 			ai_will_do = {
-   				base = 0
+   				base = 1
+				modifier = {
+					factor = 0
+
+					# don't take if we have a reasonable sized ally
+					# since they will require our trades
+					has_large_ally_not_pick_closed_economy = yes
+				}
    			}
 		}
 	}

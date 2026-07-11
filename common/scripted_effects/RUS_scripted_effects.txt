@@ -3,33 +3,27 @@ constituent_assembly_effect = {
 		limit = {
 			check_variable = {
 				var = vote_to_puppet_former_territories
+				value = 0
+				compare = greater_than
+			}
+			check_variable = {
+				var = vote_to_puppet_former_territories
 				value = vote_to_let_former_territories
 				compare = greater_than
 			}
 			check_variable = {
 				var = vote_to_puppet_former_territories
-				value = has_support_to_annex_former_territories
+				value = vote_to_annex_former_territories
 				compare = greater_than
 			}
 		}
-		every_country = {
+		every_other_country = {
 			limit = {
-				OR = {
-					original_tag = UKR
-					original_tag = LIT
-					original_tag = GEO
-					original_tag = ARM
-					original_tag = AZR
-					original_tag = TRK
-					original_tag = LAT
-					original_tag = EST
-					original_tag = MOU
-					original_tag = CRI
-					original_tag = TRK
-					original_tag = KAZ
-				}
+				is_russian_breakaway_tag = yes
+				is_cossack_tag = no
 				is_subject = no
-				NOT = {				
+				NOT = {
+					tag = CER
 					has_war_with = ROOT
 					has_country_leader_ideology = vanguardism
 					has_country_leader_ideology = revolutionary_socialism
@@ -56,9 +50,10 @@ constituent_assembly_effect = {
 				}
 				transfer_state_to = TRK 
 			}
+			TRK = { set_country_flag = colony }
 			set_autonomy = {
 				target = TRK 
-				autonomy_state = autonomy_dominion
+				autonomy_state = autonomy_tgwr_self_governing_colony
 			}
 			hidden_effect = {
 				TRK = {
@@ -90,9 +85,10 @@ constituent_assembly_effect = {
 				}
 				transfer_state_to = KAZ 
 			}
+			KAZ = { set_country_flag = colony }
 			set_autonomy = {
 				target = KAZ
-				autonomy_state = autonomy_dominion
+				autonomy_state = autonomy_tgwr_self_governing_colony
 			}
 			hidden_effect = {			
 				KAZ = {
@@ -116,7 +112,7 @@ constituent_assembly_effect = {
 			check_variable = {
 				var = votes_for_republic
 				value = 0
-				compare = greater_than_or_equals
+				compare = greater_than
 			}
 			check_variable = {
 				var = votes_for_republic
@@ -137,12 +133,10 @@ constituent_assembly_effect = {
 					tag = NWA
 					tag = TRC
 					tag = RSO
+					tag = SRA
 				}
 			}
-			every_possible_country = {
-				limit = {
-					has_character = RUS_pavel_milyukov
-				}
+			RUS = {
 				RUS_pavel_milyukov = {
 					set_nationality = PREV.PREV
 					promote_character = yes
@@ -150,11 +144,11 @@ constituent_assembly_effect = {
 			}
 			set_party_name = {
 				ideology = democratic
-				long_name = RUS_democratic_party_CDP_long
-				name = RUS_democratic_party_CDP
+				long_name = RUS_democratic_party_long
+				name = RUS_democratic_party
 			}
 		}
-		if = {
+		else_if = {
 			limit = {
 				tag = SIB
 				NOT = {
@@ -172,7 +166,7 @@ constituent_assembly_effect = {
 				}
 			}
 			set_cosmetic_tag = RUS_state_neutrality
-		}	
+		}
 		if = {
 			limit = {
 				OR = {
@@ -193,18 +187,19 @@ constituent_assembly_effect = {
 					}
 					has_country_leader = {
 						character = RUS_fyodor_makhin
-					}										
-				}			
-			}
-			set_cosmetic_tag = RUS_federation
-			else_if = {
-				limit = {		
-					NOT = {
-						tag = SIB
 					}
 				}
-				set_cosmetic_tag = RUS_republic_democratic
 			}
+			set_cosmetic_tag = RUS_federation
+		}
+		else_if = {
+			limit = {		
+				NOT = {
+					has_cosmetic_tag = RUS_state_neutrality
+					has_cosmetic_tag = RUS_state
+				}
+			}
+			set_cosmetic_tag = RUS_republic_democratic
 		}
 		if =  {
 			limit = {
@@ -223,7 +218,7 @@ constituent_assembly_effect = {
 			}
 		}
 	}
-	if = {
+	else_if = {
 		limit = {
 			check_variable = {
 				var = votes_for_tsardom
@@ -248,12 +243,11 @@ constituent_assembly_effect = {
 					has_global_flag = nicholas_ii_is_dead
 				}
 			}
-			every_possible_country = {
-				limit = {
-					has_character = RUS_nikolai_ii
-				}
+			RXL= {
 				RUS_nikolai_ii = {
 					set_nationality = PREV.PREV
+					set_character_name = RUS_nicholas_II
+					set_character_flag = RUS_nicholas_romanov_dictator
 					set_portraits = {
 						civilian = {
 							large = "gfx/leaders/RUS/RUS_nicholas_romanov_dictator.png"
@@ -275,23 +269,7 @@ constituent_assembly_effect = {
 				}	
 			}
 			else = {
-				every_possible_country = {
-					limit = {
-						has_character = RUS_nikolai_nikolaevich_romanov
-					}
-					RUS_nikolai_nikolaevich_romanov = {
-						set_nationality = PREV.PREV
-						set_character_name = RUS_nikolai_iii
-						add_country_leader_role ={
-							promote_leader = yes
-							country_leader = {
-								desc = RUS_nicholas_II_desc
-								ideology=semi_constitutional_monarchy
-								traits = { autocratic_imperialist }
-							}
-						}
-					}
-				}
+				country_event = ww1_rcw_unification.12
 			}		
 		}
 		add_popularity = {
@@ -305,25 +283,51 @@ constituent_assembly_effect = {
 			elections_allowed = yes
 		}
 	}
-	if = {
+	else = {
+		# limit = {
+		# 	check_variable = {
+		# 		var = votes_for_dictatorship
+		# 		value = votes_for_republic
+		# 		compare = greater_than
+		# 	}
+		# 	check_variable = {
+		# 		var = votes_for_dictatorship
+		# 		value = votes_for_tsardom
+		# 		compare = greater_than
+		# 	}
+		# 	check_variable = {
+		# 		var = votes_for_dictatorship
+		# 		value = 0
+		# 		compare = greater_than
+		# 	}
+		# }
+		set_cosmetic_tag = RUS_state
+	}
+	every_other_country = {
 		limit = {
-			check_variable = {
-				var = votes_for_dictatorship
-				value = votes_for_republic
-				compare = greater_than
+			is_russian_tag = yes
+			OR = {
+				is_subject_of = ROOT
+				is_subject = no
 			}
-			check_variable = {
-				var = votes_for_dictatorship
-				value = votes_for_tsardom
-				compare = greater_than
-			}
-			check_variable = {
-				var = votes_for_dictatorship
-				value = 0
-				compare = greater_than
+			NOT = {
+				AND = {
+					original_tag = CER
+					is_subject_of = ROOT
+					NOT = {
+						CER = { has_cosmetic_tag = CER_provisional_russia }
+					}						
+				}
+				has_war_with = ROOT
+				has_country_leader_ideology = vanguardism
+				has_country_leader_ideology = revolutionary_socialism
+				has_country_flag = has_left_the_conference
 			}
 		}
-		set_cosmetic_tag = RUS_state
+		country_event = {
+			id = ww1_rcw_unification.1
+			random_hours = 12
+		}	
 	}
 	set_country_flag = russian_civil_war_winner
 	set_global_flag = russian_civil_war_ends
@@ -373,6 +377,14 @@ create_SOV = {
 				}
 			}
 		}
+		SOV_semyon_budyonny = {
+			set_portraits = {
+				army = {
+					large="gfx/leaders/SOV/SOV_semyon_budyonny.png"
+					small="gfx/interface/ideas/SOV/idea_budyonny.png"
+				}
+			}
+		}
 		every_character = {
 			limit = {
 				NOT = {
@@ -382,11 +394,16 @@ create_SOV = {
 					is_character = RUS_evgeniy_radkevich
 					is_character = RUS_mikhail_bonchbruevich
 					is_character = RUS_yuri_danilov
+					is_character = RUS_aleksandr_verkhovsky
+					is_character = SOV_semyon_budyonny
+					is_character = RUS_nikolai_dukhonin
 					
 					#is_scientist = yes
 					is_character = RUS_igor_sikorsky
 					is_character = RUS_dmitry_grigorovich
 					is_character = RUS_yakov_gakkel
+					is_character = RUS_aleksandr_porokhovschikov
+					is_character = RUS_aleksey_krylov
 				}
 			}
 			set_nationality = RXL
@@ -396,19 +413,29 @@ create_SOV = {
 		clr_country_flag = RUS_soviet_tag
 		drop_cosmetic_tag = yes
 		every_character = {
+			limit = {
+				is_generic_character = no
+			}
 			set_nationality = RUS
 		}
 		reserve_dynamic_country = no	
 	}	
 	RUS = {
 		set_country_flag = RUS_soviet_tag
-		set_cosmetic_tag = SOV
+		set_cosmetic_tag = RUS_republic_vanguardism
 		load_focus_tree = soviet_focus
-		set_politics = {
-			ruling_party = communism
-			long_name = SOV_communism_party_long
-			name = SOV_communism_party
-			elections_allowed = no
+		meta_effect = {
+			text = {
+				set_politics = {
+					ruling_party = communism
+					long_name = SOV_communism_party_long
+					name = SOV_communism_party
+					last_election = "[CURRENT_DATE]"
+					election_frequency = 1
+					elections_allowed = yes
+				}
+			}
+			CURRENT_DATE = "[?global.date.GetDateStringNoHour]"
 		}
 		set_party_name = {
 			ideology = neutrality
@@ -457,6 +484,7 @@ create_SOV = {
 		set_political_power = 0
 		set_stability = 0.3
 		activate_mission = RUS_kerensky_krasnov_uprising
+		activate_mission = SOV_constituent_assembly_elections
 		add_ideas = {
 			disarmed_nation
 			limited_exports
@@ -468,8 +496,11 @@ create_SOV = {
 			SOV_idea_red_guard
 			RUS_demobilizing_army
 			SOV_industry_in_chaos_1 
+
+			RUS_nikolai_dukhonin_opposition
 		}
-		country_lock_all_division_template = yes
+		country_event = ww1_political.4 #unit limit calculation
+		clear_all_ledgers = yes
 		if = {
 			limit = {
 				has_idea = RUS_idea_agrarian_empire	
@@ -487,28 +518,28 @@ create_SOV = {
 			RUS_idea_volunteer_army
 			RUS_idea_tsushima_humiliation		
 		}
-		if = {
-			limit = {
-				GER = {
-					has_completed_focus = GER_strike_from_the_shadows
-				}
-				has_global_flag = strike_from_the_shadows
-			}
-			RUS = {
-				add_timed_idea = {
-					idea = GER_idea_abwehr_support
-					days = 365
-				}
-				add_country_leader_trait = german_agent
-				set_global_flag = lenin_german_agent
-			}
-			GER = {
-				add_timed_idea = {
-					idea = GER_idea_abwehr_supports_revolution
-					days = 365
-				}
-			}
-		}
+		# if = {
+		# 	limit = {
+		# 		GER = {
+		# 			has_completed_focus = GER_strike_from_the_shadows
+		# 		}
+		# 		has_global_flag = strike_from_the_shadows
+		# 	}
+		# 	RUS = {
+		# 		add_timed_idea = {
+		# 			idea = GER_idea_abwehr_support
+		# 			days = 365
+		# 		}
+		# 		add_country_leader_trait = german_agent
+		# 		set_global_flag = lenin_german_agent
+		# 	}
+		# 	GER = {
+		# 		add_timed_idea = {
+		# 			idea = GER_idea_abwehr_supports_revolution
+		# 			days = 365
+		# 		}
+		# 	}
+		# }
 		every_other_country = {
 			limit = {
 				is_major = yes
@@ -561,10 +592,7 @@ create_FIN = {
 				id = ww1_finland.11
 				days = 20
 			}
-			every_possible_country = {
-				limit = {
-					has_character = FIN_carl_gustaf_mannerheim
-				}
+			RUS = {
 				FIN_carl_gustaf_mannerheim = {
 					set_nationality = FIN
 					promote_leader = yes
@@ -625,18 +653,15 @@ create_FIN = {
 		FIN = {
 			load_oob = "FIN_1918"
 			FIN_set_finnish_state_names = yes
+			delete_obsolete_russian_templates = yes
 		}
 	}
 	if = {
 		limit = {
 			FIN = { has_war_together_with = RUS }
 		}
-		every_country = {
-			limit = {
-				has_war_with = RUS
-				has_war_with = FIN
-			}
-			white_peace = FIN
+		FIN = {
+			separate_peace_all_wars = yes
 		}
 	}
 }
@@ -679,17 +704,15 @@ create_DON = {
 			country_lock_all_division_template = yes
 			inherit_technology = RUS
 			delete_obsolete_russian_templates = yes
+			RUS_create_cossack_templates = yes
 			load_oob = "DON_1918"
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = 2500
+				amount = 1000
 				producer = RUS
 			}
 		}
-		every_possible_country = {
-			limit = {
-				has_character = RUS_pyotr_krasnov
-			}
+		RUS = {
 			RUS_pyotr_krasnov = {
 				set_nationality = DON	
 				add_country_leader_role ={
@@ -710,11 +733,6 @@ create_DON = {
 						}
 					}
 				}
-			}
-		}
-		every_possible_country = {
-			limit = {
-				has_character = RUS_alexei_kaledin
 			}
 			RUS_alexei_kaledin = {
 				set_nationality = DON
@@ -741,30 +759,31 @@ create_DON = {
 		}
 	}	
 }
-create_UKR = {
+create_UPR = {
 	if = {
 		limit = {
-			UKR = {
+			UPR = {
 				exists = no
 			}
 			any_owned_state = {
-				is_core_of = UKR
+				is_core_of = UPR
 			}
 		}
 		every_owned_state = {
 			limit = {
-				is_core_of = UKR
+				is_core_of = UPR
 				NOT = {
-					state = 766				
+					state = 766		
+					state = 808
 				}
 			}
 			if = {
 				limit = {
 					is_controlled_by_ROOT_or_ally = yes
 				}
-				transfer_state_to = UKR
+				transfer_state_to = UPR
 				else = {
-					set_state_owner_to = UKR
+					set_state_owner_to = UPR
 				}
 			}
 		}
@@ -776,24 +795,28 @@ create_UKR = {
 					state = 766
 				}
 			}
-			add_claim_by = UKR
+			add_claim_by = UPR
 		}
-		# disagreed with universal
-		# every_state = {
-		# 	limit = {
-		# 		OR = {
-		# 			region = 192
-		# 			state = 221
-		# 		}
-		# 		is_core_of = UKR
-		# 	}
-		# 	set_demilitarized_zone = yes
-		# }
 		RUS = {
-			transfer_ship = {
-				prefer_name = "Georgii Pobedonosets"
-				type = battleship
-				target = UKR
+			transfer_units_fraction= {
+				target = UPR
+				size = 0
+				target_organization = 1
+				source_organization = 1
+				stockpile_ratio = 0.05
+				army_ratio = 0.05
+				navy_ratio = 0
+				air_ratio = 0
+				keep_unit_leaders_trigger = {
+					always = yes
+				}
+			}
+			UPR = {
+				transfer_units_fraction = {
+					target = PREV
+					size = 0
+					navy_ratio = 1
+				}
 			}
 			transfer_ship = {
 				prefer_name = "Pamiat Merkuria"
@@ -811,7 +834,7 @@ create_UKR = {
 				target = UKR
 			}
 			transfer_ship = {
-				prefer_name = "Kapitan-leitenant Baranov"
+				prefer_name = "Kapitan-Leytenant Baranov"
 				type = destroyer
 				target = UKR
 			}
@@ -820,42 +843,35 @@ create_UKR = {
 				type = destroyer
 				target = UKR
 			}
-			#transfer_ship = {
-			#	prefer_name = "Imperatritsa Ekaterina Velikaya"
-			#	type = battleship
-			#	target = UKR
-			#}
-			transfer_units_fraction= {
-				target = UKR
-				size = 0
-				stockpile_ratio = 0.15
-				army_ratio = 0.15
-				navy_ratio = 0
-				air_ratio = 0.15
-				keep_unit_leaders_trigger = {
-					always = yes
-				}
-			}
 		}
 		every_state = {
 			limit = {
-				is_core_of = UKR
+				OR = {
+					is_core_of = UKR
+					is_core_of = WUK 
+				}
+				NOT = {
+					state = 241
+					state = 1231
+					state = 1233
+				}
 			}
 			remove_russian_cores = yes
 			remove_russian_claims = yes
 		}
-		UKR = {
+		UPR = {
 			add_ideas = {
 				standing_alone
 				disarmed_nation
+				UKR_soviet_sympathies
 			}			
 			inherit_technology = RUS
-			delete_obsolete_russian_templates = yes
-			load_oob = "UKR_army"
+			#delete_obsolete_russian_templates = yes
+			country_lock_all_division_template = yes
 			send_embargo = RUS
 			give_military_access = RUS
 		}
-		give_military_access = UKR
+		give_military_access = UPR
 		every_other_country = {
 			limit = {
 				has_war_with = RUS
@@ -872,10 +888,7 @@ create_UKR = {
 				}
 			}
 		}
-		every_possible_country = {
-			limit = {
-				has_character = UKR_pavlo_skoropadskyi
-			}
+		RUS = {
 			UKR_pavlo_skoropadskyi = {			
 				set_nationality = UKR	
 				if = {
@@ -905,6 +918,7 @@ create_RUC = {
 		192 = {
 			add_core_of = RUC
 			transfer_state_to = RUC
+
 		}
 		if = {
 			limit = {
@@ -939,36 +953,27 @@ create_RUC = {
 					}
 				}
 			}
-			add_core_of = RUC
-			set_state_owner_to = RUC
-		}
-		every_possible_country = {
-			limit = {
-				has_character = RUS_mikhail_drozdovsky
+			78 = {
+				add_core_of = RUC
+				set_state_owner_to = RUC
 			}
+		}
+		every_state = {
+			limit = {
+				is_core_of = RUC
+			}
+			remove_russian_cores = yes
+			remove_russian_claims = yes
+		}
+		RUS = {
 			RUS_mikhail_drozdovsky = {
 				set_nationality = RUC	
 			}		
-		}
-		every_possible_country = {
-			limit = {
-				has_character = RUS_vladimir_vitkovsky
-			}
 			RUS_vladimir_vitkovsky = {
 				set_nationality = RUC
-			}		
-		}
-		every_possible_country = {
-			limit = {
-				has_character = RUS_vladimir_kharzhevsky
 			}
 			RUS_vladimir_kharzhevsky = {
 				set_nationality = RUC
-			}		
-		}
-		every_possible_country = {
-			limit = {
-				has_character = RUS_dmitry_shcherbachev
 			}
 			RUS_dmitry_shcherbachev = {
 				set_nationality = RUC
@@ -987,20 +992,24 @@ create_RUC = {
 				}
 			}
 		}
+		RUC = {
+			inherit_technology = RUS
+			give_market_access = RUS
+			give_market_access = UKR
+			delete_obsolete_russian_templates = yes
+		}
 		transfer_units_fraction= {
 			target = RUC
 			size = 0
-			stockpile_ratio = 0.1
-			army_ratio = 0.1
-			navy_ratio = 0.3
-			air_ratio = 0.1
+			target_organization = 1
+			source_organization = 1
+			stockpile_ratio = 0.05
+			army_ratio = 0.05
+			navy_ratio = 0
+			air_ratio = 0	
 			keep_unit_leaders_trigger = {
 				always = yes
 			}
-		}
-		RUC = {
-			inherit_technology = RUS
-			delete_obsolete_russian_templates = yes
 		}
 		every_other_country = {
 			limit = {
@@ -1016,6 +1025,409 @@ create_RUC = {
 					targeted_alliance = RUS
 					enemy = PREV
 				}
+			}
+		}
+		if = {
+			limit = {
+				RUC = {
+					has_war_together_with = ENT
+					NOT = {
+						has_war_with = ENT
+					}
+				}
+			}
+			ENT = {
+				add_to_faction = RUC
+			}
+		}
+	}
+}
+create_UPRS = {
+	UKR = {
+		every_character = {
+			limit = {
+				has_character_flag = soviet_ukrainian_character
+			}
+			set_nationality = USR
+		}				
+	}
+	SOV = {
+		SOV_vladimir_ovseenko = {
+			if = {
+				limit = {
+					is_field_marshal = no
+				}
+				promote_leader = yes
+			}
+			set_character_name = UKR_vladimir_ovseenko
+			set_nationality = USR
+		}
+	}
+	USR = {
+		promote_character = UKR_yuriy_pyatakov
+		promote_character = UKR_yevgenia_bosch
+		inherit_technology = RUS
+		delete_obsolete_russian_templates = yes
+	}
+	every_state = {
+		limit = {
+			is_core_of = UPR
+		}
+		add_core_of = USR
+	}
+	if = {
+		limit = {
+			UPR = {
+				exists = yes
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					is_owned_by = UPR
+					is_owned_by = ROOT
+				}
+				OR = {
+					state = 221
+					state = 228
+				}
+			}
+			transfer_state_to = USR
+		}
+		USR = {
+			declare_war_on = {
+				target = UPR
+				type = civil_war
+			}
+			add_civil_war_target = UPR
+		}
+	}
+	else = {
+		SOV = {
+			every_owned_state = {
+				limit = {
+					is_core_of = USR
+				}
+				transfer_state_to = USR
+			}
+		}
+	}
+	SOV = {
+		puppet = {
+			target = USR
+			end_wars = no
+			end_civil_wars = no
+		}
+		add_to_war = {
+			targeted_alliance = USR
+			enemy = UPR
+		}			
+	}
+	every_other_country = {
+		limit = {
+			has_war_with = RUS
+			is_russian_tag = no
+			# without this, it makes germany join war with persia lol
+			NOT = {
+				has_idea = standing_alone
+			}
+		}
+		USR = {
+			add_to_war = {
+				targeted_alliance = RUS
+				enemy = PREV
+			}
+		}
+	}
+	USR = {
+		set_cosmetic_tag = UKR_communist
+		set_popularities = {
+			fascism = 10
+			communism = 78
+			democratic = 2
+			neutrality = 10
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_template = "Krasnaya Gvardiya"
+				}
+			}
+			division_template = {
+				name = "Krasnaya Gvardiya"
+				template_counter = 69
+				division_names_group = UKR_MIL_01
+				regiments = {
+					militia = { x = 0 y = 0 }
+					militia = { x = 0 y = 1 }
+					militia = { x = 1 y = 0 }
+				}
+				priority = 0
+				division_cap = 10
+			}
+		}
+		every_owned_state = {
+			create_unit = {
+				division = "division_template = \"Krasnaya Gvardiya\" start_experience_factor = 0.1 start_equipment_factor = 0.5"
+				owner = CONTROLLER
+				count = 2
+			}
+			set_state_flag = SOV_has_mobilized_militia
+		}
+	}
+}
+create_USR = {
+	set_global_flag = ukrainian_civil_war
+	UKR = {
+		every_character = {
+			limit = {
+				has_character_flag = soviet_ukrainian_character
+			}
+			set_nationality = USR
+		}				
+	}
+	SOV = {
+		SOV_vladimir_ovseenko = {
+			if = {
+				limit = {
+					is_field_marshal = no
+				}
+				promote_leader = yes
+			}
+			set_character_name = UKR_vladimir_ovseenko
+			set_nationality = USR
+		}
+		SOV_pavel_dybenko = {
+			set_character_name = UKR_pavel_dybenko
+			set_nationality = USR
+		}
+	}
+	USR = {
+		promote_character = UKR_yuriy_pyatakov
+		inherit_technology = RUS
+		delete_obsolete_russian_templates = yes
+	}
+	every_state = {
+		limit = {
+			is_core_of = UPR
+		}
+		add_core_of = USR
+	}
+	if = {
+		limit = {
+			UPR = {
+				exists = yes
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					is_owned_by = UPR
+					is_owned_by = ROOT
+				}
+				OR = {
+					state = 221
+					state = 228
+				}
+			}
+			transfer_state_to = USR
+		}
+		USR = {
+			declare_war_on = {
+				target = UPR
+				type = civil_war
+			}
+			add_civil_war_target = UPR
+		}
+	}
+	else = {
+		SOV = {
+			every_owned_state = {
+				limit = {
+					is_core_of = USR
+				}
+				transfer_state_to = USR
+			}
+		}
+	}
+	SOV = {
+		puppet = {
+			target = USR
+			end_wars = no
+			end_civil_wars = no
+		}
+		add_to_war = {
+			targeted_alliance = USR
+			enemy = UPR
+		}			
+	}
+	USR = {
+		set_cosmetic_tag = UKR_SOV_provisional
+		copy_SOV_army_idea = yes
+		set_popularities = {
+			fascism = 10
+			communism = 78
+			democratic = 2
+			neutrality = 10
+		}
+		country_lock_all_division_template = no
+		if = {
+			limit = {
+				NOT = {
+					has_template = "Krasnaya Gvardiya"
+				}
+			}
+			division_template = {
+				name = "Krasnaya Gvardiya"
+				template_counter = 69
+				division_names_group = UKR_MIL_01
+				regiments = {
+					militia = { x = 0 y = 0 }
+					militia = { x = 0 y = 1 }
+					militia = { x = 1 y = 0 }
+				}
+				priority = 0
+				division_cap = 10
+			}
+		}
+		every_owned_state = {
+			create_unit = {
+				division = "division_template = \"Krasnaya Gvardiya\" start_experience_factor = 0.1 start_equipment_factor = 0.5"
+				owner = CONTROLLER
+				count = 2
+			}
+			set_state_flag = SOV_has_mobilized_militia
+		}
+	}
+}
+create_DKR = {
+	UKR = {
+		UKR_fyodor_sergeyev = {
+			set_nationality = DKR
+			promote_character = yes
+		}
+	}
+	DKR = {
+		inherit_technology = USR
+		delete_obsolete_russian_templates = yes
+	}
+	every_state = {
+		limit = {
+			OR = {
+				state = 196
+				state = 221
+				state = 226
+				state = 227
+				state = 228
+			}
+		}
+		add_core_of = DKR
+	}
+	every_owned_state = {
+		limit = {
+			OR = {
+				state = 196
+				state = 221
+				state = 226
+				state = 227
+				state = 228
+			}
+		}
+		DKR = {
+			safe_transfer_state_to = yes
+		}
+	}
+	if = {
+		limit = { 
+			USR = {
+				is_subject_of = SOV
+			}
+		}
+		SOV = {
+			puppet = {
+				target = DKR
+				end_wars = no
+				end_civil_wars = no
+			}			
+		}
+		else = {
+			USR = {
+				puppet = {
+					target = DKR
+					end_wars = no
+					end_civil_wars = no
+				}		
+			}
+		}
+	}
+	if = {
+		limit = { 
+			USR = { has_war_with = UPR }
+		}
+		DKR = {
+			add_to_war = {
+				targeted_alliance = USR
+				enemy = UPR
+			}
+		}
+	}
+	
+	DKR = {
+		set_cosmetic_tag = DKR_communism
+		set_popularities = {
+			fascism = 10
+			communism = 78
+			democratic = 2
+			neutrality = 10
+		}
+		if = {
+			limit = { 
+				USR = { has_idea = standing_alone }
+			}
+			add_ideas = standing_alone
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_template = "Krasnaya Gvardiya"
+				}
+			}
+			division_template = {
+				name = "Krasnaya Gvardiya"
+				template_counter = 69
+				division_names_group = UKR_MIL_01
+				regiments = {
+					militia = { x = 0 y = 0 }
+					militia = { x = 0 y = 1 }
+					militia = { x = 1 y = 0 }
+				}
+				priority = 0
+				division_cap = 10
+			}
+		}
+		capital_scope = {
+			create_unit = {
+				division = "division_template = \"Krasnaya Gvardiya\" start_experience_factor = 0.1 start_equipment_factor = 0.5"
+				owner = CONTROLLER
+				count = 2
+			}
+			set_state_flag = SOV_has_mobilized_militia
+		}
+	}
+	every_other_country = {
+		limit = {
+			has_war_with = USR
+			is_russian_tag = no
+			# without this, it makes germany join war with persia lol
+			NOT = {
+				has_idea = standing_alone
+				has_war_with = DKR
+			}
+		}
+		DKR = {
+			add_to_war = {
+				targeted_alliance = USR
+				enemy = PREV
 			}
 		}
 	}
@@ -1042,7 +1454,7 @@ create_KUB = {
 					state = 941
 					state = 940
 					state = 233
-				}			
+				}
 			}	
 			add_core_of = KUB	
 		}
@@ -1073,6 +1485,7 @@ create_KUB = {
 			country_lock_all_division_template = yes
 			inherit_technology = RUS
 			delete_obsolete_russian_templates = yes
+			RUS_create_cossack_templates = yes
 			load_oob = "KUB_1918"
 			add_equipment_to_stockpile = {
 				type = infantry_equipment_0
@@ -1099,6 +1512,11 @@ create_CRI = {
 				CRI = { give_military_access = PREV }
 			}
 			transfer_state_to = CRI
+			reset_state_name = yes
+		}
+		set_victory_points = {
+			province = 3169
+			value = 5
 		}
 		RUS_matvei_sulkevich = {
 			set_character_name = CRI_maciej_sulkiewicz
@@ -1157,10 +1575,7 @@ create_ORE = {
 				target = ORE
 			}
 		}
-		every_possible_country = {
-			limit = {
-				has_character = RUS_aleksandr_dutov
-			}
+		RUS = {
 			RUS_aleksandr_dutov = {
 				set_nationality = ORE
 				promote_leader = yes
@@ -1186,13 +1601,12 @@ create_ORE = {
 				disarmed_nation
 			}
 			load_focus_tree = white_guard_focus
-			inherit_technology = RUS
-			delete_obsolete_russian_templates = yes		
-			load_oob = "RUS_civil_war"
+			inherit_technology = RUS	
+			RUS_create_cossack_templates = yes
 		}
 		652 = {
 			create_unit = {
-				division = "division_template = \"Belogvardeyskaya Kavaleriya\"	start_experience_factor = 0.6	start_equipment_factor = 1"
+				division = "division_template = \"Kazach'ya Brigada\"	start_experience_factor = 0.6	start_equipment_factor = 1"
 				owner = ORE
 				allow_spawning_on_enemy_provs = yes
 				count = 4
@@ -1213,6 +1627,10 @@ create_UCH = {
 			add_core_of = UCH
 			transfer_state_to = UCH
 		}
+		send_equipment_fraction = {
+			value = 0.15
+			target = UCH
+		}
 		UCH = {			
 			add_ideas = {
 				standing_alone
@@ -1220,24 +1638,17 @@ create_UCH = {
 			}
 			load_focus_tree = white_guard_focus		
 			inherit_technology = RUS
-			delete_obsolete_russian_templates = yes
-			load_oob = "RUS_civil_war"
+			RUS_create_cossack_templates = yes
 		}
 		943 = {
 			create_unit = {
-				division = "division_template = \"Belogvardeyskaya Kavaleriya\"	start_experience_factor = 0.6	start_equipment_factor = 1"
+				division = "division_template = \"Kazach'ya Brigada\"	start_experience_factor = 0.6	start_equipment_factor = 1"
 				owner = UCH
 				allow_spawning_on_enemy_provs = yes
 				count = 5
 				country_score = {
 					base = 100
 				}
-			}
-		}
-		SOV = {
-			send_equipment_fraction = {
-				value = 0.15
-				target = UCH
 			}
 		}
 	}
@@ -1268,7 +1679,8 @@ create_TER = {
 			}
 			load_focus_tree = white_guard_focus
 			inherit_technology = RUS
-			give_military_access = ROOT
+			give_military_access = ROOT	
+			RUS_create_cossack_templates = yes
 		}
 	}
 }
@@ -1304,6 +1716,15 @@ create_MOU = {
 				popularity = 0.30
 			}
 			give_military_access = ROOT
+			give_guarantee = ABK
+		}
+		if = {
+			limit = {
+				has_war_with = TUR
+			}
+			TUR = {
+				give_guarantee = MOU
+			}
 		}
 	}
 }
@@ -1330,6 +1751,10 @@ create_USS = {
 			}
 			add_core_of = USS
 		}
+		send_equipment_fraction = {
+			value = 0.05
+			target = USS
+		}
 		USS = {			
 			add_ideas = {
 				standing_alone
@@ -1337,12 +1762,11 @@ create_USS = {
 			}
 			load_focus_tree = white_guard_focus
 			inherit_technology = RUS
-			delete_obsolete_russian_templates = yes
-			load_oob = "RUS_civil_war"
+			RUS_create_cossack_templates = yes
 		}
 		569 = {
 			create_unit = {
-				division = "name = \"Ussuriyskiy Osobyy otryad\" division_template = \"Belogvardeyskaya Kavaleriya\"	start_experience_factor = 0.6	start_equipment_factor = 1"
+				division = "name = \"Ussuriyskiy Osobyy otryad\" division_template = \"Kazach'ya Brigada\"	start_experience_factor = 0.6	start_equipment_factor = 1"
 				owner = USS
 				allow_spawning_on_enemy_provs = yes
 				count = 3
@@ -1351,15 +1775,42 @@ create_USS = {
 				}
 			}
 		}
-		SOV = {
-			send_equipment_fraction = {
-				value = 0.05
-				target = USS
-			}
-		}
 	}
 }
 create_TSCN = {
+	if = {
+		limit = {
+			1068 = {
+				is_owned_or_subject_trigger = yes
+			}
+		}
+		ABK = {
+			ABK_aleksandr_sharvashidze = {
+				remove_country_leader_role = {
+					ideology = semi_constitutional_monarchy
+				}
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = authoritarian_democracy
+					}
+				}
+			}
+			set_politics = {
+				ruling_party = neutrality
+				long_name = ABK_neutrality_committee_party_long
+				name = ABK_neutrality_committee_party
+				elections_allowed = no
+			}
+			transfer_state = 1068
+			add_ideas = standing_alone
+			give_market_access = MOU
+			give_market_access = GEO
+			country_event = {
+				id = ww1_abkhazia.1 days = 14
+			}
+		}
+	}
 	if = {
 		limit = {
 			GEO = {
@@ -1383,7 +1834,7 @@ create_TSCN = {
 				has_subject = ARM
 			}
 		}
-		every_owned_state = {
+		every_state = {
 			limit = {
 				OR = {
 					is_core_of = GEO
@@ -1391,16 +1842,44 @@ create_TSCN = {
 					is_core_of = ARM
 					is_core_of = PER
 					region = 134
+
+					state = 352
+					state = 353
+					state = 1022
+				}
+				NOT = {
+					state = 233
+					state = 877
+					state = 940
+					is_core_of = MOU
+				}
+			}
+			add_claim_by = GEO
+		}
+		restore_transcaucasian_cores = yes
+		every_owned_state = {
+			limit = {
+				OR = {
+					is_core_of = GEO
+					is_core_of = AZR
+					is_core_of = ARM
+					is_core_of = PER
+					region = 116
+					region = 134
 					region = 129
 				}
 				NOT = {
 					state = 233
+					state = 940
 					is_core_of = MOU
 				}
 			}
 			if = {
 				limit = {
-					NOT = { is_core_of = PER }
+					OR = {
+						is_core_of = AZR
+						is_core_of = ARM
+					}
 				}
 				add_core_of = GEO
 			}
@@ -1413,6 +1892,8 @@ create_TSCN = {
 					set_state_owner_to = GEO
 				}
 			}
+			remove_russian_cores = yes
+			remove_russian_claims = yes
 		}
 		every_other_country = {
 			limit = {
@@ -1478,8 +1959,10 @@ create_TSCN = {
 				communism = 34
 			}
 			inherit_technology = ROOT
+			delete_obsolete_russian_templates = yes
 			send_embargo = ROOT
 			give_military_access = ROOT
+			add_ideas = ARM_idea_mountain_fighters
 			#Transcaucasian Commissariat
 			country_event = {
 				id  = ww1_russia.32
@@ -1492,6 +1975,29 @@ create_TSCN = {
 				promote_character = authoritarian_democracy
 			}
 		}
+		if = {
+			limit = {
+				NOT = {
+					country_exists = ARM
+				}
+			}
+			ARM = {
+				every_unit_leader = {
+					limit = {
+						OR = {
+							is_character = ARM_tovmas_nazarbekian
+							is_character = ARM_andranik_ozanian
+							is_character = ARM_christophor_araratov
+							is_character = ARM_drastama_kanayan
+							is_character = ARM_movses_silikyan
+							is_character = ARM_daniel_bek_pirumyan
+						}
+					}
+					set_nationality = GEO
+					set_unit_leader_flag = TSCN_armenian_general
+				}
+			}
+		}	
 		give_military_access = GEO
 		every_other_country = {
 			limit = {
@@ -1507,7 +2013,7 @@ create_TSCN = {
 			}
 		}
 		transfer_ship = {
-			prefer_name = "Kars"
+			prefer_name = "Kars II"
 			type = destroyer
 			target = GEO
 		}
@@ -1519,8 +2025,85 @@ create_TSCN = {
 	}
 }
 
+create_LAT = {
+	if = {
+		limit = {
+			OR = {
+				has_subject = LAT
+				AND = {
+					LAT = { exists = no }
+					any_owned_state = {
+						is_core_of = LAT
+					}
+				}
+			}
+		}
+		set_global_flag = iskolat_republic
+		set_global_flag = latvia_released
+		LAT = {
+			set_country_flag = LAT_iskolata
+			set_cosmetic_tag = LAT_iskolata
+			set_politics = {
+				ruling_party = communism
+				elections_allowed = no
+			}
+			promote_character = LAT_fricis_rozins
+			division_template = {
+				name = "Latvijas Milicija"
+				division_names_group = LAT_GAR_01
+				template_counter = 69
+				regiments = {
+					militia = { x = 0 y = 0 }
+					militia = { x = 0 y = 1 }
+					militia = { x = 1 y = 0 }
+					militia = { x = 1 y = 1 }
+				}
+				division_cap = 5
+			}
+			give_military_access = ROOT
+			inherit_technology = RUS
+			delete_obsolete_russian_templates = yes
+			copy_SOV_army_idea = yes
+		}
+		puppet = {
+			target = LAT
+			end_wars = no
+			end_civil_wars = no
+		}
+		every_owned_state = {
+			limit = {
+				OR = {
+					is_core_of = LAT
+					is_core_of = COU
+				}
+				NOT = { state = 947 }
+			}
+			LAT = {
+				safe_transfer_state_to = yes
+			}
+		}	
+		LAT = {
+			set_popularities = {
+				democratic = 10
+				neutrality = 10
+				fascism = 0
+				communism = 80
+			}
+			random_controlled_state = {
+				create_unit = {
+					division = "division_template = \"Latvijas Milicija\" start_experience_factor = 0.1	start_equipment_factor = 0.6"
+					owner = PREV
+					allow_spawning_on_enemy_provs = yes
+					count = 3
+				}
+			}
+		}	
+	}	
+}	
+
 SE_rus_civil_war_winner = {
 	hidden_effect = {
+		clear_superevents = yes
 		if = {
 			limit = {
 				SOV = { has_country_flag = russian_civil_war_winner }
@@ -1610,67 +2193,47 @@ SE_rus_civil_war_winner = {
 				}
 			}
 		}
+		update_superevents = yes
 	}
 }
 FIN_set_finnish_state_names = {
-	if = {
-		limit = { controls_state = 111 }
-		111 = { set_state_name = HELSINKI_STATE }
-		set_province_name = { id = 11105 name = HELSINKI_STATE }
-		set_province_name = { id = 6108 name = TAMMISAARI_PROV }
-		set_province_name = { id = 6009 name = PORVOO_PROV }
-		set_province_name = { id = 11211 name = HANKO_PROV }
-	}
-	if = {
-		limit = { controls_state = 722 }
-		722 = { set_state_name = PETSAMO_STATE }
-	}
-	if = {
-		limit = { controls_state = 149 }
-		149 = { set_state_name = VAASA_STATE }
-		set_province_name = { id = 3122 name = VAASA_STATE }
-		set_province_name = { id = 66 name = KOKKOLA_PROV }
-		set_province_name = { id = 11065 name = UUSIKAARLEPYY_PROV }
-	}
-	if = {
-		limit = { controls_state = 960 }
-		960 = { set_state_name = TURKU_STATE }
-		set_province_name = { id = 3083 name = TURKU_STATE }
-		set_province_name = { id = 3117 name = PORI_PROV }
-		set_province_name = { id = 169 name = RAUMA_PROV }
-	}
-	if = {
-		limit = { controls_state = 961 }
-		961 = { set_state_name = HAME_STATE }
-		set_province_name = { id = 3137 name = TAMPERE_PROV }
-		set_province_name = { id = 67 name = LAHTI_PROV }
-		set_province_name = { id = 9167 name = HAME_PROV }
-	}
-	if = {
-		limit = { controls_state = 150 }
-		150 = { set_state_name = MIKKELI_STATE }
-		set_province_name = { id = 165 name = MIKKELI_STATE }
-		set_province_name = { id = 37 name = SAVONLINNA_PROV }
-	}
-	if = {
-		limit = { controls_state = 148 }
-		148 = { set_state_name = OULU_STATE }
-		set_province_name = { id = 158 name = OULU_STATE }
-		set_province_name = { id = 11121 name = RAAHE_PROV }
-		set_province_name = { id = 195 name = KOKKOLA_PROV }
-		set_province_name = { id = 3125 name = KAJAANI_PROV }
-		set_province_name = { id = 11125 name = TORNIO_PROV }
-	}
-	if = {
-		limit = { controls_state = 146 }
-		146 = { set_state_name = VIIPURI_STATE }
-		set_province_name = { id = 9206 name = VIIPURI_STATE }
-		set_province_name = { id = 9105 name = KAKISALMI_PROV }
-		set_province_name = { id = 204 name = LOVIISA_PROV }
-		set_province_name = { id = 3061 name = HAMINA_PROV }
-		set_province_name = { id = 6150 name = SORTAVALA_PROV }
-		set_province_name = { id = 6082 name = LAPPEENRANTA_PROV }
-	}
+	111 = { reset_state_name = yes }
+	reset_province_name = 11105
+	reset_province_name = 6108
+	reset_province_name = 6009
+	reset_province_name = 11211
+	reset_province_name = 204	
+	149 = { reset_state_name = yes }
+	reset_province_name = 3122
+	reset_province_name = 66
+	reset_province_name = 11065
+	reset_province_name = 9056
+	960 = { reset_state_name = yes }
+	reset_province_name = 3083
+	reset_province_name = 3117
+	reset_province_name = 169
+	reset_province_name = 6066
+	961 = { reset_state_name = yes }
+	reset_province_name = 3137
+	reset_province_name = 9167
+	150 = { reset_state_name = yes }
+	reset_province_name = 165
+	reset_province_name = 37
+	148 = { reset_state_name = yes }
+	reset_province_name = 158
+	reset_province_name = 11121
+	reset_province_name = 3125
+	146 = { reset_state_name = yes }
+	reset_province_name = 9206
+	reset_province_name = 6150
+	reset_province_name = 3061
+	reset_province_name = 6082
+	reset_province_name = 9105
+	957 = { reset_state_name = yes }
+	reset_province_name = 3060
+	145 = { reset_state_name = yes }
+	reset_province_name = 9228
+	reset_province_name = 9061
 }
 SOV_destroy_black_fleet = {
 	damage_units = {
@@ -1951,5 +2514,165 @@ SOV_destroy_black_fleet = {
 		str_damage = 1
 		ratio = yes
 		navy = yes
+	}
+}
+
+SOV_improve_peasant_support = {
+	if = {
+		limit = { has_idea = SOV_idea_very_low_peasant_support }
+		swap_ideas = {
+			remove_idea = SOV_idea_very_low_peasant_support
+			add_idea = SOV_idea_low_peasant_support
+		}
+	}
+	else_if = {
+		limit = { has_idea = SOV_idea_low_peasant_support }
+		swap_ideas = {
+			remove_idea = SOV_idea_low_peasant_support
+			add_idea = SOV_idea_weak_peasant_support
+		}
+	}
+	else_if = {
+		limit = { has_idea = SOV_idea_weak_peasant_support }
+		remove_ideas = SOV_idea_weak_peasant_support
+	}	
+}
+
+copy_SOV_army_idea = {
+	if = {
+		limit = { 
+			SOV = { has_idea = SOV_idea_red_guard }
+		}
+		add_ideas = SOV_idea_red_guard
+	}
+	else_if = {
+		limit = { 
+			SOV = { has_idea = SOV_idea_red_army }
+		}
+		add_ideas = SOV_idea_red_army 
+	}
+	else_if = {
+		limit = { 
+			SOV = { has_idea = SOV_idea_red_army_officers }
+		}
+		add_ideas = SOV_idea_red_army_officers  
+	}
+	else_if = {
+		limit = { 
+			SOV = { has_idea = SOV_idea_red_army_officers_2 }
+		}
+		add_ideas = SOV_idea_red_army_officers_2  
+	}
+	else_if = {
+		limit = { 
+			SOV = { has_idea = SOV_idea_red_army_officers_3 }
+		}
+		add_ideas = SOV_idea_red_army_officers_3  
+	}
+	else_if = {
+		limit = { 
+			SOV = { has_idea = SOV_idea_red_army_officers_3 }
+		}
+		add_ideas = SOV_idea_red_army_officers_3  
+	}
+	else_if = {
+		limit = { 
+			SOV = { has_idea = SOV_idea_red_army_militia }
+		}
+		add_ideas = SOV_idea_red_army_militia 
+	}
+	else_if = {
+		limit = { 
+			SOV = { has_idea = SOV_idea_red_army_militia_2 }
+		}
+		add_ideas = SOV_idea_red_army_militia_2  
+	}
+	else_if = {
+		limit = { 
+			SOV = { has_idea = SOV_idea_red_army_militia_3 }
+		}
+		add_ideas = SOV_idea_red_army_militia_3  
+	}
+}
+
+restore_transcaucasian_cores = {
+	every_state = {
+		limit = {
+			OR = {
+				state = 230
+				state = 352
+				state = 353
+				state = 787
+				state = 806
+				state = 818
+				state = 938
+				state = 939
+				state = 1022
+			}
+		}
+		add_core_of = ARM
+	}
+	every_state = {
+		limit = {
+			OR = {
+				state = 231
+				state = 748
+				state = 816
+				state = 830
+				state = 855
+				state = 1034
+				state = 1068
+				state = 1069
+			}
+		}
+		add_core_of = GEO
+	}
+	every_state = {
+		limit = {
+			OR = {
+				state = 229
+				state = 818
+				state = 823
+				state = 877
+				state = 938
+				state = 939
+			}
+		}
+		add_core_of = AZR
+	}
+}
+
+RUS_create_cossack_templates = {
+	if = {
+		limit = {
+			NOT = {
+				has_template = "Pekhotnaya Brigada"
+			}
+		}
+		division_template = {
+			name = "Pekhotnaya Brigada"
+			division_names_group = RUS_INF_06
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+			}
+		}
+	}
+	if = {
+		limit = {
+			NOT = {
+				has_template = "Kazach'ya Brigada"
+			}
+		}
+		division_template = {
+			name = "Kazach'ya Brigada"
+			division_names_group = RUS_COS_02
+			regiments = {
+				cavalry = { x = 0 y = 0 }
+				cavalry = { x = 0 y = 1 }
+				cavalry = { x = 0 y = 2 }
+			}
+		}
 	}
 }
