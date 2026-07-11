@@ -837,9 +837,13 @@ armistice_effect = {
 				}
 				every_state = {
 					limit = {
-						GER_is_MAF_core = yes
+						GER_is_MAF_state = yes
 						NOT = {
+							is_claimed_by = GER
 							is_owned_by = GER
+							# exclude west africa
+							region = 226
+							state = 779
 						}
 					}
 					add_claim_by = GER
@@ -2359,6 +2363,56 @@ armistice_effect = {
 			}
 			OVERLORD = {
 				end_puppet = PREV
+			}
+		}
+	}
+	### Portugal ###
+	if = {
+		limit = {
+			POR = {
+				has_country_flag = great_war_loser
+				NOT = {
+					has_country_flag = has_capitulated_in_great_war
+				}
+			}
+		}
+		if = {
+			limit = {
+				540 = {
+					is_owned_by = POR
+					NOT = {
+						has_state_flag = angola_lost
+					}
+				}
+			}
+			POR = {
+				every_owned_state = {
+					limit = {
+						OR = {
+							region = 224
+							region = 227
+						}
+					}
+					set_state_flag = dont_transfer
+				}
+			}
+		}
+		if = {
+			limit = {
+				970 = {
+					is_owned_by = POR
+					NOT = {
+						has_state_flag = mozambique_lost
+					}
+				}
+			}
+			POR = {
+				every_owned_state = {
+					limit = {
+						region = 185
+					}
+					set_state_flag = dont_transfer
+				}
 			}
 		}
 	}
