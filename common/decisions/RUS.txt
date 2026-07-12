@@ -321,6 +321,14 @@ foreign_politics = {
 				has_guaranteed = FROM
 			}
 		}
+		target_root_trigger = {
+			is_subject = no
+			NOT = {
+				has_global_flag = great_war_ends
+				has_global_flag = russian_revolution
+				has_government = communism
+			}
+		}
 		available = {
 			has_capitulated = no
 			has_civil_war = no
@@ -2787,6 +2795,80 @@ TGWR_great_power_politics = {
 					has_idea = RUS_demobilizing_army
 				}
 				remove_ideas = RUS_demobilizing_army
+			}
+		}
+	}
+	RUS_warning_tsar_abdication = {
+		icon = eng_support_imperialist_coup
+		allowed = {
+			always = yes
+		}
+		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
+			RUS = {
+				has_country_leader = {
+					character = RUS_nikolai_ii
+				}
+				has_threat_of_revolution = yes
+				NOT = {
+					has_global_flag = russian_revolution
+					has_active_mission = RUS_mission_tsar_abdication
+				}
+			}
+		}
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+			RUS = {
+				has_country_leader = {
+					character = RUS_nikolai_ii
+				}
+				has_threat_of_revolution = yes
+				OR = {
+					AND = {
+						war_length_with = { 
+							tag = GER 
+							months > 28 
+						}
+						OR = {
+							AND = {
+								surrender_progress > 0.1
+								casualties > 1500000
+							}
+							AND = {
+								POL = {
+									exists = yes
+								}
+								surrender_progress > 0.04
+								casualties > 1500000
+							}
+						}
+					}
+					# we are in a big danger
+					AND = {
+						surrender_progress > 0.2
+						casualties > 1000000
+					}	
+					surrender_progress > 0.35
+				}
+				SOV = { exists = no }
+				hidden_trigger = {
+					NOT = { has_completed_focus = RUS_force_tsar_abdtication }
+					NOT = { has_completed_focus = RUS_resist_the_duma }
+					NOT = { has_completed_focus = RUS_provisional_committee }
+				}
+				NOT = { has_global_flag = russian_revolution }
+			}
+		}
+		fire_only_once = yes
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
+		complete_effect = {
+			RUS = {
+				country_event = rusrevolt.2
 			}
 		}
 	}
