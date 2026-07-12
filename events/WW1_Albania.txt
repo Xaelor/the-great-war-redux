@@ -8261,6 +8261,42 @@ country_event = { #popular party
 	is_triggered_only = yes
 	option = {
 		name = albania.166.a
+		if = {
+			limit = { any_other_country = { has_character = ALB_fan_noli } }
+			every_country = {
+				limit = { has_character = ALB_fan_noli }
+				ALB_fan_noli = {
+					set_nationality = ROOT
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = social_democracy
+							traits = { ALB_progressive_bishop }
+						}
+					}
+				}
+			}
+		}
+		else = {
+			add_country_leader_role = {
+				character = ALB_fan_noli
+				promote_leader = yes
+				country_leader = {
+					ideology = social_democracy
+					traits = { ALB_progressive_bishop }
+				}
+			}
+		}
+		set_party_name = {
+			ideology = democratic
+			name = ALB_popular_party
+			long_name = ALB_popular_party_long
+		}
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.1
+		}
+		hidden_effect = { country_event = { id = albania.167 days = 3 random_days = 3 } }
 		ai_chance = { base = 100 }
 	}
 }
@@ -8273,6 +8309,24 @@ country_event = { #progressive party
 	is_triggered_only = yes
 	option = {
 		name = albania.167.a
+		add_country_leader_role = {
+			character = ALB_shefqet_verlaci
+			promote_leader = yes
+			country_leader = {
+				ideology = reactionism
+				traits = { ALB_entrenched_landowner }
+			}
+		}
+		set_party_name = {
+			ideology = fascism
+			name = ALB_progressive_party
+			long_name = ALB_progressive_party_long
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.1
+		}
+		hidden_effect = { country_event = { id = albania.168 days = 3 random_days = 3 } }
 		ai_chance = { base = 100 }
 	}
 }
@@ -8285,6 +8339,107 @@ country_event = { #atdheu
 	is_triggered_only = yes
 	option = {
 		name = albania.168.a
+		add_country_leader_role = {
+			character = ALB_avni_rustemi
+			promote_leader = yes
+			country_leader = {
+				ideology = reformist_socialism
+				traits = { ALB_progressive_industrialist }
+			}
+		}
+		set_party_name = {
+			ideology = communism
+			name = ALB_atdheu_party
+			long_name = ALB_atdheu_party
+		}
+		add_popularity = {
+			ideology = communism
+			popularity = 0.05
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					any_state = {
+						ALB_is_kosovar_state = yes
+						NOT = { owner = { original_tag = ALB } }
+					}
+				}
+				country_event = { id = albania.169 days = 3 random_days = 3 }
+			}
+			else = { country_event = { id = albania.170 days = 3 random_days = 3 } }
+		}
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #committee for the liberation of kosova politics
+	id = albania.169
+	title = albania.169.t
+	desc = albania.169.desc
+	picture = GFX_report_event_kommittee_for_the_liberation_of_kosova
+	is_triggered_only = yes
+	option = {
+		name = albania.169.a
+		add_manpower = 2000
+		every_state = {
+			limit = {
+				ALB_is_kosovar_state = yes
+				has_resistance = yes
+			}
+			add_resistance = 5
+		}
+		add_popularity = {
+			ideology = neutrality
+			popularity = -0.05
+		}
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.02
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.03
+		}
+		hidden_effect = { country_event = { id = albania.170 days = 3 random_days = 3 } }
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #vatra
+	id = albania.170
+	title = albania.170.t
+	desc = albania.170.desc
+	picture = GFX_report_event_vatra
+	is_triggered_only = yes
+	option = {
+		name = albania.170.a
+		add_political_power = 25
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.05
+		}
+		country_event = { id = albania.171 days = 3 random_days = 3 }
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #Ora e Maleve
+	id = albania.171
+	title = albania.171.t
+	desc = albania.171.desc
+	picture = GFX_report_event_luigi_gurakuqi
+	is_triggered_only = yes
+	option = {
+		name = albania.171.a
+		add_war_support = 0.05
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.03
+		}
+		add_popularity = {
+			ideology = fascism
+			popularity = -0.02
+		}
 		ai_chance = { base = 100 }
 	}
 }
