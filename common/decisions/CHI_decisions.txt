@@ -156,21 +156,24 @@ CHI_warlord_era = {
 		available = {
 			has_war_with = FROM
 		}
+		target_array = enemies
 		target_trigger = {
 			FROM = {
 				has_country_flag = CHI_national_protection_flag
+			}
+		}
+		target_root_trigger = {
+			is_subject = no
+			NOT = {
+				has_country_flag = CHI_national_protection_flag
+				has_completed_focus = CHI_kuomintang
 			}
 		}
 		targets = {
 			YUN
 		}
 		visible = {
-			is_subject = no
 			has_war_with = FROM
-			NOT = {
-				has_country_flag = CHI_national_protection_flag
-				has_completed_focus = CHI_kuomintang
-			}
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -890,10 +893,10 @@ CHI_warlord_era = {
 			surrender_progress > 0.1
 			is_in_faction = no
 		}
-		visible = {
-			has_global_flag = first_chiang_feng_war
+		visible = {		
 			has_war_with = FROM
 		}
+		target_array = enemies
 		target_trigger = {
 			FROM = {
 				is_china_or_warlord_no_tt = yes
@@ -901,6 +904,7 @@ CHI_warlord_era = {
 			}
 		}
 		target_root_trigger = {
+			has_global_flag = first_chiang_feng_war
 			has_country_flag = first_chiang_feng_war
 		}
 		fire_only_once = yes
@@ -1169,6 +1173,7 @@ CHI_warlord_era = {
 		allowed = {
 			tag = FNG
 		}
+		target_array = enemies
 		target_trigger = {
 			FROM = {
 				has_country_flag = CHI_kuomintang_flag
@@ -2272,22 +2277,14 @@ CHI_chinese_warlords = {
 			is_china_or_warlord_no_tt = yes
 		}
 		visible = {
-			is_subject = no
-			OR = {
-				has_country_flag = ready_to_unite_china
-				has_country_flag = reunited_china
-			}
 			FROM = {
-				exists = yes
 				NOT = { has_war_with = ROOT }
 			}
 		}
-		target_trigger = {
-			FROM = {
-				is_china_or_warlord_no_tt = yes
-			}
-		}
+		target_array = global.is_china_or_warlord
+		targets_dynamic = yes
 		target_root_trigger = {
+			is_subject = no
 			OR = {
 				has_country_flag = ready_to_unite_china
 				has_country_flag = reunited_china
@@ -2520,7 +2517,6 @@ CHI_chinese_warlords = {
 		# 	is_neighbor_of = FROM
 		# }
 		visible = {
-			is_china_or_warlord = yes
 			KUM = {
 				exists = yes
 				is_neighbor_of = ROOT
@@ -2921,15 +2917,14 @@ CHI_chinese_warlords = {
 		allowed = {
 			is_china_or_warlord_no_tt = yes
 		}
+		target_array = global.is_china_or_warlord
 		target_trigger = {
 			FROM = {
-				is_china_or_warlord_no_tt = yes
 				has_country_flag = CHI_kuomintang_flag
 			}
 		}
 		visible = {
-			owns_state = 608
-			has_global_flag = northern_expedition
+			owns_state = 608		
 			OR = {
 				has_war_with = FROM
 				FROM = {
@@ -2952,6 +2947,11 @@ CHI_chinese_warlords = {
 		}
 		target_root_trigger = {
 			owns_state = 608
+			has_global_flag = northern_expedition
+			NOT = {
+				has_global_flag = northern_expedition_end
+				has_global_flag = national_pacification_army
+			}
 		}
 		fire_only_once = yes
 		available = {
@@ -2979,9 +2979,10 @@ CHI_chinese_warlords = {
 		allowed = {
 			is_china_or_warlord_no_tt = yes
 		}
+		target_array = global.is_china_or_warlord
+		targets_dynamic = yes
 		target_trigger = {
 			FROM = {
-				is_china_or_warlord_no_tt = yes
 				is_kuomintang_state = no
 				NOT = {
 					tag = ROOT
@@ -3375,7 +3376,6 @@ CHI_chinese_warlords = {
 			is_china_or_warlord_no_tt = yes
 		}
 		visible = {
-			is_china_or_warlord_no_tt = yes
 			has_global_flag = warlord_era
 			has_country_flag = CHI_cult_of_personality
 		}
@@ -3467,7 +3467,6 @@ political_actions = {
 			is_china_or_warlord_no_tt = yes
 		}
 		visible = {
-			is_china_or_warlord_no_tt = yes
 			has_global_flag = puyi_age
 			is_qing_monarchy = yes
 			NOT = {
@@ -3506,7 +3505,6 @@ political_actions = {
 			is_china_or_warlord_no_tt = yes
 		}
 		visible = {
-			is_china_or_warlord_no_tt = yes
 			has_global_flag = abdicated_qing_imperial_family_allowed
 			is_qing_monarchy = no
 			has_idea = QIN_abdicated_qing_imperial_family
@@ -3566,7 +3564,6 @@ political_actions = {
 			is_china_or_warlord_no_tt = yes
 		}
 		visible = {
-			is_china_or_warlord_no_tt = yes
 			is_kuomintang_state = no
 			608 = {
 				is_owned_by = ROOT
@@ -3684,11 +3681,8 @@ TGWR_great_power_politics = {
 				has_global_flag = warlord_era_end
 			}
 		}
-		target_trigger = {
-			FROM = {
-				has_country_flag = entente_leader
-				is_faction_leader = yes
-			}
+		targets = {
+			ENT
 		}
 		target_root_trigger = {
 			is_great_war_ongoing = yes
@@ -4020,6 +4014,9 @@ TGWR_great_power_politics = {
 			great_power_politics_century_of_humiliation_visible = yes
 			is_subject = no		
 		}
+		target_root_trigger = {
+			is_subject = no
+		}
 		available = {
 			FROM = {
 				controls_state = 745
@@ -4051,9 +4048,11 @@ TGWR_great_power_politics = {
 				}
 			}
 		}
+		targets = {
+			745.OWNER
+		}
 		target_trigger = {
 			FROM = {
-				owns_state = 745
 				is_china_or_warlord = no
 			}
 		}
@@ -4080,6 +4079,9 @@ TGWR_great_power_politics = {
 		}
 		visible = {
 			great_power_politics_century_of_humiliation_visible = yes
+			is_subject = no
+		}
+		target_root_trigger = {
 			is_subject = no
 		}
 		available = {
@@ -4112,6 +4114,9 @@ TGWR_great_power_politics = {
 					country_event = ww1_china.124
 				}
 			}
+		}
+		targets = {
+			746.OWNER
 		}
 		target_trigger = {
 			FROM = {
@@ -4213,23 +4218,23 @@ TGWR_great_power_politics = {
 				}
 			}
 		}
+		targets = {
+			746.OWNER
+			744.OWNER
+			745.OWNER
+			326.OWNER
+			729.OWNER
+			728.OWNER
+			524.OWNER
+			593.OWNER
+			592.OWNER
+			613.OWNER
+			872.OWNER
+			591.OWNER
+			594.OWNER
+		}
 		target_trigger = {
 			FROM = {
-				OR = {
-					owns_state = 746
-					owns_state = 744
-					owns_state = 745
-					owns_state = 326
-					owns_state = 729
-					owns_state = 728
-					owns_state = 524
-					owns_state = 593
-					owns_state = 592
-					owns_state = 613
-					owns_state = 872
-					owns_state = 591
-					owns_state = 594
-				}
 				is_china_or_warlord = no
 			}
 		}
@@ -4253,15 +4258,15 @@ TGWR_great_power_politics = {
 		icon = GFX_decision_generic_railway
 		allowed = {
 			is_china_or_warlord_no_tt = yes
+			# Fengtian must do with focus
 			NOT = {
 				original_tag = FNG
 			}
 		}
-		target_trigger = {
-			FROM = {
-				original_tag = CER
-			}
+		targets = {
+			CER
 		}
+		targets_dynamic = yes
 		visible = {
 			great_power_politics_century_of_humiliation_visible = yes
 			has_capitulated = no
@@ -4271,9 +4276,11 @@ TGWR_great_power_politics = {
 				has_global_flag = khabarovsk_protocol
 			}
 			is_neighbor_of = FROM
-			# Fengtian must do with focus
+		}
+		target_root_trigger = {
 			NOT = {
-				original_tag = FNG
+				has_global_flag = chinese_eastern_railway_incident
+				has_global_flag = khabarovsk_protocol
 			}
 		}
 		available = {
@@ -4536,11 +4543,14 @@ TGWR_great_power_politics = {
 	CHI_declare_war_CER = {
 		icon = GFX_decision_generic_railway
 		allowed = {
-			always = yes
+			is_russian_tag_no_tt = no
+			is_china_or_warlord_no_tt = no
+		}
+		targets = {
+			CER
 		}
 		target_trigger = {
 			FROM = {
-				original_tag = CER
 				OR = {
 					is_subject = yes
 					is_in_faction = yes
@@ -4548,8 +4558,6 @@ TGWR_great_power_politics = {
 			}
 		}
 		target_root_trigger = {
-			is_russian_tag_no_tt = no
-			is_china_or_warlord_no_tt = no
 			has_war = yes
 			any_enemy_country = {
 				OR = {
@@ -4643,7 +4651,6 @@ operations = {
 			}
 		}
 		visible	= {
-			is_china_or_warlord_no_tt = yes
 			any_enemy_country = {
 				is_major = yes
 				is_china_or_warlord = no
@@ -4716,9 +4723,12 @@ operations = {
 		allowed = {
 			original_tag = GDC
 		}
+		targets = {
+			GDC
+		}
+		targets_dynamic = yes
 		target_trigger = {
 			FROM = {
-				original_tag = GDC
 				has_country_flag = CHI_kuomintang_flag
 			}
 		}
@@ -4832,10 +4842,8 @@ operations = {
 			has_capitulated = no
 			NOT = { has_border_war_with = FROM }
 		}
-		target_trigger = {
-			FROM = {
-				owns_state = 1220
-			}
+		targets = {
+			1220.OWNER
 		}
 		target_root_trigger = {
 			NOT = { owns_state = 1220 } 
@@ -5261,8 +5269,23 @@ CHI_national_revolution = {
 		allowed = {
 			is_china_or_warlord_no_tt = yes
 		}
+		state_target = yes
+		targets = {
+			608
+		}
+		target_array = owned_states
+		target_root_trigger = {
+			is_kuomintang_state = yes
+		}
+		target_trigger = {
+			FROM = {
+				NOT = {
+					has_state_flag = beiping
+				}
+			}
+		}
+		on_map_mode = map_and_decisions_view
 		visible = {
-			is_china_or_warlord_no_tt = yes
 			is_kuomintang_state = yes
 			608 = {
 				is_owned_by = ROOT
@@ -5388,9 +5411,9 @@ CHI_national_revolution = {
 		allowed = {
 			is_china_or_warlord_no_tt = yes
 		}
+		target_array = global.is_china_or_warlord
 		target_trigger = {
 			FROM = {
-				is_china_or_warlord_no_tt = yes
 				any_enemy_country = {
 					has_country_flag = CHI_kuomintang_flag
 				}
@@ -5399,6 +5422,7 @@ CHI_national_revolution = {
 				}
 			}
 		}
+		target_array = enemies_of_allies
 		target_root_trigger = {
 			has_global_flag = northern_expedition
 			any_allied_country = {
@@ -5430,14 +5454,14 @@ CHI_national_revolution = {
 		allowed = {
 			original_tag = GDC
 		}
-		target_trigger = {
-			FROM = {
-				is_china_or_warlord_no_tt = yes
-				owns_state = 603
-			}
+		targets = {
+			603.OWNER
 		}
+		target_array = global.is_china_or_warlord
 		target_root_trigger = {
 			is_kuomintang_state = yes
+			has_global_flag = warlord_era
+			has_completed_focus = GDC_guizhou_front
 		}
 		war_with_on_remove = GZC
 		war_with_on_remove = YUN
@@ -5560,10 +5584,15 @@ CHI_national_revolution = {
 			has_war_with = FROM
 			is_subject = no
 		}
+		target_array = enemies
 		target_trigger = {
 			FROM = {
 				has_country_flag = CHI_kuomintang_flag
 			}
+		}
+		target_root_trigger = {
+			has_global_flag = anti_chiang_war
+			NOT = { has_global_flag = anti_chiang_war_end }
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -5598,15 +5627,22 @@ economy_decisions = {
 		allowed = {
 			is_china_or_warlord_no_tt = yes	
 		}
-
+		targets = {
+			CER
+		}
+		targets_dynamic = yes
 		target_trigger = {
 			FROM = {
-				original_tag = CER
 				NOT = {
 					gives_military_access_to = ROOT
 					is_ally_with = ROOT
 				}
 			}
+		}
+		target_root_trigger = {
+			NOT = {
+				has_global_flag = chinese_eastern_railway_sold
+			}	
 		}
 		visible = {
 			hidden_trigger = {
@@ -5664,14 +5700,17 @@ peace_deals = {
 					is_major = yes
 					is_china_or_warlord_no_tt = no
 				}
-			}
-			tag = event_target:fengtian_soviet_war_chi
+			}		
 			FROM = {
-				tag = event_target:fengtian_soviet_war_rus
+				
 			}
 		}
 		available = {
 			
+		}
+		target_array = enemies
+		targets = {
+			event_target:fengtian_soviet_war_rus
 		}
 		target_trigger = {
 			FROM = {
@@ -5679,7 +5718,11 @@ peace_deals = {
 			}
 		}
 		target_root_trigger = {
-			has_war_with = FROM
+			tag = event_target:fengtian_soviet_war_chi
+			has_global_flag = chinese_eastern_railway_incident
+			NOT = {
+				has_global_flag = khabarovsk_protocol
+			}
 		}
 		fire_only_once = yes
 		complete_effect = {
@@ -5723,9 +5766,9 @@ peace_deals = {
 				}
 			}
 		}
+		target_array = enemies
 		target_trigger = {
 			FROM = {
-				has_war_with = ROOT
 				has_country_flag = concessions_war
 			}
 		}
