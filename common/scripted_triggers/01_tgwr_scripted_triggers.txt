@@ -1,3 +1,9 @@
+diplomatic_trigger_always_no = {
+	custom_trigger_tooltip = {
+		tooltip = diplomatic_trigger_always_no_tt
+		always = no
+	}
+}
 has_completed_industrial_warfare_doctrine = {
 	custom_trigger_tooltip = {
 		tooltip = has_completed_industrial_warfare_doctrine_tt
@@ -493,6 +499,12 @@ is_islamic_core = {
 		is_core_of = DAR
 		is_core_of = KUT
 		is_core_of = BLC
+		is_core_of = ARB
+		is_core_of = MAK
+		is_core_of = MRG
+		is_core_of = JMA
+		is_core_of = AFA
+		is_core_of = GOB
 	}
 }
 
@@ -531,6 +543,17 @@ has_catholicism = {
 		original_tag = HES
 		original_tag = ALS
 		original_tag = USA
+	}
+}
+
+has_orthodoxy = {
+	custom_trigger_tooltip = {
+		tooltip = has_orthodoxy_tt
+		any_country_of = {
+			target = constant:country_groups.orthodox_tag
+			tag = PREV
+		}
+		NOT = { has_completed_focus = SOV_militant_atheism }
 	}
 }
 
@@ -653,6 +676,7 @@ is_microstate = {
 			original_tag = SMR
 			original_tag = LIE
 			original_tag = PAP
+			original_tag = ATH
 		}
 	}
 }
@@ -663,6 +687,63 @@ is_a_very_weak_country = {
 		num_of_controlled_states < 2
 		num_of_factories < 3
 	}
+}
+
+is_unplayable_tag = {
+	OR = {
+		is_disabled_tag = yes
+		original_tag = PAP
+		original_tag = IKR
+		original_tag = SMS
+		original_tag = CRE
+		original_tag = JOH
+		original_tag = SKK
+		original_tag = BHU
+		original_tag = MAL
+		original_tag = NAJ
+		original_tag = BID
+		original_tag = QAT
+		original_tag = BHR
+		original_tag = KUW
+		original_tag = ARB
+		original_tag = MRG
+		original_tag = MAK
+		original_tag = AFA
+		original_tag = AMR
+		original_tag = RWL
+		original_tag = MJT
+		original_tag = HBY
+		original_tag = GLD
+		original_tag = BRN
+		original_tag = SAR
+		original_tag = KUT
+		original_tag = TAN
+		original_tag = NFL
+		original_tag = JMA
+	}
+
+}
+
+is_disabled_tag = {
+	NOT = {
+		original_tag = PAP
+		original_tag = IKR
+		original_tag = SMS
+	}
+	OR = {
+		is_microstate = yes
+		original_tag = ZAN
+		original_tag = MLD
+		original_tag = PLS
+		original_tag = KED
+		original_tag = KEL
+		original_tag = TRG
+		original_tag = RIA
+		original_tag = FUJ
+		original_tag = TON
+		original_tag = GOB
+	}
+
 }
 
 is_spanish_tag = {
@@ -831,6 +912,7 @@ is_european_tag_no_constant = {
 		original_tag = LUB
 		original_tag = THU
 		original_tag = KAL
+		original_tag = ATH
 	}
 }
 
@@ -993,14 +1075,20 @@ is_actual_major_without_exceptions = {
 is_polish_criteria_state = {
     OR = {
         state = 10  # Warszawa
+        state = 1266  # Pultulsk
         state = 87  # Kalisz
         state = 90  # Kielce
         state = 92  # Lublin
+        state = 1262  # Sedlets
         state = 98  # Plock
         state = 766 # Kholm
+        state = 1263 # Byala
         state = 1201 # Radom
         state = 1202 # Piotrków
+        state = 1264 # Lodz
+        state = 1265 # Chenstokhov
         state = 1203 # Łomża
+        state = 1267 # Kolno
         state = 1204 # Włocławek
     }
 }
@@ -1129,6 +1217,36 @@ protectorate_type_subject = {
 is_generic_character = {
 	has_character_flag = is_generic
 }
+
+is_in_colonial_war = {
+	custom_trigger_tooltip = {
+		tooltip = is_in_colonial_war_tt
+		has_war = yes
+		has_dynamic_modifier = colonial_war
+		all_enemy_country = {
+			capital_scope = {
+				OR = {
+					is_on_continent = africa
+					is_on_continent = middle_east
+					is_on_continent = asia
+				}
+			}
+			is_actual_major = no
+		}	
+	}
+}
+
+is_in_major_war = {
+	custom_trigger_tooltip = {
+		tooltip = is_in_major_war_tt
+		has_war = yes
+		any_enemy_country = {
+			is_government_in_exile = no
+		}
+		is_in_colonial_war = no
+	}
+}
+
 ins_has_funds = {
 	OR = {
 		check_variable = {

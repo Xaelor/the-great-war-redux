@@ -1,4 +1,87 @@
 SOV_recruit_militia_category = {
+	SOV_recruit_militia_normal = {
+		icon = generic_prepare_civil_war
+		name = SOV_recruit_militia
+		allowed = {
+			original_tag = RUS
+		}
+		state_target = yes
+		target_array = global.RCW_core_normal_states_array
+		target_trigger = {
+			FROM = {
+				RCW_recruit_militia_valid_targer = yes
+			}
+		}
+		cancel_trigger = {
+			FROM = {
+				RCW_recruit_militia_valid_targer = no
+			}
+		}
+		target_root_trigger = {
+			SOV = {
+				has_completed_focus = SOV_red_army
+			}
+		}
+		fire_only_once = yes
+		on_map_mode = map_and_decisions_view
+		days_remove = 1
+		custom_cost_text = 100_infantry_equipment_1
+		available = {
+			has_equipment = {
+				infantry_equipment > 99
+			}
+			controls_state = FROM
+		}
+		custom_cost_trigger = {
+			has_equipment = {
+				infantry_equipment > 99
+			}
+		}
+		cancel_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 100
+			}
+		}
+		complete_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -100
+			}
+		}
+		remove_effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_template = "Krasnaya Gvardiya"
+					}
+				}
+				division_template = {
+					name = "Krasnaya Gvardiya"
+					template_counter = 69
+					division_names_group = RUS_MIL_01
+					regiments = {
+						militia = { x = 0 y = 0 }
+						militia = { x = 0 y = 1 }
+						militia = { x = 1 y = 0 }
+					}
+					priority = 0
+					is_locked = yes
+				}
+			}
+			FROM = {
+				create_unit = {
+					division = "division_template = \"Krasnaya Gvardiya\" start_experience_factor = 0.05 start_equipment_factor = 0.75"
+					owner = ROOT
+					count = 1
+				}
+				set_state_flag = SOV_has_mobilized_militia
+			}
+		}
+		ai_will_do = {
+			base = 1000
+		}
+	}
 	SOV_recruit_militia_big = {
 		icon = generic_prepare_civil_war
 		name = SOV_recruit_militia
@@ -19,37 +102,34 @@ SOV_recruit_militia_category = {
 		}
 		target_root_trigger = {
 			SOV = {
-				OR = {
-					has_completed_focus = SOV_military_academy
-					has_completed_focus = SOV_military_all_education
-				}	
+				has_completed_focus = SOV_red_army
 			}
 		}
 		fire_only_once = yes
 		on_map_mode = map_and_decisions_view
 		days_remove = 1
-		custom_cost_text = 500_infantry_equipment_1
+		custom_cost_text = 250_infantry_equipment_1
 		available = {
 			has_equipment = {
-				infantry_equipment > 499
+				infantry_equipment > 249
 			}
 			controls_state = FROM
 		}
 		custom_cost_trigger = {
 			has_equipment = {
-				infantry_equipment > 499
+				infantry_equipment > 249
 			}
 		}
 		cancel_effect = {
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = 500
+				amount = 250
 			}
 		}
 		complete_effect = {
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = -500
+				amount = -250
 			}
 		}
 		remove_effect = {
@@ -105,37 +185,34 @@ SOV_recruit_militia_category = {
 		}
 		target_root_trigger = {
 			SOV = {
-				OR = {
-					has_completed_focus = SOV_pre_revolutionary_army_officers
-					has_completed_focus = SOV_peoples_army
-				}	
+				has_completed_focus = SOV_red_army
 			}
 		}
 		fire_only_once = yes
 		on_map_mode = map_and_decisions_view
 		days_remove = 3
-		custom_cost_text = 1500_infantry_equipment_1
+		custom_cost_text = 500_infantry_equipment_1
 		available = {
 			has_equipment = {
-				infantry_equipment > 999
+				infantry_equipment > 499
 			}
 			controls_state = FROM
 		}
 		custom_cost_trigger = {
 			has_equipment = {
-				infantry_equipment > 999
+				infantry_equipment > 499
 			}
 		}
 		cancel_effect = {
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = 1000
+				amount = 500
 			}
 		}
 		complete_effect = {
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = -1000
+				amount = -500
 			}
 		}
 		remove_effect = {
@@ -197,27 +274,27 @@ SOV_recruit_militia_category = {
 		fire_only_once = yes
 		on_map_mode = map_and_decisions_view
 		days_remove = 4
-		custom_cost_text = 1500_infantry_equipment_1
+		custom_cost_text = 1000_infantry_equipment_1
 		available = {
 			has_equipment = {
-				infantry_equipment > 1499
+				infantry_equipment > 999
 			}
 		}
 		custom_cost_trigger = {
 			has_equipment = {
-				infantry_equipment > 1499
+				infantry_equipment > 999
 			}
 		}
 		cancel_effect = {
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = 1500
+				amount = 1000
 			}
 		}
 		complete_effect = {
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = -1500
+				amount = -1000
 			}
 		}
 		remove_effect = {
@@ -3314,14 +3391,6 @@ SOV_decision_soviet_republics = {
 		}
 		visible = {
 			has_global_flag = russian_civil_war
-			FROM = {
-				NOT = {
-					has_cosmetic_tag = GEO_TSCN_commissariat
-					has_cosmetic_tag = GEO_TSCN_committee
-					#has_cosmetic_tag = GEO_TSCN
-					#has_cosmetic_tag = GEO_TSCN_communism
-				}
-			}
 		}
 		cost = 25
 		ai_will_do = {
@@ -4268,6 +4337,7 @@ SOV_decision_soviet_republics = {
 					is_owned_and_controlled_by = ROOT
 					OWNER = {
 						OR = {
+							original_tag = CAU
 							original_tag = GEO
 							original_tag = ARM
 							original_tag = AZR
@@ -4282,6 +4352,7 @@ SOV_decision_soviet_republics = {
 					is_owned_and_controlled_by = ROOT
 					OWNER = {
 						OR = {
+							original_tag = CAU
 							original_tag = GEO
 							original_tag = ARM
 							original_tag = AZR
@@ -4296,6 +4367,7 @@ SOV_decision_soviet_republics = {
 					is_owned_and_controlled_by = ROOT
 					OWNER = {
 						OR = {
+							original_tag = CAU
 							original_tag = GEO
 							original_tag = ARM
 							original_tag = AZR
@@ -4310,6 +4382,7 @@ SOV_decision_soviet_republics = {
 					is_owned_and_controlled_by = ROOT
 					OWNER = {
 						OR = {
+							original_tag = CAU
 							original_tag = GEO
 							original_tag = ARM
 							original_tag = AZR
@@ -4324,6 +4397,7 @@ SOV_decision_soviet_republics = {
 					is_owned_and_controlled_by = ROOT
 					OWNER = {
 						OR = {
+							original_tag = CAU
 							original_tag = GEO
 							original_tag = ARM
 							original_tag = AZR
@@ -4338,6 +4412,7 @@ SOV_decision_soviet_republics = {
 					is_owned_and_controlled_by = ROOT
 					OWNER = {
 						OR = {
+							original_tag = CAU
 							original_tag = GEO
 							original_tag = ARM
 							original_tag = AZR
@@ -4352,6 +4427,7 @@ SOV_decision_soviet_republics = {
 					is_owned_and_controlled_by = ROOT
 					OWNER = {
 						OR = {
+							original_tag = CAU
 							original_tag = GEO
 							original_tag = ARM
 							original_tag = AZR
@@ -4366,6 +4442,7 @@ SOV_decision_soviet_republics = {
 					is_owned_and_controlled_by = ROOT
 					OWNER = {
 						OR = {
+							original_tag = CAU
 							original_tag = GEO
 							original_tag = ARM
 							original_tag = AZR
@@ -4381,6 +4458,7 @@ SOV_decision_soviet_republics = {
 					is_owned_and_controlled_by = ROOT
 					OWNER = {
 						OR = {
+							original_tag = CAU
 							original_tag = GEO
 							original_tag = ARM
 							original_tag = AZR
@@ -4395,6 +4473,7 @@ SOV_decision_soviet_republics = {
 					is_owned_and_controlled_by = ROOT
 					OWNER = {
 						OR = {
+							original_tag = CAU
 							original_tag = GEO
 							original_tag = ARM
 							original_tag = AZR
@@ -4411,6 +4490,12 @@ SOV_decision_soviet_republics = {
 			OR = {
 				has_government = democratic
 				has_government = communism
+			}
+			CAU = {
+				OR = {
+					is_subject_of = ROOT
+					exists = no
+				}
 			}
 			GEO = {
 				OR = {
