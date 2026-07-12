@@ -19,12 +19,17 @@ focus_tree = {
 
 	focus = {
 		id = MSC_end_of_the_great_war
-		icon = GFX_focus_generic_monarchy_2
+		icon = GFX_focus_BEL_legacy_of_the_great_war
 		cost = 5
 		x = 2
 		y = 5
 		ai_will_do = {
 			factor = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
 		}
 		available = {
 			has_global_flag = great_war_ends
@@ -43,13 +48,23 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
 		relative_position_id = MSC_end_of_the_great_war
 		prerequisite = {
 			focus = MSC_end_of_the_great_war
 		}
 		available = {
 			owns_state = 882
-			882 = { is_core_of = OMA }
+			NOT = {
+				882 = { is_core_of = ROOT }
+			}		
+		}
+		bypass = {
+			has_war_with = OMA
 		}
 		completion_reward = {
 			882 = {
@@ -67,12 +82,26 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
 		relative_position_id = MSC_end_of_the_great_war
 		prerequisite = {
 			focus = MSC_deal_with_imamate
 		}
 		available = {
-			owns_state = 882
+			OR = {
+				AND = {
+					owns_state = 882
+					NOT = {
+						882 = { is_core_of = ROOT }
+					}
+				}
+				has_war_with = OMA
+			}
+			
 		}
 		completion_reward = {
 			country_event = ww1_oman.6
@@ -104,7 +133,12 @@ focus_tree = {
 			}
 			OR = {
 				is_subject_of = ENG
-				is_subject = no
+				AND = {
+					is_subject_of = RAJ
+					RAJ = {
+						is_subject_of = ENG
+					}
+				}
 			}
 		}
 		prerequisite = {
@@ -112,17 +146,8 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_political_power = 5
-			hidden_effect = {
-				get_current_government_type = yes
-			}
-			ENG = {
-				set_autonomy = {
-					target = ROOT
-					autonomy_state = autonomy_dominion
-				}
-			}
-			hidden_effect = {
-				restore_previous_government_type = yes
+			add_autonomy_score = {
+				value = 100
 			}
 		}
 	}
@@ -204,8 +229,22 @@ focus_tree = {
 			focus = MSC_matters_of_the_sultanate
 		}
 		completion_reward = {
-			ENG={
-				end_puppet = ROOT
+			if = {
+				limit = { 
+					OR = {
+						is_subject = no
+						is_subject_of = ENG
+						AND = {
+							is_subject_of = RAJ
+							RAJ = {
+								is_subject_of = ENG
+							}
+						}
+					}	
+				}
+				OVERLORD = {
+					end_puppet = ROOT
+				}
 			}
 			add_opinion_modifier = {
 				target = ENG
@@ -424,6 +463,12 @@ focus_tree = {
 		x = 4
 		y = 0
 		relative_position_id = MSC_end_of_the_great_war
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
+		}
 		ai_will_do = {
 			factor = 1
 		}
@@ -443,6 +488,11 @@ focus_tree = {
 		x = 3
 		y = 1
 		relative_position_id = MSC_end_of_the_great_war
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
 		ai_will_do = {
 			factor = 1
 		}
@@ -466,6 +516,11 @@ focus_tree = {
 		relative_position_id = MSC_end_of_the_great_war
 		ai_will_do = {
 			factor = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL
 		}
 		available = {
 			NOT = {
@@ -504,11 +559,14 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INDUSTRY
+		}
 		available = {
-			OR = {
-				is_subject_of = ENG
-				is_in_faction_with = ENG
-			}		
+			is_ally_with = ENG	
 		}
 		prerequisite = {
 			focus = MSC_matters_of_the_sultanate
@@ -519,9 +577,23 @@ focus_tree = {
 		completion_reward = {
 			add_stability = -0.1
 			add_ideas = MSC_Angry_oligarchs
-			swap_ideas = {
-				remove_idea = MSC_Feudal_state
-				add_idea = MSC_modern_state
+			if = {
+				limit = {
+					has_idea = MSC_Feudal_state
+				}
+				swap_ideas = {
+					remove_idea = MSC_Feudal_state
+					add_idea = MSC_Feudal_state_2
+				}
+				else_if = {
+					limit = {
+						has_idea = MSC_Feudal_state_2
+					}
+					swap_ideas = {
+						remove_idea = MSC_Feudal_state_2
+						add_idea = MSC_modern_state
+					}
+				}
 			}
 		}
 	}
@@ -534,6 +606,12 @@ focus_tree = {
 		relative_position_id = MSC_end_of_the_great_war
 		ai_will_do = {
 			factor = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INDUSTRY
 		}
 		available = {
 			NOT = {
@@ -565,6 +643,12 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INDUSTRY
+		}
 		available = {
 
 		}
@@ -589,6 +673,12 @@ focus_tree = {
 		x = 7
 		y = 1
 		relative_position_id = MSC_end_of_the_great_war
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INDUSTRY
+		}
 		ai_will_do = {
 			factor = 1
 		}
@@ -603,9 +693,23 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_stability = 0.1
-			swap_ideas = {
-				remove_idea = MSC_Feudal_state
-				add_idea = MSC_Feudal_state_2
+			if = {
+				limit = {
+					has_idea = MSC_Feudal_state
+				}
+				swap_ideas = {
+					remove_idea = MSC_Feudal_state
+					add_idea = MSC_Feudal_state_2
+				}
+				else_if = {
+					limit = {
+					has_idea = MSC_Feudal_state_2
+				}
+				swap_ideas = {
+					remove_idea = MSC_Feudal_state_2
+					add_idea = MSC_modern_state
+				}
+				}
 			}
 		}
 	}
@@ -618,6 +722,12 @@ focus_tree = {
 		relative_position_id = MSC_end_of_the_great_war
 		ai_will_do = {
 			factor = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_RESEARCH
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
 		}
 		available = {
 			NOT = {

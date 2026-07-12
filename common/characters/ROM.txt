@@ -131,6 +131,7 @@ characters = {
 	}
 	ROM_carol_i = {
 		name = ROM_carol_i
+		can_be_captured = no
 		portraits = {
 			civilian = {
 				large = "gfx/leaders/ROM/ROM_carol_i.png"
@@ -161,6 +162,7 @@ characters = {
 	}
 	ROM_ferdinand_i = {
 		name = "ROM_ferdinand_hohenzollern_sigmaringen"
+		can_be_captured = no
 		portraits = {
 			civilian = {
 				large = "gfx/leaders/ROM/ROM_ferdinand_i.png"
@@ -502,6 +504,7 @@ characters = {
 	}
 	ROM_ion_dragalina = {
 		name = "ROM_ion_dragalina"
+		can_be_captured = no #should die instead
 		portraits = {
 			army = {
 				large = "gfx/leaders/ROM/ROM_Ion_Dragalina.png"
@@ -562,7 +565,7 @@ characters = {
 			}
 			cost = 150
 			traits = {
-				mass_assault_expert
+				cult_of_offensive_expert
 			}
 		}
 		corps_commander = {
@@ -1116,31 +1119,34 @@ characters = {
 						has_completed_focus = ROM_center_consensus
 						has_completed_focus = ROM_the_moderating_influence
 					}
-					else_if = {
-						limit = {
-							has_ROM_conservative_government = yes
-							NOT = {
-								has_country_leader = {
-									character = ROM_petre_p_carp
-								}
-								has_country_leader = {
-									character = ROM_lupu_kostaki
-								}
-							}
-						}
+				}
+				else_if = {
+					limit = {
 						has_ROM_conservative_government = yes
-						OR = {
-							has_completed_focus = ROM_reconcile_pcd
-							has_completed_focus = ROM_put_a_leash_on_carp
-							has_country_flag = ROM_no_take_halve					
-						}
-						else = {
-							has_ROM_liberal_government = yes
-							OR = {
-								has_completed_focus = ROM_alliance_of_convience
-								has_completed_focus = ROM_the_moderating_influence				
-							}
-						}
+						#NOT = {
+						#	has_country_leader = {
+						#		character = ROM_petre_p_carp
+						#	}
+						#	has_country_leader = {
+						#		character = ROM_lupu_kostaki
+						#	}
+						#}
+					}
+					has_ROM_conservative_government = yes
+					OR = {
+						has_completed_focus = ROM_reconcile_pcd
+						has_completed_focus = ROM_put_a_leash_on_carp	
+						custom_trigger_tooltip = {
+							tooltip = ROM_no_take_halve.tt
+							has_country_flag = ROM_no_take_halve
+						}			
+					}
+				}
+				else = {
+					has_ROM_liberal_government = yes
+					OR = {
+						has_completed_focus = ROM_alliance_of_convience
+						has_completed_focus = ROM_the_moderating_influence				
 					}
 				}
 			}
@@ -1198,7 +1204,7 @@ characters = {
 			}
 		}
 		country_leader = {
-			ideology = fascism_ideology
+			ideology = reactionism
 			traits = {
 				right_wing_populist
 			}
@@ -1707,7 +1713,6 @@ characters = {
             }
             cost = 75
         }
-        name = "ROM_aurel_vlaicu_name"
         portraits = {
             army = {
                 small = "GFX_idea_generic_army_europe_2"
