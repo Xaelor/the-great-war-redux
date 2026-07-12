@@ -116,26 +116,28 @@ TGWR_great_power_politics = {
 		cost = 25
 		fire_only_once = yes
 		complete_effect = {
-			722.OWNER = {
-				if = {
-					limit = {
+			if = {
+				limit = {
+					FROM.OWNER = {
 						is_subject_of = ROOT
-					}
-					ROOT = { add_state_core = 722 transfer_state = 722 }
+					}	
 				}
-				else_if = {
-					limit = {
+				add_state_core = FROM transfer_state = FROM
+			}
+			else_if = {
+				limit = {
+					FROM.OWNER = {
 						has_war_with = ROOT
 					}
-					ROOT = { add_state_core = 722 set_state_owner = 722 }
 				}
-				else = {
-					custom_effect_tooltip = agree_effect_tooltip
-					effect_tooltip = {
-						ROOT = { add_state_core = 722 transfer_state = 722 }
-					}
-					country_event = ww1_finland.9
+				add_state_core = FROM set_state_owner = FROM
+			}
+			else = {
+				custom_effect_tooltip = agree_effect_tooltip
+				effect_tooltip = {
+					add_state_core = FROM transfer_state = FROM
 				}
+				country_event = ww1_finland.9
 			}
 		}
 		ai_will_do = {
