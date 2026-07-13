@@ -255,10 +255,27 @@ TGWR_great_power_politics = {
 }
 #PETROGRAD COMMUNE
 TGWR_great_power_politics = {
+	#debug
+	RUS_petrograd_commune_debug = {
+		allowed = {
+			tag = RUS
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
+			is_debug = yes
+		}
+		
+		complete_effect = {
+			set_global_flag = petrograd_commune
+			RUS_petrograd_commune = yes
+		}
+	}
 }
 #REVOLUTION DURING PEACETIME/NEW 1905
 TGWR_great_power_politics = {
-
 	#debug
 	RUS_remove_political_mechanics_debug = {
 		allowed = {
@@ -277,25 +294,6 @@ TGWR_great_power_politics = {
 		}
 
 	}
-
-	RUS_petrograd_commune_debug = {
-		allowed = {
-			tag = RUS
-		}
-		available = {
-			is_ai = no
-		}
-		visible = {
-			great_power_politics_empire_of_the_periphery_visible = yes
-			is_debug = yes
-		}
-		
-		complete_effect = {
-			RUS_petrograd_commune = yes
-		}
-
-	}
-
 	launch_new_1905 = {
 		allowed = {
 			tag = RUS
@@ -312,7 +310,6 @@ TGWR_great_power_politics = {
 			set_global_flag = new_1905
 		}
 	}
-
 	#gflg: new_1905
 	RUS_revolution_suppression_progress = {
 
@@ -339,7 +336,6 @@ TGWR_great_power_politics = {
 		custom_cost_text = decision_cost_INFO
 
 	}
-
 	RUS_revolution_turns_violent = {
 
 		icon = GFX_decision_generic_civil_support
@@ -372,14 +368,29 @@ TGWR_great_power_politics = {
 
 		days_mission_timeout = 360
 
+		complete_effect = {
+			custom_effect_tooltip = RUS_revolution_will_end_tt
+			hidden_effect = {
+				every_owned_state = {
+					limit = {
+						has_dynamic_modifier = RUS_revolutionary_activity
+					}
+					remove_dynamic_modifier = {
+						modifier = RUS_revolutionary_activity
+					}
+				}
+				remove_ideas = RUS_general_strike
+			}
+		}
+
 		timeout_effect = {
+			custom_effect_tooltip = RUS_revolution_will_escalate_tt
 			hidden_effect = {
 				country_event = ww1_new_1905.4
 			}
 		}
 
 	}
-
 	RUS_crack_down_on_revolution_in_state = {
 
 		icon = GFX_decision_generic_form_nation
