@@ -1950,43 +1950,34 @@ country_event = {
 	}
 	immediate = {
 		hidden_effect = {
+			214 = {
+				RSO = {
+					RCW_transfer_core_state_PREV = yes
+				}
+			}
 			SOV = {
 				every_owned_state = {
 					limit = {
 						region = 150
 					}
-					every_country = {
-						limit = {
-							has_war_with = SOV
-							controls_state = PREV
-						}
-						RSO = { give_military_access = PREV }
-					}
 					RSO = {
 						RCW_transfer_core_state_PREV = yes
 					}
 				}
-			}
-			RSO = {
-				transfer_state = 214
-				every_state = {
+				every_core_state = {
 					limit = {
 						region = 150
-						is_core_of = SOV
+						NOT = { is_core_of = RSO }
 					}
-					add_core_of = PREV
+					RSO = {
+						RCW_core_state_PREV = yes
+					}
 				}
+			}
+			RSO = {
 				inherit_technology = RUS
 				delete_obsolete_russian_templates = yes
-				every_other_country = {
-					limit = {
-						OR = {
-							tag = ENT
-							is_in_faction_with = ENT
-							is_actual_major = yes
-						}
-						NOT = { has_government = communism }
-					}
+				ENT = {
 					diplomatic_relation = {
 						country = PREV
 						relation = non_aggression_pact
@@ -1997,6 +1988,22 @@ country_event = {
 							relation = military_access
 						}
 					}
+					every_faction_member = {
+						limit = {
+							is_actual_major = yes
+							NOT = { has_government = communism }
+						}
+						diplomatic_relation = {
+							country = PREV.PREV
+							relation = non_aggression_pact
+						}
+						PREV.PREV = {
+							diplomatic_relation = {
+								country = PREV
+								relation = military_access
+							}
+						}
+					}					
 				}
 				add_ideas = {
 					RUS_russian_civil_war

@@ -945,11 +945,8 @@ political_actions = {
 		fire_only_once = yes
 		cost = 400
 		days_remove = 30
-		target_trigger = {
-			FROM = {
-				original_tag = FRA
-				has_country_flag = FRA_socialist_france_flag
-			}
+		targets = {
+			FRC
 		}
 		war_with_target_on_remove = yes
 		#war_with_on_remove = FRC
@@ -1460,7 +1457,6 @@ ENG_interwar_entente_category = {
 				is_subject = no
 				is_in_faction = no
 				NOT = {
-					tag = ROOT
 					has_government = communism
 					has_country_flag = FRA_socialist_france_flag
 					has_country_flag = ENG_socialist_britain_flag
@@ -1794,11 +1790,8 @@ ENG_british_civil_war_category = {
 		fire_only_once = yes
 		cost = 125
 		days_remove = 15
-		target_trigger = {
-			FROM = {
-				original_tag = ENG
-				has_country_flag = ENG_socialist_britain_flag
-			}				
+		targets = {
+			UOB
 		}
 		target_root_trigger = {
 			has_global_flag = british_civil_war
@@ -2112,6 +2105,124 @@ TGWR_great_power_politics = {
 			remove_ideas = ENG_homeland_under_attack
 		}
 	}
+	#great_power_politics_scramble_for_africa
+	ENG_cancel_chinde_concession = {
+		icon = GFX_decision_eng_trade_unions_demand
+		allowed = {
+			original_tag = ENG
+		}
+		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
+			owns_state = 924
+		}
+		available = {
+			971 = { is_owned_and_controlled_by = FROM }
+			924 = { is_owned_and_controlled_by = ROOT }
+		}
+		targets = {
+			971.OWNER
+		}
+		target_trigger = {
+			FROM = {
+				NOT = {
+					is_subject_of = ROOT
+					has_war_with = ROOT
+				}
+			}
+		}
+		target_root_trigger = {
+			owns_state = 924
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 971
+				state = 924
+			}
+		}
+		fire_only_once = yes
+		complete_effect = {
+			FROM = {
+				effect_tooltip = {
+					transfer_state = 924
+				}
+				hidden_effect = {
+					country_event = {
+						id = ww1_england.250
+						hours = 3
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			base = 1
+			modifier = {
+				factor = 0
+				date < 1919.1.1
+			}
+			modifier = {
+				factor = 0
+				has_opinion = {
+					target = FROM
+					value < -25
+				}
+			}
+			modifier = {
+				factor = 0
+				has_war = yes
+			}
+			modifier = {
+				factor = 0
+				has_government = fascism
+			}
+		}
+	}
+	#great_power_politics_misc
+	ENG_propose_arms_limitations = {
+		icon = eng_trade_unions_support
+		cost = 35
+
+		allowed = {
+			original_tag = ENG
+		}
+		visible = {
+			great_power_politics_misc_visible = yes			
+			has_war_with_major = no
+		}
+		available = {
+			NOT = {
+				has_global_flag = great_war
+				is_ally_with = FROM
+			}
+		}
+		targets = {
+			FRA
+			GER
+			RUS
+		}
+		target_root_trigger = {
+			has_war_with_major = no
+		}
+		fire_only_once = yes
+
+		complete_effect = {
+			FROM = {
+				country_event = {
+					id = ww1_germanrework.8
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				FROM = {
+					tag = GER
+				}
+				date > 1911.1.1
+			}
+		}
+	}
 }
 peace_deals = {
 	ENG_sue_for_peace_IRE = {
@@ -2256,126 +2367,6 @@ peace_deals = {
 					is_owned_or_subject_trigger = yes
 				}
 				transfer_state_to = FROM
-			}
-		}
-	}
-}
-
-foreign_politics = {
-	ENG_cancel_chinde_concession = {
-		icon = GFX_decision_eng_trade_unions_demand
-		allowed = {
-			original_tag = ENG
-		}
-		visible = {
-			owns_state = 924
-		}
-		available = {
-			971 = { is_owned_and_controlled_by = FROM }
-			924 = { is_owned_and_controlled_by = ROOT }
-		}
-		target_trigger = {
-			FROM = {
-				owns_state = 971
-				NOT = {
-					tag = ROOT
-					is_subject_of = ROOT
-					has_war_with = ROOT
-				}
-			}
-		}
-		target_root_trigger = {
-			owns_state = 924
-		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 971
-				state = 924
-			}
-		}
-		fire_only_once = yes
-		complete_effect = {
-			FROM = {
-				effect_tooltip = {
-					transfer_state = 924
-				}
-				hidden_effect = {
-					country_event = {
-						id = ww1_england.250
-						hours = 3
-					}
-				}
-			}
-		}
-		ai_will_do = {
-			base = 1
-			modifier = {
-				factor = 0
-				date < 1919.1.1
-			}
-			modifier = {
-				factor = 0
-				has_opinion = {
-					target = FROM
-					value < -25
-				}
-			}
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
-			modifier = {
-				factor = 0
-				has_government = fascism
-			}
-		}
-	}
-	ENG_propose_arms_limitations = {
-		icon = GFX_decision_eng_trade_unions_demand #Needs to be changed
-		cost = 35
-
-		allowed = {
-			original_tag = ENG
-		}
-		visible = {
-			original_tag = ENG
-			has_war_with_major = no
-		}
-		available = {
-			original_tag = ENG
-			NOT = {
-				has_global_flag = great_war
-			}
-		}
-		targets = {
-			FRA
-			GER
-			RUS
-		}
-		target_root_trigger = {
-			has_war_with_major = no
-		}
-		fire_only_once = yes
-
-		complete_effect = {
-			FROM = {
-				country_event = {
-					id = ww1_germanrework.8
-				}
-			}
-		}
-
-		ai_will_do = {
-			base = 1
-			modifier = {
-				factor = 0
-			}
-			modifier = {
-				factor = 10
-				FROM = {
-					tag = GER
-				}
-				date > 1911.1.1
 			}
 		}
 	}
