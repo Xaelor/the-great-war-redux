@@ -6711,10 +6711,6 @@ focus_tree = {
 		x = 2
 		y = 1
 		available = {
-			OR = {
-				has_completed_focus = USA_curtail_the_two_party_system
-				has_completed_focus = USA_re_unification_of_the_republicans
-			}
 		}
 		completion_reward = {
 			set_variable = {
@@ -6756,24 +6752,15 @@ focus_tree = {
 			set_variable = {
 				USA_new_nationalism_monthly_pop = 0
 			}
-			add_to_variable = {
-				var = USA_new_nationalism_stability
-				value = 0.05
-			}
-			add_to_variable = {
-				var = USA_new_nationalism_pp_percent
-				value = 0.05
-			}
-			hidden_effect = {
 				add_dynamic_modifier = {
 					modifier = USA_new_nationalism_dynamic
 				}
+							add_to_variable = {
+				var = USA_new_nationalism_pp_percent
+				value = 0.05
+				tooltip = political_power_factor_tt
 			}
-			custom_effect_tooltip = new_nationalism_first
-			add_days_mission_timeout = {
-				mission = USA_progressives_expect_reforms
-				days = 28
-			}
+			
 		}
 	}
 
@@ -6801,32 +6788,88 @@ focus_tree = {
 			focus = USA_policy_of_new_nationalism
 		}
 		select_effect = {
-			activate_mission = USA_minimum_wage_law
+			country_event = {
+				id = ww1_USA_roosevelt.101
+				days = 26
+			}
 		}
 		cost = 8
 		x = 2
 		y = 1
 		available = {
 			custom_trigger_tooltip = {
-				tooltip = progressives_more_50.tt
-				check_variable = {
-					new_nationalist_ideology > 50
-				}
+				tooltip = USA_rlc_noh_tt
+
 			}
+			check_variable = {
+	var = USA_the_peoples_ledger_support_congress
+	value = 30
+	compare = greater_than_or_equals
+}
+
 		}
 		completion_reward = {
-			custom_effect_tooltip = min_wage_select.tt
-			custom_effect_tooltip = if_minimum_wage_pass.tt
-			custom_effect_tooltip = tooltip_white_line
-			add_political_power = 50
+if = {
+	limit = {has_country_flag = USA_r_small_wage}
+				add_to_variable = {
+				USA_the_peoples_ledger_support_corporations = -3
+				tooltip = USA_modify_RLC_tt
+			}
 			add_to_variable = {
-				USA__1914_election_balance = 2
+				USA_the_peoples_ledger_support_smallbiz = -5
+				tooltip = USA_modify_RLBZ_tt
 			}
-			custom_effect_tooltip = progressive_republicans_midterm_1914
-			add_days_mission_timeout = {
-				mission = USA_progressives_expect_reforms
-				days = 70
+			add_to_variable = {
+				USA_the_peoples_ledger_support_labor = 3
+				tooltip = USA_modify_RLO_tt
 			}
+			add_to_variable = {
+				USA_the_peoples_ledger_support_base = 3
+				tooltip = USA_modify_RLB_tt
+			}
+custom_effect_tooltip = USA_modify_new_nationalism_tt
+			add_to_variable = {
+				var = USA_new_nationalism_consumer_goods
+				value = 0.05
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				var = USA_new_nationalism_stability
+				value = 0.05
+				tooltip = stability_factor_tt
+			}
+			else_if = {
+				limit = {has_country_flag = USA_r_big_wage}
+							add_to_variable = {
+				USA_the_peoples_ledger_support_corporations = -6
+				tooltip = USA_modify_RLC_tt
+			}
+			add_to_variable = {
+				USA_the_peoples_ledger_support_smallbiz = -10
+				tooltip = USA_modify_RLBZ_tt
+			}
+			add_to_variable = {
+				USA_the_peoples_ledger_support_labor = 6
+				tooltip = USA_modify_RLO_tt
+			}
+			add_to_variable = {
+				USA_the_peoples_ledger_support_base = 6
+				tooltip = USA_modify_RLB_tt
+			}
+			custom_effect_tooltip = USA_modify_new_nationalism_tt
+			add_to_variable = {
+				var = USA_new_nationalism_consumer_goods
+				value = 0.08
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				var = USA_new_nationalism_stability
+				value = 0.08
+				tooltip = stability_factor_tt
+			}
+				
+			}
+}
 		}
 	}
 	focus = {
@@ -6915,6 +6958,9 @@ focus_tree = {
 		y = 2
 		prerequisite = {
 			focus = USA_friends_from_above
+		}
+		completion_reward = {
+			custom_effect_tooltip = yaexemptions.tt
 		}
 	}
 	focus = {
