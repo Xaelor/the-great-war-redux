@@ -2150,6 +2150,7 @@ RUS_release_country = {
 				}
 				OR = {
 					state = 766
+					state = 1263
 					state = 1017
 					NOT = {
 						is_core_of = BLR
@@ -2553,7 +2554,8 @@ RUS_release_country = {
 		}
 	}
 }
-GER_great_war = {
+TGWR_great_power_politics = {
+	#great_power_politics_great_war
 	RUS_send_AuH_battleplan_to_serbia = {
 		icon = GFX_decision_hol_draw_up_staff_plans
 		fire_only_once = yes
@@ -2572,6 +2574,7 @@ GER_great_war = {
 			}
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			NOT = {
 				tag = SOV
 				tag = STV
@@ -2609,39 +2612,33 @@ GER_great_war = {
 		allowed = {
 			NOT = { original_tag = RUS }
 		}
-		available = {
-			OR = {
-				AND = {
-					is_major = yes
-					is_in_faction_with = RUS
-					has_war_with = GER
-				}
-				original_tag = USA
-			}
-			RUS = {
-				NOT = {
-					has_government = communism
-				}
-				has_war_with = GER
+		targets = {
+			RUS
+		}
+		target_trigger = {
+			NOT = {
+				has_government = communism
 			}
 		}
-		visible = {
+		target_root_trigger = {
 			OR = {
 				AND = {
 					is_major = yes
 					is_in_faction_with = RUS
-					has_war_with = GER
 				}
 				original_tag = USA
 			}
 			NOT = {
 				has_war_with = RUS
 			}
-			RUS = {
-				NOT = {
-					has_government = communism
-				}
+		}
+		available = {
+			FROM = {
+				has_war_with = GER
 			}
+		}
+		visible = {		
+			great_power_politics_great_war_visible = yes
 		}
 		fire_only_once = no
 		custom_cost_trigger = {
@@ -2790,6 +2787,80 @@ GER_great_war = {
 					has_idea = RUS_demobilizing_army
 				}
 				remove_ideas = RUS_demobilizing_army
+			}
+		}
+	}
+	RUS_warning_tsar_abdication = {
+		icon = eng_support_imperialist_coup
+		allowed = {
+			always = yes
+		}
+		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
+			RUS = {
+				has_country_leader = {
+					character = RUS_nikolai_ii
+				}
+				has_threat_of_revolution = yes
+				NOT = {
+					has_global_flag = russian_revolution
+					has_active_mission = RUS_mission_tsar_abdication
+				}
+			}
+		}
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+			RUS = {
+				has_country_leader = {
+					character = RUS_nikolai_ii
+				}
+				has_threat_of_revolution = yes
+				OR = {
+					AND = {
+						war_length_with = { 
+							tag = GER 
+							months > 28 
+						}
+						OR = {
+							AND = {
+								surrender_progress > 0.1
+								casualties > 1500000
+							}
+							AND = {
+								POL = {
+									exists = yes
+								}
+								surrender_progress > 0.04
+								casualties > 1500000
+							}
+						}
+					}
+					# we are in a big danger
+					AND = {
+						surrender_progress > 0.2
+						casualties > 1000000
+					}	
+					surrender_progress > 0.35
+				}
+				SOV = { exists = no }
+				hidden_trigger = {
+					NOT = { has_completed_focus = RUS_force_tsar_abdtication }
+					NOT = { has_completed_focus = RUS_resist_the_duma }
+					NOT = { has_completed_focus = RUS_provisional_committee }
+				}
+				NOT = { has_global_flag = russian_revolution }
+			}
+		}
+		fire_only_once = yes
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
+		complete_effect = {
+			RUS = {
+				country_event = rusrevolt.2
 			}
 		}
 	}

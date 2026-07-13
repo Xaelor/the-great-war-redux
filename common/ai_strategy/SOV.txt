@@ -333,41 +333,21 @@ SOV_save_equipment_for_militia = {
 			infantry_equipment < 3000
 		}
 		is_in_russian_civil_war = yes
+		has_completed_focus = SOV_red_army
 		any_controlled_state = {
 			state_population_k > 50
 			OR = {
-				AND = {
-					is_in_array = {
-						array = global.RCW_core_big_states_array
-						value = THIS.id
-					}
-					ROOT = {
-						OR = {
-							has_completed_focus = SOV_military_academy
-							has_completed_focus = SOV_military_all_education
-						}	
-					}
+				is_in_array = {
+					array = global.RCW_core_big_states_array
+					value = THIS.id
 				}
-				AND = {
-					is_in_array = {
-						array = global.RCW_core_large_states_array
-						value = THIS.id
-					}
-					ROOT = {
-						OR = {
-							has_completed_focus = SOV_pre_revolutionary_army_officers
-							has_completed_focus = SOV_peoples_army
-						}
-					}
+				is_in_array = {
+					array = global.RCW_core_large_states_array
+					value = THIS.id
 				}
-				AND = {
-					is_in_array = {
-						array = global.RCW_core_huge_states_array
-						value = THIS.id
-					}
-					ROOT = {
-						has_completed_focus = SOV_red_army
-					}
+				is_in_array = {
+					array = global.RCW_core_huge_states_array
+					value = THIS.id
 				}
 			}
 			NOT = { has_state_flag = SOV_has_mobilized_militia }
@@ -824,6 +804,29 @@ SOV_crush_rest_of_white_army = {
 				tag = RSO
 			}
 		}
+		value = 100
+	}
+}
+
+SOV_build_mils = {
+	allowed = {
+		tag = RUS
+	}
+	enable = {
+		tag = SOV
+		is_in_russian_civil_war = yes
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = build_building
+		id = arms_factory
+		target = 219
+		value = 100
+	}
+	ai_strategy = {
+		type = build_building
+		id = arms_factory
+		target = 195
 		value = 100
 	}
 }

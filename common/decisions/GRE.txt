@@ -239,269 +239,6 @@ operations = {
 	}
 }
 
-GRE_battle_of_epirus = {
-	GRE_leave_northern_epirus_mission = {
-		icon = GFX_decision_infiltrate_state
-		highlight_states = {
-			highlight_state_targets = {
-				state = 803
-				state = 1225
-			}
-		}
-		allowed = {
-			OR = {
-				tag = GRE
-				tag = ITA
-				tag = AUS
-			}
-		}
-		visible = {
-			OR = {
-				tag = GRE
-				has_country_flag = AUH_ITA_BUL_reaction_to_GRE_occupation_of_nothern_epirus
-				has_country_flag = ROOT_against_GRE_occupation_of_northern_epirus
-			}	
-		}
-		activation = {
-			AUS = {
-				exists = yes
-				is_subject = no
-				NOT = {
-					has_country_flag = great_war_loser
-				}
-				has_country_flag = AUH_ITA_BUL_reaction_to_GRE_occupation_of_nothern_epirus
-			}
-			NOT = {
-				has_global_flag = epirus_has_been_freed
-			}
-			803 = { is_owned_and_controlled_by = GRE }
-			1225 = { is_owned_and_controlled_by = GRE }
-		}
-		selectable_mission = yes
-		cost = 0
-		timeout_effect = {
-			every_country = {
-				limit = {
-					has_country_flag = ROOT_against_GRE_occupation_of_northern_epirus
-					is_subject = no
-					has_war = no
-					is_subject = no
-					NOT = {
-						has_country_flag = great_war_loser
-					}
-				}
-				declare_war_on = {
-					target = GRE
-					type = liberate_wargoal
-				}
-			}
-		}
-		complete_effect = {
-			set_global_flag = epirus_has_been_freed
-			news_event = {
-				id = ww1_greece.237
-				days = 1
-			}
-			hidden_effect = {
-				EPR = {
-					transfer_state = 803
-					transfer_state = 1225
-				}
-			}
-			every_country = {
-				limit = {
-					has_country_flag = ROOT_against_GRE_occupation_of_northern_epirus
-				}
-				country_event = {
-					id = ww1_firstbalkan.52
-					days = 2
-				}
-				clr_country_flag = ROOT_against_GRE_occupation_of_northern_epirus
-				hidden_effect = {
-					remove_decision = GRE_leave_northern_epirus_mission
-					remove_mission = GRE_leave_northern_epirus_mission
-				}
-				
-			}
-		}
-		available = {
-			if = {
-				limit = {
-					tag = GRE
-				}
-				has_completed_focus = GRE_florence_protocol
-				owns_state = 803
-				owns_state = 1225
-				else = {
-					always = no
-				}	
-			}
-			
-		}
-		ai_will_do = {
-			factor = 15
-			modifier = {
-				date < 1914.1.1
-				is_historical_focus_on = yes
-				factor = 5
-			}
-			modifier = {
-				date > 1914.2.2
-				factor = 100
-			}
-		}
-		days_mission_timeout = 400
-		is_good = no
-	}
-	GRE_send_ministers_to_northern_epirus = {
-		icon = "GFX_decision_generic_autonomy"
-		allowed = {
-			original_tag = GRE
-		}
-		targets = {
-			EPR
-		}
-		visible = {
-			FROM = {
-				is_subject = no
-				has_war_with = ALB
-			}
-			original_tag = GRE
-		}
-		fire_only_once = yes
-		cost = 25
-		remove_effect = {
-			FROM = {
-				set_country_flag = GRE_sent_support
-				custom_effect_tooltip = available_political_advisor
-				show_ideas_tooltip = EPR_Alexandros_Karapanos
-				custom_effect_tooltip = available_chief_of_army
-				show_ideas_tooltip = EPR_Dimitrios_Doulis
-			}
-			
-		}
-		ai_will_do = {
-			factor = 2.5
-		}
-	}
-	GRE_send_weapons_to_epirus = {
-		icon = GFX_decision_eng_trade_unions_support
-		allowed = {
-			original_tag = GRE
-		}
-		targets = {
-			EPR
-		}
-		visible = {
-			original_tag = GRE
-			FROM = {
-				is_subject = no
-				has_war_with = ALB
-			}
-		}
-		fire_only_once = yes
-		custom_cost_trigger = {
-			has_equipment = { infantry_equipment > 499 }
-		}
-		custom_cost_text = 500_infantry_equipment_1
-		remove_effect = {
-			send_equipment = {
-				amount = 500
-				equipment = infantry_equipment
-				target = FROM
-			}
-			
-		}
-		ai_will_do = {
-			factor = 2.5
-			modifier = {
-				factor = 0
-				stockpile_ratio = { 
-					archetype = infantry_equipment
-					ratio < 0.75
-				}
-			}
-		}
-	}
-	GRE_occupy_northern_epirus_epr = {
-		name = GRE_occupy_northern_epirus
-		desc = GRE_occupy_northern_epirus_desc
-		icon = GFX_decision_infiltrate_state
-		allowed = {
-			original_tag = GRE
-		}
-		target_trigger = {
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ALB
-				}
-			}
-		}
-		targets = {
-			EPR
-		}
-		visible = {
-			owns_state = 758
-			FROM = {
-				owns_state = 803
-				owns_state = 1225
-			} 
-		}
-		target_root_trigger = {
-			has_completed_focus = GRE_florence_protocol
-			has_global_flag = albanian_peasant_revolt
-			has_global_flag = great_war
-		}
-		available = {
-			count_triggers = {
-				amount = 4
-				FRA = { any_enemy_country = { is_major = yes } }
-				ENG = { any_enemy_country = { is_major = yes } }
-				ITA = { any_enemy_country = { is_major = yes } }
-				RUS = { any_enemy_country = { is_major = yes } }
-				AUS = { any_enemy_country = { is_major = yes } }
-				GER = { any_enemy_country = { is_major = yes } }
-			}
-			is_subject = no
-			has_capitulated = no
-			FROM = { NOT = { has_war_with = ROOT } }
-		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 803
-				state = 1225
-			}
-		}
-		fire_only_once = yes
-		custom_cost_trigger = {
-			command_power > 4.9
-		}
-		custom_cost_text = decision_cost_CP_5
-		ai_will_do = {
-			factor = 1000
-		}
-		complete_effect = {
-			hidden_effect = { add_command_power = -5 }
-			add_named_threat = {
-				threat = 3
-				name = GRE_occupy_northern_epirus
-			}
-			effect_tooltip = {
-				transfer_state = 803
-				transfer_state = 1225
-			}
-			hidden_effect = {
-				if = {
-					limit = { FROM = { is_subject = yes } }
-					FROM.OVERLORD = { country_event = ww1_albania.5 }
-				}
-				else = { FROM = { country_event = ww1_albania.5 } }
-			}
-		}
-	}
-}
-
 GRE_balkan_war = {
 	GRE_capture_thessaloniki = {
 		icon = GFX_decision_generic_ignite_civil_war
@@ -4194,6 +3931,7 @@ GRE_territorial_allegeance = {
 					ROOT = {
 						owns_state = 758
 						owns_state = 826
+						owns_state = 1257
 					}
 				}
 			}
@@ -4225,8 +3963,10 @@ GRE_territorial_allegeance = {
 						state = 182
 						state = 185
 						state = 731
+						state = 1256
 						state = 758
 						state = 826
+						state = 1257
 					}
 				}
 				OR = {
@@ -5408,6 +5148,141 @@ GRE_territorial_allegeance = {
 		}
 	}
 
+	GRE_expand_influence_in_the_katerini_garrison = {
+		allowed = { original_tag = GRE }
+		icon = {
+			key = gre_venizelist_garrison_control_none
+			trigger = {
+				has_completed_focus = GRE_negotiations_with_entente
+				1257 = { check_variable = { var = GRE_garrison_control value = 1 compare = equals } }
+			}
+		}
+		icon = {
+			key = gre_venizelist_garrison_control_weak
+			trigger = {
+				has_completed_focus = GRE_negotiations_with_entente
+				1257 = { check_variable = { var = GRE_garrison_control value = 2 compare = equals } }
+			}
+		}
+		icon = {
+			key = gre_venizelist_garrison_control_strong
+			trigger = {
+				has_completed_focus = GRE_negotiations_with_entente
+				1257 = { check_variable = { var = GRE_garrison_control value = 3 compare = equals } }
+			}
+		}
+		icon = {
+			key = gre_venizelist_garrison_control_total
+			trigger = {
+				has_completed_focus = GRE_negotiations_with_entente
+				1257 = { check_variable = { var = GRE_garrison_control value = 4 compare = greater_than_or_equals } }
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_none
+			trigger = {
+				has_completed_focus = GRE_commit_to_neutrality
+				1257 = { check_variable = { var = GRE_garrison_control value = 1 compare = equals } }
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_weak
+			trigger = {
+				has_completed_focus = GRE_commit_to_neutrality
+				1257 = { check_variable = { var = GRE_garrison_control value = 2 compare = equals } }
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_strong
+			trigger = {
+				has_completed_focus = GRE_commit_to_neutrality
+				1257 = { check_variable = { var = GRE_garrison_control value = 3 compare = equals } }
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_total
+			trigger = {
+				has_completed_focus = GRE_commit_to_neutrality
+				1257 = { check_variable = { var = GRE_garrison_control value = 4 compare = greater_than_or_equals } }
+			}
+		}
+		available = {
+			has_full_control_of_state = 1257
+			has_civil_war = no
+			if = {
+				limit = { has_completed_focus = GRE_commit_to_neutrality }
+				custom_trigger_tooltip = {
+					tooltip = GRE_expand_influence_monarchists_trigger_tt
+					1257 = { check_variable = { var = GRE_garrison_control value = 2 compare = greater_than_or_equals } }
+				}
+			}
+			if = {
+				limit = { has_completed_focus = GRE_negotiations_with_entente }
+				custom_trigger_tooltip = {
+					tooltip = GRE_expand_influence_venizelists_trigger_tt
+					1257 = { check_variable = { var = GRE_garrison_control value = 4 compare = less_than } }
+				}
+			}
+			NOT = { has_country_flag = GRE_already_expanding_influence_flag }
+		}
+		highlight_states = { highlight_state_targets = { state = 1257 }  }
+		on_map_mode = map_only
+		cost = 1257.GRE_garrison_control_cost?10
+		days_remove = 14
+		fire_only_once = no
+		visible = {
+			has_country_flag = battle_of_influence
+			1257 = { is_owned_and_controlled_by = ROOT }
+		}
+		cancel_if_not_visible = yes
+		complete_effect = { set_country_flag = GRE_already_expanding_influence_flag }
+		remove_effect = {
+			if = {
+				limit = { has_completed_focus = GRE_negotiations_with_entente }
+				1257 = {
+					custom_effect_tooltip = GRE_expand_influence_venizelists_tt
+					hidden_effect = {
+						if = {
+							limit = { check_variable = { GRE_garrison_control < 4 } }
+							add_to_variable = { var = GRE_garrison_control value = 1 }
+							ROOT = { add_to_variable = { var = GRE_venizelist_civil_war_divisions_counter_var value = 1 } }
+							ROOT = { subtract_from_variable = { var = GRE_monarchist_civil_war_divisions_counter_var value = 1 } }
+						}
+					}
+					GRE_garrison_control_tooltip = yes
+					GRE_garrison_control_cost_calculation_venizelists = yes
+				}
+			}
+			if = {
+				limit = { has_completed_focus = GRE_commit_to_neutrality }
+				1257 = {
+					custom_effect_tooltip = GRE_expand_influence_monarchists_tt
+					hidden_effect = {
+						subtract_from_variable = { var = GRE_garrison_control value = 1 }
+						ROOT = { subtract_from_variable = { var = GRE_venizelist_civil_war_divisions_counter_var value = 1 } }
+						ROOT = { add_to_variable = { var = GRE_monarchist_civil_war_divisions_counter_var value = 1 } }
+					}
+					GRE_garrison_control_tooltip = yes
+					GRE_garrison_control_cost_calculation_monarchists = yes
+				}
+			}
+			clr_country_flag = GRE_already_expanding_influence_flag
+		}
+		ai_will_do = {
+			base = 110
+			modifier = {
+				has_completed_focus = GRE_negotiations_with_entente
+				1257 = { check_variable = { var = GRE_garrison_control value = 2 compare = greater_than_or_equals } }
+				factor = 5
+			}
+			modifier = {
+				has_completed_focus = GRE_negotiations_with_entente
+				1257 = { check_variable = { var = GRE_garrison_control value = 3 compare = greater_than_or_equals } }
+				factor = 5
+			}
+		}
+	}
+
 	GRE_expand_influence_in_the_northern_epirus_garrison = {
 		allowed = { original_tag = GRE }
 		icon = {
@@ -5865,6 +5740,193 @@ GRE_territorial_allegeance = {
 		}
 	}
 
+	GRE_expand_influence_in_the_servia_garrison = {
+		allowed = { original_tag = GRE }
+		icon = {
+			key = gre_venizelist_garrison_control_none
+			trigger = {
+				NOT = { has_country_flag = battle_of_influence_royalist_side }
+				1256 = { check_variable = { var = GRE_garrison_control value = 1 compare = equals } }
+			}
+		}
+		icon = {
+			key = gre_venizelist_garrison_control_weak
+			trigger = {
+				NOT = { has_country_flag = battle_of_influence_royalist_side }
+				1256 = {
+					check_variable = { var = GRE_garrison_control value = 2 compare = equals }
+					NOT = { has_state_flag = GRE_venizelist_state_flag }
+				}
+			}
+		}
+		icon = {
+			key = gre_venizelist_garrison_control_weak2
+			trigger = {
+				NOT = { has_country_flag = battle_of_influence_royalist_side }
+				1256 = {
+					check_variable = { var = GRE_garrison_control value = 2 compare = equals }
+					has_state_flag = GRE_venizelist_state_flag
+				}
+			}
+		}
+		icon = {
+			key = gre_venizelist_garrison_control_strong
+			trigger = {
+				NOT = { has_country_flag = battle_of_influence_royalist_side }
+				1256 = {
+					check_variable = { var = GRE_garrison_control value = 3 compare = equals }
+					NOT = { has_state_flag = GRE_venizelist_state_flag }
+				}
+			}
+		}
+		icon = {
+			key = gre_venizelist_garrison_control_strong2
+			trigger = {
+				NOT = { has_country_flag = battle_of_influence_royalist_side }
+				1256 = {
+					check_variable = { var = GRE_garrison_control value = 3 compare = equals }
+					has_state_flag = GRE_venizelist_state_flag
+				}
+			}
+		}
+		icon = {
+			key = gre_venizelist_garrison_control_total
+			trigger = {
+				NOT = { has_country_flag = battle_of_influence_royalist_side }
+				1256 = { check_variable = { var = GRE_garrison_control value = 4 compare = greater_than_or_equals } }
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_none
+			trigger = {
+				has_country_flag = battle_of_influence_royalist_side
+				1256 = { check_variable = { var = GRE_garrison_control value = 1 compare = equals } }
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_weak
+			trigger = {
+				has_country_flag = battle_of_influence_royalist_side
+				1256 = {
+					check_variable = { var = GRE_garrison_control value = 2 compare = equals }
+					NOT = { has_state_flag = GRE_venizelist_state_flag }
+				}
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_weak2
+			trigger = {
+				has_country_flag = battle_of_influence_royalist_side
+				1256 = {
+					check_variable = { var = GRE_garrison_control value = 2 compare = equals }
+					has_state_flag = GRE_venizelist_state_flag
+				}
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_strong
+			trigger = {
+				has_country_flag = battle_of_influence_royalist_side
+				1256 = {
+					check_variable = { var = GRE_garrison_control value = 3 compare = equals }
+					NOT = { has_state_flag = GRE_venizelist_state_flag }
+				}
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_strong2
+			trigger = {
+				has_country_flag = battle_of_influence_royalist_side
+				1256 = {
+					check_variable = { var = GRE_garrison_control value = 3 compare = equals }
+					has_state_flag = GRE_venizelist_state_flag
+				}
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_total
+			trigger = {
+				has_country_flag = battle_of_influence_royalist_side
+				1256 = { check_variable = { var = GRE_garrison_control value = 4 compare = greater_than_or_equals } }
+			}
+		}
+		available = {
+			has_full_control_of_state = 1256
+			has_civil_war = no
+			if = {
+				limit = { has_completed_focus = GRE_commit_to_neutrality }
+				custom_trigger_tooltip = {
+					tooltip = GRE_expand_influence_monarchists_trigger_tt
+					1256 = { check_variable = { var = GRE_garrison_control value = 2 compare = greater_than_or_equals } }
+				}
+			}
+			if = {
+				limit = { has_completed_focus = GRE_negotiations_with_entente }
+				custom_trigger_tooltip = {
+					tooltip = GRE_expand_influence_venizelists_trigger_tt
+					1256 = { check_variable = { var = GRE_garrison_control value = 4 compare = less_than } }
+				}
+			}
+			NOT = { has_country_flag = GRE_already_expanding_influence_flag }
+		}
+		highlight_states = { highlight_state_targets = { state = 1256 }  }
+		on_map_mode = map_only
+		cost = 1256.GRE_garrison_control_cost?10
+		days_remove = 14
+		fire_only_once = no
+		visible = {
+			has_country_flag = battle_of_influence
+			1256 = { is_owned_and_controlled_by = ROOT }
+		}
+		cancel_if_not_visible = yes
+		complete_effect = { set_country_flag = GRE_already_expanding_influence_flag }
+		remove_effect = {
+			if = {
+				limit = { has_completed_focus = GRE_negotiations_with_entente }
+				1256 = {
+					custom_effect_tooltip = GRE_expand_influence_venizelists_tt
+					hidden_effect = {
+						if = {
+							limit = { check_variable = { GRE_garrison_control < 4 } }
+							add_to_variable = { var = GRE_garrison_control value = 1 }
+							ROOT = { add_to_variable = { var = GRE_venizelist_civil_war_divisions_counter_var value = 1 } }
+							ROOT = { subtract_from_variable = { var = GRE_monarchist_civil_war_divisions_counter_var value = 1 } }
+						}
+					}
+					GRE_garrison_control_tooltip = yes
+					GRE_garrison_control_cost_calculation_venizelists = yes
+				}
+			}
+			if = {
+				limit = { has_completed_focus = GRE_commit_to_neutrality }
+				1256 = {
+					custom_effect_tooltip = GRE_expand_influence_monarchists_tt
+					hidden_effect = {
+						subtract_from_variable = { var = GRE_garrison_control value = 1 }
+						ROOT = { subtract_from_variable = { var = GRE_venizelist_civil_war_divisions_counter_var value = 1 } }
+						ROOT = { add_to_variable = { var = GRE_monarchist_civil_war_divisions_counter_var value = 1 } }
+					}
+					GRE_garrison_control_tooltip = yes
+					GRE_garrison_control_cost_calculation_monarchists = yes
+				}
+			}
+			clr_country_flag = GRE_already_expanding_influence_flag
+		}
+		ai_will_do = {
+			base = 110
+			modifier = {
+				has_completed_focus = GRE_negotiations_with_entente
+				1256 = { check_variable = { var = GRE_garrison_control value = 2 compare = greater_than_or_equals } }
+				factor = 5
+			}
+			modifier = {
+				has_completed_focus = GRE_negotiations_with_entente
+				1256 = { check_variable = { var = GRE_garrison_control value = 3 compare = greater_than_or_equals } }
+				factor = 5
+			}
+		}
+	}
+
 	GRE_expand_influence_in_the_thessaloniki_garrison = {
 		allowed = { original_tag = GRE }
 		icon = {
@@ -6047,6 +6109,193 @@ GRE_territorial_allegeance = {
 			modifier = {
 				has_completed_focus = GRE_negotiations_with_entente
 				345 = { check_variable = { var = GRE_garrison_control value = 3 compare = greater_than_or_equals } }
+				factor = 5
+			}
+		}
+	}
+
+	GRE_expand_influence_in_the_athos_garrison = {
+		allowed = { original_tag = GRE }
+		icon = {
+			key = gre_venizelist_garrison_control_none
+			trigger = {
+				NOT = { has_country_flag = battle_of_influence_royalist_side }
+				1255 = { check_variable = { var = GRE_garrison_control value = 1 compare = equals } }
+			}
+		}
+		icon = {
+			key = gre_venizelist_garrison_control_weak
+			trigger = {
+				NOT = { has_country_flag = battle_of_influence_royalist_side }
+				1255 = {
+					check_variable = { var = GRE_garrison_control value = 2 compare = equals }
+					NOT = { has_state_flag = GRE_venizelist_state_flag }
+				}
+			}
+		}
+		icon = {
+			key = gre_venizelist_garrison_control_weak2
+			trigger = {
+				NOT = { has_country_flag = battle_of_influence_royalist_side }
+				1255 = {
+					check_variable = { var = GRE_garrison_control value = 2 compare = equals }
+					has_state_flag = GRE_venizelist_state_flag
+				}
+			}
+		}
+		icon = {
+			key = gre_venizelist_garrison_control_strong
+			trigger = {
+				NOT = { has_country_flag = battle_of_influence_royalist_side }
+				1255 = {
+					check_variable = { var = GRE_garrison_control value = 3 compare = equals }
+					NOT = { has_state_flag = GRE_venizelist_state_flag }
+				}
+			}
+		}
+		icon = {
+			key = gre_venizelist_garrison_control_strong2
+			trigger = {
+				NOT = { has_country_flag = battle_of_influence_royalist_side }
+				1255 = {
+					check_variable = { var = GRE_garrison_control value = 3 compare = equals }
+					has_state_flag = GRE_venizelist_state_flag
+				}
+			}
+		}
+		icon = {
+			key = gre_venizelist_garrison_control_total
+			trigger = {
+				NOT = { has_country_flag = battle_of_influence_royalist_side }
+				1255 = { check_variable = { var = GRE_garrison_control value = 4 compare = greater_than_or_equals } }
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_none
+			trigger = {
+				has_country_flag = battle_of_influence_royalist_side
+				1255 = { check_variable = { var = GRE_garrison_control value = 1 compare = equals } }
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_weak
+			trigger = {
+				has_country_flag = battle_of_influence_royalist_side
+				1255 = {
+					check_variable = { var = GRE_garrison_control value = 2 compare = equals }
+					NOT = { has_state_flag = GRE_venizelist_state_flag }
+				}
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_weak2
+			trigger = {
+				has_country_flag = battle_of_influence_royalist_side
+				1255 = {
+					check_variable = { var = GRE_garrison_control value = 2 compare = equals }
+					has_state_flag = GRE_venizelist_state_flag
+				}
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_strong
+			trigger = {
+				has_country_flag = battle_of_influence_royalist_side
+				1255 = {
+					check_variable = { var = GRE_garrison_control value = 3 compare = equals }
+					NOT = { has_state_flag = GRE_venizelist_state_flag }
+				}
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_strong2
+			trigger = {
+				has_country_flag = battle_of_influence_royalist_side
+				1255 = {
+					check_variable = { var = GRE_garrison_control value = 3 compare = equals }
+					has_state_flag = GRE_venizelist_state_flag
+				}
+			}
+		}
+		icon = {
+			key = gre_monarchist_garrison_control_total
+			trigger = {
+				has_country_flag = battle_of_influence_royalist_side
+				1255 = { check_variable = { var = GRE_garrison_control value = 4 compare = greater_than_or_equals } }
+			}
+		}
+		available = {
+			has_full_control_of_state = 1255
+			has_civil_war = no
+			if = {
+				limit = { has_completed_focus = GRE_commit_to_neutrality }
+				custom_trigger_tooltip = {
+					tooltip = GRE_expand_influence_monarchists_trigger_tt
+					1255 = { check_variable = { var = GRE_garrison_control value = 2 compare = greater_than_or_equals } }
+				}
+			}
+			if = {
+				limit = { has_completed_focus = GRE_negotiations_with_entente }
+				custom_trigger_tooltip = {
+					tooltip = GRE_expand_influence_venizelists_trigger_tt
+					1255 = { check_variable = { var = GRE_garrison_control value = 4 compare = less_than } }
+				}
+			}
+			NOT = { has_country_flag = GRE_already_expanding_influence_flag }
+		}
+		highlight_states = { highlight_state_targets = { state = 1255 }  }
+		on_map_mode = map_only
+		cost = 1255.GRE_garrison_control_cost?10
+		days_remove = 14
+		fire_only_once = no
+		visible = {
+			has_country_flag = battle_of_influence
+			1255 = { is_owned_and_controlled_by = ROOT }
+		}
+		cancel_if_not_visible = yes
+		complete_effect = { set_country_flag = GRE_already_expanding_influence_flag }
+		remove_effect = {
+			if = {
+				limit = { has_completed_focus = GRE_negotiations_with_entente }
+				1255 = {
+					custom_effect_tooltip = GRE_expand_influence_venizelists_tt
+					hidden_effect = {
+						if = {
+							limit = { check_variable = { GRE_garrison_control < 4 } }
+							add_to_variable = { var = GRE_garrison_control value = 1 }
+							ROOT = { add_to_variable = { var = GRE_venizelist_civil_war_divisions_counter_var value = 1 } }
+							ROOT = { subtract_from_variable = { var = GRE_monarchist_civil_war_divisions_counter_var value = 1 } }
+						}
+					}
+					GRE_garrison_control_tooltip = yes
+					GRE_garrison_control_cost_calculation_venizelists = yes
+				}
+			}
+			if = {
+				limit = { has_completed_focus = GRE_commit_to_neutrality }
+				1255 = {
+					custom_effect_tooltip = GRE_expand_influence_monarchists_tt
+					hidden_effect = {
+						subtract_from_variable = { var = GRE_garrison_control value = 1 }
+						ROOT = { subtract_from_variable = { var = GRE_venizelist_civil_war_divisions_counter_var value = 1 } }
+						ROOT = { add_to_variable = { var = GRE_monarchist_civil_war_divisions_counter_var value = 1 } }
+					}
+					GRE_garrison_control_tooltip = yes
+					GRE_garrison_control_cost_calculation_monarchists = yes
+				}
+			}
+			clr_country_flag = GRE_already_expanding_influence_flag
+		}
+		ai_will_do = {
+			base = 110
+			modifier = {
+				has_completed_focus = GRE_negotiations_with_entente
+				1255 = { check_variable = { var = GRE_garrison_control value = 2 compare = greater_than_or_equals } }
+				factor = 5
+			}
+			modifier = {
+				has_completed_focus = GRE_negotiations_with_entente
+				1255 = { check_variable = { var = GRE_garrison_control value = 3 compare = greater_than_or_equals } }
 				factor = 5
 			}
 		}
@@ -10427,6 +10676,62 @@ GRE_territorial_allegeance = {
 		}
 	}
 
+	GRE_expand_influence_in_the_katerini_garrison_mission = {
+		icon = generic_prepare_civil_war
+		allowed = { original_tag = GRE }
+		available = { hidden_trigger = { always = no } }
+		highlight_states = { highlight_state_targets = { state = 1257 } }
+		on_map_mode = map_and_decisions_view
+		fire_only_once = no
+		days_mission_timeout = 14
+		is_good = no
+		cancel_if_not_visible = yes
+		activation = { always = no }
+		visible = {
+			has_country_flag = battle_of_influence
+			1257 = { is_owned_and_controlled_by = ROOT }
+		}
+		timeout_effect = {
+			hidden_effect = { 1257 = { set_state_flag = { flag = GRE_national_schism_recently_chosen value = 1 days = 30 } } }
+			if = {
+				limit = { has_completed_focus = GRE_commit_to_neutrality }
+				1257 = {
+					custom_effect_tooltip = GRE_expand_influence_monarchists_tt
+					GRE_garrison_control_tooltip = yes
+				}
+				hidden_effect = {
+					1257 = {
+						if = {
+							limit = { check_variable = { GRE_garrison_control < 4 } }
+							add_to_variable = { var = GRE_garrison_control value = 1 }
+							ROOT = { add_to_variable = { var = GRE_venizelist_civil_war_divisions_counter_var value = 1 } }
+							ROOT = { subtract_from_variable = { var = GRE_monarchist_civil_war_divisions_counter_var value = 1 } }
+						}
+						GRE_garrison_control_cost_calculation_monarchists = yes
+					}
+					country_event = { id = ww1_greece.248 days = 5 random_days = 5 }
+				}
+			}
+			if = {
+				limit = { has_completed_focus = GRE_negotiations_with_entente }
+				1257 = {
+					custom_effect_tooltip = GRE_expand_influence_venizelists_tt
+					GRE_garrison_control_tooltip = yes
+					GRE_garrison_control_cost_calculation_venizelists = yes
+				}
+				hidden_effect = {
+					1257 = {
+						subtract_from_variable = { var = GRE_garrison_control value = 1 }
+						ROOT = { subtract_from_variable = { var = GRE_venizelist_civil_war_divisions_counter_var value = 1 } }
+						ROOT = { add_to_variable = { var = GRE_monarchist_civil_war_divisions_counter_var value = 1 } }
+						GRE_garrison_control_cost_calculation_venizelists = yes
+					}
+					country_event = { id = ww1_greece.248 days = 5 random_days = 5 }
+				}
+			}
+		}
+	}
+
 	GRE_expand_influence_in_the_northern_epirus_garrison_mission = {
 		icon = generic_prepare_civil_war
 		allowed = { original_tag = GRE }
@@ -10595,6 +10900,62 @@ GRE_territorial_allegeance = {
 		}
 	}
 
+	GRE_expand_influence_in_the_servia_garrison_mission = {
+		icon = generic_prepare_civil_war
+		allowed = { original_tag = GRE }
+		available = { hidden_trigger = { always = no } }
+		highlight_states = { highlight_state_targets = { state = 1256 } }
+		on_map_mode = map_and_decisions_view
+		fire_only_once = no
+		days_mission_timeout = 14
+		is_good = no
+		cancel_if_not_visible = yes
+		activation = { always = no }
+		visible = {
+			has_country_flag = battle_of_influence
+			1256 = { is_owned_and_controlled_by = ROOT }
+		}
+		timeout_effect = {
+			hidden_effect = { 1256 = { set_state_flag = { flag = GRE_national_schism_recently_chosen value = 1 days = 30 } } }
+			if = {
+				limit = { has_completed_focus = GRE_commit_to_neutrality }
+				1256 = {
+					custom_effect_tooltip = GRE_expand_influence_monarchists_tt
+					GRE_garrison_control_tooltip = yes
+				}
+				hidden_effect = {
+					1256 = {
+						if = {
+							limit = { check_variable = { GRE_garrison_control < 4 } }
+							add_to_variable = { var = GRE_garrison_control value = 1 }
+							ROOT = { add_to_variable = { var = GRE_venizelist_civil_war_divisions_counter_var value = 1 } }
+							ROOT = { subtract_from_variable = { var = GRE_monarchist_civil_war_divisions_counter_var value = 1 } }
+						}
+						GRE_garrison_control_cost_calculation_monarchists = yes
+					}
+					country_event = { id = ww1_greece.248 days = 5 random_days = 5 }
+				}
+			}
+			if = {
+				limit = { has_completed_focus = GRE_negotiations_with_entente }
+				1256 = {
+					custom_effect_tooltip = GRE_expand_influence_venizelists_tt
+					GRE_garrison_control_tooltip = yes
+					GRE_garrison_control_cost_calculation_venizelists = yes
+				}
+				hidden_effect = {
+					1256 = {
+						subtract_from_variable = { var = GRE_garrison_control value = 1 }
+						ROOT = { subtract_from_variable = { var = GRE_venizelist_civil_war_divisions_counter_var value = 1 } }
+						ROOT = { add_to_variable = { var = GRE_monarchist_civil_war_divisions_counter_var value = 1 } }
+						GRE_garrison_control_cost_calculation_venizelists = yes
+					}
+					country_event = { id = ww1_greece.248 days = 5 random_days = 5 }
+				}
+			}
+		}
+	}
+
 	GRE_expand_influence_in_the_thessaloniki_garrison_mission = {
 		icon = generic_prepare_civil_war
 		allowed = { original_tag = GRE }
@@ -10640,6 +11001,62 @@ GRE_territorial_allegeance = {
 				}
 				hidden_effect = {
 					345 = {
+						subtract_from_variable = { var = GRE_garrison_control value = 1 }
+						ROOT = { subtract_from_variable = { var = GRE_venizelist_civil_war_divisions_counter_var value = 1 } }
+						ROOT = { add_to_variable = { var = GRE_monarchist_civil_war_divisions_counter_var value = 1 } }
+						GRE_garrison_control_cost_calculation_venizelists = yes
+					}
+					country_event = { id = ww1_greece.248 days = 5 random_days = 5 }
+				}
+			}
+		}
+	}
+
+	GRE_expand_influence_in_the_athos_garrison_mission = {
+		icon = generic_prepare_civil_war
+		allowed = { original_tag = GRE }
+		available = { hidden_trigger = { always = no } }
+		highlight_states = { highlight_state_targets = { state = 1255 } }
+		on_map_mode = map_and_decisions_view
+		fire_only_once = no
+		days_mission_timeout = 14
+		is_good = no
+		cancel_if_not_visible = yes
+		activation = { always = no }
+		visible = {
+			has_country_flag = battle_of_influence
+			1255 = { is_owned_and_controlled_by = ROOT }
+		}
+		timeout_effect = {
+			hidden_effect = { 1255 = { set_state_flag = { flag = GRE_national_schism_recently_chosen value = 1 days = 30 } } }
+			if = {
+				limit = { has_completed_focus = GRE_commit_to_neutrality }
+				1255 = {
+					custom_effect_tooltip = GRE_expand_influence_monarchists_tt
+					GRE_garrison_control_tooltip = yes
+				}
+				hidden_effect = {
+					1255 = {
+						if = {
+							limit = { check_variable = { GRE_garrison_control < 4 } }
+							add_to_variable = { var = GRE_garrison_control value = 1 }
+							ROOT = { add_to_variable = { var = GRE_venizelist_civil_war_divisions_counter_var value = 1 } }
+							ROOT = { subtract_from_variable = { var = GRE_monarchist_civil_war_divisions_counter_var value = 1 } }
+						}
+						GRE_garrison_control_cost_calculation_monarchists = yes
+					}
+					country_event = { id = ww1_greece.248 days = 5 random_days = 5 }
+				}
+			}
+			if = {
+				limit = { has_completed_focus = GRE_negotiations_with_entente }
+				1255 = {
+					custom_effect_tooltip = GRE_expand_influence_venizelists_tt
+					GRE_garrison_control_tooltip = yes
+					GRE_garrison_control_cost_calculation_venizelists = yes
+				}
+				hidden_effect = {
+					1255 = {
 						subtract_from_variable = { var = GRE_garrison_control value = 1 }
 						ROOT = { subtract_from_variable = { var = GRE_venizelist_civil_war_divisions_counter_var value = 1 } }
 						ROOT = { add_to_variable = { var = GRE_monarchist_civil_war_divisions_counter_var value = 1 } }
@@ -11851,7 +12268,10 @@ GRE_territorial_allegeance = {
 		available = {
 			OR = {
 				has_war = yes
-				any_other_country = { original_tag = GRE }
+				any_country_with_original_tag = {
+					original_tag_to_check = GRE 
+					NOT = { tag = ROOT }
+				}
 				NOT = { has_country_flag = battle_of_influence }
 			}
 			OR = {
@@ -12143,7 +12563,9 @@ crisis = {
 		highlight_states = {
 			highlight_state_targets = {
 				state = 345
+				state = 1255
 				state = 731
+				state = 1256
 				state = 184
 			}
 		}
@@ -12176,7 +12598,19 @@ crisis = {
 						is_owned_and_controlled_by = FRA
 					}
 				}
+				1255 = {
+					OR = {
+						is_owned_and_controlled_by = GRE
+						is_owned_and_controlled_by = FRA
+					}
+				}
 				731 = {
+					OR = {
+						is_owned_and_controlled_by = GRE
+						is_owned_and_controlled_by = FRA
+					}
+				}
+				1256 = {
 					OR = {
 						is_owned_and_controlled_by = GRE
 						is_owned_and_controlled_by = FRA
@@ -12202,7 +12636,9 @@ crisis = {
 			if = {
 				limit = { is_ai = no }
 				divisions_in_state = { state = 345 size < 1 }
+				divisions_in_state = { state = 1255 size < 1 }
 				divisions_in_state = { state = 731 size < 1 }
+				divisions_in_state = { state = 1256 size < 1 }
 				divisions_in_state = { state = 184 size < 1 }
 			}
 			else = { always = yes }
@@ -12210,6 +12646,11 @@ crisis = {
 		complete_effect = {
 			set_country_flag = has_retreated_from_new_territories
 			731 = {
+				set_border_war = yes
+				add_dynamic_modifier = { modifier = GRE_support_to_entente }
+				GRE = { give_military_access = FRA }
+			}
+			1256 = {
 				set_border_war = yes
 				add_dynamic_modifier = { modifier = GRE_support_to_entente }
 				GRE = { give_military_access = FRA }
@@ -12447,7 +12888,9 @@ GRE_minorities_management = {
 		}
 		targets = {
 			731
+			1256
 			345
+			1255
 			184
 			757
 			200
@@ -12486,7 +12929,9 @@ GRE_minorities_management = {
 				FROM = {
 					OR = {
 						state = 731
+						state = 1256
 						state = 345
+						state = 1255
 						state = 184
 					}
 				}
@@ -12837,10 +13282,13 @@ GRE_byzantium_category = {
 				owns_state = 185
 				owns_state = 186
 				owns_state = 345
+				owns_state = 1255
 				owns_state = 731
+				owns_state = 1256
 				owns_state = 758
 				owns_state = 790
 				owns_state = 826
+				owns_state = 1257
 				owns_state = 898
 				owns_state = 900
 				owns_state = 974
@@ -12855,10 +13303,13 @@ GRE_byzantium_category = {
 				state = 185
 				state = 186
 				state = 345
+				state = 1255
 				state = 731
+				state = 1256
 				state = 758
 				state = 790
 				state = 826
+				state = 1257
 				state = 898
 				state = 900
 				state = 974
@@ -13116,8 +13567,8 @@ GRE_road_to_ankara = {
 		visible = {
 			has_global_flag = great_war_ends
 			has_global_flag = interwar_greco_turkish_war
-			any_other_country = {
-				original_tag = TUR
+			any_country_with_original_tag = {
+				original_tag_to_check = TUR
 				has_country_flag = TUR_national_movement_tag
 				has_war_with = ROOT
 			}
@@ -13185,10 +13636,12 @@ GRE_road_to_ankara = {
 							state = 186
 							state = 187
 							state = 731
+							state = 1256
 							state = 758
 							state = 803
 							state = 1225
 							state = 826
+							state = 1257
 							state = 898
 							state = 900
 						}

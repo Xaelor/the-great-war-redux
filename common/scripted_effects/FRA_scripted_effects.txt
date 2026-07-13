@@ -340,7 +340,7 @@ FRA_create_FRC = {
 			long_name = FRA_syndicalism_party_long
 			name = FRA_syndicalism_party
 		}
-		ROOT = {
+		FRA = {
 			FRA_pierre_monatte = {
 				set_nationality = FRC
 			}
@@ -472,7 +472,7 @@ FRA_create_NFA = {
 			name = FRA_FSN
 		}
 		add_ideas = FRA_disjointed_government2
-		ROOT = {
+		FRA = {
 			FRA_maurice_pujo = {
 				set_nationality = NFA
 			}
@@ -2011,15 +2011,24 @@ FRA_french_surrender_effect = {
 					limit = {
 						is_demilitarized_zone = no
 						is_on_continent = europe
-						any_neighbor_state = {
-							OR = {
-								is_owned_by = GER
-								owner = { is_subject_of = GER }
-								BEL = {
-									owns_state = PREV
-									has_war_with = GER
+						OR = {
+							any_neighbor_state = {
+								OR = {
+									is_owned_by = GER
+									owner = { is_subject_of = GER }
+									BEL = {
+										owns_state = PREV
+										has_war_with = GER
+									}
 								}
 							}
+							state = 17
+							state = 29
+							state = 33
+							state = 785
+							state = 863
+							state = 864
+							state = 865
 						}
 					}
 					set_demilitarized_zone = yes
@@ -2342,5 +2351,82 @@ FRA_setup_german_monarch = {
 		neutrality = 47
 		fascism = 34
 		communism = 5
+	}
+}
+
+FRA_send_kamerun_agadir_crisis = {
+	GER = {
+		if = {
+			limit = {
+				769 = {
+					is_owned_or_subject_PREV_trigger = yes
+				}
+			}
+			769 = {
+				transfer_state_to = FRA
+				add_core_of = CHA
+			}
+		}
+		country_event = {
+			id = ww1_agadir.6
+			days = 1
+		}
+	}
+	news_event = {
+		id = ww1_agadir.15
+		days = 3
+	}
+	if = {
+		limit = { 
+			has_global_flag = agadir_no_escalation
+		}
+		every_state = {
+			limit = {
+				is_owned_or_subject_trigger = yes
+				OR = {
+					state = 814
+					state = 1143
+					state = 815
+					state = 1144
+					state = 752
+					state = 772
+				}	
+			}
+			if = {
+				limit = {
+					country_exists = CMR
+				}
+				transfer_state_to = CMR
+			}
+			else = {
+				transfer_state_to = GER
+			}
+			add_core_of = CMR
+			add_claim_by = ROOT
+		}
+	}
+	else = {		
+		every_state = {
+			limit = {
+				is_owned_or_subject_trigger = yes
+				OR = {
+					state = 814
+					state = 1143
+					state = 815
+					state = 1144
+				}	
+			}
+			if = {
+				limit = {
+					country_exists = CMR
+				}
+				transfer_state_to = CMR
+			}
+			else = {
+				transfer_state_to = GER
+			}
+			add_core_of = CMR
+			add_claim_by = ROOT
+		}
 	}
 }

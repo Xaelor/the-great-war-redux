@@ -1144,12 +1144,13 @@ country_event = {
 				}
 			}
 		}
-		any_other_country = {
-			owns_state = 171
-			NOT = {
-				has_war_with = ROOT
-				has_cosmetic_tag = SPR_REP
-				has_government = communism
+		171 = {
+			OWNER = {
+				NOT = {
+					has_war_with = ROOT
+					has_cosmetic_tag = SPR_REP
+					has_government = communism
+				}
 			}
 		}
 		date > 1912.7.1
@@ -1193,8 +1194,8 @@ country_event = {
 		}
 		NOT = {
 			has_country_flag = pais_second_term
-			any_other_country = {
-				original_tag = POR
+			any_country_with_original_tag = {
+				original_tag_to_check = POR
 				has_war_with = ROOT
 				has_government = neutrality
 				NOT = {
@@ -1770,9 +1771,9 @@ country_event = {
 		owns_state = 112
 		has_capitulated = no
 		NOT = {
-			any_other_country = {
-				original_tag = POR
-				exists = yes
+			any_country_with_original_tag = {
+				original_tag_to_check = POR
+				NOT = { tag = ROOT }
 			}
 		}
 	}
@@ -1789,6 +1790,62 @@ country_event = {
 			}
 			promote_character = semi_constitutional_monarchy
 		}
+	}
+}
+
+# Portugal loses control over Mozambique
+country_event = {
+	id = ww1_portugal.34
+	title = ww1_portugal.34.t
+	desc = ww1_portugal.34.d
+	picture = GFX_report_event_african_soldiers
+	trigger = {
+		original_tag = POR
+		is_great_war_ongoing = yes
+		any_enemy_country = {
+			OR = {
+				is_ally_with = GER
+				is_ally_with = ENT
+			}
+		}
+		NOT = {
+			any_owned_state = {
+				region = 185	#Mozambique
+				is_controlled_by = ROOT
+			}
+		}
+	}
+	fire_only_once = yes
+	option = {
+		name = ww1_portugal.34.a
+		add_war_support = -0.10
+		970 = { set_state_flag = mozambique_lost }
+	}
+}
+
+# Portugal loses control over Angola
+country_event = {
+	id = ww1_portugal.35
+	title = ww1_portugal.35.t
+	desc = ww1_portugal.35.d
+	picture = GFX_report_event_african_soldiers
+	trigger = {
+		original_tag = POR
+		is_great_war_ongoing = yes
+		any_enemy_country = {
+			OR = {
+				is_ally_with = GER
+				is_ally_with = ENT
+			}
+			controls_state = 540
+		}
+		owns_state = 540
+	}
+	fire_only_once = yes
+	option = {
+		name = ww1_portugal.34.a
+		add_war_support = -0.10
+		540 = { set_state_flag = angola_lost }
 	}
 }
 

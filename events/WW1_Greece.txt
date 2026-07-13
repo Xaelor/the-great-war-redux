@@ -129,6 +129,7 @@ country_event = {
 						#state = 731
 						state = 758
 						state = 826
+						state = 1257
 					}
 				}
 				prioritize = {
@@ -159,7 +160,7 @@ country_event = {
 					}
 				}
 				else_if = {
-					limit = { state = 826 }
+					limit = { state = 1257 }
 					add_building_construction = {
 						type = naval_base
 						level = 2
@@ -3223,8 +3224,9 @@ country_event = {
 	picture = GFX_report_event_noemvriana
 	is_triggered_only = yes
 	trigger = {
-		any_country = {
-			original_tag = GRE
+		any_country_with_original_tag = {
+			original_tag_to_check = GRE
+			NOT = { tag = ROOT }
 			GRE_has_royalist_government = yes
 			owns_state = 898
 		}
@@ -3232,9 +3234,9 @@ country_event = {
 	option = {
 		name = ww1_greece.101.a
 		add_stability = -0.05
-		every_other_country = {
+		every_country_with_original_tag = {
+			original_tag_to_check = GRE
 			limit = {
-				original_tag = GRE
 				GRE_has_royalist_government = yes
 				owns_state = 898
 			}
@@ -7538,6 +7540,40 @@ country_event = {
 					factor = 0
 					has_completed_focus = GRE_negotiations_with_entente
 					OR = {
+						1255 = { check_variable = { var = GRE_garrison_control value = 2 compare = less_than } }
+						is_historical_focus_on = yes
+					}
+				}
+				modifier = {
+					factor = 0
+					has_completed_focus = GRE_commit_to_neutrality
+					1255 = { check_variable = { var = GRE_garrison_control value = 4 compare = equals } }
+				}
+				modifier = {
+					factor = 0
+					has_completed_focus = GRE_commit_to_neutrality
+					NOT = { has_country_flag = SPA_secure_the_northern_garrisons_flag }
+				}
+				modifier = {
+					factor = 10
+					1255 = { has_state_flag = GRE_national_schism_recently_chosen }
+				}
+				modifier = {
+					factor = 20
+					has_completed_focus = GRE_commit_to_neutrality
+					is_historical_focus_on = yes
+				}
+				modifier = {
+					factor = 0
+					1255 = { NOT = { is_owned_and_controlled_by = ROOT } }
+				}
+				activate_mission = GRE_expand_influence_in_the_athos_garrison_mission
+			}
+			20 = {
+				modifier = {
+					factor = 0
+					has_completed_focus = GRE_negotiations_with_entente
+					OR = {
 						731 = { check_variable = { var = GRE_garrison_control value = 2 compare = less_than } }
 						is_historical_focus_on = yes
 					}
@@ -7566,6 +7602,40 @@ country_event = {
 					731 = { NOT = { is_owned_and_controlled_by = ROOT } }
 				}
 				activate_mission = GRE_expand_influence_in_the_central_macedonia_garrison_mission
+			}
+			20 = {
+				modifier = {
+					factor = 0
+					has_completed_focus = GRE_negotiations_with_entente
+					OR = {
+						1256 = { check_variable = { var = GRE_garrison_control value = 2 compare = less_than } }
+						is_historical_focus_on = yes
+					}
+				}
+				modifier = {
+					factor = 0
+					has_completed_focus = GRE_commit_to_neutrality
+					1256 = { check_variable = { var = GRE_garrison_control value = 4 compare = equals } }
+				}
+				modifier = {
+					factor = 0
+					has_completed_focus = GRE_commit_to_neutrality
+					NOT = { has_country_flag = SPA_secure_the_northern_garrisons_flag }
+				}
+				modifier = {
+					factor = 10
+					1256 = { has_state_flag = GRE_national_schism_recently_chosen }
+				}
+				modifier = {
+					factor = 20
+					has_completed_focus = GRE_commit_to_neutrality
+					is_historical_focus_on = yes
+				}
+				modifier = {
+					factor = 0
+					1256 = { NOT = { is_owned_and_controlled_by = ROOT } }
+				}
+				activate_mission = GRE_expand_influence_in_the_servia_garrison_mission
 			}
 			20 = {
 				modifier = {
@@ -8185,6 +8255,32 @@ country_event = {
 				modifier = {
 					factor = 0
 					has_completed_focus = GRE_negotiations_with_entente
+					1257 = { check_variable = { var = GRE_garrison_control value = 2 compare = less_than } }
+				}
+				modifier = {
+					factor = 0
+					has_completed_focus = GRE_commit_to_neutrality
+					1257 = { check_variable = { var = GRE_garrison_control value = 4 compare = equals } }
+				}
+				modifier = {
+					factor = 10
+					1257 = { has_state_flag = GRE_national_schism_recently_chosen }
+				}
+				modifier = {
+					factor = 10
+					has_completed_focus = GRE_negotiations_with_entente
+					is_historical_focus_on = yes
+				}
+				modifier = {
+					factor = 0
+					1257 = { NOT = { is_owned_and_controlled_by = ROOT } }
+				}
+				activate_mission = GRE_expand_influence_in_the_katerini_garrison_mission
+			}
+			20 = {
+				modifier = {
+					factor = 0
+					has_completed_focus = GRE_negotiations_with_entente
 					758 = { check_variable = { var = GRE_garrison_control value = 2 compare = less_than } }
 				}
 				modifier = {
@@ -8455,8 +8551,10 @@ country_event = {
 					OR = {
 						any_owned_state = {
 							NOT = { state = 345 }
+							NOT = { state = 1255 }
 							NOT = { state = 184 }
 							NOT = { state = 731 }
+							NOT = { state = 1256 }
 							NOT = { state = 790 }
 							NOT = { state = 974 }
 							NOT = { state = 975 }
@@ -8479,8 +8577,10 @@ country_event = {
 					any_owned_state = {
 						OR = {
 							state = 345
+							state = 1255
 							state = 184
 							state = 731
+							state = 1256
 							state = 790
 							state = 974
 							state = 975

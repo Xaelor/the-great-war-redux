@@ -6301,12 +6301,8 @@ country_event = {
 		original_tag = GER
 		has_country_flag = great_war_winner
 		has_global_flag = frankfurt_treaty
-		OR = {
-			owns_state = 547
-			any_other_country = {
-				owns_state = 547
-				is_subject_of = GER
-			}
+		547 = {
+			is_owned_or_subject_trigger = yes
 		}
 		any_enemy_country = {
 			any_controlled_state = {
@@ -6567,8 +6563,8 @@ country_event = {
 		NOT = {
 			has_government = communism
 		}
-		any_other_country = {
-			original_tag = FRA
+		any_country_with_original_tag = {
+			original_tag_to_check = FRA
 			has_country_flag = FRA_nationalist_france_flag
 			NOT = {
 				has_government = communism
@@ -6844,24 +6840,15 @@ country_event = {
 		ENG = {
 			has_country_flag = great_war_loser
 			OR = {
-				owns_state = 410
-				owns_state = 412
-				owns_state = 1248
-				owns_state = 1249
-				owns_state = 413
-				owns_state = 1246
-				owns_state = 421
-				owns_state = 1211
-				owns_state = 416
-				owns_state = 1242
-				owns_state = 1243
-				owns_state = 266
-				owns_state = 418
-				owns_state = 1241
-				owns_state = 414
-				owns_state = 1244
-				owns_state = 411
+				any_owned_state = {
+					region = 116
+				}
+				has_subject = PER
 				has_subject = ARB
+				has_subject = MAK
+				has_subject = MRG
+				has_subject = BLC
+				check_variable = { ENG.PER_foreign_influence > 0 }
 			}
 		}
 	}
@@ -6870,24 +6857,92 @@ country_event = {
 	}
 	hidden = yes
 	immediate = {
+		every_owned_state = {
+			limit = {
+				region = 116
+			}
+			transfer_state_to = PER
+		}
 		ENG = {
-			end_puppet = PER
+			if = {
+				limit = {
+					has_subject = PER
+				}
+				end_puppet = PER
+			}		
 			if = {
 				limit = {
 					has_subject = ARB
-					country_exists = PER
 				}
-				ARB = {
-					clr_country_flag = protectorate
-					get_current_government_type = yes
-					PER = {
-						set_autonomy = {
-							target = ARB
-							autonomous_state = autonomy_integrated_puppet
-							freedom_level = 0.9
-						}
-					}	
-					restore_previous_government_type = yes
+				end_puppet = ARB
+				if = {
+					limit = {
+						country_exists = PER
+						PER = { is_subject = no }
+					}
+					ARB = {
+						clr_country_flag = protectorate
+						clr_country_flag = occupied_state
+						get_current_government_type = yes
+						PER = {
+							set_autonomy = {
+								target = ARB
+								autonomous_state = autonomy_tgwr_feudal_autonomy
+								freedom_level = 0.9
+							}
+						}	
+						restore_previous_government_type = yes
+					}			
+				}			
+			}
+			if = {
+				limit = {
+					has_subject = MAK
+				}
+				end_puppet = MAK
+				if = {
+					limit = {
+						country_exists = PER
+						PER = { is_subject = no }
+					}
+					MAK = {
+						clr_country_flag = protectorate
+						clr_country_flag = occupied_state
+						get_current_government_type = yes
+						PER = {
+							set_autonomy = {
+								target = MAK
+								autonomous_state = autonomy_tgwr_feudal_autonomy
+								freedom_level = 0.9
+							}
+						}	
+						restore_previous_government_type = yes
+					}			
+				}			
+			}
+			if = {
+				limit = {
+					has_subject = MRG
+				}
+				end_puppet = MRG
+				if = {
+					limit = {
+						country_exists = PER
+						PER = { is_subject = no }
+					}
+					MRG = {
+						clr_country_flag = protectorate
+						clr_country_flag = occupied_state
+						get_current_government_type = yes
+						PER = {
+							set_autonomy = {
+								target = MRG
+								autonomous_state = autonomy_tgwr_feudal_autonomy
+								freedom_level = 0.9
+							}
+						}	
+						restore_previous_government_type = yes
+					}			
 				}			
 			}
 		}
@@ -6919,15 +6974,7 @@ country_event = {
 				active = no
 			}
 		}
-		every_state = {
-			limit = {
-				region = 116
-				is_owned_by = ENG
-			}
-			PER = {
-				transfer_state = PREV
-			}
-		}
+		set_variable = { var = ENG.PER_foreign_influence value = 0 }
 	}
 }
 
@@ -7241,9 +7288,8 @@ country_event = {
 			has_war = no
 			OR = {
 				is_neighbor_of = PREV
-				any_other_country = {
+				any_neighbor_country = {
 					is_subject_of = PREV.PREV
-					is_neighbor_of = PREV
 				}
 			}
 		}
@@ -9248,6 +9294,7 @@ country_event = {
 		add_state_claim = 455
 		add_state_claim = 344
 		add_state_claim = 345
+		add_state_claim = 1255
 		add_state_claim = 342
 		add_state_claim = 339
 		add_state_claim = 340
@@ -11443,7 +11490,7 @@ country_event = {
 	}
 }
 #Send Knox to RUssia
-country_event = {
+unit_leader_event = {
 	id = ww1_england.209
 	title = ww1_england.209.t
 	desc = ww1_england.209.d
@@ -11456,15 +11503,11 @@ country_event = {
 		ai_chance = {
 			base = 100
 		}
+		show_unit_leaders_tooltip = ENG_alfred_knox
 		FROM = {
 			country_event = {
 				id = ww1_england.210
 				hours = 3
-			}
-			effect_tooltip = {
-				ENG_alfred_knox = {
-					set_nationality = ROOT
-				}
 			}
 		}
 	}
@@ -11474,7 +11517,10 @@ country_event = {
 		ai_chance = {
 			base = 0
 		}
-		ENG = { country_event = { id = ww1_england.211 } }
+		ENG_alfred_knox = {
+			set_nationality = FROM
+			unit_leader_event = { id = ww1_england.211 hours = 3 }
+		}
 	}
 }
 #Russians accept Knox's help
@@ -11489,13 +11535,15 @@ country_event = {
 	option = {
 		name = ww1_england.210.a
 		add_political_power = 5
-		ENG_alfred_knox = {
-			set_nationality = FROM
+		effect_tooltip = {
+			RUS = {
+				show_unit_leaders_tooltip = ENG_alfred_knox
+			}			
 		}
 	}
 }
 #Russians refuse Knox's help
-country_event = {
+unit_leader_event = {
 	id = ww1_england.211
 	title = ww1_england.211.t
 	desc = ww1_england.211.d
@@ -11997,9 +12045,8 @@ country_event = {
 		has_war = yes
 		has_war_support > 0.40
 		NOT = {
-			any_other_country = {
+			any_enemy_country = {
 				original_tag = ENG
-				has_war_with = ROOT
 			}
 		}
 		OR = {
@@ -14040,8 +14087,9 @@ country_event = {
 		has_war_with = TUR
 		controls_province = 2089
 		controls_state = 874
+		has_dynamic_modifier = PER_influence_in_persia_modifier
 		PER = {
-			has_idea = PER_idea_foreign_reliance
+			has_dynamic_modifier = PER_foreign_influence_modifier
 			1246 = {
 				is_owned_or_subject_PREV_trigger = yes
 			}
@@ -14181,7 +14229,7 @@ country_event = {
 			division_template = {
 				name = "Fao Landing Force"
 				division_names_group = ENG_INF_02
-				template_counter = 121
+				template_counter = 122
 				regiments = {
 					infantry = { x = 0 y = 0 }
 					infantry = { x = 0 y = 1 }
@@ -14277,8 +14325,8 @@ country_event = {
 		is_subject = no
 		has_government = democratic
 		NOT = {
-			any_other_country = {
-				original_tag = ROOT
+			any_country_with_original_tag = {
+				original_tag_to_check = ROOT
 			}
 		}
 	}

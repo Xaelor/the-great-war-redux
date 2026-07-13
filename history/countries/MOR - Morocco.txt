@@ -6,19 +6,11 @@ set_war_support = 0.3
 recruit_character = MOR_mulay_abdelhafid
 recruit_character = MOR_yusef_bin_hassan
 recruit_character = MOR_muhammad_bin_yusef
-recruit_character = MOR_maal_al_aynayn
-recruit_character = MOR_ahmed_al_hiba
+recruit_character = MOR_mohammed_mehedi_uld_ben_ismael
 
-MOR_ahmed_al_hiba = {
-	set_nationality = GUD
-	promote_character = absolute_monarchy
-	promote_character = reactionism
-}
-MOR_maal_al_aynayn = {
-	set_nationality = GUD
-	promote_character = theocracy_ideology
-	promote_character = fundamentalism
-}
+recruit_character = MOR_muhammad_al_mustfa_al_qalqami
+recruit_character = MOR_ahmed_al_hiba
+recruit_character = MOR_merrebi_rebbu
 
 recruit_character = MOR_thami_el_glaoui
 recruit_character = MOR_mohammed_el_mokri
@@ -38,6 +30,11 @@ recruit_character = MOR_mouha_ou_hammou_zayani
 recruit_character = MOR_mohammed_ameziane
 
 recruit_character = MOR_sidi_mohamed_of_tazeroualt
+
+recruit_character = MOR_zain_al_abidin_ibn_al_hasan
+
+set_country_flag = empty_focus
+load_focus_tree = empty_focus
 
 1910.1.1 = {
 	oob = "MOR_1910"
@@ -120,13 +117,44 @@ recruit_character = MOR_sidi_mohamed_of_tazeroualt
 
 	# if = {
 	# 	limit = { has_start_date < 1914.1.1 }
-	# 	MOR_maal_al_aynayn = { unit_leader_event = { id = ww1_generic.38 days = 175 }} #died in 1910.10.23, should be its own event
+	# 	MOR_muhammad_al_mustfa_al_qalqami = { unit_leader_event = { id = ww1_generic.38 days = 175 }} #died in 1910.10.23, should be its own event
 	# }
+	if = {
+		limit = { 
+			has_start_date < 1914.1.1 
+		}
+		activate_mission = MOR_tribal_discontent
+	}
+	GUD = {
+		if = {
+			limit = { 
+				has_start_date < 1914.1.1 
+			}
+			declare_war_on = {
+				target = MOR
+				type = civil_war
+			}
+			FRA = {
+				declare_war_on = {
+					target = PREV
+					type = annex_everything
+				}
+			}
+			activate_mission = GUD_jihad_against_french
+			MOR_muhammad_al_mustfa_al_qalqami = {
+				unit_leader_event = { id = ww1_morocco.89 days = 175 }
+			}
+		}
+	}
 }
 
 1914.1.1 = {
 	add_political_power = 1198
 	add_command_power = 100
+
+	set_capital = {
+		state = 1093
+	}
 
 	#generic focuses
 	unlock_national_focus = state_of_the_country_army
@@ -165,14 +193,120 @@ recruit_character = MOR_sidi_mohamed_of_tazeroualt
 	set_popularities = {
 		neutrality = 100
 	}
-	set_cosmetic_tag = MOR_1915 #should be later
-	retire_character = MOR_maal_al_aynayn
+	set_cosmetic_tag = MOR_1915 #should be later	
 	MOR_mulay_abdelhafid = {
 		remove_country_leader_role = {
 			ideology = semi_constitutional_monarchy
 		}
 	}
 	promote_character = MOR_yusef_bin_hassan
+	GUD = {
+		retire_character = MOR_muhammad_al_mustfa_al_qalqami
+	}
+	set_country_flag = tribes_rebels_in_south_morocco
+	MOR_ahmed_al_hiba_rebellion = yes
+}
+
+create_dynamic_country = {
+	original_tag = MOR
+	set_country_flag = MOR_gudfiyya_tag
+	set_oob = "GUD_1910"
+	set_research_slots = 1
+	set_politics = {
+		ruling_party = neutrality
+		long_name = GUD_neutrality_party
+	 	name = GUD_neutrality_party
+		elections_allowed = no
+	}
+	set_cosmetic_tag = GUD
+	reserve_dynamic_country = yes
+
+	set_country_flag = empty_focus
+	load_focus_tree = empty_focus
+	
+	set_capital = {
+		state = 1235
+	}
+
+	PREV = {
+		MOR_merrebi_rebbu = {
+			set_nationality = PREV.PREV
+			promote_character = theocracy_ideology
+			promote_character = fundamentalism
+		}
+		MOR_ahmed_al_hiba = {
+			set_nationality = PREV.PREV
+			promote_character = theocracy_ideology
+			promote_character = fundamentalism
+		}
+		MOR_muhammad_al_mustfa_al_qalqami = {
+			set_nationality = PREV.PREV
+			promote_character = theocracy_ideology
+			promote_character = fundamentalism
+		}
+	}
+
+	set_technology = {
+		#infantry
+		obsolete_infantry_weapons = 1
+		infantry_weapons = 1
+		camelry = 1
+		#navy
+		
+		#engineering
+		construction0 = 1
+	}
+	
+	set_popularities = {
+		democratic = 0
+		fascism = 30
+		communism = 0
+		neutrality = 70
+	}
+	set_party_name = {
+	 	ideology = fascism
+	 	long_name = GUD_neutrality_party
+	 	name = GUD_neutrality_party
+	}
+	every_core_state = {
+		remove_core_of = PREV
+	}
+	set_stability = 0.80
+	set_war_support = 0.80
+
+	add_ideas = {
+		isolation
+		closed_economy
+		limited_conscription
+		GUD_nation_of_poets
+		GUD_tribal_loyalty_medium
+		GUD_uncertain_mission
+	}
+}
+create_dynamic_country = {
+	original_tag = MOR
+	reserve_dynamic_country = yes
+	set_country_flag = MOR_anti_french
+	set_cosmetic_tag = RMO
+	PREV = {
+		MOR_zain_al_abidin_ibn_al_hasan = {
+			set_nationality = PREV.PREV
+			promote_character = absolute_monarchy
+			promote_character = reactionism
+		}
+		MOR_mouha_ou_hammou_zayani = {
+			set_nationality = PREV.PREV
+		}
+	}
+	set_country_flag = empty_focus
+	load_focus_tree = empty_focus
+	set_popularities = {
+		neutrality = 100
+	}
+	set_politics = {
+		ruling_party = neutrality
+		elections_allowed = no
+	}
 }
 
 create_dynamic_country = {
@@ -188,34 +322,23 @@ create_dynamic_country = {
 	set_country_flag = empty_focus
 	load_focus_tree = empty_focus
 
-	recruit_character = MOR_mohammed_mehedi_uld_ben_ismael
-	promote_character = MOR_mohammed_mehedi_uld_ben_ismael
+	PREV = {
+		MOR_mohammed_mehedi_uld_ben_ismael = {
+			set_nationality = PREV.PREV
+			promote_character = absolute_monarchy
+		}
+	}
 	
 	set_capital = {
 		state = 1137
 	}
-	
-	set_popularities = {
-		democratic = 0
-		fascism = 0
-		communism = 0
-		neutrality = 100
-	}
+
 	set_party_name = {
 	 	ideology = fascism
 	 	long_name = RIF_fascism_party
 	 	name = RIF_fascism_party
 	}
-	every_state = {
-		limit = {
-			is_claimed_by = PREV
-		}
-		remove_claim_by = PREV
-	}
-	every_state = {
-		limit = {
-			is_core_of = PREV
-		}
+	every_core_state = {
 		remove_core_of = PREV
 	}
 	set_stability = 0.2
