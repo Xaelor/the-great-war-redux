@@ -3625,7 +3625,7 @@ country_event = {
 
 #NEW 1905
 ###########
-#Uprisings in St Petersburg and Moscow
+#Strikes in St Petersburg and Moscow
 country_event = {
 	id = ww1_new_1905.1
 	title = ww1_new_1905.1.t
@@ -3636,39 +3636,38 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			195 = {
-				add_dynamic_modifier = {
-					modifier = RUS_revolutionary_activity
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 195
+						state = 219
+					}
 				}
-			}
-			219 = {
 				add_dynamic_modifier = {
 					modifier = RUS_revolutionary_activity
 				}
 			}
 			activate_mission = RUS_revolution_turns_violent
-			activate_mission = RUS_revolution_spreads_to_217_and_578
 			country_event = {
 				id = ww1_new_1905.2
 				days = 12
 			}
-			add_ideas = RUS_revolutionary_chaos
+			add_ideas = RUS_general_strike
 		}
 	}
 
 	option = {
 		name = ww1_new_1905.1.a
 		effect_tooltip = {
-			add_ideas = RUS_revolutionary_chaos
+			add_ideas = RUS_general_strike
+			activate_mission = RUS_revolution_turns_violent
 		}
-		custom_effect_tooltip = generic_skip_one_line_tt
 		unlock_decision_tooltip = RUS_crack_down_on_revolution_in_state
-		custom_effect_tooltip = generic_skip_one_line_tt
-		custom_effect_tooltip = ww1_new_1905.1.a.tt
+		custom_effect_tooltip = RUS_new_1905_mechanic_tt
 	}
 }
 
-#Revolution Spreads to Tsaritsyn and Tomsk
+#Revolution in Central RUssia
 country_event = {
 	id = ww1_new_1905.2
 	title = ww1_new_1905.2.t
@@ -3678,24 +3677,28 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		RUS_has_revolutionary_chaos_idea = yes
-		has_agrarian_question = yes
-		has_labour_question = yes
+		has_active_mission = RUS_revolution_turns_violent
 	}
 
 	immediate = {
 		hidden_effect = {
-			217 = {
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 205
+						state = 220
+						state = 221
+						state = 222
+						state = 223
+						state = 224
+						state = 240
+						state = 260
+					}
+				}
 				add_dynamic_modifier = {
 					modifier = RUS_revolutionary_activity
 				}
 			}
-			578 = {
-				add_dynamic_modifier = {
-					modifier = RUS_revolutionary_activity
-				}
-			}
-			activate_mission = RUS_revolution_spreads_to_ukraine
 			country_event = {
 				id = ww1_new_1905.3
 				days = 11
@@ -3705,11 +3708,29 @@ country_event = {
 
 	option = {
 		name = ww1_new_1905.2.a
-		custom_effect_tooltip = ww1_new_1905.2.a.tt
+		effect_tooltip = {
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 205
+						state = 220
+						state = 221
+						state = 222
+						state = 223
+						state = 224
+						state = 240
+						state = 260
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = RUS_revolutionary_activity
+				}
+			}
+		}
 	}
 }
 
-#Ukrainians Join In
+#Strikes in the Donbas!
 country_event = {
 	id = ww1_new_1905.3
 	title = ww1_new_1905.3.t
@@ -3719,34 +3740,20 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		RUS_has_revolutionary_chaos_idea = yes
-		has_agrarian_question = yes
-		has_labour_question = yes
+		has_active_mission = RUS_revolution_turns_violent
 	}
 
 	immediate = {
 		hidden_effect = {
-			93 = {
-				add_dynamic_modifier = {
-					modifier = RUS_revolutionary_activity
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 221
+						state = 226
+						state = 227
+						state = 228
+					}
 				}
-			}
-			201 = {
-				add_dynamic_modifier = {
-					modifier = RUS_revolutionary_activity
-				}
-			}
-			198 = {
-				add_dynamic_modifier = {
-					modifier = RUS_revolutionary_activity
-				}
-			}
-			202 = {
-				add_dynamic_modifier = {
-					modifier = RUS_revolutionary_activity
-				}
-			}
-			259 = {
 				add_dynamic_modifier = {
 					modifier = RUS_revolutionary_activity
 				}
@@ -3756,11 +3763,25 @@ country_event = {
 
 	option = {
 		name = ww1_new_1905.3.a
-		custom_effect_tooltip = ww1_new_1905.3.a.tt
+		effect_tooltip = {
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 221
+						state = 226
+						state = 227
+						state = 228
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = RUS_revolutionary_activity
+				}
+			}
+		}
 	}
 }
 
-#Ukrainians Join In
+#Civil War
 country_event = {
 	id = ww1_new_1905.4
 	title = ww1_new_1905.4.t
@@ -3772,13 +3793,7 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			RUS_petrograd_commune = yes
-			transfer_units_fraction = {
-				target = PET
-				army_ratio = 0.6
-				air_ratio = 0.15
-				navy_ratio = 0.15
-			}
-			every_controlled_state = {
+			every_state = {
 				limit = {
 					has_dynamic_modifier = RUS_revolutionary_activity
 				}
@@ -3786,11 +3801,34 @@ country_event = {
 					destroy_unit = yes
 				}
 				transfer_state_to = PET
+				remove_dynamic_modifier = RUS_revolutionary_activity
+			}
+			transfer_units_fraction = {
+				target = PET
+				army_ratio = 0.4
+				air_ratio = 0.2
+				navy_ratio = 0.2
 			}
 		}
 	}
 
 	option = {
 		name = ww1_new_1905.4.a
+		effect_tooltip = {
+			declare_war_on = {
+				target = PET
+				type = civil_war
+			}
+		}
+	}
+
+	option = {
+		name = ww1_new_1905.4.b
+		effect_tooltip = {
+			declare_war_on = {
+				target = PET
+				type = civil_war
+			}
+		}
 	}
 }
