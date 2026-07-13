@@ -4637,7 +4637,6 @@ crisis = {
 			set_global_flag = ALB_muslim_rebellion_end
 		}
 	}
-
 	ALB_catholic_rebellion_mission = {
 		icon = GFX_decision_SWI_consolidate_council_power
 		available = {
@@ -4825,6 +4824,185 @@ crisis = {
 			}
 			hidden_effect = { news_event = { id = albania.63 hours = 6 } }
 			set_global_flag = ALB_catholic_rebellion_end
+		}
+	}
+
+	ALB_diminishing_support = {
+		icon = GFX_decision_SWI_dismiss_council
+		available = { hidden_trigger = { always = no } }
+		activation = { always = no }
+		days_mission_timeout = 180
+		timeout_effect = {
+			if = {
+				limit = { ALB_shefqet_verlaci = { advisor_can_be_fired = no } }
+				deactivate_advisor = ALB_shefqet_verlaci
+				ALB_shefqet_verlaci = { set_can_be_fired_in_advisor_role = { slot = political_advisor value = yes } }
+			}
+			if = {
+				limit = { ALB_ahmet_zogolli = { advisor_can_be_fired = no } }
+				deactivate_advisor = ALB_ahmet_zogolli
+				ALB_ahmet_zogolli = { set_can_be_fired_in_advisor_role = { slot = political_advisor value = yes } }
+			}
+			if = {
+				limit = { ALB_luigj_gurakuqi = { advisor_can_be_fired = no } }
+				deactivate_advisor = ALB_luigj_gurakuqi
+				ALB_luigj_gurakuqi = { set_can_be_fired_in_advisor_role = { slot = political_advisor value = yes } }
+			}
+			if = {
+				limit = { ALB_avni_rustemi = { advisor_can_be_fired = no } }
+				deactivate_advisor = ALB_avni_rustemi
+				ALB_avni_rustemi = { set_can_be_fired_in_advisor_role = { slot = political_advisor value = yes } }
+			}
+			if = {
+				limit = { ALB_faik_konica = { advisor_can_be_fired = no } }
+				deactivate_advisor = ALB_faik_konica
+				ALB_faik_konica = { set_can_be_fired_in_advisor_role = { slot = political_advisor value = yes } }
+			}
+			if = {
+				limit = { ALB_hasan_prishtina = { advisor_can_be_fired = no } }
+				deactivate_advisor = ALB_hasan_prishtina
+				ALB_hasan_prishtina = { set_can_be_fired_in_advisor_role = { slot = political_advisor value = yes } }
+			}
+			add_country_leader_role = {
+				character = ALB_qazim_koculi
+				promote_leader = yes
+				country_leader = {
+					ideology = authoritarian_democracy
+					traits = { ALB_without_a_plan }
+				}
+			}
+			ALB_increase_domestic_instability = yes
+			country_event = { id = albania.175 days = 1 }
+		}
+	}
+	ALB_compromise_with_progressive_party = {
+		icon = GFX_decision_SWI_dismiss_council
+		visible = { has_active_mission = ALB_diminishing_support }
+		cost = 50
+		available = {
+			amount_taken_ideas = {
+				amount < 3
+				slots = { political_advisor }
+			}
+		}
+		complete_effect = {
+			activate_advisor = ALB_shefqet_verlaci
+			ALB_shefqet_verlaci = { set_can_be_fired_in_advisor_role = { slot = political_advisor value = no } }
+			add_days_mission_timeout = { mission = ALB_albanian_national_revolution days = 70 }
+		}
+		ai_will_do = { base = 100 }
+	}
+	ALB_compromise_with_popular_party = {
+		icon = GFX_decision_SWI_dismiss_council
+		visible = { has_active_mission = ALB_diminishing_support }
+		cost = 50
+		available = {
+			amount_taken_ideas = {
+				amount < 3
+				slots = { political_advisor }
+			}
+		}
+		complete_effect = {
+			activate_advisor = ALB_ahmet_zogolli
+			ALB_ahmet_zogolli = { set_can_be_fired_in_advisor_role = { slot = political_advisor value = no } }
+			add_days_mission_timeout = { mission = ALB_albanian_national_revolution days = 70 }
+		}
+		ai_will_do = { base = 0 }
+	}
+	ALB_compromise_with_hour_of_the_mountain = {
+		icon = GFX_decision_SWI_dismiss_council
+		visible = { has_active_mission = ALB_diminishing_support }
+		cost = 50
+		available = {
+			amount_taken_ideas = {
+				amount < 3
+				slots = { political_advisor }
+			}
+		}
+		complete_effect = {
+			activate_advisor = ALB_luigj_gurakuqi
+			ALB_luigj_gurakuqi = { set_can_be_fired_in_advisor_role = { slot = political_advisor value = no } }
+			add_days_mission_timeout = { mission = ALB_albanian_national_revolution days = 70 }
+		}
+		ai_will_do = { base = 100 }
+	}
+	ALB_compromise_with_atdheu = {
+		icon = GFX_decision_SWI_dismiss_council
+		visible = { has_active_mission = ALB_diminishing_support }
+		cost = 50
+		available = {
+			amount_taken_ideas = {
+				amount < 3
+				slots = { political_advisor }
+			}
+		}
+		complete_effect = {
+			activate_advisor = ALB_avni_rustemi
+			ALB_avni_rustemi = { set_can_be_fired_in_advisor_role = { slot = political_advisor value = no } }
+			add_days_mission_timeout = { mission = ALB_albanian_national_revolution days = 70 }
+		}
+		ai_will_do = { base = 0 }
+	}
+	ALB_compromise_with_vatra = {
+		icon = GFX_decision_SWI_dismiss_council
+		visible = { has_active_mission = ALB_diminishing_support }
+		cost = 50
+		available = {
+			amount_taken_ideas = {
+				amount < 3
+				slots = { political_advisor }
+			}
+		}
+		complete_effect = {
+			activate_advisor = ALB_faik_konica
+			ALB_faik_konica = { set_can_be_fired_in_advisor_role = { slot = political_advisor value = no } }
+			add_days_mission_timeout = { mission = ALB_albanian_national_revolution days = 70 }
+		}
+		ai_will_do = { base = 0 }
+	}
+	ALB_compromise_with_committee_for_the_liberation_of_kosova = {
+		icon = GFX_decision_SWI_dismiss_council
+		visible = { has_active_mission = ALB_diminishing_support }
+		cost = 50
+		available = {
+			amount_taken_ideas = {
+				amount < 3
+				slots = { political_advisor }
+			}
+		}
+		complete_effect = {
+			activate_advisor = ALB_hasan_prishtina
+			ALB_hasan_prishtina = { set_can_be_fired_in_advisor_role = { slot = political_advisor value = no } }
+			add_days_mission_timeout = { mission = ALB_albanian_national_revolution days = 70 }
+		}
+		ai_will_do = { base = 0 }
+	}
+	ALB_military_intervention = {
+		icon = GFX_decision_generic_army_support
+		available = { has_stability > 0.19 }
+		activation = {
+			has_idea = ALB_unruly_military
+			has_stability < 0.2
+		}
+		days_mission_timeout = 70
+		timeout_effect = {
+			add_country_leader_role = {
+				character = ALB_ali_shefqet_shkupi
+				promote_leader = yes
+				country_leader = {
+					ideology = personalistic_dictatorship
+				}
+			}
+			set_party_name = {
+				ideology = neutrality
+				name = ALB_military_party
+				long_name = ALB_military_party
+			}
+			remove_ideas = ALB_unruly_military
+			add_timed_idea = {
+				idea = ALB_military_rule
+				days = 780
+			}
 		}
 	}
 }

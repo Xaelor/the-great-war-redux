@@ -13718,11 +13718,12 @@ focus_tree = {
 				ALB_aqif_bicaku = { set_can_be_fired_in_advisor_role = { slot = political_advisor value = yes } }
 				set_country_flag = ALB_open_up_the_albanian_political_spectrum13
 			}
+			hidden_effect = { country_event = { id = albania.174 days = 7 random_days = 4 } }
 		}
 		ai_will_do = { base = 20 }
 	}
 	focus = {
-		id = ALB_first_free_elections
+		id = ALB_hold_parliamentary_elections
 		icon = GFX_focus_generic_election
 		cost = 5
 		search_filters = {
@@ -13734,7 +13735,114 @@ focus_tree = {
 		y = 1
 		relative_position_id = ALB_open_up_the_albanian_political_spectrum
 		completion_reward = {
-			
+			country_event = { id = albania.172 hours = 8 }
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_sacred_appointment
+		icon = GFX_focus_generic_improve_the_administration_2
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_hold_parliamentary_elections }
+		x = 0
+		y = 1
+		relative_position_id = ALB_hold_parliamentary_elections
+		completion_reward = {
+			add_country_leader_role = {
+				character = ALB_pandeli_evangjeli
+				promote_leader = yes
+				country_leader = {
+					ideology = authoritarian_democracy
+				}
+			}
+			set_party_name = {
+				ideology = neutrality
+				name = ALB_holy_union
+				long_name = ALB_holy_union
+			}
+			add_ideas = ALB_technical_government
+			ALB_decrease_political_violence = yes
+			activate_mission = ALB_diminishing_support
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_hand_over_the_progressive_leadership
+		icon = GFX_focus_generic_improve_the_administration_2
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_hold_parliamentary_elections }
+		x = -1
+		y = 2
+		relative_position_id = ALB_hold_parliamentary_elections
+		available = { has_country_leader = { character = ALB_hasan_prishtina } }
+		bypass = { has_idea = ALB_military_rule }
+		completion_reward = {
+			promote_character = {
+				character = ALB_fan_noli
+				ideology = social_democracy
+			}
+			set_politics = {
+				ruling_party = democratic
+				elections_allowed = no
+			}
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_ready_for_zog
+		icon = GFX_focus_generic_improve_the_administration_2
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_hold_parliamentary_elections }
+		x = 1
+		y = 2
+		relative_position_id = ALB_hold_parliamentary_elections
+		available = { has_country_leader = { character = ALB_xhafer_ypi } }
+		bypass = { has_idea = ALB_military_rule }
+		completion_reward = {
+			ALB_ahmet_zogolli = {
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = personalistic_dictatorship
+						traits = { ALB_ambitious_hotshot }
+					}
+				}
+				set_character_name = ALB_ahmet_zogu
+			}
+			ALB_increase_political_violence = yes
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_election_of_the_constituent_assembly
+		icon = GFX_focus_generic_election
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_hand_over_the_progressive_leadership focus = ALB_ready_for_zog }
+		available = {
+			has_stability > 0.6
+			NOT = { has_idea = ALB_military_rule }
+		}
+		x = 0
+		y = 3
+		relative_position_id = ALB_hold_parliamentary_elections
+		completion_reward = {
+			country_event = { id = albania.172 hours = 8 }
 		}
 		ai_will_do = { base = 20 }
 	}

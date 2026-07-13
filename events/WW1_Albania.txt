@@ -8297,6 +8297,7 @@ country_event = { #popular party
 			popularity = 0.1
 		}
 		hidden_effect = { country_event = { id = albania.167 days = 3 random_days = 3 } }
+		set_global_flag = ALB_popular_party
 		ai_chance = { base = 100 }
 	}
 }
@@ -8413,12 +8414,22 @@ country_event = { #vatra
 	is_triggered_only = yes
 	option = {
 		name = albania.170.a
+		if = {
+			limit = { any_other_country = { has_character = ALB_faik_konica } }
+			every_country = {
+				limit = { has_character = ALB_faik_konica }
+				ALB_faik_konica = { set_nationality = ROOT }
+			}
+		}
+		custom_effect_tooltip = available_political_advisor
+		show_ideas_tooltip = ALB_faik_konica
 		add_political_power = 25
 		add_popularity = {
 			ideology = democratic
 			popularity = 0.05
 		}
 		country_event = { id = albania.171 days = 3 random_days = 3 }
+		set_global_flag = ALB_vatra
 		ai_chance = { base = 100 }
 	}
 }
@@ -8441,5 +8452,212 @@ country_event = { #Ora e Maleve
 			popularity = -0.02
 		}
 		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #elections of parliament
+	id = albania.172
+	title = albania.172.t
+	desc = albania.172.desc
+	picture = GFX_report_event_election_vote
+	is_triggered_only = yes
+	option = {
+		name = albania.172.a
+		ALB_increase_political_violence = yes
+		hidden_effect = { country_event = { id = albania.173 days = 18 random_days = 10 } }
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #political violence
+	id = albania.173
+	title = albania.173.t
+	desc = albania.173.desc
+	is_triggered_only = yes
+	option = {
+		name = albania.173.a
+		ALB_increase_domestic_instability = yes
+		hidden_effect = { country_event = { id = albania.173 days = 18 random_days = 10 } }
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { # military threat
+	id = albania.174
+	title = albania.174.t
+	desc = albania.174.desc
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_army
+	option = {
+		name = albania.174.a
+		add_ideas = ALB_unruly_military
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #patriotic takeover
+	id = albania.175
+	title = albania.175.t
+	desc = albania.175.desc
+	is_triggered_only = yes
+	picture = GFX_report_event_hasan_prishtina
+	option = {
+		name = albania.175.a
+		add_country_leader_role = {
+			character = ALB_hasan_prishtina
+			promote_leader = yes
+			country_leader = {
+				ideology = authoritarian_democracy
+				traits = { ALB_pragmatic_statesman }
+			}
+		}
+		set_party_name = {
+			ideology = neutrality
+			name = ALB_prishtina_party
+			long_name = ALB_prishtina_party
+		}
+		hidden_effect = { country_event = { id = albania.176 days = 5 } }
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #march on tirana
+	id = albania.176
+	title = albania.176.t
+	desc = albania.176.desc
+	is_triggered_only = yes
+#	immediate = {
+#		hidden_effect = {
+#			add_country_leader_role = {
+#				character = ALB_idhomen_kosturi
+#				promote_leader = yes
+#				country_leader = {
+#					ideology = authoritarian_democracy
+#				}
+#			}
+#			set_party_name = {
+#				ideology = neutrality
+#				name = ALB_acting_government
+#				long_name = ALB_acting_government
+#			}
+#		}
+#	}
+	option = {
+		name = albania.176.a
+		ALB_increase_domestic_instability = yes
+		add_country_leader_role = {
+			character = ALB_xhafer_ypi
+			promote_leader = yes
+			country_leader = {
+				ideology = authoritarian_democracy
+				traits = { ALB_zogs_puppet }
+			}
+		}
+		set_party_name = {
+			ideology = neutrality
+			name = ALB_popular_party
+			long_name = ALB_popular_party
+		}
+		ai_chance = { base = 100 }
+	}
+	option = {
+		name = albania.176.b
+		start_civil_war = {
+			ideology = neutrality
+			size = 0.5
+			PREV = {
+				ALB_ahmet_zogolli = {
+					set_nationality = PREV.PREV
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = personalistic_dictatorship
+							traits = { ALB_ambitious_hotshot }
+						}
+					}
+					set_character_name = ALB_ahmet_zogu
+				}
+				set_party_name = {
+					ideology = neutrality
+					name = ALB_zogu_party
+					long_name = ALB_zogu_party
+				}
+			}
+		}
+		ai_chance = { base = 0 }
+	}
+}
+
+country_event = { #kosovar revolt 1922
+	id = albania.177
+	title = albania.177.t
+	desc = albania.177.desc
+	is_triggered_only = yes
+	option = {
+		name = albania.177.a
+		add_country_leader_role = {
+			character = ALB_hasan_prishtina
+			promote_leader = yes
+			country_leader = {
+				ideology = authoritarian_democracy
+				traits = { ALB_pragmatic_statesman }
+			}
+		}
+		set_party_name = {
+			ideology = neutrality
+			name = ALB_prishtina_party
+			long_name = ALB_prishtina_party
+		}
+		ALB_increase_domestic_instability = yes
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 0
+				has_stability > 0.40
+			}
+		}
+	}
+	option = {
+		name = albania.177.b
+		if = {
+			limit = { has_stability > 0.4 }
+			ALB_increase_domestic_instability = yes
+		}
+		custom_effect_tooltip = albania.177.b.tt
+		if = {
+			limit = { has_stability < 0.41 }
+			start_civil_war = {
+				ideology = neutrality
+				size = 0.8
+				PREV = {
+					ALB_hasan_prishtina = {
+						set_nationality = PREV.PREV
+						add_country_leader_role = {
+							promote_leader = yes
+							country_leader = {
+								ideology = authoritarian_democracy
+								traits = { ALB_pragmatic_statesman }
+							}
+						}
+					}
+					set_party_name = {
+						ideology = neutrality
+						name = ALB_prishtina_party
+						long_name = ALB_prishtina_party
+					}
+					every_character = {
+						limit = { ALB_is_kosovar_character = yes }
+						set_nationality = PREV.PREV
+					}
+				}
+			}
+		}
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 10
+				has_stability > 0.40
+			}
+		}
 	}
 }
