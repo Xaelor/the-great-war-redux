@@ -5,16 +5,15 @@ SAU_arabian_conquest = {
 		allowed = {
 			original_tag = SAU			
 		}
+		targets = {
+			804.owner
+		}
 		visible = {
 			#date > 1912.12.13
-			NOT = {
-				owns_state = 804
-			}
 			292 = {
 				is_owned_and_controlled_by = ROOT
 			}
 		}
-		target_array = 804.owner
 		available = {
 			has_war = no
 			804 = {
@@ -91,9 +90,11 @@ SAU_arabian_conquest = {
 		}
 		visible = {
 			is_subject = no
-			NOT = {
-				owns_state = 905
-			}
+		}
+		targets = {
+			905.owner
+		}
+		target_root_trigger = {
 			292 = {
 				is_owned_and_controlled_by = ROOT
 			}
@@ -101,7 +102,6 @@ SAU_arabian_conquest = {
 				has_country_flag = great_war_loser
 			}
 		}
-		target_array = 905.owner
 		available = {
 			has_war = no
 			owns_state = 804
@@ -818,6 +818,72 @@ SAU_arabian_conquest = {
 			news_event = {
 				id = interwar_news.19
 				hours = 3
+			}
+		}
+	}
+	SAU_unite_NAJ = {
+		icon = border_war
+		allowed = {
+			original_tag = SAU
+		}
+		targets = {
+			929.owner
+		}
+		target_trigger = {
+			FROM = {
+				NOT = {
+					has_war_with = ROOT
+				}
+			}
+		}
+		target_root_trigger = {
+			owns_state = 292
+		}
+		war_with_target_on_complete = yes
+		available = {
+			is_subject = no
+			has_war = no
+			FROM = {
+				is_subject = no
+			}
+			NOT = {
+				has_idea = idea_army_restrictions
+				has_active_mission = frankfurt_conference
+				has_active_mission = versallies_conference
+			}
+		}
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 0
+				date < 1934.1.1
+			}
+			modifier = {
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio > 1.0
+				}
+			}
+		}
+		cost = 75
+		fire_only_once = yes
+		complete_effect = {
+			add_state_core = 929
+			start_border_war = {
+				change_state_after_war = no
+				attacker = {
+					state = 292
+					num_provinces = 3
+					on_win = ww1_yemen.6
+					on_lose =  ww1_yemen.7
+				}
+				defender = {
+					state = 929
+					num_provinces = 1
+					on_win =  ww1_yemen.8
+					on_lose =  ww1_yemen.9
+				}
 			}
 		}
 	}

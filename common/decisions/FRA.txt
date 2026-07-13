@@ -529,9 +529,7 @@ TGWR_great_power_politics = {
 		visible = {
 			great_power_politics_scramble_for_africa_visible = yes
 			NOT = {
-				tag = FRC
-			}
-			NOT = { 
+				tag = FRC 
 				has_country_flag = great_war_loser
 				has_subject = FROM
 			}
@@ -540,18 +538,17 @@ TGWR_great_power_politics = {
 			command_power > 9.9
 		}
 		custom_cost_text = decision_cost_CP_10
-		target_trigger = {
-			FROM = {
-				original_tag = TUN
+		targets = {
+			TUN
+		}
+		target_root_trigger = {
+			NOT = {
+				tag = FRC 
+				has_country_flag = great_war_loser
 			}
 		}
-		# target_root_trigger = {
-		# 	NOT = {
-		# 		has_subject = FROM
-		# 	}
-		# }
 		available = {
-			TUN = {
+			FROM = {
 				has_war = no
 				is_subject = no
 			}
@@ -568,11 +565,11 @@ TGWR_great_power_politics = {
 			factor = 10
 		}
 		days_remove = 14
-		war_with_on_remove = TUN
+		war_with_target_on_remove = yes
 		complete_effect = {
 			add_ai_strategy = {
 				type = prepare_for_war
-				id = TUN
+				id = FROM
 				value = 25
 			}
 			hidden_effect = {
@@ -583,7 +580,7 @@ TGWR_great_power_politics = {
 			set_country_flag = france_intervention_started
 			FRA = {
 				declare_war_on = {
-					target = TUN
+					target = FROM
 					type = annex_everything
 				} 
 			}
@@ -676,6 +673,7 @@ TGWR_great_power_politics = {
 		targets_dynamic = yes
 		available = {
 			FROM = {
+				original_tag = RUS
 				any_enemy_country = {
 					OR = {
 						is_major = yes
