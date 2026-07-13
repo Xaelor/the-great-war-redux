@@ -216,18 +216,53 @@ TGWR_great_power_politics = {
 							duma_exists = yes
 							is_constitutional_monarchy = no
 						}
+						RUS_remove_political_mechanics = yes
 						set_global_flag = february_revolution
 						country_event = ww1_february_revolution.1
 					}
 					#PETROGRAD COMMUNE
 					else = {
+						RUS_remove_political_mechanics = yes
 						set_global_flag = petrograd_commune
+						mark_focus_tree_layout_dirty = yes
+						RUS_petrograd_commune = yes
+						activate_mission = RUS_petrograd_commune_mission
+						every_owned_state = {
+							limit = {
+								OR = {
+									state = 219
+									state = 239
+									state = 251
+									state = 253
+									state = 351
+									state = 653
+								}
+							}
+							add_dynamic_modifier = {
+								modifier = RUS_revolutionary_activity
+							}
+						}
 						country_event = ww1_petrograd_commune.1
 					}
 				}
 				#NEW 1905
 				else = {
+					RUS_remove_political_mechanics = yes
 					set_global_flag = new_1905
+					mark_focus_tree_layout_dirty = yes
+					every_owned_state = {
+						limit = {
+							OR = {
+								state = 195
+								state = 219
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = RUS_revolutionary_activity
+						}
+					}
+					activate_mission = RUS_revolution_turns_violent
+					add_ideas = RUS_general_strike
 					country_event = ww1_new_1905.1
 				}
 			}
@@ -239,11 +274,31 @@ TGWR_great_power_politics = {
 						duma_exists = yes
 						is_constitutional_monarchy = no
 					}
+					RUS_remove_political_mechanics = yes
 					set_global_flag = february_revolution
 					country_event = ww1_february_revolution.1
 				}
 				else = {
+					RUS_remove_political_mechanics = yes
 					set_global_flag = petrograd_commune
+					mark_focus_tree_layout_dirty = yes
+					RUS_petrograd_commune = yes
+					activate_mission = RUS_petrograd_commune_mission
+					every_owned_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 239
+								state = 251
+								state = 253
+								state = 351
+								state = 653
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = RUS_revolutionary_activity
+						}
+					}
 					country_event = ww1_petrograd_commune.1
 				}
 			}
@@ -271,7 +326,113 @@ TGWR_great_power_politics = {
 		complete_effect = {
 			set_global_flag = petrograd_commune
 			RUS_petrograd_commune = yes
+			activate_mission = RUS_petrograd_commune_mission
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 219
+						state = 239
+						state = 251
+						state = 253
+						state = 351
+						state = 653
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = RUS_revolutionary_activity
+				}
+			}
+			country_event = ww1_petrograd_commune.1
 		}
+	}
+	RUS_petrograd_commune_mission = {
+
+		icon = GFX_decision_generic_civil_support
+
+		allowed = {
+			original_tag = RUS
+		}
+
+		available = {
+			PET = {
+				exists = no
+			}
+		}
+
+		activation = {
+			always = no
+		}
+
+		is_good = no
+
+		days_mission_timeout = 90
+
+		complete_effect = {
+			hidden_effect = {
+				country_event = ww1_petrograd_commune.2
+			}
+		}
+
+		timeout_effect = {
+			custom_effect_tooltip = RUS_revolution_will_escalate_tt
+			hidden_effect = {
+				RUS_transfer_revolutionary_states = yes
+				transfer_units_fraction = {
+					target = PET
+					size = 0.2
+					army_ratio = 0.3
+				}
+				set_country_flag = RUS_petrograd_commune_civil_war
+				country_event = ww1_petrograd_commune.3
+			}
+		}
+
+	}
+	RUS_crack_down_on_revolution_in_FROM = {
+
+		icon = GFX_decision_generic_form_nation
+
+		allowed = {
+			original_tag = RUS
+		}
+
+		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
+			has_active_mission = RUS_petrograd_commune_mission
+		}
+
+		available = {
+			divisions_in_state = {
+				size > 4
+				state = FROM
+			}
+		}
+
+		state_target = yes
+
+		target_trigger = {
+			FROM = {
+				is_controlled_by = ROOT
+				has_dynamic_modifier = RUS_revolutionary_activity
+			}
+		}
+
+		on_map_mode = map_only
+
+		cost = 15
+
+		days_remove = 30
+
+		remove_effect = {
+			FROM = {
+				add_manpower  = -150
+				remove_dynamic_modifier = {
+					modifier = RUS_revolutionary_activity
+				}
+			}
+			add_stability = -0.02
+		}
+
 	}
 }
 #REVOLUTION DURING PEACETIME/NEW 1905
@@ -386,6 +547,15 @@ TGWR_great_power_politics = {
 		timeout_effect = {
 			custom_effect_tooltip = RUS_revolution_will_escalate_tt
 			hidden_effect = {
+				RUS_petrograd_commune = yes
+				RUS_transfer_revolutionary_states = yes
+				transfer_units_fraction = {
+					target = PET
+					size = 0.3
+					army_ratio = 0.4
+					air_ratio = 0.2
+					navy_ratio = 0.2
+				}
 				country_event = ww1_new_1905.4
 			}
 		}

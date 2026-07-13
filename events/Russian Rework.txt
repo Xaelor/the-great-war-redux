@@ -3642,11 +3642,6 @@ country_event = {
 	picture = ww1_russia_petrosoviet
 	is_triggered_only = yes
 	fire_only_once = yes
-	immediate = {
-		hidden_effect = {
-			RUS_petrograd_commune = yes
-		}
-	}
 	option = {
 		name = ww1_petrograd_commune.1.a
 		effect_tooltip = {
@@ -3654,6 +3649,49 @@ country_event = {
 				target = PET
 				type = civil_war
 			}
+			activate_mission = RUS_petrograd_commune_mission
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 219
+						state = 239
+						state = 251
+						state = 253
+						state = 351
+						state = 653
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = RUS_revolutionary_activity
+				}
+			}
+			unlock_decision_category_tooltip = RUS_crack_down_on_revolutionaries_in_FROM
+		}
+	}
+}
+country_event = {
+	id = ww1_petrograd_commune.2
+	title = ww1_petrograd_commune.2.t
+	desc = ww1_petrograd_commune.2.d
+	picture = ww1_russia_petrosoviet
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_petrograd_commune.2.a
+		effect_tooltip = {
+		}
+	}
+}
+country_event = {
+	id = ww1_petrograd_commune.3
+	title = ww1_petrograd_commune.3.t
+	desc = ww1_petrograd_commune.3.d
+	picture = ww1_russia_petrosoviet
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_petrograd_commune.3.a
+		effect_tooltip = {
 		}
 	}
 }
@@ -3671,23 +3709,10 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			every_owned_state = {
-				limit = {
-					OR = {
-						state = 195
-						state = 219
-					}
-				}
-				add_dynamic_modifier = {
-					modifier = RUS_revolutionary_activity
-				}
-			}
-			activate_mission = RUS_revolution_turns_violent
 			country_event = {
 				id = ww1_new_1905.2
 				days = 12
 			}
-			add_ideas = RUS_general_strike
 		}
 	}
 
@@ -3825,29 +3850,6 @@ country_event = {
 
 	is_triggered_only = yes
 
-	immediate = {
-		hidden_effect = {
-			RUS_petrograd_commune = yes
-			every_state = {
-				limit = {
-					has_dynamic_modifier = RUS_revolutionary_activity
-				}
-				every_state_division = {
-					destroy_unit = yes
-				}
-				transfer_state_to = PET
-				remove_dynamic_modifier = { modifier = RUS_revolutionary_activity }
-			}
-			transfer_units_fraction = {
-				target = PET
-				size = 0.3
-				army_ratio = 0.4
-				air_ratio = 0.2
-				navy_ratio = 0.2
-			}
-		}
-	}
-
 	option = {
 		name = ww1_new_1905.4.a
 		effect_tooltip = {
@@ -3865,6 +3867,9 @@ country_event = {
 				target = PET
 				type = civil_war
 			}
+		}
+		PET = {
+			change_tag_from = ROOT
 		}
 	}
 }
