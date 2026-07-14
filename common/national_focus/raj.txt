@@ -4,7 +4,7 @@
 		factor = 0
 		modifier = {
 			add = 10
-            is_raj_tag = yes
+            tag = RAJ
 		}
 	}
 	default = no
@@ -18,11 +18,6 @@
 		icon = GFX_focus_generic_modernize_industry
 		x = 4
 		y = 0
-		allow_branch = {
-			NOT = {
-				has_country_flag = pandemonium_occurred
-			}
-		}
 		available = {
 		}
 		bypass = {
@@ -578,11 +573,6 @@
 		icon = GFX_generic_railroad
 		x = 10
 		y = 0
-		allow_branch = {
-			NOT = {
-				has_country_flag = pandemonium_occurred
-			}
-		}
 		available = {
 		}
 		bypass = {
@@ -1276,11 +1266,6 @@
 		y = 0
 		available = {
 			has_completed_focus = RAJ_george_V_royal_tour
-		}
-		allow_branch = {
-			NOT = {
-				has_country_flag = pandemonium_occurred
-			}
 		}
 		bypass = {
 		}
@@ -2418,11 +2403,6 @@
 		x = 13
 		y = 0
 		relative_position_id = RAJ_indian_army_act
-		allow_branch = {
-			NOT = {
-				has_country_flag = pandemonium_occurred
-			}
-		}
 		available = {
 		}
 		bypass = {
@@ -3665,631 +3645,631 @@
 		}
 	}
 	# RAJ DOWNFALL TREE
-	focus = {
-		id = RAJ_pandemonium
-		icon = GFX_focus_AST_never_gallipoli
-		x = 10
-		y = 0
-		relative_position_id = RAJ_indian_press_act
-		available = {
-			custom_trigger_tooltip = {
-				always = no
-				has_country_flag = pandemonium_occurred
-			}
-		}
-		bypass = {
-		}
-		cost = 10
-		completion_reward = {
-			mark_focus_tree_layout_dirty = yes
-			hidden_effect = {
-				add_ideas = RAJ_unrest_low
-			}
-			custom_effect_tooltip = RAJ_pandemonium_reward
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_emergency_powers
-		icon = GFX_goal_generic_political_pressure
-		x = 0
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_pandemonium
-		cost = 10
-		prerequisite = {
-			focus = RAJ_pandemonium
-		}
-		completion_reward = {
-			set_country_flag = jej
-			mark_focus_tree_layout_dirty = yes
-			custom_effect_tooltip = RAJ_emergency_powers_reward
-			add_stability = -0.15
-			add_country_leader_trait = dictator
-			if = {
-				limit = {
-					has_completed_focus = RAJ_pandemonium
-				}
-				add_days_mission_timeout = {
-					mission = RAJ_unrest_increases
-					days = 50
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_martial_law
-		icon = GFX_focus_eng_move_to_secure_the_dominions
-		x = -4
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_emergency_powers
-		cost = 10
-		prerequisite = {
-			focus = RAJ_emergency_powers
-		}
-		completion_reward = {
-			add_timed_idea = {
-				idea = RAJ_martial_law_idea
-				days = 300
-			}
-			if = {
-				limit = {
-					has_completed_focus = RAJ_pandemonium
-				}
-				add_days_mission_timeout = {
-					mission = RAJ_unrest_increases
-					days = 50
-				}
-			}
-			set_party_name = {
-				ideology = democratic
-				name = RAJ_suspended_INC_name
-				long_name = RAJ_suspended_INC_long_name
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_uphold_indian_loyalists
-		icon = GFX_goal_generic_improve_relations
-		x = -2
-		y = 1
-		mutually_exclusive = {
-			focus = RAJ_the_european_martyrs
-		}
-		available = {
-			not = {
-				has_country_flag = RAJ_support_indians
-			}
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_emergency_powers
-		cost = 10
-		prerequisite = {
-			focus = RAJ_emergency_powers
-		}
-		completion_reward = {
-			mark_focus_tree_layout_dirty = yes
-			if = {
-				limit = {
-					has_idea = RAJ_indian_national_congress_high
-				}
-				swap_ideas = {
-					remove_idea = RAJ_indian_national_congress_high
-					add_idea = RAJ_indian_national_congress_medium
-				}
-				else_if = {
-					limit = {
-						has_idea = RAJ_indian_national_congress_medium
-					}
-					swap_ideas = {
-						remove_idea = RAJ_indian_national_congress_medium
-						add_idea = RAJ_indian_national_congress_low
-					}
-					else_if = {
-						limit = {
-							has_idea = RAJ_indian_national_congress_low
-						}
-						remove_ideas = RAJ_indian_national_congress_low
-					}
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_ensured_loyalty
-		icon = GFX_goal_generic_political_pressure
-		x = 1
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_martial_law
-		cost = 10
-		prerequisite = {
-			focus = RAJ_uphold_indian_loyalists
-			focus = RAJ_martial_law
-		}
-		completion_reward = {
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_integrate_loyalists
-		icon = GFX_goal_generic_military_sphere
-		x = 1
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_ensured_loyalty
-		cost = 10
-		prerequisite = {
-			focus = RAJ_ensured_loyalty
-		}
-		prerequisite = {
-			focus = RAJ_uphold_indian_loyalists
-		}
-		completion_reward = {
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_the_european_martyrs
-		icon = GFX_goal_generic_demand_territory
-		x = 0
-		y = 1
-		mutually_exclusive = {
-			focus = RAJ_uphold_indian_loyalists
-		}
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_emergency_powers
-		cost = 5
-		prerequisite = {
-			focus = RAJ_emergency_powers
-		}
-		completion_reward = {
-			mark_focus_tree_layout_dirty = yes
-			add_equipment_to_stockpile = {
-				type = infantry_equipment
-				amount = 1000
-			}
-			set_country_flag = RAJ_support_indians
-			add_stability = 0.05
-			add_opinion_modifier = {
-				target = GER
-				modifier = RAJ_french_delegation_relation				# PLACEHOLDER
-			}
-			if = {
-				limit = {
-					has_completed_focus = RAJ_pandemonium
-				}
-				add_days_mission_timeout = {
-					mission = RAJ_unrest_increases
-					days = 50
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_secure_the_railways
-		icon = GFX_goal_generic_construct_infrastructure
-		x = 2
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_emergency_powers
-		cost = 10
-		prerequisite = {
-			focus = RAJ_emergency_powers
-		}
-		completion_reward = {
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_consolidate_our_positions
-		icon = GFX_goal_generic_defence
-		x = 5
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_emergency_powers
-		cost = 5
-		prerequisite = {
-			focus = RAJ_emergency_powers
-		}
-		completion_reward = {
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_take_the_initiave
-		icon = GFX_goal_generic_occupy_states_ongoing_war
-		x = -1
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_consolidate_our_positions
-		cost = 10
-		prerequisite = {
-			focus = RAJ_consolidate_our_positions
-		}
-		completion_reward = {
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_emergency_ordance_factories
-		icon = GFX_goal_generic_construct_mil_factory
-		x = 1
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_consolidate_our_positions
-		cost = 10
-		prerequisite = {
-			focus = RAJ_consolidate_our_positions
-		}
-		completion_reward = {
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_imperial_aid
-		icon = GFX_focus_chi_british_cooperation
-		x = 0
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_emergency_ordance_factories
-		cost = 10
-		prerequisite = {
-			focus = RAJ_emergency_ordance_factories
-		}
-		completion_reward = {
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_northern_logistics
-		icon = GFX_goal_generic_army_doctrines
-		x = 0
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_secure_the_railways
-		cost = 10
-		prerequisite = {
-			focus = RAJ_secure_the_railways
-		}
-		completion_reward = {
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_the_princely_front
-		icon = GFX_focus_generic_home_defense
-		x = -1
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_take_the_initiave
-		cost = 10
-		prerequisite = {
-			focus = RAJ_take_the_initiave
-			focus = RAJ_northern_logistics
-		}
-		completion_reward = {
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_legacy_of_the_eic
-		icon = GFX_focus_generic_navy_battleship2
-		x = 0
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_the_european_martyrs
-		cost = 10
-		prerequisite = {
-			focus = RAJ_the_european_martyrs
-		}
-		completion_reward = {
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_suspend_constitution
-		icon = GFX_goal_generic_political_pressure
-		x = -1
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_martial_law
-		cost = 10
-		prerequisite = {
-			focus = RAJ_martial_law
-		}
-		completion_reward = {
-			custom_effect_tooltip = RAJ_suspend_constitution_reward
-			custom_effect_tooltip = RAJ_decision_reward
-			if = {
-				limit = {
-					has_idea = RAJ_indian_national_congress_low
-				}
-				swap_ideas = {
-					remove_idea = RAJ_indian_national_congress_low
-					add_idea = RAJ_indian_national_congress_medium
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = RAJ_indian_national_congress_medium
-				}
-				swap_ideas = {
-					remove_idea = RAJ_indian_national_congress_medium
-					add_idea = RAJ_indian_national_congress_high
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = RAJ_indian_national_congress_high
-				}
-				add_popularity = {
-					ideology = democratic
-					popularity = 0.05
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_political_manoeuvring
-		icon = GFX_goal_generic_dangerous_deal
-		x = 1
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_suspend_constitution
-		cost = 10
-		prerequisite = {
-			focus = RAJ_suspend_constitution
-			focus = RAJ_ensured_loyalty
-		}
-		completion_reward = {
-			set_country_flag = RAJ_political_manoeuvring_done
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_after_the_storm
-		icon = GFX_focus_spr_torchbearers_of_tomorrow
-		x = -1
-		y = 3
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_the_european_martyrs
-		cost = 10
-		prerequisite = {
-			focus = RAJ_political_manoeuvring
-		}
-		prerequisite = {
-			focus = RAJ_uphold_indian_loyalists
-			focus = RAJ_the_european_martyrs
-			focus = RAJ_legacy_of_the_eic
-		}
-		completion_reward = {
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_re_integrate_the_empire
-		icon = GFX_focus_eng_the_sun_never_sets
-		x = 0
-		y = 1
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_after_the_storm
-		cost = 10
-		prerequisite = {
-			focus = RAJ_after_the_storm
-		}
-		completion_reward = {
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_return_to_responsible_government
-		icon = GFX_goal_generic_intelligence_exchange
-		x = 0
-		y = 1
-		mutually_exclusive = {
-			focus = RAJ_military_government
-			focus = RAJ_reforms_at_last
-		}
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_re_integrate_the_empire
-		cost = 10
-		prerequisite = {
-			focus = RAJ_re_integrate_the_empire
-		}
-		completion_reward = {
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.02
-			}
-			add_stability = 0.02
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_military_government
-		icon = GFX_focus_generic_military_mission
-		x = 2
-		y = 1
-		mutually_exclusive = {
-			focus = RAJ_return_to_responsible_government
-			focus = RAJ_reforms_at_last
-		}
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_re_integrate_the_empire
-		cost = 10
-		prerequisite = {
-			focus = RAJ_re_integrate_the_empire
-		}
-		select_effect = {
-			if = {
-				limit = {
-					has_idea = RAJ_indian_national_congress_high
-				}
-				country_event = {
-					id = ww1_raj.48
-				}
-			}
-			else_if = {
-				limit = {
-					has_idea = RAJ_indian_national_congress_medium
-				}
-				country_event = {
-					id = ww1_raj.48
-				}
-				else_if = {
-					limit = {
-						has_idea = RAJ_indian_national_congress_low
-					}
-					add_stability = 0.05
-				}
-			}
-		}
-		completion_reward = {
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_reforms_at_last
-		icon = GFX_goal_generic_national_unity
-		x = -2
-		y = 1
-		mutually_exclusive = {
-			focus = RAJ_return_to_responsible_government
-			focus = RAJ_military_government
-		}
-		available = {
-		}
-		bypass = {
-		}
-		relative_position_id = RAJ_re_integrate_the_empire
-		cost = 10
-		prerequisite = {
-			focus = RAJ_re_integrate_the_empire
-		}
-		completion_reward = {
-			add_popularity = {
-				ideology = democratic
-				popularity = 0.02
-			}
-			add_stability = 0.02
-			if = {
-				limit = {
-					has_country_flag = pandemonium_occurred
-				}
-				clr_country_flag = pandemonium_occurred
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
+	#focus = {
+	#	id = RAJ_pandemonium
+	#	icon = GFX_focus_AST_never_gallipoli
+	#	x = 10
+	#	y = 0
+	#	relative_position_id = RAJ_indian_press_act
+	#	available = {
+	#		custom_trigger_tooltip = {
+	#			always = no
+	#			has_country_flag = pandemonium_occurred
+	#		}
+	#	}
+	#	bypass = {
+	#	}
+	#	cost = 10
+	#	completion_reward = {
+	#		mark_focus_tree_layout_dirty = yes
+	#		hidden_effect = {
+	#			add_ideas = RAJ_unrest_low
+	#		}
+	#		custom_effect_tooltip = RAJ_pandemonium_reward
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_emergency_powers
+	#	icon = GFX_goal_generic_political_pressure
+	#	x = 0
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_pandemonium
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_pandemonium
+	#	}
+	#	completion_reward = {
+	#		set_country_flag = jej
+	#		mark_focus_tree_layout_dirty = yes
+	#		custom_effect_tooltip = RAJ_emergency_powers_reward
+	#		add_stability = -0.15
+	#		add_country_leader_trait = dictator
+	#		if = {
+	#			limit = {
+	#				has_completed_focus = RAJ_pandemonium
+	#			}
+	#			add_days_mission_timeout = {
+	#				mission = RAJ_unrest_increases
+	#				days = 50
+	#			}
+	#		}
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_martial_law
+	#	icon = GFX_focus_eng_move_to_secure_the_dominions
+	#	x = -4
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_emergency_powers
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_emergency_powers
+	#	}
+	#	completion_reward = {
+	#		add_timed_idea = {
+	#			idea = RAJ_martial_law_idea
+	#			days = 300
+	#		}
+	#		if = {
+	#			limit = {
+	#				has_completed_focus = RAJ_pandemonium
+	#			}
+	#			add_days_mission_timeout = {
+	#				mission = RAJ_unrest_increases
+	#				days = 50
+	#			}
+	#		}
+	#		set_party_name = {
+	#			ideology = democratic
+	#			name = RAJ_suspended_INC_name
+	#			long_name = RAJ_suspended_INC_long_name
+	#		}
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_uphold_indian_loyalists
+	#	icon = GFX_goal_generic_improve_relations
+	#	x = -2
+	#	y = 1
+	#	mutually_exclusive = {
+	#		focus = RAJ_the_european_martyrs
+	#	}
+	#	available = {
+	#		not = {
+	#			has_country_flag = RAJ_support_indians
+	#		}
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_emergency_powers
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_emergency_powers
+	#	}
+	#	completion_reward = {
+	#		mark_focus_tree_layout_dirty = yes
+	#		if = {
+	#			limit = {
+	#				has_idea = RAJ_indian_national_congress_high
+	#			}
+	#			swap_ideas = {
+	#				remove_idea = RAJ_indian_national_congress_high
+	#				add_idea = RAJ_indian_national_congress_medium
+	#			}
+	#			else_if = {
+	#				limit = {
+	#					has_idea = RAJ_indian_national_congress_medium
+	#				}
+	#				swap_ideas = {
+	#					remove_idea = RAJ_indian_national_congress_medium
+	#					add_idea = RAJ_indian_national_congress_low
+	#				}
+	#				else_if = {
+	#					limit = {
+	#						has_idea = RAJ_indian_national_congress_low
+	#					}
+	#					remove_ideas = RAJ_indian_national_congress_low
+	#				}
+	#			}
+	#		}
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_ensured_loyalty
+	#	icon = GFX_goal_generic_political_pressure
+	#	x = 1
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_martial_law
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_uphold_indian_loyalists
+	#		focus = RAJ_martial_law
+	#	}
+	#	completion_reward = {
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_integrate_loyalists
+	#	icon = GFX_goal_generic_military_sphere
+	#	x = 1
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_ensured_loyalty
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_ensured_loyalty
+	#	}
+	#	prerequisite = {
+	#		focus = RAJ_uphold_indian_loyalists
+	#	}
+	#	completion_reward = {
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_the_european_martyrs
+	#	icon = GFX_goal_generic_demand_territory
+	#	x = 0
+	#	y = 1
+	#	mutually_exclusive = {
+	#		focus = RAJ_uphold_indian_loyalists
+	#	}
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_emergency_powers
+	#	cost = 5
+	#	prerequisite = {
+	#		focus = RAJ_emergency_powers
+	#	}
+	#	completion_reward = {
+	#		mark_focus_tree_layout_dirty = yes
+	#		add_equipment_to_stockpile = {
+	#			type = infantry_equipment
+	#			amount = 1000
+	#		}
+	#		set_country_flag = RAJ_support_indians
+	#		add_stability = 0.05
+	#		add_opinion_modifier = {
+	#			target = GER
+	#			modifier = RAJ_french_delegation_relation				# PLACEHOLDER
+	#		}
+	#		if = {
+	#			limit = {
+	#				has_completed_focus = RAJ_pandemonium
+	#			}
+	#			add_days_mission_timeout = {
+	#				mission = RAJ_unrest_increases
+	#				days = 50
+	#			}
+	#		}
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_secure_the_railways
+	#	icon = GFX_goal_generic_construct_infrastructure
+	#	x = 2
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_emergency_powers
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_emergency_powers
+	#	}
+	#	completion_reward = {
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_consolidate_our_positions
+	#	icon = GFX_goal_generic_defence
+	#	x = 5
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_emergency_powers
+	#	cost = 5
+	#	prerequisite = {
+	#		focus = RAJ_emergency_powers
+	#	}
+	#	completion_reward = {
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_take_the_initiave
+	#	icon = GFX_goal_generic_occupy_states_ongoing_war
+	#	x = -1
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_consolidate_our_positions
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_consolidate_our_positions
+	#	}
+	#	completion_reward = {
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_emergency_ordance_factories
+	#	icon = GFX_goal_generic_construct_mil_factory
+	#	x = 1
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_consolidate_our_positions
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_consolidate_our_positions
+	#	}
+	#	completion_reward = {
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_imperial_aid
+	#	icon = GFX_focus_chi_british_cooperation
+	#	x = 0
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_emergency_ordance_factories
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_emergency_ordance_factories
+	#	}
+	#	completion_reward = {
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_northern_logistics
+	#	icon = GFX_goal_generic_army_doctrines
+	#	x = 0
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_secure_the_railways
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_secure_the_railways
+	#	}
+	#	completion_reward = {
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_the_princely_front
+	#	icon = GFX_focus_generic_home_defense
+	#	x = -1
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_take_the_initiave
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_take_the_initiave
+	#		focus = RAJ_northern_logistics
+	#	}
+	#	completion_reward = {
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_legacy_of_the_eic
+	#	icon = GFX_focus_generic_navy_battleship2
+	#	x = 0
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_the_european_martyrs
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_the_european_martyrs
+	#	}
+	#	completion_reward = {
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_suspend_constitution
+	#	icon = GFX_goal_generic_political_pressure
+	#	x = -1
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_martial_law
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_martial_law
+	#	}
+	#	completion_reward = {
+	#		custom_effect_tooltip = RAJ_suspend_constitution_reward
+	#		custom_effect_tooltip = RAJ_decision_reward
+	#		if = {
+	#			limit = {
+	#				has_idea = RAJ_indian_national_congress_low
+	#			}
+	#			swap_ideas = {
+	#				remove_idea = RAJ_indian_national_congress_low
+	#				add_idea = RAJ_indian_national_congress_medium
+	#			}
+	#		}
+	#		else_if = {
+	#			limit = {
+	#				has_idea = RAJ_indian_national_congress_medium
+	#			}
+	#			swap_ideas = {
+	#				remove_idea = RAJ_indian_national_congress_medium
+	#				add_idea = RAJ_indian_national_congress_high
+	#			}
+	#		}
+	#		else_if = {
+	#			limit = {
+	#				has_idea = RAJ_indian_national_congress_high
+	#			}
+	#			add_popularity = {
+	#				ideology = democratic
+	#				popularity = 0.05
+	#			}
+	#		}
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_political_manoeuvring
+	#	icon = GFX_goal_generic_dangerous_deal
+	#	x = 1
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_suspend_constitution
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_suspend_constitution
+	#		focus = RAJ_ensured_loyalty
+	#	}
+	#	completion_reward = {
+	#		set_country_flag = RAJ_political_manoeuvring_done
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_after_the_storm
+	#	icon = GFX_focus_spr_torchbearers_of_tomorrow
+	#	x = -1
+	#	y = 3
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_the_european_martyrs
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_political_manoeuvring
+	#	}
+	#	prerequisite = {
+	#		focus = RAJ_uphold_indian_loyalists
+	#		focus = RAJ_the_european_martyrs
+	#		focus = RAJ_legacy_of_the_eic
+	#	}
+	#	completion_reward = {
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_re_integrate_the_empire
+	#	icon = GFX_focus_eng_the_sun_never_sets
+	#	x = 0
+	#	y = 1
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_after_the_storm
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_after_the_storm
+	#	}
+	#	completion_reward = {
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_return_to_responsible_government
+	#	icon = GFX_goal_generic_intelligence_exchange
+	#	x = 0
+	#	y = 1
+	#	mutually_exclusive = {
+	#		focus = RAJ_military_government
+	#		focus = RAJ_reforms_at_last
+	#	}
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_re_integrate_the_empire
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_re_integrate_the_empire
+	#	}
+	#	completion_reward = {
+	#		add_popularity = {
+	#			ideology = neutrality
+	#			popularity = 0.02
+	#		}
+	#		add_stability = 0.02
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_military_government
+	#	icon = GFX_focus_generic_military_mission
+	#	x = 2
+	#	y = 1
+	#	mutually_exclusive = {
+	#		focus = RAJ_return_to_responsible_government
+	#		focus = RAJ_reforms_at_last
+	#	}
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_re_integrate_the_empire
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_re_integrate_the_empire
+	#	}
+	#	select_effect = {
+	#		if = {
+	#			limit = {
+	#				has_idea = RAJ_indian_national_congress_high
+	#			}
+	#			country_event = {
+	#				id = ww1_raj.48
+	#			}
+	#		}
+	#		else_if = {
+	#			limit = {
+	#				has_idea = RAJ_indian_national_congress_medium
+	#			}
+	#			country_event = {
+	#				id = ww1_raj.48
+	#			}
+	#			else_if = {
+	#				limit = {
+	#					has_idea = RAJ_indian_national_congress_low
+	#				}
+	#				add_stability = 0.05
+	#			}
+	#		}
+	#	}
+	#	completion_reward = {
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
+	#focus = {
+	#	id = RAJ_reforms_at_last
+	#	icon = GFX_goal_generic_national_unity
+	#	x = -2
+	#	y = 1
+	#	mutually_exclusive = {
+	#		focus = RAJ_return_to_responsible_government
+	#		focus = RAJ_military_government
+	#	}
+	#	available = {
+	#	}
+	#	bypass = {
+	#	}
+	#	relative_position_id = RAJ_re_integrate_the_empire
+	#	cost = 10
+	#	prerequisite = {
+	#		focus = RAJ_re_integrate_the_empire
+	#	}
+	#	completion_reward = {
+	#		add_popularity = {
+	#			ideology = democratic
+	#			popularity = 0.02
+	#		}
+	#		add_stability = 0.02
+	#		if = {
+	#			limit = {
+	#				has_country_flag = pandemonium_occurred
+	#			}
+	#			clr_country_flag = pandemonium_occurred
+	#		}
+	#	}
+	#	ai_will_do = {
+	#		factor = 1
+	#	}
+	#}
 
 	focus = {
 		id = RAJ_legacy_of_the_harappan
@@ -4343,829 +4323,4 @@
 			}
 		}
 	}
-
-
-	# Berlin Committee Tree
-	focus = {
-		id = RAJ_organise_the_committee
-		icon = GFX_berlin_committee_flag
-		x = 54
-		y = 0
-		available = {
-			has_country_flag = can_complete_RAJ_focus_6767
-			custom_trigger_tooltip = {
-				tooltip = to_trigger_berlin_committee
-			}
-		}
-		bypass = {
-		}
-		cost = 5
-		available_if_capitulated = yes
-		select_effect = {
-			country_event = ww1_rin.1
-		}
-		completion_reward = {
-			mark_focus_tree_layout_dirty = yes
-			add_political_power = 120
-			hidden_effect = {
-				add_timed_idea = {
-					idea = RIN_berlin_committee
-					days = 1095 # 
-				}
-				add_ideas = RIN_10_rupees_banknotes
-				add_ideas = RIN_nationalist_literature
-
-				#these are all fucking focuses why are they add_ideas
-				#add_ideas = RAJ_german_financial_support 
-				#add_ideas = RAJ_spandau_training_grounds
-				#add_ideas = RAJ_radio_communication
-				#add_ideas = RAJ_sway_indian_pows
-				#add_ideas = RAJ_german_instructors
-			}
-			custom_effect_tooltip = RIN_berlin_committee_tt
-			set_country_flag = RAJ_berlin_committee_begins
-				
-			add_offsite_building = { type = industrial_complex level = 1 }
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_oppenheim_leadership
-		icon = GFX_focus_deal_with_german_empire
-		x = -4
-		y = 1
-		relative_position_id = RAJ_organise_the_committee
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_organise_the_committee
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_issue_ten_rupees_banknotes
-		icon = GFX_focus_generic_banking_legislation
-		x = -1
-		y = 1
-		relative_position_id = RAJ_oppenheim_leadership
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_oppenheim_leadership
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_german_financial_support
-		icon = GFX_generic_deals_money
-		x = 0
-		y = 1
-		relative_position_id = RAJ_issue_ten_rupees_banknotes
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_issue_ten_rupees_banknotes
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_spandau_training_grounds
-		icon = GFX_goal_generic_axis_build_infantry
-		x = 1
-		y = 1
-		relative_position_id = RAJ_oppenheim_leadership
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_oppenheim_leadership
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_radio_communication
-		icon = GFX_focus_generic_radio_communication
-		x = -1
-		y = 2
-		relative_position_id = RAJ_spandau_training_grounds
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_spandau_training_grounds
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_sway_indian_pows
-		icon = GFX_goal_generic_military_deal
-		x = 0
-		y = 1
-		relative_position_id = RAJ_spandau_training_grounds
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_spandau_training_grounds
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_german_instructors
-		icon = GFX_focus_GER_army_officer
-		x = 1
-		y = 2
-		relative_position_id = RAJ_spandau_training_grounds
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_spandau_training_grounds
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_kaiserliche_marine_lessons
-		icon = GFX_focus_GER_panzerschiff
-		x = 1
-		y = 1
-		relative_position_id = RAJ_radio_communication
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_radio_communication
-		}
-		prerequisite = {
-			focus = RAJ_german_instructors
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-	}
-
-	focus = {
-		id = RAJ_the_intelligence_bureau_of_the_east
-		icon = GFX_intelligence_bureau_of_the_east
-		x = 4
-		y = 1
-		relative_position_id = RAJ_organise_the_committee
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_organise_the_committee
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-			if = {
-				limit = {
-					has_dlc = "La Resistance"
-				}
-				create_intelligence_agency = {
-					name = RAJ_intelligence_agency
-					icon = GFX_intelligence_agency_AUH # placeholder change when i get real icon
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_the_ghadar_party
-		icon = GFX_ghadar_party_deal
-		x = -2
-		y = 1
-		relative_position_id = RAJ_the_intelligence_bureau_of_the_east
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_the_intelligence_bureau_of_the_east
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_repatriation_of_ghadarites
-		icon = GFX_focus_generic_naval_ship_transfer
-		x = 0
-		y = 1
-		relative_position_id = RAJ_the_ghadar_party
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_the_ghadar_party
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_central_leadership_in_punjab
-		icon = GFX_focus_generic_limited_social_mobilization
-		x = -1
-		y = 1
-		relative_position_id = RAJ_repatriation_of_ghadarites
-
-		available = {
-		}
-		mutually_exclusive = {
-			focus = RAJ_allow_decentralised_leadership
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_repatriation_of_ghadarites
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_allow_decentralised_leadership
-		icon = GFX_focus_generic_workers
-		x = 1
-		y = 1
-		relative_position_id = RAJ_repatriation_of_ghadarites
-
-		available = {
-		}
-		mutually_exclusive = {
-			focus = RAJ_central_leadership_in_punjab
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_repatriation_of_ghadarites
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_the_jugantar_organisation
-		icon = GFX_samiti_organisation_deal
-		x = 2
-		y = 1
-		relative_position_id = RAJ_the_intelligence_bureau_of_the_east
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_the_intelligence_bureau_of_the_east
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_universal_emporium
-		icon = GFX_focus_generic_foreign_diplomacy
-		x = 0
-		y = 1
-		relative_position_id = RAJ_the_jugantar_organisation
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_the_jugantar_organisation
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_relocate_to_balasor
-		icon = GFX_focus_prc_infiltration
-		x = -1
-		y = 2
-		relative_position_id = RAJ_the_jugantar_organisation
-
-		available = {
-		}
-		mutually_exclusive = {
-			focus = RAJ_merge_with_the_anushilan_samiti
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_the_jugantar_organisation
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_merge_with_the_anushilan_samiti
-		icon = GFX_goal_generic_wolf_pack
-		x = 1
-		y = 2
-		relative_position_id = RAJ_the_jugantar_organisation
-
-		available = {
-		}
-		mutually_exclusive = {
-			focus = RAJ_relocate_to_balasor
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_the_jugantar_organisation
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_arms_shipments
-		icon = GFX_goal_generic_amphibious_assault # Will be changed to Luck titanic icon
-		x = 2
-		y = 1
-		relative_position_id = RAJ_the_ghadar_party
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_the_jugantar_organisation focus = RAJ_the_ghadar_party
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_the_irish_connection
-		icon = GFX_focus_deal_with_ireland
-		x = 0
-		y = 1
-		relative_position_id = RAJ_the_intelligence_bureau_of_the_east
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_the_intelligence_bureau_of_the_east
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-
-	focus = {
-		id = RAJ_publish_nationalist_literature
-		icon = GFX_goal_generic_propaganda
-		x = 4
-		y = 1
-		relative_position_id = RAJ_oppenheim_leadership
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_oppenheim_leadership focus = RAJ_the_intelligence_bureau_of_the_east
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_propaganda_airdrops
-		icon = GFX_goal_generic_air_fighter
-		x = 0
-		y = 1
-		relative_position_id = RAJ_publish_nationalist_literature
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_publish_nationalist_literature
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-
-	focus = {
-		id = RAJ_the_provisional_government_of_india
-		icon = GFX_provisional_government_of_india_flag
-		x = 3
-		y = 1
-		relative_position_id = RAJ_central_leadership_in_punjab
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_central_leadership_in_punjab focus = RAJ_allow_decentralised_leadership
-		}
-		prerequisite = {
-			focus = RAJ_relocate_to_balasor focus = RAJ_merge_with_the_anushilan_samiti
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			promote_character = RIN_raja_mahendra_pratap
-			set_country_flag = RAJ_formed_a_government
-			set_cosmetic_tag = RAJ_provisional_government_of_india
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_influence_the_emir_inner_circle
-		icon = GFX_goal_generic_dangerous_deal
-		x = -1
-		y = 1
-		relative_position_id = RAJ_the_provisional_government_of_india
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_the_provisional_government_of_india
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_siraj_al_akhbar
-		icon = GFX_generic_media_controls
-		x = 0
-		y = 1
-		relative_position_id = RAJ_influence_the_emir_inner_circle
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_influence_the_emir_inner_circle
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 69
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_attract_foreign_aid
-		icon = GFX_goal_generic_positive_trade_relations
-		x = 1
-		y = 1
-		relative_position_id = RAJ_the_provisional_government_of_india
-
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_the_provisional_government_of_india
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 67
-			if = {
-				limit = {
-					NOT = {
-						has_idea = free_trade
-					}
-					has_idea = closed_economy
-			
-				
-			}
-			swap_ideas = {
-				remove_idea = closed_economy
-				add_idea = free_trade
-			}
-	
-		}
-		if = {
-			limit = {
-				NOT = {
-					has_idea = free_trade
-				}
-				has_idea = limited_exports
-			}
-			remove_ideas = limited_exports
-			add_ideas = free_trade
-		}
-		if = {
-			limit = {
-				NOT = {
-					has_idea = free_trade
-				}
-				has_idea = export_focus
-			}
-			remove_ideas = export_focus
-			add_ideas = free_trade
-		}
-		add_offsite_building = {
-			type = industrial_complex
-			level = 1
-		}
-		add_offsite_building = {
-			type = arms_factory
-			level = 1
-		}
-		random_list = {
-			50 = {
-				GER = {
-					add_opinion_modifier = {
-						target = RAJ
-						modifier = RUS_rapprochement_with_kaiser
-					}
-				}
-			}
-			50 = {
-				RUS = {
-					add_opinion_modifier = {
-						target = RAJ
-						modifier = RUS_rapprochement_with_kaiser
-					}
-				}
-			}
-		}
-	}
-	
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_contact_the_soviet_government
-		icon = GFX_focus_chi_mission_to_the_soviet_union
-		x = 0
-		y = 1
-		relative_position_id = RAJ_attract_foreign_aid
-
-		available = {
-			country_exists = SOV
-			or = {
-				RUS = {
-					has_government = communism
-				}
-			}
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_attract_foreign_aid
-		}
-		
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 100
-		}
-	
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_our_dreams_fufilled
-		#icon = GFX_goal_generic_political_influence
-		x = -4
-		y = 2
-		relative_position_id = RAJ_the_provisional_government_of_india
-		prerequisite = {
-			focus = RAJ_kaiserliche_marine_lessons
-			focus = RAJ_the_provisional_government_of_india
-		}
-		available = {
-		}
-		cost = 4
-		completion_reward = {
-			add_political_power = 120
-			#country_event = ww1_rin. what event?
-			
-		}
-	}
-
-	focus = {
-		id = RAJ_first_indian_national_congress
-		#icon = GFX_focus_generic_political_party
-		x = -3
-		y = 1
-		relative_position_id = RAJ_our_dreams_fufilled
-		prerequisite = {
-			focus = RAJ_our_dreams_fufilled
-			focus = RAJ_kaiserliche_marine_lessons
-		}
-		available = {
-		}
-		cost = 1
-		select_effect = {
-			add_political_power = 120
-			country_event = ww1_rin.5
-			custom_effect_tooltip = RAJ_first_indian_national_congress_tt
-		}
-		completion_reward = {
-			add_political_power = 120
-			country_event = ww1_rin.4
-			custom_effect_tooltip = RAJ_first_indian_national_congress_tt
-			GER = {
-				add_opinion_modifier = {
-					target  = RIN
-					modifier = RUS_rapprochement_with_kaiser
-				}
-			}
-		}
-	}
-
 }
