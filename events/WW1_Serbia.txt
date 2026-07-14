@@ -4417,3 +4417,104 @@ country_event = { #albania border war attacker loss
 		ai_chance = { base = 100 }
 	}
 }
+
+country_event = { #republic of mirdita
+	id = ww1_serbia_albania.10
+	title = ww1_serbia_albania.10.t
+	desc = ww1_serbia_albania.10.desc
+	is_triggered_only = yes
+	picture = GFX_country_event_marka_gjoni
+	option = {
+		name = ww1_serbia_albania.10.a
+		create_dynamic_country = {
+			original_tag = ALB
+			1214 = {
+				hidden_effect = { transfer_state_to = PREV }
+				custom_effect_tooltip = becomes_owned_and_controlled_by_republic_of_mirdita
+			}
+			hidden_effect = {
+				load_focus_tree = empty_focus
+				set_popularities = { neutrality = 100 }
+				set_politics = { ruling_party = neutrality elections_allowed = no }
+				set_cosmetic_tag = ALB_mirdita_republic
+			}
+			every_other_country = {
+				limit = { has_character = ALB_marka_gjoni }
+				ALB_marka_gjoni = {
+					custom_effect_tooltip = joins_republic_of_mirdita
+					hidden_effect = {
+						set_nationality = PREV.PREV
+						promote_character = warlordism
+						add_country_leader_trait = ALB_president_of_mirdita
+					}
+				}
+			}
+			custom_effect_tooltip = gjoni_president_becomes_country_leader
+			add_ideas = MDT_foreign_headquarters
+			add_ideas = MDT_serbian_support
+			custom_effect_tooltip = mirdita_declare_war_on_albania
+			hidden_effect = {
+				set_capital = {
+					state = 1214
+					remember_old_capital = no
+				}
+				set_party_name = {
+					ideology = neutrality
+					name = ALB_marka_party
+					long_name = ALB_marka_party
+				}
+				set_party_name = {
+					ideology = democratic
+					name = ALB_marka_party
+					long_name = ALB_marka_party
+				}
+				set_party_name = {
+					ideology = fascism
+					name = ALB_marka_party
+					long_name = ALB_marka_party
+				}
+				set_party_name = {
+					ideology = communism
+					name = ALB_marka_party
+					long_name = ALB_marka_party
+				}
+				declare_war_on = {
+					target = PREV
+					type = independence_wargoal
+				}
+				division_template = {
+					name = "Kryengritësit e Mirditës"
+					template_counter = 112
+					regiments = {
+						irregular_infantry = {
+							x = 0
+							y = 0
+						}
+						irregular_infantry = {
+							x = 0
+							y = 1
+						}
+					}
+				}
+				1214 = {
+					create_unit = {
+						division = "division_template = \"Kryengritësit e Mirditës\" start_experience_factor = 0.4"
+						owner = PREV
+						allow_spawning_on_enemy_provs = yes
+					}
+					create_unit = {
+						division = "division_template = \"Kryengritësit e Mirditës\" start_experience_factor = 0.4"
+						owner = PREV
+						allow_spawning_on_enemy_provs = yes
+					}
+					create_unit = {
+						division = "division_template = \"Kryengritësit e Mirditës\" start_experience_factor = 0.4"
+						owner = PREV
+						allow_spawning_on_enemy_provs = yes
+					}
+				}
+			}
+		}
+		ai_chance = { base = 100 }
+	}
+}

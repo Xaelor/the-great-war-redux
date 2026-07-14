@@ -8222,6 +8222,13 @@ country_event = { #prenk bib doda ambush
 	option = {
 		name = albania.164.a
 		retire_character = ALB_prenk_bib_doda
+		add_country_leader_role = {
+			character = ALB_marka_gjoni
+			country_leader = {
+				ideology = warlordism
+				traits = { ALB_coward ALB_kapedan_of_the_mirdita }
+			}
+		}
 		ai_chance = { base = 100 }
 	}
 }
@@ -8495,13 +8502,45 @@ country_event = { #patriotic takeover
 	picture = GFX_report_event_hasan_prishtina
 	option = {
 		name = albania.175.a
-		add_country_leader_role = {
-			character = ALB_hasan_prishtina
-			promote_leader = yes
-			country_leader = {
-				ideology = authoritarian_democracy
-				traits = { ALB_pragmatic_statesman }
+		if = {
+			limit = { has_country_flag = ALB_parliamentarly_republic }
+			add_country_leader_role = {
+				character = ALB_hasan_prishtina
+				promote_leader = yes
+				country_leader = {
+					ideology = authoritarian_democracy
+					traits = { ALB_pragmatic_statesman ALB_prime_minister }
+				}
 			}
+		}
+		else_if = {
+			limit = { has_country_flag = ALB_presidential_republic }
+			add_country_leader_role = {
+				character = ALB_hasan_prishtina
+				promote_leader = yes
+				country_leader = {
+					ideology = authoritarian_democracy
+					traits = { ALB_pragmatic_statesman ALB_president }
+				}
+			}
+		}
+		else = {
+			add_country_leader_role = {
+				character = ALB_hasan_prishtina
+				promote_leader = yes
+				country_leader = {
+					ideology = authoritarian_democracy
+					traits = { ALB_pragmatic_statesman }
+				}
+			}
+		}
+		if = {
+			limit = { has_country_flag = ALB_parliamentarly_republic }
+			ALB_hasan_prishtina = { add_country_leader_trait = ALB_prime_minister }
+		}
+		if = {
+			limit = { has_country_flag = ALB_presidential_republic }
+			ALB_hasan_prishtina = { add_country_leader_trait = ALB_president }
 		}
 		set_party_name = {
 			ideology = neutrality
@@ -8537,12 +8576,36 @@ country_event = { #march on tirana
 	option = {
 		name = albania.176.a
 		ALB_increase_domestic_instability = yes
-		add_country_leader_role = {
-			character = ALB_xhafer_ypi
-			promote_leader = yes
-			country_leader = {
-				ideology = authoritarian_democracy
-				traits = { ALB_zogs_puppet }
+		if = {
+			limit = { has_country_flag = ALB_parliamentarly_republic }
+			add_country_leader_role = {
+				character = ALB_xhafer_ypi
+				promote_leader = yes
+				country_leader = {
+					ideology = authoritarian_democracy
+					traits = { ALB_zogs_puppet ALB_prime_minister }
+				}
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = ALB_presidential_republic }
+			add_country_leader_role = {
+				character = ALB_xhafer_ypi
+				promote_leader = yes
+				country_leader = {
+					ideology = authoritarian_democracy
+					traits = { ALB_zogs_puppet ALB_president }
+				}
+			}
+		}
+		else = {
+			add_country_leader_role = {
+				character = ALB_xhafer_ypi
+				promote_leader = yes
+				country_leader = {
+					ideology = authoritarian_democracy
+					traits = { ALB_zogs_puppet }
+				}
 			}
 		}
 		set_party_name = {
@@ -8558,22 +8621,52 @@ country_event = { #march on tirana
 			ideology = neutrality
 			size = 0.5
 			PREV = {
-				ALB_ahmet_zogolli = {
-					set_nationality = PREV.PREV
-					add_country_leader_role = {
-						promote_leader = yes
-						country_leader = {
-							ideology = personalistic_dictatorship
-							traits = { ALB_ambitious_hotshot }
+				if = {
+					limit = { has_country_flag = ALB_parliamentarly_republic }
+					ALB_ahmet_zogolli = {
+						set_nationality = PREV.PREV
+						add_country_leader_role = {
+							promote_leader = yes
+							country_leader = {
+								ideology = personalistic_dictatorship
+								traits = { ALB_ambitious_hotshot ALB_prime_minister }
+							}
 						}
+						set_character_name = ALB_ahmet_zogu
 					}
-					set_character_name = ALB_ahmet_zogu
 				}
-				set_party_name = {
-					ideology = neutrality
-					name = ALB_zogu_party
-					long_name = ALB_zogu_party
+				else_if = {
+					limit = { has_country_flag = ALB_presidential_republic }
+					ALB_ahmet_zogolli = {
+						set_nationality = PREV.PREV
+						add_country_leader_role = {
+							promote_leader = yes
+							country_leader = {
+								ideology = personalistic_dictatorship
+								traits = { ALB_ambitious_hotshot ALB_president }
+							}
+						}
+						set_character_name = ALB_ahmet_zogu
+					}
 				}
+				else = {
+					ALB_ahmet_zogolli = {
+						set_nationality = PREV.PREV
+						add_country_leader_role = {
+							promote_leader = yes
+							country_leader = {
+								ideology = personalistic_dictatorship
+								traits = { ALB_ambitious_hotshot }
+							}
+						}
+						set_character_name = ALB_ahmet_zogu
+					}
+				}
+			}
+			set_party_name = {
+				ideology = neutrality
+				name = ALB_zogu_party
+				long_name = ALB_zogu_party
 			}
 		}
 		ai_chance = { base = 0 }
@@ -8587,13 +8680,45 @@ country_event = { #kosovar revolt 1922
 	is_triggered_only = yes
 	option = {
 		name = albania.177.a
-		add_country_leader_role = {
-			character = ALB_hasan_prishtina
-			promote_leader = yes
-			country_leader = {
-				ideology = authoritarian_democracy
-				traits = { ALB_pragmatic_statesman }
+		if = {
+			limit = { has_country_flag = ALB_parliamentarly_republic }
+			add_country_leader_role = {
+				character = ALB_hasan_prishtina
+				promote_leader = yes
+				country_leader = {
+					ideology = authoritarian_democracy
+					traits = { ALB_pragmatic_statesman ALB_prime_minister }
+				}
 			}
+		}
+		else_if = {
+			limit = { has_country_flag = ALB_presidential_republic }
+			add_country_leader_role = {
+				character = ALB_hasan_prishtina
+				promote_leader = yes
+				country_leader = {
+					ideology = authoritarian_democracy
+					traits = { ALB_pragmatic_statesman ALB_president }
+				}
+			}
+		}
+		else = {
+			add_country_leader_role = {
+				character = ALB_hasan_prishtina
+				promote_leader = yes
+				country_leader = {
+					ideology = authoritarian_democracy
+					traits = { ALB_pragmatic_statesman }
+				}
+			}
+		}
+		if = {
+			limit = { has_country_flag = ALB_parliamentarly_republic }
+			ALB_hasan_prishtina = { add_country_leader_trait = ALB_prime_minister }
+		}
+		if = {
+			limit = { has_country_flag = ALB_presidential_republic }
+			ALB_hasan_prishtina = { add_country_leader_trait = ALB_president }
 		}
 		set_party_name = {
 			ideology = neutrality
@@ -8622,25 +8747,53 @@ country_event = { #kosovar revolt 1922
 				ideology = neutrality
 				size = 0.8
 				PREV = {
-					ALB_hasan_prishtina = {
-						set_nationality = PREV.PREV
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = authoritarian_democracy
-								traits = { ALB_pragmatic_statesman }
+					if = {
+						limit = { has_country_flag = ALB_parliamentarly_republic }
+						ALB_hasan_prishtina = {
+							set_nationality = PREV.PREV
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = authoritarian_democracy
+									traits = { ALB_pragmatic_statesman ALB_prime_minister }
+								}
 							}
 						}
 					}
-					set_party_name = {
-						ideology = neutrality
-						name = ALB_prishtina_party
-						long_name = ALB_prishtina_party
+					else_if = {
+						limit = { has_country_flag = ALB_presidential_republic }
+						ALB_hasan_prishtina = {
+							set_nationality = PREV.PREV
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = authoritarian_democracy
+									traits = { ALB_pragmatic_statesman ALB_president }
+								}
+							}
+						}
+					}
+					else = {
+						ALB_hasan_prishtina = {
+							set_nationality = PREV.PREV
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = authoritarian_democracy
+									traits = { ALB_pragmatic_statesman }
+								}
+							}
+						}
 					}
 					every_character = {
 						limit = { ALB_is_kosovar_character = yes }
 						set_nationality = PREV.PREV
 					}
+				}
+				set_party_name = {
+					ideology = neutrality
+					name = ALB_prishtina_party
+					long_name = ALB_prishtina_party
 				}
 			}
 		}

@@ -7978,6 +7978,7 @@ focus_tree = {
 				ALB_as_stability_factor = 0.05
 			}
 			custom_effect_tooltip = empty_space
+			set_country_flag = ALB_parliamentarly_republic
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -8264,6 +8265,8 @@ focus_tree = {
 				ALB_sos_high_command_cost_factor = -0.15
 			}
 			custom_effect_tooltip = empty_space
+			clr_country_flag = ALB_parliamentarly_republic
+			set_country_flag = ALB_presidential_republic
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -12070,14 +12073,14 @@ focus_tree = {
 						promote_leader = yes
 						country_leader = {
 							ideology = personalistic_dictatorship
-							traits = { ALB_president_of_the_mirdita }
+							traits = { ALB_president_of_mirdita }
 						}
 					}
 				}
 				hidden_effect = {
-					swap_country_leader_traits = { remove = ALB_kapedan_of_the_mirdita add = ALB_president_of_the_mirdita ideology = fundamentalism }
-					swap_country_leader_traits = { remove = ALB_kapedan_of_the_mirdita add = ALB_president_of_the_mirdita ideology = conservatism }
-					swap_country_leader_traits = { remove = ALB_kapedan_of_the_mirdita add = ALB_president_of_the_mirdita ideology = religious_communism }
+					swap_country_leader_traits = { remove = ALB_kapedan_of_the_mirdita add = ALB_president_of_mirdita ideology = fundamentalism }
+					swap_country_leader_traits = { remove = ALB_kapedan_of_the_mirdita add = ALB_president_of_mirdita ideology = conservatism }
+					swap_country_leader_traits = { remove = ALB_kapedan_of_the_mirdita add = ALB_president_of_mirdita ideology = religious_communism }
 				}
 			}
 			custom_effect_tooltip = swap_ALB_statuti_organik_i_mirdites
@@ -12328,14 +12331,14 @@ focus_tree = {
 						promote_leader = yes
 						country_leader = {
 							ideology = absolute_monarchy
-							traits = { ALB_prince_of_the_mirdita }
+							traits = { ALB_prince_of_mirdita }
 						}
 					}
 				}
 				hidden_effect = {
-					swap_country_leader_traits = { remove = ALB_president_of_the_mirdita add = ALB_prince_of_the_mirdita ideology = fundamentalism }
-					swap_country_leader_traits = { remove = ALB_president_of_the_mirdita add = ALB_prince_of_the_mirdita ideology = conservatism }
-					swap_country_leader_traits = { remove = ALB_president_of_the_mirdita add = ALB_prince_of_the_mirdita ideology = religious_communism }
+					swap_country_leader_traits = { remove = ALB_president_of_mirdita add = ALB_prince_of_mirdita ideology = fundamentalism }
+					swap_country_leader_traits = { remove = ALB_president_of_mirdita add = ALB_prince_of_mirdita ideology = conservatism }
+					swap_country_leader_traits = { remove = ALB_president_of_mirdita add = ALB_prince_of_mirdita ideology = religious_communism }
 				}
 				set_character_name = ALB_prenk_bib_doda_prince
 			}
@@ -13578,12 +13581,36 @@ focus_tree = {
 			custom_effect_tooltip = ALB_open_up_the_albanian_political_spectrum_tt
 			custom_effect_tooltip = SOV_focus_complete_effect_tt
 			add_political_power = 15
-			add_country_leader_role = {
-				character = ALB_illaz_vrioni
-				promote_leader = yes
-				country_leader = {
-					ideology = authoritarian_democracy
-					traits = { ideological_crusader }
+			if = {
+				limit = { has_country_flag = ALB_parliamentarly_republic }
+				add_country_leader_role = {
+					character = ALB_illaz_vrioni
+					promote_leader = yes
+					country_leader = {
+						ideology = authoritarian_democracy
+						traits = { ideological_crusader ALB_prime_minister }
+					}
+				}
+			}
+			else_if = {
+				limit = { has_country_flag = ALB_presidential_republic }
+				add_country_leader_role = {
+					character = ALB_illaz_vrioni
+					promote_leader = yes
+					country_leader = {
+						ideology = authoritarian_democracy
+						traits = { ideological_crusader ALB_president }
+					}
+				}
+			}
+			else = {
+				add_country_leader_role = {
+					character = ALB_illaz_vrioni
+					promote_leader = yes
+					country_leader = {
+						ideology = authoritarian_democracy
+						traits = { ideological_crusader }
+					}
 				}
 			}
 			set_party_name = {
@@ -13653,12 +13680,36 @@ focus_tree = {
 			custom_effect_tooltip = ALB_open_up_the_albanian_political_spectrum_tt
 			custom_effect_tooltip = SOV_focus_complete_effect_tt
 			add_political_power = 15
-			add_country_leader_role = {
-				character = ALB_illaz_vrioni
-				promote_leader = yes
-				country_leader = {
-					ideology = authoritarian_democracy
-					traits = { ideological_crusader }
+			if = {
+				limit = { has_country_flag = ALB_parliamentarly_republic }
+				add_country_leader_role = {
+					character = ALB_illaz_vrioni
+					promote_leader = yes
+					country_leader = {
+						ideology = authoritarian_democracy
+						traits = { ideological_crusader ALB_prime_minister }
+					}
+				}
+			}
+			else_if = {
+				limit = { has_country_flag = ALB_presidential_republic }
+				add_country_leader_role = {
+					character = ALB_illaz_vrioni
+					promote_leader = yes
+					country_leader = {
+						ideology = authoritarian_democracy
+						traits = { ideological_crusader ALB_president }
+					}
+				}
+			}
+			else = {
+				add_country_leader_role = {
+					character = ALB_illaz_vrioni
+					promote_leader = yes
+					country_leader = {
+						ideology = authoritarian_democracy
+						traits = { ideological_crusader }
+					}
 				}
 			}
 			set_party_name = {
@@ -13765,12 +13816,44 @@ focus_tree = {
 		y = 1
 		relative_position_id = ALB_hold_parliamentary_elections
 		completion_reward = {
-			add_country_leader_role = {
-				character = ALB_pandeli_evangjeli
-				promote_leader = yes
-				country_leader = {
-					ideology = authoritarian_democracy
+			if = {
+				limit = { has_country_flag = ALB_parliamentarly_republic }
+				add_country_leader_role = {
+					character = ALB_pandeli_evangjeli
+					promote_leader = yes
+					country_leader = {
+						ideology = authoritarian_democracy
+						traits = { ALB_prime_minister }
+					}
 				}
+			}
+			else_if = {
+				limit = { has_country_flag = ALB_presidential_republic }
+				add_country_leader_role = {
+					character = ALB_pandeli_evangjeli
+					promote_leader = yes
+					country_leader = {
+						ideology = authoritarian_democracy
+						traits = { ALB_president }
+					}
+				}
+			}
+			else = {
+				add_country_leader_role = {
+					character = ALB_pandeli_evangjeli
+					promote_leader = yes
+					country_leader = {
+						ideology = authoritarian_democracy
+					}
+				}
+			}
+			if = {
+				limit = { has_country_flag = ALB_parliamentarly_republic }
+				ALB_pandeli_evangjeli = { add_country_leader_trait = ALB_prime_minister }
+			}
+			if = {
+				limit = { has_country_flag = ALB_presidential_republic }
+				ALB_pandeli_evangjeli = { add_country_leader_trait = ALB_president }
 			}
 			set_party_name = {
 				ideology = neutrality
@@ -13798,9 +13881,40 @@ focus_tree = {
 		available = { has_country_leader = { character = ALB_hasan_prishtina } }
 		bypass = { has_idea = ALB_military_rule }
 		completion_reward = {
-			promote_character = {
-				character = ALB_fan_noli
-				ideology = social_democracy
+			if = {
+				limit = { has_country_flag = ALB_parliamentarly_republic }
+				ALB_fan_noli = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = social_democracy
+							traits = { ALB_progressive_bishop ALB_prime_minister }
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = { has_country_flag = ALB_presidential_republic }
+				ALB_fan_noli = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = social_democracy
+							traits = { ALB_progressive_bishop ALB_president }
+						}
+					}
+				}
+			}
+			else = {
+				ALB_fan_noli = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = social_democracy
+							traits = { ALB_progressive_bishop }
+						}
+					}
+				}
 			}
 			set_politics = {
 				ruling_party = democratic
@@ -13824,15 +13938,43 @@ focus_tree = {
 		available = { has_country_leader = { character = ALB_xhafer_ypi } }
 		bypass = { has_idea = ALB_military_rule }
 		completion_reward = {
-			ALB_ahmet_zogolli = {
-				add_country_leader_role = {
-					promote_leader = yes
-					country_leader = {
-						ideology = personalistic_dictatorship
-						traits = { ALB_ambitious_hotshot }
+			if = {
+				limit = { has_country_flag = ALB_parliamentarly_republic }
+				ALB_ahmet_zogolli = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = personalistic_dictatorship
+							traits = { ALB_ambitious_hotshot ALB_prime_minister }
+						}
 					}
+					set_character_name = ALB_ahmet_zogu
 				}
-				set_character_name = ALB_ahmet_zogu
+			}
+			else_if = {
+				limit = { has_country_flag = ALB_presidential_republic }
+				ALB_ahmet_zogolli = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = personalistic_dictatorship
+							traits = { ALB_ambitious_hotshot ALB_president }
+						}
+					}
+					set_character_name = ALB_ahmet_zogu
+				}
+			}
+			else = {
+				ALB_ahmet_zogolli = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = personalistic_dictatorship
+							traits = { ALB_ambitious_hotshot }
+						}
+					}
+					set_character_name = ALB_ahmet_zogu
+				}
 			}
 			ALB_increase_domestic_instability = yes
 		}
