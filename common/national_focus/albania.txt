@@ -7832,6 +7832,18 @@ focus_tree = {
 				news_event = { id = albania.132 hours = 6 }
 			}
 			mark_focus_tree_layout_dirty = yes
+			custom_effect_tooltip = swap_ALB_statuti_organik_i_abdulhamidit
+			add_to_variable = {
+				tooltip = war_support_factor_tt
+				ALB_sos_war_support_factor = 0.05
+			}
+			custom_effect_tooltip = empty_space
+			hidden_effect = {
+				remove_dynamic_modifier = { modifier = ALB_country_in_disarray }
+				add_dynamic_modifier = { modifier = ALB_statuti_organik_i_myslimaneve }
+				set_variable = { ALB_sos_war_support_factor = ALB_as_war_support_factor }
+				set_variable = { ALB_sos_political_power_factor = ALB_as_political_power_factor }
+			}
 			if = {
 				limit = { has_idea = ALB_swedish_military_mission }
 				remove_ideas = ALB_swedish_military_mission
@@ -13134,11 +13146,14 @@ focus_tree = {
 		completion_reward = {
 			add_ideas = ALB_political_transformation
 			custom_effect_tooltip = ALB_political_transformation_instant_desc
+			custom_effect_tooltip = modify_ALB_statuti_organik_i_abdulhamidit
+			custom_effect_tooltip = ALB_general_council_tt
+			custom_effect_tooltip = empty_space
 		}
 		ai_will_do = { factor = 100 }
 	}
 	focus = {
-		id = ALB_cencorship_of_the_press
+		id = ALB_censorship_of_the_press
 		icon = GFX_focus_generic_silence
 		cost = 5
 		search_filters = {
@@ -13155,18 +13170,6 @@ focus_tree = {
 				has_active_mission = ALB_albanian_national_revolution
 			}
 		}
-		complete_tooltip = {
-			if = {
-				limit = { has_country_flag = ALB_cencorship_of_the_press }
-				swap_ideas = {
-					remove_idea = ALB_political_transformation
-					add_idea = ALB_political_transformation_2
-				}
-			}
-			unlock_decision_tooltip = ALB_raid_on_opposition_newspapers
-			unlock_decision_tooltip = ALB_pressure_on_religious_minorities
-			unlock_decision_tooltip = ALB_exile_politicized_officers
-		}
 		completion_reward = {
 			if = {
 				limit = { has_idea = ALB_political_transformation }
@@ -13174,11 +13177,21 @@ focus_tree = {
 					remove_idea = ALB_political_transformation
 					add_idea = ALB_political_transformation_2
 				}
-				set_country_flag = ALB_cencorship_of_the_press
+				set_country_flag = ALB_censorship_of_the_press
 			}
 			unlock_decision_tooltip = ALB_raid_on_opposition_newspapers
 			unlock_decision_tooltip = ALB_pressure_on_religious_minorities
 			unlock_decision_tooltip = ALB_exile_politicized_officers
+			custom_effect_tooltip = modify_ALB_statuti_organik_i_abdulhamidit
+			add_to_variable = {
+				tooltip = political_power_factor_tt
+				ALB_sos_political_power_factor = 0.1
+			}
+			add_to_variable = {
+				tooltip = stability_factor_tt
+				ALB_sos_stability_factor = -0.1
+			}
+			custom_effect_tooltip = empty_space
 		}
 		ai_will_do = { factor = 100 }
 	}
@@ -13765,7 +13778,7 @@ focus_tree = {
 				long_name = ALB_holy_union
 			}
 			add_ideas = ALB_technical_government
-			ALB_decrease_political_violence = yes
+			ALB_decrease_domestic_instability = yes
 			activate_mission = ALB_diminishing_support
 		}
 		ai_will_do = { base = 20 }
@@ -13821,7 +13834,7 @@ focus_tree = {
 				}
 				set_character_name = ALB_ahmet_zogu
 			}
-			ALB_increase_political_violence = yes
+			ALB_increase_domestic_instability = yes
 		}
 		ai_will_do = { base = 20 }
 	}
