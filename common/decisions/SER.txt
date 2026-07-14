@@ -2254,4 +2254,164 @@ TGWR_great_power_politics = {
 			factor = 10000
 		}
 	}
+	SER_enforce_treaty_of_london = {
+		icon = GFX_decision_generic_confiscation
+		activation = { always = no }
+		available = { hidden_trigger = { always = no } }
+		days_mission_timeout = 780
+		timeout_effect = {
+			SER = {
+				declare_war_on = {
+					target = ALB
+					type = take_claimed_state
+				}
+			}
+			if = {
+				limit = { MNT = { has_country_flag = treaty_of_london_1920_signatory } }
+				MNT = {
+					declare_war_on = {
+						target = ALB
+						type = take_claimed_state
+					}
+				}
+			}
+			if = {
+				limit = { GRE = { has_country_flag = treaty_of_london_1920_signatory } }
+				GRE = {
+					declare_war_on = {
+						target = ALB
+						type = take_claimed_state
+					}
+				}
+			}
+			if = {
+				limit = { ITA = { has_country_flag = treaty_of_london_1920_signatory } }
+				ITA = {
+					declare_war_on = {
+						target = ALB
+						type = take_claimed_state
+					}
+				}
+			}
+			set_global_flag = treaty_of_london_1920_war
+		}
+	}
+	SER_harass_the_albanian_border = {
+		icon = GFX_decision_border_war
+		allowed = { original_tag = SER }
+		target_trigger = {
+			FROM = {
+				is_owned_by = ALB
+				is_claimed_by = ROOT
+			}
+		}
+		state_target = yes
+		on_map_mode = map_only
+		visible = {
+			great_power_politics_balkan_powder_keg_visible = yes
+			has_active_mission = SER_enforce_treaty_of_london
+			NOT = { has_war_with = ALB }
+		}
+		available = {
+			has_border_war = no
+			FROM = { any_neighbor_state = { is_controlled_by = ROOT } }
+		}
+		cancel_trigger = { has_war_with = ALB }
+		custom_cost_text = decision_cost_CP_15
+		custom_cost_trigger = { command_power > 14.9 }
+		complete_effect = {
+			hidden_effect = { add_command_power = -15 }
+			activate_mission = SER_border_conflict_in_FROM_mission
+			custom_effect_tooltip = if_we_win_border_war
+			effect_tooltip = { add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = -30 } }
+			custom_effect_tooltip = if_we_win_lose_war
+			effect_tooltip = { add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = 10 } }
+			hidden_effect = {
+				FROM = {
+					random_neighbor_state = {
+						limit = { is_controlled_by = ROOT }
+						set_variable = { global.SER_border_conflict_in_FROM_attacker = THIS }
+					}
+				}
+				ROOT = { set_variable = { global.SER_border_conflict_in_FROM_attacker_controller = THIS } }
+				FROM = { set_variable = { global.SER_border_conflict_in_FROM_defender = THIS } }
+				FROM.controller = {
+					country_event = ww1_serbia_albania.5
+					set_variable = { global.SER_border_conflict_in_FROM_defender_controller = THIS }
+				}
+				set_variable = { global.SER_border_conflict_in_FROM_attacker_value = 0 }
+				set_variable = { global.SER_border_conflict_in_FROM_defender_value = 0 }
+			}
+		}
+	}
+	SER_border_conflict_in_FROM_mission = {
+		icon = GFX_decision_generic_ignite_civil_war
+		activation = { always = no }
+		highlight_states = {
+			highlight_state_targets = {
+				state = global.SER_border_conflict_in_FROM_attacker
+				state = global.SER_border_conflict_in_FROM_defender
+			}
+		}
+		available = { hidden_trigger = { always = no } }
+		cancel_trigger = {
+			OR = {
+				var:global.SER_border_conflict_in_FROM_attacker_controller = {  has_war_with = var:global.SER_border_conflict_in_FROM_defender_controller }
+				NOT = { var:global.SER_border_conflict_in_FROM_attacker = { is_controlled_by = global.SER_border_conflict_in_FROM_attacker_controller } }
+				NOT = { var:global.SER_border_conflict_in_FROM_defender = { is_controlled_by = global.SER_border_conflict_in_FROM_defender_controller } }
+			}
+		}
+		days_mission_timeout = 7
+		timeout_effect = {
+			if = {
+				limit = { original_tag = ALB }
+				start_border_war = {
+					change_state_after_war = no
+					attacker = {
+						state = global.SER_border_conflict_in_FROM_attacker
+						num_provinces = 4
+						on_win = ww1_serbia_albania.6
+						on_lose = ww1_serbia_albania.7
+						on_cancel = ww1_serbia_albania.7
+					}
+					defender = {
+						state = global.SER_border_conflict_in_FROM_defender
+						num_provinces = 4
+						on_win = ww1_serbia_albania.7
+						on_lose = ww1_serbia_albania.9
+						on_cancel = ww1_serbia_albania.8
+					}
+				}
+				custom_effect_tooltip = if_we_win_border_war
+				effect_tooltip = { add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = 10 } }
+				custom_effect_tooltip = if_we_win_lose_war
+				effect_tooltip = { add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = -30 } }
+			}
+			else = {
+				effect_tooltip = {
+					start_border_war = {
+						change_state_after_war = no
+						attacker = {
+							state = global.SER_border_conflict_in_FROM_attacker
+							num_provinces = 4
+							on_win = ww1_serbia_albania.6
+							on_lose = ww1_serbia_albania.7
+							on_cancel = ww1_serbia_albania.7
+						}
+						defender = {
+							state = global.SER_border_conflict_in_FROM_defender
+							num_provinces = 4
+							on_win = ww1_serbia_albania.8
+							on_lose = ww1_serbia_albania.9
+							on_cancel = ww1_serbia_albania.8
+						}
+					}
+				}
+				custom_effect_tooltip = if_we_win_border_war
+				effect_tooltip = { add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = -30 } }
+				custom_effect_tooltip = if_we_win_lose_war
+				effect_tooltip = { add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = 10 } }
+			}
+		}
+	}
 }

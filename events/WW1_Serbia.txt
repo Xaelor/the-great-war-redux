@@ -1,4 +1,6 @@
 ﻿add_namespace = ww1_serbia
+add_namespace = ww1_serbia_albania
+
 ###Grand coalition crash
 country_event = {
 	id = ww1_serbia.1
@@ -4229,5 +4231,189 @@ country_event = {
 	option = {
 		name = ww1_serbia.150.a
 		add_political_power = 25
+	}
+}
+
+country_event = { #serbian offer to divide albania
+	id = ww1_serbia_albania.1
+	title = ww1_serbia_albania.1.t
+	desc = ww1_serbia_albania.1.desc
+	is_triggered_only = yes
+	option = {
+		name = ww1_serbia_albania.1.a
+		if = {
+			limit = { tag = MNT }
+			add_state_claim = 870
+			custom_effect_tooltip = ww1_serbia_albania.1.tt
+		}
+		if = {
+			limit = { tag = GRE }
+			add_state_claim = 803
+			add_state_claim = 1225
+			custom_effect_tooltip = ww1_serbia_albania.1.tt
+		}
+		if = {
+			limit = { tag = ITA }
+			add_state_claim = 871
+			custom_effect_tooltip = ww1_serbia_albania.1.tt2
+		}
+		set_country_flag = treaty_of_london_1920_signatory
+		effect_tooltip = { add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = -30 } }
+		hidden_effect = { FROM = { country_event = { id = ww1_serbia_albania.2 hours = 8 } } }
+		ai_chance = { base = 10 }
+	}
+	option = {
+		name = ww1_serbia_albania.1.b
+		add_war_support = -0.05
+		hidden_effect = { FROM = { country_event = { id = ww1_serbia_albania.3 hours = 8 } } }
+		ai_chance = { base = 0 }
+	}
+}
+
+country_event = { #serbian offer to divide albania accept
+	id = ww1_serbia_albania.2
+	title = ww1_serbia_albania.2.t
+	desc = ww1_serbia_albania.2.desc
+	is_triggered_only = yes
+	option = {
+		name = ww1_serbia_albania.2.a
+		if = {
+			limit = { FROM = { tag = MNT } }
+			MNT = {
+				add_state_claim = 870
+			}
+		}
+		if = {
+			limit = { FROM = { tag = GRE } }
+			GRE = {
+				add_state_claim = 803
+				add_state_claim = 1225
+			}
+		}
+		if = {
+			limit = { FROM = { tag = ITA } }
+			ITA = { add_state_claim = 871 }
+		}
+		add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = -30 }
+		ai_chance = { base = 10 }
+	}
+}
+
+country_event = { #serbian offer to divide albania refuse
+	id = ww1_serbia_albania.3
+	title = ww1_serbia_albania.3.t
+	desc = ww1_serbia_albania.3.desc
+	is_triggered_only = yes
+	option = {
+		name = ww1_serbia_albania.3.a
+		ai_chance = { base = 10 }
+	}
+}
+
+news_event = { #treaty of london
+	id = ww1_serbia_albania.4
+	title  =ww1_serbia_albania.4.t
+	desc = ww1_serbia_albania.4.desc
+	picture = GFX_news_event_treaty_of_london_1920
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_serbia_albania.4.a
+		trigger = {
+			OR = {
+				original_tag = SER
+				original_tag = MNT
+				original_tag = GRE
+				original_tag = ITA
+			}
+		}
+		effect_tooltip = { activate_mission = SER_enforce_treaty_of_london }
+	}
+	option = {
+		name = ww1_serbia_albania.4.B
+		trigger = { original_tag = ALB }
+		effect_tooltip = { activate_mission = SER_enforce_treaty_of_london }
+	}
+	option = {
+		name = ww1_serbia_albania.4.C
+		trigger = {
+			NOT = {
+				original_tag = SER
+				original_tag = MNT
+				original_tag = GRE
+				original_tag = ITA
+				original_tag = ALB
+			}
+		}
+		effect_tooltip = { activate_mission = SER_enforce_treaty_of_london }
+	}
+}
+
+country_event = { #serbia is initiating border war
+	id = ww1_serbia_albania.5
+	title = ww1_serbia_albania.5.t
+	desc = ww1_serbia_albania.5.desc
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			activate_mission = SER_border_conflict_in_FROM_mission
+		}
+	}
+	option = {
+		name = ww1_serbia_albania.5.a
+		effect_tooltip = { activate_mission = SER_border_conflict_in_FROM_mission }
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #albania border war attacker victory
+	id = ww1_serbia_albania.6
+	title = ww1_serbia_albania.6.t
+	desc = ww1_serbia_albania.6.desc
+	is_triggered_only = yes
+	timeout_days = 7
+	option = {
+		name = ww1_serbia_albania.6.a
+		add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = -30 }
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #albania border war attacker loss
+	id = ww1_serbia_albania.7
+	title = ww1_serbia_albania.7.t
+	desc = ww1_serbia_albania.7.desc
+	is_triggered_only = yes
+	timeout_days = 7
+	option = {
+		name = ww1_serbia_albania.7.a
+		add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = 10 }
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #albania border war attacker loss
+	id = ww1_serbia_albania.8
+	title = ww1_serbia_albania.8.t
+	desc = ww1_serbia_albania.8.desc
+	is_triggered_only = yes
+	timeout_days = 7
+	option = {
+		name = ww1_serbia_albania.8.a
+		effect_tooltip = { add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = 10 } }
+		ai_chance = { base = 100 }
+	}
+}
+
+country_event = { #albania border war attacker loss
+	id = ww1_serbia_albania.9
+	title = ww1_serbia_albania.9.t
+	desc = ww1_serbia_albania.9.desc
+	is_triggered_only = yes
+	timeout_days = 7
+	option = {
+		name = ww1_serbia_albania.9.a
+		effect_tooltip = { add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = -30 } }
+		ai_chance = { base = 100 }
 	}
 }

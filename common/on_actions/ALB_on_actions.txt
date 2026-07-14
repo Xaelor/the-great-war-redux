@@ -672,4 +672,54 @@ on_actions = {
 			}
 		}
 	}
+	on_before_peace_conference_start = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = treaty_of_london_1920_war
+					FROM = {original_tag = ALB }
+					ROOT = { has_country_flag = treaty_of_london_1920_signatory }
+				}
+				if = {
+					limit = { SER = { has_country_flag = treaty_of_london_1920_signatory } }
+					SER = {
+						transfer_state = 1240
+						transfer_state = 1214
+					}
+					if = {
+						limit = { SER = { owns_state = 105 } }
+						SER = {
+							transfer_state = 870
+						}
+					}
+				}
+				if = {
+					limit = { MNT = { has_country_flag = treaty_of_london_1920_signatory } }
+					MNT = {
+						transfer_state = 870
+					}
+				}
+				if = {
+					limit = { GRE = { has_country_flag = treaty_of_london_1920_signatory } }
+					GRE = {
+						transfer_state = 803
+						transfer_state = 1225
+					}
+				}
+				if = {
+					limit = { ITA = { has_country_flag = treaty_of_london_1920_signatory } }
+					ITA = {
+						transfer_state = 871
+						set_autonomy = {
+							target = ALB
+							autonomous_state = autonomy_tgwr_protectorate
+							end_wars = no
+							end_civil_wars = no
+						}
+					}
+				}
+				clr_global_flag = treaty_of_london_1920_war
+			}
+		}
+	}
 }
