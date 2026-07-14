@@ -5550,3 +5550,55 @@ ALB_playing_both_sides_category = {
 		ai_will_do = { base = 100 }
 	}
 }
+
+TGWR_great_power_politics = {
+	ALB_seek_support_from_FROM = {
+		icon = GFX_decision_SWI_support_humanitarian_efforts
+		allowed = { original_tag = ALB }
+		target_trigger = {
+			FROM = {
+				NOT = { has_country_flag = great_war_loser }
+				is_major = yes
+				capital_scope = {
+					OR = {
+						is_on_continent = europe
+						is_on_continent = north_america
+					}
+				}
+				NOT = { has_country_flag = treaty_of_london_1920_signatory }
+			}
+		}
+		fire_only_once = yes
+		visible = {
+			great_power_politics_balkan_powder_keg_visible = yes
+			has_active_mission = SER_enforce_treaty_of_london
+		}
+		target_root_trigger = { has_completed_focus = ALB_demonstrating_our_will }
+		available = { FROM = { has_opinion = { target = ROOT value > 65 } } }
+		cost = 50
+		complete_effect = {
+			FROM = { custom_effect_tooltip = ALB_seek_support_from_FROM_tt }
+			add_to_variable = { global.ALB_supporting_our_independence = 1 }
+		}
+	}
+	ALB_push_for_league_of_nations_resolution = {
+		icon = GFX_decision_SWI_swiss_democratic_tradition_campaign
+		allowed = { original_tag = ALB }
+		visible = {
+			great_power_politics_balkan_powder_keg_visible = yes
+			has_completed_focus = ALB_demonstrating_our_will
+			has_active_mission = SER_enforce_treaty_of_london
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ALB_push_for_league_of_nations_resolution_trigger
+				check_variable = { global.ALB_supporting_our_independence > 2 }
+			}
+		}
+		fire_only_once = yes
+		cost = 100
+		complete_effect = {
+			#code tomorrow, individual events + a news event
+		}
+	}
+}
