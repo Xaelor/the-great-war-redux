@@ -286,7 +286,7 @@ SER_colonize_claims = {
 		days_remove = 70
 		allowed = { original_tag = SER }
 		state_target = yes
-		targets = { 847 848 1240 1213 }
+		targets = { 847 848 1240 1213 870 1214 }
 		on_map_mode = map_only
 		days_re_enable = 180
 		target_trigger = {
@@ -2257,61 +2257,151 @@ TGWR_great_power_politics = {
 	SER_enforce_treaty_of_london = {
 		icon = GFX_decision_generic_confiscation
 		activation = { always = no }
-		available = { hidden_trigger = { always = no } }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SER_enforce_treaty_of_london_tt
+				NOT = { has_active_mission = SER_enforce_treaty_of_london }
+			}
+		}
 		days_mission_timeout = 780
 		timeout_effect = {
-			SER = {
-				declare_war_on = {
-					target = ALB
-					type = take_claimed_state
-				}
-			}
-			if = {
-				limit = { MNT = { has_country_flag = treaty_of_london_1920_signatory } }
-				MNT = {
-					declare_war_on = {
-						target = ALB
-						type = take_claimed_state
-					}
-				}
-			}
-			if = {
-				limit = { GRE = { has_country_flag = treaty_of_london_1920_signatory } }
-				GRE = {
-					declare_war_on = {
-						target = ALB
-						type = take_claimed_state
-					}
-				}
-			}
-			if = {
-				limit = { ITA = { has_country_flag = treaty_of_london_1920_signatory } }
-				ITA = {
-					declare_war_on = {
-						target = ALB
-						type = take_claimed_state
-					}
-				}
-			}
-			if = {
-				limit = {
-					country_exists = DOD
-					DOD = {
-						has_country_leader = { character = ALB_marka_gjoni }
-						has_war_with = ALB
-					}
-				}
+			effect_tooltip = {
 				SER = {
-					hidden_effect = { DOD = { get_current_government_type = yes } }
-					set_autonomy = {
-						target = DOD
-						autonomy_state = autonomy_puppet
-						freedom_level = 0.5
+					declare_war_on = {
+						target = ALB
+						type = take_claimed_state
 					}
-					hidden_effect = { DOD = { restore_previous_government_type = yes } }
+				}
+				if = {
+					limit = { MNT = { has_country_flag = treaty_of_london_1920_signatory } }
+					MNT = {
+						declare_war_on = {
+							target = ALB
+							type = take_claimed_state
+						}
+					}
+				}
+				if = {
+					limit = { GRE = { has_country_flag = treaty_of_london_1920_signatory } }
+					GRE = {
+						declare_war_on = {
+							target = ALB
+							type = take_claimed_state
+						}
+					}
+				}
+				if = {
+					limit = { ITA = { has_country_flag = treaty_of_london_1920_signatory } }
+					ITA = {
+						declare_war_on = {
+							target = ALB
+							type = take_claimed_state
+						}
+					}
+				}
+				if = {
+					limit = {
+						country_exists = DOD
+						DOD = {
+							has_country_leader = { character = ALB_marka_gjoni }
+							has_war_with = ALB
+						}
+					}
+					SER = {
+						hidden_effect = { DOD = { get_current_government_type = yes } }
+						set_autonomy = {
+							target = DOD
+							autonomy_state = autonomy_puppet
+							freedom_level = 0.5
+						}
+						hidden_effect = { DOD = { restore_previous_government_type = yes } }
+					}
 				}
 			}
-			set_global_flag = treaty_of_london_1920_war
+			hidden_effect = {
+				if = {
+					limit = { tag = ALB }
+					SER = {
+						declare_war_on = {
+							target = ALB
+							type = take_claimed_state
+						}
+					}
+					if = {
+						limit = { MNT = { has_country_flag = treaty_of_london_1920_signatory } }
+						MNT = {
+							declare_war_on = {
+								target = ALB
+								type = take_claimed_state
+							}
+						}
+					}
+					if = {
+						limit = { GRE = { has_country_flag = treaty_of_london_1920_signatory } }
+						GRE = {
+							declare_war_on = {
+								target = ALB
+								type = take_claimed_state
+							}
+						}
+					}
+					if = {
+						limit = { ITA = { has_country_flag = treaty_of_london_1920_signatory } }
+						ITA = {
+							declare_war_on = {
+								target = ALB
+								type = take_claimed_state
+							}
+						}
+					}
+					if = {
+						limit = {
+							country_exists = DOD
+							DOD = {
+								has_country_leader = { character = ALB_marka_gjoni }
+								has_war_with = ALB
+							}
+						}
+						SER = {
+							hidden_effect = { DOD = { get_current_government_type = yes } }
+							set_autonomy = {
+								target = DOD
+								autonomy_state = autonomy_puppet
+								freedom_level = 0.5
+							}
+							hidden_effect = { DOD = { restore_previous_government_type = yes } }
+						}
+					}
+					set_global_flag = treaty_of_london_1920_war
+				}
+			}
+		}
+	}
+	SER_sectarian_issues_in_albania = {
+		icon = GFX_decision_generic_civil_support
+		activation = { ALB = { has_war_with = DOD } }
+		available = { ALB = { NOT = { has_war_with = DOD } } }
+		days_mission_timeout = 7
+		timeout_effect = {
+			add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = -5 }
+			activate_mission = SER_sectarian_issues_in_albania
+		}
+	}
+	SER_send_equipment_to_mirdita = {
+		icon = GFX_decision_ger_military_buildup
+		allowed = { original_tag = SER }
+		visible = {
+			great_power_politics_balkan_powder_keg_visible = yes
+			country_exists = DOD
+			DOD = { has_war_with = ALB }
+		}
+		days_remove = 30
+		remove_effect = {
+			send_equipment = {
+				equipment = infantry_equipment
+				amount = 350
+				target = DOD
+			}
 		}
 	}
 	SER_harass_the_albanian_border = {

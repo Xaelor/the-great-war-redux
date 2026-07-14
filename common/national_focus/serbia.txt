@@ -2317,6 +2317,17 @@ focus_tree = {
 				ITA = { add_state_claim = 871 }
 			}
 			activate_mission = SER_enforce_treaty_of_london
+			hidden_effect = {
+				every_other_country = {
+					limit = {
+						OR = {
+							is_balkan_nation = yes
+							is_major = yes
+						}
+					}
+					activate_mission = SER_enforce_treaty_of_london
+				}
+			}
 			unlock_decision_tooltip = SER_harass_the_albanian_border
 		}
 		ai_will_do = {
@@ -2326,7 +2337,7 @@ focus_tree = {
 		y = 1
 	}
 	focus = {
-		id = SER_fuel_mirdita_separatism
+		id = SER_fuel_mirdita_separatists
 		icon = GFX_ALB_new_regime_in_mirdita
 		cost = 5
 		relative_position_id = SER_push_for_border_readjustments
@@ -2349,8 +2360,15 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = -70 }
+			hidden_effect = {
+				every_other_country = {
+					limit = { has_active_mission = SER_enforce_treaty_of_london }
+					add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = -70 }
+				}
+			}
 			ALB = { country_event = { id = ww1_serbia_albania.10 } }
 			event_option_tooltip = ww1_serbia_albania.10.a
+			unlock_decision_tooltip = SER_send_equipment_to_mirdita
 		}
 		ai_will_do = {
 			factor = 100

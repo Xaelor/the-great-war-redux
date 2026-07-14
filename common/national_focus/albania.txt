@@ -521,7 +521,10 @@ focus_tree = {
 				}
 				custom_effect_tooltip = ALB_overlord_albanian_agreement_tt
 				hidden_effect = {
-					remove_ideas = ALB_delegated_governor
+					if = {
+						limit = { has_idea = ALB_delegated_governor }
+						remove_ideas = ALB_delegated_governor
+					}
 					set_can_be_fired_in_advisor_role = { character = delegated_governor value = yes }
 				}
 				every_character = {
@@ -1306,7 +1309,6 @@ focus_tree = {
 		relative_position_id = ALB_kick_the_occupiers_out
 		completion_reward = {
 			add_political_power = 50
-			USA = { give_guarantee = ROOT }
 			add_opinion_modifier = {
 				target = USA
 				modifier = ALB_recognized_independence
@@ -13787,6 +13789,100 @@ focus_tree = {
 		ai_will_do = { base = 20 }
 	}
 	focus = {
+		id = ALB_join_the_league_of_nations
+		icon = GFX_focus_generic_league_of_nations
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_open_up_the_albanian_political_spectrum }
+		x = -10
+		y = 1
+		relative_position_id = ALB_open_up_the_albanian_political_spectrum
+		completion_reward = {
+			add_political_power = 50
+			add_stability = 0.05
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_neutral_zone_of_junik
+		icon = GFX_focus_generic_mountain_fortification
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_join_the_league_of_nations }
+		x = -1
+		y = 1
+		relative_position_id = ALB_join_the_league_of_nations
+		completion_reward = {
+			#Neutral Zone of Junik
+			add_war_support = 0.05
+			if = {
+				limit = { has_active_mission = SER_enforce_treaty_of_london }
+				hidden_effect = {
+					every_other_country = {
+						limit = { has_active_mission = SER_enforce_treaty_of_london }
+						add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = 70 }
+					}
+				}
+			}
+			event_option_tooltip = albania.178.a
+			hidden_effect = { 848 = { owner = { id = albania.178 } } }
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_demonstrating_our_will
+		icon = GFX_focus_generic_world_peace
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_join_the_league_of_nations }
+		x = 0
+		y = 2
+		relative_position_id = ALB_join_the_league_of_nations
+		available = { has_active_mission = SER_enforce_treaty_of_london }
+		completion_reward = {
+			custom_effect_tooltip = ALB_demonstrating_our_will_tt
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_leagues_economic_advise
+		icon = GFX_focus_generic_economic_recovery
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_join_the_league_of_nations }
+		x = 1
+		y = 1
+		relative_position_id = ALB_join_the_league_of_nations
+		completion_reward = {
+			
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_apply_for_foreign_bonds
+		icon = GFX_focus_RAJ_issue_bonds_on_the_stock_market
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_leagues_economic_advise }
+		x = 0
+		y = 2
+		relative_position_id = ALB_leagues_economic_advise
+		completion_reward = {
+			
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
 		id = ALB_hold_parliamentary_elections
 		icon = GFX_focus_generic_election
 		cost = 5
@@ -13800,6 +13896,56 @@ focus_tree = {
 		relative_position_id = ALB_open_up_the_albanian_political_spectrum
 		completion_reward = {
 			country_event = { id = albania.172 hours = 8 }
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_a_western_styled_army
+		icon = GFX_goal_generic_allies_build_infantry
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_hold_parliamentary_elections }
+		x = -6
+		y = 1
+		relative_position_id = ALB_hold_parliamentary_elections
+		completion_reward = {
+			country_event = { id = albania.172 hours = 8 }
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_cut_the_militarys_funding
+		icon = GFX_focus_generic_reduce_unneccessary_expenditure
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_leagues_economic_advise focus = ALB_a_western_styled_army }
+		x = 2
+		y = 1
+		relative_position_id = ALB_leagues_economic_advise
+		completion_reward = {
+			
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_depoliticize_the_military
+		icon = GFX_focus_SIA_sideline_disloyal_officers
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_cut_the_militarys_funding }
+		x = 0
+		y = 1
+		relative_position_id = ALB_cut_the_militarys_funding
+		completion_reward = {
+			remove_ideas = ALB_unruly_military
+			add_war_support = 0.1
 		}
 		ai_will_do = { base = 20 }
 	}
