@@ -13829,14 +13829,14 @@ focus_tree = {
 				}
 			}
 			event_option_tooltip = albania.178.a
-			hidden_effect = { 848 = { owner = { id = albania.178 } } }
+			hidden_effect = { 848 = { owner = { country_event = { id = albania.178 } } } }
 		}
 		ai_will_do = { base = 20 }
 	}
 	focus = {
 		id = ALB_demonstrating_our_will
 		icon = GFX_focus_generic_world_peace
-		cost = 5
+		cost = 10
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
 		}
@@ -13844,9 +13844,13 @@ focus_tree = {
 		x = 0
 		y = 2
 		relative_position_id = ALB_join_the_league_of_nations
-		available = { has_active_mission = SER_enforce_treaty_of_london }
+		#available = { has_active_mission = SER_enforce_treaty_of_london }
 		completion_reward = {
-			custom_effect_tooltip = ALB_demonstrating_our_will_tt
+			add_dynamic_modifier = { modifier = ALB_diplomatic_victories }
+			if = {
+				limit = { has_active_mission = SER_enforce_treaty_of_london }
+				custom_effect_tooltip = ALB_demonstrating_our_will_tt
+			}
 		}
 		ai_will_do = { base = 20 }
 	}
@@ -13912,7 +13916,6 @@ focus_tree = {
 		y = 1
 		relative_position_id = ALB_hold_parliamentary_elections
 		completion_reward = {
-			country_event = { id = albania.172 hours = 8 }
 		}
 		ai_will_do = { base = 20 }
 	}
@@ -13928,7 +13931,36 @@ focus_tree = {
 		y = 1
 		relative_position_id = ALB_leagues_economic_advise
 		completion_reward = {
-			
+			add_timed_idea = {
+				idea = ALB_cutting_militarys_funding
+				days = 270
+			}
+			custom_effect_tooltip = ALB_cut_the_militarys_funding_tt
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							AND = {
+								has_government = neutrality
+								neutrality > 0.49
+							}
+							AND = {
+								has_government = democratic
+								democratic > 0.49
+							}
+							AND = {
+								has_government = fascism
+								fascism > 0.49
+							}
+							AND = {
+								has_government = communism
+								communism > 0.49
+							}
+						}
+					}
+					country_event = albania.179
+				}
+			}
 		}
 		ai_will_do = { base = 20 }
 	}
