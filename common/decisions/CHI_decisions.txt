@@ -5915,60 +5915,82 @@ peace_deals = {
 		fire_only_once = no
 		days_mission_timeout = 200
 		timeout_effect = {
-			every_country = {
+			if = {
 				limit = {
+					is_china_or_warlord_no_tt = no
 					has_country_flag = concessions_war
-					is_china_or_warlord = no
-					any_enemy_country = {
+				}
+				every_enemy_country = {
+					limit = {
+						is_china_or_warlord_no_tt = yes
 						has_country_flag = concessions_war
+					}
+					PREV = {
+						every_owned_state = {
+							limit = {
+								OR = {
+									state = 746
+									state = 744
+									state = 745
+									state = 326
+									state = 729
+									state = 728
+									state = 524
+									state = 593
+									state = 592
+									state = 613
+									state = 872
+									state = 591
+									state = 594
+								}
+							}
+							transfer_state_to = PREV.PREV
+						}
+					}
+					white_peace = PREV
+					if = {
+						limit = {
+							NOT = {
+								any_enemy_country = {
+									has_country_flag = concessions_war
+									is_china_or_warlord_no_tt = no
+								}
+							}
+						}
+						clr_country_flag = concessions_war
 					}
 				}
 				clr_country_flag = concessions_war
-				every_owned_state = {
-					limit = {
-						OR = {
-							state = 746
-							state = 744
-							state = 745
-							state = 326
-							state = 729
-							state = 728
-							state = 524
-							state = 593
-							state = 592
-							state = 613
-							state = 872
-							state = 591
-							state = 594
-						}
-					}
-					random_country = {
+			}
+			else = {
+				effect_tooltip = {
+					every_enemy_country = {
 						limit = {
+							is_china_or_warlord_no_tt = no
 							has_country_flag = concessions_war
-							is_china_or_warlord = yes
-							has_war_with = PREV.PREV
 						}
-						transfer_state = PREV
-						white_peace = PREV.PREV
-						hidden_effect = {
-							if = {
-								limit = {
-									NOT = {
-										any_enemy_country = {
-											has_country_flag = concessions_war
-										}
-									}
+						every_owned_state = {
+							limit = {
+								is_controlled_by_ROOT_or_ally = yes
+								OR = {
+									state = 746
+									state = 744
+									state = 745
+									state = 326
+									state = 729
+									state = 728
+									state = 524
+									state = 593
+									state = 592
+									state = 613
+									state = 872
+									state = 591
+									state = 594
 								}
-								clr_country_flag = concessions_war
 							}
-							every_other_country = {
-								limit = {
-									has_war_with = PREV.PREV.PREV
-									is_ally_with = PREV
-								}
-								white_peace = PREV.PREV.PREV
-							}
+							transfer_state_to = ROOT
 						}
+						white_peace = ROOT
 					}
 				}
 			}
