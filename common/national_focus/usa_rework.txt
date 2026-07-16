@@ -78,18 +78,463 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = USA_appoint_knox
+		icon = GFX_focus_generic_self_management
+		cost = 5
+		x = 37
+		y = 0
+		available = {
+		}
+		completion_reward = {
+			set_variable = {
+				USA_expl_fu.1 = 0
+			}
+			add_political_power = 25
+			add_stability = 0.02
+			unlock_decision_category_tooltip = USA_exploiting_latin_america
+			unlock_decision_tooltip = USA_political_backing_to_honduras
+			unlock_decision_tooltip = USA_political_backing_to_cuba
+			unlock_decision_tooltip = USA_political_backing_to_dominica
+			unlock_decision_tooltip = USA_expand_business_in_latin_america
+			custom_effect_tooltip = this_decision_can_be_taken_5_times
+			custom_effect_tooltip = tooltip_white_line
+			CUB = {
+				add_ideas = USA_anti_american_agitation
+			}
+			DOM = {
+				add_ideas = USA_anti_american_agitation
+			}
+			HON = {
+				add_ideas = USA_anti_american_agitation
+			}
+			country_event = ww1_USA.123
+		}
+	}
+	focus = {
+		id = USA_meeting_with_diaz
+		icon = GFX_focus_generic_scales_replacement
+		cost = 5
+		x = -4
+		y = 1
+		prerequisite = {
+			focus = USA_appoint_knox
+		}
+		relative_position_id = USA_appoint_knox
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+		focus = {
+		id = USA_mediate_peru_ecuador
+		icon = GFX_focus_SWE_refuge_from_war
+		cost = 5
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = USA_meeting_with_diaz
+		}
+		relative_position_id = USA_meeting_with_diaz
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = USA_mexican_revolution
+		icon = GFX_focus_army_purge
+		cost = 0
+		x = -1
+		y = 1
+		prerequisite = {
+			focus = USA_meeting_with_diaz
+		}
+		relative_position_id = USA_meeting_with_diaz
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = mexican_revolution.tt
+				always = no
+			}
+		}
+		completion_reward = {
+			add_stability = -0.05
+			USA_less_fat_stacks_in_central_america = yes
+		}
+	}
+	focus = {
+		id = USA_dollars_instead_of_bullets
+		icon = GFX_focus_generic_banking
+		cost = 5
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = USA_appoint_knox
+		}
+		relative_position_id = USA_appoint_knox
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = {
+		id = USA_question_american_neutrality
+		icon = GFX_goal_support_democracy
+		relative_position_id = USA_appoint_knox
+		cost = 3
+		x = 6
+		y = 1
+		prerequisite = {
+			focus = USA_appoint_knox
+		}
+		mutually_exclusive = {
+			focus = USA_re_affirm_kill_all_researchers
+		}
+		available = {
+			has_war = no
+		}
+		prerequisite = {
+			focus = USA_peace_diplomacy
+		}
+		completion_reward = {
+			add_stability = -0.05
+			add_war_support = 0.05
+		}
+	}
+	focus = {
+		id = USA_re_affirm_kill_all_researchers
+		icon = GFX_goal_generic_neutrality_focus
+		relative_position_id = USA_question_american_neutrality
+		cost = 3
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		x = 2
+		y = 0
+		available = {
+			has_war = no
+		}
+		prerequisite = {
+			focus = USA_appoint_knox
+		}
+		mutually_exclusive = {
+			focus = USA_question_american_neutrality
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_war_support = -0.05
+		}
+	}
+
+	
+	focus = {
+		id = USA_neutrality_in_europes_war
+		icon = GFX_focus_SWE_privately_managed_vacation
+		relative_position_id = USA_question_american_neutrality
+		cost = 3
+		x = 1
+		y = 1
+		available = {
+			has_war = no
+		}
+		prerequisite = {
+			focus = USA_re_affirm_kill_all_researchers
+			focus = USA_question_american_neutrality
+		}
+		completion_reward = {
+			custom_effect_tooltip = 1_prog_level.tt
+			add_to_variable = {
+				var = USA_progressive_strength
+				value = 1
+			}
+			add_political_power = 20
+			add_war_support = -0.05
+		}
+		available = {
+			any_country = {
+				is_major = yes
+				OR = {
+					has_war_with = FRA
+					has_war_with = RUS
+					has_war_with = ENG
+				}
+			}
+		}
+	}
+	focus = {
+		id = USA_loans_to_the_entente
+		icon = GFX_focus_mex_privatisation
+		relative_position_id = USA_question_american_neutrality
+		cost = 4
+		x = 0
+		y = 2
+		available = {
+			has_war = no
+		}
+		ai_will_do = {
+			base = 10000
+		}
+		available = {
+			has_global_flag = USA_british_request_loans
+		}
+		prerequisite = {
+			focus = USA_neutrality_in_europes_war
+		}
+		bypass = {
+			has_country_flag = USA_failed_loans_to_uk
+		}
+		completion_reward = {
+			set_global_flag = USA_american_loans_to_uk
+			ENG = {
+				unlock_decision_tooltip = ENG_apply_for_american_loans
+			}
+			IF = {
+				limit = {
+					has_war_support < 0.4
+				}
+				custom_effect_tooltip = hurt_wilson_2
+				add_to_variable = {
+					USA_wilson_midterms_support = -1
+				}
+			}
+		}
+	}
+	focus = {
+		id = USA_neutrality_with_a_spine
+		icon = GFX_goal_generic_propaganda
+		relative_position_id = USA_question_american_neutrality
+		cost = 5
+		x = 2
+		y = 2
+		available = {
+			has_war = no
+		}
+		available = {
+		}
+		prerequisite = {
+			focus = USA_neutrality_in_europes_war
+		}
+		
+		completion_reward = {
+			add_ideas = USA_spine
+		}
+	}
+	
+	focus = {
+		id = USA_support_the_war_preparedness_campaign
+		icon = GFX_goal_generic_military_sphere
+		relative_position_id = USA_question_american_neutrality
+		cost = 5
+		x = 3
+		y = 3
+		available = {
+			has_war = no
+		}
+		available = {
+			has_war_support > 0.5
+		}
+		prerequisite = {
+			focus = USA_neutrality_with_a_spine
+		}
+		completion_reward = {
+			unlock_decision_tooltip = USA_speak_to_congress
+			unlock_decision_tooltip = USA_important_of_deterrence
+			unlock_decision_tooltip = USA_rally_politicians_on_war_preparedness
+		}
+	}
+	focus = {
+		id = USA_increase_food_trade
+		icon = GFX_focus_generic_coffee
+		relative_position_id = USA_question_american_neutrality
+		prerequisite = {
+			focus = USA_loans_to_the_entente
+		}
+		cost = 5
+		x = -1
+		y = 3
+		available = {
+			has_war = no
+		}
+		available = {
+			NOT = {
+				has_global_flag = GER_unrestricted_sub
+			}
+			ITA = {
+				has_war_with = GER
+			}
+		}
+		completion_reward = {
+			ITA = {
+				country_event = ww1_USA.139
+				unlock_decision_tooltip = USA_sell_food
+			}
+			FRA = {
+				country_event = ww1_USA.139
+				unlock_decision_tooltip = USA_sell_food
+			}
+			ENG = {
+				country_event = ww1_USA.139
+				unlock_decision_tooltip = USA_sell_food
+			}
+			custom_effect_tooltip = sell_food_effect
+		}
+	}
+	focus = {
+		id = USA_private_arms_contracts
+		icon = GFX_goal_generic_small_arms
+		relative_position_id = USA_question_american_neutrality
+		prerequisite = {
+			focus = USA_loans_to_the_entente
+		}
+		cost = 5
+		x = 1
+		y = 3
+		available = {
+			has_war = no
+		}
+		available = {
+			NOT = {
+				has_global_flag = GER_unrestricted_sub
+			}
+		}
+		completion_reward = {
+			ITA = {
+				country_event = ww1_USA.140
+				unlock_decision_tooltip = USA_sell_infantry
+				unlock_decision_tooltip = USA_sell_artillery
+				unlock_decision_tooltip = USA_sell_medical_equipment
+			}
+			FRA = {
+				country_event = ww1_USA.140
+				unlock_decision_tooltip = USA_sell_infantry
+				unlock_decision_tooltip = USA_sell_artillery
+				unlock_decision_tooltip = USA_sell_medical_equipment
+			}
+			ENG = {
+				country_event = ww1_USA.140
+				unlock_decision_tooltip = USA_sell_infantry
+				unlock_decision_tooltip = USA_sell_artillery
+				unlock_decision_tooltip = USA_sell_medical_equipment
+			}
+			RUS = {
+				country_event = ww1_USA.140
+				unlock_decision_tooltip = USA_sell_infantry
+				unlock_decision_tooltip = USA_sell_artillery
+				unlock_decision_tooltip = USA_sell_medical_equipment
+			}
+		}
+	}
+	focus = {
+		id = USA_wallstreet_in_china
+		icon = GFX_focus_zhili_unification
+		cost = 5
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = USA_dollars_instead_of_bullets
+		}
+		relative_position_id = USA_dollars_instead_of_bullets
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = USA_commercial_treaty_with_japan
+		icon = GFX_focus_chi_collaboration_with_the_japanese
+		cost = 3
+		prerequisite = {
+			focus = USA_wallstreet_in_china
+		}
+		relative_position_id = USA_wallstreet_in_china
+		x = 1
+		y = 2
+		available = {
+		}
+		completion_reward = {
+			country_event = ww1_USA.68
+		}
+	}
+	focus = {
+		id = USA_the_knox_plan
+		icon = GFX_focus_Generic_Develop_Rail_Network
+		cost = 5
+		x = 1
+		y = 2
+		prerequisite = {
+			focus = USA_wallstreet_in_china
+		}
+		relative_position_id = USA_dollars_instead_of_bullets
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = USA_mercenaries_in_latin_america
+		icon = GFX_focus_industry_profit
+		cost = 5
+		x = -2
+		y = 1
+		prerequisite = {
+			focus = USA_dollars_instead_of_bullets
+			focus = USA_meeting_with_diaz
+		}
+		relative_position_id = USA_dollars_instead_of_bullets
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	
+	focus = {
+		id = USA_support_pro_us_rebellions
+		icon = GFX_focus_RAJ_union_busting
+		cost = 5
+		x = -3
+		y = 2
+		prerequisite = {
+			focus = USA_mercenaries_in_latin_america
+		}
+		relative_position_id = USA_dollars_instead_of_bullets
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = USA_jp_morgan_in_honduras
+		icon = GFX_focus_DEN_heavy_regulations
+		cost = 5
+		x = 0
+		y = 2
+		prerequisite = {
+			focus = USA_support_pro_us_rebellions
+		}
+		relative_position_id = USA_support_pro_us_rebellions
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
 		id = USA_dollar_diplomacy
 		icon = GFX_focus_generic_banking
 		cost = 5
-		mutually_exclusive = {
-			focus = USA_good_neighbor_policy
-		}
-		prerequisite = {
-			focus = USA_united_states_bureau_of_mines
-		}
-		relative_position_id = USA_united_states_bureau_of_mines
-		x = 5
+		x = 1
 		y = 1
+		prerequisite = {
+			focus = USA_mercenaries_in_latin_america
+		}
+		relative_position_id = USA_mercenaries_in_latin_america
 		available = {
 		}
 		completion_reward = {
@@ -126,6 +571,9 @@ focus_tree = {
 		prerequisite = {
 			focus = USA_dollar_diplomacy
 		}
+		prerequisite = {
+			focus = USA_support_pro_us_rebellions
+		}
 		mutually_exclusive = {
 			focus = USA_best_pullout_game_west_of_the_atlantic
 		}
@@ -147,10 +595,61 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = USA_invade_dominica
+		icon = GFX_goal_generic_occupy_states_ongoing_war
+		relative_position_id = USA_supervise_dominican_republic
+		cost = 3
+		x = 0
+		y = 2
+		prerequisite = {
+			focus = USA_supervise_dominican_republic
+		}
+		available = {
+		}
+		completion_reward = {
+			add_threat = 2
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = DOM
+			}
+		}
+	}
+	focus = {
+		id = USA_stabilize_hati
+		icon = GFX_goal_generic_occupy_states_ongoing_war
+		relative_position_id = USA_question_american_neutrality
+		cost = 3
+		relative_position_id = USA_supervise_dominican_republic
+		cost = 3
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = USA_supervise_dominican_republic
+			focus = USA_best_pullout_game_west_of_the_atlantic
+		}
+		available = {
+			has_global_flag = hati_president_dead
+		}
+		completion_reward = {
+			add_timed_idea = {
+				idea = USA_prepare_for_invasion
+				days = 100
+			}
+			add_threat = 2
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = HAI
+			}
+		}
+	}
+	focus = {
 		id = USA_best_pullout_game_west_of_the_atlantic
 		icon = GFX_TUR_strengthen_the_national_economy
 		prerequisite = {
 			focus = USA_dollar_diplomacy
+		}
+	prerequisite = {
+			focus = USA_the_knox_plan
 		}
 		mutually_exclusive = {
 			focus = USA_supervise_dominican_republic
@@ -441,22 +940,7 @@ focus_tree = {
 			}
 		}
 	}
-	focus = {
-		id = USA_commercial_treaty_with_japan
-		icon = GFX_focus_chi_collaboration_with_the_japanese
-		cost = 3
-		prerequisite = {
-			focus = USA_canadian_reciprocal_trade_agreement
-		}
-		relative_position_id = USA_united_states_bureau_of_mines
-		x = 2
-		y = 7
-		available = {
-		}
-		completion_reward = {
-			country_event = ww1_USA.68
-		}
-	}
+	
 	focus = {
 		id = USA_boost_american_manufacturing
 		icon = GFX_goal_generic_construct_civ_factory
@@ -528,26 +1012,7 @@ focus_tree = {
 			}
 		}
 	}
-	focus = {
-		id = USA_support_us_steel_industry
-		icon = GFX_focus_generic_steel
-		cost = 4
-		prerequisite = {
-			focus = USA_boost_american_manufacturing
-		}
-		relative_position_id = USA_united_states_bureau_of_mines
-		x = -4
-		y = 7
-		available = {
-		}
-		completion_reward = {
-			add_resource = {
-				type = steel
-				amount = 12
-				state = 393
-			}
-		}
-	}
+	
 	focus = {
 		id = USA_develop_new_mexico
 		icon = GFX_goal_generic_construct_civilian
@@ -1492,32 +1957,13 @@ focus_tree = {
 			}
 		}
 	}
-	focus = {
-		id = USA_mexican_revolution
-		icon = GFX_focus_army_purge
-		cost = 0
-		x = 9
-		y = 1
-		prerequisite = {
-			focus = USA_united_states_bureau_of_mines
-		}
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = mexican_revolution.tt
-				always = no
-			}
-		}
-		completion_reward = {
-			add_stability = -0.05
-			USA_less_fat_stacks_in_central_america = yes
-		}
-	}
+	
 	focus = {
 		id = USA_1912_election
 		icon = GFX_TUR_end_martial_law
 		cost = 1
-		x = 60
-		y = 0
+		x = 0
+		y = 10
 		available = {
 			always = no
 		}
@@ -1639,427 +2085,19 @@ focus_tree = {
 			air_experience = 50
 		}
 	}
-	focus = {
-		id = USA_question_american_neutrality
-		icon = GFX_goal_support_democracy
-		relative_position_id = USA_the_wilson_presidency
-		cost = 3
-		x = 12
-		y = 1
-		mutually_exclusive = {
-			focus = USA_re_affirm_kill_all_researchers
-		}
-		available = {
-			has_war = no
-		}
-		prerequisite = {
-			focus = USA_the_wilson_presidency
-		}
-		completion_reward = {
-			add_stability = -0.05
-			add_war_support = 0.05
-		}
-	}
-	focus = {
-		id = USA_re_affirm_kill_all_researchers
-		icon = GFX_goal_generic_neutrality_focus
-		relative_position_id = USA_question_american_neutrality
-		cost = 3
-		search_filters = {
-			FOCUS_FILTER_HISTORICAL
-		}
-		x = 2
-		y = 0
-		available = {
-			has_war = no
-		}
-		prerequisite = {
-			focus = USA_the_wilson_presidency
-		}
-		mutually_exclusive = {
-			focus = USA_question_american_neutrality
-		}
-		completion_reward = {
-			add_stability = 0.05
-			add_war_support = -0.05
-		}
-	}
-	focus = {
-		id = USA_old_policy_in_latin
-		icon = GFX_goal_generic_military_sphere
-		relative_position_id = USA_question_american_neutrality
-		cost = 3
-		x = -1
-		y = 1
-		available = {
-		}
-		prerequisite = {
-			focus = USA_re_affirm_kill_all_researchers
-			focus = USA_question_american_neutrality
-		}
-		completion_reward = {
-			USA_more_fat_stacks_in_central_america = yes
-			add_political_power = 20
-			add_stability = 0.02
-			GUA = {
-				add_political_power = 50
-				add_stability = 0.1
-			}
-			HON = {
-				add_political_power = 50
-				add_stability = 0.1
-			}
-			CUB = {
-				add_political_power = 50
-				add_stability = 0.1
-			}
-			DOM = {
-				add_political_power = 50
-				add_stability = 0.1
-			}
-		}
-	}
-	focus = {
-		id = USA_invade_dominica
-		icon = GFX_goal_generic_occupy_states_ongoing_war
-		relative_position_id = USA_question_american_neutrality
-		cost = 3
-		x = -3
-		y = 3
-		prerequisite = {
-			focus = USA_old_policy_in_latin
-		}
-		available = {
-		}
-		completion_reward = {
-			add_threat = 2
-			create_wargoal = {
-				type = puppet_wargoal_focus
-				target = DOM
-			}
-		}
-	}
-	focus = {
-		id = USA_stabilize_hati
-		icon = GFX_goal_generic_occupy_states_ongoing_war
-		relative_position_id = USA_question_american_neutrality
-		cost = 3
-		x = -2
-		y = 2
-		prerequisite = {
-			focus = USA_old_policy_in_latin
-		}
-		available = {
-			has_global_flag = hati_president_dead
-		}
-		completion_reward = {
-			add_timed_idea = {
-				idea = USA_prepare_for_invasion
-				days = 100
-			}
-			add_threat = 2
-			create_wargoal = {
-				type = puppet_wargoal_focus
-				target = HAI
-			}
-		}
-	}
-	focus = {
-		id = USA_pursue_world_peace
-		icon = GFX_focus_spr_torchbearers_of_tomorrow
-		relative_position_id = USA_question_american_neutrality
-		mutually_exclusive = {
-			focus = USA_nightmares_of_world_war
-		}
-		available = {
-			has_war = no
-		}
-		cost = 3
-		search_filters = {
-			FOCUS_FILTER_HISTORICAL
-		}
-		x = 3
-		y = 1
-		prerequisite = {
-			focus = USA_re_affirm_kill_all_researchers
-			focus = USA_question_american_neutrality
-		}
-		completion_reward = {
-			remove_trait = {
-				character = USA_william_jennings_bryan
-				slot = political_advisor
-				trait = pacifist
-			}
-			add_trait = {
-				character = USA_william_jennings_bryan
-				slot = political_advisor
-				trait = pacifist2
-			}
-		}
-	}
-	focus = {
-		id = USA_nightmares_of_world_war
-		icon = GFX_focus_usa_shield
-		mutually_exclusive = {
-			focus = USA_pursue_world_peace
-		}
-		available = {
-			has_war = no
-		}
-		relative_position_id = USA_question_american_neutrality
-		cost = 3
-		x = 5
-		y = 1
-		available = {
-			USA_william_jennings_bryan = {
-				is_hired_as_advisor = no
-			}
-		}
-		prerequisite = {
-			focus = USA_re_affirm_kill_all_researchers
-			focus = USA_question_american_neutrality
-		}
-		completion_reward = {
-			add_war_support = 0.1
-		}
-	}
-	focus = {
-		id = USA_neutrality_in_europes_war
-		icon = GFX_focus_SWE_privately_managed_vacation
-		relative_position_id = USA_question_american_neutrality
-		cost = 3
-		x = 1
-		y = 1
-		available = {
-			has_war = no
-		}
-		prerequisite = {
-			focus = USA_re_affirm_kill_all_researchers
-			focus = USA_question_american_neutrality
-		}
-		completion_reward = {
-			custom_effect_tooltip = 1_prog_level.tt
-			add_to_variable = {
-				var = USA_progressive_strength
-				value = 1
-			}
-			add_political_power = 20
-			add_war_support = -0.05
-		}
-		available = {
-			any_country = {
-				is_major = yes
-				OR = {
-					has_war_with = FRA
-					has_war_with = RUS
-					has_war_with = ENG
-				}
-			}
-		}
-	}
-	focus = {
-		id = USA_loans_to_the_entente
-		icon = GFX_focus_mex_privatisation
-		relative_position_id = USA_question_american_neutrality
-		cost = 4
-		x = 0
-		y = 2
-		available = {
-			has_war = no
-		}
-		ai_will_do = {
-			base = 10000
-		}
-		available = {
-			has_global_flag = USA_british_request_loans
-		}
-		prerequisite = {
-			focus = USA_neutrality_in_europes_war
-		}
-		bypass = {
-			has_country_flag = USA_failed_loans_to_uk
-		}
-		completion_reward = {
-			set_global_flag = USA_american_loans_to_uk
-			ENG = {
-				unlock_decision_tooltip = ENG_apply_for_american_loans
-			}
-			IF = {
-				limit = {
-					has_war_support < 0.4
-				}
-				custom_effect_tooltip = hurt_wilson_2
-				add_to_variable = {
-					USA_wilson_midterms_support = -1
-				}
-			}
-		}
-	}
-	focus = {
-		id = USA_neutrality_with_a_spine
-		icon = GFX_goal_generic_propaganda
-		relative_position_id = USA_question_american_neutrality
-		cost = 5
-		x = 2
-		y = 2
-		available = {
-			has_war = no
-		}
-		available = {
-		}
-		prerequisite = {
-			focus = USA_neutrality_in_europes_war
-		}
-		prerequisite = {
-			focus = USA_pursue_world_peace
-			focus = USA_nightmares_of_world_war
-		}
-		completion_reward = {
-			add_ideas = USA_spine
-		}
-	}
-	focus = {
-		id = USA_a_safe_place
-		icon = GFX_focus_research
-		relative_position_id = USA_question_american_neutrality
-		cost = 3
-		x = 4
-		y = 2
-		available = {
-			has_war = no
-		}
-		prerequisite = {
-			focus = USA_pursue_world_peace
-			focus = USA_nightmares_of_world_war
-		}
-		completion_reward = {
-			add_ideas = USA_talented_refugee
-		}
-		available = {
-			any_country = {
-				is_major = yes
-				OR = {
-					has_war_with = FRA
-					has_war_with = RUS
-					has_war_with = ENG
-				}
-			}
-		}
-	}
-	focus = {
-		id = USA_support_the_war_preparedness_campaign
-		icon = GFX_goal_generic_military_sphere
-		relative_position_id = USA_question_american_neutrality
-		cost = 5
-		x = 3
-		y = 3
-		available = {
-			has_war = no
-		}
-		available = {
-			has_war_support > 0.5
-		}
-		prerequisite = {
-			focus = USA_neutrality_with_a_spine
-		}
-		completion_reward = {
-			unlock_decision_tooltip = USA_speak_to_congress
-			unlock_decision_tooltip = USA_important_of_deterrence
-			unlock_decision_tooltip = USA_rally_politicians_on_war_preparedness
-		}
-	}
-	focus = {
-		id = USA_increase_food_trade
-		icon = GFX_focus_generic_coffee
-		relative_position_id = USA_question_american_neutrality
-		prerequisite = {
-			focus = USA_loans_to_the_entente
-		}
-		cost = 5
-		x = -1
-		y = 3
-		available = {
-			has_war = no
-		}
-		available = {
-			NOT = {
-				has_global_flag = GER_unrestricted_sub
-			}
-			ITA = {
-				has_war_with = GER
-			}
-		}
-		completion_reward = {
-			ITA = {
-				country_event = ww1_USA.139
-				unlock_decision_tooltip = USA_sell_food
-			}
-			FRA = {
-				country_event = ww1_USA.139
-				unlock_decision_tooltip = USA_sell_food
-			}
-			ENG = {
-				country_event = ww1_USA.139
-				unlock_decision_tooltip = USA_sell_food
-			}
-			custom_effect_tooltip = sell_food_effect
-		}
-	}
-	focus = {
-		id = USA_private_arms_contracts
-		icon = GFX_goal_generic_small_arms
-		relative_position_id = USA_question_american_neutrality
-		prerequisite = {
-			focus = USA_loans_to_the_entente
-		}
-		cost = 5
-		x = 1
-		y = 3
-		available = {
-			has_war = no
-		}
-		available = {
-			NOT = {
-				has_global_flag = GER_unrestricted_sub
-			}
-		}
-		completion_reward = {
-			ITA = {
-				country_event = ww1_USA.140
-				unlock_decision_tooltip = USA_sell_infantry
-				unlock_decision_tooltip = USA_sell_artillery
-				unlock_decision_tooltip = USA_sell_medical_equipment
-			}
-			FRA = {
-				country_event = ww1_USA.140
-				unlock_decision_tooltip = USA_sell_infantry
-				unlock_decision_tooltip = USA_sell_artillery
-				unlock_decision_tooltip = USA_sell_medical_equipment
-			}
-			ENG = {
-				country_event = ww1_USA.140
-				unlock_decision_tooltip = USA_sell_infantry
-				unlock_decision_tooltip = USA_sell_artillery
-				unlock_decision_tooltip = USA_sell_medical_equipment
-			}
-			RUS = {
-				country_event = ww1_USA.140
-				unlock_decision_tooltip = USA_sell_infantry
-				unlock_decision_tooltip = USA_sell_artillery
-				unlock_decision_tooltip = USA_sell_medical_equipment
-			}
-		}
-	}
+	
 	focus = {
 		id = USA_the_final_war
 		icon = GFX_focus_spr_torchbearers_of_tomorrow
-		relative_position_id = USA_1912_election
+		relative_position_id = USA_private_arms_contracts
 		prerequisite = {
-		
+		focus = USA_private_arms_contracts
+		focus = USA_support_the_war_preparedness_campaign
+		focus = USA_increase_food_trade
 		}
 		cost = 2
-		x = 40
-		y = 0
+		x = 0
+		y = 1
 		available = {
 			has_war_support > 0.7
 		}
@@ -3342,6 +3380,7 @@ focus_tree = {
 			show_ideas_tooltip = USA_franklin_lane
 			activate_advisor = USA_william_jennings_bryan
 			country_event = ww1_USA_wilson.22
+			complete_national_focus = USA_peace_diplomacy
 		}
 	}
 	focus = {
