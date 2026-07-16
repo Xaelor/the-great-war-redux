@@ -2373,6 +2373,130 @@ economy_decisions = {
 			base = 0.1
 		}
 	}
+	ALB_acquire_foreign_bonds = {
+		icon = GFX_decision_hol_attract_foreign_investors
+		allowed = { original_tag = ALB }
+		visible = { has_dynamic_modifier = { modifier = ALB_foreign_bonds } }
+		available = {
+			count_triggers = {
+				amount = 2
+				ENG = {
+					has_opinion = {
+						target = ROOT
+						value > 74
+					}
+					NOT = {
+						is_embargoing = ROOT
+						has_country_flag = great_war_loser
+					}
+				}
+				FRA = {
+					has_opinion = {
+						target = ROOT
+						value > 74
+					}
+					NOT = {
+						is_embargoing = ROOT
+						has_country_flag = great_war_loser
+					}
+				}
+				GER = {
+					has_opinion = {
+						target = ROOT
+						value > 74
+					}
+					NOT = {
+						is_embargoing = ROOT
+						has_country_flag = great_war_loser
+					}
+				}
+				ITA = {
+					has_opinion = {
+						target = ROOT
+						value > 74
+					}
+					NOT = {
+						is_embargoing = ROOT
+						has_country_flag = great_war_loser
+					}
+				}
+				AUS = {
+					has_opinion = {
+						target = ROOT
+						value > 74
+					}
+					NOT = {
+						is_embargoing = ROOT
+						has_country_flag = great_war_loser
+					}
+				}
+				USA = {
+					has_opinion = {
+						target = ROOT
+						value > 74
+					}
+					NOT = {
+						is_embargoing = ROOT
+						has_country_flag = great_war_loser
+					}
+				}
+			}
+		}
+		cost = 50
+		fire_only_once = no
+		days_remove = 70
+		complete_effect = {
+			custom_effect_tooltip = modify_ALB_foreign_bonds
+			add_to_variable = {
+				tooltip = industrial_factory_donations_tt
+				ALB_fb_industrial_factory_donations = 1
+			}
+			custom_effect_tooltip = empty_space
+			custom_effect_tooltip = ALB_acquire_foreign_bonds_tt
+			hidden_effect = { country_event = { id = albania.180 days = 180 } }
+			effect_tooltip = {
+				custom_effect_tooltip = modify_ALB_foreign_bonds
+				add_to_variable = {
+					tooltip = industrial_factory_donations_tt
+					ALB_fb_industrial_factory_donations = -1
+				}
+			}
+		}
+		remove_effect = {
+			custom_effect_tooltip = modify_ALB_foreign_bonds
+			add_to_variable = {
+				tooltip = consumer_goods_factor_tt
+				ALB_fb_consumer_goods_factor = 0.1
+			}
+		}
+		ai_will_do = {
+			base = 0.1
+		}
+	}
+	ALB_paying_our_loans = {
+		icon = GFX_decision_generic_welfare
+		allowed = { original_tag = ALB }
+		visible = { has_dynamic_modifier = { modifier = ALB_foreign_bonds } }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ALB_paying_our_loans_tt
+				check_variable = { ALB_fb_consumer_goods_factor > 0 }
+			}
+		}
+		cost = 30
+		fire_only_once = no
+		days_remove = 35
+		remove_effect = {
+			custom_effect_tooltip = modify_ALB_foreign_bonds
+			add_to_variable = {
+				tooltip = consumer_goods_factor_tt
+				ALB_fb_consumer_goods_factor = -0.02
+			}
+		}
+		ai_will_do = {
+			base = 0.1
+		}
+	}
 }
 
 foreign_politics = {

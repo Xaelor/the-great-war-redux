@@ -13561,6 +13561,7 @@ focus_tree = {
 		x = 0
 		y = 13
 		relative_position_id = ALB_rilindja_kombetare
+		cancel_if_invalid = no
 		available = {
 			NOT = { has_country_flag = TUR_revolting_country }
 			has_civil_war = no
@@ -13866,7 +13867,12 @@ focus_tree = {
 		y = 1
 		relative_position_id = ALB_join_the_league_of_nations
 		completion_reward = {
-			
+			add_timed_idea = {
+				idea = ALB_austerity_measures
+				days = 1080
+			}
+			add_ideas = limited_exports
+			ALB_decrease_domestic_instability = yes
 		}
 		ai_will_do = { base = 20 }
 	}
@@ -13882,7 +13888,9 @@ focus_tree = {
 		y = 2
 		relative_position_id = ALB_the_leagues_economic_advise
 		completion_reward = {
-			
+			add_dynamic_modifier = { modifier = ALB_foreign_bonds }
+			unlock_decision_tooltip = ALB_acquire_foreign_bonds
+			unlock_decision_tooltip = ALB_paying_our_loans
 		}
 		ai_will_do = { base = 20 }
 	}
@@ -14375,37 +14383,65 @@ focus_tree = {
 		bypass = { has_idea = ALB_military_rule }
 		completion_reward = {
 			if = {
-				limit = { has_country_flag = ALB_parliamentarly_republic }
-				ALB_fan_noli = {
-					add_country_leader_role = {
-						promote_leader = yes
-						country_leader = {
-							ideology = social_democracy
-							traits = { ALB_progressive_bishop ALB_prime_minister }
+				limit = { has_character = ALB_fan_noli }
+				if = {
+					limit = { has_country_flag = ALB_parliamentarly_republic }
+					ALB_fan_noli = {
+						add_country_leader_role = {
+							promote_leader = yes
+							country_leader = {
+								ideology = social_democracy
+								traits = { ALB_progressive_bishop ALB_prime_minister }
+							}
 						}
 					}
 				}
-			}
-			else_if = {
-				limit = { has_country_flag = ALB_presidential_republic }
-				ALB_fan_noli = {
-					add_country_leader_role = {
-						promote_leader = yes
-						country_leader = {
-							ideology = social_democracy
-							traits = { ALB_progressive_bishop ALB_president }
+				else_if = {
+					limit = { has_country_flag = ALB_presidential_republic }
+					ALB_fan_noli = {
+						add_country_leader_role = {
+							promote_leader = yes
+							country_leader = {
+								ideology = social_democracy
+								traits = { ALB_progressive_bishop ALB_president }
+							}
+						}
+					}
+				}
+				else = {
+					ALB_fan_noli = {
+						add_country_leader_role = {
+							promote_leader = yes
+							country_leader = {
+								ideology = social_democracy
+								traits = { ALB_progressive_bishop }
+							}
 						}
 					}
 				}
 			}
 			else = {
-				ALB_fan_noli = {
-					add_country_leader_role = {
-						promote_leader = yes
-						country_leader = {
-							ideology = social_democracy
-							traits = { ALB_progressive_bishop }
-						}
+				if = {
+					limit = { has_country_flag = ALB_parliamentarly_republic }
+					create_country_leader = {
+						name = ALB_fan_noli
+						ideology = social_democracy
+						traits = { ALB_progressive_bishop ALB_prime_minister }
+					}
+				}
+				else_if = {
+					limit = { has_country_flag = ALB_presidential_republic }
+					create_country_leader = {
+						name = ALB_fan_noli
+						ideology = social_democracy
+						traits = { ALB_progressive_bishop ALB_president }
+					}
+				}
+				else = {
+					create_country_leader = {
+						name = ALB_fan_noli
+						ideology = social_democracy
+						traits = { ALB_progressive_bishop }
 					}
 				}
 			}
@@ -14413,6 +14449,7 @@ focus_tree = {
 				ruling_party = democratic
 				elections_allowed = no
 			}
+			ALB_increase_domestic_instability = yes
 		}
 		ai_will_do = { base = 20 }
 	}
