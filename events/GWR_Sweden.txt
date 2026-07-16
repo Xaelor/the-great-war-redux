@@ -6,6 +6,7 @@ add_namespace = ww_sverige_prohibition
 add_namespace = ww_sverige_neutralitet
 add_namespace = ww_sverige_hungerskjold
 add_namespace = ww_sverige_great_war
+add_namespace = ww_sverige_post_war
 add_namespace = ww_sverige_civil_war	# Unused, tbd
 
 # Status Quo???
@@ -801,12 +802,12 @@ country_event = {
 		add_to_variable = {
 			tooltip = swe_agr_dem_vote_f_tt
 			var = SWE_agr_dem_votes_f
-			value = -0.01
+			value = -0.02
 		}
 		add_to_variable = {
 			tooltip = swe_con_dem_vote_f_tt
 			var = SWE_con_dem_votes_f
-			value = 0.01
+			value = 0.02
 		}
 	}
 }
@@ -1156,7 +1157,7 @@ country_event = {
 	option = {	# Sure
 		name = ww_sverige.15.a
 		ai_chance = {
-			base = 2
+			base = 1
 		}
 		custom_effect_tooltip = adjust_swe_political_tt
 		add_to_variable = {
@@ -1170,7 +1171,7 @@ country_event = {
 	option = {	# Leave it be
 		name = ww_sverige.15.b
 		ai_chance = {
-			base = 1
+			base = 2
 		}
 	}
 }
@@ -1874,32 +1875,6 @@ country_event = {
 	}
 }
 
-# Unemployment Rises
-country_event = {
-	id = ww_sverige.33
-	title = ww_sverige.33.t
-	desc = ww_sverige.33.d
-	
-	is_triggered_only = yes
-	
-	immediate = {
-		hidden_effect = {
-			add_ideas = SWE_unemployment_crisis_10
-			activate_mission = SWE_return_of_employment
-		}
-	}
-	
-	option = {	# Oh no
-		name = ww_sverige.33.a
-		effect_tooltip = {
-			add_ideas = SWE_unemployment_crisis_10
-			activate_mission = SWE_return_of_employment
-		}
-		unlock_decision_tooltip = SWE_create_emergency_jobs_in_infrastructure
-		unlock_decision_tooltip = SWE_create_emergency_jobs_in_forest_clearing
-	}
-}
-
 # Sweden Trade Reassurances
 country_event = {
 	id = ww_sverige.34
@@ -2326,10 +2301,16 @@ country_event = {
 		add_to_variable = {
 			tooltip = stability_factor_tt
 			var = SWE_pol_stability_factor
+			value = -0.10
+		}
+		add_to_variable = {
+			tooltip = war_support_factor_tt
+			var = SWE_pol_war_support_factor
 			value = -0.05
 		}
 		if = {
 			limit = {
+				NOT = { has_government = communism }
 				check_variable = {
 					var = SWE_pol_neutrality_drift
 					value = 0.01
@@ -2356,6 +2337,7 @@ country_event = {
 		}
 		if = {
 			limit = {
+				NOT = { has_government = fascism }
 				check_variable = {
 					var = SWE_pol_democratic_drift
 					value = 0.01
@@ -2364,6 +2346,20 @@ country_event = {
 			add_to_variable = {
 				tooltip = democratic_drift_tt
 				var = SWE_pol_democratic_drift
+				value = -0.01
+			}
+		}
+		if = {
+			limit = {
+				has_government = communism
+				check_variable = {
+					var = SWE_pol_communism_drift
+					value = 0.01
+				}
+			}
+			add_to_variable = {
+				tooltip = communism_drift_tt
+				var = SWE_pol_communism_drift
 				value = -0.01
 			}
 		}
@@ -3321,13 +3317,13 @@ country_event = {
 	
 	immediate = {
 		hidden_effect = {
-			activate_mission = SWE_demands_of_elections
+			activate_mission = SWE_demands_of_elections_mission_two
 		}
 	}
 	
 	option = {	# Outrageous
 		name = ww_sverige_demo_crisis.16.a
-		effect_tooltip = { activate_mission = SWE_demands_of_elections }
+		effect_tooltip = { activate_mission = SWE_demands_of_elections_mission_two }
 	}
 }
 
@@ -3810,6 +3806,9 @@ country_event = {
 	
 	option = {	# We need to give up here
 		name = ww_sverige_riksdag.14.a
+		ai_chance = {
+			base = 2
+		}
 		remove_ideas = SWE_civil_unrest
 		if = {
 			limit = { has_idea = SWE_unofficial_parliamentalism }
@@ -3836,8 +3835,15 @@ country_event = {
 	}
 	option = {	# We need to give up here
 		name = ww_sverige_riksdag.14.b
-		add_stability = -0.15
-		add_war_support = -0.25
+		ai_chance = {
+			base = 1
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+		add_stability = -0.10
+		add_war_support = -0.20
 		# Mission to Revolution
 		activate_mission = SWE_the_civil_war_is_comming
 		hidden_effect = {
@@ -5974,6 +5980,34 @@ country_event = {
 	}
 }
 
+# "Sveriges utrikespolitik i världskrigets belysning"
+country_event = {
+	id = ww_sverige_general.62
+	title = ww_sverige_general.62.t
+	desc = ww_sverige_general.62.d
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	option = {
+		name = ww_sverige_general.62.a
+		if = {
+			limit = { has_completed_focus = SWE_strengthen_german_relations }
+			add_political_power = 5
+		}
+		else = {
+			add_political_power = -5
+		}
+		add_war_support = 0.01
+		add_popularity = {
+			ideology = neutrality
+			popularity = 0.03
+		}
+	}
+}
+
+
+
 # Inlandsbanan - Östersund–Ulriksfors, klar 1912
 	# Banan stod klar till Dorotea 1915, till Vilhelmina 1918, till Storuman 1923 och till Arvidsjaur 1928
 # Nyköpings centralstation finished in 1913, add railways between nyköping & stockholm
@@ -5981,8 +6015,6 @@ country_event = {
 # Skogsbranden i Spannarboda 1914
 # Rabeska utredningen - 28th of may 1912 to 26th of may 1914
 	# Stockholms författningsreform 1920
-
-# "Sveriges utrikespolitik i världskrigets belysning"
 
 # Sven Hedin's contribution to the Swedish defence issue, Ett varningsord, is published and distributed in one million copies. - 1912
 
@@ -7068,6 +7100,137 @@ country_event = {
 		}
 		GER = {
 			country_event = { id = ww_swerige_great_war.2 hours = 6 }
+		}
+	}
+}
+
+
+### POST WAR ###
+
+# Dust Settles
+country_event = {
+	id = ww_sverige_post_war.1
+	title = ww_sverige_post_war.1.t
+	desc = ww_sverige_post_war.1.d
+	
+	is_triggered_only = yes
+	
+	option = {	# People are getting restless
+		name = ww_sverige_post_war.1.a
+		custom_effect_tooltip = adjust_swe_political_tt
+		add_to_variable = {
+			tooltip = stability_factor_tt
+			var = SWE_pol_stability
+			value = -0.1
+		}
+		add_to_variable = {
+			tooltip = war_support_factor_tt
+			var = SWE_pol_war_support
+			value = -0.2
+		}
+	}
+}
+
+# Non-Loser of GW Economic Problems
+country_event = {
+	id = ww_sverige_post_war.2
+	title = ww_sverige_post_war.2.t
+	desc = ww_sverige_post_war.2.d
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	option = {	# The economy :c
+		name = ww_sverige_post_war.2.a
+		add_stability = -0.10
+		add_war_support = -0.10
+		set_country_flag = SWE_economic_problems_flag
+		custom_effect_tooltip = adjust_swe_economic_tt
+		add_to_variable = {
+			tooltip = consumer_goods_factor_tt
+			var = SWE_consumer_goods
+			value = 0.4
+		}
+		add_to_variable = {
+			tooltip = stability_factor_tt
+			var = SWE_eco_stability
+			value = -0.2
+		}
+		add_to_variable = {
+			tooltip = industrial_capacity_factory_tt
+			var = SWE_mil_industrial_capacity_factory
+			value = -0.20
+		}
+		add_to_variable = {
+			tooltip = industrial_capacity_dockyard_tt
+			var = SWE_mil_industrial_capacity_dockyard
+			value = -0.20
+		}
+		add_to_variable = {
+			tooltip = production_speed_arms_factory_factor_tt
+			var = SWE_mil_build_speed
+			value = -0.10
+		}
+		add_to_variable = {
+			tooltip = production_speed_industrial_complex_factor_tt
+			var = SWE_civ_build_speed
+			value = -0.10
+		}
+		add_to_variable = {
+			tooltip = production_speed_infrastructure_factor_tt
+			var = SWE_inf_build_speed
+			value = -0.10
+		}
+	}
+}
+
+# Unemployment Rises
+country_event = {
+	id = ww_sverige_post_war.3
+	title = ww_sverige_post_war.3.t
+	desc = ww_sverige_post_war.3.d
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	immediate = {
+		hidden_effect = {
+			add_ideas = SWE_unemployment_crisis_10
+			activate_mission = SWE_return_of_employment
+		}
+	}
+	
+	option = {	# Oh no
+		name = ww_sverige_post_war.3.a
+		effect_tooltip = {
+			add_ideas = SWE_unemployment_crisis_10
+			activate_mission = SWE_return_of_employment
+		}
+		unlock_decision_tooltip = SWE_create_emergency_jobs_in_infrastructure
+		unlock_decision_tooltip = SWE_create_emergency_jobs_in_forest_clearing
+	}
+}
+
+# People Unrest Due to No Election
+country_event = {
+	id = ww_sverige_post_war.4
+	title = ww_sverige_post_war.4.t
+	desc = ww_sverige_post_war.4.d
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	immediate = {
+		hidden_effect = {
+			add_ideas = SWE_election_unrest
+		}
+	}
+	
+	option = {	# People are unhappy
+		name = ww_sverige_post_war.4.a
+		add_stability = -0.05
+		effect_tooltip = {
+			add_ideas = SWE_election_unrest
 		}
 	}
 }

@@ -38,7 +38,6 @@ focus_tree = {
 		scroll_wheel_factor = 0.7
 		trigger = {
 			NOT = {
-				#has_completed_focus = SWE_the_great_war_emergency
 				has_completed_focus = SWE_third_liberal_regering
 				has_completed_focus = SWE_hammarskjold_government
 				has_completed_focus = SWE_trygger_government
@@ -51,11 +50,8 @@ focus_tree = {
 		target = SWE_courtyard_speech
 		scroll_wheel_factor = 0.86
 		trigger = {
-			OR = {
-				NOT = {
-					has_completed_focus = SWE_third_liberal_regering
-				}
-				#has_completed_focus = SWE_the_great_war_emergency
+			NOT = {
+				has_completed_focus = SWE_third_liberal_regering
 			}
 		}
 	}
@@ -67,7 +63,6 @@ focus_tree = {
 		trigger = {
 			NOT = {
 				has_completed_focus = SWE_courtyard_speech
-				#has_completed_focus = SWE_the_great_war_emergency
 			}
 		}
 	}
@@ -78,8 +73,8 @@ focus_tree = {
 		scroll_wheel_factor = 0.86
 		trigger = {
 			NOT = {
+				has_completed_focus = SWE_third_liberal_regering
 				has_completed_focus = SWE_courtyard_speech
-				#has_completed_focus = SWE_the_great_war_emergency
 			}
 		}
 	}
@@ -1188,8 +1183,8 @@ focus_tree = {
 		prerequisite = { focus = SWE_third_liberal_regering }
 		relative_position_id = SWE_third_liberal_regering
 		cost = 10.00
-		x = -1
-		y = 1
+		x = 1
+		y = 3
 		
 		available = {
 			OR = {
@@ -1201,21 +1196,33 @@ focus_tree = {
 				has_completed_focus = SWE_push_for_parliamentism_reforms
 			}
 			has_idea = SWE_unofficial_parliamentalism
-			set_temp_variable = { leftwing_temp = party_popularity@communism }
-			add_to_temp_variable = { leftwing_temp = party_popularity@democratic }
-			set_temp_variable = { support_for_reform_a = liberal_a_riksdag }
-			add_to_temp_variable = { support_for_reform_a = socialist_a_riksdag }
-			set_temp_variable = { support_for_reform_f = liberal_f_riksdag }
-			add_to_temp_variable = { support_for_reform_f = socialist_f_riksdag }
 			custom_trigger_tooltip = {
 				tooltip = swe_pressure_for_parliamentalism_tt
-				OR = {
-					AND = {
-						check_variable = {
-							var = leftwing_temp
-							value = 0.6
+				SWE = {
+					set_temp_variable = { leftwing_temp = party_popularity@communism }
+					add_to_temp_variable = { leftwing_temp = party_popularity@democratic }
+					set_temp_variable = { support_for_reform_a = liberal_a_riksdag }
+					add_to_temp_variable = { support_for_reform_a = socialist_a_riksdag }
+					set_temp_variable = { support_for_reform_f = liberal_f_riksdag }
+					add_to_temp_variable = { support_for_reform_f = socialist_f_riksdag }
+					OR = {
+						AND = {
+							check_variable = {
+								var = leftwing_temp
+								value = 0.6
+							}
+							OR = {
+								check_variable = {
+									var = support_for_reform_a
+									value = sweden_a_mandate_requirement
+								}
+								check_variable = {
+									var = support_for_reform_f
+									value = sweden_f_mandate_requirement
+								}
+							}
 						}
-						OR = {
+						AND = {
 							check_variable = {
 								var = support_for_reform_a
 								value = sweden_a_mandate_requirement
@@ -1224,16 +1231,6 @@ focus_tree = {
 								var = support_for_reform_f
 								value = sweden_f_mandate_requirement
 							}
-						}
-					}
-					AND = {
-						check_variable = {
-							var = support_for_reform_a
-							value = sweden_a_mandate_requirement
-						}
-						check_variable = {
-							var = support_for_reform_f
-							value = sweden_f_mandate_requirement
 						}
 					}
 				}
@@ -1708,9 +1705,27 @@ focus_tree = {
 				value = 0.05
 			}
 			add_to_variable = {
+				tooltip = war_support_factor_tt
+				var = SWE_pol_war_support_factor
+				value = 0.05
+			}
+			add_to_variable = {
 				tooltip = political_power_factor_tt
 				var = SWE_pol_political_power_factor
 				value = 0.1
+			}
+			if = {
+				limit = {
+					check_variable = {
+						var = SWE_pol_democratic_drift
+						value = 0.01
+					}
+				}
+				add_to_variable = {
+					tooltip = democratic_drift_tt
+					var = SWE_pol_democratic_drift
+					value = -0.01
+				}
 			}
 		}
 	}
@@ -1749,9 +1764,6 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_POLITICAL }
 		
 		completion_reward = {
-			#SWE_hjalmar_hammarskjold = {
-			#	add_country_leader_trait = SWE_principalled
-			#}
 			add_popularity = {
 				ideology = democratic
 				popularity = 0.05
@@ -1771,7 +1783,7 @@ focus_tree = {
 		}
 		mutually_exclusive = { focus = SWE_foreign_policy_of_the_king }
 		relative_position_id = SWE_hammarskjold_government
-		cost = 10.00
+		cost = 8.00
 		x = 3
 		y = 1
 		
@@ -1790,11 +1802,6 @@ focus_tree = {
 				var = SWE_pol_war_support_factor
 				value = -0.05
 			}
-			#add_to_variable = {
-			#	tooltip = neutrality_drift_tt
-			#	var = SWE_pol_neutrality_drift
-			#	value = -0.01
-			#}
 			custom_effect_tooltip = skip_line
 			custom_effect_tooltip = SWE_gives_access_to_path_in_diplomatic_tree
 		}
@@ -2014,7 +2021,7 @@ focus_tree = {
 						}
 						power_balance_value = {
 							id = SWE_parliamentalism_vs_royalism
-							value > 0.05
+							value > 0.10
 						}
 					}
 				}
@@ -2024,7 +2031,7 @@ focus_tree = {
 				limit = {
 					power_balance_value = {
 						id = SWE_parliamentalism_vs_royalism
-						value < -0.05
+						value < -0.10
 					}
 				}
 				SWE_small_riksdag_decrease = yes
@@ -2106,20 +2113,28 @@ focus_tree = {
 			always = no
 		}
 		
+		# This trigger needs to be adjusted
 		bypass = {
 			OR = {
 				has_completed_focus = SWE_promises_from_the_king
 				has_completed_focus = SWE_cement_riksdag_regime
-				has_government = communism	# For now
-				has_country_flag = SWE_suffrage_flag
+				has_government = communism
 				power_balance_value = {
 					id = SWE_parliamentalism_vs_royalism
 					value < -0.5
 				}
+				AND = {
+					has_country_flag = SWE_suffrage_flag
+					NOT = { has_government = fascism }
+				}
 			}
 			OR = {
 				has_completed_focus = SWE_third_liberal_regering
-				has_completed_focus = SWE_courtyard_speech
+				AND = {
+					has_completed_focus = SWE_courtyard_speech
+					neutrality < 0.25
+					fascism < 0.25
+				}
 			}
 			NOT = {
 				has_government = fascism
@@ -2190,20 +2205,22 @@ focus_tree = {
 		relative_position_id = SWE_riksdagens_breakthrough
 		cost = 4.00
 		x = 1
-		y = 1
+		y = 2
 		
 		available = {
 			has_elections = yes
+			has_completed_focus = SWE_stop_economic_spiraling
 			custom_trigger_tooltip = {
 				tooltip = SWE_has_unemployment_issues_tt
-				
+				SWE_has_unemployement_problem = yes
 			}
 		}
 		
 		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_INDUSTRY }
 		
 		completion_reward = {
-			
+			SWE_lower_unemployment = yes
+			unlock_decision_tooltip = SWE_create_temporary_jobs_for_the_unemployed
 		}
 	}
 	focus = {	# Adjust to be event chain that makes this occur at later point
@@ -2239,12 +2256,12 @@ focus_tree = {
 			add_to_variable = {
 				tooltip = swe_lib_dem_vote_a_tt
 				var = SWE_lib_dem_votes_a
-				value = -0.02
+				value = -0.03
 			}
 			add_to_variable = {
 				tooltip = swe_agr_dem_vote_a_tt
 				var = SWE_agr_dem_votes_a
-				value = 0.02
+				value = 0.03
 			}
 			activate_mission = SWE_conservative_promises_of_suffrage
 		}
@@ -2318,7 +2335,7 @@ focus_tree = {
 		prerequisite = { focus = SWE_trygger_government }
 		mutually_exclusive = { focus = SWE_keeping_our_head_down }
 		relative_position_id = SWE_trygger_government
-		cost = 10.00
+		cost = 8.00
 		x = -2
 		y = 1
 		
@@ -4424,7 +4441,7 @@ focus_tree = {
 			}
 		}
 	}
-	focus = {	# To be replaced
+	focus = {	# to be adjusted into mutually exclusive short thing?
 		id = SWE_organise_the_workforce
 		icon = GFX_goal_generic_construct_mil_factory
 		prerequisite = { focus = SWE_secure_army_prepardness }
@@ -4432,7 +4449,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		
-		cost = 7
+		cost = 5
 		
 		available = {
 			has_war_support > 0.25
@@ -4443,9 +4460,15 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		
-		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_INDUSTRY }
+		search_filters = { FOCUS_FILTER_INDUSTRY }
 		
 		completion_reward = {
+			add_tech_bonus = {
+				name = industry
+				category = industry
+				uses = 1
+				bonus = 0.25
+			}
 			# Change bonus/penalty depending on government?
 			custom_effect_tooltip = adjust_swe_economic_tt
 			add_to_variable = {
@@ -6927,20 +6950,48 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_HISTORICAL }
 		bypass_effect = {
-			custom_effect_tooltip = adjust_swe_political_tt
-			add_to_variable = {
-				tooltip = war_support_factor_tt
-				var = SWE_pol_war_support
-				value = -0.3
+			country_event = { id = ww_sverige_post_war.1 days = 7 }
+			event_option_tooltip = ww_sverige_post_war.1.a
+			hidden_effect = {
+				if = {
+					limit = { NOT = { has_country_flag = great_war_winner } }
+					country_event = { id = ww_sverige_post_war.2 days = 14 }
+				}
+				if = {
+					limit = { has_completed_focus = SWE_solidify_military_control }
+					country_event = { id = ww_sverige_post_war.4 days = 7 }
+				}
+				country_event = { id = ww_sverige_post_war.3 days = 40 }
 			}
 		}
 		
 		completion_reward = {
-			custom_effect_tooltip = adjust_swe_political_tt
+			event_option_tooltip = ww_sverige_post_war.1.a
+		}
+	}
+	focus = {
+		id = SWE_stop_economic_spiraling
+		icon = GFX_goal_generic_political_pressure
+		prerequisite = { focus = SWE_the_dust_settles }
+		relative_position_id = SWE_the_dust_settles
+		cost = 5.00
+		x = 0
+		y = 1
+		
+		available = {
+			has_country_flag = SWE_economic_problems_flag
+			# Make proper check for it later
+		}
+		
+		search_filters = { FOCUS_FILTER_HISTORICAL }
+		
+		completion_reward = {
+			custom_effect_tooltip = enables_further_riksdag_decisions
+			custom_effect_tooltip = adjust_swe_economic_tt
 			add_to_variable = {
-				tooltip = war_support_factor_tt
-				var = SWE_pol_war_support
-				value = -0.3
+				tooltip = stability_factor_tt
+				var = SWE_eco_stability
+				value = 0.05
 			}
 		}
 	}
@@ -7218,32 +7269,29 @@ focus_tree = {
 		cost = 5
 		
 		available_if_capitulated = yes
+		available = {
+			has_completed_focus = SWE_stop_economic_spiraling
+		}
 		
 		search_filters = { FOCUS_FILTER_HISTORICAL }
 		
 		completion_reward = {
-			add_tech_bonus = {
-				name = industry
-				category = industry
-				category = electronics
-				uses = 2
-				bonus = 0.35
-			}
+			add_political_power = 40
 			custom_effect_tooltip = adjust_swe_economic_tt
 			add_to_variable = {
 				tooltip = consumer_goods_factor_tt
 				var = SWE_consumer_goods
-				value = -0.15
+				value = -0.05
 			}
 			add_to_variable = {
 				tooltip = industrial_capacity_factory_tt
 				var = SWE_mil_industrial_capacity_factory
-				value = -0.05
+				value = -0.10
 			}
 			add_to_variable = {
 				tooltip = industrial_capacity_dockyard_tt
 				var = SWE_mil_industrial_capacity_dockyard
-				value = -0.05
+				value = -0.10
 			}
 		}
 	}
@@ -7349,17 +7397,16 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_HISTORICAL }
 		
 		completion_reward = {
-			custom_effect_tooltip = adjust_swe_political_tt
-			add_to_variable = {
-				tooltip = stability_factor_tt
-				var = SWE_pol_stability_factor
-				value = 0.05
-			}
 			custom_effect_tooltip = adjust_swe_economic_tt
 			add_to_variable = {
 				tooltip = consumer_goods_factor_tt
 				var = SWE_consumer_goods
 				value = -0.05
+			}
+			add_to_variable = {
+				tooltip = stability_factor_tt
+				var = SWE_eco_stability
+				value = 0.05
 			}
 		}
 	}
@@ -7385,7 +7432,17 @@ focus_tree = {
 			add_to_variable = {
 				tooltip = production_speed_arms_factory_factor_tt
 				var = SWE_mil_build_speed
-				value = -0.10
+				value = -0.05
+			}
+			add_to_variable = {
+				tooltip = industrial_capacity_factory_tt
+				var = SWE_mil_industrial_capacity_factory
+				value = -0.05
+			}
+			add_to_variable = {
+				tooltip = industrial_capacity_dockyard_tt
+				var = SWE_mil_industrial_capacity_dockyard
+				value = -0.05
 			}
 			add_to_variable = {
 				tooltip = min_export_tt
@@ -7395,7 +7452,7 @@ focus_tree = {
 			add_to_variable = {
 				tooltip = production_speed_infrastructure_factor_tt
 				var = SWE_inf_build_speed
-				value = 0.05
+				value = 0.10
 			}
 		}
 	}
@@ -7412,6 +7469,7 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		available = {
+			has_completed_focus = SWE_stop_economic_spiraling
 			GER = {
 				exists = yes
 				is_subject = no
@@ -7437,6 +7495,7 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		available = {
+			has_completed_focus = SWE_stop_economic_spiraling
 			GER = { has_country_flag = great_war_loser }
 		}
 		
@@ -7446,7 +7505,7 @@ focus_tree = {
 			add_to_variable = {
 				tooltip = production_speed_arms_factory_factor_tt
 				var = SWE_mil_build_speed
-				value = -0.10
+				value = -0.05
 			}
 			add_to_variable = {
 				tooltip = production_speed_industrial_complex_factor_tt

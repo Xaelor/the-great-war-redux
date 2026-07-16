@@ -30,6 +30,7 @@ characters={
 	}
 	SWE_gustaf_vi={ #appears in possible great-war-loss event chain
 		name=SWE_gustaf_vi
+		can_be_captured = no
 		portraits={
 			civilian={
 				large="gfx/leaders/SWE/SWE_gustaf_vi_adolf.png"
@@ -45,6 +46,7 @@ characters={
 	}
 	SWE_prins_wilhelm = {
 		name=SWE_prins_wilhelm
+		can_be_captured = no
 		portraits={
 			civilian={
 				large="gfx/leaders/SWE/SWE_Prins_Wilhelm.png"
@@ -467,7 +469,7 @@ characters={
 			}
 		}
 		country_leader = {
-			ideology = liberalism
+			ideology = social_liberalism
 			traits = {
 				indecisive
 			}
@@ -542,6 +544,23 @@ characters={
 		}
 	}
 	# Add 'Erik Bergström'
+	SWE_erik_bergstrom = {
+		name="SWE_erik_bergstrom"
+		portraits={
+			army={
+				large="gfx/leaders/SWE/SWE_Erik_Bergstrom.png"
+			}
+		}
+		corps_commander={
+			visible = { date > 1912.1.1 }
+			traits={ cavalry_officer politically_connected artillery_officer }
+			skill=2
+			attack_skill=1
+			defense_skill=2
+			planning_skill=2
+			logistics_skill=2
+		}
+	}
 	SWE_axel_von_matern={	# Dies in 1920, add event
 		name="SWE_axel_von_matern"
 		portraits={
@@ -1536,7 +1555,7 @@ characters={
 			traits  = {	# Change it to something with writer
 				communist_revolutionary 
 			}
-			cost  = 75.000
+			cost = 75.000
 			ai_will_do  = {
 				factor  = 100.000
 			}
@@ -1677,6 +1696,10 @@ characters={
 			}
 			ai_will_do  = {
 				factor = 1.5
+				modifier = {
+					factor = 0.2
+					date > 1914.1.1
+				}
 				modifier = {
 					factor = 0
 					NOT = { is_in_faction_with = GER }
@@ -1855,7 +1878,11 @@ characters={
 				}
 			}
 			ai_will_do  = {
-				factor  = 1.000
+				factor = 1.000
+				modifier = {
+					factor = 1.1
+					has_government = fascism
+				}
 			}
 		}
 	}
@@ -1872,6 +1899,7 @@ characters={
 			cost = 100
 			available = {
 				has_completed_focus = SWE_allies_in_unlikely_places
+				has_government = democratic
 			}
 			visible = {
 				NOT = { has_completed_focus = SWE_third_liberal_regering }
@@ -1879,7 +1907,15 @@ characters={
 				NOT = { has_completed_focus = SWE_for_sveriges_framtid }
 			}
 			ai_will_do  = {
-				factor  = 1.000
+				factor = 1.000
+				modifier = {
+					factor = 1.2
+					OR = {
+						has_country_leader_ideology = conservatism
+						has_country_leader_ideology = liberal_conservatism
+						has_country_leader_ideology = classical_liberalism
+					}
+				}
 			}
 		}
 		name="SWE_otto_jarte"
@@ -1909,7 +1945,15 @@ characters={
 				NOT = { has_completed_focus = SWE_for_sveriges_framtid }
 			}
 			ai_will_do  = {
-				factor  = 1.000
+				factor = 1.2
+				modifier = {
+					factor = 0.5
+					NOT = {
+						has_country_leader_ideology = conservatism
+						has_country_leader_ideology = liberal_conservatism
+						has_country_leader_ideology = classical_liberalism
+					}
+				}
 			}
 		}
 		name="SWE_axel_hultkrantz"
@@ -1938,7 +1982,7 @@ characters={
 				NOT = { has_completed_focus = SWE_hammarskjold_government }
 			}
 			ai_will_do  = {
-				factor  = 1.000
+				factor = 0.75
 			}
 		}
 		name="SWE_adrian_molin"
@@ -1982,7 +2026,7 @@ characters={
 			cost = 200
 			
 			ai_will_do  = {
-				factor  = 1.000
+				factor = 1.000
 				modifier = {
 					factor = 0.25
 					has_country_leader_ideology = conservatism
