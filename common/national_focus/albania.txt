@@ -13855,7 +13855,7 @@ focus_tree = {
 		ai_will_do = { base = 20 }
 	}
 	focus = {
-		id = ALB_leagues_economic_advise
+		id = ALB_the_leagues_economic_advise
 		icon = GFX_focus_generic_economic_recovery
 		cost = 5
 		search_filters = {
@@ -13877,10 +13877,10 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
 		}
-		prerequisite = { focus = ALB_leagues_economic_advise }
+		prerequisite = { focus = ALB_the_leagues_economic_advise }
 		x = 0
 		y = 2
-		relative_position_id = ALB_leagues_economic_advise
+		relative_position_id = ALB_the_leagues_economic_advise
 		completion_reward = {
 			
 		}
@@ -13915,7 +13915,19 @@ focus_tree = {
 		x = -6
 		y = 1
 		relative_position_id = ALB_hold_parliamentary_elections
+		available = { has_dynamic_modifier = { modifier = ALB_albanian_national_army_dm } }
 		completion_reward = {
+			custom_effect_tooltip = modify_ALB_albanian_national_army
+			add_to_variable = {
+				tooltip = experience_gain_army_factor_5
+				ALB_ana_experience_gain_army_factor = 0.05
+			}
+			add_to_variable = {
+				tooltip = army_org_factor_5
+				ALB_ana_army_org_factor = 0.05
+			}
+			custom_effect_tooltip = empty_space
+			ALB_decrease_domestic_instability = yes
 		}
 		ai_will_do = { base = 20 }
 	}
@@ -13926,10 +13938,10 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
 		}
-		prerequisite = { focus = ALB_leagues_economic_advise focus = ALB_a_western_styled_army }
+		prerequisite = { focus = ALB_the_leagues_economic_advise focus = ALB_a_western_styled_army }
 		x = 2
 		y = 1
-		relative_position_id = ALB_leagues_economic_advise
+		relative_position_id = ALB_the_leagues_economic_advise
 		completion_reward = {
 			add_timed_idea = {
 				idea = ALB_cutting_militarys_funding
@@ -13966,7 +13978,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ALB_depoliticize_the_military
-		icon = GFX_focus_SIA_sideline_disloyal_officers
+		icon = GFX_focus_generic_crush_the_military
 		cost = 10
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
@@ -13978,6 +13990,309 @@ focus_tree = {
 		completion_reward = {
 			remove_ideas = ALB_unruly_military
 			add_war_support = 0.1
+			ALB_decrease_domestic_instability = yes
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_promises_of_reform
+		icon = GFX_focus_generic_treaty
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_hold_parliamentary_elections }
+		x = -3
+		y = 1
+		relative_position_id = ALB_hold_parliamentary_elections
+		completion_reward = {
+			add_timed_idea = {
+				idea = ALB_hopeful_for_reforms
+				days = 365
+			}
+			ALB_decrease_domestic_instability = yes
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_break_up_landlord_monopolies
+		icon = GFX_focus_generic_expropriate_industrialist
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_promises_of_reform }
+		x = 0
+		y = 1
+		relative_position_id = ALB_promises_of_reform
+		available = { NOT = { has_idea = ALB_landlord_support } }
+		completion_reward = {
+			add_timed_idea = {
+				idea = ALB_landlord_resistance
+				days = 365
+			}
+			ALB_decrease_domestic_instability = yes
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_orthodox_church_of_albania
+		icon = GFX_focus_GRE_an_orthodox_state
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_promises_of_reform }
+		x = -2
+		y = 1
+		relative_position_id = ALB_promises_of_reform
+		completion_reward = {
+			add_ideas = ALB_autocephalous_orthodox_church_of_albania
+			ALB_decrease_domestic_instability = yes
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_autonomy_for_mirdita
+		icon = GFX_goal_generic_catholic_cross
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_orthodox_church_of_albania }
+		x = 0
+		y = 1
+		relative_position_id = ALB_orthodox_church_of_albania
+		available = {
+			owns_state = 1214
+			controls_state = 1214
+		}
+		completion_reward = {
+			1214 = { add_dynamic_modifier = { modifier = autonomous_state } }
+			ALB_decrease_domestic_instability = yes
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_empty_promises
+		icon = GFX_focus_renounce_the_treaty_of_trianon
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_hold_parliamentary_elections }
+		x = 3
+		y = 1
+		relative_position_id = ALB_hold_parliamentary_elections
+		completion_reward = {
+			add_timed_idea = {
+				idea = ALB_fooled_population
+				days = 180
+			}
+			custom_effect_tooltip = ALB_fooled_population_instant_desc
+			ALB_decrease_domestic_instability = yes
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_ensure_border_security
+		icon = GFX_goal_fortify_the_westwall
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_open_up_the_albanian_political_spectrum }
+		x = 6
+		y = 1
+		relative_position_id = ALB_open_up_the_albanian_political_spectrum
+		available = { has_dynamic_modifier = { modifier = ALB_albanian_national_army_dm } }
+		completion_reward = {
+			custom_effect_tooltip = modify_ALB_albanian_national_army
+			add_to_variable = {
+				tooltip = dig_in_speed_factor_tt
+				ALB_ana_dig_in_speed_factor = 0.07
+			}
+			add_to_variable = {
+				tooltip = army_core_defence_factor_tt
+				ALB_ana_army_core_defence_factor = 0.07
+			}
+			custom_effect_tooltip = empty_space
+			ALB_decrease_domestic_instability = yes
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_approach_the_landlords
+		icon = GFX_focus_generic_industrialists
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_empty_promises }
+		x = 0
+		y = 1
+		relative_position_id = ALB_empty_promises
+		available = { NOT = { has_idea = ALB_landlord_resistance } }
+		completion_reward = {
+			add_timed_idea = {
+				idea = ALB_landlord_support
+				days = 365
+			}
+			ALB_decrease_domestic_instability = yes
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_reform_the_gendarmerie
+		icon = GFX_focus_AUS_frontmiliz_focus
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_ensure_border_security }
+		prerequisite = { focus = ALB_hold_parliamentary_elections }
+		x = 6
+		y = 1
+		relative_position_id = ALB_hold_parliamentary_elections
+		completion_reward = {
+			effect_tooltip = { add_ideas = ALB_reformed_gendarmerie_n }
+			hidden_effect = {
+				if = {
+					limit = { has_government = neutrality }
+					add_ideas = ALB_reformed_gendarmerie_n
+				}
+				if = {
+					limit = { has_government = democratic }
+					add_ideas = ALB_reformed_gendarmerie_d
+				}
+				if = {
+					limit = { has_government = fascism }
+					add_ideas = ALB_reformed_gendarmerie_f
+				}
+				if = {
+					limit = { has_government = communism }
+					add_ideas = ALB_reformed_gendarmerie_c
+				}
+			}
+			ALB_decrease_domestic_instability = yes
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_war_time_order
+		icon = GFX_focus_generic_advanced_military_studies
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_reform_the_gendarmerie }
+		x = -1
+		y = 1
+		relative_position_id = ALB_reform_the_gendarmerie
+		completion_reward = {
+			ALB_domestic_instability_wto = yes
+			add_war_support = 0.05
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_stability_propaganda
+		icon = GFX_goal_generic_neutrality_focus
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_empty_promises }
+		prerequisite = { focus = ALB_reform_the_gendarmerie }
+		x = 1
+		y = 2
+		relative_position_id = ALB_empty_promises
+		completion_reward = {
+			add_dynamic_modifier = { modifier = ALB_domestic_control }
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_authoritarian_stability
+		icon = GFX_goal_generic_political_pressure
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_ensure_border_security }
+		x = 2
+		y = 1
+		relative_position_id = ALB_ensure_border_security
+		completion_reward = {
+			unlock_decision_tooltip = {
+				decision = ALB_crackdown_on_instability
+				show_effect_tooltip = yes
+				show_modifiers = yes
+			}
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_disarm_rogue_tribes
+		icon = GFX_focus_SIA_sideline_disloyal_officers
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_reform_the_gendarmerie }
+		x = 1
+		y = 1
+		relative_position_id = ALB_reform_the_gendarmerie
+		available = { has_completed_focus = ALB_rely_on_tribal_units }
+		completion_reward = {
+			if = {
+				limit = { has_country_flag = ALB_arm_patriotic_civilians }
+				custom_effect_tooltip = ALB_disarm_rogue_tribes_tt
+				hidden_effect = { set_division_template_cap = { division_template = "Forcat Fisnore" division_cap = 4 } }
+			}
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 5000
+			}
+			add_war_support = -0.1
+			ALB_decrease_domestic_instability = yes
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_arming_our_power_base
+		icon = GFX_focus_generic_hand_out_weapons
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_disarm_rogue_tribes }
+		x = 0
+		y = 1
+		relative_position_id = ALB_disarm_rogue_tribes
+		available = { has_equipment = { infantry_equipment > 2000 } }
+		completion_reward = {
+			set_division_template_lock = {
+				division_template = "Forcat Fisnore"
+				is_locked = no
+			}
+			custom_effect_tooltip = ALB_arming_our_power_base_tt
+			add_manpower = 2000
+			add_popularity = { ideology = neutrality popularity = 0.1 }
+			ALB_decrease_domestic_instability = yes
 		}
 		ai_will_do = { base = 20 }
 	}
@@ -14176,6 +14491,56 @@ focus_tree = {
 		relative_position_id = ALB_hold_parliamentary_elections
 		completion_reward = {
 			country_event = { id = albania.172 hours = 8 }
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_question_of_the_capital
+		icon = GFX_focus_generic_election
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_election_of_the_constituent_assembly }
+		x = 0
+		y = 1
+		relative_position_id = ALB_election_of_the_constituent_assembly
+		completion_reward = {
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_restore_the_monarchy
+		icon = GFX_focus_generic_election
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_election_of_the_constituent_assembly }
+		mutually_exclusive = { focus = ALB_declare_the_republic }
+		x = -1
+		y = 2
+		relative_position_id = ALB_election_of_the_constituent_assembly
+		completion_reward = {
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_declare_the_republic
+		icon = GFX_focus_generic_election
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_election_of_the_constituent_assembly }
+		mutually_exclusive = { focus = ALB_restore_the_monarchy }
+		x = 1
+		y = 2
+		relative_position_id = ALB_election_of_the_constituent_assembly
+		completion_reward = {
 		}
 		ai_will_do = { base = 20 }
 	}

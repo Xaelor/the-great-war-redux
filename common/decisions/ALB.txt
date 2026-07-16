@@ -1295,10 +1295,13 @@ ALB_albanian_tribes = {
 		name = ALB_disbanding_tribes
 		icon = GFX_decision_generic_disband_irregulars
 		allowed = { original_tag = ALB }
-		visible = { has_completed_focus = ALB_rely_on_tribal_units }
+		visible = {
+			has_completed_focus = ALB_rely_on_tribal_units
+			NOT = { has_completed_focus = ALB_arming_our_power_base }
+		}
 		days_remove = 7
 		remove_effect = {
-			add_stability = -0.1
+			add_war_support = -0.05
 			delete_units = { division_template = "Forcat Fisnore" }
 		}
 		ai_will_do = { factor = 0 }
@@ -5490,6 +5493,24 @@ political_actions = {
 			}
 			custom_effect_tooltip = empty_space
 			activate_mission = ALB_waning_public_patience
+		}
+	}
+	ALB_crackdown_on_instability = {
+		icon = GFX_decision_generic_police_action
+		allowed = { original_tag = ALB }
+		visible = { has_completed_focus = ALB_authoritarian_stability }
+		days_remove = 70
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = party_pop_more_than_5
+				check_variable = { party_popularity@ruling_party > 0.49 }
+			}
+		}
+		cost = 25
+		modifier = { political_power_cost = 0.05 }
+		complete_effect = {
+			add_popularity = { ideology = ROOT popularity = -0.05 }
+			ALB_decrease_domestic_instability = yes
 		}
 	}
 }
