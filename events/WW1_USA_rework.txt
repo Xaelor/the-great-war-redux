@@ -10,9 +10,6 @@ country_event = {
 		tag = USA
 		date > 1910.11.08
 		date < 1910.12.11
-		NOT = {
-			has_completed_focus = USA_request_teddies_help_in_the_midterms
-		}
 	}
 	option = {
 		name = ww1_USA.1.a
@@ -22,6 +19,18 @@ country_event = {
 		add_political_power = -75
 		set_global_flag = democratic_house
 		custom_effect_tooltip = democratic_house.tt
+		if = {
+			limit = {
+				has_global_flag = playing_republicans
+			}
+			hidden_effect = {
+			country_event = {
+				days = 3
+				id = ww1_USA.177
+			}
+		}
+		}
+		
 	}
 }
 
@@ -48,10 +57,7 @@ country_event = {
 				id = ww1_USA.3
 				days = 365
 			}
-			country_event = {
-				id = ww1_USA.57
-				days = 45
-			}
+			
 		}
 	}
 	option = {
@@ -133,8 +139,6 @@ country_event = {
 		custom_effect_tooltip = USA_commies_influence_taft
 	}
 }
-
-
 
 ####free trade canada agreement event chain
 country_event = {
@@ -222,7 +226,9 @@ country_event = {
 			days = 360
 			value = 1
 		}
-		FROM = { country_event = ww1_usa.141 }
+		FROM = {
+			country_event = ww1_usa.141
+		}
 	}
 }
 
@@ -2267,6 +2273,21 @@ country_event = {
 		set_global_flag = playing_republicans
 		custom_effect_tooltip = rep.tt
 		USA_pp_refresh = yes
+		hidden_effect = {
+			country_event = {
+				id = ww1_USA.175
+				days = 120
+			}
+			country_event = {
+				id = ww1_USA.176
+				days = 153
+			}
+			country_event = {
+				id = ww1_USA.181
+				days = 55
+			}
+		
+		}
 	}
 	option = {
 		name = ww1_USA.86.b
@@ -3825,9 +3846,9 @@ country_event = {
 		set_global_flag = usa_at_war
 		# custom_effect_tooltip = home_front_event.t
 		#hidden_effect = {
-		 	add_dynamic_modifier = {
-		 		modifier = USA_domestic_front
-		 	}
+		add_dynamic_modifier = {
+			modifier = USA_domestic_front
+		}
 		#}
 		if = {
 			limit = {
@@ -4317,32 +4338,32 @@ country_event = {
 			idea = USA_the_mexico_blitz
 			days = 30
 		}
-	hidden_effect = {
-		every_other_country = {
-			limit = {
-				original_tag = MEX
-				NOT = {
-					is_in_faction_with = ROOT
-					is_subject_of = ROOT
+		hidden_effect = {
+			every_other_country = {
+				limit = {
+					original_tag = MEX
+					NOT = {
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+					}
+					is_subject = no
 				}
-				is_subject = no
+				USA = {
+					declare_war_on = {
+						target = PREV
+						type = topple_government
+					}
+				}
 			}
+		}
+		effect_tooltip = {
 			USA = {
 				declare_war_on = {
-					target = PREV
+					target = MEX
 					type = topple_government
 				}
 			}
 		}
-	}
-	effect_tooltip = {
-		USA = {
-			declare_war_on = {
-				target = MEX
-				type = topple_government
-			}
-		}
-	}
 	}
 	option = {
 		name = ww1_USA.160.b
@@ -4350,6 +4371,7 @@ country_event = {
 		custom_effect_tooltip = historical_tt
 	}
 }
+
 country_event = {
 	title = ww1_USA.161.t
 	desc = ww1_USA.161.d
@@ -4369,51 +4391,18 @@ country_event = {
 	option = {
 		name = ww1_USA.161.a
 		add_ideas = USA_mexican_quagmire_1
-		every_country_with_original_tag	 = {
+		every_country_with_original_tag = {
 			original_tag_to_check = MEX
 			add_ideas = MEX_guerilla_warfare
 		}
 		set_global_flag = USA_mexico_failed_invasion
-		unlock_decision_category_tooltip  = USA_second_mexican_american_war
+		unlock_decision_category_tooltip = USA_second_mexican_american_war
 		activate_mission = USA_war_apathy
-		hidden_effect = {
-			478 = {
-			create_unit = {
-				division = "name = \"Brigada Milicia\" division_template = \"Brigada Milicia\" start_experience_factor = 0.5"
-				owner = MEX
-			}
-			create_unit = {
-				division = "name = \"Brigada Milicia\" division_template = \"Brigada Milicia\" start_experience_factor = 0.5"
-				owner = MEX
-			}
-			create_unit = {
-				division = "name = \"Brigada Milicia\" division_template = \"Brigada Milicia\" start_experience_factor = 0.5"
-				owner = MEX
-			}
-			create_unit = {
-				division = "name = \"Brigada Milicia\" division_template = \"Brigada Milicia\" start_experience_factor = 0.5"
-				owner = MEX
-			}
-			create_unit = {
-				division = "name = \"Brigada Milicia\" division_template = \"Brigada Milicia\" start_experience_factor = 0.5"
-				owner = MEX
-			}
-			create_unit = {
-				division = "name = \"Brigada Milicia\" division_template = \"Brigada Milicia\" start_experience_factor = 0.5"
-				owner = MEX
-			}
-			create_unit = {
-				division = "name = \"Brigada Milicia\" division_template = \"Brigada Milicia\" start_experience_factor = 0.5"
-				owner = MEX
-			}
-			create_unit = {
-				division = "name = \"Brigada Milicia\" division_template = \"Brigada Milicia\" start_experience_factor = 0.5"
-				owner = MEX
-			}
-		}
-		}
+		
+			
 	}
 }
+
 country_event = {
 	title = ww1_USA.162.t
 	desc = ww1_USA.162.d
@@ -4431,6 +4420,7 @@ country_event = {
 		add_political_power = -20
 	}
 }
+
 country_event = {
 	title = ww1_USA.163.t
 	desc = ww1_USA.163.d
@@ -4451,6 +4441,7 @@ country_event = {
 		}
 	}
 }
+
 country_event = {
 	title = ww1_USA.164.t
 	desc = ww1_USA.164.d
@@ -4464,12 +4455,12 @@ country_event = {
 		has_completed_focus = USA_sedition_act
 		has_completed_focus = USA_herbert_hoover
 	}
-
 	option = {
 		name = ww1_USA.164.a
 		add_political_power = 20
 	}
 }
+
 country_event = {
 	title = ww1_USA.165.t
 	desc = ww1_USA.165.d
@@ -4483,7 +4474,6 @@ country_event = {
 		date > 1920.4.6
 		original_tag = USA
 	}
-
 	option = {
 		name = ww1_USA.165.a
 		IF = {
@@ -4493,7 +4483,6 @@ country_event = {
 				}
 			}
 			add_ideas = USA_1920_recessionbad
-
 		}
 		else_if = {
 			limit = {
@@ -4502,7 +4491,6 @@ country_event = {
 				}
 			}
 			add_ideas = USA_1920_recession
-
 		}
 		else_if = {
 			limit = {
@@ -4511,7 +4499,6 @@ country_event = {
 				}
 			}
 			add_ideas = USA_1920_recession1
-
 		}
 		else_if = {
 			limit = {
@@ -4520,44 +4507,34 @@ country_event = {
 				}
 			}
 			add_ideas = USA_1920_recession2
-
 		}
 	}
 }
+
 #Ioawa GOP rejects taft reelection
 country_event = {
 	title = ww1_USA.175.t
 	desc = ww1_USA.175.d
 	id = ww1_USA.175
-	mean_time_to_happen = {
-		days = 1
-	}
 	fire_only_once = yes
-		trigger = {
-		date > 1910.7.12
-		original_tag = USA
-		}
+	is_triggered_only = yes
 	option = {
-	name = ww1_USA.175.a 
-	add_to_variable = {
-		var = USA_progressive_popularity
-		value = 10
+		name = ww1_USA.175.a
+		add_to_variable = {
+			var = USA_progressive_popularity
+			value = 5
+		}
 	}
 }
-}
+
 #Taft defends aldrich
 country_event = {
 	title = ww1_USA.176.t
 	desc = ww1_USA.176.d
 	id = WW1_USA.176
-	mean_time_to_happen = {
-		days = 1
-	}
+	
 	fire_only_once = yes
-		trigger = {
-		date > 1910.10.1
-		original_tag = USA
-		}
+	is_triggered_only = yes
 	option = {
 		name = ww1_usa.176.a
 		add_to_variable = {
@@ -4566,31 +4543,81 @@ country_event = {
 		}
 	}
 }
+
 #Speaker of the house joseph cannin is ousted
 country_event = {
 	title = ww1_USA.177.t
 	desc = ww1_USA.177.d
 	id = WW1_USA.177
-	mean_time_to_happen = {
-		days = 1
-	}
 	fire_only_once = yes
-		trigger = {
-			date > 1910.11.12
-			original_tag = USA
-		}
+	is_triggered_only = yes
 	option = {
 		name = ww1_usa.177.a
-		add_to_variable = {
-			var = USA_progressive2_popularity
-			value = -10
-		}
+		set_country_flag = USA_cannon_gone
+				custom_effect_tooltip = rep_ex
+
 	}
 	option = {
 		name = ww1_usa.177.b
-		add_to_variable = {
-			var = USA_progressive2_popularity
-			value = 10
-		}
+				custom_effect_tooltip = rep_ex
+
+	}
+}
+country_event = {
+	title = ww1_USA.181.t
+	desc = ww1_USA.181.d
+	id = WW1_USA.181
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_usa.181.a
+				custom_effect_tooltip = rep_ex
+
+	}
+	
+}
+country_event = {
+	title = ww1_USA.179.t
+	desc = ww1_USA.179.d
+	id = WW1_USA.179
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_usa.179.a
+				custom_effect_tooltip = rep_ex
+hidden_effect = {
+	country_event = {
+				id = ww1_USA.57
+				days = 2
+			}
+}
+	}
+	
+}
+country_event = {
+	title = ww1_USA.180.t
+	desc = ww1_USA.180.d
+	id = WW1_USA.180
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_USA.180.a
+				custom_effect_tooltip = rep_ex
+				hidden_effect = {
+				USA_progressive2_popularity_increase_effect = yes
+				USA_progressive2_loyalty_increase_effect = yes
+				USA_pp_refresh = yes
+			}
+			hidden_effect = {
+				USA_progressive_loyalty_decrease_effect = yes
+				USA_pp_refresh = yes
+			}
+			custom_effect_tooltip = USA_commies_not_support_taft
+			custom_effect_tooltip = USA_nazis_influence_taft
+			custom_effect_tooltip = USA_nazis_support_taft
+	}
+		option = {
+		name = ww1_USA.180.b
+				
 	}
 }
