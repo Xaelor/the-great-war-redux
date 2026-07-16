@@ -42,19 +42,23 @@ RCW_core_state_FROM = {
 	}
 }
 RCW_transfer_state_PREV = {
-	every_other_country = {
-		limit = {
-			has_war_with = PREV.PREV.OWNER
-			OR = {
-				controls_state = PREV.PREV
-				divisions_in_state = {
-					state = PREV.PREV
-					size > 0			
-				}
-			}			
+	PREV.OWNER = {
+		every_enemy_country = {
+			limit = {
+				OR = {
+					controls_state = PREV.PREV.PREV
+					divisions_in_state = {
+						state = PREV.PREV.PREV
+						size > 0			
+					}
+				}	
+				NOT = {
+					tag = PREV
+				}		
+			}
+			PREV.PREV = { give_military_access = PREV }
 		}
-		PREV = { give_military_access = PREV }
-	}
+	}	
 	PREV = { add_contested_owner = OWNER }
 	transfer_state = PREV
 }
