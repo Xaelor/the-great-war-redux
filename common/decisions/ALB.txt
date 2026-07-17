@@ -5741,3 +5741,34 @@ TGWR_great_power_politics = {
 		}
 	}
 }
+
+ALB_disarmament_process = {
+	ALB_undergoing_disarmament = {
+		icon = GFX_decision_generic_confiscation
+		allowed = { original_tag = ALB }
+		activation = {
+			has_completed_focus = ALB_disarmament_campaign
+			check_variable = { ALB_disarmament_campaign_process < 10 }
+			has_war = no
+		}
+		days_mission_timeout = 70
+		available = { has_War = yes }
+		timeout_effect = {
+			custom_effect_tooltip = modify_ALB_statuti_organik_i_shqiperise
+			add_to_variable = {
+				tooltip = stability_factor_tt
+				ALB_sos_stability_factor = 0.01
+			}
+			custom_effect_tooltip = empty_space
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 500
+			}
+			if = {
+				limit = { check_variable = { ALB_disarmament_campaign_process < 10 } }
+				set_variable = { ALB_disarmament_campaign_process = 1 }
+				activate_mission = ALB_undergoing_disarmament
+			}
+		}
+	}
+}

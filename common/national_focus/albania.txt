@@ -7215,7 +7215,10 @@ focus_tree = {
 		y = 1
 		relative_position_id = ALB_albanian_national_army
 		continue_if_invalid = yes
-		available = { num_of_civilian_factories_available_for_projects > 4 }
+		available = {
+			num_of_civilian_factories_available_for_projects > 4
+			has_dynamic_modifier = { modifier = ALB_albanian_national_army_dm }
+		}
 		select_effect = { add_ideas = ALB_military_spendings }
 		completion_reward = {
 			if = {
@@ -7255,7 +7258,11 @@ focus_tree = {
 		y = 1
 		relative_position_id = ALB_albanian_national_army
 		continue_if_invalid = yes
-		available = { num_of_civilian_factories_available_for_projects > 4 }
+		available = {
+			num_of_civilian_factories_available_for_projects > 4
+			has_dynamic_modifier = { modifier = ALB_albanian_national_army_dm }
+		}
+		bypass = { NOT = { has_dynamic_modifier = { modifier = ALB_albanian_national_army_dm } } }
 		select_effect = { add_ideas = ALB_military_spendings }
 		completion_reward = {
 			custom_effect_tooltip = tooltip_immediate_effect_upon_focus_start
@@ -7296,7 +7303,10 @@ focus_tree = {
 		y = 1
 		relative_position_id = ALB_finance_the_army
 		continue_if_invalid = yes
-		available = { num_of_civilian_factories_available_for_projects > 4 }
+		available = {
+			num_of_civilian_factories_available_for_projects > 4
+			has_dynamic_modifier = { modifier = ALB_albanian_national_army_dm }
+		}
 		select_effect = { add_ideas = ALB_military_spendings }
 		completion_reward = {
 			custom_effect_tooltip = tooltip_immediate_effect_upon_focus_start
@@ -7358,7 +7368,10 @@ focus_tree = {
 		y = 1
 		relative_position_id = ALB_order_foreign_equipments
 		continue_if_invalid = yes
-		available = { num_of_civilian_factories_available_for_projects > 2 }
+		available = {
+			num_of_civilian_factories_available_for_projects > 2
+			has_dynamic_modifier = { modifier = ALB_albanian_national_army_dm }
+		}
 		select_effect = { add_ideas = ALB_military_spendings2 }
 		completion_reward = {
 			custom_effect_tooltip = tooltip_immediate_effect_upon_focus_start
@@ -7445,7 +7458,11 @@ focus_tree = {
 		y = 2
 		relative_position_id = ALB_finance_the_army
 		continue_if_invalid = yes
-		available = { num_of_civilian_factories_available_for_projects > 2 }
+		available = {
+			num_of_civilian_factories_available_for_projects > 2
+			has_dynamic_modifier = { modifier = ALB_albanian_national_army_dm }
+		}
+		bypass = { NOT = { has_dynamic_modifier = { modifier = ALB_albanian_national_army_dm } } }
 		select_effect = { add_ideas = ALB_military_spendings2 }
 		completion_reward = {
 			custom_effect_tooltip = tooltip_immediate_effect_upon_focus_start
@@ -7487,6 +7504,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = ALB_create_military_academies
+		available = { has_dynamic_modifier = { modifier = ALB_albanian_national_army_dm } }
 		completion_reward = {
 			custom_effect_tooltip = modify_ALB_albanian_national_army
 			add_to_variable = {
@@ -13962,19 +13980,19 @@ focus_tree = {
 						OR = {
 							AND = {
 								has_government = neutrality
-								neutrality > 0.49
+								neutrality < 0.5
 							}
 							AND = {
 								has_government = democratic
-								democratic > 0.49
+								democratic < 0.5
 							}
 							AND = {
 								has_government = fascism
-								fascism > 0.49
+								fascism < 0.5
 							}
 							AND = {
 								has_government = communism
-								communism > 0.49
+								communism < 0.5
 							}
 						}
 					}
@@ -13986,7 +14004,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ALB_depoliticize_the_military
-		icon = GFX_focus_generic_crush_the_military
+		icon = GFX_focus_chi_army_reform
 		cost = 10
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
@@ -14086,6 +14104,62 @@ focus_tree = {
 		ai_will_do = { base = 20 }
 	}
 	focus = {
+		id = ALB_tending_the_people
+		icon = GFX_focus_generic_welfare
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_open_up_the_albanian_political_spectrum }
+		x = 5
+		y = 1
+		relative_position_id = ALB_open_up_the_albanian_political_spectrum
+		completion_reward = {
+			add_timed_idea = {
+				idea = ALB_social_spendings
+				days = 1800
+			}
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_hands_off_approach_towards_kosovo
+		icon = GFX_generic_kosovar_eagle
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_open_up_the_albanian_political_spectrum }
+		x = 7
+		y = 1
+		relative_position_id = ALB_open_up_the_albanian_political_spectrum
+		available = { any_state = { has_dynamic_modifier = { modifier = ALB_committee_for_the_liberation_of_kosova } } }
+		completion_reward = {
+			add_political_power = 75
+			847 = {
+				owner = {
+					add_opinion_modifier = { target = ROOT modifier = ALB_hands_off_approach_towards_kosovo }
+				}
+			}
+			if = {
+				limit = { has_active_mission = SER_enforce_treaty_of_london }
+				hidden_effect = {
+					every_other_country = {
+						limit = { has_active_mission = SER_enforce_treaty_of_london }
+						add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = 100 }
+					}
+				}
+			}
+			ALB_decrease_domestic_instability = yes
+			add_war_support = -0.1
+			custom_effect_tooltip = ALB_hands_off_approach_towards_kosovo_tt
+			hidden_effect = { country_event = { id = albania.177 days = 14 random_days = 30 } }
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
 		id = ALB_empty_promises
 		icon = GFX_focus_renounce_the_treaty_of_trianon
 		cost = 5
@@ -14103,34 +14177,6 @@ focus_tree = {
 				days = 180
 			}
 			custom_effect_tooltip = ALB_fooled_population_instant_desc
-			ALB_decrease_domestic_instability = yes
-		}
-		ai_will_do = { base = 20 }
-	}
-	focus = {
-		id = ALB_ensure_border_security
-		icon = GFX_goal_fortify_the_westwall
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_INTERNAL_AFFAIRS
-			FOCUS_FILTER_HISTORICAL
-		}
-		prerequisite = { focus = ALB_open_up_the_albanian_political_spectrum }
-		x = 6
-		y = 1
-		relative_position_id = ALB_open_up_the_albanian_political_spectrum
-		available = { has_dynamic_modifier = { modifier = ALB_albanian_national_army_dm } }
-		completion_reward = {
-			custom_effect_tooltip = modify_ALB_albanian_national_army
-			add_to_variable = {
-				tooltip = dig_in_speed_factor_tt
-				ALB_ana_dig_in_speed_factor = 0.07
-			}
-			add_to_variable = {
-				tooltip = army_core_defence_factor_tt
-				ALB_ana_army_core_defence_factor = 0.07
-			}
-			custom_effect_tooltip = empty_space
 			ALB_decrease_domestic_instability = yes
 		}
 		ai_will_do = { base = 20 }
@@ -14165,7 +14211,6 @@ focus_tree = {
 			FOCUS_FILTER_INTERNAL_AFFAIRS
 			FOCUS_FILTER_HISTORICAL
 		}
-		prerequisite = { focus = ALB_ensure_border_security }
 		prerequisite = { focus = ALB_hold_parliamentary_elections }
 		x = 6
 		y = 1
@@ -14195,8 +14240,8 @@ focus_tree = {
 		ai_will_do = { base = 20 }
 	}
 	focus = {
-		id = ALB_hands_off_approach_towards_kosovo
-		icon = GFX_generic_kosovar_eagle
+		id = ALB_declare_martial_law
+		icon = GFX_focus_generic_advanced_military_studies
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_INTERNAL_AFFAIRS
@@ -14206,27 +14251,11 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = ALB_reform_the_gendarmerie
-		available = { 847 = { owner = { NOT = { original_tag = ALB } } } }
+		available = { ALB_has_domestic_instability = yes }
 		completion_reward = {
-			add_political_power = 75
-			847 = {
-				owner = {
-					add_opinion_modifier = { target = ROOT modifier = ALB_hands_off_approach_towards_kosovo }
-				}
-			}
-			if = {
-				limit = { has_active_mission = SER_enforce_treaty_of_london }
-				hidden_effect = {
-					every_other_country = {
-						limit = { has_active_mission = SER_enforce_treaty_of_london }
-						add_days_mission_timeout = { mission = SER_enforce_treaty_of_london days = 100 }
-					}
-				}
-			}
+			ALB_add_martial_law = yes
+			custom_effect_tooltip = ALB_declare_martial_law_tt
 			ALB_decrease_domestic_instability = yes
-			add_war_support = -0.1
-			custom_effect_tooltip = ALB_hands_off_approach_towards_kosovo_tt
-			hidden_effect = { country_event = { id = albania.177 days = 14 random_days = 30 } }
 		}
 		ai_will_do = { base = 20 }
 	}
@@ -14256,10 +14285,10 @@ focus_tree = {
 			FOCUS_FILTER_INTERNAL_AFFAIRS
 			FOCUS_FILTER_HISTORICAL
 		}
-		prerequisite = { focus = ALB_ensure_border_security }
-		x = 2
+		prerequisite = { focus = ALB_hold_parliamentary_elections }
+		x = 8
 		y = 1
-		relative_position_id = ALB_ensure_border_security
+		relative_position_id = ALB_hold_parliamentary_elections
 		completion_reward = {
 			unlock_decision_tooltip = {
 				decision = ALB_crackdown_on_instability
@@ -14270,7 +14299,7 @@ focus_tree = {
 		ai_will_do = { base = 20 }
 	}
 	focus = {
-		id = ALB_disarm_rogue_tribes
+		id = ALB_disarmament_campaign
 		icon = GFX_focus_SIA_sideline_disloyal_officers
 		cost = 5
 		search_filters = {
@@ -14283,17 +14312,160 @@ focus_tree = {
 		relative_position_id = ALB_reform_the_gendarmerie
 		available = { has_completed_focus = ALB_rely_on_tribal_units }
 		completion_reward = {
+			activate_mission = ALB_undergoing_disarmament
+			set_variable = { ALB_disarmament_campaign_process = 1 }
+			custom_effect_tooltip = after_70_days
+			effect_tooltip = {
+				custom_effect_tooltip = modify_ALB_statuti_organik_i_shqiperise
+				add_to_variable = {
+					tooltip = stability_factor_tt
+					ALB_sos_stability_factor = 0.01
+				}
+				custom_effect_tooltip = empty_space
+			}
+			custom_effect_tooltip = ALB_disarmament_campaign_tt1
 			if = {
 				limit = { has_country_flag = ALB_arm_patriotic_civilians }
-				custom_effect_tooltip = ALB_disarm_rogue_tribes_tt
+				custom_effect_tooltip = ALB_disarmament_campaign_tt2
 				hidden_effect = { set_division_template_cap = { division_template = "Forcat Fisnore" division_cap = 4 } }
 			}
-			add_equipment_to_stockpile = {
-				type = infantry_equipment
-				amount = 5000
+			custom_effect_tooltip = {
+				localization_key = remove_character_as_tt
+				CHARACTER = ALB_isa_boletini
+				ROLE = cc_leader
 			}
-			add_war_support = -0.1
+			custom_effect_tooltip = {
+				localization_key = remove_character_as_tt
+				CHARACTER = ALB_ded_gjo_luli
+				ROLE = cc_leader
+			}
+			custom_effect_tooltip = {
+				localization_key = remove_character_as_tt
+				CHARACTER = ALB_cerciz_topulli
+				ROLE = cc_leader
+			}
+			custom_effect_tooltip = {
+				localization_key = remove_character_as_tt
+				CHARACTER = ALB_prenk_bib_doda
+				ROLE = cc_leader
+			}
+			custom_effect_tooltip = {
+				localization_key = remove_character_as_tt
+				CHARACTER = ALB_idriz_seferi
+				ROLE = cc_leader
+			}
+			custom_effect_tooltip = {
+				localization_key = remove_character_as_tt
+				CHARACTER = ALB_sokol_baci
+				ROLE = cc_leader
+			}
+			custom_effect_tooltip = {
+				localization_key = remove_character_as_tt
+				CHARACTER = ALB_riza_gjakova
+				ROLE = cc_leader
+			}
+			custom_effect_tooltip = {
+				localization_key = remove_character_as_tt
+				CHARACTER = ALB_selam_musai
+				ROLE = cc_leader
+			}
+			custom_effect_tooltip = {
+				localization_key = remove_character_as_tt
+				CHARACTER = ALB_mehmet_shpendi
+				ROLE = cc_leader
+			}
+			custom_effect_tooltip = {
+				localization_key = remove_character_as_tt
+				CHARACTER = ALB_mihal_grameno
+				ROLE = cc_leader
+			}
+			custom_effect_tooltip = {
+				localization_key = remove_character_as_tt
+				CHARACTER = ALB_sali_butka
+				ROLE = cc_leader
+			}
+			custom_effect_tooltip = {
+				localization_key = remove_character_as_tt
+				CHARACTER = ALB_shaban_polluzha
+				ROLE = cc_leader
+			}
 			ALB_decrease_domestic_instability = yes
+		}
+		ai_will_do = { base = 20 }
+	}
+	focus = {
+		id = ALB_disband_the_army
+		icon = GFX_focus_generic_crush_the_military
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = ALB_disarmament_campaign }
+		x = -1
+		y = 1
+		relative_position_id = ALB_disarmament_campaign
+		available = { has_dynamic_modifier = { modifier = ALB_albanian_national_army_dm } }
+		completion_reward = {
+			remove_dynamic_modifier = { modifier = ALB_albanian_national_army_dm }
+			remove_ideas = ALB_unruly_military
+			custom_effect_tooltip = ALB_cut_the_militarys_funding_tt
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							AND = {
+								has_government = neutrality
+								neutrality < 0.5
+							}
+							AND = {
+								has_government = democratic
+								democratic < 0.5
+							}
+							AND = {
+								has_government = fascism
+								fascism < 0.5
+							}
+							AND = {
+								has_government = communism
+								communism < 0.5
+							}
+						}
+					}
+					country_event = albania.179
+				}
+			}
+			custom_effect_tooltip = ALB_disband_the_army_tt
+			hidden_effect = {
+				if = {
+					limit = { has_idea = ALB_reformed_gendarmerie_n }
+					swap_ideas = {
+						remove_idea = ALB_reformed_gendarmerie_n
+						add_idea = ALB_reformed_gendarmerie2_n
+					}
+				}
+				if = {
+					limit = { has_idea = ALB_reformed_gendarmerie_d }
+					swap_ideas = {
+						remove_idea = ALB_reformed_gendarmerie_d
+						add_idea = ALB_reformed_gendarmerie2_d
+					}
+				}
+				if = {
+					limit = { has_idea = ALB_reformed_gendarmerie_f }
+					swap_ideas = {
+						remove_idea = ALB_reformed_gendarmerie_f
+						add_idea = ALB_reformed_gendarmerie2_f
+					}
+				}
+				if = {
+					limit = { has_idea = ALB_reformed_gendarmerie_c }
+					swap_ideas = {
+						remove_idea = ALB_reformed_gendarmerie_c
+						add_idea = ALB_reformed_gendarmerie2_c
+					}
+				}
+			}
 		}
 		ai_will_do = { base = 20 }
 	}
@@ -14305,18 +14477,28 @@ focus_tree = {
 			FOCUS_FILTER_INTERNAL_AFFAIRS
 			FOCUS_FILTER_HISTORICAL
 		}
-		prerequisite = { focus = ALB_disarm_rogue_tribes }
-		x = 0
+		prerequisite = { focus = ALB_disarmament_campaign }
+		x = 1
 		y = 1
-		relative_position_id = ALB_disarm_rogue_tribes
-		available = { has_equipment = { infantry_equipment > 2000 } }
+		relative_position_id = ALB_disarmament_campaign
+		available = { has_equipment = { infantry_equipment >4991999 } }
 		completion_reward = {
 			set_division_template_lock = {
 				division_template = "Forcat Fisnore"
 				is_locked = no
 			}
 			custom_effect_tooltip = ALB_arming_our_power_base_tt
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -500
+			}
 			add_manpower = 2000
+			custom_effect_tooltip = modify_ALB_statuti_organik_i_shqiperise
+			add_to_variable = {
+				tooltip = stability_factor_tt
+				ALB_sos_stability_factor = -0.01
+			}
+			custom_effect_tooltip = empty_space
 			add_popularity = { ideology = neutrality popularity = 0.1 }
 			ALB_decrease_domestic_instability = yes
 		}
@@ -14443,6 +14625,7 @@ focus_tree = {
 					limit = { has_country_flag = ALB_parliamentarly_republic }
 					create_country_leader = {
 						name = ALB_fan_noli
+						picture = "gfx/leaders/ALB/ALB_fan_noli.png"
 						ideology = social_democracy
 						traits = { ALB_progressive_bishop ALB_prime_minister }
 					}
@@ -14451,6 +14634,7 @@ focus_tree = {
 					limit = { has_country_flag = ALB_presidential_republic }
 					create_country_leader = {
 						name = ALB_fan_noli
+						picture = "gfx/leaders/ALB/ALB_fan_noli.png"
 						ideology = social_democracy
 						traits = { ALB_progressive_bishop ALB_president }
 					}
@@ -14458,6 +14642,7 @@ focus_tree = {
 				else = {
 					create_country_leader = {
 						name = ALB_fan_noli
+						picture = "gfx/leaders/ALB/ALB_fan_noli.png"
 						ideology = social_democracy
 						traits = { ALB_progressive_bishop }
 					}
