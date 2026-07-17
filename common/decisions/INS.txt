@@ -1126,68 +1126,6 @@ INS_dc_economy_decisions = {
 			factor = 200
 		}
 	}
-	INS_migrate_molluken = {
-		icon = GFX_decision_hol_war_on_pacifism
-		allowed = {
-			original_tag = INS
-		}
-		available = {
-			hidden_trigger = {
-				owns_state = 335
-				owns_state = 668
-			}
-		}
-		visible = {
-			has_completed_focus = INS_transmigration_programmes
-		}
-		fire_only_once = yes
-		complete_effect = {
-			
-		}
-		remove_effect = {
-			335 = {
-				add_manpower = -30000
-			}
-			668 = {
-				add_manpower = 30000
-			}
-			random_list = {
-				25 = {
-
-				}
-				25 = {
-					668 = {
-						add_building_construction = {
-							type = industrial_complex
-							level = 1
-							instant_build = yes
-						}
-						add_extra_state_shared_building_slots = 1
-					}
-				}
-				25 = {
-					668 = {
-						add_building_construction = {
-							type = infrastructure
-							level = 1
-							instant_build = yes
-						}
-						add_extra_state_shared_building_slots = 1
-					}
-				}
-				25 = {
-					668 = {
-						add_extra_state_shared_building_slots = 1
-					}
-				}
-			}
-		}
-		days_remove = 180
-		cost = 50
-		ai_will_do = {
-			factor = 200
-		}
-	}
 	INS_renovate_tanjung_priok_port = {
 		icon = GFX_decision_hol_war_on_pacifism
 		allowed = {
@@ -1245,7 +1183,7 @@ INS_dc_economy_decisions = {
 			
 		}
 		remove_effect = {
-			335 = {
+			1282 = {
 				add_building_construction = {
 					type = dockyard
 					level = 1
@@ -1301,6 +1239,198 @@ INS_dc_economy_decisions = {
 		}
 		days_remove = 90
 		cost = 50
+		ai_will_do = {
+			factor = 200
+		}
+	}
+	INS_trams_java = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+			original_tag = INS
+		}
+		available = {
+			hidden_trigger = {
+				owns_state = 335
+				owns_state = 1281
+				owns_state = 1282
+			}
+		}
+		visible = {
+			has_completed_focus = INS_tram_initiatives
+		}
+		fire_only_once = yes
+		complete_effect = {
+			
+		}
+		remove_effect = {
+			335 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			1281 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			1282 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		days_remove = 270
+		cost = 150
+		ai_will_do = {
+			factor = 200
+		}
+	}
+	INS_trams_sumatra = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+			original_tag = INS
+		}
+		available = {
+			hidden_trigger = {
+				owns_state = 672
+				owns_state = 1279
+			}
+		}
+		visible = {
+			has_completed_focus = INS_tram_initiatives
+		}
+		fire_only_once = yes
+		complete_effect = {
+			
+		}
+		remove_effect = {
+			672 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			1279 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		days_remove = 220
+		cost = 150
+		ai_will_do = {
+			factor = 200
+		}
+	}
+	INS_trams_other = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+			original_tag = INS
+		}
+		available = {
+			hidden_trigger = {
+				owns_state = 1280
+				owns_state = 673
+			}
+		}
+		visible = {
+			has_completed_focus = INS_tram_initiatives
+		}
+		fire_only_once = yes
+		complete_effect = {
+			
+		}
+		remove_effect = {
+			673 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			1280 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		days_remove = 220
+		cost = 150
+		ai_will_do = {
+			factor = 200
+		}
+	}
+	INS_investor_confidence = {
+		allowed = {
+			original_tag = INS
+		}
+    	activation = {
+			has_completed_focus = INS_industrialise_our_islands
+    	}
+		fire_only_once = yes
+    	available = {
+    	    NOT = {
+				tag = INS
+			}
+			NOT = {
+				num_of_factories > 29
+			}
+    	}
+    	cancel_trigger = {
+			
+    	}
+    	icon = GFX_decision_generic_factory
+    	days_mission_timeout = 360
+    	selectable_mission = no
+    	complete_effect = {
+			
+    	}
+    	timeout_effect = {
+			activate_mission = INS_investor_confidence
+			add_to_variable = {
+				INS_var_num_factories_needed = 5
+			}
+    	}
+	}
+	INS_make_way_industrialists = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+			original_tag = INS
+		}
+		available = {
+			
+		}
+		visible = {
+			has_completed_focus = INS_tram_initiatives
+		}
+		fire_only_once = yes
+		complete_effect = {
+			
+		}
+		remove_effect = {
+			any_owned_state = {
+				limit = {
+					is_owned_by = INS
+					NOT = {
+						state = 1222
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+			}
+		}
+		days_remove = 220
+		cost = 150
 		ai_will_do = {
 			factor = 200
 		}
