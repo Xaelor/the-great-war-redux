@@ -86,9 +86,6 @@ country_event = {
 	option = {
 		name = usa.40.a
 		USA_senate_small_support = yes
-		hidden_effect = {
-			country_event = { id = usa.50 days = 70 random_days = 10 }
-		}
 	}
 
 }
@@ -123,9 +120,6 @@ country_event = {
 	option = {
 		name = usa.42.a
 		USA_senate_small_opposition = yes
-		hidden_effect = {
-			country_event = { id = usa.50 days = 70 random_days = 10 }
-		}
 	}
 
 }
@@ -160,9 +154,6 @@ country_event = {
 	option = {
 		name = usa.44.a
 		USA_senate_medium_support = yes
-		hidden_effect = {
-			country_event = { id = usa.50 days = 70 random_days = 20 }
-		}
 	}
 
 }
@@ -197,9 +188,6 @@ country_event = {
 	option = {
 		name = usa.46.a
 		USA_senate_medium_opposition = yes
-		hidden_effect = {
-			country_event = { id = usa.50 days = 70 random_days = 20 }
-		}
 	}
 
 }
@@ -228,65 +216,65 @@ country_event = {
 	Hidden = yes
 	is_triggered_only = yes
 
-	immediate = {
-		random_list = {
-			20 = { 
-				modifier = {
-					not = { congress_medium_support_trigger = yes }
-					factor = 1.25
-				}
-				modifier = {
-					not = { congress_low_support_trigger = yes }
-					factor = 2
-				}
-				country_event = { id = usa.40 days = 15 random_days = 6 } #small support
-			} 
-			20 = { 
-				modifier = {
-					check_variable = { var = senators_support value = quorum_high compare = greater_than_or_equals }
-					factor = 3
-				}
-				modifier = {
-					has_idea_with_trait = fascist_demagogue
-					factor = 2
-				}
-				modifier = {
-					has_idea_with_trait = communist_revolutionary
-					factor = 2
-				}
-				country_event = { id = usa.42 days = 20 random_days = 6 } #small opposition 
-			} 
-			15 = { 
-				modifier = {
-					not = { congress_medium_support_trigger = yes }
-					factor = 1.25
-				}
-				modifier = {
-					not = { congress_low_support_trigger = yes }
-					factor = 2
-				}
-				country_event = { id = usa.44 days = 20 random_days = 10 } #medium support
-			} 
-			15 = { 
-				modifier = {
-					check_variable = { var = senators_support value = quorum_high compare = greater_than_or_equals }
-					factor = 3
-				}
-				modifier = {
-					has_idea_with_trait = fascist_demagogue
-					factor = 2
-				}
-				modifier = {
-					has_idea_with_trait = communist_revolutionary
-					factor = 2
-				}
-				country_event = { id = usa.46 days = 20 random_days = 10 }  #medium opposition
-			}
-			30 = { #investment opportunity
-				country_event = { id = usa.60 days = 10 random_days = 15 } 
-			} 
-		}
-	}
+	#immediate = {
+	#	random_list = {
+	#		20 = { 
+	#			modifier = {
+	#				not = { congress_medium_support_trigger = yes }
+	#				factor = 1.25
+	#			}
+	#			modifier = {
+	#				not = { congress_low_support_trigger = yes }
+	#				factor = 2
+	#			}
+	#			country_event = { id = usa.40 days = 15 random_days = 6 } #small support
+	#		} 
+	#		20 = { 
+	#			modifier = {
+	#				check_variable = { var = senators_support value = quorum_high compare = greater_than_or_equals }
+	#				factor = 3
+	#			}
+	#			modifier = {
+	#				has_idea_with_trait = fascist_demagogue
+	#				factor = 2
+	#			}
+	#			modifier = {
+	#				has_idea_with_trait = communist_revolutionary
+	#				factor = 2
+	#			}
+	#			country_event = { id = usa.42 days = 20 random_days = 6 } #small opposition 
+	#		} 
+	#		15 = { 
+	#			modifier = {
+	#				not = { congress_medium_support_trigger = yes }
+	#				factor = 1.25
+	#			}
+	#			modifier = {
+	#				not = { congress_low_support_trigger = yes }
+	#				factor = 2
+	#			}
+	#			country_event = { id = usa.44 days = 20 random_days = 10 } #medium support
+	#		} 
+	#		15 = { 
+	#			modifier = {
+	#				check_variable = { var = senators_support value = quorum_high compare = greater_than_or_equals }
+	#				factor = 3
+	#			}
+	#			modifier = {
+	#				has_idea_with_trait = fascist_demagogue
+	#				factor = 2
+	#			}
+	#			modifier = {
+	#				has_idea_with_trait = communist_revolutionary
+	#				factor = 2
+	#			}
+	#			country_event = { id = usa.46 days = 20 random_days = 10 }  #medium opposition
+	#		}
+	#		30 = { #investment opportunity
+	#			country_event = { id = usa.60 days = 10 random_days = 15 } 
+	#		} 
+	#	}
+	#}
 }
 
 # dispatcher event - house
@@ -369,141 +357,141 @@ country_event = {
 	}
 }
 # senator wants investment in their state - hidden dispatch event
-country_event = {
-	id = usa.60
-	hidden = yes
-	is_triggered_only = yes
-
-	immediate = {
-		set_country_flag = USA_congress_investment
-		if = {
-			limit = { has_event_target = USA_congress_investment_state }
-			clear_global_event_target = USA_congress_investment_state
-		}
-		random_list = {
-			25 = {
-				modifier = {
-					NOT = {
-						any_owned_state = {
-							is_core_of = ROOT
-							is_controlled_by = ROOT
-							free_building_slots = {
-								building = industrial_complex
-								size > 0
-								include_locked = no
-							}
-						}
-					}
-					factor = 0
-				}
-				random_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						is_controlled_by = ROOT
-						free_building_slots = {
-							building = industrial_complex
-							size > 0
-							include_locked = no
-						}
-					}
-					
-					save_global_event_target_as = USA_congress_investment_state
-					state_event = { id = usa.61 trigger_for = controller }
-				}
-			}
-			25 = {
-				modifier = {
-					NOT = {
-						any_owned_state = {
-							is_core_of = ROOT
-							is_controlled_by = ROOT
-							free_building_slots = {
-								building = arms_factory
-								size > 0
-								include_locked = no
-							}
-						}
-					}
-					factor = 0
-				}
-				random_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						is_controlled_by = ROOT
-						free_building_slots = {
-							building = arms_factory
-							size > 0
-							include_locked = no
-						}
-					}
-					save_global_event_target_as = USA_congress_investment_state
-					state_event = { id = usa.62 trigger_for = controller }
-				}
-			}
-			25 = { 
-				modifier = {
-					NOT = {
-						any_owned_state = {
-							is_core_of = ROOT
-							is_controlled_by = ROOT
-							is_coastal = yes
-							free_building_slots = {
-								building = dockyard
-								size > 0
-								include_locked = no
-							}
-						}
-					}
-					factor = 0
-				}
-				random_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						is_controlled_by = ROOT
-						free_building_slots = {
-							building = dockyard
-							size > 0
-							include_locked = no
-						}
-					}
-					save_global_event_target_as = USA_congress_investment_state
-					state_event = { id = usa.64 trigger_for = controller }
-				}
-			}
-			25 = {
-				modifier = {
-					NOT = {
-						any_owned_state = {
-							is_core_of = ROOT
-							free_building_slots = {
-								building = infrastructure
-								size > 0
-								include_locked = no
-							}
-						}
-					}
-					factor = 0
-				}
-				random_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						is_controlled_by = ROOT
-						free_building_slots = {
-							building = infrastructure
-							size > 0
-							include_locked = no
-						}
-					}
-					save_global_event_target_as = USA_congress_investment_state
-					state_event = { id = usa.63 trigger_for = controller }
-				}
-			}
-		}
-		hidden_effect = {
-			country_event = { id = usa.50 days = 70 random_days = 10 }
-		}
-	}
-}
+#country_event = {
+#	id = usa.60
+#	hidden = yes
+#	is_triggered_only = yes
+#
+#	immediate = {
+#		set_country_flag = USA_congress_investment
+#		if = {
+#			limit = { has_event_target = USA_congress_investment_state }
+#			clear_global_event_target = USA_congress_investment_state
+#		}
+#		random_list = {
+#			25 = {
+#				modifier = {
+#					NOT = {
+#						any_owned_state = {
+#							is_core_of = ROOT
+#							is_controlled_by = ROOT
+#							free_building_slots = {
+#								building = industrial_complex
+#								size > 0
+#								include_locked = no
+#							}
+#						}
+#					}
+#					factor = 0
+#				}
+#				random_owned_state = {
+#					limit = {
+#						is_core_of = ROOT
+#						is_controlled_by = ROOT
+#						free_building_slots = {
+#							building = industrial_complex
+#							size > 0
+#							include_locked = no
+#						}
+#					}
+#					
+#					save_global_event_target_as = USA_congress_investment_state
+#					state_event = { id = usa.61 trigger_for = controller }
+#				}
+#			}
+#			25 = {
+#				modifier = {
+#					NOT = {
+#						any_owned_state = {
+#							is_core_of = ROOT
+#							is_controlled_by = ROOT
+#							free_building_slots = {
+#								building = arms_factory
+#								size > 0
+#								include_locked = no
+#							}
+#						}
+#					}
+#					factor = 0
+#				}
+#				random_owned_state = {
+#					limit = {
+#						is_core_of = ROOT
+#						is_controlled_by = ROOT
+#						free_building_slots = {
+#							building = arms_factory
+#							size > 0
+#							include_locked = no
+#						}
+#					}
+#					save_global_event_target_as = USA_congress_investment_state
+#					state_event = { id = usa.62 trigger_for = controller }
+#				}
+#			}
+#			25 = { 
+#				modifier = {
+#					NOT = {
+#						any_owned_state = {
+#							is_core_of = ROOT
+#							is_controlled_by = ROOT
+#							is_coastal = yes
+#							free_building_slots = {
+#								building = dockyard
+#								size > 0
+#								include_locked = no
+#							}
+#						}
+#					}
+#					factor = 0
+#				}
+#				random_owned_state = {
+#					limit = {
+#						is_core_of = ROOT
+#						is_controlled_by = ROOT
+#						free_building_slots = {
+#							building = dockyard
+#							size > 0
+#							include_locked = no
+#						}
+#					}
+#					save_global_event_target_as = USA_congress_investment_state
+#				#	state_event = { id = usa.64 trigger_for = controller }
+#				}
+#			}
+#			25 = {
+#				modifier = {
+#					NOT = {
+#						any_owned_state = {
+#							is_core_of = ROOT
+#							free_building_slots = {
+#								building = infrastructure
+#								size > 0
+#								include_locked = no
+#							}
+#						}
+#					}
+#					factor = 0
+#				}
+#				random_owned_state = {
+#					limit = {
+#						is_core_of = ROOT
+#						is_controlled_by = ROOT
+#						free_building_slots = {
+#							building = infrastructure
+#							size > 0
+#							include_locked = no
+#						}
+#					}
+#					save_global_event_target_as = USA_congress_investment_state
+#					state_event = { id = usa.63 trigger_for = controller }
+#				}
+#			}
+#		}
+#		hidden_effect = {
+#			country_event = { id = usa.50 days = 70 random_days = 10 }
+#		}
+#	}
+#}
 # senator wants investment in civilian factory
 state_event = {
 	id = usa.61
@@ -602,35 +590,35 @@ state_event = {
 	}
 }
 # senator wants investment in dockyards
-state_event = {
-	id = usa.64
-	title = usa.64.t
-	desc = usa.64.desc
-	picture = GFX_report_event_ast_navy
-	
-	is_triggered_only = yes
-	
-
-	option = {
-		name = usa.64.a #accept
-		ai_chance = {
-			factor = 0
-		}		
-		event_target:USA_congress_investment_state = {
-			OWNER = { unlock_decision_tooltip = { decision = USA_invest_in_state_dockyard show_effect_tooltip = yes }}
-			set_state_flag = USA_congress_build_dockyard
-			set_variable = { dockyard_goal = building_level@dockyard }
-			add_to_variable = { dockyard_goal = 1 }
-		}
-	}
-	option = {
-		name = usa.64.b #refuse
-		ai_chance = {
-			factor = 100
-		}
-		event_target:USA_congress_investment_state = {
-			OWNER = { clr_country_flag = USA_congress_investment }
-		}
-		clear_global_event_target = USA_congress_investment_state
-	}
-}
+#state_event = {
+#	id = usa.64
+#	title = usa.64.t
+#	desc = usa.64.desc
+#	picture = GFX_report_event_ast_navy
+#	
+#	is_triggered_only = yes
+#	
+#
+#	option = {
+#		name = usa.64.a #accept
+#		ai_chance = {
+#			factor = 0
+#		}		
+#		event_target:USA_congress_investment_state = {
+#			OWNER = { unlock_decision_tooltip = { decision = USA_invest_in_state_dockyard show_effect_tooltip = yes }}
+#			set_state_flag = USA_congress_build_dockyard
+#			set_variable = { dockyard_goal = building_level@dockyard }
+#			add_to_variable = { dockyard_goal = 1 }
+#		}
+#	}
+#	option = {
+#		name = usa.64.b #refuse
+#		ai_chance = {
+#			factor = 100
+#		}
+#		event_target:USA_congress_investment_state = {
+#			OWNER = { clr_country_flag = USA_congress_investment }
+#		}
+#		clear_global_event_target = USA_congress_investment_state
+#	}
+#}

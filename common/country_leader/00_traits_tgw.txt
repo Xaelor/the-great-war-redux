@@ -1,10 +1,24 @@
+@chief_experience_gain_low = 0.20
+@chief_experience_gain_medium = 0.30
+@chief_experience_gain_high = 0.40
+
+@tier1_cp_cap_increase = 10
+@tier2_cp_cap_increase = 20
+@tier3_cp_cap_increase = 30
+
+@tier1_cp_cost = 0
+@tier2_cp_cost = 0
+@tier3_cp_cost = 0
+
+@air_chief_factor_1 = 0.10
+@air_chief_factor_2 = 0.13
+@air_chief_factor_3 = 0.16
+
+@navy_chief_factor_1 = 0.31
+@navy_chief_factor_2 = 0.57
+@navy_chief_factor_3 = 0.73
+
 leader_traits = {
-	anarchy = {
-		random = no
-		political_power_factor = -1
-		stability_factor = -0.5
-		surrender_limit = 0.10
-	}
 	proto_fascist = {
 		random = no
 		sprite = 13
@@ -123,6 +137,19 @@ leader_traits = {
 			value = -50
 		}
 	}
+	austrophile = {
+		random = no
+		ai_strategy = {
+			type = befriend
+			id = "AUS"
+			value = 20
+		}
+		ai_strategy = {
+			type = declare_war
+			id = "AUS"
+			value = -100
+		}
+	}
 	german_agent = {
 		random = no
 		ai_strategy = {
@@ -152,6 +179,7 @@ leader_traits = {
 	afrika_herzog = {
 		random = no
 		stability_factor = 0.05
+		political_power_factor = 0.1
 		targeted_modifier = {
 			tag = GER
 			cic_to_target_factor = 0.25
@@ -160,7 +188,29 @@ leader_traits = {
 			type = alliance
 			id = "GER"
 			value = 100
-		}	
+		}
+	}
+    GER_officer_of_the_federation_of_farmers = {
+		sprite = 13
+		random = no
+		production_speed_infrastructure_factor = 0.05
+		stability_factor = 0.05
+		monthly_population = 0.25
+	}
+	varied_shipbuilding = {
+		random = no
+		equipment_bonus = {
+			submarine = {
+				sub_visibility = -0.1 torpedo_attack = 0.1 build_cost_ic = -0.1
+			}
+			capital_ship = {
+				sub_detection = 0.05 hg_attack = 0.05 build_cost_ic = -0.1
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
 	}
 	TUR_british_investments_on_iraq = {
 		random = no
@@ -288,7 +338,6 @@ leader_traits = {
 		political_power_factor = 0.15
 		political_advisor_cost_factor = -0.15
 	}
-
 	abdulhamid_paranoid_sultan_lar = {
 		random = no
 		stability_factor = -0.15
@@ -299,7 +348,6 @@ leader_traits = {
 		operation_outcome = 0.1
 		drift_defence_factor = 0.1
 	}
-
 	abdulhamid_paranoid_sultan_no_lar = {
 		random = no
 		stability_factor = -0.15
@@ -308,7 +356,6 @@ leader_traits = {
 		drift_defence_factor = 0.1
 		foreign_subversive_activites = -0.3
 	}
-
 	abdulhamid_head_of_hamidiye = {
 		random = no
 		stability_factor = -0.05
@@ -316,7 +363,6 @@ leader_traits = {
 		resistance_damage_to_garrison = -0.15
 		resistance_decay = 0.1
 	}
-
 	abdulhamid_absolute_monarchy2 = {
 		random = no
 		political_power_factor = 0.25
@@ -331,14 +377,12 @@ leader_traits = {
 		navy_chief_cost_factor = -0.25
 		subjects_autonomy_gain = -0.1
 	}
-
 	TUR_seyhulislam = {
 		random = no
 		sprite = 13
 		compliance_growth = 0.3
 		monthly_population = 0.15
 	}
-
 	tgwr_caliph = {
 		random = no
 		weekly_manpower = 1000
@@ -353,7 +397,6 @@ leader_traits = {
 		conscription_factor = 0.1
 		mobilization_speed = 0.25
 	}
-
 	TUR_seyhulislam_leader = {
 		random = no
 		sprite = 13
@@ -361,27 +404,23 @@ leader_traits = {
 		monthly_population = 0.15
 		stability_factor = 0.05
 	}
-
 	abdulmejid_sultan_of_arts = {
 		random = no
 		stability_factor = 0.15
 		war_support_factor = -0.1
 	}
-
 	abdulmejid_funder_of_opera = {
 		random = no
 		stability_factor = 0.05
 		production_speed_industrial_complex_factor = 0.05
 		opinion_gain_monthly_factor = 0.15
 	}
-
 	abdulmejid_sponsor_of_art = {
 		random = no
 		political_power_cost = 0.05
 		stability_factor = 0.1
 		research_speed_factor = 0.1
 	}
-
 	abdulmejid_sultan_of_arts2 = {
 		random = no
 		political_power_factor = 0.1
@@ -418,7 +457,7 @@ leader_traits = {
 		industry_repair_factor = 0.15
 		trade_laws_cost_factor = -0.25
 		economy_cost_factor = -0.25
-	}	
+	}
 	yusuf_izzeddin_great_conqueror = {
 		random = no
 		army_org_factor = 0.05
@@ -448,22 +487,18 @@ leader_traits = {
 	grand_vizier_mehmed_said = {
 		random = no
 		sprite = 13
-
 		stability_factor = 0.05
 		political_advisor_cost_factor = -0.05
 		political_power_factor = 0.05
 	}
-
 	grand_vizier_said_halim = {
 		random = no
 		sprite = 13
-
 		political_power_cost = 0.05
 		stability_factor = 0.03
-		recruitable_population_factor = 0.03
+		conscription_factor = 0.03
 		fascism_acceptance = 5
 	}
-	
 	the_council_on_the_management_of_ottoman_debt = {
 		random = no
 	}
@@ -537,7 +572,7 @@ leader_traits = {
 	osman_fuad_1 = {
 		random = no
 		stability_factor = 0.05
-		offensive_war_stability_factor = 0.25
+		offensive_war_stability_factor = 0.1
 	}
 	osman_fuad_2 = {
 		random = no
@@ -546,7 +581,7 @@ leader_traits = {
 		stability_factor = 0.1
 		justify_war_goal_time = -0.25
 		subjects_autonomy_gain = -0.15
-		offensive_war_stability_factor = 0.25
+		offensive_war_stability_factor = 0.1
 		ai_strategy = {
 			type = antagonize
 			id = "GER"
@@ -628,6 +663,7 @@ leader_traits = {
 		political_power_gain = -0.05
 	}
 	islamist_leader = {
+		sprite = 12
 		ai_strategy = {
 			type = antagonize
 			id = "RUS"
@@ -742,7 +778,7 @@ leader_traits = {
 		random = no
 		stability_factor = 0.15
 		political_power_gain = 0.05
-		recruitable_population_factor = 0.1
+		conscription_factor = 0.1
 		political_advisor_cost_factor = -0.15
 		compliance_growth = 0.05
 		resistance_growth = -0.1
@@ -762,7 +798,7 @@ leader_traits = {
 		stability_factor = -0.1
 		war_support_factor = 0.05
 		fascism_acceptance = 50
-		recruitable_population_factor = 0.05
+		conscription_factor = 0.05
 		mobilization_speed = 0.1
 	}
 	TUR_leftist_parliament = {
@@ -780,7 +816,7 @@ leader_traits = {
 		political_power_cost = 0.05
 		stability_factor = 0.1
 		compliance_growth = 0.01
-		recruitable_population_factor = 0.05
+		conscription_factor = 0.05
 	}
 	TUR_positivist = {
 		random = no
@@ -807,7 +843,6 @@ leader_traits = {
 		# Boosts Communism
 		sprite = 13
 		communism_drift = 0.03
-
 		ai_will_do = {
 			factor = 0
 		}
@@ -817,7 +852,6 @@ leader_traits = {
 		# Boosts Communism
 		sprite = 13
 		democratic_drift = 0.03
-
 		ai_will_do = {
 			factor = 0
 		}
@@ -874,8 +908,7 @@ leader_traits = {
 		political_power_factor = -0.05
 		stability_factor = 0.15
 		war_support_factor = 0.05
-		offensive_war_stability_factor = 0.15
-		defensive_war_stability_factor = 0.25
+		war_stability_factor = 0.1
 	}
 	TUR_liberal_reformer = {
 		random = no
@@ -915,13 +948,12 @@ leader_traits = {
 		random = no
 		sprite = 13
 		production_factory_max_efficiency_factor = 0.1
-		trade_opinion_factor = 0.10
+		trade_opinion_factor = 0.1
 		political_power_cost = 0.01
 	}
 	mehmet_sadik_trait = {
 		random = no
 		sprite = 13
-		
 		stability_factor = 0.05
 		consumer_goods_factor = -0.08
 		industrial_capacity_factory = 0.1
@@ -954,6 +986,7 @@ leader_traits = {
 	}
 	grand_vizier = {
 		random = no
+		sprite = 13
 		stability_factor = 0.05
 		political_advisor_cost_factor = -0.05
 		political_power_factor = 0.05
@@ -1096,6 +1129,41 @@ leader_traits = {
 		political_power_factor = 0.05
 		stability_factor = 0.05
 	}
+	democratic_journalist = {
+		random = no
+		sprite = 13
+		democratic_drift = 0.05
+	}
+	autonomist = {
+		random = no
+		sprite = 13
+		autonomy_gain = 0.2
+	}
+	minister_of_feather = {
+		random = no
+		sprite = 13
+		stability_weekly = 0.001
+	}
+	#Cheikh El Médina
+	cheikh_el_medina = {
+		random = no
+		sprite = 13
+		political_power_factor = 0.1
+		stability_factor = -0.05
+	}
+	destour_support = {
+		random = no
+		sprite = 13
+		war_support_factor = 0.05
+		political_power_factor = 0.1
+	}
+	panarab_nationalist = {
+		random = no
+		sprite = 13
+		autonomy_gain = 0.5
+		improve_relations_maintain_cost_factor = -0.33
+		stability_factor = 0.1
+	}
 	nationalist_poet_arab = {
 		sprite = 13
 		random = no
@@ -1128,7 +1196,6 @@ leader_traits = {
 	TUR_ruthless_revanchist = {
 		random = no
 		sprite = 13
-
 		political_power_gain = 0.05
 		subversive_activites_upkeep = -0.15
 		foreign_subversive_activites = -0.05
@@ -1136,7 +1203,6 @@ leader_traits = {
 	}
 	TUR_ruthless_revanchist_leader = {
 		random = no
-
 		political_power_gain = 0.1
 		subversive_activites_upkeep = -0.3
 		foreign_subversive_activites = -0.08
@@ -1152,13 +1218,11 @@ leader_traits = {
 	}
 	TUR_civilian_front = {
 		random = no
-
-	    power_balance_weekly = 0.003
+		power_balance_weekly = 0.003
 	}
 	TUR_butcher = {
 		random = no
 		sprite = 13
-
 		resistance_damage_to_garrison = -0.25
 		resistance_decay = 0.15
 		resistance_garrison_penetration_chance = -0.05
@@ -1166,7 +1230,6 @@ leader_traits = {
 	TUR_butcher_2 = {
 		random = no
 		sprite = 13
-
 		resistance_damage_to_garrison = -0.25
 		resistance_decay = 0.3
 		resistance_garrison_penetration_chance = -0.15
@@ -1225,19 +1288,21 @@ leader_traits = {
 	ittihadist_ideologue = {
 		random = no
 		sprite = 13
-
 		political_power_factor = 0.1
 		neutrality_acceptance = 15
 		fascism_acceptance = 15
 	}
 	TUR_monopoly = {
 		random = no
-		
 		ai_will_do = {
 			factor = 1
 		}
-	}	
+	}
 	## BRITAIN
+	eng_bertie = {
+		random = no
+		drift_defence_factor = 0.5
+	}
 	lord_protector = {
 		random = no
 		resistance_damage_to_garrison = -0.15
@@ -1281,18 +1346,21 @@ leader_traits = {
 		army_core_attack_factor = -0.01
 	}
 	eng_revolutionary_icon = {
+		sprite = 12
 		random = no
 		stability_factor = 0.1
 		fascism_drift = 0.1
 		communism_drift = 0.1
 	}
 	eng_revolutionary_icon_2 = {
+		sprite = 12
 		random = no
 		stability_factor = 0.1
 		political_power_factor = 0.15
 		communism_drift = 0.15
 	}
 	eng_revolutionary_icon_3 = {
+		sprite = 12
 		random = no
 		stability_factor = 0.15
 		political_power_factor = 0.05
@@ -1331,6 +1399,19 @@ leader_traits = {
 		fascism_drift = 0.05
 		communism_drift = 0.01
 		democratic_drift = -0.075
+		fascism_acceptance = -100
+		democratic_acceptance = -100
+		neutrality_acceptance = -100
+		communism_acceptance = -100
+		political_advisor_cost_factor = 10
+		trade_laws_cost_factor = 10
+		mobilization_laws_cost_factor = 10
+		economy_cost_factor = 10
+		high_command_cost_factor = 10
+		air_chief_cost_factor = 10
+		army_chief_cost_factor = 10
+		navy_chief_cost_factor = 10
+		theorist_cost_factor = 10
 	}
 	eng_asquith_trait = {
 		random = no
@@ -1374,7 +1455,7 @@ leader_traits = {
 		sprite = 13
 		political_power_factor = 0.05
 		war_support_factor = 0.05
-		industrial_capacity_dockyard = 0.10
+		industrial_capacity_dockyard = 0.1
 	}
 	ENG_father_of_republic_pease = {
 		random = no
@@ -1506,7 +1587,18 @@ leader_traits = {
 			}
 		}
 	}
-	SRW_white_rajah = {
+	laborite_reformer = {
+		random = no
+		sprite = 13
+
+		communism_drift = 0.05
+		stability_factor = 0.05
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	SAR_white_rajah = {
 		random = no
 		stability_factor = 0.05
 		political_power_factor = 0.05
@@ -1587,9 +1679,11 @@ leader_traits = {
 	}
 	constable_of_the_republic = {
 		random = no
+		sprite = 13
 		political_advisor_cost_factor = -0.25
 		political_power_factor = 0.1
 		drift_defence_factor = 0.25
+		stability_factor = -0.05
 	}
 	#ECUADOR
 	old_fighter = {
@@ -1683,11 +1777,12 @@ leader_traits = {
 	}
 	controversy_over_legitimacy = {
 		random = no
-		stability_factor = -0.10
-		war_support_factor = -0.10
+		stability_factor = -0.1
+		war_support_factor = -0.1
 		political_power_factor = -0.15
 	}
-	political_publicist = { #Ustryalov 
+	political_publicist = {
+		#Ustryalov 
 		random = no
 		sprite = 13
 		drift_defence_factor = 0.5
@@ -1708,32 +1803,65 @@ leader_traits = {
 		production_factory_start_efficiency_factor = 0.05
 		stability_factor = -0.05
 	}
+	black_devil_of_the_revolution = {
+		random = no
+		resistance_damage_to_garrison = -0.3
+		foreign_subversive_activites = -0.3
+		political_advisor_cost_factor = -0.15
+		party_popularity_stability_factor = 0.1
+		political_power_gain = 0.1
+		stability_factor = -0.1
+		improve_relations_maintain_cost_factor = 0.2
+		drift_defence_factor = 0.2
+		fascism_acceptance = -50
+		democratic_acceptance = -50
+		neutrality_acceptance = -50
+	}
+	iron_felix = {
+		random = no
+		sprite = 12
+		resistance_damage_to_garrison = -0.3
+		foreign_subversive_activites = -0.4
+		non_core_manpower = 0.04
+	}
+	comrade_artyom = {
+		random = no
+		sprite = 12
+		war_support_factor = 0.1
+		drift_defence_factor = 0.1
+		resistance_damage_to_garrison_on_our_occupied_states = 0.2
+		army_defence_against_major_factor = 0.2
+		surrender_limit = 0.05
+	}
 	dealbreaker = {
 		random = no
 		# to do
 	}
-
-	
 	#AUSTRIA
 	oldschool_kaiser = {
 		random = no
 		stability_factor = 0.1
-		political_power_factor = -0.1
 		drift_defence_factor = 0.5
 		opinion_gain_monthly_same_ideology_factor = 0.5
 	}
-	newschool_kaiser = {
+	blessed = {
 		random = no
-		stability_factor = -0.1
-		political_power_factor = 0.1
+		stability_factor = 0.05
+		war_stability_factor = 0.05
+		war_support_factor = -0.1
 		democratic_drift = 0.01
 	}
 	autro_hungarian_public_debt_administration = {
 		random = no
-
 		min_export = 0.15
 		political_power_gain = -0.05
-	}	
+	}
+	TUN_debt_council = {
+		random = no
+		min_export = 0.15
+		consumer_goods_factor = 0.05
+		political_power_gain = -0.05
+	}
 	#ETHIOPIA
 	lion_of_judah = {
 		random = no
@@ -1758,9 +1886,41 @@ leader_traits = {
 	dud_murra = {
 		random = no
 		war_support_factor = 0.1
-		army_core_attack_factor = 0.05
+		army_core_attack_factor = 0.15
+		army_core_defence_factor = 0.15
+	}
+	# Dervish
+	SOM_mad_mullah = {
+		random = no
+		army_speed_factor = 0.05
+		army_attack_against_major_factor = 0.1
+		opinion_gain_monthly_factor = -0.5
+	}
+	SOM_sayyid = {
+		random = no
+		army_morale_factor = 0.1
+		ai_focus_defense_factor = 0.5
+		high_command_cost_factor = -0.3
+		army_chief_cost_factor = -0.3
 	}
 	#Italy
+	economist2 = {
+		sprite = 10
+		random = yes
+		production_factory_max_efficiency_factor = 0.1
+		consumer_goods_factor = -0.05
+
+		ai_will_do = {
+			factor = 2
+		}
+	}
+	ITA_republican = { 
+		random = no
+		sprite = 10 
+		democratic_drift = 0.01
+		fascism_drift = -0.06
+		war_support_factor = 0.1
+	}
 	little_saber = {
 		random = no
 		war_support_factor = 0.05
@@ -1781,10 +1941,26 @@ leader_traits = {
 	}
 	two_faced = {
 		random = no
-		political_power_factor = 0.1
+		political_power_factor = 0.05
 		political_advisor_cost_factor = -0.1
 		stability_factor = -0.02
 		drift_defence_factor = -0.2
+	}
+	political_genius = {
+		random = no
+		political_power_factor = 0.25
+		stability_factor = -0.02
+		drift_defence_factor = -0.2
+		political_advisor_cost_factor = -0.3
+	}
+	strong_leader = {
+		random = no
+		political_power_factor = 0.1
+		political_advisor_cost_factor = -0.3
+	}
+	ITA_kings_decrees = {
+		random = no
+		political_power_factor = 0.15
 	}
 	undistinguished_suit = {
 		random = yes
@@ -1808,8 +1984,8 @@ leader_traits = {
 		random = no
 		war_support_factor = 0.1
 		mobilization_laws_cost_factor = -0.1
-		justify_war_goal_time = -0.1
-		diplomatic_pressure_mission_factor = 0.1
+		fascism_drift = 0.03
+		consumer_goods_factor = -0.15
 		ai_will_do = {
 			factor = 1
 		}
@@ -1840,6 +2016,110 @@ leader_traits = {
 		stability_factor = -0.05
 		consumer_goods_factor = 0.06
 	}
+	ITA_regency_council = {
+		random = no
+		political_power_factor = -0.25
+	}
+	ITA_naval_support_designer = {
+		random = no
+	}
+	ITA_minister_grace_justice = {
+		random = no
+		sprite = 13
+		political_power_factor = 0.05
+		stability_factor = 0.05
+	}
+	ITA_public_works_minister = {
+		random = no
+		sprite = 13
+		stability_factor = 0.05
+		production_speed_buildings_factor = 0.1
+	}
+	ITA_minister_of_agriculture_industry = {
+		random = no
+		sprite = 13
+		industrial_capacity_factory = 0.05
+		global_building_slots_factor = 0.1
+		consumer_goods_factor = -0.05
+	}
+	ITA_colonial_governor = {
+		random = no
+		sprite = 13
+		compliance_growth = 0.15
+		resistance_growth = -0.1
+	}
+	anti_war_socialist = {
+		random = no
+		sprite = 13
+		war_support_factor = -0.05
+		stability_factor = 0.05
+		communism_drift = 0.02
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	ITA_war_socialist = {
+		random = no
+		sprite = 13
+		industrial_capacity_factory = 0.05
+		war_support_factor = 0.05
+	}
+	ITA_nationalist_journalist = {
+		random = no
+		sprite = 13
+		fascism_drift = 0.01
+		war_support_factor = 0.1
+	}
+	ITA_soclialist_journalist_law = {
+		random = no
+		sprite = 13
+		communism_drift = 0.01
+		stability_factor = 0.05
+	}
+	ITA_minister_of_finance = {
+		random = no
+		sprite = 10
+		consumer_goods_factor = -0.1
+		political_power_factor = 0.05
+		industrial_capacity_factory = 0.05
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	ITA_banker = {
+		random = no
+		sprite = 10
+		industrial_capacity_factory = 0.1
+		consumer_goods_factor = -0.05
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	ITA_socialist_explorer = {
+		random = no
+		sprite = 13
+		war_support_factor = 0.05
+		communism_acceptance = 50
+		communism_drift = 0.005
+	}
+	ITA_ministry_of_war = {
+		random = no
+		sprite = 10
+		war_support_factor = 0.1
+		political_power_factor = 0.1
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	communist_theorist_2 = {
+		name = communist_theorist
+		random = no
+		sprite = 13
+		drift_defence_factor = 0.1
+		political_power_factor = 0.1
+		communism_acceptance = 25
+		communism_drift = 0.01
+	}
 	nationalist_syndicalist = {
 		random = no
 		sprite = 10
@@ -1847,6 +2127,34 @@ leader_traits = {
 		production_factory_max_efficiency_factor = 0.05
 		line_change_production_efficiency_factor = 0.05
 		production_factory_efficiency_gain_factor = -0.05
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	industrial_magnate = {
+		random = yes
+		sprite = 10
+		production_speed_industrial_complex_factor = 0.15
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	propagandist_journalist = {
+		random = yes
+		sprite = 10
+		party_popularity_stability_factor = 0.3
+		stability_factor = 0.1
+		political_power_gain = 0.1
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	propagandist_journalist2 = {
+		random = yes
+		sprite = 10
+		communism_drift = 0.005
+		stability_factor = 0.05
+		political_power_gain = 0.15
 		ai_will_do = {
 			factor = 1
 		}
@@ -1892,7 +2200,7 @@ leader_traits = {
 	}
 	#MEXICO
 	democratic_fighter = {
-		random= no
+		random = no
 		stability_factor = 0.05
 		political_power_gain = 0.15
 	}
@@ -1934,18 +2242,16 @@ leader_traits = {
 		random = no
 		political_advisor_cost_factor = 0.25
 		political_power_gain = -0.1
-
 	}
 	counter_revolutionary = {
-		random = no 
+		random = no
 		political_power_gain = -0.1
 		stability_factor = -0.1
 	}
 	#Mexican Advisor Traits
 	shadow_of_diaz = {
-		random = no 
+		random = no
 		sprite = 13
-		
 		political_power_gain = 0.15
 		stability_factor = -0.1
 	}
@@ -1958,14 +2264,16 @@ leader_traits = {
 	}
 	corrupted_minister = {
 		political_power_factor = -0.1
-		consumer_goods_factor = 0.10
+		consumer_goods_factor = 0.1
 	}
 	retired_minister_of_war = {
+		sprite = 13
 		random = no
 		war_support_factor = 0.1
 		high_command_cost_factor = -0.5
 	}
 	militarist_socialist = {
+		sprite = 13
 		random = no
 		war_support_factor = 0.05
 		army_core_attack_factor = 0.05
@@ -1981,6 +2289,11 @@ leader_traits = {
 		random = no
 		army_core_attack_factor = 0.15
 		army_defence_factor = -0.15
+	}
+	BEL_liberal_governor = {
+		random = no
+		subjects_autonomy_gain = -0.1
+		stability_factor = 0.05
 	}
 	#SWEDEN
 	SWE_liberal_hegemon = {
@@ -2018,7 +2331,7 @@ leader_traits = {
 	influencal_president = {
 		sprite = 13
 		random = no
-		political_power_gain = 0.10
+		political_power_gain = 0.1
 		stability_factor = 0.05
 	}
 	le_pere_fallieres = {
@@ -2027,7 +2340,7 @@ leader_traits = {
 	}
 	indisputable_ruler = {
 		random = yes
-		political_power_gain = 0.10
+		political_power_gain = 0.1
 	}
 	revolutionary_syndicalist = {
 		random = no
@@ -2037,31 +2350,31 @@ leader_traits = {
 		production_factory_max_efficiency_factor = 0.05
 		line_change_production_efficiency_factor = 0.05
 	}
-	defender_of_violence = { #Georges Sorel
+	defender_of_violence = {
+		#Georges Sorel
 		random = no
 		sprite = 13
-		
 		war_support_factor = 0.05
 		foreign_subversive_activites = -0.5
 		drift_defence_factor = 0.5
-		
 		ai_will_do = {
 			factor = 1
 		}
 	}
 	trench_warfare_expert = {
 		sprite = 14
-		land_doctrine_cost_factor = -0.05
-		max_dig_in_factor = 0.1
+		land_doctrine_cost_factor = -0.1
+		bite_and_hold_mastery_gain_factor = 0.1
+		#max_dig_in_factor = 0.1
 		ai_will_do = {
-			factor = 500
+			factor = 1
 		}
 	}
 	great_military_theorist = {
 		sprite = 14
 		land_doctrine_cost_factor = -0.15
 		ai_will_do = {
-			factor = 500
+			factor = 1
 		}
 	}
 	next_generation_theorist = {
@@ -2071,7 +2384,7 @@ leader_traits = {
 		experience_gain_army_factor = 0.1
 		experience_gain_navy = 0.1
 		ai_will_do = {
-			factor = 500
+			factor = 1
 		}
 	}
 	fra_homme_de_la_defaite = {
@@ -2093,7 +2406,83 @@ leader_traits = {
 	}
 	# Germany
 	GER_schliffen = {
+		random = no
 		ai_focus_aggressive_factor = 0.75
+	}
+	naval_enthusiast = {
+		random = no
+		industrial_capacity_dockyard = 0.05
+		naval_doctrine_cost_factor = -0.05
+		consumer_goods_factor = 0.05
+		production_speed_dockyard_factor = 0.1
+	}
+	assertive_weltpolitik = {
+		random = no
+		stability_factor = -0.05
+		political_power_gain = -0.05
+		war_support_factor = 0.05
+		improve_relations_maintain_cost_factor = 0.20
+		trade_opinion_factor = -0.10
+		required_garrison_factor = 0.05
+	}
+	crown_authority = {
+		random = no
+		stability_factor = -0.05
+		high_command_cost_factor = -0.15
+		army_chief_cost_factor = -0.15
+		navy_chief_cost_factor = -0.15
+		air_chief_cost_factor = -0.15
+		political_advisor_cost_factor = -0.10
+	}
+	GER_scheming_intrigant = {
+		sprite = 12
+		random = no
+		political_power_factor = -0.1
+		high_command_cost_factor = -0.15
+		stability_factor = -0.05
+		command_power_gain = 0.1
+		weekly_casualties_war_support = 0.001
+	}
+	GER_silent_dictator = {
+		sprite = 12
+		random = no
+		political_power_factor = 0.2
+		high_command_cost_factor = -0.15
+		stability_factor = -0.05
+		fascism_drift = 0.01
+		command_power_gain = 0.1
+		weekly_casualties_war_support = 0.001
+	}
+	GER_militarist_colonialist = {
+		sprite = 13
+		random = no
+		non_core_manpower = 0.05
+		resistance_decay = 0.1
+		compliance_growth = -0.05
+		resistance_growth = -0.1
+	}
+	GER_hamlet = {
+		sprite = 13
+		random = no
+		political_power_factor = 0.1
+		drift_defence_factor = -0.5
+		party_popularity_stability_factor = 0.5
+	}
+	GER_military_man = {
+		sprite = 5
+		random = no
+		war_stability_factor = 0.1
+		war_support_factor = 0.05
+		political_advisor_cost_factor = 0.25
+		power_balance_daily = 0.001
+	}
+	GER_liberal_prince = {
+		sprite = 13
+		random = no
+		stability_factor = 0.05
+		political_power_factor = 0.1
+		democratic_drift = 0.05
+		power_balance_daily = -0.005
 	}
 	# Ukraine
 	knyaz_vasyl = {
@@ -2150,7 +2539,6 @@ leader_traits = {
 		drift_defence_factor = 0.2
 		neutrality_drift = 0.002
 		consumer_goods_factor = -0.08
-		
 	}
 	great_compromiser = {
 		random = no
@@ -2174,6 +2562,11 @@ leader_traits = {
 		army_chief_cost_factor = -0.15
 		navy_chief_cost_factor = -0.15
 	}
+	SER_lawyer = {
+		random = no
+		sprite = 13
+		political_power_gain = 0.13
+	}
 	teacher_politician = {
 		random = no
 		democratic_drift = 0.02
@@ -2184,6 +2577,12 @@ leader_traits = {
 	political_swimmer = {
 		political_power_factor = 0.05
 		stability_factor = -0.02
+	}
+	insane_prince = {
+		stability_factor = -0.1
+		war_support_factor = 0.075
+		political_power_factor = 0.025
+		consumer_goods_factor = 0.025
 	}
 	insane_king = {
 		stability_factor = -0.2
@@ -2199,8 +2598,8 @@ leader_traits = {
 	SER_mother_serbia = {
 		random = no
 		sprite = 13
-		army_core_defence_factor = 0.10
-		army_core_attack_factor = 0.10
+		army_core_defence_factor = 0.1
+		army_core_attack_factor = 0.1
 	}
 	SER_popular_queen = {
 		stability_factor = 0.15
@@ -2208,7 +2607,7 @@ leader_traits = {
 	SER_popular_symbol = {
 		random = no
 		sprite = 13
-		political_power_factor = 0.20
+		political_power_factor = 0.2
 	}
 	SER_anti_fascist_figure = {
 		random = no
@@ -2219,13 +2618,13 @@ leader_traits = {
 	SER_strongman = {
 		random = no
 		sprite = 13
-		stability_factor = 0.10
-		war_stability_factor = -0.25
+		stability_factor = 0.1
+		war_stability_factor = -0.05
 	}
 	SER_socialist_resistance = {
 		random = no
 		sprite = 13
-		stability_factor = -0.10
+		stability_factor = -0.1
 	}
 	###
 	armoured_warfare_theorist = {
@@ -2236,13 +2635,36 @@ leader_traits = {
 				soft_attack = 0.05
 			}
 		}
-		cat_mobile_warfare_cost_factor = -0.15
+		new_mobile_warfare_mastery_gain_factor = 0.05
 		land_doctrine_cost_factor = -0.1
-		
 		ai_will_do = {
 			factor = 500
 		}
 	}
+	cult_of_offensive_expert = {
+		sprite = 14
+		industrial_warfare_mastery_gain_factor = 0.15
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	deep_defence_expert = {
+		sprite = 14
+		defense_in_depth_mastery_gain_factor = 0.1
+		land_doctrine_cost_factor = -0.1
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	hurricane_bombardment_expert = {
+		sprite = 14
+		hurricane_bombardment_mastery_gain_factor = 0.1
+		land_doctrine_cost_factor = -0.1
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
 	liberal_economist = {
 		sprite = 10
 		random = no
@@ -2283,7 +2705,7 @@ leader_traits = {
 		random = no
 		min_export = 0.3
 		opinion_gain_monthly_factor = -0.05
-		consumer_goods_factor = 0.20
+		consumer_goods_factor = 0.2
 		political_power_gain = -0.15
 		ai_will_do = {
 			factor = 1
@@ -2293,7 +2715,7 @@ leader_traits = {
 		random = no
 		min_export = 0.3
 		opinion_gain_monthly_factor = -0.05
-		consumer_goods_factor = 0.20
+		consumer_goods_factor = 0.2
 		political_power_gain = 0.15
 		ai_will_do = {
 			factor = 1
@@ -2303,7 +2725,7 @@ leader_traits = {
 		random = no
 		extra_trade_to_overlord_factor = 0.25
 		min_export = 0.2
-		consumer_goods_factor = 0.10
+		consumer_goods_factor = 0.1
 		political_power_gain = -0.3
 		ai_will_do = {
 			factor = 1
@@ -2334,7 +2756,6 @@ leader_traits = {
 		consumer_goods_factor = -0.05
 		neutrality_drift = 0.05
 		communism_drift = 0.05
-
 		ai_will_do = {
 			factor = 2
 		}
@@ -2353,11 +2774,9 @@ leader_traits = {
 	minister_of_constitutional_law = {
 		random = no
 		sprite = 13
-		
 		political_power_factor = 0.07
 		democratic_drift = 0.01
 		fascism_drift = -0.02
-
 		ai_will_do = {
 			factor = 0
 		}
@@ -2367,7 +2786,6 @@ leader_traits = {
 		sprite = 13
 		political_power_factor = 0.02
 		democratic_drift = -0.03
-		
 		ai_will_do = {
 			factor = 10
 		}
@@ -2381,8 +2799,6 @@ leader_traits = {
 		random = no
 		sprite = 13
 		political_power_factor = 0.05
-		
-
 		ai_will_do = {
 			factor = 1
 		}
@@ -2414,7 +2830,6 @@ leader_traits = {
 		fascism_acceptance = 50
 		democratic_acceptance = 50
 		neutrality_acceptance = 50
-		
 		political_power_factor = -0.15
 	}
 	pampered_upbringing = {
@@ -2434,7 +2849,7 @@ leader_traits = {
 	}
 	liberal_emperor2 = {
 		random = no
-		political_power_cost = 0.10
+		political_power_cost = 0.1
 		stability_factor = 0.15
 		consumer_goods_factor = 0.05
 	}
@@ -2470,34 +2885,21 @@ leader_traits = {
 		stability_factor = 0.15
 		political_power_gain = 0.1
 	}
+	second_pillar_of_the_revolution  = {
+		sprite = 12
+		random = no
+		drift_defence_factor = 0.5
+		party_popularity_stability_factor = 0.25
+	}
 	emperor_of_unity_proclamation = {
 		random = no
 		stability_factor = 0.15
 	}
-	chinese_federalist = {
-		random = no
-		stability_factor = 0.05
-		democratic_acceptance = 10
-	}
-	chinese_nationalist = {
-		random = no
-		political_power_gain = 0.05
-		democratic_acceptance = 10
-	}
-	yuan_shikai_loyalist = {
-		random = no
-		war_support_factor = 0.05
-	}
-	chinese_royalist = {
-		random = no
-		drift_defence_factor = 0.05
-		neutrality_acceptance = 10
-	}
 	tyrant = {
 		random = no
-		political_power_factor = -0.10
-		stability_factor = -0.10
-		war_support_factor = -0.10
+		political_power_factor = -0.1
+		stability_factor = -0.1
+		war_support_factor = -0.1
 	}
 	civil_administration = {
 		random = no
@@ -2506,16 +2908,16 @@ leader_traits = {
 	}
 	corrupted_bureaucrat = {
 		political_power_factor = -0.1
-		consumer_goods_factor = 0.10
+		consumer_goods_factor = 0.1
 	}
 	CHI_trait_dictator = {
-		political_power_factor = 0.10
+		political_power_factor = 0.1
 		stability_factor = 0.05
 	}
 	CHI_trait_imperial_prime_minister = {
 		random = no
 		political_power_gain = 0.15
-		political_advisor_cost_factor = -0.20
+		political_advisor_cost_factor = -0.2
 		neutrality_acceptance = 50
 		democratic_acceptance = 10
 	}
@@ -2558,9 +2960,19 @@ leader_traits = {
 		democratic_acceptance = 20
 		communism_acceptance = 20
 	}
+	CHI_trait_god_of_wealth = {
+		sprite = 10
+		random = no
+		conversion_cost_civ_to_mil_factor = -0.1
+		conversion_cost_mil_to_civ_factor = -0.1
+		production_speed_industrial_complex_factor = 0.15
+		production_speed_infrastructure_factor = 0.15
+		production_speed_rail_way_factor = 0.15
+		production_speed_synthetic_refinery_factor = 0.1
+	}
 	king_shanxi = {
 		random = no
-		consumer_goods_factor = -0.30
+		consumer_goods_factor = -0.3
 	}
 	japanophobia = {
 		random = no
@@ -2580,53 +2992,700 @@ leader_traits = {
 			value = -100
 		}
 	}
-	no_resistance = {
-		random = no
-		targeted_modifier = {
-			tag = JAP
-			army_attack_factor = -0.30
-			army_defence_factor = -0.30
-		}
-		targeted_modifier = {
-			tag = MAN
-			army_attack_factor = -0.30
-			army_defence_factor = -0.30
-		}
-	}
 	hate_opium = {
 		random = no
 		political_power_factor = 0.05
+	}
+	hairpin_general = {
+		# Meng Enyuan
+		random = no
+		army_org_regain = 0.05
+		political_power_factor = -0.05
+		drift_defence_factor = 0.15
+		neutrality_acceptance = 25
+	}
+	pacificer_of_four_gates = {
+		# Chen Shufan
+		random = no
+		political_power_factor = 0.15
+		stability_factor = -0.05
+		conscription_factor = -0.05
+		resistance_damage_to_garrison = -0.2
+		foreign_subversive_activites = -0.3
+	}
+	green_forest_warlord = {
+		# Liu Zhenhua
+		random = no
+		army_org_regain = 0.05
+		conscription_factor = 0.05
+		political_power_factor = -0.1
+		stability_factor = -0.05
+	}
+	modern_sage = {
+		# Yu Youren
+		random = no
+		research_speed_factor = 0.02
+		party_popularity_stability_factor = 0.15
+		democratic_acceptance = 30
 	}
 	christian_general = {
 		random = no
 		party_popularity_stability_factor = 0.15
 	}
-	schemer_yuan = { #yuan shikai
+	young_marshal = {
+		# Zhang Xueliang
 		random = no
-		political_power_factor = -0.30
-		fascism_drift = 0.05
+		army_attack_factor = 0.05
+		army_defence_factor = 0.05
+		stability_factor = 0.05
+		neutrality_acceptance = 25
+	}
+	jade_marshal = {
+		# Wu Peifu
+		random = no
+		army_attack_factor = 0.1
+		army_defence_factor = 0.05
+		political_power_factor = -0.1
+		drift_defence_factor = 0.05
+		war_support_factor = 0.1
+		neutrality_acceptance = 25
+		ai_strategy = {
+			type = befriend
+			id = JAP
+			value = -100
+		}
+		ai_strategy = {
+			type = antagonize
+			id = "JAP"
+			value = 100
+		}
+		ai_strategy = {
+			type = alliance
+			id = JAP
+			value = -100
+		}
+	}
+	pillar_south = {
+		# Tang Jiyao
+		random = no
+		research_speed_factor = 0.05
+		war_support_factor = 0.1
+		democratic_acceptance = 50
+	}
+	king_southwest = {
+		# Ambitous Tang Jiyao 
+		random = no
+		army_attack_factor = 0.1
+		research_speed_factor = 0.05
+		war_support_factor = 0.15
+	}
+	master_east_continent = {
+		# Tang self proclaimed
+		random = no
+		army_attack_factor = 0.1
+		political_advisor_cost_factor = -0.15
+		army_chief_cost_factor = -0.15
+		war_support_factor = 0.1
+		neutrality_acceptance = -25
+		democratic_acceptance = -25
+		fascism_acceptance = -25
+		communism_acceptance = -25
+	}
+	changshan_general = {
+		# Xiong Kewu
+		random = no
+		army_morale_factor = 0.05
+		army_speed_factor = 0.05
+		democratic_acceptance = 50
+	}
+	crystal_fox = {
+		# Xu Shichang
+		random = no
+		political_advisor_cost_factor = -0.15
+		army_chief_cost_factor = -0.15
+		stability_factor = 0.1
+		war_support_factor = -0.1
+	}
+	ningxia_king = {
+		# Ma Hongkui
+		random = no
+		consumer_goods_factor = 0.1
+		army_defence_factor = 0.05
+		political_power_factor = 0.05
+	}
+	old_general = {
+		# Yang Zexin
+		random = no
+		political_power_factor = 0.05
+		stability_factor = 0.1
+		neutrality_acceptance = 25
+	}
+	dragon_among_men = {
+		# Xu Shuzheng
+		random = no
+		army_attack_factor = 0.1
+		army_defence_factor = 0.1
+		stability_factor = -0.1
+		political_power_factor = -0.15
+		war_support_factor = 0.1
+		ai_focus_aggressive_factor = 0.5
+	}
+	titai_of_kashgar = {
+		# Ma Fuxing
+		random = no
+		political_power_factor = 0.1
+		consumer_goods_factor = 0.1
+		war_support_factor = -0.1
+		stability_factor = -0.1
+	}
+	scholar_general = {
+		# Ma Fuxiang
+		random = no
+		research_speed_factor = 0.05
+		political_power_factor = 0.05
+		stability_factor = 0.1
+	}
+	queue_general = {
+		# Zhang Xun
+		random = no
+		drift_defence_factor = 0.15
+		neutrality_acceptance = 25
+		stability_factor = 0.1
+	}
+	xinjiang_king = {
+		# Sheng Shicai
+		random = no
+		army_defence_factor = 0.05
+		political_power_factor = 0.05
+		drift_defence_factor = 0.05
+		neutrality_acceptance = 25
+		communism_acceptance = 25
+	}
+	smiling_tiger = {
+		# Sun Chuanfang
+		random = no
+		political_power_factor = 0.1
+		drift_defence_factor = 0.15
+		ai_focus_aggressive_factor = 0.5
+		improve_relations_maintain_cost_factor = 0.2
+	}
+	dogmeat_general = {
+		# Zhang Zongchang
+		random = no
+		army_attack_factor = 0.1
+		army_defence_factor = -0.05
+		consumer_goods_factor = 0.15
+		political_power_factor = -0.2
+		stability_factor = -0.1
+		war_support_factor = -0.1
+		ai_focus_aggressive_factor = 0.5
+		justify_war_goal_time = -0.2
+	}
+	rightesousness_of_heaven = {
+		# Song Zheyuan
+		random = no
+		army_core_defence_factor = 0.1
+		stability_factor = 0.1
+		war_support_factor = 0.1
+		ai_strategy = {
+			type = befriend
+			id = JAP
+			value = -100
+		}
+		ai_strategy = {
+			type = antagonize
+			id = JAP
+			value = 100
+		}
+		ai_strategy = {
+			type = alliance
+			id = JAP
+			value = -100
+		}
+	}
+	tyrant_xinjiang = {
+		# Jin Shuren
+		random = no
+		political_power_factor = 0.15
+		war_support_factor = -0.1
+		stability_factor = -0.1
+	}
+	qinghai_king = {
+		# Ma Bufang
+		random = no
+		army_core_attack_factor = 0.05
+		political_power_factor = 0.05
+		war_support_factor = 0.1
+	}
+	butcher_hunan = {
+		# Zhang Jingyao
+		random = no
+		army_org_factor = -0.1
+		army_morale_factor = -0.2
+		political_power_factor = -0.15
+		war_support_factor = -0.1
+		stability_factor = -0.1
+	}
+	ma_kind_man = {
+		# Ma Hongbin
+		random = no
+		stability_factor = 0.1
+	}
+	baoding_king = {
+		# Cao Kun
+		random = no
+		political_power_factor = 0.05
+		army_chief_cost_factor = -0.15
+	}
+	righteous_theif = {
+		# Lu Rongting
+		random = no
+		army_org_regain = 0.05
+		army_morale_factor = 0.05
+		war_support_factor = 0.1
+	}
+	tiger_of_mukden = { # Zhang Zuolin
+		random = no
+		drift_defence_factor = 0.10
+		stability_factor = 0.10
+	}
+	# Qing Rework Traits
+	beiyang_connections = { 
+		random = no
+		army_chief_cost_factor = -0.15
+	}
+	militarist_connections = { 
+		random = no
+		army_chief_cost_factor = -0.10
+	}
+	literai_scholar = { 
+		random = no
+		political_power_factor = 0.10
+		stability_factor = 0.10
+	}
+	empress_dowager = { 
+		random = no
+		stability_factor = 0.10
+	}
+	inept_manipulator = { 
+		random = no
+		political_power_factor = -0.10
+	}
+	old_warhawk = { 
+		random = no
+		war_support_factor = 0.10
+	}
+	enemy_of_the_reformist = { 
+		random = no
+		political_power_factor = -0.05
+		stability_factor = -0.10
+	}
+	old_reformer = { 
+		random = no
+		political_power_factor = 0.05
+		stability_factor = 0.05
+	}
+	reformist_connections = { 
+		random = no
+		political_power_factor = 0.05
+	}
+	the_middleman = { 
+		random = no
+		stability_factor = 0.05
+	}
+	chinese_washington = { 
+		random = no
+		stability_factor = 0.05
+		improve_relations_maintain_cost_factor = 0.1
+	}
+	emperor_of_china = { 
+		random = no
+		stability_factor = 0.10
+		political_power_factor = 0.05
+	}
+	# End
+	imperial_commissioner = { # Yuan Shikai during Xinhai as Imperial Commissioner
+		random = no
+		army_chief_cost_factor = -0.15
+		political_advisor_cost_factor = -0.1
+	}
+	hongxian_emperor = {
+		# Yuan Shikai
+		random = no
+		political_power_factor = -0.3
+		army_morale_factor = -0.2
+		stability_factor = -0.3
+	}
+	hongxian_emperor_won = {
+		# Yuan Shikai Post NPW
+		random = no
+		political_power_factor = 0.05
+	}
+	thunder_general = {
+		# Ma Zhongying
+		random = no
+		army_org_regain = -0.05
+		army_morale_factor = 0.05
+		war_support_factor = 0.1
+		stability_factor = -0.2
+		ai_strategy = {
+			type = befriend
+			id = SOV
+			value = -100
+		}
+		ai_strategy = {
+			type = antagonize
+			id = SOV
+			value = 100
+		}
+		ai_strategy = {
+			type = alliance
+			id = SOV
+			value = -100
+		}
+	}
+	king_tunganistan = {
+		# Ma Hushan
+		random = no
+		army_defence_factor = 0.05
+		army_morale_factor = 0.05
+		war_support_factor = 0.1
+		ai_strategy = {
+			type = befriend
+			id = SOV
+			value = -100
+		}
+		ai_strategy = {
+			type = antagonize
+			id = SOV
+			value = 100
+		}
+		ai_strategy = {
+			type = alliance
+			id = SOV
+			value = -100
+		}
+		ai_strategy = {
+			type = befriend
+			id = JAP
+			value = -100
+		}
+		ai_strategy = {
+			type = antagonize
+			id = JAP
+			value = 100
+		}
+		ai_strategy = {
+			type = alliance
+			id = JAP
+			value = -100
+		}
+	}
+	southern_king = {
+		# Long Jiguang
+		random = no
+		political_power_factor = 0.05
+		stability_factor = -0.1
+		ai_strategy = {
+			type = alliance
+			id = ANC
+			value = 100
+		}
+		ai_strategy = {
+			type = befriend
+			id = ANC
+			value = 100
+		}
+	}
+	ironfist_warlord = {
+		# 
+		random = no
+		political_power_factor = 0.1
+		stability_factor = -0.1
+	}
+	southern_heavenly_king = {
+		# Chen Jitang 
+		random = no
+		research_speed_factor = 0.05
+		production_speed_infrastructure_factor = 0.05
+		stability_factor = 0.1
+	}
+	shandong_king = {
+		# Han Fuju
+		random = no
+		political_power_factor = 0.05
+		stability_factor = 0.1
+		war_support_factor = -0.1
+	}
+	buddhist_general = {
+		# Tang Shengzhi
+		random = no
+		war_support_factor = 0.1
+	}
+	qinghai_architect = {
+		# Ma Qi
+		random = no
+		political_power_factor = 0.05
+	}
+	mo_the_butcher = {
+		# Mo Rongxin
+		random = no
+		political_power_factor = 0.05
+		army_morale_factor = -0.05
+		war_support_factor = -0.1
+		stability_factor = -0.1
+		ai_strategy = {
+			type = befriend
+			id = GXC
+			value = 100
+		}
+		ai_strategy = {
+			type = alliance
+			id = GXC
+			value = 100
+		}
+	}
+	protector_guizhou = {
+		# Liu Xianshi
+		random = no
+		political_power_factor = -0.1
+		war_support_factor = -0.1
+		stability_factor = 0.1
+	}
+	silver_face_golden_mustache_general = {
+		# Yuan Zuming, who the hell gave this dude this nickname welp can't argue
+		random = no
+		political_power_factor = -0.1
+		war_support_factor = -0.1
+		stability_factor = -0.1
+	}
+	rising_star = {
+		# Wang Wenhua
+		random = no
+		political_power_factor = 0.1
+		war_support_factor = 0.1
+		army_chief_cost_factor = -0.15
+		army_morale_factor = 0.05
+		democratic_acceptance = 50
+		ai_strategy = {
+			type = alliance
+			id = CHI
+			value = 100
+		}
+		ai_strategy = {
+			type = befriend
+			id = CHI
+			value = 100
+		}
+	}
+	indecisive_regent = {
+		# Generic
+		random = no
+		political_power_factor = -0.1
+		political_advisor_cost_factor = 0.1
+		economy_cost_factor = 0.1
+		trade_laws_cost_factor = 0.1
+		mobilization_laws_cost_factor = 0.1
+		high_command_cost_factor = 0.1
+		army_chief_cost_factor = 0.1
+	}
+	regent = {
+		# Generic
+		random = no
+		political_power_factor = -0.1
+		stability_factor = 0.1
+	}
+	well_intentioned_reformer = {
+		# Generic
+		random = no
+		political_power_factor = 0.15
+		stability_factor = 0.1
+	}
+	slient_cloud = {
+		# New Zaifeng 
+		random = no
+		political_power_factor = 0.1
+		political_advisor_cost_factor = 0.25
+		economy_cost_factor = 0.25
+		trade_laws_cost_factor = 0.25
+		mobilization_laws_cost_factor = 0.25
+		high_command_cost_factor = 0.25
+		army_chief_cost_factor = 0.25
+		drift_defence_factor = 0.05
+		stability_factor = 0.1
+	}
+	virtuous_paragon = {
+		random = no
+		drift_defence_factor = 0.05
+		stability_factor = 0.1
+	}
+	progressive_revolutionary = {
+		# Wang Jingwei
+		random = no
+		democratic_drift = 0.02
+		stability_factor = 0.1
+		democratic_acceptance = 25
+		communism_acceptance = 25
+	}
+	nationalist_philosopher = {
+		# Hu Hanmin
+		random = no
+		communism_drift = -0.02
+		democratic_drift = 0.02
+		stability_factor = 0.1
+		war_support_factor = 0.1
+		democratic_acceptance = 25
+		neutrality_acceptance = 25
+		communism_acceptance = -25
+		ai_strategy = {
+			type = antagonize
+			id = JAP
+			value = 100
+		}
+	}
+	god_of_war = {
+		# Bai Chongxi
+		random = no
+		army_attack_factor = 0.15
+		army_defence_factor = 0.15
+		war_support_factor = 0.1
+	}
+	warrior_general = {
+		# Lu Yongxiang
+		random = no
+		army_core_attack_factor = 0.05
+		army_core_defence_factor = 0.05
+		war_support_factor = 0.1
+		army_defence_factor = -0.1
+	}
+	charismatic_warlord = {
+		random = no
+		stability_factor = 0.1
+		war_support_factor = 0.1
+		ai_focus_aggressive_factor = 0.25
+		ai_strategy = {
+			type = antagonize
+			id = ANC
+			value = 100
+		}
+		ai_strategy = {
+			type = antagonize
+			id = ZHE
+			value = 100
+		}
+	}
+	slanted_eye_qi = {
+		# Qi Xieyuan when becoming a traitor
+		random = no
+		army_core_defence_factor = -0.05
+		war_support_factor = -0.1
+		ai_focus_aggressive_factor = 0.25
+		ai_strategy = {
+			type = befriend
+			id = JAP
+			value = 50
+		}
+		ai_strategy = {
+			type = antagonize
+			id = CHI
+			value = 100
+		}
+	}
+	butcher_of_officials = { # Cen Chunxuan
+		random = no
+		political_power_factor = 0.05
+		drift_defence_factor = 0.05
+		political_advisor_cost_factor = 0.10
+		high_command_cost_factor = 0.10
+		army_chief_cost_factor = 0.10
+	}
+	sage_scholar = { # Kang Youwei, Man this dude is crazy and wild
+		random = no
+		political_power_factor = 0.05
+		drift_defence_factor = 0.05
+		political_advisor_cost_factor = 0.10
+		high_command_cost_factor = 0.10
+		army_chief_cost_factor = 0.10
+	} 
+	sage_scholar = {
+		# Kang Youwei, Man this dude is crazy and wild
+		random = no
+		political_power_factor = 0.1
+		stability_factor = 0.1
+	}
+	reformer_scholar = {
+		# Liang Qichao
+		random = no
+		political_power_factor = 0.1
+		stability_factor = 0.1
+	}
+	schemer_yuan = {
+		#yuan shikai
+		random = no
+		political_power_factor = -0.3
+		fascism_drift = 0.02
+		army_core_attack_factor = -0.1
+		army_core_defence_factor = -0.1
+	}
+	crusher_yuan = {
+		#yuan shikai
+		random = no
+		political_power_factor = -0.15
+		fascism_drift = 0.1
+		army_core_attack_factor = 0.1
+		army_core_defence_factor = 0.1
 	}
 	CHI_beiyang_triumvirate = {
 		random = no
-		political_power_factor = -0.40
+		political_power_factor = -0.1
 	}
-	beiyang_dragon = { #wang shizen
+	beiyang_dragon = {
+		#wang shizen
 		sprite = 12
 		random = no
-		army_defence_factor = 0.10
+		army_defence_factor = 0.1
 		stability_factor = 0.05
 	}
-	beiyang_tiger = { #duan qirui
+	beiyang_tiger = {
+		#duan qirui
 		sprite = 12
 		random = no
-		army_attack_factor = 0.10
-		command_power_gain_mult = 0.20
+		army_attack_factor = 0.1
+		command_power_gain_mult = 0.2
 	}
-	beiyang_dog = { #feng guozhang
+	beiyang_dog = {
+		#feng guozhang
 		sprite = 12
 		random = no
-		army_org_factor = 0.10
+		army_org_factor = 0.1
 		consumer_goods_factor = 0.05
+	}
+	CHI_revolutionary_lawyer = {
+		#chen jiongming
+		random = no
+		communism_acceptance = 10
+		party_popularity_stability_factor = 0.1
+	}
+	tridemism_is_socialism = {
+		#sun yatsen, by focus
+		random = no
+		communism_acceptance = 10
+		drift_defence_factor = 0.05
+		party_popularity_stability_factor = 0.10
+	}
+	perverted_control_freak = {
+		#Yang Sen
+		random = no
+		political_power_gain = -0.10
+		consumer_goods_factor = 0.05
+	}
+	#
+	VEN_el_pacificador = {
+		random = no
+		stability_factor = 0.15
+		political_power_factor = 0.1
+		min_export = 0.1
+		production_speed_buildings_factor = 0.1
 	}
 	#Albania
 	alb_national_hero = {
@@ -2636,21 +3695,21 @@ leader_traits = {
 	}
 	ambitious_wicked_man = {
 		random = no
-		stability_factor = -0.10
+		stability_factor = -0.1
 		war_support_factor = 0.05
 		political_power_gain = 0.1
 	}
 	#Greece
 	gre_ethnarch = {
-       random = no
-	   stability_factor = 0.05
-	   political_power_gain = 0.1
+		random = no
+		stability_factor = 0.05
+		political_power_gain = 0.1
 	}
 	gre_divisive_autocrat = {
 		random = no
-		stability_factor = -0.10
+		stability_factor = -0.1
 		political_power_gain = 0.2
-	 }
+	}
 	gre_fanatic_monarchist = {
 		random = no
 		neutrality_drift = 0.1
@@ -2685,8 +3744,7 @@ leader_traits = {
 		random = no
 		production_speed_buildings_factor = 0.05
 		resistance_activity = -0.2
-        political_power_gain = 0.2
-
+		political_power_gain = 0.2
 	}
 	gre_great_general = {
 		random = no
@@ -2699,37 +3757,171 @@ leader_traits = {
 	}
 	gre_puppet_of_the_military_league = {
 		random = no
-		political_power_gain = -0.10
+		political_power_gain = -0.1
 	}
 	#Romania
 	the_loyal = {
 		random = no
 		stability_factor = 0.1
 	}
-
-	true_personality_amidst_the_inanity = {
+	ROM_king_heavy_approve_2 = {
 		random = no
-		consumer_goods_factor = 0.10
-		stability_factor = -0.10
+		political_power_factor = 0.2
+		stability_factor = 0.12
+		political_advisor_cost_factor = -0.25
 	}
-
-	true_personality_amidst_the_inanity_1 = {
+	ROM_king_approve_2 = {
 		random = no
-		stability_factor = 0.1
+		political_power_factor = 0.1
+		stability_factor = 0.06
+		political_advisor_cost_factor = -0.15
 	}
-
-	imperial_authoritarian = {
+	ROM_king_heavy_approve = {
+		random = no
+		political_power_factor = 0.2
+		stability_factor = 0.12
+	}
+	ROM_king_approve = {
+		random = no
+		political_power_factor = 0.1
+		stability_factor = 0.06
+	}
+	ROM_king_neutral = {
+		random = no
+	}
+	ROM_king_disaprove = {
+		random = no
+		political_power_factor = -0.1
+		stability_factor = -0.06
+	}
+	ROM_king_heavy_disaprove = {
+		random = no
+		political_power_factor = -0.2
+		stability_factor = -0.12
+	}
+	the_great_communicator = {
 		random = no
 		sprite = 13
-		neutrality_drift = 0.1
-		neutrality_acceptance = 50
+		political_power_gain = 0.15
+	}
+	pcd_leader = {
+		random = no
+		sprite = 13
+		stability_factor = 0.15
+		political_power_factor = -0.08
+	}
+	pcd_leader2 = {
+		random = no
+		sprite = 13
+		stability_factor = 0.15
+	}
+	pcd_member = {
+		random = no
+		sprite = 13
+	}
+	arm_twister = {
+		random = no
+		sprite = 13
+		political_power_gain = 0.15
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	democratic_coalition = {
+		random = no
+		sprite = 13
+		political_power_factor = -0.05
+		democratic_drift = 0.03
+	}
+	conservative_coalition = {
+		random = no
+		sprite = 13
+		political_power_factor = 0.05
+		neutrality_drift = 0.02
 		stability_factor = 0.05
-		political_power_gain = -0.10
+	}
+	strong_monarch = {
+		random = no
+		neutrality_drift = 0.03
+	}
+	empowered_ruler = {
+		random = no
+		sprite = 13
+		democratic_drift = -0.01
+		stability_factor = -0.05
+		political_power_factor = 0.1
 		ai_will_do = {
 			factor = 0
 		}
 	}
-
+	collaborator = {
+		random = no
+		sprite = 13
+		political_power_gain = 0.2
+		stability_factor = -0.1
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	left_wing_publisher = {
+		random = no
+		sprite = 13
+		political_power_factor = 0.1
+		democratic_drift = 0.01
+	}
+	right_wing_populist = {
+		random = no
+		sprite = 13
+		fascism_drift = 0.02
+		political_power_factor = 0.05
+		consumer_goods_factor = -0.05
+	}
+	lack_of_passion = {
+		sprite = 13
+		random = no
+		political_power_factor = -0.1
+	}
+	plays_dirty = {
+		sprite = 13
+		random = no
+		political_power_factor = 0.15
+		stability_factor = -0.05
+	}
+	industrialist = {
+		random = no
+		sprite = 13
+		production_speed_buildings_factor = 0.15
+		monthly_population = -0.1
+	}
+	true_personality_amidst_the_inanity = {
+		random = no
+		consumer_goods_factor = 0.1
+		stability_factor = -0.1
+	}
+	true_personality_amidst_the_inanity_1 = {
+		random = no
+		stability_factor = 0.1
+	}
+	imperial_authoritarian = {
+		random = no
+		sprite = 13
+		neutrality_drift = 0.05
+		stability_factor = 0.05
+		political_power_gain = -0.1
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	imperial_authoritarian2 = {
+		random = no
+		sprite = 13
+		neutrality_drift = 0.05
+		stability_factor = 0.05
+		political_power_gain = 0.1
+		ai_will_do = {
+			factor = 0
+		}
+	}
 	humble_peacemaker = {
 		random = no
 		sprite = 13
@@ -2738,7 +3930,6 @@ leader_traits = {
 			factor = 0
 		}
 	}
-
 	moderate_syndicalist = {
 		random = no
 		sprite = 13
@@ -2747,7 +3938,6 @@ leader_traits = {
 			factor = 0
 		}
 	}
-
 	autonomous_anarchist = {
 		random = no
 		sprite = 13
@@ -2756,7 +3946,6 @@ leader_traits = {
 			factor = 0
 		}
 	}
-
 	pacifist_anarchist = {
 		random = no
 		sprite = 13
@@ -2767,47 +3956,103 @@ leader_traits = {
 			factor = 0
 		}
 	}
-
 	aggressive_peacemaker = {
 		random = no
 		sprite = 13
 		production_speed_buildings_factor = 0.05
 		stability_factor = 0.05
 		puppet_cost_factor = 0.5
-		war_support_factor = -0.10
+		war_support_factor = -0.1
 		ai_will_do = {
 			factor = 0
 		}
 	}
-
 	independantist_democratic_reformer = {
 		random = no
 		# Boosts Democracy
 		sprite = 13
 		democratic_drift = 0.1
-		stability_factor = -0.10
-		political_power_cost = 0.10
-		
+		stability_factor = -0.1
+		political_power_cost = 0.1
 		ai_will_do = {
 			factor = 0
 		}
 	}
-
 	relentless_opportunist = {
 		random = no
 		sprite = 13
 		democratic_drift = 0.05
 		stability_factor = -0.15
-		political_power_gain = 0.10
-		
+		political_power_gain = 0.1
 		ai_will_do = {
 			factor = 0
 		}
 	}
-
 	cant_be_replaced = {
 		random = no
-		
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	scholarly_statesman = {
+		random = no
+		sprite = 13
+		research_speed_factor = 0.05
+		political_power_gain = 0.05
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	establishment_liberal = {
+		random = no
+		sprite = 13
+		research_speed_factor = 0.05
+		political_power_gain = 0.15
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	modernizer = {
+		random = no
+		sprite = 13
+		production_speed_buildings_factor = 0.1
+		consumer_goods_factor = -0.05
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	diplomatic_stabilizer = {
+		random = no
+		justify_war_goal_time = -0.1
+		opinion_gain_monthly_factor = 0.1
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	member_of_PC = {
+		random = no
+		custom_modifier_tooltip = member_of_pc
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	member_of_PNL = {
+		random = no
+		custom_modifier_tooltip = member_of_pnl
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	member_of_PSDR = {
+		random = no
+		custom_modifier_tooltip = member_of_psdr
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	member_of_PND = {
+		random = no
+		custom_modifier_tooltip = member_of_pnd
 		ai_will_do = {
 			factor = 0
 		}
@@ -2823,6 +4068,16 @@ leader_traits = {
 		ai_will_do = {
 			factor = 1
 		}
+	}
+	JAP_Taisho_Democracy = { #to be removed on rework
+		random = no
+		party_popularity_stability_factor = 0.30
+		democratic_acceptance = 30
+	}
+	# Guatemala
+	patriot = {
+		random = no
+		war_support_factor = 0.05
 	}
 	#Portugual
 	patriota = {
@@ -2868,6 +4123,7 @@ leader_traits = {
 	}
 	anglophile = {
 		random = no
+		sprite = 13
 		trade_opinion_factor = 0.05
 		opinion_gain_monthly = 0.03
 		ai_strategy = {
@@ -2909,6 +4165,7 @@ leader_traits = {
 	}
 	Turcophile_Royal = {
 		random = no
+		sprite = 13
 		ai_strategy = {
 			type = befriend
 			id = TUR
@@ -2923,6 +4180,7 @@ leader_traits = {
 		research_speed_factor = 0.05
 	}
 	model_workers_leader = {
+		sprite = 13
 		random = no
 		stability_factor = 0.05
 		political_power_factor = 0.05
@@ -2948,8 +4206,8 @@ leader_traits = {
 	}
 	reformist_monarch = {
 		random = no
-		stability_factor = -0.10
-		political_power_factor = 0.10
+		stability_factor = -0.1
+		political_power_factor = 0.1
 		democratic_acceptance = 5
 	}
 	sayyid = {
@@ -2966,7 +4224,6 @@ leader_traits = {
 		sprite = 13
 		conscription = 0.005
 		recon_factor = 0.05
-
 		ai_will_do = {
 			factor = 1
 		}
@@ -2980,11 +4237,11 @@ leader_traits = {
 	}
 	police_officer = {
 		random = no
-		stability_factor = 0.10
+		stability_factor = 0.1
 	}
 	al_kabir = {
 		random = no
-		stability_factor = 0.10
+		stability_factor = 0.1
 	}
 	oil_baron = {
 		random = no
@@ -3013,17 +4270,17 @@ leader_traits = {
 		random = no
 		equipment_bonus = {
 			train_equipment = {
-				build_cost_ic = -0.10
+				build_cost_ic = -0.1
 			}
 		}
 		ai_will_do = {
 			factor = 1
 		}
-	}	
+	}
 	common_railway_company = {
 		random = no
-		production_speed_rail_way_factor = 0.10
-		production_speed_supply_node_factor = 0.10
+		production_speed_rail_way_factor = 0.1
+		production_speed_supply_node_factor = 0.1
 		equipment_bonus = {
 			train_equipment = {
 				build_cost_ic = -0.15
@@ -3033,13 +4290,13 @@ leader_traits = {
 			factor = 1
 		}
 	}
-	armored_railway_company = { 
+	armored_railway_company = {
 		equipment_bonus = {
 			train_equipment = {
 				build_cost_ic = -0.15
 				reliability = 0.15
 			}
-			railway_gun_equipment = {
+			mio_cat_eq_railway_guns = {
 				build_cost_ic = -0.05
 				reliability = 0.15
 			}
@@ -3047,7 +4304,7 @@ leader_traits = {
 		ai_will_do = {
 			factor = 1
 		}
-	}	
+	}
 	infantry_equipment_manufacturer2 = {
 		random = no
 		equipment_bonus = {
@@ -3060,7 +4317,7 @@ leader_traits = {
 		ai_will_do = {
 			factor = 1
 		}
-	}	
+	}
 	motorized_equipment_manufacturer2 = {
 		random = no
 		equipment_bonus = {
@@ -3073,24 +4330,27 @@ leader_traits = {
 		ai_will_do = {
 			factor = 1
 		}
-	}	
+	}
 	seaplane_aircraft_manufacturer = {
 		random = no
 		equipment_bonus = {
 			cv_fighter_equipment = {
-				maximum_speed = 0.1 air_range = 0.1
+				maximum_speed = 0.1
+				air_range = 0.1
 			}
 			seaplane_equipment = {
-				maximum_speed = 0.1 air_range = 0.1
+				maximum_speed = 0.1
+				air_range = 0.1
 			}
 			nav_bomber_equipment = {
-				maximum_speed = 0.1 air_range = 0.1
+				maximum_speed = 0.1
+				air_range = 0.1
 			}
 		}
 		ai_will_do = {
 			factor = 1
 		}
-	}	
+	}
 	airship_manufacturer = {
 		random = no
 		equipment_bonus = {
@@ -3106,17 +4366,6 @@ leader_traits = {
 			factor = 1
 		}
 	}
-	militarist_socialist = {
-		random = yes
-		conscription_factor = 0.05
-	}
-	
-	comic_relief = {
-		random = no			
-		resistance_target = -0.05
-	}
-
-	
 	monarchist_nationalist = {
 		random = no
 		sprite = 13
@@ -3124,28 +4373,25 @@ leader_traits = {
 		fascism_drift = 0.02
 		neutrality_drift = 0.02
 	}
-
 	federative_socialist = {
 		sprite = 13
 		random = no
 		communism_drift = 0.03
 		political_power_gain = 0.1
 	}
-
 	federative_republican = {
 		sprite = 13
 		random = no
-		stability_weekly = 0.0010
+		stability_weekly = 0.001
 		political_power_gain = 0.1
+		democratic_drift = 0.01
 	}
-
 	christian_republicain = {
 		sprite = 13
 		random = no
 		democratic_drift = 0.01
 		neutrality_drift = 0.01
 	}
-
 	christian_nationalist = {
 		sprite = 13
 		random = no
@@ -3154,35 +4400,30 @@ leader_traits = {
 		fascism_drift = 0.01
 		political_power_gain = 0.15
 	}
-
 	antisemitic_nationalist = {
 		sprite = 13
 		random = no
 		fascism_drift = 0.01
-		resistance_growth = -0.20
+		resistance_growth = -0.2
 	}
-
 	trench_veteran = {
 		sprite = 13
 		random = no
-		war_stability_factor = 0.25
+		war_stability_factor = 0.05
 		max_dig_in_factor = 0.05
 	}
-
 	national_socialist_militarist = {
 		sprite = 13
 		random = no
 		production_speed_arms_factory_factor = 0.1
 		conscription_factor = 0.05
 	}
-
 	educational_reformer = {
 		sprite = 13
 		random = no
 		research_speed_factor = 0.075
 		political_power_factor = -0.1
 	}
-
 	politized_admiral = {
 		sprite = 13
 		random = no
@@ -3190,77 +4431,50 @@ leader_traits = {
 		high_command_cost_factor = -0.5
 		war_support_factor = 0.05
 	}
-
 	moderate_socialist = {
 		sprite = 13
 		random = no
 		communism_drift = 0.01
 		democratic_drift = 0.01
 	}
-
 	consensual_figure = {
 		sprite = 13
 		random = no
 		stability_weekly = 0.0025
 	}
-	conservative_party_president = {
+	corporatist = {
 		sprite = 13
 		random = no
-		neutrality_drift = 0.05
+		economy_cost_factor = -0.25
+		production_speed_buildings_factor = 0.1
+		production_factory_max_efficiency_factor = 0.05
 	}
 	industrial_reformer = {
 		sprite = 13
 		random = no
 		consumer_goods_factor = -0.1
 	}
-
 	anarchist_author = {
 		sprite = 13
 		random = no
 		communism_drift = 0.05
 		stability_factor = -0.05
 	}
-	archnishop_of_santiago = {
+	MON_spiritual_leader = {
 		random = no
-		sprite = 13
-		stability_factor = 0.1
-		army_morale_factor = 0.1
-		compliance_growth_on_our_occupied_states = -0.15
-	}
-	wine_business_man = {
-		sprite = 13
-		random = no
-		global_building_slots_factor = 0.1
-		min_export = -0.1
-		ai_will_do = {
-			factor = 2
-		}
-	}
-	wine_company = {
-		random = no
-		production_factory_efficiency_gain_factor = 0.1
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	nationalist_writer = {
-		random = no
-		sprite = 13
-		fascism_drift = 0.1
-		conscription_factor = 0.1
-		ai_will_do = {
-			factor = 1
-		}
+		stability_factor = 0.05
+		neutrality_drift = 0.01
+		political_power_gain = 0.05
 	}
 	SAU_engineer = {
-		sprite = 13
+		sprite = 10
 		random = no
 		research_speed_factor = 0.05
 		production_speed_rail_way_factor = 0.05
 		production_speed_supply_node_factor = 0.05
 	}
 	SAU_telegraph_operator = {
-		sprite = 13
+		sprite = 15
 		random = no
 		intel_network_gain_factor = 0.2
 		operative_slot = 1
@@ -3272,7 +4486,7 @@ leader_traits = {
 		war_support_factor = 0.05
 		political_advisor_cost_factor = -0.05
 	}
-	progressive_royal = {			
+	progressive_royal = {
 		random = no
 		sprite = 13
 		stability_factor = 0.05
@@ -3281,8 +4495,9 @@ leader_traits = {
 			factor = 0
 		}
 	}
-	Whabbist_demagogue = {	
+	Whabbist_demagogue = {
 		random = no
+		sprite = 13
 		stability_factor = 0.05
 		political_power_factor = 0.05
 		drift_defence_factor = 0.2
@@ -3293,12 +4508,12 @@ leader_traits = {
 	}
 	gun_dealer = {
 		random = no
+		sprite = 16
 		equipment_capture_factor = 0.1
 		state_production_speed_arms_factory_factor = 0.05
 	}
-	
 	famous_politician = {
-		random = no
+		random = yes
 		opinion_gain_monthly = 0.05
 		trade_opinion_factor = 0.05
 		trade_laws_cost_factor = -0.05
@@ -3326,7 +4541,888 @@ leader_traits = {
 	minister_of_national_defense = {
 		random = no
 		war_support_factor = 0.05
-		recruitable_population_factor = 0.1
-		war_stability_factor = 0.2
+		conscription_factor = 0.1
+		war_stability_factor = 0.1
+	}
+	administration_reformer = {
+		random = yes
+		sprite = 13
+		stability_factor = 0.1
+		political_power_factor = 0.1
+	}
+	### RCW
+	black_baron = {
+		random = no
+		war_support_factor = 0.1
+		surrender_limit = 0.2
+		army_core_defence_factor = 0.1
+		army_core_attack_factor = 0.1
+		army_org_factor = 0.25
+	}
+	master_organizer = {
+		random = no
+		political_power_factor = 0.25
+		political_advisor_cost_factor = -0.15
+		command_power_gain_mult = 0.25
+		max_command_power_mult = 0.35
+	}
+	socialist_organizer = {
+		random = no
+		sprite = 13
+		political_power_factor = 0.1
+		political_advisor_cost_factor = -0.15
+		stability_factor = 0.1
+	}
+	divided_coalition_leader = {
+		random = no
+		political_power_factor = -0.1
+		stability_factor = -0.05
+		neutrality_acceptance = 25
+		fascism_acceptance = 25
+	}
+	steadfast_commander = {
+		random = no
+		army_org_regain = 0.15
+		war_support_factor = 0.05
+	}
+	rus_anti_communist_crusader = {
+		random = no
+		war_stability_factor = 0.1
+		communism_acceptance = -100
+		communism_drift = -0.1
+	}
+	ruthless_commander = {
+		random = no
+		army_attack_factor = 0.1
+		army_org_regain = -0.05
+	}
+	supreme_ruler = {
+		random = no
+		political_power_factor = 0.15
+		stability_factor = -0.05
+		communism_drift = -0.05
+		democratic_drift = -0.05
+	}
+	air_chief_glider_builder = {
+		random = no
+		sprite = 1
+		experience_gain_air = 0.2
+		air_accidents_factor = -0.035
+	}
+	cossack_ataman = {
+		random = no
+		cavalry_attack_factor = 0.1
+		cavalry_defence_factor = 0.05
+		modifier_army_sub_unit_cavalry_speed_factor = 0.05
+	}
+	cossack_warlord = {
+		random = no
+		cavalry_attack_factor = 0.1
+		breakthrough_factor = 0.05
+		cavalry_defence_factor = -0.05
+		supply_consumption_factor = 0.1
+		equipment_capture_factor = 0.1
+	}
+	anarchist_batko = {
+		random = no
+		resistance_growth_on_our_occupied_states = 0.2
+		resistance_activity = 0.15
+		army_org_factor = -0.1
+		army_morale_factor = 0.15
+	}
+	debt_council = {
+		random = no
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	zemstvo_influencer = {
+		random = no
+		stability_factor = 0.05
+		political_power_factor = 0.1
+		democratic_drift = 0.05
+	}
+	silent_cal = {
+		random = no
+		political_power_factor = -0.05
+		consumer_goods_factor = -0.15
+	}
+	fighting_bob = {
+		random = no
+		political_power_factor = 0.15
+		stability_factor = 0.1
+	}
+	dharma_king = {
+		random = no
+		stability_factor = 0.1
+	}
+	dragon_king = {
+		random = no
+		war_support_factor = 0.1
+	}
+	thirteenth_dalai_lama = {
+		random = no
+		stability_factor = 0.1
+	}
+	talented_engineer = {
+		sprite = 13
+		random = no
+		research_speed_factor = 0.03
+	}
+	unpopular_minister = {
+		random = no
+		stability_factor = -0.05
+		political_power_factor = -0.25
+	}
+	outdated_theorist = {
+		sprite = 14
+		random = no
+		land_doctrine_cost_factor = 0.2
+	}
+	political_conflict_with_the_king = {
+		random = no
+		sprite = 13
+		stability_weekly = -0.002
+		political_advisor_cost_factor = 0.25
+	}
+	investment_bank = {
+		sprite = 13
+		random = no
+		opinion_gain_monthly_factor = 0.2
+		consumer_goods_factor = -0.1
+		production_speed_arms_factory_factor = 0.1
+		production_speed_industrial_complex_factor = 0.1
+	}
+	army_chief_old_guard_weak = {
+		sprite = 5		# Should not need sprite, should mostly be secondary
+		experience_gain_army = 0.1
+		max_command_power = 15
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	ARB_oil_profiteer = {
+		random = no
+		consumer_goods_factor = 0.15
+		stability_factor = -0.03
+	}
+	ARB_british_loyalist = {
+		random = no
+		targeted_modifier = {
+			tag = ENG
+			trade_cost_for_target_factor = -0.25
+		}
+		political_power_factor = -0.1
+	}
+	ARB_dedicated_sheikh = {
+		random = no
+		drift_defence_factor = 0.1
+	}
+	SPR_el_africano = {
+		random = no
+		compliance_growth = 0.05
+		acclimatization_hot_climate_gain_factor = 0.1
+		war_support_factor = 0.05
+		stability_factor = -0.05
+	}
+	CUB_tiburon = {
+		random = no
+		political_advisor_cost_factor = -0.3
+		political_power_factor = -0.1
+		consumer_goods_factor = 0.1
+		experience_gain_navy_unit_factor = 0.1
+	}
+	MEX_gentleman_dictator = {
+		random = no
+		max_command_power = 20
+		political_power_factor = 0.15
+		drift_defence_factor = 0.1
+	}
+	USA_big_bill = {
+		random = no
+		monthly_population = 0.05
+		production_speed_buildings_factor = -0.05
+		consumer_goods_factor = -0.05
+	}
+	USA_impartial_attorney = {
+		random = no
+		stability_factor = 0.15
+		political_power_factor = 0.1
+		war_support_factor = -0.1
+	}
+	USA_president_hardly = {
+		random = no
+		production_factory_efficiency_gain_factor = 0.1
+		political_power_factor = -0.1
+		war_support_factor = -0.05
+	}
+	BRA_paz_e_amor = {
+		random = no
+		stability_factor = 0.1
+		political_power_gain = 1
+		consumer_goods_factor = 0.1
+	}
+	BRA_mulatto = {
+		random = no
+		stability_factor = -0.03
+		political_power_gain = -0.5
+	}
+	EGY_nationalist_khedive = {
+		random = no
+		drift_defence_factor = 0.25
+		war_support_factor = 0.1
+		autonomy_gain = 0.25
+		ai_join_ally_desire_factor = -2000
+	}
+	EGY_british_collaborationist = {
+		targeted_modifier = {
+			tag = ENG
+			trade_cost_for_target_factor = -0.25
+		}
+		autonomy_gain_trade_factor = 0.25
+		autonomy_gain_global_factor = -0.33
+		political_power_factor = -0.1
+	}
+	EGY_agrarian_maestro = {
+		stability_factor = 0.1
+		conscription_factor = 0.02
+		supply_consumption_factor = -0.15
+		production_speed_buildings_factor = -0.1
+	}
+	ARM_experienced_architect = {
+		production_speed_buildings_factor = 0.1
+		research_speed_factor = 0.05
+	}
+	EGY_autocratic_oppurtunist = {
+		political_power_factor = 0.15
+		stability_factor = -0.1
+		political_advisor_cost_factor = -0.25
+	}
+	EGY_custodian_of_heritage = {
+		stability_factor = 0.05
+		drift_defence_factor = 0.25
+	}
+	ATH_the_magnificent = {
+		random = no
+		stability_factor = 0.15
+	}
+	businessman = {
+		political_power_factor = 0.1
+		consumer_goods_factor = -0.1
+	}
+	traditionalist_theorist2 = {
+		random = no
+		sprite = 13
+		neutrality_drift = 0.025
+		political_power_factor = 0.15
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	staunch_monarchist2 = {
+		random = no
+		# Boosts Unaligned
+		sprite = 13
+		neutrality_drift = 0.05
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	financial_expert2 = {
+		sprite = 10
+		random = yes
+		consumer_goods_factor = -0.1
+		ai_will_do = {
+			factor = 2
+		}
+	}
+	financial_expert3 = {
+		sprite = 10
+		random = yes
+		consumer_goods_factor = -0.15
+		ai_will_do = {
+			factor = 2
+		}
+	}
+	patriotic_socialist2 = {
+		random = no
+		sprite = 13
+		communism_drift = 0.01
+		war_support_factor = 0.1
+	}
+	socialist_novelist2 = {
+		random = no
+		sprite = 13
+		war_support_factor = 0.1
+		communism_drift = 0.01
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	socialist_journalist2 = {
+		random = no
+		sprite = 13
+		communism_drift = 0.01
+		political_power_factor = 0.05
+		compliance_gain = 0.02
+	}
+	political_chameleon_millerand = {
+		random = no
+		sprite = 13
+		stability_factor = 0.1
+		democratic_drift = 0.01
+	}
+	army_chief_opposition = {
+		sprite = 5
+		random = no
+		max_command_power_mult = -0.5
+		drift_defence_factor = -0.5
+		command_power_gain_mult = -0.5
+		custom_modifier_tooltip = army_chief_opposition_tt
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	lackluster_sultan = {
+		random = no
+		political_power_factor = -0.25
+	}
+	unpopular_sultan = {
+		random = no
+		stability_factor = -0.05
+		political_power_factor = -0.1
+	}
+	shadow_of_abdelaziz = {
+		random = no
+		political_power_factor = -0.1
+	}
+	commander_of_the_faithful = {
+		random = no
+		war_support_factor = 0.15
+		conscription_factor = 0.15
+		mobilization_speed = 0.25
+	}
+	marrakech_pasha = {
+		random = no
+		sprite = 13
+		political_power_factor = 0.15
+		consumer_goods_factor = 0.05
+	}
+	marrakech_pasha2 = {
+		random = no
+		sprite = 13
+		consumer_goods_factor = -0.05
+		production_speed_buildings_factor = 0.1
+	}
+	warlord_caid = {
+		random = no
+		sprite = 13
+		defensive_war_stability_factor = 0.1
+		army_core_defence_factor = 0.1
+		war_support_factor = 0.05
+	}
+	loyal_caid = {
+		random = no
+		sprite = 13
+		conscription_factor = 0.05
+		mobilization_speed = 0.1
+	}
+	puppet_jalifa = {
+		random = no
+		political_power_factor = -0.15
+		stability_factor = 0.1
+	}
+	MOR_maal_al_aynayn = {
+		random = no
+		war_support_factor = 0.1
+		army_core_attack_factor = 0.1
+		opinion_gain_monthly_factor = -0.5
+		army_morale_factor = 0.1
+	}
+	blue_sultan = {
+		random = no
+		political_power_factor = 0.05
+		army_core_defence_factor = 0.1
+		opinion_gain_monthly_factor = -0.5
+		army_morale_factor = 0.1
+	}
+	COL_el_bayardo = {
+		random = no
+		consumer_goods_factor = 0.2
+		command_power_gain = 0.05
+		neutrality_drift = 0.01
+		stability_factor = -0.05
+		political_power_factor = 0.05
+	}
+	COL_progressive_pioneer = {
+		random = no
+		democratic_drift = 0.02
+		stability_factor = 0.05
+		political_power_factor = 0.1
+		improve_relations_maintain_cost_factor = -0.25
+	}
+	ITA_chr_dem = {
+		random = no
+		democratic_drift = 0.02
+		stability_factor = 0.05
+		political_power_factor = 0.05
+		consumer_goods_factor = -0.1
+	}
+	resolute = {
+		random = no
+		political_power_factor = 0.15
+		stability_factor = 0.1
+	}
+	anti_habsburg = {
+		random = no
+	}
+	phra_piya_maharat = {
+		random = no
+		stability_factor = 0.1
+		political_power_cost = 0.1
+		political_advisor_cost_factor = -0.15
+	}
+	SIA_national_reformer = {
+		random = no
+		political_power_cost = 0.15
+		democratic_drift = 0.005
+		research_speed_factor = 0.05
+		war_stability_factor = 0.1
+	}
+	INS_committed_christian = {
+		random = no
+		drift_defence_factor = 0.5
+		stability_factor = -0.025
+	}
+	BNT_tranquil = {
+		random = no
+		democratic_drift = 0.05
+		stability_factor = 0.1
+	}
+	TRP_connections_with_the_elites = {
+		random = no
+		political_power_factor = 0.1
+		research_speed_factor = 0.05
+	}
+	TRP_anticolonial_militant = {
+		random = no
+		war_support_factor = 0.05
+		army_core_defence_factor = 0.1
+		resistance_target_on_our_occupied_states = 0.15
+	}
+	TRP_tribal_leader = {
+		random = no
+		supply_consumption_factor = -0.1
+		conscription_factor = 0.05
+	}
+	TRP_unifying_figure_from_the_coast = {
+		random = no
+		compliance_growth = 0.05
+		stability_factor = 0.05
+	}
+	CRO_yugophile = {
+		random = no
+		stability_factor = 0.05
+		political_power_factor = -0.15
+		war_support_factor = -0.1
+	}
+	CRO_stalwart_nationalist = {
+		random = no
+		stability_factor = 0.15
+		political_power_factor = 0.15
+		war_stability_factor = 0.05
+	}
+	SLO_agrarianist_leader = {
+		random = no
+		stability_factor = 0.1
+		political_power_factor = 0.05
+		production_speed_buildings_factor = -0.05
+	}
+	CRO_transleithanian_alligned = {
+		random = no
+		stability_factor = -0.05
+		war_support_factor = -0.05
+		political_advisor_cost_factor = -0.25
+	}
+	WUK_capable_politician = {
+		random = no
+		stability_factor = 0.05
+		political_power_factor = 0.15
+		political_advisor_cost_factor = -0.25
+	}
+	ITA_cadorna_the_bastard = {
+		random = no
+		sprite = 7
+		experience_gain_army = 0.2
+		breakthrough_factor = -0.05
+		army_attack_factor = 0.05
+		army_defence_factor = -0.05
+		land_mastery_gain_factor = -0.07
+	}
+	USA_admiral_of_the_navy = {
+		random = no
+		experience_gain_navy = 0.3
+		navy_capital_ship_defence_factor = 0.25
+		navy_org_factor = 0.15
+	}
+	USA_wilson_stroked = {
+		random = no
+		stability_factor = -0.05
+		political_power_factor = -0.1
+	}
+	USA_humorous = {
+		random = no
+	}
+	MSC_weak_sultan = {
+		random = no
+		stability_factor = -0.15
+		war_support_factor = -0.15
+		political_advisor_cost_factor = 0.15
+	}
+	AUS_pink_frued_dark_side_of_your_mom = {
+		random = no
+		sprite = 13
+		research_speed_factor = 0.15
+		stability_factor = -0.05
+		political_power_factor = 0.05
+	}
+	HUN_stiff_leader = {
+		random = no
+		stability_factor = -0.05
+		political_power_factor = 0.05
+		war_support_factor = 0.05
+	}
+	HUN_connected_magnate = {
+		random = no
+		stability_factor = -0.05
+		consumer_goods_factor = -0.15
+		production_speed_buildings_factor = 0.1
+		local_resources_factor = 0.05
+	}
+	HUN_flimsy = {
+		random = no
+		stability_factor = -0.1
+		political_power_factor = -0.1
+	}
+	SAF_boer_veteran = {
+		random = no
+		political_power_factor = 0.1
+		war_support_factor = 0.05
+		war_stability_factor = 0.1
+		drift_defence_factor = 0.5
+	}
+	SAF_conciliatory = {
+		random = no
+		improve_relations_maintain_cost_factor = -0.1
+		political_advisor_cost_factor = 0.15
+	}
+	MEX_apostle_of_democracy = {
+		random = no
+		democratic_drift = 0.05
+		compliance_growth_on_our_occupied_states = 0.02
+		stability_factor = 0.05
+	}
+	MEX_espiritista = {
+		random = no
+		drift_defence_factor = 0.1
+	}
+	MEX_connected_landowner = {
+		random = no
+		stability_factor = -0.05
+		neutrality_acceptance = 0.25
+		political_advisor_cost_factor = -0.15
+	}
+	MEX_el_chacal = {
+		random = no
+		stability_factor = -0.15
+		political_power_gain  = 0.15
+		war_support_factor = 0.1
+		war_stability_factor = 0.1
+	}
+	ETH_disliked_by_nobles = {
+		random = no
+		political_power_gain = -0.15
+		political_advisor_cost_factor = 0.25
+		stability_factor = -0.05
+	}
+	ETH_admirer_of_ottomans = {
+		random = no
+		war_support_factor = 0.05
+		stability_factor = -0.05
+		compliance_growth = 0.05
+		targeted_modifier = {
+			tag = TUR
+			trade_opinion_factor = 0.25
+		}
+	}
+	TRK_korshirmat = {
+		random = no
+		war_support_factor = 0.1
+		army_core_defence_factor = 0.1
+		war_stability_factor = 0.1
+		political_power_factor = -0.1
+		custom_modifier_tooltip = TRK_korshirmat_tt
+	}
+	progressive_educator = { #John Dewey
+		random = no
+		research_speed_factor = 0.05
+	}
+	#Costa Rica
+	COS_compromise_dark_horse = {
+		random = no
+		stability_factor = -0.05
+		political_power_factor = 0.1
+	}
+	COS_cromwell_of_vaudeville = {
+		random = no
+		fascism_drift = 0.01
+		command_power_gain = 0.1
+		stability_factor = 0.05
+		political_power_cost = -0.05
+	}
+	#Persia
+	PER_sepahdar_a_zam = { #greatest of the marshals
+		random = no
+		sprite = 18
+		command_power_gain = 0.1
+		army_chief_cost_factor = -0.15
+		high_command_cost_factor = -0.15
+	}
+	PER_mostowfi_ol_mamalek = { #Chancellor of the Realm
+		random = no
+		sprite = 13
+		stability_factor = 0.15
+		political_power_factor = -0.1
+	}
+	PER_samsam_al_saltaneh = { #Sword of the Monarchy
+		random = no
+		sprite = 7
+		stability_factor = 0.1
+		political_power_factor = 0.05
+	}
+	PER_ala_ol_saltaneh = { #causes the kingdom to rise
+		random = no
+		sprite = 13
+		drift_defence_factor = 0.25
+		political_power_gain = 0.05
+	}
+	PER_sardar_asaad = { #Victorous Commander
+		random = no
+		sprite = 18
+		war_support_factor = 0.1
+		war_stability_factor = 0.15
+	}
+	PER_bombist = {
+		random = no
+		sprite = 12
+		foreign_subversive_activites = -0.5
+		drift_defence_factor = 0.5
+		subversive_activites_upkeep = -0.25
+	}
+	PER_azod_ol_nolk = { #Pillar of the Realm
+		random = no
+		sprite = 13
+		stability_factor = 0.05
+		political_power_factor = 0.02
+	}
+	PER_naser_al_molk = { #Assistant of the Realm
+		random = no
+		sprite = 13
+		drift_defence_factor = 0.5
+		economy_cost_factor = -0.1
+		consumer_goods_factor = -0.05
+	}
+	PER_vosugh_od_dowleh = { #Trust of the State
+		random = no
+		sprite = 13
+		improve_relations_maintain_cost_factor = -0.5
+		opinion_gain_monthly_factor = 0.25
+		trade_opinion_factor = 0.10
+		war_support_factor = -0.05
+		custom_modifier_tooltip = anglophile
+		ai_strategy = {
+			type = befriend
+			id = ENG
+			value = 10
+		}
+	}
+	PER_honest_advisor = {
+		random = no
+		sprite = 13
+		consumer_goods_factor = -0.05
+	}
+	PER_voice_from_the_new_world = {
+		random = no
+		sprite = 13
+		consumer_goods_factor = -0.1
+	}
+	PER_eqbal_al_saltaneh = { #Fortune the Monarchy
+		political_power_factor = 0.15
+		opinion_gain_monthly_factor = -0.25
+		improve_relations_maintain_cost_factor = 0.25
+		civilian_intel_to_others = -15
+	}
+	PER_salar_al_daula = { #Commander of the Dynasty
+		random = no
+		sprite = 18
+		drift_defence_factor = 0.5
+		war_support_factor = 0.1
+		stability_factor = -0.1
+	}
+	PER_hayrik = {
+		random = no
+		sprite = 12
+		war_support_factor = 0.1
+		drift_defence_factor = 0.2
+	}
+	PER_farman_farma = { #giver of an order
+		random = no
+		sprite = 18
+		stability_factor = 0.05
+		political_power_factor = 0.05
+		monthly_population = 0.1
+	}
+	PER_nezam_us_saltaneh = { #organizer of the Realm
+		random = no
+		sprite = 13
+		political_power_cost = 0.1
+	}
+	PER_eyn_ed_dowleh = { #Eyes of the State
+		random = no
+		sprite = 13
+		party_popularity_stability_factor = 0.1
+		political_power_gain = 0.1
+		neutrality_drift = 0.05
+	}
+	PER_shoja_al_dowleh = { #Courage of the State
+		random = no
+		sprite = 13
+		war_support_factor = 0.1
+		political_power_factor = 0.05
+	}
+	PER_sadar_nasr = { #Hundred Gates in Prose ?
+		random = no
+		sprite = 13
+		stability_factor = 0.1
+		political_power_factor = 0.05
+	}
+
+	tgwr_exiled = {
+		random = no
+		stability_factor = -0.2
+		political_power_gain = -1.5
+	}
+	
+
+	navy_chief_shore_bombardement_1 = {
+		sprite = 3
+		shore_bombardment_bonus = 0.05
+		shore_bombardment_collateral_damage_factor = 0.05
+		experience_gain_navy = @chief_experience_gain_low
+
+		command_cap_increase = @tier1_cp_cap_increase
+		command_power = @tier1_cp_cost
+
+		ai_will_do = {
+			factor = @navy_chief_factor_1
+			modifier = {
+				factor = 0
+				command_power < @tier1_cp_cost
+			}
+		}
+	}
+	navy_chief_shore_bombardement_2 = {
+		sprite = 3
+		shore_bombardment_bonus = 0.1
+		shore_bombardment_collateral_damage_factor = 0.1
+		experience_gain_navy = @chief_experience_gain_medium
+
+		command_cap_increase = @tier2_cp_cap_increase
+		command_power = @tier2_cp_cost
+
+		ai_will_do = {
+			factor = @navy_chief_factor_2
+			modifier = {
+				factor = 0
+				command_power < @tier2_cp_cost
+			}
+		}
+	}
+	navy_chief_shore_bombardement_3 = {
+		sprite = 3
+		shore_bombardment_bonus = 0.15
+		shore_bombardment_collateral_damage_factor = 0.15
+		experience_gain_navy = @chief_experience_gain_high
+
+		command_cap_increase = @tier3_cp_cap_increase
+		command_power = @tier3_cp_cost
+
+		ai_will_do = {
+			factor = @navy_chief_factor_3
+			modifier = {
+				factor = 0
+				command_power < @tier3_cp_cost
+			}
+		}
+	}
+	air_chief_production_1 = {
+		sprite = 1
+		equipment_bonus = {
+			fighter = {
+				build_cost_ic = -0.025
+			}
+		}
+		experience_gain_air = @chief_experience_gain_low
+
+		command_cap_increase = @tier1_cp_cap_increase
+		command_power = @tier1_cp_cost
+
+		ai_will_do = {
+			factor = @air_chief_factor_1
+			modifier = {
+				factor = 0
+				command_power < @tier1_cp_cost
+			}
+		}	
+	}
+	air_chief_production_2 = {
+		sprite = 1
+		equipment_bonus = {
+			fighter = {
+				build_cost_ic = -0.05
+			}
+		}
+		experience_gain_air = @chief_experience_gain_high
+
+		command_cap_increase = @tier2_cp_cap_increase
+		command_power = @tier2_cp_cost
+
+		ai_will_do = {
+			factor = @air_chief_factor_2
+			modifier = {
+				factor = 0
+				command_power < @tier2_cp_cost
+			}
+		}	
+	}
+	air_chief_production_3 = {
+		sprite = 1
+		equipment_bonus = {
+			fighter = {
+				build_cost_ic = -0.075
+			}
+		}
+		experience_gain_air = @chief_experience_gain_high
+
+		command_cap_increase = @tier3_cp_cap_increase
+		command_power = @tier3_cp_cost
+
+		ai_will_do = {
+			factor = @air_chief_factor_3
+			modifier = {
+				factor = 0
+				command_power < @tier3_cp_cost
+			}
+		}	
 	}
 }
