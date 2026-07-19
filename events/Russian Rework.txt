@@ -684,20 +684,9 @@ country_event = {
 	desc = ww1_russia_common.27.d
 	picture = GFX_report_event_german_reichstag_gathering
 	is_triggered_only = yes
-	fire_only_once = yes
-	immediate = {
-		hidden_effect = {
-			set_country_flag = {
-				flag = RUS_strikes_suppressed
-				days = 120
-			}
-		}
-	}
+	fire_only_once = no
 	option = {
 		name = ww1_russia_common.27.a
-		effect_tooltip = {
-			remove_ideas = RUS_strikes
-		}
 	}
 }
 #Strike Massacred!
@@ -707,22 +696,30 @@ country_event = {
 	desc = ww1_russia_common.28.d
 	picture = GFX_report_event_german_reichstag_gathering
 	is_triggered_only = yes
-	fire_only_once = yes
+	fire_only_once = no
 	immediate = {
 		hidden_effect = {
-			add_manpower = -50
+			random_owned_state = {
+				limit = {
+					state_population_k > 1000
+				}
+				add_manpower = -50
+			}
 			add_stability = -0.01
 			add_political_power = -25
-			set_country_flag = RUS_strikes_suppressed
 		}
 	}
 	option = {
 		name = ww1_russia_common.28.a
 		effect_tooltip = {
-			add_manpower = -50
+			random_owned_state = {
+				limit = {
+					state_population_k > 1000
+				}
+				add_manpower = -50
+			}
 			add_stability = -0.01
 			add_political_power = -25
-			remove_ideas = RUS_strikes
 		}
 	}
 }
@@ -1062,6 +1059,18 @@ unit_leader_event = {
 			}
 			show_ideas_tooltip = RUS_ivan_grigorovich
 		}
+	}
+}
+#Strike Calms Down
+country_event = {
+	id = ww1_russia_common.38
+	title = ww1_russia_common.38.t
+	desc = ww1_russia_common.38.d
+	picture = GFX_report_event_german_reichstag_gathering
+	is_triggered_only = yes
+	fire_only_once = no
+	option = {
+		name = ww1_russia_common.38.a
 	}
 }
 

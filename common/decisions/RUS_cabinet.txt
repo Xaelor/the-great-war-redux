@@ -1,4 +1,4 @@
-#Stolypin decisions
+#Stolypin mechanic
 RUS_state_council_gui_decision_category = {
 	RUS_western_zemstvo_reform_deadline = {
 		icon = GFX_decision_generic_political_discourse
@@ -58,7 +58,7 @@ RUS_state_council_gui_decision_category = {
 		}
 	}
 }
-#Kokovtsov decisions
+#Kokovtsov mechanic
 RUS_parliament_gui_decision_category = {
 	RUS_kokovtsov_resignation_mission = {
 		icon = GFX_decision_generic_political_discourse
@@ -711,7 +711,6 @@ RUS_reforms_decision_category = {
 			}
 		}
 		modifier = {
-			political_power_cost = 0.1
 			custom_modifier_tooltip = RUS_strikes_wont_occur_tt
 		}
 		days_remove = 100
@@ -724,9 +723,23 @@ RUS_reforms_decision_category = {
 							has_country_flag = RUS_lena_massacre
 						}
 					}
-					random = {
-						chance = 25
-						country_event = ww1_russia_common.13
+					random_list = {
+						25 = {
+							country_event = ww1_russia_common.13
+						}
+						75 = {
+							country_event = ww1_russia_common.27
+						}
+					}
+				}
+				else = {
+					random_list = {
+						25 = {
+							country_event = ww1_russia_common.28
+						}
+						75 = {
+							country_event = ww1_russia_common.27
+						}
 					}
 				}
 			}
@@ -990,7 +1003,7 @@ RUS_parliament_gui_decision_category = {
 		}
 	}
 }
-#Government of Public Trust Mechanic
+#Government of Public Trust mechanic
 RUS_parliament_gui_decision_category = {
 	RUS_mandate_of_reform_mission = {
 		icon = GFX_decision_generic_political_discourse
@@ -1072,5 +1085,53 @@ RUS_reforms_decision_category = {
 			}
 		}
 		cost = 50
+	}
+}
+#Reformist mechanic
+RUS_parliament_gui_decision_category = {
+}
+RUS_reforms_decision_category = {
+	#Negotiate with strikers
+	RUS_negotiate_with_strikers_decision = {
+		icon = GFX_decision_oppression
+		allowed = {
+			original_tag = RUS
+		}
+		available = {
+			has_idea = RUS_strikes
+		}
+		visible = {
+			has_revolution = no
+			has_completed_focus = RUS_negotiate_with_strikers
+			any_character = {
+				is_prime_minister = yes
+				is_reformist = yes
+			}
+		}
+		modifier = {
+			stability_factor = 0.02
+			political_power_cost = 0.1
+			consumer_goods_factor = 0.1
+			custom_modifier_tooltip = RUS_strikes_wont_occur_tt
+		}
+		days_remove = 100
+		complete_effect = {
+			remove_ideas = RUS_strikes
+			hidden_effect = {
+				country_event = ww1_russia_common.38
+			}
+		}
+		cost = 10
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_revolution = yes
+					any_character = {
+						is_prime_minister = yes
+						is_reformist = no
+					}
+				}
+			}
+		}
 	}
 }
