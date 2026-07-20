@@ -171,6 +171,10 @@ TGWR_great_power_politics = {
 			}
 			has_war_with = FRA
 		}
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
 		complete_effect = {
 			custom_effect_tooltip = current_schlieffen_plan_buffs
 			custom_effect_tooltip = empty_space_tt
@@ -337,6 +341,10 @@ TGWR_great_power_politics = {
 				is_in_faction_with = FROM
 			}
 		}
+		targets = {
+			MEX
+		}
+		targets_dynamic = yes
 		target_trigger = {
 			FROM = {
 				original_tag = MEX
@@ -643,6 +651,7 @@ TGWR_great_power_politics = {
 			tag = GER
 		}
 		visible = {
+			is_great_war_ongoing = yes
 			great_power_politics_great_war_visible = yes
 			FROM = {
 				has_capitulated = no 
@@ -1284,9 +1293,6 @@ TGWR_great_power_politics = {
 		is_good = no
 		allowed = {
 			original_tag = GER
-		}
-		visible = {
-			tag = GER
 		}
 		available = {
 			OR = {
@@ -3375,6 +3381,21 @@ GER_mittelafrika_project = {
 								give_military_access = PREV
 							}
 						}
+						if = {
+							limit = {
+								GOB = {
+									exists = yes
+									NOT = {
+										has_war_with = GER
+										has_war_with = PREV
+									}
+								}
+							}
+							GOB = {
+								give_military_access = GER
+								give_military_access = PREV
+							}
+						}
 					}
 				}
 			}
@@ -3490,36 +3511,6 @@ GER_mittelafrika_project = {
 			}
 			1036 = {
 				transfer_state_to = ROOT
-			}
-			if = {
-				limit = {
-					ETH = {
-						exists = yes
-						NOT = {
-							has_war_with = GER
-							has_war_with = MAF
-						}
-					}
-				}
-				ETH = {
-					give_military_access = GER
-					give_military_access = MAF
-				}
-			}
-			if = {
-				limit = {
-					AFA = {
-						exists = yes
-						NOT = {
-							has_war_with = GER
-							has_war_with = MAF
-						}
-					}
-				}
-				AFA = {
-					give_military_access = GER
-					give_military_access = MAF
-				}
 			}
 		}
 	}
@@ -5185,7 +5176,6 @@ interwar_decisions = {
 			}
 		}
 		visible = {
-			tag = GER
 			has_global_flag = interbellum
 			has_global_flag = karl_liebknecht_dead
 			has_government = democratic
@@ -10811,8 +10801,10 @@ GER_bundesrat_category = {
 	GER_law_on_the_constitution_for_alsace_lorraine_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -10866,8 +10858,10 @@ GER_bundesrat_category = {
 	GER_employment_agency_act_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -10921,8 +10915,10 @@ GER_bundesrat_category = {
 	GER_prussian_electoral_reform_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -10976,8 +10972,10 @@ GER_bundesrat_category = {
 	GER_health_insurance_act_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11031,8 +11029,10 @@ GER_bundesrat_category = {
 	GER_hausarbeitsgesetz_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11086,8 +11086,10 @@ GER_bundesrat_category = {
 	GER_law_on_rustungswende_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11141,8 +11143,10 @@ GER_bundesrat_category = {
 	GER_limited_army_bill_law_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11195,8 +11199,10 @@ GER_bundesrat_category = {
 	GER_first_army_law_cen_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11249,8 +11255,10 @@ GER_bundesrat_category = {
 	GER_second_army_law_cen_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11304,8 +11312,10 @@ GER_bundesrat_category = {
 	GER_five_year_army_law_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11360,8 +11370,10 @@ GER_bundesrat_category = {
 	GER_law_on_the_reich_and_nationality_left_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11414,8 +11426,10 @@ GER_bundesrat_category = {
 	GER_wealth_tax_law_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11468,8 +11482,10 @@ GER_bundesrat_category = {
 	GER_1912_liberal_budget_law_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11523,8 +11539,10 @@ GER_bundesrat_category = {
 	GER_law_on_hollwegs_national_pension_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11579,8 +11597,10 @@ GER_bundesrat_category = {
 	GER_law_on_discrimitory_national_pension_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11770,8 +11790,10 @@ GER_bundesrat_category = {
 	GER_law_on_the_reich_and_nationality_right_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11825,8 +11847,10 @@ GER_bundesrat_category = {
 	GER_law_on_raising_tariffs_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11879,8 +11903,10 @@ GER_bundesrat_category = {
 	GER_fith_fleet_act_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11933,8 +11959,10 @@ GER_bundesrat_category = {
 	GER_law_on_polish_landholders_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -11993,8 +12021,10 @@ GER_bundesrat_category = {
 	GER_1912_conservative_budget_law_bund = {
 		icon = eng_trade_unions_support
 		cost = 10
-		visible = {
+		allowed = {
 			tag = GER
+		}
+		visible = {
 			OR = {
 				AND = {
 					is_debug = yes
@@ -14701,7 +14731,6 @@ GER_economic_actions = {
 			}
 		}
 		visible = {
-			tag = GER
 			has_completed_focus = GER_state_munitions
 			NOT = {
 				has_global_flag = interbellum
@@ -14740,7 +14769,6 @@ GER_economic_actions = {
 			}
 		}
 		visible = {
-			tag = GER
 			has_completed_focus = GER_state_munitions
 			NOT = {
 				has_global_flag = interbellum
@@ -14779,7 +14807,6 @@ GER_economic_actions = {
 			}
 		}
 		visible = {
-			tag = GER
 			has_completed_focus = GER_state_munitions
 			NOT = {
 				has_global_flag = interbellum
@@ -14823,7 +14850,6 @@ GER_economic_actions = {
 			}
 		}
 		visible = {
-			tag = GER
 			has_completed_focus = GER_conduct_a_national_census
 			64 = {
 				is_owned_and_controlled_by = ROOT
@@ -14864,7 +14890,6 @@ GER_economic_actions = {
 		}
 		custom_cost_text = decision_cost_3_civ
 		visible = {
-			tag = GER
 			has_completed_focus = GER_conduct_a_national_census
 			1165 = {
 				is_owned_and_controlled_by = ROOT
@@ -14919,7 +14944,6 @@ GER_economic_actions = {
 			}
 		}
 		visible = {
-			tag = GER
 			has_completed_focus = GER_conduct_a_national_census
 			873 = {
 				is_owned_and_controlled_by = ROOT
@@ -14967,7 +14991,6 @@ GER_economic_actions = {
 			}
 		}
 		visible = {
-			tag = GER
 			has_completed_focus = GER_conduct_a_national_census
 			42 = {
 				is_owned_and_controlled_by = ROOT
@@ -15015,7 +15038,6 @@ GER_economic_actions = {
 			}
 		}
 		visible = {
-			tag = GER
 			has_completed_focus = GER_conduct_a_national_census
 			1185 = {
 				is_owned_and_controlled_by = ROOT
@@ -15094,7 +15116,6 @@ GER_military_constructions = {
 			controls_province = 3447
 		}
 		visible = {
-			tag = GER
 			has_war = yes
 		}
 		on_map_mode = map_and_decisions_view
@@ -15169,7 +15190,6 @@ GER_military_constructions = {
 			controls_province = 11483
 		}
 		visible = {
-			tag = GER
 			has_war = yes
 		}
 		on_map_mode = map_and_decisions_view
@@ -15244,7 +15264,6 @@ GER_military_constructions = {
 			controls_province = 3476
 		}
 		visible = {
-			tag = GER
 			has_war = yes
 		}
 		on_map_mode = map_and_decisions_view
@@ -15319,7 +15338,6 @@ GER_military_constructions = {
 			controls_province = 3402
 		}
 		visible = {
-			tag = GER
 			has_war = yes
 		}
 		on_map_mode = map_and_decisions_view
@@ -15394,7 +15412,6 @@ GER_military_constructions = {
 			controls_province = 6560
 		}
 		visible = {
-			tag = GER
 			has_war = yes
 		}
 		on_map_mode = map_and_decisions_view
@@ -15469,7 +15486,6 @@ GER_military_constructions = {
 			controls_province = 13081
 		}
 		visible = {
-			tag = GER
 			has_war = yes
 		}
 		on_map_mode = map_and_decisions_view
@@ -15544,7 +15560,6 @@ GER_military_constructions = {
 			controls_province = 6598
 		}
 		visible = {
-			tag = GER
 			has_war = yes
 		}
 		on_map_mode = map_and_decisions_view
@@ -15619,7 +15634,6 @@ GER_military_constructions = {
 			controls_province = 9444
 		}
 		visible = {
-			tag = GER
 			has_war = yes
 		}
 		on_map_mode = map_and_decisions_view
@@ -15694,7 +15708,6 @@ GER_military_constructions = {
 			controls_province = 3560
 		}
 		visible = {
-			tag = GER
 			has_war = yes
 		}
 		on_map_mode = map_and_decisions_view
@@ -15766,7 +15779,6 @@ GER_military_constructions = {
 			}
 		}
 		visible = {
-			tag = GER
 			has_completed_focus = GER_fortify_the_russian_border
 			NOT = {
 				has_global_flag = interbellum
@@ -15806,7 +15818,6 @@ GER_military_constructions = {
 			}
 		}
 		visible = {
-			tag = GER
 			has_completed_focus = GER_fortify_the_russian_border
 			NOT = {
 				has_global_flag = interbellum
@@ -15852,7 +15863,6 @@ GER_military_constructions = {
 			}
 		}
 		visible = {
-			tag = GER
 			has_completed_focus = GER_fortify_the_russian_border
 			NOT = {
 				has_global_flag = interbellum
@@ -15905,7 +15915,6 @@ GER_military_constructions = {
 			}
 		}
 		visible = {
-			tag = GER
 			has_completed_focus = GER_fortify_elsass
 			NOT = {
 				has_global_flag = interbellum
@@ -15952,7 +15961,6 @@ GER_military_constructions = {
 			}
 		}
 		visible = {
-			tag = GER
 			has_completed_focus = GER_fortify_elsass
 			NOT = {
 				has_global_flag = interbellum
@@ -15999,7 +16007,6 @@ GER_military_constructions = {
 			}
 		}
 		visible = {
-			tag = GER
 			has_completed_focus = GER_fortify_elsass
 			NOT = {
 				has_global_flag = interbellum
