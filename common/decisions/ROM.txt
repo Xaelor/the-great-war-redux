@@ -1152,7 +1152,8 @@ ROM_kings_country_category = {
 	
 }
 
-GER_great_war = {
+TGWR_great_power_politics = {
+	#great_power_politics_misc
 	ROM_unite_with_moldova = {
 		icon = GFX_decision_generic_speech
 		allowed = {
@@ -1165,6 +1166,7 @@ GER_great_war = {
 			}
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			country_exists = MOL
 		}
 		fire_only_once = yes
@@ -1184,18 +1186,25 @@ GER_great_war = {
 		allowed = {
 			original_tag = ROM
 		}
+		targets = {
+			RUC
+		}
 		target_trigger = {
 			FROM = {
+				owns_state = 78
 				controls_state = 78		
 				is_subject = yes
-				tag = RUC
 				NOT = {
 					is_in_faction_with = ENT
 					is_in_faction_with = GER
 				}
 			}
 		}
-		target_array = 78.owner
+		highlight_states = {
+			highlight_state_targets = {
+				state = 78
+			}
+		}
 		fire_only_once = yes
 		available = {
 			has_war = no
@@ -1316,6 +1325,7 @@ GER_great_war = {
 			}	
 		}
 	}
+	#great_power_politics_great_war
 	ROM_armistice_of_focsani_decision = {
 		icon = GFX_decision_generic_break_treaty
 		cost = 0
@@ -1334,6 +1344,7 @@ GER_great_war = {
 			# ^ broken
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			has_war_with = GER
 			has_global_flag = great_war
 			NOT = {
@@ -1410,6 +1421,7 @@ GER_great_war = {
 		}
 	}
 	ROM_treaty_of_bucharest = {
+		name = ROM_treaty_of_bucharest_mission
 		icon = GFX_decision_generic_break_treaty
 		cost = 0
 		allowed = {
@@ -1423,6 +1435,7 @@ GER_great_war = {
 			}
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			has_global_flag = great_war
 			has_global_flag = ROM_treaty_doable
 			NOT = {
@@ -1501,6 +1514,7 @@ GER_great_war = {
 			}
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			is_great_war_ongoing = yes
 			NOT = {
 				has_country_flag = ROM_collaborationist_tag
@@ -1706,11 +1720,26 @@ GER_great_war = {
 	}
 }
 
-foreign_politics = {
+TGWR_great_power_politics = {
+	#great_power_politics_balkan_powder_keg
 	ROM_balkan_war_intervention_decision = {
 		icon = GFX_decision_generic_prepare_civil_war
 		allowed = {
 			original_tag = ROM
+		}
+		targets = {
+			BUL
+		}
+		target_trigger = {
+			FROM = {
+				has_war_with = SER
+			}
+		}
+		target_root_trigger = {
+			NOT = {
+				has_global_flag = kis_secondbalkanwar_victory
+				has_global_flag = kis_secondbalkanwar_lose
+			}
 		}
 		available = {
 			is_subject = no
@@ -1721,6 +1750,7 @@ foreign_politics = {
 			is_in_faction = no
 		}
 		visible = {
+			great_power_politics_balkan_powder_keg_visible = yes
 			NOT = {
 				has_war_together_with = GER
 				has_war_together_with = FRA
@@ -1747,11 +1777,8 @@ foreign_politics = {
 					has_war_together_with = FRA
 				}
 			}
-			BUL = {
-				has_war_with = SER
-			}
 		}
-		war_with_on_remove = BUL
+		war_with_target_on_remove = yes
 		fire_only_once = yes
 		days_remove = 7
 		ai_will_do = {
@@ -1797,6 +1824,20 @@ foreign_politics = {
 		allowed = {
 			original_tag = ROM
 		}
+		targets = {
+			BUL
+		}
+		target_trigger = {
+			FROM = {
+				has_war_with = SER
+			}
+		}
+		target_root_trigger = {
+			NOT = {
+				has_global_flag = kis_secondbalkanwar_victory
+				has_global_flag = kis_secondbalkanwar_lose
+			}
+		}
 		available = {
 			is_subject = no
 			BUL = {
@@ -1807,13 +1848,7 @@ foreign_politics = {
 		}
 		visible = {
 			NOT = {
-				has_war_together_with = GER
-				has_war_together_with = FRA
-			}
-			NOT = {
 				has_global_flag = kis_secondbalkanwar_victory
-			}
-			NOT = {
 				has_global_flag = kis_secondbalkanwar_lose
 			}
 			SER = {
@@ -1831,9 +1866,6 @@ foreign_politics = {
 					is_in_faction_with = FRA
 					has_war_together_with = FRA
 				}
-			}
-			BUL = {
-				has_war_with = SER
 			}
 		}
 		fire_only_once = yes
@@ -1956,7 +1988,7 @@ peace_deals = {
 
 economy_decisions = {
 	ROM_fix_the_railways = {
-		icon = GFX_decision_generic_construction
+		icon = GFX_decision_generic_railway
 		cost = 50
 		days_remove = 190
 		allowed = {
@@ -2041,12 +2073,13 @@ political_actions = {
 		}
 	}
 	ROM_encourage_aromanian_migration = {
-		icon = GFX_none
+		icon = GFX_decision_eng_blackshirt_march
 		cost = 10
 		days_remove = 40
 		allowed = {
 			original_tag = ROM
 		}
+		highlight_states = { highlight_state_targets = { state = 805 } }
 		available = {
 			has_completed_focus = ROM_encourage_romanian_migration_dobruja
 		}
