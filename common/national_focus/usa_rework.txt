@@ -6698,7 +6698,7 @@ focus_tree = {
 						id = ww1_USA_wilson.2
 					}
 				}
-				set_global_flag = no_trade
+				set_global_flag = Usa_no_trade
 			}
 			else_if = {
 				limit = {
@@ -6858,6 +6858,9 @@ hidden_effect = {
 		}
 		completion_reward = {
 			set_variable = {
+				USA_new_nationalism_local_resources = 0
+			}
+			set_variable = {
 				USA_new_nationalism_stability = 0
 			}
 			set_variable = {
@@ -6957,13 +6960,15 @@ hidden_effect = {
 			focus = USA_pork_barell_politics
 		}
 		cost = 5
-		x = 4
+		x = 5
 		y = 1
 		available = {
 		}
 		completion_reward = {
-			
-			
+			add_to_variable = {
+					USA_the_peoples_ledger_support_base = 5
+					tooltip = USA_modify_RLB_tt
+				}
 		}
 	}
 	focus = {
@@ -7121,6 +7126,30 @@ hidden_effect = {
 		}
 	}
 	focus = {
+		id = USA_keep_calm_and_carry_a_big_stick
+		icon = GFX_focus_RAJ_to_shake_the_world
+		relative_position_id = USA_progressive_eugenics
+		prerequisite = {
+			focus = USA_progressive_eugenics
+		}
+		cost = 5
+		x = 2
+		y = 1
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = USA_rlc_noh_tt
+					check_variable = {
+				var = USA_the_peoples_ledger_support_congress
+				value = 30
+				compare = greater_than_or_equals
+			}
+			}
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
 		id = USA_banning_child_labor
 		icon = GFX_focus_generic_workers
 		relative_position_id = USA_progressive_eugenics
@@ -7171,9 +7200,21 @@ hidden_effect = {
 		x = -1
 		y = 1
 		available = {
+			custom_trigger_tooltip = {
+				tooltip = USA_rlc_noh_tt
+					check_variable = {
+				var = USA_the_peoples_ledger_support_congress
+				value = 30
+				compare = greater_than_or_equals
+			}
+			}
 		}
 		completion_reward = {
-			
+			add_ideas = USA_bureau_of_roads
+			add_to_variable = {
+					USA_the_peoples_ledger_support_congress = -5
+					tooltip = USA_modify_RLCO_tt
+				}
 		}
 	}
 	focus = {
@@ -7404,34 +7445,7 @@ hidden_effect = {
 				}
 		}
 	}
-	focus = {
-		id = USA_8_hour_work_week_roosevelt
-		icon = GFX_goal_workers_rights
-		relative_position_id = USA_cover_sick_leave_and_accident_insurance
-		prerequisite = {
-			focus = USA_conservation_programs
-			focus = USA_national_bank_roosevelt
-		}
-		cost = 5
-		x = -3
-		y = 1
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = USA_rlc_noh_tt
-			}
-			check_variable = {
-				var = USA_the_peoples_ledger_support_congress
-				value = 30
-				compare = greater_than_or_equals
-			}
-		}
-		completion_reward = {
-				add_to_variable = {
-					USA_the_peoples_ledger_support_congress = -5
-					tooltip = USA_modify_RLCO_tt
-				}
-		}
-	}
+	
 	focus = {
 		id = USA_social_security
 		icon = GFX_focus_generic_befriend_usa
@@ -7712,7 +7726,11 @@ hidden_effect = {
 		available = {
 		}
 		completion_reward = {
-		
+		USA_workers_rights_improve = yes
+		add_to_variable = {
+				USA_the_peoples_ledger_support_corporations = -5
+				tooltip = USA_modify_RLC_tt
+			}
 		}
 	}
 	focus = {
@@ -7740,7 +7758,9 @@ hidden_effect = {
 			}
 		}
 		completion_reward = {
-			
+			unlock_decision_tooltip = USA_break_up_bad_stuff
+			custom_effect_tooltip = 3_times.tt
+			custom_effect_tooltip = trustbust.tt
 		}
 	}
 	focus = {
@@ -7767,6 +7787,14 @@ hidden_effect = {
 			}
 		}
 		completion_reward = {
+			custom_effect_tooltip = federal_tt.tt
+				hidden_effect = {
+					country_event = {
+						days = 140
+						id = ww1_USA_wilson.2
+					}
+				}
+				set_global_flag = Usa_no_trade
 			
 		}
 	}
@@ -7783,6 +7811,16 @@ hidden_effect = {
 			focus = USA_goldilocks_and_the_three_trusts
 		}
 		completion_reward = {
+			custom_effect_tooltip = USA_modify_new_nationalism_tt
+			add_to_variable = {
+				USA_new_nationalism_local_resources = 0.05
+				tooltip = local_resources_factor_tt
+			}
+			add_to_variable = {
+				USA_the_peoples_ledger_support_corporations = 10
+				tooltip = USA_modify_RLC_tt
+			}
+			add_political_power = 100
 		}
 	}
 	focus = {
@@ -7852,7 +7890,6 @@ hidden_effect = {
 		y = 1
 		prerequisite = {
 			focus = USA_mary_jones_mining_standards_act
-			focus = USA_8_hour_work_week_roosevelt
 			focus = USA_commerce_collectivate
 		}
 		completion_reward = {
@@ -7873,7 +7910,6 @@ hidden_effect = {
 		y = 1
 		prerequisite = {
 			focus = USA_mary_jones_mining_standards_act
-			focus = USA_8_hour_work_week_roosevelt
 			focus = USA_commerce_collectivate
 			focus = USA_national_health_coverage
 		}
