@@ -135,7 +135,7 @@ focus_tree = {
 	}
 	focus = {
 		id = INS_expand_bases
-		icon = GFX_focus_generic_advanced_military_studies
+		icon = GFX_focus_INS_evacuate_soldiers_to_australia
 		available = {
 			
 		}
@@ -145,14 +145,14 @@ focus_tree = {
 		relative_position_id = INS_request_dutch_funding
 		available_if_capitulated = yes
 		completion_reward = {
-			
+			add_manpower = 5000
+			add_ideas = limited_conscription
 		}
 		ai_will_do = {
 			factor = 500
 		}
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
-			
 		}
 		cost = 5
 		x = -1
@@ -202,7 +202,7 @@ focus_tree = {
 	}
 	focus = {
 		id = INS_create_mlknil
-		icon = GFX_focus_SMB_purchase_aircraft
+		icon = GFX_goal_generic_build_airforce
 		available = {
 			
 		}
@@ -212,15 +212,46 @@ focus_tree = {
 		relative_position_id = INS_request_dutch_funding
 		available_if_capitulated = yes
 		completion_reward = {
-			air_experience = 10
+			air_experience = 30
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
 			add_tech_bonus = {
 				category = cat_scout_plane
 				uses = 1
-				bonus = 0.75
+				bonus = 0.5
 			}
-			unlock_decision_tooltip = INS_create_kalidjati_airbase
-			unlock_decision_tooltip = INS_create_andir_airbase
-			unlock_decision_tooltip = INS_create_tjililitan_airbase
+			add_tech_bonus = {
+				category = light_fighter
+				uses = 1
+				bonus = 0.5
+			}
+		}
+		ai_will_do = {
+			factor = 500
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			
+		}
+		cost = 5
+		x = 0
+		y = 2
+	}
+	focus = {
+		id = INS_request_airship_deliveries
+		icon = GFX_focus_French_Air_Force
+		available = {
+			
+		}
+		prerequisite = {
+			focus = INS_create_mlknil
+		}
+		relative_position_id = INS_create_mlknil
+		available_if_capitulated = yes
+		completion_reward = {
 			unlock_decision_tooltip = INS_buy_french_aeroplanes
 			unlock_decision_tooltip = INS_buy_dutch_aeroplanes
 			unlock_decision_tooltip = INS_buy_german_aeroplanes
@@ -233,8 +264,35 @@ focus_tree = {
 			
 		}
 		cost = 5
-		x = 0
-		y = 2
+		x = 1
+		y = 1
+	}
+	focus = {
+		id = INS_construct_airbases
+		icon = GFX_goal_generic_air_production
+		available = {
+			
+		}
+		prerequisite = {
+			focus = INS_create_mlknil
+		}
+		relative_position_id = INS_create_mlknil
+		available_if_capitulated = yes
+		completion_reward = {
+			unlock_decision_tooltip = INS_create_kalidjati_airbase
+			unlock_decision_tooltip = INS_create_andir_airbase
+			unlock_decision_tooltip = INS_create_tjililitan_airbase
+		}
+		ai_will_do = {
+			factor = 500
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			
+		}
+		cost = 5
+		x = -1
+		y = 1
 	}
 	focus = {
 		id = INS_indigenous_in_army
@@ -1142,7 +1200,7 @@ focus_tree = {
 		id = INS_bandung_institute_technology
 		icon = GFX_focus_generic_education
 		available = {
-			
+			num_of_factories > 19
 		}
 		available_if_capitulated = yes
 		relative_position_id = INS_establish_credit_bank
@@ -1297,6 +1355,11 @@ focus_tree = {
 			focus = INS_industrialise_our_islands
 		}
 		completion_reward = {
+			add_stability = -0.025
+			add_popularity = {
+				ideology = ROOT
+				popularity = -0.05
+			}
 			add_tech_bonus = {
 				category = industry
 				bonus = 0.5
@@ -1546,6 +1609,7 @@ focus_tree = {
 			focus = INS_industrialise_our_islands
 		}
 		completion_reward = {
+			add_political_power = -50
 			custom_effect_tooltip = INS_modify_industrial_effort_tt
 			add_to_variable = {
 				HOL_variable_ie_civ_construction = 0.1
