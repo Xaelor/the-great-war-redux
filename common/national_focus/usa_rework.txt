@@ -388,14 +388,15 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = USA_question_american_neutrality
-		icon = GFX_goal_support_democracy
-		relative_position_id = USA_appoint_knox
+		id = USA_intervention_in_belguim
+		icon = GFX_focus_BEL_independent_neutral_and_loyal
+	relative_position_id = USA_appoint_knox
 		cost = 3
 		x = 6
 		y = 1
-		prerequisite = {
-			focus = USA_appoint_knox
+		cost = 3
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
 		}
 		mutually_exclusive = {
 			focus = USA_re_affirm_kill_all_researchers
@@ -403,25 +404,38 @@ focus_tree = {
 		available = {
 			has_war = no
 			has_global_flag = great_war
+			GER = {
+				has_war_with = BEL
+			}
+			has_completed_focus = USA_the_bull_moose_presidency
 		}
 		prerequisite = {
-			focus = USA_peace_diplomacy
+			focus = USA_appoint_knox
 		}
+		
 		completion_reward = {
-			add_stability = -0.05
-			add_war_support = 0.05
+			declare_war_on = {
+				target = GER
+				type = topple_government
+			}
+		unlock_national_focus = USA_the_final_war
 		}
 	}
 	focus = {
 		id = USA_re_affirm_kill_all_researchers
 		icon = GFX_goal_generic_neutrality_focus
-		relative_position_id = USA_question_american_neutrality
+	relative_position_id = USA_appoint_knox
+	mutually_exclusive = {
+			focus = USA_intervention_in_belguim
+		}
+		cost = 3
+		x = 8
+		y = 1
 		cost = 3
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
 		}
-		x = 2
-		y = 0
+		
 		available = {
 			has_war = no
 			has_global_flag = great_war
@@ -429,9 +443,7 @@ focus_tree = {
 		prerequisite = {
 			focus = USA_appoint_knox
 		}
-		mutually_exclusive = {
-			focus = USA_question_american_neutrality
-		}
+		
 		completion_reward = {
 			add_stability = 0.05
 			add_war_support = -0.05
@@ -440,16 +452,15 @@ focus_tree = {
 	focus = {
 		id = USA_neutrality_in_europes_war
 		icon = GFX_focus_SWE_privately_managed_vacation
-		relative_position_id = USA_question_american_neutrality
+		relative_position_id = USA_re_affirm_kill_all_researchers
 		cost = 3
-		x = 1
+		x = 0
 		y = 1
 		available = {
 			has_war = no
 		}
 		prerequisite = {
 			focus = USA_re_affirm_kill_all_researchers
-			focus = USA_question_american_neutrality
 		}
 		completion_reward = {
 			custom_effect_tooltip = 1_prog_level.tt
@@ -472,11 +483,44 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = USA_loans_to_the_entente
-		icon = GFX_focus_mex_privatisation
-		relative_position_id = USA_question_american_neutrality
+		id = USA_friend_of_liberty
+		icon = GFX_focus_consolidate_entente
+		relative_position_id = USA_re_affirm_kill_all_researchers
 		cost = 4
-		x = 0
+		x = -2
+		y = 2
+		mutually_exclusive = {
+			focus = USA_maximizing_money
+		}
+		available = {
+			has_war = no
+		}
+		ai_will_do = {
+			base = 10000
+		}
+		available = {
+			has_global_flag = USA_british_request_loans
+		}
+		prerequisite = {
+			focus = USA_neutrality_in_europes_war
+			focus = USA_intervention_in_belguim
+		}
+		bypass = {
+			has_country_flag = USA_failed_loans_to_uk
+		}
+		completion_reward = {
+			
+		}
+	}
+		focus = {
+		id = USA_maximizing_money
+		icon = GFX_focus_generic_banking
+		mutually_exclusive = {
+			focus = USA_friend_of_liberty
+		}
+		relative_position_id = USA_re_affirm_kill_all_researchers
+		cost = 4
+		x = 2
 		y = 2
 		available = {
 			has_war = no
@@ -489,6 +533,32 @@ focus_tree = {
 		}
 		prerequisite = {
 			focus = USA_neutrality_in_europes_war
+		}
+		bypass = {
+			has_country_flag = USA_failed_loans_to_uk
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = USA_loans_to_the_entente
+		icon = GFX_focus_mex_privatisation
+		relative_position_id = USA_friend_of_liberty
+		cost = 4
+		x = 0
+		y = 1
+		available = {
+			has_war = no
+		}
+		ai_will_do = {
+			base = 10000
+		}
+		available = {
+			has_global_flag = USA_british_request_loans
+		}
+		prerequisite = {
+			focus = USA_friend_of_liberty
 		}
 		bypass = {
 			has_country_flag = USA_failed_loans_to_uk
@@ -512,29 +582,31 @@ focus_tree = {
 	focus = {
 		id = USA_neutrality_with_a_spine
 		icon = GFX_goal_generic_propaganda
-		relative_position_id = USA_question_american_neutrality
+		relative_position_id = USA_friend_of_liberty
 		cost = 5
-		x = 2
-		y = 2
+		x = 3
+		y = 1
 		available = {
 			has_war = no
 		}
 		available = {
 		}
 		prerequisite = {
-			focus = USA_neutrality_in_europes_war
+			focus = USA_friend_of_liberty
+			focus = USA_maximizing_money
 		}
 		completion_reward = {
 			add_ideas = USA_spine
 		}
 	}
+	
 	focus = {
 		id = USA_support_the_war_preparedness_campaign
 		icon = GFX_goal_generic_military_sphere
-		relative_position_id = USA_question_american_neutrality
+		relative_position_id = USA_re_affirm_kill_all_researchers
 		cost = 5
-		x = 3
-		y = 3
+		x = 1
+		y = 4
 		available = {
 			has_war = no
 		}
@@ -553,13 +625,13 @@ focus_tree = {
 	focus = {
 		id = USA_increase_food_trade
 		icon = GFX_focus_generic_coffee
-		relative_position_id = USA_question_american_neutrality
+		relative_position_id = USA_re_affirm_kill_all_researchers
 		prerequisite = {
 			focus = USA_loans_to_the_entente
 		}
 		cost = 5
-		x = -1
-		y = 3
+		x = -3
+		y = 4
 		available = {
 			has_war = no
 		}
@@ -590,13 +662,13 @@ focus_tree = {
 	focus = {
 		id = USA_private_arms_contracts
 		icon = GFX_goal_generic_small_arms
-		relative_position_id = USA_question_american_neutrality
+		relative_position_id = USA_re_affirm_kill_all_researchers
 		prerequisite = {
 			focus = USA_loans_to_the_entente
 		}
 		cost = 5
-		x = 1
-		y = 3
+		x = -1
+		y = 4
 		available = {
 			has_war = no
 		}
@@ -831,7 +903,7 @@ focus_tree = {
 	focus = {
 		id = USA_stabilize_hati
 		icon = GFX_goal_generic_occupy_states_ongoing_war
-		relative_position_id = USA_question_american_neutrality
+		relative_position_id = USA_re_affirm_kill_all_researchers
 		cost = 3
 		relative_position_id = USA_supervise_dominican_republic
 		cost = 3
@@ -2815,6 +2887,9 @@ focus_tree = {
 	focus = {
 		id = USA_the_final_war
 		icon = GFX_focus_USA_uncle_sam
+			mutually_exclusive = {
+			focus = USA_a_new_understanding
+		}
 		relative_position_id = USA_private_arms_contracts
 		prerequisite = {
 			focus = USA_private_arms_contracts
@@ -2838,6 +2913,26 @@ focus_tree = {
 					modifier = USA_domestic_front
 				}
 			}
+		}
+	}
+	focus = {
+		id = USA_a_new_understanding
+		icon = GFX_focus_ETH_peacekeeping_forces
+		mutually_exclusive = {
+			focus = USA_the_final_war
+		}
+		relative_position_id = USA_private_arms_contracts
+		prerequisite = {
+			focus = USA_maximizing_money
+		}
+		cost = 2
+		x = 3
+		y = 1
+		available = {
+			has_war_support > 0.7
+		}
+		completion_reward = {
+			
 		}
 	}
 	focus = {
