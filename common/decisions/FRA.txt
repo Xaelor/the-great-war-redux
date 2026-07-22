@@ -529,9 +529,7 @@ TGWR_great_power_politics = {
 		visible = {
 			great_power_politics_scramble_for_africa_visible = yes
 			NOT = {
-				tag = FRC
-			}
-			NOT = { 
+				tag = FRC 
 				has_country_flag = great_war_loser
 				has_subject = FROM
 			}
@@ -540,18 +538,17 @@ TGWR_great_power_politics = {
 			command_power > 9.9
 		}
 		custom_cost_text = decision_cost_CP_10
-		target_trigger = {
-			FROM = {
-				original_tag = TUN
+		targets = {
+			TUN
+		}
+		target_root_trigger = {
+			NOT = {
+				tag = FRC 
+				has_country_flag = great_war_loser
 			}
 		}
-		# target_root_trigger = {
-		# 	NOT = {
-		# 		has_subject = FROM
-		# 	}
-		# }
 		available = {
-			TUN = {
+			FROM = {
 				has_war = no
 				is_subject = no
 			}
@@ -568,11 +565,11 @@ TGWR_great_power_politics = {
 			factor = 10
 		}
 		days_remove = 14
-		war_with_on_remove = TUN
+		war_with_target_on_remove = yes
 		complete_effect = {
 			add_ai_strategy = {
 				type = prepare_for_war
-				id = TUN
+				id = FROM
 				value = 25
 			}
 			hidden_effect = {
@@ -583,7 +580,7 @@ TGWR_great_power_politics = {
 			set_country_flag = france_intervention_started
 			FRA = {
 				declare_war_on = {
-					target = TUN
+					target = FROM
 					type = annex_everything
 				} 
 			}
@@ -594,10 +591,10 @@ TGWR_great_power_politics = {
 		icon = generic_prepare_civil_war
 		days_mission_timeout = 180
 		allowed = {
-			OR = {
-				original_tag = FRA
-				original_tag = TUN
-			}
+			always = no
+		}
+		activation = {
+			always = no
 		}
 		cancel_trigger = {
 			hidden_trigger = {
@@ -676,6 +673,7 @@ TGWR_great_power_politics = {
 		targets_dynamic = yes
 		available = {
 			FROM = {
+				original_tag = RUS
 				any_enemy_country = {
 					OR = {
 						is_major = yes
@@ -865,7 +863,6 @@ FRA_railway_guns = {
 			}
 		}
 		visible = {
-			tag = FRA
 			NOT = {
 				has_global_flag = great_war_ends
 			}
@@ -924,7 +921,6 @@ FRA_railway_guns = {
 			railway_gun_bombardment_factor = 0.50
 		}
 		visible = {
-			tag = FRA
 			NOT = {
 				has_global_flag = great_war_ends
 			}
@@ -971,7 +967,6 @@ FRA_fortifications = {
 			}
 		}
 		visible = {
-			tag = FRA
 		}
 		
 		remove_effect = {
@@ -998,7 +993,6 @@ FRA_fortifications = {
 			}
 		}
 		visible = {
-			tag = FRA
 		}
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
@@ -1047,7 +1041,6 @@ FRA_fortifications = {
 			}
 		}
 		visible = {
-			tag = FRA
 		}
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
@@ -1096,7 +1089,6 @@ FRA_fortifications = {
 			}
 		}
 		visible = {
-			tag = FRA
 		}
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
@@ -1145,7 +1137,6 @@ FRA_fortifications = {
 			}
 		}
 		visible = {
-			tag = FRA
 		}
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
@@ -1194,7 +1185,6 @@ FRA_fortifications = {
 			}
 		}
 		visible = {
-			tag = FRA
 		}
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
@@ -1243,7 +1233,6 @@ FRA_fortifications = {
 			}
 		}
 		visible = {
-			tag = FRA
 		}
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
@@ -1292,7 +1281,6 @@ FRA_fortifications = {
 			}
 		}
 		visible = {
-			tag = FRA
 		}
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
@@ -1341,7 +1329,6 @@ FRA_fortifications = {
 			}
 		}
 		visible = {
-			tag = FRA
 		}
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
@@ -1387,7 +1374,6 @@ FRA_fortifications = {
 			controls_province = 5291
 		}
 		visible = {
-			tag = FRA
 		}
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
@@ -1436,7 +1422,6 @@ FRA_fortifications = {
 			}
 		}
 		visible = {
-			tag = FRA
 		}
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
@@ -1485,7 +1470,6 @@ FRA_fortifications = {
 			}
 		}
 		visible = {
-			tag = FRA
 		}
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
@@ -1534,7 +1518,6 @@ FRA_fortifications = {
 			}
 		}
 		visible = {
-			tag = FRA
 		}
 		on_map_mode = map_and_decisions_view
 		highlight_states = {
@@ -1586,7 +1569,6 @@ FRA_defense_of_france = {
 		}
 		fire_only_once = yes
 		available = {
-			tag = FRA
 			custom_trigger_tooltip = {
 				tooltip = FRA_medium_tanks_on_the_field
 				OR = {
@@ -1628,7 +1610,6 @@ FRA_defense_of_france = {
 		}
 		fire_only_once = yes
 		available = {
-			tag = FRA
 			custom_trigger_tooltip = {
 				tooltip = FRA_light_tanks_on_the_field
 				OR = {
@@ -1723,7 +1704,6 @@ FRA_defense_of_france = {
 			}
 		}
 		visible = {
-			tag = FRA
 			has_civil_war = no
 			is_great_war_ongoing = yes
 			NOT = {
@@ -1774,7 +1754,6 @@ FRA_defense_of_france = {
 			}
 		}
 		visible = {
-			tag = FRA
 			has_civil_war = no
 			owns_state = 16
 			NOT = {
@@ -1986,7 +1965,6 @@ FRA_defense_of_france = {
 			}
 		}
 		visible = {
-			tag = FRA
 			NOT = {
 				has_global_flag = great_war_ends
 			}
@@ -2115,7 +2093,6 @@ FRA_defense_of_france = {
 			}
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_ww1_rearmement_program
 		}
 		on_map_mode = map_and_decisions_view
@@ -2152,7 +2129,6 @@ FRA_defense_of_france = {
 			}
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_ww1_rearmement_program
 		}
 		on_map_mode = map_and_decisions_view
@@ -2190,7 +2166,6 @@ FRA_defense_of_france = {
 			}
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_ww1_rearmement_program
 		}
 		on_map_mode = map_and_decisions_view
@@ -2227,7 +2202,6 @@ FRA_defense_of_france = {
 			}
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_ww1_rearmement_program
 		}
 		on_map_mode = map_and_decisions_view
@@ -2264,7 +2238,6 @@ FRA_defense_of_france = {
 			}
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_ww1_rearmement_program
 		}
 		on_map_mode = map_and_decisions_view
@@ -2301,7 +2274,6 @@ FRA_defense_of_france = {
 			}
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_ww1_rearmement_program
 		}
 		on_map_mode = map_and_decisions_view
@@ -2336,7 +2308,6 @@ FRA_defense_of_france = {
 			
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_aeronotique_militaire
 		}
 		ai_will_do = {
@@ -2368,7 +2339,6 @@ FRA_defense_of_france = {
 			
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_aeronotique_militaire
 		}
 		ai_will_do = {
@@ -2400,7 +2370,6 @@ FRA_defense_of_france = {
 			
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_aeronotique_militaire
 		}
 		ai_will_do = {
@@ -2432,7 +2401,6 @@ FRA_defense_of_france = {
 			
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_aeronotique_militaire
 		}
 		ai_will_do = {
@@ -2464,7 +2432,6 @@ FRA_defense_of_france = {
 			
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_aeronotique_militaire
 		}
 		ai_will_do = {
@@ -2496,7 +2463,6 @@ FRA_defense_of_france = {
 			
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_aeronotique_militaire
 		}
 		ai_will_do = {
@@ -2529,7 +2495,6 @@ FRA_defense_of_france = {
 			
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_aeronotique_militaire
 		}
 		ai_will_do = {
@@ -2562,7 +2527,6 @@ FRA_defense_of_france = {
 			
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_aeronotique_militaire
 		}
 		ai_will_do = {
@@ -2595,7 +2559,6 @@ FRA_defense_of_france = {
 			
 		}
 		visible = {
-			tag = FRA
 			has_country_flag = FRA_aeronotique_militaire
 		}
 		ai_will_do = {
@@ -2643,7 +2606,6 @@ FRA_defense_of_france = {
 			}
 		}
 		visible = {
-			tag = FRA
 		}
 		activation = {
 			always = no
@@ -3273,7 +3235,6 @@ crisis = {
 			}
 		}
 		visible = {
-			tag = FRA
 			has_war = yes
 			OR = {
 				casualties > 1500000
@@ -3315,7 +3276,6 @@ war_measures = {
 			has_active_mission = FRA_army_mutiny_crisis
 		}
 		visible = {
-			tag = FRA
 			has_active_mission = FRA_army_mutiny_crisis
 		}
 		complete_effect = {
@@ -3346,7 +3306,6 @@ war_measures = {
 			has_army_experience > 15
 		}
 		visible = {
-			tag = FRA
 			has_active_mission = FRA_army_mutiny_crisis
 		}
 		modifier = {
@@ -3381,7 +3340,6 @@ war_measures = {
 			has_country_flag = FRA_mutiny_leaders_arrested
 		}
 		visible = {
-			tag = FRA
 			has_active_mission = FRA_army_mutiny_crisis
 		}
 		remove_effect = {
@@ -3412,7 +3370,6 @@ war_measures = {
 			has_country_flag = FRA_mutiny_leaders_arrested
 		}
 		visible = {
-			tag = FRA
 			has_active_mission = FRA_army_mutiny_crisis
 		}
 		remove_effect = {
@@ -3444,7 +3401,6 @@ war_measures = {
 			has_idea = FRA_rebellious_army
 		}
 		visible = {
-			tag = FRA
 			has_idea = FRA_rebellious_army
 		}
 		remove_effect = {
@@ -4325,7 +4281,6 @@ FRA_weapon_seller = {
 		}
 		fire_only_once = no
 		available = {
-			tag = FRA
 			custom_trigger_tooltip = {
 				tooltip = FRA_light_tanks_on_the_field_60
 				OR = {
