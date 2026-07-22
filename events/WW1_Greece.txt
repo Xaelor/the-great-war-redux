@@ -3226,6 +3226,7 @@ country_event = {
 	trigger = {
 		any_country_with_original_tag = {
 			original_tag_to_check = GRE
+			NOT = { tag = ROOT }
 			GRE_has_royalist_government = yes
 			owns_state = 898
 		}
@@ -7641,6 +7642,40 @@ country_event = {
 					factor = 0
 					has_completed_focus = GRE_negotiations_with_entente
 					OR = {
+						1287 = { check_variable = { var = GRE_garrison_control value = 2 compare = less_than } }
+						is_historical_focus_on = yes
+					}
+				}
+				modifier = {
+					factor = 0
+					has_completed_focus = GRE_commit_to_neutrality
+					1287 = { check_variable = { var = GRE_garrison_control value = 4 compare = equals } }
+				}
+				modifier = {
+					factor = 0
+					has_completed_focus = GRE_commit_to_neutrality
+					NOT = { has_country_flag = SPA_secure_the_northern_garrisons_flag }
+				}
+				modifier = {
+					factor = 10
+					1287 = { has_state_flag = GRE_national_schism_recently_chosen }
+				}
+				modifier = {
+					factor = 20
+					has_completed_focus = GRE_commit_to_neutrality
+					is_historical_focus_on = yes
+				}
+				modifier = {
+					factor = 0
+					1287 = { NOT = { is_owned_and_controlled_by = ROOT } }
+				}
+				activate_mission = GRE_expand_influence_in_the_servia_garrison_mission
+			}
+			20 = {
+				modifier = {
+					factor = 0
+					has_completed_focus = GRE_negotiations_with_entente
+					OR = {
 						184 = { check_variable = { var = GRE_garrison_control value = 2 compare = less_than } }
 						is_historical_focus_on = yes
 					}
@@ -8554,6 +8589,7 @@ country_event = {
 							NOT = { state = 184 }
 							NOT = { state = 731 }
 							NOT = { state = 1256 }
+							NOT = { state = 1287 }
 							NOT = { state = 790 }
 							NOT = { state = 974 }
 							NOT = { state = 975 }
@@ -8580,6 +8616,7 @@ country_event = {
 							state = 184
 							state = 731
 							state = 1256
+							state = 1287
 							state = 790
 							state = 974
 							state = 975

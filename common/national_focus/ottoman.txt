@@ -804,9 +804,11 @@ focus_tree = {
 		}
 		available = {
 			OR = {
-				any_country = {
+				any_allied_country = {
 					is_major = yes
-					is_in_faction_with = ROOT
+					NOT = {
+						is_subject_of = ROOT
+					}
 				}
 				custom_trigger_tooltip = {
 					tooltip = has_idea_german_military_command
@@ -5336,6 +5338,7 @@ focus_tree = {
 		}
 		relative_position_id = TUR_undermine_democracy
 		completion_reward = {
+			set_country_flag = TUR_three_pasha_government
 			set_politics = {
 				ruling_party = fascism
 				elections_allowed = no
@@ -7320,6 +7323,9 @@ focus_tree = {
 		prerequisite = {
 			focus = GER_TUR_military_mission
 		}
+		allow_branch = {
+			original_tag = TUR
+		}
 		bypass = {
 			OR = {
 				is_in_faction_with = GER
@@ -7906,8 +7912,7 @@ focus_tree = {
 			}
 			modifier = {
 				add = 10
-				any_country = {
-					has_war_with = ROOT
+				any_enemy_country = {
 					alliance_strength_ratio > 3
 				}
 			}
@@ -10579,6 +10584,7 @@ focus_tree = {
 				controls_state = 1255
 				controls_state = 731
 				controls_state = 1256
+				controls_state = 1287
 				controls_state = 826
 				controls_state = 1257
 				controls_state = 758
@@ -10627,6 +10633,7 @@ focus_tree = {
 						state = 1255
 						state = 731
 						state = 1256
+						state = 1287
 						state = 826
 						state = 1257
 						state = 758
@@ -10898,6 +10905,7 @@ focus_tree = {
 						state = 848
 						state = 1214
 						state = 1240
+						state = 1284
 						state = 1215
 					}
 					TUR_state_has_anyminority_modifier = yes
@@ -12946,8 +12954,21 @@ joint_focus = {
 		}
 	}
 	x = 0
-	y = 3
-	relative_position_id = TUR_continue_german_cooperation
+	y = 0
+	offset = {
+		x = -10
+		y = 2
+		trigger = {
+			original_tag = GER
+		}
+	}
+	offset = {
+		x = 76
+		y = 4
+		trigger = {
+			original_tag = TUR
+		}
+	}
 	completion_reward_joint_originator = {
 		if = {
 			limit = { 
@@ -12968,12 +12989,6 @@ joint_focus = {
 		custom_effect_tooltip = escape_line
 		effect_tooltip = {
 			GER_TUR_military_mission_effect = yes
-		}
-		TUR = {
-			add_power_balance_value = {
-				id = TUR_foreign_alignment
-				value = -0.2
-			}
 		}
 	}
 	ai_will_do = {

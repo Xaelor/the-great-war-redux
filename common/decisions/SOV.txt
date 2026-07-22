@@ -1184,8 +1184,7 @@ peace_deals = {
 			has_global_flag = chinese_eastern_railway_incident
 			NOT = {
 				has_global_flag = khabarovsk_protocol
-			}
-			tag = event_target:fengtian_soviet_war_rus
+			}		
 			FROM = {
 				tag = event_target:fengtian_soviet_war_chi
 				NOT = {
@@ -1200,13 +1199,22 @@ peace_deals = {
 		available = {
 			
 		}
+		targets = {
+			event_target:fengtian_soviet_war_chi
+		}
 		target_trigger = {
 			FROM = {
+				has_war_with = ROOT
 				is_china_or_warlord_no_tt = yes
+			
 			}
 		}
 		target_root_trigger = {
-			has_war_with = FROM
+			tag = event_target:fengtian_soviet_war_rus
+			has_global_flag = chinese_eastern_railway_incident
+			NOT = {
+				has_global_flag = khabarovsk_protocol
+			}
 		}
 		fire_only_once = yes
 		complete_effect = {
@@ -1556,8 +1564,21 @@ SOV_combat_the_counter_revolution = {
 		target_root_trigger = {
 			has_completed_focus = SOV_combat_the_counter_revolution
 		}
+		targets = {
+			KUB
+			DON
+			ORE
+			UCH
+			TBK
+			AMU
+			TER
+			USS
+		}
+		targets_dynamic = yes
 		target_trigger = {
-			FROM = { is_cossack_tag = yes }
+			FROM = {
+				is_cossack_tag_no_tt = yes
+			}
 		}
 		custom_cost_text = decision_cost_CP_5
 		custom_cost_trigger = {
@@ -1606,9 +1627,8 @@ SOV_combat_the_counter_revolution = {
 		available = {
 			OR = {
 				is_neighbor_of = FROM
-				any_other_country = {
+				any_allied_country = {
 					is_neighbor_of = FROM
-					is_ally_with = ROOT
 				}
 			}
 			FROM = {
@@ -1661,8 +1681,7 @@ SOV_combat_the_counter_revolution = {
 				}
 				if = {
 					limit = {
-						any_other_country = {
-							is_ally_with = ROOT
+						any_allied_country = {
 							FROM = {
 								capital_scope = {
 									is_core_of = PREV.PREV
@@ -1670,9 +1689,8 @@ SOV_combat_the_counter_revolution = {
 							}
 						}
 					}
-					random_other_country = {
+					random_allied_country = {
 						limit = {
-							is_ally_with = ROOT
 							FROM = {
 								capital_scope = {
 									is_core_of = PREV.PREV
@@ -1727,7 +1745,8 @@ SOV_combat_the_counter_revolution = {
 					owns_state = 235
 				}
 				is_subject = yes
-				any_other_country = {
+				any_country_with_original_tag = {
+					original_tag_to_check = RUS
 					has_country_flag = RUS_stavropol_tag
 				}
 			}		
@@ -1940,8 +1959,8 @@ SOV_decision_soviet_republics = {
 			is_subject = no
 			has_government = communism
 			has_war_with = UPR
-			any_other_country = {
-				original_tag = UKR
+			any_country_with_original_tag = {
+				original_tag_to_check = UKR
 				has_country_flag = UKR_rumcherod
 				has_government = communism
 				exists = yes
@@ -1957,8 +1976,8 @@ SOV_decision_soviet_republics = {
 				}
 				is_subject = yes
 				hidden_trigger = {
-					any_other_country = {
-						original_tag = UKR
+					any_country_with_original_tag = {
+						original_tag_to_check = UKR
 						has_country_flag = UKR_rumcherod
 						has_government = communism
 						OR = {
@@ -2963,9 +2982,9 @@ SOV_decision_soviet_republics = {
 			}
 	
 		}
+		target_array = subjects
 		target_trigger = {
 			FROM = {
-				is_subject_of = ROOT
 				OR = {
 					original_tag = BLR
 					AND = {
@@ -3237,8 +3256,8 @@ SOV_decision_soviet_republics = {
 		visible = {
 			has_subject = FROM
 			OR = {
-				any_other_country = {
-					original_tag = UKR
+				any_country_with_original_tag = {
+					original_tag_to_check = UKR
 					has_country_flag = UKR_dkr
 					exists = yes
 					has_government = communism
@@ -3246,8 +3265,8 @@ SOV_decision_soviet_republics = {
 						has_war_with = ROOT
 					}
 				}
-				any_other_country = {
-					original_tag = UKR
+				any_country_with_original_tag = {
+					original_tag_to_check = UKR
 					has_country_flag = UKR_rumcherod
 					exists = yes
 					custom_trigger_tooltip = {
@@ -3422,6 +3441,17 @@ SOV_decision_soviet_republics = {
 			create_wargoal = {
 				type = puppet_wargoal_focus
 				target = FROM
+			}
+			if = {
+				limit = { 
+					ABK = {
+						exists = yes
+						has_country_leader_ideology = vanguardism
+					}
+				}
+				annex_country = {
+					target = ABK
+				}
 			}
 		}
 	}
@@ -3663,8 +3693,7 @@ SOV_decision_soviet_republics = {
 			}
 			OR = {
 				is_neighbor_of = FROM
-				any_other_country = {
-					is_ally_with = ROOT
+				any_allied_country = {
 					is_neighbor_of = FROM
 				}
 			}
@@ -4194,9 +4223,8 @@ SOV_decision_soviet_republics = {
 				189 = {
 					OR = {
 						is_owned_and_controlled_by = ROOT
-						any_other_country = {
+						OWNER = {
 							is_subject_of = ROOT
-							owns_state = PREV
 							has_full_control_of_state = PREV
 						}
 					}
@@ -4204,9 +4232,8 @@ SOV_decision_soviet_republics = {
 				11 = {
 					OR = {
 						is_owned_and_controlled_by = ROOT
-						any_other_country = {
+						OWNER = {
 							is_subject_of = ROOT
-							owns_state = PREV
 							has_full_control_of_state = PREV
 						}
 					}
@@ -4214,9 +4241,8 @@ SOV_decision_soviet_republics = {
 				784 = {
 					OR = {
 						is_owned_and_controlled_by = ROOT
-						any_other_country = {
+						OWNER = {
 							is_subject_of = ROOT
-							owns_state = PREV
 							has_full_control_of_state = PREV
 						}
 					}
@@ -4224,9 +4250,8 @@ SOV_decision_soviet_republics = {
 				773 = {
 					OR = {
 						is_owned_by = ROOT
-						any_other_country = {
+						OWNER = {
 							is_subject_of = ROOT
-							owns_state = PREV
 							has_full_control_of_state = PREV
 						}
 					}
@@ -4234,9 +4259,8 @@ SOV_decision_soviet_republics = {
 				95 = {
 					OR = {
 						is_owned_and_controlled_by = ROOT
-						any_other_country = {
+						OWNER = {
 							is_subject_of = ROOT
-							owns_state = PREV
 							has_full_control_of_state = PREV
 						}
 					}
@@ -4244,9 +4268,8 @@ SOV_decision_soviet_republics = {
 				206 = {
 					OR = {
 						is_owned_and_controlled_by = ROOT
-						any_other_country = {
+						OWNER = {
 							is_subject_of = ROOT
-							owns_state = PREV
 							has_full_control_of_state = PREV
 						}
 					}
@@ -4344,7 +4367,7 @@ SOV_decision_soviet_republics = {
 			231 = {
 				OR = {
 					is_owned_and_controlled_by = ROOT
-					any_other_country = {
+					OWNER = {
 						OR = {
 							original_tag = CAU
 							original_tag = GEO
@@ -4352,7 +4375,6 @@ SOV_decision_soviet_republics = {
 							original_tag = AZR
 						}
 						is_subject_of = ROOT
-						owns_state = PREV
 						has_full_control_of_state = PREV
 					}
 				}
@@ -4360,7 +4382,7 @@ SOV_decision_soviet_republics = {
 			230 = {
 				OR = {
 					is_owned_and_controlled_by = ROOT
-					any_other_country = {
+					OWNER = {
 						OR = {
 							original_tag = CAU
 							original_tag = GEO
@@ -4368,7 +4390,6 @@ SOV_decision_soviet_republics = {
 							original_tag = AZR
 						}
 						is_subject_of = ROOT
-						owns_state = PREV
 						has_full_control_of_state = PREV
 					}
 				}
@@ -4376,7 +4397,7 @@ SOV_decision_soviet_republics = {
 			818 = {
 				OR = {
 					is_owned_and_controlled_by = ROOT
-					any_other_country = {
+					OWNER = {
 						OR = {
 							original_tag = CAU
 							original_tag = GEO
@@ -4384,7 +4405,6 @@ SOV_decision_soviet_republics = {
 							original_tag = AZR
 						}
 						is_subject_of = ROOT
-						owns_state = PREV
 						has_full_control_of_state = PREV
 					}
 				}
@@ -4392,7 +4412,7 @@ SOV_decision_soviet_republics = {
 			823 = {
 				OR = {
 					is_owned_and_controlled_by = ROOT
-					any_other_country = {
+					OWNER = {
 						OR = {
 							original_tag = CAU
 							original_tag = GEO
@@ -4400,7 +4420,6 @@ SOV_decision_soviet_republics = {
 							original_tag = AZR
 						}
 						is_subject_of = ROOT
-						owns_state = PREV
 						has_full_control_of_state = PREV
 					}
 				}
@@ -4408,7 +4427,7 @@ SOV_decision_soviet_republics = {
 			229 = {
 				OR = {
 					is_owned_and_controlled_by = ROOT
-					any_other_country = {
+					OWNER = {
 						OR = {
 							original_tag = CAU
 							original_tag = GEO
@@ -4416,7 +4435,6 @@ SOV_decision_soviet_republics = {
 							original_tag = AZR
 						}
 						is_subject_of = ROOT
-						owns_state = PREV
 						has_full_control_of_state = PREV
 					}
 				}
@@ -4424,7 +4442,7 @@ SOV_decision_soviet_republics = {
 			938 = {
 				OR = {
 					is_owned_and_controlled_by = ROOT
-					any_other_country = {
+					OWNER = {
 						OR = {
 							original_tag = CAU
 							original_tag = GEO
@@ -4432,7 +4450,6 @@ SOV_decision_soviet_republics = {
 							original_tag = AZR
 						}
 						is_subject_of = ROOT
-						owns_state = PREV
 						has_full_control_of_state = PREV
 					}
 				}
@@ -4440,7 +4457,7 @@ SOV_decision_soviet_republics = {
 			939 = {
 				OR = {
 					is_owned_and_controlled_by = ROOT
-					any_other_country = {
+					OWNER = {
 						OR = {
 							original_tag = CAU
 							original_tag = GEO
@@ -4448,7 +4465,6 @@ SOV_decision_soviet_republics = {
 							original_tag = AZR
 						}
 						is_subject_of = ROOT
-						owns_state = PREV
 						has_full_control_of_state = PREV
 					}
 				}
@@ -4456,7 +4472,7 @@ SOV_decision_soviet_republics = {
 			1068 = {
 				OR = {
 					is_owned_and_controlled_by = ROOT
-					any_other_country = {
+					OWNER = {
 						OR = {
 							original_tag = CAU
 							original_tag = GEO
@@ -4472,7 +4488,7 @@ SOV_decision_soviet_republics = {
 			1069 = {
 				OR = {
 					is_owned_and_controlled_by = ROOT
-					any_other_country = {
+					OWNER = {
 						OR = {
 							original_tag = CAU
 							original_tag = GEO
@@ -4480,7 +4496,6 @@ SOV_decision_soviet_republics = {
 							original_tag = AZR
 						}
 						is_subject_of = ROOT
-						owns_state = PREV
 						has_full_control_of_state = PREV
 					}
 				}
@@ -4488,7 +4503,7 @@ SOV_decision_soviet_republics = {
 			830 = {
 				OR = {
 					is_owned_and_controlled_by = ROOT
-					any_other_country = {
+					OWNER = {
 						OR = {
 							original_tag = CAU
 							original_tag = GEO
@@ -4496,7 +4511,6 @@ SOV_decision_soviet_republics = {
 							original_tag = AZR
 						}
 						is_subject_of = ROOT
-						owns_state = PREV
 						has_full_control_of_state = PREV
 					}
 				}
@@ -4768,10 +4782,7 @@ SOV_decision_soviet_republics = {
 			}
 		}
 		visible = {
-			FROM = {
-				has_country_leader = {
-					character = RUS_roman_ungern_sternberg 
-				}
+			FROM = {		
 				is_subject = no
 				is_in_faction = no
 			}
@@ -4779,12 +4790,17 @@ SOV_decision_soviet_republics = {
 		target_root_trigger = {
 			has_completed_focus = SOV_soviet_republics
 		}
+		targets = {
+			330.OWNER
+		}
 		target_trigger = {
 			FROM = {
 				original_tag = MON
+				has_country_leader = {
+					character = RUS_roman_ungern_sternberg 
+				}
 			}
 		}
-		target_array = 330.owner
 		cost = 20
 		ai_will_do = {
 			base = 0
@@ -4820,9 +4836,11 @@ SOV_red_terror_category = {
 		available = {
 			has_russian_civil_war = yes
 		}
-		visible = {
+		target_root_trigger = {
 			tag = SOV
 			has_completed_focus = SOV_red_terror
+		}
+		visible = {		
 			NOT = {
 				has_country_flag = SOV_train_of_trotsky
 			}
@@ -4845,10 +4863,10 @@ SOV_red_terror_category = {
 				value = 1
 			}
 		}
+		target_array = enemies
 		target_trigger = {
 			FROM = {
 				is_russian_tag = yes
-				has_war_with = ROOT
 				is_neighbor_of = ROOT
 			}
 		}
@@ -4977,13 +4995,16 @@ SOV_red_terror_category = {
 		days_re_enable = 30
 		cost = 50
 		fire_only_once = no
-		visible = {
+		target_root_trigger = {
 			tag = SOV
 			has_completed_focus = SOV_red_terror
+		}
+		visible = {
 			NOT = {
 				has_country_flag = SOV_execute_counterrevolutionaries
 			}
 		}
+		target_array = enemies
 		target_trigger = {
 			FROM = {
 				is_russian_tag = yes
@@ -5046,17 +5067,19 @@ SOV_red_terror_category = {
 		days_re_enable = 10
 		cost = 75
 		fire_only_once = no
-		visible = {
+		target_root_trigger = {
 			tag = SOV
 			has_completed_focus = SOV_red_terror
+		}
+		visible = {		
 			NOT = {
 				has_country_flag = SOV_factory_expropriation
 			}
 		}
+		target_array = enemies
 		target_trigger = {
 			FROM = {
 				is_russian_tag = yes
-				has_war_with = ROOT
 			}
 		}
 		complete_effect = {
@@ -5320,7 +5343,9 @@ operations = {
 			hidden_effect = {
 				if = {
 					limit = {
-						owns_state = 96
+						96 = {
+							is_owned_or_subject_trigger = yes
+						}
 					}
 					96 = {
 						transfer_state_to = LAT

@@ -884,24 +884,6 @@
 			}
 			if = {
 				limit = {
-					has_character = SWE_harald_hjalmarson
-				}
-				if = {
-					limit = {
-						FIN = { has_civil_war = yes }
-					}
-					SWE_harald_hjalmarson = {
-						set_nationality = FIN
-					}
-				}
-				else = {
-					SWE_harald_hjalmarson = {
-						set_nationality = SWE
-					}
-				}
-			}
-			if = {
-				limit = {
 					original_tag = PHI
 					has_cosmetic_tag = PHI_war
 				}
@@ -2273,15 +2255,15 @@
 				}
 				if = {
 					limit = {
-						any_other_country = {
+						any_country_with_original_tag = {
+							original_tag_to_check = FRA
 							is_subject_of = GER
-							original_tag = FRA
 						}
 					}
-					random_other_country = {
+					random_country_with_original_tag = {
+						original_tag_to_check = FRA
 						limit = {
 							is_subject_of = GER
-							original_tag = FRA
 						}
 						annex_country = {
 							target = ROOT
@@ -2291,7 +2273,8 @@
 				else_if = {
 					limit = {
 						NOT = {
-							any_country = {
+							any_country_with_original_tag = {
+								original_tag_to_check = FRA
 								has_cosmetic_tag = FRP
 							}
 							GER = {
@@ -3730,15 +3713,15 @@
 				}
 				if = {
 					limit = {
-						any_other_country = {
+						any_country_with_original_tag = {
+							original_tag_to_check = FRA
 							is_subject_of = GER
-							original_tag = FRA
 						}
 					}
-					random_other_country = {
+					random_country_with_original_tag = {
+						original_tag_to_check = FRA
 						limit = {
 							is_subject_of = GER
-							original_tag = FRA
 						}
 						annex_country = {
 							target = ROOT
@@ -3748,7 +3731,8 @@
 				else_if = {
 					limit = {
 						NOT = {
-							any_country = {
+							any_country_with_original_tag = {
+								original_tag_to_check = FRA
 								has_cosmetic_tag = FRP
 							}
 							GER = {
@@ -4441,7 +4425,12 @@
 				set_division_template_cap = { 
 					division_template = "Ataryād-e Qazāqkhāneh" 
 					division_cap = global.PER_cossack_cap
-				}	
+				}
+				#Irregular Troops cap
+				set_division_template_cap = { 
+					division_template = "Nīrū-ye Eshāyer"
+					division_cap = PER_irregulars_cap
+				}
 			}
 		}
 		effect = {
@@ -6330,8 +6319,8 @@
 			if = {
 				limit = {
 					tag = JAP
-					any_other_country = {
-						original_tag = JAP
+					any_country_with_original_tag = {
+						original_tag_to_check = JAP
 						has_war_with = PREV
 						has_country_leader = {
 							character = JAP_tokugawa_iesato
@@ -6965,24 +6954,6 @@
 			}
 			if = {
 				limit = {
-					has_character = SWE_harald_hjalmarson
-				}
-				if = {
-					limit = {
-						FIN = { has_civil_war = yes }
-					}
-					SWE_harald_hjalmarson = {
-						set_nationality = FIN
-					}
-				}
-				else = {
-					SWE_harald_hjalmarson = {
-						set_nationality = SWE
-					}
-				}
-			}
-			if = {
-				limit = {
 					original_tag = ARM
 					has_country_leader = {
 						character = ARM_andranik_ozanian
@@ -7006,9 +6977,8 @@
 					}
 				}
 				else = {
-					random_other_country = {
+					random_neighbor_country = {
 						limit = {
-							is_neighbor_of = PREV
 							has_war_with = PREV
 						}
 						annex_country = {
@@ -8758,8 +8728,9 @@
 						OR = {
 							owns_state = 266
 							NOT = {
-								any_other_country = {
-									original_tag = PER
+								any_country_with_original_tag = {
+									original_tag_to_check = PER
+									NOT = { tag = ROOT }
 								}
 							}
 						}			

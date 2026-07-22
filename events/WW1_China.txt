@@ -5182,7 +5182,7 @@ country_event = {
 					has_global_flag = hongxian_failed
 					has_global_flag = national_protection_war
 				}
-				CHI = {
+				YUN = {
 					YUN_luo_peijin = {
 						set_nationality = SIC
 						if = {
@@ -5214,6 +5214,8 @@ country_event = {
 							}
 						}
 					}
+				}
+				CHI = {
 					CHI_cai_e = {
 						set_nationality = SIC
 						if = {
@@ -13519,9 +13521,8 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
+				any_allied_country = {
 					has_war_with = FROM
-					is_ally_with = PREV
 				}
 			}
 		}
@@ -13540,9 +13541,8 @@ country_event = {
 			}
 			modifier = {
 				add = 1000
-				any_other_country = {
+				any_allied_country = {
 					has_war_with = FROM
-					is_ally_with = PREV
 				}
 			}
 		}
@@ -15675,9 +15675,8 @@ country_event = {
 			has_government = democratic
 			has_government = communism
 		}
-		any_other_country = {
+		any_enemy_country = {
 			# original_tag = CHI
-			has_war_with = PREV
 			has_country_flag = CHI_national_protection_flag
 		}
 		surrender_progress > 0.10
@@ -16004,8 +16003,8 @@ country_event = {
 		name = ww1_china.121.b
 		trigger = {
 			NOT = {
-				any_country = {
-					original_tag = QIN
+				any_country_with_original_tag = {
+					original_tag_to_check = QIN
 					exists = yes
 				}
 				any_country = {
@@ -17111,16 +17110,14 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
+				any_enemy_country = {
 					is_china_or_warlord = yes
-					has_war_with = ROOT
 				}
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
+				any_enemy_country = {
 					is_china_or_warlord = yes
-					is_subject_of = ROOT
 				}
 			}
 			modifier = {
@@ -20862,9 +20859,8 @@ country_event = {
 		JAP = {
 			owns_state = 872
 			NOT = {
-				any_other_country = {
+				any_enemy_country = {
 					is_china_or_warlord_no_tt = yes
-					has_war_with = PREV
 				}
 			}
 		}
@@ -21383,12 +21379,13 @@ country_event = {
 	trigger = {
 		tag = XIC
 		has_government = democratic
-		any_other_country = {
-			owns_state = 592
-			is_kuomintang_state = yes
-			has_government = democratic
-			NOT = {
-				has_war_with = ROOT
+		592 = {
+			OWNER = {
+				is_kuomintang_state = yes
+				has_government = democratic
+				NOT = {
+					has_war_with = ROOT
+				}
 			}
 		}
 		has_war = no
@@ -25064,8 +25061,8 @@ country_event = {
 		hidden_effect = {
 			if = {
 				limit = {
-					any_other_country = {
-						original_tag = GDC
+					any_country_with_original_tag = {
+						original_tag_to_check = GDC
 						has_country_flag = CHI_zhigongdang_flag
 						exists = yes
 					}

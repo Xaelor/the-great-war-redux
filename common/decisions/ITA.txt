@@ -4,12 +4,6 @@ ITA_post_war_pm = {
 		allowed = {
 			original_tag = ITA
 		}
-		visible = {
-			original_tag = ITA
-		}
-		available = {
-			original_tag = ITA
-		}
 		fire_only_once = no
 		days_remove = 30
 		ai_will_do = {
@@ -1024,42 +1018,42 @@ ITA_great_war = {
 		fire_only_once = yes
 		is_good = no
 	}
-	ITA_anti_war_news_hits_the_papers = {
-		priority = 10
-		icon = GFX_decision_generic_ignite_civil_war
-		allowed = {
-			original_tag = ITA
-		}
-		days_mission_timeout = ITA_anti_war_timer
-		available = {
-			OR = {
-				has_war = no
-				has_war_support < 0.4
-				has_global_flag = great_war_ends
-			}
-		}
-		activation = {
-			has_war_support > 0.4
-			has_war_with_major = yes
-			is_great_war_ongoing = yes
-			has_civil_war = no
-		}
-		cancel_trigger = {
-			OR = {
-				has_completed_focus = ITA_arise_workers_of_italy
-				has_war = no
-				has_italian_civil_war = yes
-			}
-		}
-		timeout_effect = {
-			add_war_support = -0.06
-			activate_mission = ITA_anti_war_news_hits_the_papers
-		}
-		complete_effect = {
-		}
-		fire_only_once = no
-		is_good = no
-	}
+	# ITA_anti_war_news_hits_the_papers = {
+	# 	priority = 10
+	# 	icon = GFX_decision_generic_ignite_civil_war
+	# 	allowed = {
+	# 		original_tag = ITA
+	# 	}
+	# 	days_mission_timeout = ITA_anti_war_timer
+	# 	available = {
+	# 		OR = {
+	# 			has_war = no
+	# 			has_war_support < 0.4
+	# 			has_global_flag = great_war_ends
+	# 		}
+	# 	}
+	# 	activation = {
+	# 		has_war_support > 0.4
+	# 		has_war_with_major = yes
+	# 		is_great_war_ongoing = yes
+	# 		has_civil_war = no
+	# 	}
+	# 	cancel_trigger = {
+	# 		OR = {
+	# 			has_completed_focus = ITA_arise_workers_of_italy
+	# 			has_war = no
+	# 			has_italian_civil_war = yes
+	# 		}
+	# 	}
+	# 	timeout_effect = {
+	# 		add_war_support = -0.06
+	# 		activate_mission = ITA_anti_war_news_hits_the_papers
+	# 	}
+	# 	complete_effect = {
+	# 	}
+	# 	fire_only_once = no
+	# 	is_good = no
+	# }
 	ITA_bread_shortages = {
 		priority = 10
 		icon = GFX_decision_generic_ignite_civil_war
@@ -7927,16 +7921,16 @@ ITA_reforming_the_country = {
 		}
 		visible = {
 			has_completed_focus = ITA_emilia_electricity_industries
-			owns_state = 833
+			owns_state = 161
 		}
 		available = {
-			833 = {
+			161 = {
 				is_controlled_by = ROOT
 			}
 		}
 		highlight_states = {
 			highlight_state_targets = {
-				state = 833
+				state = 161
 			}
 		}
 		fire_only_once = yes
@@ -7948,7 +7942,7 @@ ITA_reforming_the_country = {
 		complete_effect = {
 		}
 		remove_effect = {
-			833 = {
+			161 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
@@ -7958,7 +7952,7 @@ ITA_reforming_the_country = {
 			}
 		}
 		cancel_trigger = {
-			833 = {
+			161 = {
 				NOT = {
 					is_owned_and_controlled_by = ROOT
 				}
@@ -10448,8 +10442,8 @@ ITA_italian_civil_war_decisions = {
 		}
 		available = {
 			has_global_flag = italian_civil_war
-			any_other_country = {
-				original_tag = ITA
+			any_country_with_original_tag = {
+				original_tag_to_check = ITA
 				has_government = communism
 				has_war = yes
 				NOT = {
@@ -13622,10 +13616,10 @@ ITA_italy_communist_decisions = {
 			num_of_civilian_factories_available_for_projects > 2
 		}
 		days_remove = 140
+		target_array = faction_members
 		target_trigger = {
 			FROM = {
 				is_major = no
-				is_in_faction_with = ROOT
 			}
 		}
 		fire_only_once = no
@@ -13679,11 +13673,7 @@ ITA_socialist_sabotadge_entente = {
 			}
 		}
 		days_remove = 90
-		target_trigger = {
-			FROM = {
-				has_war_with = GER
-			}
-		}
+		target_array = GER.enemies
 		fire_only_once = no
 		ai_will_do = {
 			base = 50

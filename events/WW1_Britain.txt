@@ -6301,12 +6301,8 @@ country_event = {
 		original_tag = GER
 		has_country_flag = great_war_winner
 		has_global_flag = frankfurt_treaty
-		OR = {
-			owns_state = 547
-			any_other_country = {
-				owns_state = 547
-				is_subject_of = GER
-			}
+		547 = {
+			is_owned_or_subject_trigger = yes
 		}
 		any_enemy_country = {
 			any_controlled_state = {
@@ -6567,8 +6563,8 @@ country_event = {
 		NOT = {
 			has_government = communism
 		}
-		any_other_country = {
-			original_tag = FRA
+		any_country_with_original_tag = {
+			original_tag_to_check = FRA
 			has_country_flag = FRA_nationalist_france_flag
 			NOT = {
 				has_government = communism
@@ -7292,9 +7288,8 @@ country_event = {
 			has_war = no
 			OR = {
 				is_neighbor_of = PREV
-				any_other_country = {
+				any_neighbor_country = {
 					is_subject_of = PREV.PREV
-					is_neighbor_of = PREV
 				}
 			}
 		}
@@ -11495,7 +11490,7 @@ country_event = {
 	}
 }
 #Send Knox to RUssia
-country_event = {
+unit_leader_event = {
 	id = ww1_england.209
 	title = ww1_england.209.t
 	desc = ww1_england.209.d
@@ -11508,15 +11503,11 @@ country_event = {
 		ai_chance = {
 			base = 100
 		}
+		show_unit_leaders_tooltip = ENG_alfred_knox
 		FROM = {
 			country_event = {
 				id = ww1_england.210
 				hours = 3
-			}
-			effect_tooltip = {
-				ENG_alfred_knox = {
-					set_nationality = ROOT
-				}
 			}
 		}
 	}
@@ -11526,7 +11517,10 @@ country_event = {
 		ai_chance = {
 			base = 0
 		}
-		ENG = { country_event = { id = ww1_england.211 } }
+		ENG_alfred_knox = {
+			set_nationality = FROM
+			unit_leader_event = { id = ww1_england.211 hours = 3 }
+		}
 	}
 }
 #Russians accept Knox's help
@@ -11541,13 +11535,15 @@ country_event = {
 	option = {
 		name = ww1_england.210.a
 		add_political_power = 5
-		ENG_alfred_knox = {
-			set_nationality = FROM
+		effect_tooltip = {
+			RUS = {
+				show_unit_leaders_tooltip = ENG_alfred_knox
+			}			
 		}
 	}
 }
 #Russians refuse Knox's help
-country_event = {
+unit_leader_event = {
 	id = ww1_england.211
 	title = ww1_england.211.t
 	desc = ww1_england.211.d
@@ -12049,9 +12045,8 @@ country_event = {
 		has_war = yes
 		has_war_support > 0.40
 		NOT = {
-			any_other_country = {
+			any_enemy_country = {
 				original_tag = ENG
-				has_war_with = ROOT
 			}
 		}
 		OR = {
@@ -14330,8 +14325,8 @@ country_event = {
 		is_subject = no
 		has_government = democratic
 		NOT = {
-			any_other_country = {
-				original_tag = ROOT
+			any_country_with_original_tag = {
+				original_tag_to_check = ROOT
 			}
 		}
 	}
