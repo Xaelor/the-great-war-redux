@@ -3311,9 +3311,6 @@ country_event = {
 	title = ww1_USA.118.t
 	desc = ww1_USA.118.d
 	id = ww1_USA.118
-	mean_time_to_happen = {
-		days = 1
-	}
 	fire_only_once = yes
 	trigger = {
 		date > 1915.06.11
@@ -3323,6 +3320,7 @@ country_event = {
 		name = ww1_USA.118.a
 		HAI = {
 			add_stability = -0.1
+			retire_country_leader = yes
 		}
 		set_global_flag = hati_president_dead
 		custom_effect_tooltip = unlocks_focus_hat.tt
@@ -3785,18 +3783,30 @@ country_event = {
 	title = ww1_USA.139.t
 	desc = ww1_USA.139.d
 	id = ww1_USA.139
-	mean_time_to_happen = {
-		days = 1
-	}
 	is_triggered_only = yes
-	fire_only_once = yes
-	trigger = {
-		date > 1915.1.1
-		original_tag = USA
+	fire_only_once = no
+	option = {
+		name = ww1_USA.137.a
+		trigger = {
+			tag = ITA
+		}
+		add_to_variable = {
+			ITA_bread_shortages = 1
+			tooltip = ITA_modify_bread_shortages_tt
+		}
 	}
 	option = {
 		name = ww1_USA.137.a
-		unlock_decision_tooltip = USA_sell_food
+		trigger = {
+			NOT = {
+				tag = ITA
+			}
+		}
+		add_political_power = 50
+		add_timed_idea = {
+			idea = USA_food_aid_idea
+			days = 365
+		}
 	}
 }
 
