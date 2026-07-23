@@ -97,6 +97,7 @@ focus_tree = {
 		completion_reward = {
 			add_dynamic_modifier = { modifier = POL_the_Polish_army_dynamic_modifier }
 			upgrade_conscription_law = yes
+			hidden_effect = { load_oob = "POL_divisions" }
 		}
 	}
 	focus = {
@@ -1131,27 +1132,26 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_HISTORICAL}
 
 		completion_reward = {
-            POL_hans_hartwig_von_beseler = {
-				add_advisor_role = {
-					activate = yes
-					advisor = {
-						slot = army_chief
-						cost = 50
-						idea_token = POL_hans_hartwig_von_beseler_army_chief
-						traits = {
-							army_chief_morale_2
-						}
-					}
-				}
-			}
-			add_field_marshal_role = {
-                Character = POL_hans_hartwig_von_beseler
-				traits = { politically_connected war_hero media_personality }
-                skill = 3
-                attack_skill = 3
-                defense_skill = 2
-                planning_skill = 3
-                logistics_skill = 2
+			army_experience = 25
+            add_command_power = 15
+			add_war_support = 0.05
+            custom_effect_tooltip = available_theorist
+			show_ideas_tooltip = POL_tadeusz_jordan_rozwadowski_theorist
+			hidden_effect = { add_ideas = POL_tadeusz_jordan_rozwadowski_theorist }
+            division_template = {
+	            name = "Dywizja polskiego Wehrmachtu"
+	            division_names_group = POL_INF_01
+	            regiments = {
+		            infantry = { x = 0 y = 0 }
+		            infantry = { x = 0 y = 1 }
+		            infantry = { x = 0 y = 2 }
+		            field_gun_brigade = { x = 2 y = 0 }
+	            }
+	            support = {
+		            recon = { x = 0 y = 0 }
+		            engineer = { x = 0 y = 1 }
+	            }
+				is_locked = yes
             }
 		}
 	}
@@ -1183,7 +1183,20 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_HISTORICAL}
 
 		completion_reward = {
-			
+			recruit_character = POL_stanislaw_szeptycki
+			recruit_character = POL_zygmunt_zielinski
+			recruit_character = POL_jozef_haller
+			recruit_character = POL_kazimierz_sosnkowski
+			recruit_character = POL_edward_rydzsmigly
+            add_units_to_division_template = {
+                template_name = "Dywizja polskiego Wehrmachtu"
+                regiments = {
+                    infantry = 1
+                    infantry = 1
+                    infantry = 1
+                    infantry = 1
+                }
+            }
 		}
 	}
 	focus = {
@@ -1211,7 +1224,7 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_HISTORICAL}
 
 		completion_reward = {
-			
+			upgrade_conscription_law = yes
 		}
 	}
 	focus = {
@@ -1239,7 +1252,28 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_HISTORICAL}
 
 		completion_reward = {
-			
+			POL_hans_hartwig_von_beseler = {
+				add_advisor_role = {
+					activate = yes
+					advisor = {
+						slot = army_chief
+						cost = 50
+						idea_token = POL_hans_hartwig_von_beseler_army_chief
+						traits = {
+							army_chief_morale_2
+						}
+					}
+				}
+			}
+			add_field_marshal_role = {
+                Character = POL_hans_hartwig_von_beseler
+				traits = { politically_connected war_hero media_personality }
+                skill = 3
+                attack_skill = 3
+                defense_skill = 2
+                planning_skill = 3
+                logistics_skill = 2
+            }
 		}
 	}
 	focus = {
@@ -1275,7 +1309,37 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_HISTORICAL}
 
 		completion_reward = {
-			
+			country_event = { id = ww1_poland.7 days = 3 }
+            capital_scope = {
+				create_unit = {
+					division = "name = \"1-Dywizja polskiego Wehrmachtu\" division_template = \"Dywizja polskiego Wehrmachtu\" start_experience_factor = 0.35 start_equipment_factor = 1"
+					owner = GER
+				}
+			}
+            GER = { 
+	            create_colonial_division_template = {
+                    subject = POL
+                    division_template = {
+	                    name = "Dywizja polskiego Wehrmachtu"
+	                    division_names_group = POL_INF_01
+	                    regiments = {
+		                    infantry = { x = 0 y = 0 }
+		                    infantry = { x = 0 y = 1 }
+		                    infantry = { x = 0 y = 2 }
+		                    infantry = { x = 1 y = 0 }
+		                    infantry = { x = 1 y = 1 }
+		                    infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+		                    field_gun_brigade = { x = 2 y = 0 }
+	                    }
+	                    support = {
+		                    recon = { x = 0 y = 1 }
+		                    engineer = { x = 0 y = 2 }
+	                    }
+						is_locked = yes
+                    }
+                }
+            }
 		}
 	}
 	focus = {
@@ -1311,6 +1375,9 @@ focus_tree = {
                         slot = political_advisor
                         cost = 150
                         idea_token = POL_jozef_pilsudski_political_advisor
+						available = {
+				            NOT = { has_country_flag = POL_Pilsudski_was_arrested }
+			            }
                         traits = {
                             militant_minister_2
                         }
