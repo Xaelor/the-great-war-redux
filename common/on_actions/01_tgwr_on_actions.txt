@@ -1515,15 +1515,6 @@
 			}
 			if = {
 				limit = {
-					original_tag = USA
-					FROM = {
-						tag = RUS
-					}
-				}
-				set_cosmetic_tag = USA_RUS				#историческая справедливость
-			}
-			if = {
-				limit = {
 					original_tag = POL
 					FROM = {
 						tag = RUS
@@ -3117,15 +3108,6 @@
 						promote_character = yes
 					}					
 				}
-			}
-			if = {
-				limit = {
-					original_tag = USA
-					FROM = {
-						tag = RUS
-					}
-				}
-				set_cosmetic_tag = USA_RUS				#историческая справедливость
 			}
 			if = {
 				limit = {
@@ -9424,7 +9406,6 @@
 						NOT = {
 							has_cosmetic_tag = GER_socialism
 							has_cosmetic_tag = GER_ruhr_revolt
-							has_cosmetic_tag = BAY_germany
 							has_cosmetic_tag = PRE
 						}
 					}
@@ -9779,7 +9760,6 @@
 						original_tag = BAY
 						NOT = {
 							has_cosmetic_tag = BAY_socialism
-							has_cosmetic_tag = BAY_germany
 						}
 					}
 					set_cosmetic_tag = BAY_socialism
@@ -10833,10 +10813,21 @@
 							limit = {
 								is_GER_a_monarchy = yes
 							}
-							drop_cosmetic_tag = yes
-							else = {
-								set_cosmetic_tag = GER_republic
-							}
+							if = {
+								limit = {
+									has_game_rule = {
+										rule = rule_germany_name
+										option = EMPIRE_GERMANY_NAME
+									}
+								}
+								set_cosmetic_tag = GER_empire
+								else = {
+									drop_cosmetic_tag = yes	
+								}
+							}						
+						}
+						else = {
+							set_cosmetic_tag = GER_republic
 						}
 					}
 					if = {
@@ -10966,13 +10957,25 @@
 								has_country_flag = GER_provisional
 							}			
 						}
-						drop_cosmetic_tag = yes
-					}
-					if = {
-						limit = {
-							has_country_leader_ideology = nazism
+						if = {
+							limit = {
+								has_country_leader_ideology = nazism
+							}
+							set_cosmetic_tag = GER_nazi
+							else_if = {
+								limit = {
+									has_game_rule = {
+										rule = rule_germany_name
+										option = EMPIRE_GERMANY_NAME
+									}
+								}
+								set_cosmetic_tag = GER_empire
+								else = {
+									drop_cosmetic_tag = yes	
+								}
+							}				
 						}
-						set_cosmetic_tag = GER_nazi
+						
 					}
 				}
 				else_if = {
@@ -11064,7 +11067,18 @@
 						limit = {
 							is_GER_a_monarchy = yes
 						}
-						drop_cosmetic_tag = yes
+						if = {
+							limit = {
+								has_game_rule = {
+									rule = rule_germany_name
+									option = EMPIRE_GERMANY_NAME
+								}
+							}
+							set_cosmetic_tag = GER_empire
+							else = {
+								drop_cosmetic_tag = yes	
+							}
+						}
 						else_if = {
 							limit = {
 								NOT = {
@@ -11166,7 +11180,18 @@
 							has_cosmetic_tag = GER_provisional
 						}
 					}
-					drop_cosmetic_tag = yes	
+					if = {
+						limit = {
+							has_game_rule = {
+								rule = rule_germany_name
+								option = EMPIRE_GERMANY_NAME
+							}
+						}
+						set_cosmetic_tag = GER_empire
+						else = {
+							drop_cosmetic_tag = yes	
+						}
+					}						
 				}
 				else_if = {
 					limit = {
