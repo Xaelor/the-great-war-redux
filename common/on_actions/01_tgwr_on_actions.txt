@@ -9493,7 +9493,6 @@
 						limit = {
 							NOT = {
 								has_cosmetic_tag = RUS_socialism
-								has_cosmetic_tag = RUS_absolutism
 								has_cosmetic_tag = RUS_eser
 								has_cosmetic_tag = SOV
 								has_cosmetic_tag = SOV_union
@@ -9508,7 +9507,12 @@
 								has_cosmetic_tag = STV
 								has_cosmetic_tag = STV_communism
 								has_cosmetic_tag = TRC
-								has_cosmetic_tag = RUS_state
+								AND = {
+									has_country_flag = RUS_state_flag
+									NOT = {
+										has_country_flag = russian_civil_war_winner
+									}
+								}
 								has_cosmetic_tag = SUCH
 								has_cosmetic_tag = POLITCENTRE
 								has_cosmetic_tag = PRI
@@ -9525,11 +9529,8 @@
 							set_cosmetic_tag = RUS_socialism
 							else_if = {
 								limit = {
-									OR = {
-										has_cosmetic_tag = RUS_republic
-										has_cosmetic_tag = RUS_republic_democratic
-										has_cosmetic_tag = RUS_prov
-										has_cosmetic_tag = RUS_republic_vanguardism
+									NOT = {
+										has_country_flag = SOV_flag
 									}
 								}
 								set_cosmetic_tag = RUS_republic_vanguardism
@@ -10293,6 +10294,10 @@
 						}	
 						if = {
 							limit = {
+								has_game_rule = {
+									rule = rule_russian_name
+									option = EMPIRE_RUSSIA_NAME
+								}
 								OR = {
 									has_country_leader  = {
 										character = RUS_nikolai_ii
@@ -10316,17 +10321,23 @@
 									}
 								}
 							}
+							set_cosmetic_tag = RUS_empire							
+						}
+						else_if = {
+							limit = {
+								has_country_flag = RUS_republic_flag
+							}
+							set_cosmetic_tag = RUS_republic					
+						}
+						else_if = {
+							limit = {
+								has_country_flag = RUS_federation
+							}
+							set_cosmetic_tag = RUS_federation									
+						}	
+						else = {
 							set_cosmetic_tag = RUS
-							else_if = {
-								limit = {
-									has_country_flag = RUS_federation
-								}
-								set_cosmetic_tag = RUS_federation
-								else = {
-									set_cosmetic_tag = RUS_republic
-								}					
-							}	
-						}					
+						}	
 					}	
 					if = {
 						limit = {
@@ -10337,7 +10348,7 @@
 					}
 					if = {
 						limit = {
-							tag = SIB							
+							tag = SIB
 						}	
 						if = {
 							limit = {
@@ -10355,7 +10366,7 @@
 									}
 								}																
 							}
-							set_cosmetic_tag = RUS_state
+							set_cosmetic_tag = RUS
 							else_if = {
 								limit = { has_cosmetic_tag = RUS_socialism }
 								set_cosmetic_tag = RUS_federation
@@ -11131,7 +11142,7 @@
 								has_cosmetic_tag = POLITCENTRE
 								NOT = { has_government = communism }
 							}
-							set_cosmetic_tag = RUS_state
+							set_cosmetic_tag = RUS
 						}		
 					}
 				}
