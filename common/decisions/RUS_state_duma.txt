@@ -4744,4 +4744,100 @@ RUS_parliament_gui_decision_category = {
 			}
 		}
 	}
+	#REFORMISTS
+	RUS_amendments_to_the_law_on_reformation_of_the_state_council_sd = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			original_tag = RUS
+		}
+		available = {
+			duma_is_active = yes
+		}
+		visible = {
+			duma_exists = yes
+			RUS_alexander_krivoshein = {
+				is_prime_minister = yes
+			}
+			has_active_mission = RUS_reaction_strikes_back_mission
+			has_completed_focus = RUS_the_final_accord
+			NOT = {
+				has_country_flag = RUS_amendments_to_the_law_on_reformation_of_the_state_council_passed_in_sd
+				has_country_flag = RUS_amendments_to_the_law_on_reformation_of_the_state_council_passed_in_sc
+			}
+		}
+		complete_effect = {
+			custom_effect_tooltip = RUS_need_majority_sd
+		}
+		remove_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						total_loyalist_count > RUS_duma_majority_threshold
+					}
+				}
+				custom_effect_tooltip = RUS_likely_to_pass
+			}
+			else = {
+				custom_effect_tooltip = RUS_likely_to_be_rejected
+			}
+			if = {
+				limit = {
+					check_variable = {
+						total_loyalist_count > RUS_duma_majority_threshold
+					}
+				}
+				hidden_effect = {
+					set_country_flag = RUS_amendments_to_the_law_on_reformation_of_the_state_council_passed_in_sd
+					add_political_power = 25
+					country_event = ww1_reformist.2
+				}
+			}
+			else = {
+				hidden_effect = {
+					country_event = ww1_reformist.3
+				}
+			}
+			custom_effect_tooltip = RUS_if_the_law_passes
+			effect_tooltip = {
+				add_political_power = 25
+				custom_effect_tooltip = RUS_law_available_for_state_council
+			}
+			custom_effect_tooltip = RUS_if_the_law_passes_in_sc
+			effect_tooltip = {
+				add_political_power = 50
+				if = {
+					limit = {
+						has_completed_focus = RUS_reach_out_to_liberals
+					}
+					custom_effect_tooltip = RUS_state_council_election_reform_tt
+					remove_mission = RUS_state_council_rotation
+				}
+				else_if = {
+					limit = {
+						has_completed_focus = RUS_reinforce_the_nationalist_alliance
+					}
+					custom_effect_tooltip = RUS_state_council_nationalist_election_reform_tt
+				}
+				remove_mission = RUS_reaction_strikes_back_mission
+			}
+			
+		}
+		cost = 50
+		days_remove = 30
+		days_re_enable = 180
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					duma_is_active = no
+					duma_exists = no
+					RUS_alexander_krivoshein = {
+						is_prime_minister = no
+					}
+					NOT = {
+						has_active_mission = RUS_reaction_strikes_back_mission
+					}
+				}
+			}
+		}
+	}
 }

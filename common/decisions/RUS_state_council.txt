@@ -6169,7 +6169,7 @@ RUS_state_council_gui_decision_category = {
 				hidden_effect = {
 					add_political_power = 50
 					remove_mission = RUS_state_council_rotation
-					
+					set_country_flag = RUS_state_council_liberal_election_reform
 					country_event = ww1_government_of_public_trust.9
 					clr_country_flag = RUS_state_council_election_reform_sd
 					
@@ -6212,6 +6212,144 @@ RUS_state_council_gui_decision_category = {
 			clr_country_flag = RUS_vote_in_state_council
 			set_variable = { law_acceptance_progress = 0 }
 			#RUS_update_state_council_gui = yes
+		}
+	}
+	#REFORMISTS
+	RUS_amendments_to_the_law_on_reformation_of_the_state_council_sc = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			original_tag = RUS
+		}
+		available = {
+			NOT = { 
+				has_country_flag = RUS_vote_in_state_council 
+			}
+			duma_is_active = yes
+		}
+		visible = {
+			duma_exists = yes
+			RUS_alexander_krivoshein = {
+				is_prime_minister = yes
+			}
+			has_active_mission = RUS_reaction_strikes_back_mission
+			has_completed_focus = RUS_the_final_accord
+			NOT = {
+				has_country_flag = RUS_amendments_to_the_law_on_reformation_of_the_state_council_passed_in_sc
+				has_country_flag = RUS_vote_in_state_council
+			}
+			has_country_flag = RUS_amendments_to_the_law_on_reformation_of_the_state_council_passed_in_sd
+		}
+		complete_effect = {
+			custom_effect_tooltip = RUS_need_majority_sc
+			set_temp_variable = { RUS_state_council_socialist_support = 0 }
+			if = {
+				limit = {
+					has_completed_focus = RUS_reach_out_to_liberals
+				}
+				set_temp_variable = { RUS_state_council_liberal_support = 1 }
+			}
+			else = {
+				set_temp_variable = { RUS_state_council_liberal_support = 0 }
+			}
+			set_temp_variable = { RUS_state_council_centrist_support = 1 }
+			set_temp_variable = { RUS_state_council_rightist_support = 0 }
+			RUS_state_council_set_law_support = yes
+			set_country_flag = RUS_vote_in_state_council
+		}
+		remove_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						law_acceptance_progress = 100
+					}
+					check_variable = {
+						total_loyalist_count > RUS_duma_majority_threshold
+					}
+				}
+				custom_effect_tooltip = RUS_likely_to_pass
+			}
+			else = {
+				custom_effect_tooltip = RUS_likely_to_be_rejected
+			}
+			if = {
+				limit = {
+					check_variable = {
+						law_acceptance_progress = 100
+					}
+					check_variable = {
+						total_loyalist_count > RUS_duma_majority_threshold
+					}
+				}
+				set_country_flag = RUS_amendments_to_the_law_on_reformation_of_the_state_council_passed_in_sc
+				hidden_effect = {
+					add_political_power = 50
+					if = {
+						limit = {
+							has_completed_focus = RUS_reach_out_to_liberals
+						}
+						set_country_flag = RUS_state_council_liberal_election_reform
+						remove_mission = RUS_state_council_rotation
+					}
+					else_if = {
+						limit = {
+							has_completed_focus = RUS_reinforce_the_nationalist_alliance
+						}
+						set_country_flag = RUS_state_council_nationalist_election_reform
+					}
+					remove_mission = RUS_reaction_strikes_back_mission
+					country_event = ww1_krivoshein.5
+				}
+			}
+			else = {
+				hidden_effect = {
+					clr_country_flag = RUS_amendments_to_the_law_on_reformation_of_the_state_council_passed_in_sd
+					country_event = ww1_krivoshein.2
+				}
+			}
+			custom_effect_tooltip = RUS_if_the_law_passes
+			effect_tooltip = {
+				add_political_power = 50
+				if = {
+					limit = {
+						has_completed_focus = RUS_reach_out_to_liberals
+					}
+					custom_effect_tooltip = RUS_state_council_election_reform_tt
+					remove_mission = RUS_state_council_rotation
+				}
+				else_if = {
+					limit = {
+						has_completed_focus = RUS_reinforce_the_nationalist_alliance
+					}
+					custom_effect_tooltip = RUS_state_council_nationalist_election_reform_tt
+				}
+				remove_mission = RUS_reaction_strikes_back_mission
+			}
+			custom_effect_tooltip = RUS_if_the_law_is_rejected
+			effect_tooltip = {
+				custom_effect_tooltip = RUS_law_has_to_be_passed_again
+			}
+			clr_country_flag = RUS_vote_in_state_council
+			set_variable = { law_acceptance_progress = 0 }
+		}
+		cost = 50
+		days_remove = 30
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					duma_is_active = no
+					duma_exists = no
+					RUS_alexander_krivoshein = {
+						is_prime_minister = no
+					}
+					NOT = {
+						has_active_mission = RUS_reaction_strikes_back_mission
+					}
+				}
+			}
+		}
+		cancel_effect = {
+			clr_country_flag = RUS_vote_in_state_council
+			set_variable = { law_acceptance_progress = 0 }
 		}
 	}
 }
