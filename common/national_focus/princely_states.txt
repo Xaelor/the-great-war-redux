@@ -1,0 +1,245 @@
+
+focus_tree = {
+	id = generic_princely_states_tree
+	country = {
+		factor = 0
+		modifier = {
+			add = 1000
+			is_princely_state_tag = yes
+		}
+	}	
+	default = no
+	reset_on_civilwar = no
+	
+	focus = {
+		id = princely_develop_capitalstate
+		icon = GFX_focus_generic_industry_1
+		x = 2
+		y = 0
+		cost = 10
+		available = {
+		}
+		completion_reward = {		
+			capital_scope = {
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+	focus = {
+		id = princely_pave_the_roads
+		icon = GFX_goal_reichsautobahn
+		prerequisite = { focus = princely_develop_capitalstate }
+		x = 2
+		y = 1
+		relative_position_id = princely_develop_capitalstate
+		cost = 10
+		available = {
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_tech_bonus = {
+				name = princely_pave_the_roads
+				bonus = 0.5
+				uses = 1
+				category = construction_tech
+			}
+		}
+	}
+	focus = {
+		id = princely_contract_british_mining_companies
+		icon = GFX_focus_generic_resource_extraction
+		prerequisite = { focus = princely_pave_the_roads }
+		x = 0
+		y = 1
+		relative_position_id = princely_pave_the_roads
+		cost = 10
+		available = {
+			
+		}
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					tag = HYD
+				}
+				random_owned_controlled_state = {
+					add_resource = {
+						type = chromium
+						amount = 4
+					}
+				}
+			}
+			add_tech_bonus = {
+				name = excavation_effort
+				bonus = 1
+				category = excavation_tech
+				uses = 1
+			}
+		}
+	}
+	focus = {
+		id = princely_the_adjective_regional_development_fund
+		icon = GFX_focus_generic_money_deal
+		prerequisite = { focus = princely_develop_capitalstate }
+		dynamic = yes 
+		x = -1
+		y = 1
+		relative_position_id = princely_develop_capitalstate
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = princely_efficent_farming
+		icon = GFX_focus_generic_wheat
+		prerequisite = { focus = princely_the_adjective_regional_development_fund }
+		x = -1
+		y = 1
+		relative_position_id = princely_the_adjective_regional_development_fund
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+
+		}
+	}
+	focus = {
+		id = princely_invest_into_infrastructure_projects
+		icon = GFX_goal_generic_construct_infrastructure
+		prerequisite = { 
+			focus = princely_efficent_farming
+		}
+		x = 0
+		y = 2
+		relative_position_id = princely_the_adjective_regional_development_fund
+		cost = 10
+		available = {
+			has_tech = construction1
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = princely_literacy_programs
+		icon = GFX_focus_research2
+		prerequisite = { focus = princely_contract_british_mining_companies }
+		x = 4
+		y = 2
+		relative_position_id = princely_the_adjective_regional_development_fund
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = princely_basic_schools
+		icon = GFX_focus_generic_education
+		prerequisite = { focus = princely_literacy_programs }
+		prerequisite = { focus = princely_state_funded_projects }
+		x = 3
+		y = 3
+		relative_position_id = princely_the_adjective_regional_development_fund
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available = {
+		}
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+	focus = {
+		id = princely_improved_irrigation_systems
+		icon = GFX_goal_generic_construction2
+		x = -2
+		y = 2
+		relative_position_id = princely_the_adjective_regional_development_fund
+		prerequisite = {
+			focus = princely_efficent_farming
+		}
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = princely_expand_our_agriculture
+		icon = GFX_focus_generic_agricultural_subsidies
+		x = -1
+		y = 3
+		relative_position_id = princely_the_adjective_regional_development_fund
+		prerequisite = {
+			focus = princely_improved_irrigation_systems
+		}
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = princely_state_funded_projects
+		icon = GFX_goal_generic_construction
+		x = 2
+		y = 2
+		relative_position_id = princely_the_adjective_regional_development_fund
+		prerequisite = {
+			focus = princely_contract_british_mining_companies
+		}
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available = {
+		}
+		completion_reward = {
+			capital_scope = {
+				increase_state_category = yes
+			}
+			add_tech_bonus = {
+				name = princely_state_funded_projects
+				category = construction_tech
+				bonus = 0.5
+				uses = 1
+			}
+		}
+	}
+
+}
