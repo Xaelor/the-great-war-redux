@@ -16,7 +16,7 @@
 	# INDUSTRIAL TREE #
 	focus = {
 		id = RAJ_indian_electricity_act
-		icon = 
+		icon = GFX_focus_ARG_develop_the_electricity_sector
 		x = 4
 		y = 0
 		available = {
@@ -33,6 +33,48 @@
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY
 			FOCUS_FILTER_STABILITY
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = RAJ_hardinge_bridge_railway
+		icon = GFX_goal_generic_construct_infrastructure
+		x = 4
+		y = 0
+		relative_position_id = RAJ_indian_electricity_act
+		available = {
+		}
+		bypass = {
+		}
+		cost = 5
+		prerequisite = {
+		}
+		completion_reward = {
+			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			add_to_variable = {
+				RAJ_ind_civ_construction_speed = 0.1
+				tooltip = production_speed_industrial_complex_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_mil_construction_speed = 0.1
+				tooltip = production_speed_arms_factory_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_factory_output = 0.05
+				tooltip = industrial_capacity_factory_tt
+			}
+			build_railway = {
+				path = {
+					11929
+					4616
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
 		}
 	}
 	focus = {
@@ -101,47 +143,6 @@
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY
 			FOCUS_FILTER_STABILITY
-		}
-	}
-	focus = {
-		id = RAJ_hardinge_bridge_railway
-		icon = GFX_goal_generic_construct_infrastructure
-		x = 4
-		y = 0
-		relative_position_id = RAJ_indian_electricity_act
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-		}
-		completion_reward = {
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
-			add_to_variable = {
-				RAJ_ind_civ_construction_speed = 0.1
-				tooltip = production_speed_industrial_complex_factor_tt
-			}
-			add_to_variable = {
-				RAJ_ind_mil_construction_speed = 0.1
-				tooltip = production_speed_arms_factory_factor_tt
-			}
-			add_to_variable = {
-				RAJ_ind_factory_output = 0.05
-				tooltip = industrial_capacity_factory_tt
-			}
-			build_railway = {
-				path = {
-					11929
-					4616
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
 		}
 	}
 	focus = {
@@ -221,6 +222,7 @@
 		icon = GFX_invest_in_calcutta
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_HISTORICAL
 		}
 		x = 1
 		y = 1
@@ -299,6 +301,50 @@
 		}
 	}
 	focus = {
+		id = RAJ_invest_in_burma
+		icon = GFX_wip
+		x = 1
+		y = 1
+		relative_position_id = RAJ_invest_in_bombay
+		available = {
+			has_full_control_of_state = 288
+		}
+		bypass = {
+		}
+		cost = 5
+		prerequisite = {
+			focus = RAJ_invest_in_bombay
+			focus = RAJ_invest_in_delhi
+		}
+		completion_reward = {
+			add_stability = 0.02
+			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			add_to_variable = {
+				RAJ_ind_max_factories = 0.025
+				tooltip = global_building_slots_factor_tt
+			}
+			288 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_dynamic_modifier = {
+					days = 720
+					modifier = RAJ_invest_in_state
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_STABILITY
+		}
+	}
+	focus = {
 		id = RAJ_burmah_oil
 		icon = GFX_goal_generic_oil_refinery
 		x = 0
@@ -365,6 +411,50 @@
 		}
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY
+		}
+	}
+	focus = {
+		id = RAJ_invest_in_punjab
+		icon = GFX_invest_in_punjab
+		x = -1
+		y = 1
+		relative_position_id = RAJ_invest_in_calcutta
+		available = {
+			has_full_control_of_state = 440
+		}
+		bypass = {
+		}
+		cost = 5
+		prerequisite = {
+			focus = RAJ_invest_in_calcutta
+			focus = RAJ_invest_in_madras
+		}
+		completion_reward = {
+			add_stability = 0.02
+			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			add_to_variable = {
+				RAJ_ind_max_factories = 0.025
+				tooltip = global_building_slots_factor_tt
+			}
+			440 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_dynamic_modifier = {
+					days = 720
+					modifier = RAJ_invest_in_state
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_STABILITY
 		}
 	}
 	focus = {
@@ -624,7 +714,7 @@
 	}
 	focus = {
 		id = RAJ_invest_in_madras
-		icon = GFX_goal_unknown
+		icon = GFX_wip
 		x = 1
 		y = 1
 		relative_position_id = RAJ_indian_electricity_act
@@ -645,50 +735,6 @@
 				tooltip = global_building_slots_factor_tt
 			}
 			423 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-				add_dynamic_modifier = {
-					days = 720
-					modifier = RAJ_invest_in_state
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
-			FOCUS_FILTER_STABILITY
-		}
-	}
-	focus = {
-		id = RAJ_invest_in_punjab
-		icon = GFX_invest_in_punjab
-		x = -1
-		y = 1
-		relative_position_id = RAJ_invest_in_calcutta
-		available = {
-			has_full_control_of_state = 440
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_invest_in_calcutta
-			focus = RAJ_invest_in_madras
-		}
-		completion_reward = {
-			add_stability = 0.02
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
-			add_to_variable = {
-				RAJ_ind_max_factories = 0.025
-				tooltip = global_building_slots_factor_tt
-			}
-			440 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = infrastructure
@@ -750,74 +796,6 @@
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY
 			FOCUS_FILTER_STABILITY
-		}
-	}
-	focus = {
-		id = RAJ_invest_in_burma
-		icon = GFX_goal_unknown
-		x = 1
-		y = 1
-		relative_position_id = RAJ_invest_in_bombay
-		available = {
-			has_full_control_of_state = 288
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_invest_in_bombay
-			focus = RAJ_invest_in_delhi
-		}
-		completion_reward = {
-			add_stability = 0.02
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
-			add_to_variable = {
-				RAJ_ind_max_factories = 0.025
-				tooltip = global_building_slots_factor_tt
-			}
-			288 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-				add_dynamic_modifier = {
-					days = 720
-					modifier = RAJ_invest_in_state
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
-			FOCUS_FILTER_STABILITY
-		}
-	}
-	focus = {
-		id = RAJ_colonisation_of_government_lands
-		icon = GFX_goal_unknown
-		x = 0
-		y = 1
-		relative_position_id = RAJ_invest_in_punjab
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_invest_in_punjab
-		}
-		completion_reward = {
-			add_political_power = 67
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
 		}
 	}
 	focus = {
@@ -1445,6 +1423,41 @@
 		}
 	}
 	focus = {
+		id = RAJ_indian_expeditionary_forces
+		icon = GFX_focus_eagle
+		x = 1
+		y = 1
+		relative_position_id = RAJ_military_cooperation_with_the_entente
+		available = {
+		}
+		bypass = {
+		}
+		cost = 5
+		prerequisite = {
+			focus = RAJ_military_cooperation_with_the_entente
+			focus = RAJ_joint_commonwealth_high_command
+		}
+		completion_reward = {
+			random_unit_leader = {
+				add_trait = {
+					trait = desert_fox
+				}
+			}
+			random_unit_leader = {
+				add_trait = {
+					trait = ranger
+				}
+			}
+			army_experience = 150
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_ARMY_REFORM
+		}
+	}
+	focus = {
 		id = RAJ_extrasubcontinental_theaters
 		icon = GFX_goal_generic_more_territorial_claims
 		x = 1
@@ -1634,41 +1647,6 @@
 		}
 	}
 	focus = {
-		id = RAJ_indian_expeditionary_forces
-		icon = GFX_focus_eagle
-		x = 1
-		y = 1
-		relative_position_id = RAJ_military_cooperation_with_the_entente
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_military_cooperation_with_the_entente
-			focus = RAJ_joint_commonwealth_high_command
-		}
-		completion_reward = {
-			random_unit_leader = {
-				add_trait = {
-					trait = desert_fox
-				}
-			}
-			random_unit_leader = {
-				add_trait = {
-					trait = ranger
-				}
-			}
-			army_experience = 150
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
-			FOCUS_FILTER_ARMY_REFORM
-		}
-	}
-	focus = {
 		id = RAJ_the_seed_of_icarus
 		icon = GFX_goal_generic_air_fighter
 		x = -1
@@ -1802,7 +1780,7 @@
 	focus = {
 		id = RAJ_enlist_gurkhas
 		icon = GFX_focus_RAJ_indian_gurkhas
-		x = -3
+		x = -2
 		y = 1
 		relative_position_id = RAJ_indian_army_act
 		available = {
@@ -2153,6 +2131,7 @@
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_HISTORICAL
 		}
 	}
 	focus = {
