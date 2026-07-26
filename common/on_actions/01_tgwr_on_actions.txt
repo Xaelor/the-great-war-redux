@@ -1512,15 +1512,6 @@
 			}
 			if = {
 				limit = {
-					original_tag = USA
-					FROM = {
-						tag = RUS
-					}
-				}
-				set_cosmetic_tag = USA_RUS				#историческая справедливость
-			}
-			if = {
-				limit = {
 					original_tag = POL
 					FROM = {
 						tag = RUS
@@ -3105,15 +3096,6 @@
 						promote_character = yes
 					}					
 				}
-			}
-			if = {
-				limit = {
-					original_tag = USA
-					FROM = {
-						tag = RUS
-					}
-				}
-				set_cosmetic_tag = USA_RUS				#историческая справедливость
 			}
 			if = {
 				limit = {
@@ -4801,8 +4783,13 @@
 				SYR = {
 					set_occupation_law = foreign_civilian_oversight
 				}
-				ALB = {
-					set_occupation_law = martial_law_occupation
+				if = {
+					limit = {
+						has_start_date < 1914.1.1
+					}
+					ALB = {
+						set_occupation_law = martial_law_occupation
+					}
 				}
 			}
 			USA = {
@@ -9435,7 +9422,6 @@
 						NOT = {
 							has_cosmetic_tag = GER_socialism
 							has_cosmetic_tag = GER_ruhr_revolt
-							has_cosmetic_tag = BAY_germany
 							has_cosmetic_tag = PRE
 						}
 					}
@@ -9504,7 +9490,6 @@
 						limit = {
 							NOT = {
 								has_cosmetic_tag = RUS_socialism
-								has_cosmetic_tag = RUS_absolutism
 								has_cosmetic_tag = RUS_eser
 								has_cosmetic_tag = SOV
 								has_cosmetic_tag = SOV_union
@@ -9519,7 +9504,12 @@
 								has_cosmetic_tag = STV
 								has_cosmetic_tag = STV_communism
 								has_cosmetic_tag = TRC
-								has_cosmetic_tag = RUS_state
+								AND = {
+									has_country_flag = RUS_state_flag
+									NOT = {
+										has_country_flag = russian_civil_war_winner
+									}
+								}
 								has_cosmetic_tag = SUCH
 								has_cosmetic_tag = POLITCENTRE
 								has_cosmetic_tag = PRI
@@ -9536,11 +9526,8 @@
 							set_cosmetic_tag = RUS_socialism
 							else_if = {
 								limit = {
-									OR = {
-										has_cosmetic_tag = RUS_republic
-										has_cosmetic_tag = RUS_republic_democratic
-										has_cosmetic_tag = RUS_prov
-										has_cosmetic_tag = RUS_republic_vanguardism
+									NOT = {
+										has_country_flag = SOV_flag
 									}
 								}
 								set_cosmetic_tag = RUS_republic_vanguardism
@@ -9789,7 +9776,6 @@
 						original_tag = BAY
 						NOT = {
 							has_cosmetic_tag = BAY_socialism
-							has_cosmetic_tag = BAY_germany
 						}
 					}
 					set_cosmetic_tag = BAY_socialism
@@ -9906,11 +9892,11 @@
 					if = {
 						limit = {
 							OR = {
-								has_cosmetic_tag = AUH
-								has_cosmetic_tag = AUH_empire
+								has_cosmetic_tag = CIS
+								has_cosmetic_tag = AUS_empire
 							}			
 						}
-						set_cosmetic_tag = AUH_communism
+						set_cosmetic_tag = CIS_communism
 						else_if = {
 							limit = { 
 								OR = {
@@ -10303,6 +10289,10 @@
 						}	
 						if = {
 							limit = {
+								has_game_rule = {
+									rule = rule_russian_name
+									option = EMPIRE_RUSSIA_NAME
+								}
 								OR = {
 									has_country_leader  = {
 										character = RUS_nikolai_ii
@@ -10326,17 +10316,23 @@
 									}
 								}
 							}
+							set_cosmetic_tag = RUS_empire							
+						}
+						else_if = {
+							limit = {
+								has_country_flag = RUS_republic_flag
+							}
+							set_cosmetic_tag = RUS_republic					
+						}
+						else_if = {
+							limit = {
+								has_country_flag = RUS_federation
+							}
+							set_cosmetic_tag = RUS_federation									
+						}	
+						else = {
 							set_cosmetic_tag = RUS
-							else_if = {
-								limit = {
-									has_country_flag = RUS_federation
-								}
-								set_cosmetic_tag = RUS_federation
-								else = {
-									set_cosmetic_tag = RUS_republic
-								}					
-							}	
-						}					
+						}	
 					}	
 					if = {
 						limit = {
@@ -10347,7 +10343,7 @@
 					}
 					if = {
 						limit = {
-							tag = SIB							
+							tag = SIB
 						}	
 						if = {
 							limit = {
@@ -10365,7 +10361,7 @@
 									}
 								}																
 							}
-							set_cosmetic_tag = RUS_state
+							set_cosmetic_tag = RUS
 							else_if = {
 								limit = { has_cosmetic_tag = RUS_socialism }
 								set_cosmetic_tag = RUS_federation
@@ -10759,16 +10755,16 @@
 					}
 					if = {
 						limit = {
-							has_cosmetic_tag = AUH_communism		
+							has_cosmetic_tag = CIS_communism		
 						}
 						if = {
 							limit = {
-								has_country_flag = AUH_empire
+								has_country_flag = AUS_empire
 							}
-							set_cosmetic_tag = AUH_empire
+							set_cosmetic_tag = AUS_empire
 						}
 						else = {
-							set_cosmetic_tag = AUH
+							set_cosmetic_tag = CIS
 						}
 						else_if = {
 							limit = { 
@@ -10832,10 +10828,21 @@
 							limit = {
 								is_GER_a_monarchy = yes
 							}
-							drop_cosmetic_tag = yes
-							else = {
-								set_cosmetic_tag = GER_republic
-							}
+							if = {
+								limit = {
+									has_game_rule = {
+										rule = rule_germany_name
+										option = EMPIRE_GERMANY_NAME
+									}
+								}
+								set_cosmetic_tag = GER_empire
+								else = {
+									drop_cosmetic_tag = yes	
+								}
+							}						
+						}
+						else = {
+							set_cosmetic_tag = GER_republic
 						}
 					}
 					if = {
@@ -10947,10 +10954,10 @@
 						set_cosmetic_tag = AUR_vaterland
 						else_if = {
 							limit = {
-								has_cosmetic_tag = AUH
-								has_country_flag = AUH_empire
+								has_cosmetic_tag = CIS
+								has_country_flag = AUS_empire
 							}
-							set_cosmetic_tag = AUH_empire
+							set_cosmetic_tag = AUS_empire
 						}	
 					}
 				}
@@ -10965,13 +10972,25 @@
 								has_country_flag = GER_provisional
 							}			
 						}
-						drop_cosmetic_tag = yes
-					}
-					if = {
-						limit = {
-							has_country_leader_ideology = nazism
+						if = {
+							limit = {
+								has_country_leader_ideology = nazism
+							}
+							set_cosmetic_tag = GER_nazi
+							else_if = {
+								limit = {
+									has_game_rule = {
+										rule = rule_germany_name
+										option = EMPIRE_GERMANY_NAME
+									}
+								}
+								set_cosmetic_tag = GER_empire
+								else = {
+									drop_cosmetic_tag = yes	
+								}
+							}				
 						}
-						set_cosmetic_tag = GER_nazi
+						
 					}
 				}
 				else_if = {
@@ -11063,7 +11082,18 @@
 						limit = {
 							is_GER_a_monarchy = yes
 						}
-						drop_cosmetic_tag = yes
+						if = {
+							limit = {
+								has_game_rule = {
+									rule = rule_germany_name
+									option = EMPIRE_GERMANY_NAME
+								}
+							}
+							set_cosmetic_tag = GER_empire
+							else = {
+								drop_cosmetic_tag = yes	
+							}
+						}
 						else_if = {
 							limit = {
 								NOT = {
@@ -11141,7 +11171,7 @@
 								has_cosmetic_tag = POLITCENTRE
 								NOT = { has_government = communism }
 							}
-							set_cosmetic_tag = RUS_state
+							set_cosmetic_tag = RUS
 						}		
 					}
 				}
@@ -11165,7 +11195,18 @@
 							has_cosmetic_tag = GER_provisional
 						}
 					}
-					drop_cosmetic_tag = yes	
+					if = {
+						limit = {
+							has_game_rule = {
+								rule = rule_germany_name
+								option = EMPIRE_GERMANY_NAME
+							}
+						}
+						set_cosmetic_tag = GER_empire
+						else = {
+							drop_cosmetic_tag = yes	
+						}
+					}						
 				}
 				else_if = {
 					limit = {
