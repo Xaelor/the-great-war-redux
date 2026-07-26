@@ -1827,7 +1827,7 @@ INS_dc_absolute_power = {
 		}
 		available = {
 			NOT = {
-				has_global_flag = AUS_pacifying_state
+				has_global_flag = INS_pacifying_state
 			}
 		}
 		highlight_states = {
@@ -1841,15 +1841,8 @@ INS_dc_absolute_power = {
 		state_target = any_owned_state
 		target_trigger = {
 			FROM = {
-				OR = {
-					NOT = {
-						state = 669
-						state = 1275
-						state = 1274
-					}
-				}
 				is_fully_controlled_by = ROOT
-				is_demilitarized_zone = yes
+				has_dynamic_modifier = INS_rebelling_region
 			}
 		}
 		fire_only_once = yes
@@ -1858,18 +1851,25 @@ INS_dc_absolute_power = {
 			base = 0
 			modifier = {
 				add = 10
-				has_political_power < 10
+				command_power < 10
 			}
 		}
 		complete_effect = {
-			set_global_flag = AUS_pacifying_state
+			set_global_flag = INS_pacifying_state
+			add_command_power = -10
 		}
-		cost = 0
+		custom_cost_trigger = {
+			command_power = 10
+		}
+		custom_cost_text = command_power_more_than_10
 		remove_effect = {
-			clr_global_flag = AUS_pacifying_state
-			add_political_power = 15
+			clr_global_flag = INS_pacifying_state
+			army_experience = 10
 			FROM = {
 				set_demilitarized_zone = no
+				remove_dynamic_modifier = {
+					modifier = INS_rebelling_region
+				}
 			}
 		}
 	}
