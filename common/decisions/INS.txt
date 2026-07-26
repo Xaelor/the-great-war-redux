@@ -1816,28 +1816,61 @@ INS_dc_absolute_power = {
 			factor = 200
 		}
 	}
-	INS_pacify_bali = {
-		icon = GFX_decision_hol_war_on_pacifism
+	INS_pacify_state = {
+		icon = GFX_decision_generic_decision
 		allowed = {
 			original_tag = INS
 		}
-		available = {
-			
-		}
+		on_map_mode = map_only
 		visible = {
-			1283 = {
+			has_completed_focus = INS_pacify_rebelling_regions
+		}
+		available = {
+			NOT = {
+				has_global_flag = AUS_pacifying_state
+			}
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = FROM
+			}
+		}
+		target_root_trigger = {
+			tag = INS
+		}
+		state_target = any_owned_state
+		target_trigger = {
+			FROM = {
+				OR = {
+					NOT = {
+						state = 669
+						state = 1275
+						state = 1274
+					}
+				}
+				is_fully_controlled_by = ROOT
 				is_demilitarized_zone = yes
 			}
 		}
 		fire_only_once = yes
-		complete_effect = {
-			1283 = {
-				set_demilitarized_zone = no
+		days_remove = 10
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_political_power < 10
 			}
 		}
-		cost = 25
-		ai_will_do = {
-			factor = 200
+		complete_effect = {
+			set_global_flag = AUS_pacifying_state
+		}
+		cost = 0
+		remove_effect = {
+			clr_global_flag = AUS_pacifying_state
+			add_political_power = 15
+			FROM = {
+				set_demilitarized_zone = no
+			}
 		}
 	}
 }
