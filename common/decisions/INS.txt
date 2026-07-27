@@ -1850,7 +1850,7 @@ INS_dc_absolute_power = {
 			}
 		}
 		fire_only_once = yes
-		days_remove = 10
+		days_remove = 30
 		ai_will_do = {
 			base = 0
 			modifier = {
@@ -1875,6 +1875,80 @@ INS_dc_absolute_power = {
 					modifier = INS_rebelling_region
 				}
 			}
+		}
+	}
+	INS_expedition_state = {
+		icon = GFX_decision_generic_decision
+		allowed = {
+			original_tag = INS
+		}
+		on_map_mode = map_only
+		visible = {
+			has_completed_focus = INS_expeditions_into_papua
+		}
+		available = {
+			NOT = {
+				has_global_flag = INS_expedition_flag
+			}
+		}
+		highlight_states = {
+		}
+		target_root_trigger = {
+			tag = INS
+		}
+		state_target = any_owned_state
+		target_trigger = {
+			FROM = {
+				is_fully_controlled_by = ROOT
+				has_dynamic_modifier = INS_undiscovered_state
+			}
+		}
+		fire_only_once = yes
+		days_remove = 30
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_army_experience < 15
+			}
+		}
+		complete_effect = {
+			set_global_flag = INS_pacifying_state
+			army_experience = -15
+		}
+		custom_cost_trigger = {
+			has_army_experience = 15
+		}
+		custom_cost_text = army_xp_15_cost
+		remove_effect = {
+			clr_global_flag = INS_pacifying_state
+			army_experience = 10
+			FROM = {
+				set_demilitarized_zone = no
+				remove_dynamic_modifier = {
+					modifier = INS_undiscovered_state
+				}
+			}
+		}
+	}
+	INS_meet_kaimana = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+			original_tag = INS
+		}
+		available = {
+			
+		}
+		visible = {
+			has_completed_focus = INS_annex_the_autonomies
+		}
+		fire_only_once = yes
+		complete_effect = {
+			
+		}
+		cost = 25
+		ai_will_do = {
+			factor = 200
 		}
 	}
 }
