@@ -162,7 +162,6 @@ RUS_state_council_gui_decision_category = {
 			}
 		}
 	}
-
 	RUS_shift_left = {
 		icon = GFX_decision_generic_political_discourse
 		allowed = { original_tag = RUS }
@@ -287,135 +286,193 @@ RUS_state_council_gui_decision_category = {
 			}
 		}
 	}
-	RUS_discussion_left = {
-		icon = GFX_decision_bul_integrate_nsm
+	RUS_concessions_to_dominant_faction = {
+		icon = GFX_decision_generic_political_discourse
 		allowed = { original_tag = RUS }
 		visible = {
 			has_country_flag = RUS_vote_in_state_council
 			duma_is_active = yes
 			duma_exists = yes
-			
 			check_variable = { law_acceptance_progress < 100 }
-			OR = {
-				check_variable = { socialists_loyalty = 2.5 }
-				check_variable = { socialists_loyalty > 2.5 }
-			}
-			any_character = {
-				is_prime_minister = yes
-				OR = {
-					is_socialist = yes
-					is_liberal = yes
-				}
-			}
 		}
 		complete_effect = {
-			set_temp_variable = { RUS_add_law_acceptance_var = 25 }
+			set_temp_variable = { RUS_add_law_acceptance_var = 100 }
 			RUS_add_law_acceptance = yes
-			set_temp_variable = { RUS_modify_loyalty_socialists_var = -2.5 }
-			RUS_modify_loyalty_socialists = yes
-			#RUS_update_state_council_gui = yes
-		}
-		days_remove = 30
-		cost = 10
-	}
-	RUS_discussion_center_left = {
-		icon = GFX_decision_bul_integrate_nsm
-		allowed = { original_tag = RUS }
-		visible = {
-			has_country_flag = RUS_vote_in_state_council
-			original_tag = RUS
-			duma_is_active = yes
-			duma_exists = yes
-			
-			check_variable = { law_acceptance_progress < 100 }
-			OR = {
-				check_variable = { center_left_loyalty = 2.5 }
-				check_variable = { center_left_loyalty > 2.5 }
-			}
-			any_character = {
-				is_prime_minister = yes
-				OR = {
-					is_socialist = yes
-					is_liberal = yes
-					is_centrist = yes
+			if = {
+				limit = {
+					NOT = {
+						check_variable = { state_council_dominant_faction < 26 }
+					}
 				}
+				set_temp_variable = { RUS_modify_loyalty_socialists_var = -2.5 }
+				RUS_modify_loyalty_socialists = yes
 			}
-		}
-		complete_effect = {
-			set_temp_variable = { RUS_add_law_acceptance_var = 25 }
-			RUS_add_law_acceptance = yes
-			set_temp_variable = { RUS_modify_loyalty_center_left_var = -2.5 }
-			RUS_modify_loyalty_center_left = yes
-			#RUS_update_state_council_gui = yes
-		}
-		days_remove = 30
-		cost = 10
-	}
-	RUS_discussion_right = {
-		icon = GFX_decision_bul_integrate_nsm
-		allowed = { original_tag = RUS }
-		visible = {
-			has_country_flag = RUS_vote_in_state_council
-			original_tag = RUS
-			duma_is_active = yes
-			duma_exists = yes
-			
-			check_variable = { law_acceptance_progress < 100 }
-			OR = {
-				check_variable = { center_right_loyalty = 2.5 }
-				check_variable = { center_right_loyalty > 2.5 }
-			}
-			any_character = {
-				is_prime_minister = yes
-				OR = {
-					is_liberal = yes
-					is_centrist = yes
-					is_rightist = yes
+			if = {
+				limit = {
+					NOT = {
+						AND = {
+							check_variable = { state_council_dominant_faction > 25 }
+							check_variable = { state_council_dominant_faction < 51 }
+						}
+					}
 				}
+				set_temp_variable = { RUS_modify_loyalty_center_left_var = -2.5 }
+				RUS_modify_loyalty_center_left = yes
 			}
-		}
-		complete_effect = {
-			set_temp_variable = { RUS_add_law_acceptance_var = 25 }
-			RUS_add_law_acceptance = yes
-			set_temp_variable = { RUS_modify_loyalty_center_right_var = -2.5 }
-			RUS_modify_loyalty_center_right = yes
-			#RUS_update_state_council_gui = yes
-		}
-		days_remove = 30
-		cost = 10
-	}
-	RUS_discussion_far_right = {
-		icon = GFX_decision_bul_integrate_nsm
-		allowed = { original_tag = RUS }
-		visible = {
-			has_country_flag = RUS_vote_in_state_council
-			original_tag = RUS
-			duma_is_active = yes
-			duma_exists = yes
-			
-			check_variable = { law_acceptance_progress < 100 }
-			OR = {
-				check_variable = { far_right_loyalty = 2.5 }
-				check_variable = { far_right_loyalty > 2.5 }
-			}
-			any_character = {
-				is_prime_minister = yes
-				OR = {
-					is_centrist = yes
-					is_rightist = yes
+			if = {
+				limit = {
+					NOT = {
+						AND = {
+							check_variable = { state_council_dominant_faction > 50 }
+							check_variable = { state_council_dominant_faction < 76 }
+						}
+					}
 				}
+				set_temp_variable = { RUS_modify_loyalty_center_right_var = -2.5 }
+				RUS_modify_loyalty_center_right = yes
+			}
+			if = {
+				limit = {
+					NOT = {
+						check_variable = { state_council_dominant_faction > 75 }
+					}
+				}
+				set_temp_variable = { RUS_modify_loyalty_far_right_var = -2.5 }
+				RUS_modify_loyalty_far_right = yes
 			}
 		}
-		complete_effect = {
-			set_temp_variable = { RUS_add_law_acceptance_var = 25 }
-			RUS_add_law_acceptance = yes
-			set_temp_variable = { RUS_modify_loyalty_far_right_var = -2.5 }
-			RUS_modify_loyalty_far_right = yes
-			#RUS_update_state_council_gui = yes
-		}
 		days_remove = 30
-		cost = 10
+		cost = 25
 	}
+	#RUS_discussion_left = {
+	#	icon = GFX_decision_bul_integrate_nsm
+	#	allowed = { original_tag = RUS }
+	#	visible = {
+	#		has_country_flag = RUS_vote_in_state_council
+	#		duma_is_active = yes
+	#		duma_exists = yes
+	#		
+	#		check_variable = { law_acceptance_progress < 100 }
+	#		OR = {
+	#			check_variable = { socialists_loyalty = 2.5 }
+	#			check_variable = { socialists_loyalty > 2.5 }
+	#		}
+	#		any_character = {
+	#			is_prime_minister = yes
+	#			OR = {
+	#				is_socialist = yes
+	#				is_liberal = yes
+	#			}
+	#		}
+	#	}
+	#	complete_effect = {
+	#		set_temp_variable = { RUS_add_law_acceptance_var = 25 }
+	#		RUS_add_law_acceptance = yes
+	#		set_temp_variable = { RUS_modify_loyalty_socialists_var = -2.5 }
+	#		RUS_modify_loyalty_socialists = yes
+	#		#RUS_update_state_council_gui = yes
+	#	}
+	#	days_remove = 30
+	#	cost = 10
+	#}
+	#RUS_discussion_center_left = {
+	#	icon = GFX_decision_bul_integrate_nsm
+	#	allowed = { original_tag = RUS }
+	#	visible = {
+	#		has_country_flag = RUS_vote_in_state_council
+	#		original_tag = RUS
+	#		duma_is_active = yes
+	#		duma_exists = yes
+	#		
+	#		check_variable = { law_acceptance_progress < 100 }
+	#		OR = {
+	#			check_variable = { center_left_loyalty = 2.5 }
+	#			check_variable = { center_left_loyalty > 2.5 }
+	#		}
+	#		any_character = {
+	#			is_prime_minister = yes
+	#			OR = {
+	#				is_socialist = yes
+	#				is_liberal = yes
+	#				is_centrist = yes
+	#			}
+	#		}
+	#	}
+	#	complete_effect = {
+	#		set_temp_variable = { RUS_add_law_acceptance_var = 25 }
+	#		RUS_add_law_acceptance = yes
+	#		set_temp_variable = { RUS_modify_loyalty_center_left_var = -2.5 }
+	#		RUS_modify_loyalty_center_left = yes
+	#		#RUS_update_state_council_gui = yes
+	#	}
+	#	days_remove = 30
+	#	cost = 10
+	#}
+	#RUS_discussion_right = {
+	#	icon = GFX_decision_bul_integrate_nsm
+	#	allowed = { original_tag = RUS }
+	#	visible = {
+	#		has_country_flag = RUS_vote_in_state_council
+	#		original_tag = RUS
+	#		duma_is_active = yes
+	#		duma_exists = yes
+	#		
+	#		check_variable = { law_acceptance_progress < 100 }
+	#		OR = {
+	#			check_variable = { center_right_loyalty = 2.5 }
+	#			check_variable = { center_right_loyalty > 2.5 }
+	#		}
+	#		any_character = {
+	#			is_prime_minister = yes
+	#			OR = {
+	#				is_liberal = yes
+	#				is_centrist = yes
+	#				is_rightist = yes
+	#			}
+	#		}
+	#	}
+	#	complete_effect = {
+	#		set_temp_variable = { RUS_add_law_acceptance_var = 25 }
+	#		RUS_add_law_acceptance = yes
+	#		set_temp_variable = { RUS_modify_loyalty_center_right_var = -2.5 }
+	#		RUS_modify_loyalty_center_right = yes
+	#		#RUS_update_state_council_gui = yes
+	#	}
+	#	days_remove = 30
+	#	cost = 10
+	#}
+	#RUS_discussion_far_right = {
+	#	icon = GFX_decision_bul_integrate_nsm
+	#	allowed = { original_tag = RUS }
+	#	visible = {
+	#		has_country_flag = RUS_vote_in_state_council
+	#		original_tag = RUS
+	#		duma_is_active = yes
+	#		duma_exists = yes
+	#		
+	#		check_variable = { law_acceptance_progress < 100 }
+	#		OR = {
+	#			check_variable = { far_right_loyalty = 2.5 }
+	#			check_variable = { far_right_loyalty > 2.5 }
+	#		}
+	#		any_character = {
+	#			is_prime_minister = yes
+	#			OR = {
+	#				is_centrist = yes
+	#				is_rightist = yes
+	#			}
+	#		}
+	#	}
+	#	complete_effect = {
+	#		set_temp_variable = { RUS_add_law_acceptance_var = 25 }
+	#		RUS_add_law_acceptance = yes
+	#		set_temp_variable = { RUS_modify_loyalty_far_right_var = -2.5 }
+	#		RUS_modify_loyalty_far_right = yes
+	#		#RUS_update_state_council_gui = yes
+	#	}
+	#	days_remove = 30
+	#	cost = 10
+	#}
 	RUS_prolong_vote = {
 		icon = GFX_decision_eng_trade_unions_demand
 		allowed = { original_tag = RUS }
