@@ -88,7 +88,30 @@ focus_tree = {
 				random_owned_controlled_state = {
 					add_resource = {
 						type = chromium
-						amount = 4
+						amount = 2
+					}
+					add_resource = {
+						type = coal
+						amount = 2
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					tag = BAR
+				}
+				random_owned_controlled_state = {
+					add_resource = {
+						type = oil
+						amount = 2
+					}
+				}
+			}
+			else = {
+				random_owned_controlled_state = {
+					add_resource = {
+						type = chromium
+						amount = 2
 					}
 				}
 			}
@@ -444,6 +467,102 @@ focus_tree = {
 			show_ideas_tooltip = MYS_john_taylor_and_sons
 		}
 	}
+	focus = {
+		id = HYD_focus_on_cotton_production
+		icon = GFX_focus_generic_agricultural_subsidies
+		x = 2
+		y = 4
+		relative_position_id = princely_the_adjective_regional_development_fund
+		prerequisite = {
+			focus = princely_state_funded_projects
+		}
+		mutually_exclusive = {
+			focus = HYD_partner_with_british_export_channels
+		}
+		allow_branch = {
+			tag = HYD
+		}
+		cost = 10
+		available = {
+
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = HYD_partner_with_british_export_channels
+		icon = GFX_goal_generic_improve_relations
+		x = 4
+		y = 4
+		relative_position_id = princely_the_adjective_regional_development_fund
+		prerequisite = {
+			focus = princely_follow_british_laissez_faire
+		}
+		mutually_exclusive = {
+			focus = HYD_focus_on_cotton_production
+		}
+		allow_branch = {
+			tag = HYD
+		}
+		cost = 10
+		available = {
+			NOT = {
+				has_war_with = ENG
+			}
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = GWA_gwalior_leather_factory
+		icon = GFX_focus_generic_agricultural_subsidies
+		x = 2
+		y = 4
+		relative_position_id = princely_the_adjective_regional_development_fund
+		prerequisite = {
+			focus = princely_state_funded_projects
+		}
+		mutually_exclusive = {
+			focus = GWA_lease_land_for_british_leatherworks
+		}
+		allow_branch = {
+			tag = GWA
+		}
+		cost = 10
+		available = {
+
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = GWA_lease_land_for_british_leatherworks
+		icon = GFX_goal_generic_improve_relations
+		x = 4
+		y = 4
+		relative_position_id = princely_the_adjective_regional_development_fund
+		prerequisite = {
+			focus = princely_follow_british_laissez_faire
+		}
+		mutually_exclusive = {
+			focus = GWA_gwalior_leather_factory
+		}
+		allow_branch = {
+			tag = GWA
+		}
+		cost = 10
+		available = {
+			NOT = {
+				has_war_with = ENG
+			}
+		}
+		completion_reward = {
+			
+		}
+	}
 
 	## ARMY
 	
@@ -639,6 +758,29 @@ focus_tree = {
 			}
 		}
 	}
+	focus = {
+		id = princely_army_reform
+		icon = GFX_goal_generic_british_soldier_hall
+		x = 0
+		y = 5
+		relative_position_id = princely_the_adj_army
+		prerequisite = {
+			focus = princely_military_academies
+		}
+		prerequisite = {
+			focus = princely_fortifications_focus
+		}
+		cost = 10
+		available = {
+			OR = {
+				has_war = yes
+				is_great_war_ongoing = yes
+			}
+		}
+		completion_reward = {
+			country_lock_all_division_template = no
+		}
+	}
 
 	## POLTIICAL
 	
@@ -675,6 +817,10 @@ focus_tree = {
 					target = ROOT
 					modifier = medium_increase
 				}
+			}
+			swap_ideas = {
+				remove_idea = princely_fragmented_autonomy
+				add_idea = princely_fragmented_autonomy2
 			}
 		}
 	}
@@ -791,7 +937,37 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			
+			if = {
+				limit = {
+					any_character = {
+						is_country_leader = yes
+						is_field_marshal = yes 
+					}
+				}
+				random_character = {
+					limit = {
+						is_country_leader = yes
+						is_field_marshal = yes 
+					}
+					add_attack = 1	
+				}
+			}
+			else = {
+				random_character = {
+					limit = {
+						is_country_leader = yes
+					}
+					add_field_marshal_role = {
+						traits = {  }
+						skill = 2
+						attack_skill = 2
+						defense_skill = 1
+						planning_skill = 2
+						logistics_skill = 1
+					}
+					add_random_trait = { old_guard brilliant_strategist inflexible_strategist trait_reckless irregulars_officer }
+				}
+			}
 		}
 	}
 
