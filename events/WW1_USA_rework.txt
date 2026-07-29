@@ -2456,13 +2456,10 @@ country_event = {
 	trigger = {
 	}
 	option = {
-		name = ww1_USA_rework.86.a
-		custom_effect_tooltip = elect_rep
-		
+		name = ww1_USA_rework.86.a		
 		activate_mission = USA_fate_of_south
 		activate_mission = USA_republican_convention
 		custom_effect_tooltip = USA_delegates_based_on_progressive_vs_con_influence
-		custom_effect_tooltip = rep.tt
 		USA_pp_refresh = yes
 		hidden_effect = {
 			country_event = {
@@ -4750,6 +4747,12 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_USA_rework.186.a
+		hidden_effect = {
+			country_event = {
+				id = ww1_USA_rework.187
+				days = 4
+			}
+		}
 		custom_effect_tooltip = USA_how_did_this_happen
 		add_to_variable = {
 			USA_RP_taft_points = 59
@@ -4761,4 +4764,77 @@ country_event = {
 		}
 	}
 	
+}
+country_event = {
+	id = ww1_USA_rework.187
+	title = ww1_USA_rework.187.t
+	desc = ww1_USA_rework.187.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_USA_rework.187.a
+		hidden_effect = {
+			country_event = {
+				id = ww1_USA_rework.188
+				days = 11
+			}
+		}
+		
+	}
+	
+}
+country_event = {
+	id = ww1_USA_rework.188
+	title = ww1_USA_rework.188.t
+	desc = ww1_USA_rework.188.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_USA_rework.188.a
+		add_to_variable = {
+			USA_RP_taft_points = 2
+			tooltip = USA_modify_TD_tt
+		}
+		add_to_variable = {
+			USA_RP_roosevelt_points = 56
+			tooltip = USA_modify_RD_tt
+		}
+		custom_effect_tooltip = USA_explain_illinois_neglect
+	}
+	option = {
+		name = ww1_USA_rework.188.b
+		if = {
+			limit = {
+				NOT = {
+					has_completed_focus = USA_welcome_a_battle_of_ideals
+				}
+			}
+			add_to_variable = {
+			USA_RP_taft_points = 2
+			tooltip = USA_modify_TD_tt
+		}
+		add_to_variable = {
+			USA_RP_roosevelt_points = 56
+			tooltip = USA_modify_RD_tt
+		}
+		custom_effect_tooltip = USA_ground_game_not_strong_enough
+		
+		}
+		else = {
+			add_to_variable = {
+			USA_RP_taft_points = political_power
+			tooltip = USA_modify_TD_tt
+		}
+		add_to_variable = {
+			USA_RP_roosevelt_points = 58
+						tooltip = USA_modify_RD_tt
+
+		}
+		subtract_from_variable = {
+			USA_RP_roosevelt_points = political_power
+						tooltip = USA_modify_RD_tt
+
+		}
+		}
+	}
 }
