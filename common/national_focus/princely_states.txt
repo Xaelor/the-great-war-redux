@@ -5,7 +5,10 @@ focus_tree = {
 		factor = 0
 		modifier = {
 			add = 1000
-			is_princely_state_tag = yes
+			OR = {
+				is_close_raj_politically = yes
+				is_princely_state_tag = yes
+			}
 		}
 	}	
 	default = no
@@ -93,7 +96,20 @@ focus_tree = {
 		relative_position_id = princely_pave_the_roads
 		cost = 10
 		available = {
-			
+			NOT = {
+				has_war_with = ENG
+			}
+		}
+		bypass = {
+			has_war_with = ENG
+		}
+		bypass_effect = {
+			add_tech_bonus = {
+				name = excavation_effort
+				bonus = 0.25
+				category = excavation_tech
+				uses = 1
+			}
 		}
 		completion_reward = {
 			if = {
@@ -310,10 +326,24 @@ focus_tree = {
 		completion_reward = {
 			if = {
 				limit = {
+					NOT = {
+						has_idea = free_trade
+					}
+				}
+				add_ideas=free_trade
+			}
+			if = {
+				limit = {
 					tag = MYS
 					has_idea = MYS_progressive_economy
 				}
-				remove_ideas = MYS_progressive_economy
+				swap_ideas = {
+					remove_idea = MYS_progressive_economy
+					add_idea = princely_follow_british_liberalism
+				}
+			}
+			else = {
+				add_ideas = princely_follow_british_liberalism
 			}
 		}
 	}
@@ -331,7 +361,19 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = princely_hydro_power_projects
+				category = electronics
+				uses = 2
+				bonus = 0.75
+			}
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
@@ -496,7 +538,10 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			
+			swap_ideas = {
+				add_idea = HYD_agricultural_exports_focus_improved
+				remove_idea = HYD_agricultural_exports_focus
+			}
 		}
 	}
 	focus = {
@@ -671,6 +716,11 @@ focus_tree = {
 		cost = 10
 		available = {
 		}
+		allow_branch = {
+			NOT = {
+				is_close_raj_politically = yes
+			}
+		}
 		completion_reward = {
 			add_ideas = princely_trained_cavalry_idea
 		}
@@ -791,7 +841,7 @@ focus_tree = {
 		prerequisite = {
 			focus = princely_fortifications_focus
 		}
-		cost = 10
+		cost = 5
 		available = {
 			OR = {
 				has_war = yes
@@ -799,7 +849,22 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			country_lock_all_division_template = no
+			if = {
+				limit = {
+					is_princely_state_tag = yes
+				}
+				country_lock_all_division_template = no
+			}
+			else_if = {
+				limit = {
+					tag = NEP
+				}
+				remove_ideas = NEP_nepotism_in_the_army
+				swap_ideas = {
+					remove_idea = NEP_royal_army
+					add_idea = NEP_royal_army2
+				}
+			}
 		}
 	}
 
@@ -833,7 +898,27 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			ENG = {
+			every_country = {
+				limit = {
+					OR = {
+						if = {
+							limit = {
+								ROOT = {
+									is_subject_of = RAJ
+								}
+							}
+							tag = RAJ
+						}
+						if = {
+							limit = {
+								RAJ = {
+									is_subject_of = ENG
+								}
+							}
+							tag = ENG
+						}
+					}
+				}
 				add_opinion_modifier = {
 					target = ROOT
 					modifier = medium_increase
@@ -926,7 +1011,18 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			
+			add_tech_bonus = {
+				category = industry
+				uses = 1
+				ahead_reduction = 1
+				name = princely_study_foreign_machinery
+			}
+			add_tech_bonus = {
+				category = industry
+				uses = 1
+				bonus = 0.75
+				name = princely_study_foreign_machinery
+			}
 		}
 	}
 	focus = {
