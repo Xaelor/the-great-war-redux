@@ -870,7 +870,6 @@
 				category = industry
 			}
 			custom_effect_tooltip = RAJ_use_the_industrials_reward
-			custom_effect_tooltip = when_taken
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = RAJ_dorabji_tata
 		}
@@ -1302,7 +1301,9 @@
 		}
 		cost = 5
 		completion_reward = {
-			add_political_power = 67
+			country_event = {
+				id = ww1_council_raj.0
+			}
 		}
 		ai_will_do = {
 			factor = 1
@@ -1328,7 +1329,26 @@
 			focus = RAJ_matters_of_the_council
 		}
 		completion_reward = {
-			add_political_power = 67
+			custom_effect_tooltip = RAJ_modify_state_of_the_raj
+			add_to_variable = {
+				RAJ_state_of_the_raj_consumer_goods_factor_dynamic = -0.075
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				RAJ_state_of_the_raj_stability_dynamic = 0.025
+				tooltip = stability_factor_tt
+			}
+			custom_effect_tooltip = RAJ_skip_a_line
+			add_to_variable = {
+				RAJ_british_confidence_var = 2.5
+				tooltip = RAJ_british_confidence_var_modify
+			}
+			RAJ_british_confidence_scripted_effect = yes
+			add_to_variable = {
+				RAJ_indian_confidence_var = 2.5
+				tooltip = RAJ_indian_confidence_var_modify
+			}
+			RAJ_indian_confidence_scripted_effect = yes
 		}
 		ai_will_do = {
 			factor = 1
@@ -1367,6 +1387,7 @@
 		y = 1
 		relative_position_id = RAJ_indian_income_tax_f_1916
 		available = {
+			has_country_flag = council_meeting_february_1917_held
 		}
 		bypass = {
 		}
@@ -1390,6 +1411,7 @@
 		y = 1
 		relative_position_id = RAJ_indian_airships_act
 		available = {
+			has_country_flag = council_meeting_february_1917_held
 		}
 		bypass = {
 		}
@@ -1694,7 +1716,26 @@
 			focus = RAJ_indian_paper_currency_act_m_1910
 		}
 		completion_reward = {
-			add_political_power = 67
+			custom_effect_tooltip = RAJ_modify_state_of_the_raj
+			add_to_variable = {
+				RAJ_state_of_the_raj_consumer_goods_factor_dynamic = -0.025
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				RAJ_state_of_the_raj_political_power_factor_dynamic = 0.05
+				tooltip = political_power_factor_tt
+			}
+			custom_effect_tooltip = RAJ_skip_a_line
+			add_to_variable = {
+				RAJ_british_confidence_var = 2.5
+				tooltip = RAJ_british_confidence_var_modify
+			}
+			RAJ_british_confidence_scripted_effect = yes
+			add_to_variable = {
+				RAJ_indian_confidence_var = 2.5
+				tooltip = RAJ_indian_confidence_var_modify
+			}
+			RAJ_indian_confidence_scripted_effect = yes
 		}
 		ai_will_do = {
 			factor = 1
@@ -1994,7 +2035,17 @@
 			focus = RAJ_matters_of_the_council
 		}
 		completion_reward = {
-			add_political_power = 67
+			custom_effect_tooltip = RAJ_modify_state_of_the_raj
+			add_to_variable = {
+				RAJ_state_of_the_raj_political_power_factor_dynamic = 0.08
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				RAJ_state_of_the_raj_stability_dynamic = 0.025
+				tooltip = stability_factor_tt
+			}
+			custom_effect_tooltip = RAJ_skip_a_line
+			add_political_power = 25
 		}
 		ai_will_do = {
 			factor = 1
@@ -3019,16 +3070,44 @@
 
 	# ARMY TREE #
 	focus = {
+		id = RAJ_cantonments_act
+		icon = GFX_goal_unknown
+		x = 10
+		y = 0
+		relative_position_id = RAJ_seditious_meeting_act_d_1910
+		available = {
+			has_country_flag = council_meeting_december_1910_held
+		}
+		bypass = {
+		}
+		cost = 5
+		prerequisite = {
+			focus = RAJ_matters_of_the_council
+		}
+		completion_reward = {
+			add_political_power = 67
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		search_filters = {
+		}
+	}
+	focus = {
 		id = RAJ_indian_army_act
 		icon = GFX_british_india_army
-		x = 55
-		y = 0
+		x = 0
+		y = 1
+		relative_position_id = RAJ_cantonments_act
 		available = {
 			has_country_flag = RAJ_held_delhi_durbar
 		}
 		bypass = {
 		}
 		cost = 10
+		prerequisite = {
+			focus = RAJ_cantonments_act
+		}
 		completion_reward = {
 			country_lock_all_division_template = no
 			custom_effect_tooltip = RAJ_indian_army_reward
@@ -3057,7 +3136,7 @@
 		id = RAJ_the_grand_war
 		icon = GFX_focus_generic_total_war
 		x = 0
-		y = 2
+		y = 1
 		relative_position_id = RAJ_indian_army_act
 		available = {
 			OR = {
@@ -3066,12 +3145,8 @@
 			}
 		}
 		bypass = {
-			OR = {
-				has_global_flag = great_war
-				has_war_with_major = yes
-			}
 		}
-		cost = 0
+		cost = 5
 		prerequisite = {
 			focus = RAJ_indian_army_act
 		}
@@ -3573,7 +3648,7 @@
 	focus = {
 		id = RAJ_ramp_up_military_budget
 		icon = GFX_focus_SWI_issue_war_bonds
-		x = 3
+		x = 2
 		y = 1
 		relative_position_id = RAJ_indian_army_act
 		available = {
