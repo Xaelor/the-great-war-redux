@@ -44,55 +44,6 @@ characters={
 			}	
 		}
 	}
-	UKR_pavlo_skoropadskyi={
-		name="UKR_pavlo_skoropadskyi"
-		portraits={
-			civilian={
-				small="gfx/interface/ideas/UKR/idea_UKR_pavlo_skoropadskyi_advisor_civil.png"
-			}
-			army={
-				large="gfx/leaders/UKR/UKR_Pavlo_Skoropadskyi.png"
-				small="gfx/interface/ideas/UKR/idea_UKR_pavlo_skoropadskyi_advisor.png"			
-			}
-		}
-		advisor={
-			slot = army_chief
-			idea_token = UKR_pavlo_skoropadskyi_army_chief
-			allowed  = {
-				original_tag  = UKR
-			}
-			available  = {
-				has_government = neutrality
-			}
-			visible = {
-				has_government = neutrality
-			}
-			traits  = {
-				army_chief_maneuver_2 
-			}
-			cost = 100
-			ai_will_do  = {
-				factor  = 3.000
-			}
-		}
-		field_marshal={
-			traits={ media_personality harsh_leader cavalry_officer politically_connected }
-			skill=3
-			attack_skill=3
-			defense_skill=2
-			planning_skill=2
-			logistics_skill=3
-			visible = {
-				has_government = neutrality
-			}	
-		}
-		country_leader={
-			ideology=personalistic_dictatorship
-			traits = {
-				russophile
-			}	
-		}
-	}
 	UKR_oleksandr_shumsky={
 		name="UKR_oleksandr_shumsky"
 		portraits={
@@ -146,7 +97,7 @@ characters={
 			
 		}
 	}
-	UKR_volodymyr_vynnychenko ={
+	UKR_volodymyr_vynnychenko = {
 		name="UKR_volodymyr_vynnychenko"
 		portraits={
 			civilian={
@@ -161,12 +112,19 @@ characters={
 				original_tag  = UKR
 			}
 			available  = {
+				is_country_leader = no
+				NOT = {
+					has_country_leader = {
+						character = UKR_symon_petliura
+					}
+				}
 				OR = {
 					has_government  = democratic 
 					has_government  = communism
 				}	
 			}
 			visible  = {
+				is_country_leader = no
 				OR = {
 					has_government  = democratic 
 					has_government  = communism
@@ -181,10 +139,20 @@ characters={
 		}
 		country_leader={
 			ideology=social_democracy
+			traits  = {
+				political_chameleon
+			}
+		}
+		country_leader={
+			ideology=reformist_socialism
+			traits  = {
+				political_chameleon
+			}
 		}
 	}
 	UKR_symon_petliura={
 		name="UKR_symon_petliura"
+		can_be_captured = no
 		portraits={
 			army={
 				large="gfx/leaders/UKR/UKR_simon_petlyura.png"		
@@ -201,10 +169,12 @@ characters={
 				original_tag  = UKR
 			}
 			available  = {
-				has_government  = democratic 
+				has_government  = democratic
+				is_country_leader = no 
 			}
 			visible  = {
 				has_government  = democratic 
+				is_country_leader = no
 			}
 			traits  = {
 				prince_of_terror 
@@ -213,13 +183,46 @@ characters={
 				factor  = 3.000
 			}
 		}
+		advisor={
+			slot = army_chief
+			idea_token = UKR_symon_petliura_army_chief
+			allowed  = {
+				original_tag  = UKR
+			}
+			available  = {
+				OR = {
+					is_country_leader = yes
+					has_government  = democratic 
+				}
+			}
+			visible  = {
+				OR = {
+					is_country_leader = yes
+					has_government  = democratic 
+				}
+			}
+			traits  = {
+				army_chief_morale_2 
+			}
+			cost = 100
+			ai_will_do  = {
+				factor  = 5
+			}
+		}
 		corps_commander={
 			traits={ politically_connected trickster }
 			skill=3
 			attack_skill=1
 			defense_skill=3
 			planning_skill=2
-			logistics_skill=4			
+			logistics_skill=4
+			visible = {
+				original_tag  = UKR
+				OR = {
+					is_country_leader = yes
+					has_government  = democratic 
+				}
+			}		
 		}
 		country_leader={
 			ideology=social_democracy
@@ -237,16 +240,18 @@ characters={
 			}
 		}
 		corps_commander={
-			traits={ politically_connected winter_specialist hill_fighter }
-			skill=4
-			attack_skill=4
-			defense_skill=4
-			planning_skill=2
-			logistics_skill=3
-			#legacy_id=91008
+			traits={ politically_connected winter_specialist hill_fighter harsh_leader }
+			skill=1
+			attack_skill=1
+			defense_skill=1
+			planning_skill=1
+			logistics_skill=1
 		}
 		country_leader={
-			ideology=fascism_ideology
+			ideology=revolutionary_nationalism
+			traits = {
+				dislikes_russia
+			}	
 		}
 	}
 	UKR_oleksander_osetsky={
@@ -270,7 +275,8 @@ characters={
 		name="UKR_mykhailo_omelianovychpavlenko"
 		portraits={
 			army={
-				large="gfx/leaders/UKR/UKR_Mykhailo_Omelianovych_Pavlenko.png"
+				large = GFX_portrait_UKR_mykhailo_omelianovych_pavlenko
+				small = GFX_portrait_UKR_mykhailo_omelianovych_pavlenko_small
 			}
 		}
 		corps_commander={
@@ -287,8 +293,8 @@ characters={
 		name="UKR_volodymyr_oskilko"
 		portraits={
 			army={
-				large="GFX_Portrait_RUS_generic_land_1"
-				small="GFX_Portrait_RUS_generic_land_1_small"
+				large="gfx/leaders/UKR/UKR_Volodymyr_Oskilko.png"
+				small="gfx/interface/ideas/UKR/idea_UKR_Volodymyr_Oskilko.png"
 			}
 		}
 		corps_commander={
@@ -321,10 +327,8 @@ characters={
 		name="UKR_sergey_delwig"
 		portraits={
 			army={
-				small="gfx/interface/ideas/idea_europe_generic_land_1.dds"
-			}
-			army={
-				large="gfx/leaders/Europe/Portrait_Europe_Generic_land_1.dds"
+				large="gfx/leaders/UKR/UKR_Sergey_Delwig.png"
+				small="gfx/interface/ideas/UKR/idea_UKR_Sergey_Delwig.png"
 			}
 		}
 		corps_commander={
@@ -338,23 +342,19 @@ characters={
 		}
 	}
 	UKR_nikifor_grigoriev={
-		name="UKR_nikifor_grigoriev"
 		portraits={
 			army={
-				small="gfx/interface/ideas/idea_europe_generic_land_2.dds"
-			}
-			army={
-				large="gfx/leaders/Europe/Portrait_Europe_Generic_land_2.dds"
+				large="gfx/leaders/UKR/UKR_Nikifor_Grigoriev.png"
+				small="gfx/interface/ideas/UKR/idea_UKR_Nikifor_Grigoriev.png"							
 			}
 		}
 		corps_commander={
-			traits={ trickster }
+			traits={ trickster irregulars_officer }
 			skill=1
 			attack_skill=1
 			defense_skill=1
 			planning_skill=1
 			logistics_skill=1
-			#legacy_id=91030
 		}
 	}
 	UKR_vasyl_tyutyunnyk={
@@ -435,6 +435,7 @@ characters={
 	}
 	UKR_vasyl_i={
 		name="UKR_vasyl_vyshyvanyi"
+		can_be_captured = no
 		portraits={
 			civilian={
 				large="gfx/leaders/UKR/UKR_vasyl_habsburg.png"
@@ -447,10 +448,11 @@ characters={
 			planning_skill=2
 			logistics_skill=1
 			visible = {
+				original_tag  = UKR
 				date > 1918.1.1
 				NOT = {
 					has_government = communism
-					has_war_with = AUH
+					has_war_with = AUS
 				}
 			}
 			traits = { trait_royal infantry_officer politically_connected }
@@ -472,6 +474,8 @@ characters={
 			planning_skill=1
 			logistics_skill=1
 			visible = {
+				original_tag  = UKR
+				NOT = { tag = RUC }
 				has_government = democratic
 			}	
 		}
@@ -1027,11 +1031,14 @@ characters={
 			idea_token = UKR_volodymyr_zatonskij
 			allowed  = {
 				original_tag  = UKR
+				NOT = { tag = RUC }
 			}
 			available  = {
+				is_country_leader = no
 				has_government  = communism 
 			}
 			visible  = {
+				is_country_leader = no
 				has_government  = communism 
 			}
 			traits  = {
@@ -1045,6 +1052,94 @@ characters={
 			civilian={
 				large="gfx/leaders/UKR/UKR_volodymyr_zatonskij.png"
 				small="gfx/interface/ideas/UKR/idea_UKR_volodymyr_zatonskij.png"
+			}
+		}
+		country_leader = {
+			ideology = vanguardism
+		}
+		corps_commander={
+			traits = {
+				politically_connected militias_officer
+			}
+			skill = 1
+			attack_skill = 1
+			defense_skill = 2
+			planning_skill = 1 
+			logistics_skill = 1
+			visible = {
+				original_tag  = UKR
+				NOT = { tag = RUC }
+				has_government  = communism 
+			}
+		}
+	}
+	UKR_fyodor_sergeyev = {
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/SOV/SOV_Fyodor_Sergeyev.png"
+				small="gfx/interface/ideas/SOV/idea_SOV_Fyodor_Sergeyev.png"
+			}
+			army = {
+				small="gfx/interface/ideas/SOV/idea_SOV_Fyodor_Sergeyev_army.png"
+			}
+		}
+		advisor={
+			slot = political_advisor
+			idea_token = UKR_fyodor_sergeyev
+			allowed  = {
+				original_tag  = UKR
+				NOT = { tag = RUC }
+			}
+			available  = {
+				is_country_leader = no
+				has_government  = communism 
+			}
+			visible  = {
+				is_country_leader = no
+				has_government  = communism 
+			}
+			traits  = {
+				silent_workhorse 
+			}
+		}
+		advisor={
+			slot = high_command
+			idea_token = UKR_fyodor_sergeyev_high_command
+			allowed  = {
+				original_tag  = UKR
+				NOT = { tag = RUC }
+			}
+			ledger = army
+			available  = {
+				has_government  = communism 
+			}
+			visible  = {
+				has_government  = communism 
+			}
+			cost = 100
+			traits  = {
+				army_logistics_2 
+			}
+		}
+		country_leader = {
+			ideology = vanguardism
+			traits = {
+				comrade_artyom
+			}
+		}
+		corps_commander={
+			traits = {
+				politically_connected trickster
+			}
+			skill = 1
+			attack_skill = 2
+			defense_skill = 1 
+			planning_skill = 1 
+			logistics_skill = 1
+			visible = {
+				original_tag  = UKR
+				NOT = { tag = RUC }
+				has_government  = communism 
 			}
 		}
 	}

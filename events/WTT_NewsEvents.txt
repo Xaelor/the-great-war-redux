@@ -342,8 +342,7 @@ news_event = {
 	option = {
 		name = wtt_news.40.c
 		trigger = {
-			any_country = {
-				has_war_with = ROOT
+			any_enemy_country = {
 				owns_state = 446
 				owns_state = 453
 				has_country_flag = blew_up_suez
@@ -353,8 +352,7 @@ news_event = {
 	option = {
 		name = wtt_news.40.d
 		trigger = {
-			any_country = {
-				has_war_with = ROOT
+			any_enemy_country = {
 				owns_state = 446
 				owns_state = 453
 			}
@@ -365,8 +363,7 @@ news_event = {
 	option = {
 		name = wtt_news.40.e
 		trigger = {
-			any_country = {
-				has_war_with = ROOT
+			any_enemy_country = {
 				owns_state = 446
 				owns_state = 453
 				NOT = { has_country_flag = blew_up_suez }
@@ -393,8 +390,7 @@ news_event = {
 	option = {
 		name = wtt_news.40.g
 		trigger = {
-			any_country = {
-				has_war_with = ROOT
+			any_enemy_country = {
 				has_country_flag = blew_up_suez
 			}
 			any_other_country = {
@@ -410,8 +406,7 @@ news_event = {
 		name = wtt_news.40.h
 		trigger = {
 			NOT = {
-				any_country = {
-					has_war_with = ROOT
+				any_enemy_country = {
 					has_country_flag = blew_up_suez
 				}
 			}
@@ -488,8 +483,7 @@ news_event = {
 	option = {
 		name = wtt_news.41.c
 		trigger = {
-			any_country = {
-				has_war_with = ROOT
+			any_enemy_country = {
 				owns_state = 685
 				has_country_flag = blew_up_panama
 			}
@@ -498,8 +492,7 @@ news_event = {
 	option = {
 		name = wtt_news.41.d
 		trigger = {
-			any_country = {
-				has_war_with = ROOT
+			any_enemy_country = {
 				owns_state = 685
 			}
 			has_country_flag = blew_up_panama
@@ -509,8 +502,7 @@ news_event = {
 	option = {
 		name = wtt_news.41.e
 		trigger = {
-			any_country = {
-				has_war_with = ROOT
+			any_enemy_country = {
 				owns_state = 685
 				NOT = { has_country_flag = blew_up_panama }
 			}
@@ -535,8 +527,7 @@ news_event = {
 	option = {
 		name = wtt_news.41.g
 		trigger = {
-			any_country = {
-				has_war_with = ROOT
+			any_enemy_country = {
 				has_country_flag = blew_up_panama
 			}
 			any_other_country = {
@@ -551,8 +542,7 @@ news_event = {
 		name = wtt_news.41.h
 		trigger = {
 			NOT = {
-				any_country = {
-					has_war_with = ROOT
+				any_enemy_country = {
 					has_country_flag = blew_up_panama
 				}
 			}
@@ -606,8 +596,7 @@ news_event = {
 	option = {
 		name = wtt_news.42.d
 		trigger = {
-			any_other_country = {
-				has_war_with = ROOT
+			any_enemy_country = {
 				has_country_flag = rebuilt_suez
 			}
 			NOT = { has_country_flag = rebuilt_suez }
@@ -624,8 +613,7 @@ news_event = {
 				}
 			}
 			NOT = {
-				any_other_country = {
-					has_war_with = ROOT
+				any_enemy_country = {
 					has_country_flag = rebuilt_suez
 				}
 			}
@@ -671,8 +659,7 @@ news_event = {
 	option = {
 		name = wtt_news.43.d
 		trigger = {
-			any_other_country = {
-				has_war_with = ROOT
+			any_enemy_country = {
 				has_country_flag = rebuilt_panama
 			}
 			NOT = { has_country_flag = rebuilt_panama }
@@ -689,8 +676,7 @@ news_event = {
 				}
 			}
 			NOT = {
-				any_other_country = {
-					has_war_with = ROOT
+				any_enemy_country = {
 					has_country_flag = rebuilt_panama
 				}
 			}
@@ -824,6 +810,23 @@ news_event = {
 		trigger = {
 			tag = FROM
 		}
+	}
+	option = {
+		name = wtt_news.66.b
+		trigger = {
+			NOT = {
+				tag = FROM
+				has_war_with = FROM
+			}
+		}
+	}
+	option = {
+		name = wtt_news.53.c
+		trigger = {
+			has_war_with = FROM
+		}
+	}
+	after = {
 		if = {
 			limit = {
 				has_game_rule = {
@@ -836,55 +839,10 @@ news_event = {
 				}	
 			}
 			hidden_effect = {
+				clear_superevents = yes
 				play_song = "SE_gre_byzantium"
 				set_country_flag = SE_gre_byzantium
-			}
-		}
-	}
-	option = {
-		name = wtt_news.66.b
-		trigger = {
-			NOT = {
-				tag = FROM
-				has_war_with = FROM
-			}
-		}
-		if = {
-			limit = {
-				has_game_rule = {
-					rule = rule_superevent
-					option = DEFAULT
-				}
-				is_ai = no
-				FROM = {
-					original_tag = GRE
-				}
-			}
-			hidden_effect = {
-				play_song = "SE_gre_byzantium"
-				set_country_flag = SE_gre_byzantium
-			}
-		}
-	}
-	option = {
-		name = wtt_news.53.c
-		trigger = {
-			has_war_with = FROM
-		}
-		if = {
-			limit = {
-				has_game_rule = {
-					rule = rule_superevent
-					option = DEFAULT
-				}
-				is_ai = no
-				FROM = {
-					original_tag = GRE
-				}
-			}
-			hidden_effect = {
-				play_song = "SE_gre_byzantium"
-				set_country_flag = SE_gre_byzantium
+				update_superevents = yes
 			}
 		}
 	}

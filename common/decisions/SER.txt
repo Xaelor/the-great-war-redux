@@ -2,7 +2,7 @@ SER_black_hand_category = {
 	#SER_arranged_BOS_rebellion
 	SER_form_yugoslavia = {
 		name = SER_form_yugoslavia2
-		icon = GFX_decision_ser_yugoslavia
+		icon = GFX_decision_generic_form_nation
 		ai_will_do = {
 			factor = 500
 		}
@@ -10,51 +10,104 @@ SER_black_hand_category = {
 			tag = SER
 		}
 		visible = {
-			NOT = {
-				has_country_flag = SER_yugoslavia_formed
-			}
+			NOT = { has_country_flag = SER_yugoslavia_formed }
+			has_country_flag = SER_unification_of_yugoslavs
 		}
 		available = {
-			has_country_flag = SER_unification_of_yugoslavs
 			custom_trigger_tooltip = {
 				tooltip = SER_at_least_3_integrated_nations
-				check_variable = {
-					SER_integrated_nations > 2
+				OR = {
+					check_variable = { SER_integrated_nations > 2 }
+					count_triggers = {
+						amount = 3
+						SLV = {
+							OR = {
+								AND = {
+									exists = no
+									any_core_state = { is_owned_by = ROOT }
+								}
+								all_core_state = { is_fully_controlled_by = ROOT }
+								is_subject_of = ROOT
+							}
+						}
+						CRO = {
+							OR = {
+								AND = {
+									exists = no
+									any_core_state = { is_owned_by = ROOT }
+								}
+								all_core_state = { is_fully_controlled_by = ROOT }
+								is_subject_of = ROOT
+							}
+						}
+						BOS = {
+							OR = {
+								AND = {
+									exists = no
+									any_core_state = { is_owned_by = ROOT }
+								}
+								all_core_state = { is_fully_controlled_by = ROOT }
+								is_subject_of = ROOT
+							}
+						}
+						MAC = {
+							OR = {
+								AND = {
+									exists = no
+									any_core_state = { is_owned_by = ROOT }
+								}
+								all_core_state = { is_fully_controlled_by = ROOT }
+								is_subject_of = ROOT
+							}
+						}
+						MNT = {
+							OR = {
+								AND = {
+									exists = no
+									any_core_state = { is_owned_by = ROOT }
+								}
+								all_core_state = { is_fully_controlled_by = ROOT }
+								is_subject_of = ROOT
+							}
+						}
+						BUL = {
+							OR = {
+								AND = {
+									exists = no
+									any_core_state = { is_owned_by = ROOT }
+								}
+								all_core_state = { is_fully_controlled_by = ROOT }
+								is_subject_of = ROOT
+							}
+						}
+					}
 				}
 			}
 		}
 		days_remove = 3
 		remove_effect = {
-			custom_effect_tooltip = SER_integrated_count
+			#custom_effect_tooltip = SER_integrated_count
 			set_country_flag = SER_yugoslavia_formed
 			if = {
-				limit = {
-					has_country_flag = greater_serbia_chosen
-				}
+				limit = { has_country_flag = greater_serbia_chosen }
 				set_cosmetic_tag = SER_empire
-				else = {
-					set_cosmetic_tag = YUG
-				}
 			}
+			else = { set_cosmetic_tag = YUG }
 		}
 	}
 	SER_integrate_balkan_nations = {
 		name = integrate_country
+		icon = GFX_decision_hol_exchange_intelligence_data
 		allowed = {
 			tag = SER
 		}
-		target_trigger = {
-			FROM = {
-				OR = {
-					tag = SLV
-					tag = CRO
-					tag = BOS
-					tag = MAC
-					tag = TRA
-					tag = ALB
-					tag = MNT
-				}
-			}
+		targets = {
+			SLV
+			CRO
+			BOS
+			MAC
+			MNT
+			BUL	
 		}
 		target_non_existing = yes
 		ai_will_do = {
@@ -85,7 +138,7 @@ SER_black_hand_category = {
 				has_war = no
 				# you shouldn't able to merge albania
 				any_other_country = {
-					is_major = yes
+					is_actual_major = yes
 					NOT = { has_guaranteed = PREV }
 				}
 			}
@@ -103,6 +156,7 @@ SER_black_hand_category = {
 	SER_ignite_bosnian_rebellion = {
 		days_remove = 60
 		cost = 100
+		icon = GFX_decision_generic_nationalism
 		allowed = {
 			original_tag = SER
 		}
@@ -110,10 +164,7 @@ SER_black_hand_category = {
 			factor = 100
 		}
 		available = {
-			has_country_flag = BOS_rebellion_planed
-			NOT = {
-				has_country_flag = BOS_rebellion
-			}
+			NOT = { has_country_flag = BOS_rebellion }
 		}
 		visible = {
 			has_country_flag = BOS_rebellion_planed
@@ -124,7 +175,7 @@ SER_black_hand_category = {
 		remove_effect = {
 			set_country_flag = BOS_rebellion
 			set_global_flag = SER_arranged_BOS_rebellion
-			AUH = {
+			AUS = {
 				country_event = {
 					id = ww1_auh.53
 					days = 2
@@ -142,33 +193,26 @@ SER_black_hand_category = {
 		}
 		available = {
 			BOS = {
-				has_war_with = AUH
+				has_war_with = AUS
 			}
 			NOT = {
 				has_war_together_with = BOS
 			}
-			has_country_flag = BOS_rebellion
 		}
 		visible = {
-			BOS = {
-				has_war_with = AUH
-			}
-			NOT = {
-				has_war_together_with = BOS
-			}
 			has_country_flag = BOS_rebellion
 		}
 		remove_effect = {
 			add_to_war = {
 				targeted_alliance = BOS
-				enemy = AUH
+				enemy = AUS
 			}
 		}
 	}
 	SER_invest_into_bosnian_liberation_army = {
 		days_remove = 30
 		custom_cost_trigger = {
-			command_power > 24
+			command_power > 24.9
 			has_political_power > 49
 		}
 		days_re_enable = 190
@@ -180,22 +224,14 @@ SER_black_hand_category = {
 			factor = 100
 		}
 		available = {
-			has_country_flag = BOS_rebellion_planed
 			NOT = {
 				has_country_flag = BOS_rebellion
-			}
-			BOS = {
-				exists = no
 			}
 		}
 		visible = {
 			has_country_flag = BOS_rebellion_planed
-			NOT = {
-				has_country_flag = BOS_rebellion
-			}
-			BOS = {
-				exists = no
-			}
+			NOT = { has_country_flag = BOS_rebellion }
+			BOS = { exists = no }
 		}
 		complete_effect = {
 			add_political_power = -50
@@ -310,9 +346,9 @@ AUH_franzjoseph = {
 		available = {
 			OR = {
 				GAL = {
-					is_subject_of = AUH
+					is_subject_of = AUS
 				}
-				AUH = {
+				AUS = {
 					has_war_with = GAL
 				}
 				has_global_flag = galician_crisis_ends
@@ -326,7 +362,7 @@ AUH_franzjoseph = {
 			}
 		}
 		activation = {
-			has_global_flag = kis_franzJoseph_murdered
+			has_global_flag = AUH_franz_joseph_killed
 			NOT = {
 				has_global_flag = galician_crisis_ends
 			}
@@ -387,6 +423,7 @@ crisis = {
 		}
 	}
 	SER_impending_monarchist_counterattack = {
+		icon = GFX_decision_generic_ignite_civil_war
 		allowed = {
 			original_tag = SER
 		}
@@ -394,7 +431,6 @@ crisis = {
 			OR = {
 				has_civil_war = yes
 				has_government = neutrality
-				neutrality < 10
 			}
 		}
 		days_mission_timeout = 140
@@ -403,13 +439,12 @@ crisis = {
 			NOT = {
 				has_country_flag = SER_monarchist_civil_war
 			}
-			neutrality > 2
 		}
 		fire_only_once = no
 		is_good = no
 		timeout_effect = {
+			set_country_flag = SER_monarchist_civil_war
 			hidden_effect = {
-				set_country_flag = SER_monarchist_civil_war
 				check_neutrality_civil_war_popularity = yes
 			}
 			start_civil_war = {
@@ -458,6 +493,9 @@ SER_laws = {
 			clr_country_flag = passing_law
 			add_stability = 0.03
 		}
+		ai_will_do = {
+			factor = 1
+		}
 		cost = 10
 	}
 	SER_press_improvements = {
@@ -490,6 +528,9 @@ SER_laws = {
 			}
 			add_stability = 0.03
 		}
+		ai_will_do = {
+			factor = 1
+		}
 		cost = 60
 	}
 	SER_antiqity_law = {
@@ -517,6 +558,9 @@ SER_laws = {
 			set_country_flag = SER_antiqity_law
 			add_war_support = 0.05
 			clr_country_flag = passing_law
+		}
+		ai_will_do = {
+			factor = 1
 		}
 		cost = 10
 	}
@@ -553,6 +597,9 @@ SER_laws = {
 				bonus = 1
 			}
 		}
+		ai_will_do = {
+			factor = 10
+		}
 		cost = 60
 	}
 	SER_armement_grants = {
@@ -583,6 +630,9 @@ SER_laws = {
 				type = infantry_equipment_1
 				amount = 500
 			}
+		}
+		ai_will_do = {
+			factor = 10
 		}
 		cost = 10
 	}
@@ -625,6 +675,9 @@ SER_laws = {
 				uses = 1
 			}
 		}
+		ai_will_do = {
+			factor = 1
+		}
 		cost = 25
 	}
 	SER_monetary_reform = {
@@ -657,6 +710,9 @@ SER_laws = {
 				days = 780
 			}
 		}
+		ai_will_do = {
+			factor = 1
+		}
 		cost = 50
 	}
 	SER_reinforce_administration = {
@@ -685,6 +741,9 @@ SER_laws = {
 			set_country_flag = SER_reinforce_administration
 			clr_country_flag = passing_law
 			add_political_power = 100
+		}
+		ai_will_do = {
+			factor = 1
 		}
 		cost = 10
 	}
@@ -750,6 +809,7 @@ SER_royal_tour = {
 				NOT = {
 					has_idea = neutrality_idea
 					has_idea = SWI_swiss_neutrality
+					has_idea = LUX_london_treaty
 				}
 				NOT = {
 					## dont care about them
@@ -769,7 +829,7 @@ SER_royal_tour = {
 				has_country_flag = SER_on_tour
 			}
 		}
-		visible = {
+		target_root_trigger = {
 			has_completed_focus = SER_neverending_journey
 		}
 		days_remove = 30
@@ -1025,6 +1085,7 @@ SER_fighting_radicals = {
 
 political_actions = {
 	SER_fire_stojanovic = {
+		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
 			original_tag = SER
 		}
@@ -1079,7 +1140,7 @@ SER_war_preparations = {
 		}
 		fire_only_once = yes
 		visible = {
-			has_war_with = AUH
+			has_war_with = AUS
 			has_war_support < 0.9
 		}
 		available = {
@@ -1115,7 +1176,7 @@ SER_war_preparations = {
 		}
 		available = {
 			is_ai = yes
-			has_war_with = AUH
+			has_war_with = AUS
 			OR = {
 				surrender_progress > 0.9
 				AND = {
@@ -1143,15 +1204,12 @@ SER_weapon_purchases = {
 		allowed = {
 			original_tag = SER
 		}
-		target_trigger = {
-			FROM = {
-				tag = FRA
-			}
+		targets = {
+			FRA
 		}
 		visible = {
 			has_war = yes
-			has_global_flag = great_war
-			NOT = { has_global_flag = great_war_ends }
+			is_great_war_ongoing = yes
 			NOT = { has_war_with = FROM }
 		}
 		available = {
@@ -1187,19 +1245,16 @@ SER_weapon_purchases = {
 		allowed = {
 			original_tag = SER
 		}
-		target_trigger = {
-			FROM = {
-				tag = RUS
-			}
+		targets = {
+			RUS
 		}
 		visible = {
 			has_war = yes
-			has_global_flag = great_war
-			NOT = { has_global_flag = great_war_ends }
+			is_great_war_ongoing = yes
 			NOT = { has_war_with = FROM }
 		}
 		available = {
-			FROM = { has_tech = artillery1 }
+			FROM = { has_tech = improved_field_gun }
 		}
 		fire_only_once = no
 		days_re_enable = 70
@@ -1210,8 +1265,13 @@ SER_weapon_purchases = {
 		}
 		remove_effect = {
 			add_equipment_to_stockpile = {
-				type = artillery_equipment_1
-				amount = 200
+				type = field_gun_equipment_1
+				amount = 160
+				producer = RUS
+			}
+			add_equipment_to_stockpile = {
+				type = howitzer_equipment_1
+				amount = 40
 				producer = RUS
 			}
 		}
@@ -1220,7 +1280,11 @@ SER_weapon_purchases = {
 			modifier = {
 				factor = 0
 				stockpile_ratio = {
-					archetype = artillery_equipment
+					archetype = field_gun_equipment
+					ratio > 0.5
+				}
+				stockpile_ratio = {
+					archetype = howitzer_equipment
 					ratio > 0.5
 				}
 			}
@@ -1231,15 +1295,12 @@ SER_weapon_purchases = {
 		allowed = {
 			original_tag = SER
 		}
-		target_trigger = {
-			FROM = {
-				tag = ENG
-			}
+		targets = {
+			ENG
 		}
 		visible = {
 			has_war = yes
-			has_global_flag = great_war
-			NOT = { has_global_flag = great_war_ends }
+			is_great_war_ongoing = yes
 			NOT = { has_war_with = FROM }
 		}
 		available = {
@@ -1268,23 +1329,17 @@ SER_weapon_purchases = {
 		allowed = {
 			original_tag = SER
 		}
-		target_trigger = {
-			FROM = {
-				tag = ITA
-			}
+		targets = {
+			ITA
 		}
 		visible = {
 			has_war = yes
-			has_global_flag = great_war
-			NOT = { has_global_flag = great_war_ends }
+			is_great_war_ongoing = yes
 			NOT = { has_war_with = FROM }
 		}
 		available = {
 			FROM = {
-				OR = {
-					has_tech = transport
-					has_tech = mtg_transport
-				}
+				has_tech = mtg_transport
 			}
 		}
 		fire_only_once = no
@@ -1320,7 +1375,7 @@ SER_spark_the_uprisings = {
 		}
 		available = {
 			any_controlled_state = {
-				is_owned_by = AUH
+				is_owned_by = AUS
 			}
 			has_equipment = {
 				infantry_equipment > 500
@@ -1338,7 +1393,7 @@ SER_spark_the_uprisings = {
 			production_factory_max_efficiency_factor = -0.2
 		}
 		visible = {
-			has_war_with = AUH
+			has_war_with = AUS
 		}
 		complete_effect = {
 			add_equipment_to_stockpile = {
@@ -1391,7 +1446,7 @@ SER_spark_the_uprisings = {
 		}
 		available = {
 			any_controlled_state = {
-				is_owned_by = AUH
+				is_owned_by = AUS
 			}
 			has_equipment = {
 				infantry_equipment > 500
@@ -1409,7 +1464,7 @@ SER_spark_the_uprisings = {
 			production_factory_max_efficiency_factor = -0.2
 		}
 		visible = {
-			has_war_with = AUH
+			has_war_with = AUS
 		}
 		complete_effect = {
 			add_equipment_to_stockpile = {
@@ -1461,7 +1516,7 @@ SER_spark_the_uprisings = {
 		}
 		available = {
 			any_controlled_state = {
-				is_owned_by = AUH
+				is_owned_by = AUS
 			}
 			has_equipment = {
 				infantry_equipment > 500
@@ -1479,7 +1534,7 @@ SER_spark_the_uprisings = {
 			production_factory_max_efficiency_factor = -0.2
 		}
 		visible = {
-			has_war_with = AUH
+			has_war_with = AUS
 		}
 		complete_effect = {
 			add_equipment_to_stockpile = {
@@ -1531,7 +1586,7 @@ SER_spark_the_uprisings = {
 		}
 		available = {
 			any_controlled_state = {
-				is_owned_by = AUH
+				is_owned_by = AUS
 			}
 			has_equipment = {
 				infantry_equipment > 500
@@ -1549,7 +1604,7 @@ SER_spark_the_uprisings = {
 			production_factory_max_efficiency_factor = -0.2
 		}
 		visible = {
-			has_war_with = AUH
+			has_war_with = AUS
 		}
 		complete_effect = {
 			add_equipment_to_stockpile = {
@@ -1595,9 +1650,48 @@ SER_spark_the_uprisings = {
 			}		
 		}
 	}
+	SER_united_front_FROM = {
+		allowed = {
+			original_tag = SER
+		}
+		target_trigger = {
+			FROM = {
+				is_subject = no
+				has_war_with = AUS
+				NOT = {
+					has_war_with = ROOT
+				}
+			}
+		}
+		targets = {
+			CRO
+			SLV
+			BOS
+		}
+		visible = {
+			has_war_with = AUS
+		}
+		target_root_trigger = {
+			has_completed_focus = SER_a_united_front
+		}
+		available = {
+			has_capitulated = no
+			is_government_in_exile = no
+		}
+		fire_only_once = yes
+		complete_effect = {
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_integrated_puppet
+				freedom_level = 0.8
+				end_wars = no
+			}
+		}
+	}
 }
 SER_army_promotions = {
 	SER_promote_terzic = {
+		icon = GFX_decision_generic_army_support
 		allowed = {
 			original_tag = SER
 		}
@@ -1609,7 +1703,7 @@ SER_army_promotions = {
 		}
 		custom_cost_text = command_power_more_than_25
 		custom_cost_trigger = {
-			command_power > 24
+			command_power > 24.9
 		}
 		fire_only_once = yes
 		remove_effect = {
@@ -1625,6 +1719,7 @@ SER_army_promotions = {
 		}
 	}
 	SER_promote_kondic = {
+		icon = GFX_decision_generic_army_support
 		allowed = {
 			original_tag = SER
 		}
@@ -1636,7 +1731,7 @@ SER_army_promotions = {
 		}
 		custom_cost_text = command_power_more_than_25
 		custom_cost_trigger = {
-			command_power > 24
+			command_power > 24.9
 		}
 		fire_only_once = yes
 		remove_effect = {
@@ -1652,6 +1747,7 @@ SER_army_promotions = {
 		}
 	}
 	SER_promote_pavlovic = {
+		icon = GFX_decision_generic_army_support
 		allowed = {
 			original_tag = SER
 		}
@@ -1663,7 +1759,7 @@ SER_army_promotions = {
 		}
 		custom_cost_text = command_power_more_than_25
 		custom_cost_trigger = {
-			command_power > 24
+			command_power > 24.9
 		}
 		fire_only_once = yes
 		remove_effect = {
@@ -1682,6 +1778,7 @@ SER_army_promotions = {
 		}
 	}
 	SER_promote_pesic = {
+		icon = GFX_decision_generic_army_support
 		allowed = {
 			original_tag = SER
 		}
@@ -1693,7 +1790,7 @@ SER_army_promotions = {
 		}
 		custom_cost_text = command_power_more_than_25
 		custom_cost_trigger = {
-			command_power > 24
+			command_power > 24.9
 		}
 		fire_only_once = yes
 		remove_effect = {
@@ -1711,6 +1808,7 @@ SER_army_promotions = {
 		}
 	}
 	SER_promote_hadzic = {
+		icon = GFX_decision_generic_army_support
 		allowed = {
 			original_tag = SER
 		}
@@ -1722,7 +1820,7 @@ SER_army_promotions = {
 		}
 		custom_cost_text = command_power_more_than_25
 		custom_cost_trigger = {
-			command_power > 24
+			command_power > 24.9
 		}
 		fire_only_once = yes
 		remove_effect = {
@@ -1742,6 +1840,7 @@ SER_army_promotions = {
 		}
 	}
 	SER_promote_vasic = {
+		icon = GFX_decision_generic_army_support
 		allowed = {
 			original_tag = SER
 		}
@@ -1753,7 +1852,7 @@ SER_army_promotions = {
 		}
 		custom_cost_text = command_power_more_than_25
 		custom_cost_trigger = {
-			command_power > 24
+			command_power > 24.9
 		}
 		fire_only_once = yes
 		remove_effect = {
@@ -1770,6 +1869,7 @@ SER_army_promotions = {
 		}
 	}
 	SER_promote_rasic = {
+		icon = GFX_decision_generic_army_support
 		allowed = {
 			original_tag = SER
 		}
@@ -1782,7 +1882,7 @@ SER_army_promotions = {
 		fire_only_once = yes
 		custom_cost_text = command_power_more_than_25
 		custom_cost_trigger = {
-			command_power > 24
+			command_power > 24.9
 		}
 		remove_effect = {
 			SER_mihailo_rasic = {
@@ -1799,6 +1899,7 @@ SER_army_promotions = {
 		}
 	}
 	SER_promote_gojkovic = {
+		icon = GFX_decision_generic_army_support
 		allowed = {
 			original_tag = SER
 		}
@@ -1811,7 +1912,7 @@ SER_army_promotions = {
 		fire_only_once = yes
 		custom_cost_text = command_power_more_than_25
 		custom_cost_trigger = {
-			command_power > 24
+			command_power > 24.9
 		}
 		remove_effect = {
 			SER_ilija_gojkovic = {
@@ -1851,26 +1952,27 @@ peace_deals = {
 				}
 			}
 		}
-		target_trigger = {
-			FROM = {
-				tag = BUL
-			}
+		targets = {
+			BUL
 		}
+		# target_root_trigger = {
+		# 	has_war_with = FROM
+		# }
 		visible = {
 			has_war_with = FROM
 			has_global_flag = kis_secondbalkan_war
 			FROM = {
 				NOT = {
-					is_in_faction_with = AUH
+					is_in_faction_with = AUS
 					is_in_faction_with = RUS
 				}
 			}
 			NOT = {
 				is_in_faction_with = RUS
-				is_in_faction_with = AUH
+				is_in_faction_with = AUS
 				has_global_flag = great_war
-				has_global_flag = kis_franzferdinand_murdered
-				has_global_flag = kis_franzJoseph_murdered
+				has_global_flag = AUH_franz_ferdinand_killed_in_sarajevo
+				has_global_flag = AUH_franz_joseph_killed
 			}
 		}
 		complete_effect = {
@@ -1888,6 +1990,7 @@ peace_deals = {
 						controls_state = 203
 						controls_state = 106
 						controls_state = 821
+						controls_state = 1213
 					}
 				}
 				if = {
@@ -1897,7 +2000,7 @@ peace_deals = {
 						}
 					}
 					ROM = {
-						surrender_progress > 0.6
+						surrender_progress > 0.25
 					}	
 				}
 				GRE = {
@@ -1917,6 +2020,104 @@ peace_deals = {
 }
 
 GER_great_war = {
+	#invasion of Banat
+	SER_invade_BNT = { 
+		icon = generic_ignite_civil_war
+		allowed = {
+			original_tag = SER
+		}
+		target_trigger = {
+			FROM = {
+				original_tag = BNT
+				country_exists = FROM
+			}
+		}
+		visible = {
+			is_subject = no
+			has_country_flag = great_war_winner
+			country_exists = BNT
+		}
+		available = {
+			has_war = no
+			is_neighbor_of = BNT
+			NOT = { 
+				has_war_with = BNT
+				is_subject_of = BNT
+				is_in_faction_with = BNT
+			}
+		}
+		days_remove = 7
+		remove_effect = {
+			every_state = {
+				limit = {
+					is_owned_by = BNT
+				}
+				add_claim_by = SER
+			}
+			if = {
+				limit = {
+					BNT = {
+						is_subject_of = SER
+					}
+				}
+				country_event = {
+					id = ww1_serbia.150
+					days = 1
+				} 
+				else = {
+					SER = {
+						declare_war_on = {
+							target = BNT
+							type = annex_everything
+							generator = { 764 82 }
+						}
+					}
+					set_country_flag = SER_war_on_BNT
+				}
+			}
+			
+		}
+		fire_only_once = yes
+		ai_will_do = {
+			#must do it
+			factor = 10000
+		}
+	}
+	SER_occupy_pecs = {
+		icon = GFX_decision_eng_blackshirt_march
+		name = SER_occupy_pecs
+		days_mission_timeout = 730
+		is_good = no
+		allowed = {
+			original_tag = SER
+		}
+		activation = {
+			owns_state = 1139
+			HUN = {
+				has_war = no
+			}
+		}
+		available = {
+			NOT = {
+				owns_state = 1139
+			}
+		}
+		timeout_effect = {
+			if = {
+				limit = { 
+					NOT = {
+						HUN = {
+							is_subject_of = ROM
+						}
+					}
+				}
+				1139 = {
+					remove_contested_owner = HUN
+					transfer_state_to = HUN
+				}
+			}
+		}
+	}
 	BLL_join_allies = {
 		name = decision_join_allies
 		icon = generic_ignite_civil_war
@@ -1929,12 +2130,12 @@ GER_great_war = {
 		}
 		target_trigger = {
 			FROM = {
-				OR = {
-					tag = FRA
-					tag = GER
-				}
 				NOT = { has_war_with = ROOT }
 			}
+		}
+		targets = {
+			FRA
+			GER
 		}
 		visible = {
 			is_faction_leader = yes
