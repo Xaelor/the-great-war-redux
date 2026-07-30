@@ -516,9 +516,7 @@ country_event = {
 	trigger = {
 		tag = RUS
 		has_elections = yes
-		NOT = {
-			has_country_flag = RUS_duma_abolished
-		}
+		duma_is_active = yes
 		has_revolution = no
 	}
 	#Let's see
@@ -1994,7 +1992,7 @@ country_event = {
 	id = ww1_kokovtsov.13
 	title = ww1_kokovtsov.13.t
 	desc = ww1_kokovtsov.13.d
-	picture = GFX_report_event_rus_maklakov_2
+	picture = GFX_report_event_rus_maklakov_3
 	is_triggered_only = yes
 	fire_only_once = yes
 	option = {
@@ -2063,7 +2061,7 @@ country_event = {
 	id = ww1_kokovtsov.16
 	title = ww1_kokovtsov.16.t
 	desc = ww1_kokovtsov.16.d
-	picture = GFX_report_event_rus_maklakov
+	picture = GFX_report_event_rus_maklakov_2
 	fire_only_once = yes
 	trigger = {
 		tag = RUS
@@ -2079,19 +2077,35 @@ country_event = {
 			has_country_flag = RUS_rightists_left_the_coalition
 		}
 		has_active_mission = RUS_kokovtsov_resignation_mission
-		NOT = {
-			has_country_flag = RUS_duma_abolished
-		}
+		duma_is_active = yes
 		has_revolution = no
 	}
 	#Sounds like a perfect plan!
 	option = {
 		name = ww1_kokovtsov.16.a
 		set_country_flag = RUS_maklakovs_plan_approved
+		add_days_mission_timeout = {
+			mission = RUS_kokovtsov_resignation_mission
+			days = 90
+		}
+		activate_mission = RUS_window_of_opportunity_mission
+		effect_tooltip = {
+			unlock_national_focus = RUS_drastic_measures
+		}
+		ai_chance = {
+			base = 4
+			modifier = {
+				factor = 0
+				is_historical_focus_on = no
+			}
+		}
 	}
 	#Duly noted
 	option = {
 		name = ww1_kokovtsov.16.b
+		ai_chance = {
+			base = 6
+		}
 	}
 }
 #Krivoshein resigns
@@ -2130,7 +2144,27 @@ country_event = {
 	is_triggered_only = yes
 	#Good riddance
 	option = {
-		name = ww1_kokovtsov.17.a
+		name = ww1_kokovtsov.17.a	
+		hidden_effect = {
+			RUS_vladimir_kokovtsov = {
+				RUS_remove_from_the_cabinet = yes
+			}
+		}
+		hidden_effect = {
+			RUS_nikolay_maklakov = {
+				RUS_appoint_chairman = yes
+			}
+		}
+		effect_tooltip = {
+			RUS_nikolay_maklakov = {
+				RUS_appoint_chairman = yes
+			}
+			show_ideas_tooltip = RUS_nikolay_maklakov
+		}
+		RUS_remove_political_mechanics = yes
+		set_country_flag = RUS_maklakov_path
+		mark_focus_tree_layout_dirty = yes		
+		complete_national_focus = RUS_someone_i_can_work_with
 	}
 }
 #Kokovtsov's Fall
