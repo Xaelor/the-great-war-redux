@@ -9656,7 +9656,6 @@ country_event = { #unintended consequences - trade breaks down in macedonia
 						state = 1255
 						state = 731
 						state = 1256
-						state = 1287
 					}
 					has_state_flag = TUR_greek_state
 				}
@@ -9674,7 +9673,6 @@ country_event = { #unintended consequences - trade breaks down in macedonia
 						state = 1255
 						state = 731
 						state = 1256
-						state = 1287
 					}
 					has_state_flag = TUR_greek_state
 				}
@@ -12591,7 +12589,6 @@ country_event = { #economic collapse in_greece 3
 						state = 1255
 						state = 731
 						state = 1256
-						state = 1287
 						state = 826
 						state = 1257
 						state = 758
@@ -12623,7 +12620,6 @@ country_event = { #economic collapse in_greece 3
 						state = 1255
 						state = 731
 						state = 1256
-						state = 1287
 						state = 826
 						state = 1257
 						state = 758
@@ -15717,49 +15713,56 @@ country_event = { #balkan war event
 	desc = ottoman.212.d
 	is_triggered_only = yes
 	picture = GFX_report_event_picture_ottoman_balkan_war
-	option = {
-		name = ottoman.212.a
-		if = {
-			limit = {
-				check_variable = { TUR_harbiyeli_officer_loyalty > 1 }
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					check_variable = { TUR_harbiyeli_officer_loyalty > 1 }
+				}
+				TUR_make_harbiyeli_officer_disloyalty = yes
 			}
-			TUR_make_harbiyeli_officer_disloyalty = yes
-		}
-		if = {
-			limit = {
-				has_completed_focus = TUR_elections_of_1912
-				NOT = {
-					has_completed_focus = TUR_hurriyet_ve_itilaf_victory
-					has_completed_focus = TUR_ittihat_ve_terakki_victory
+			if = {
+				limit = {
+					has_completed_focus = TUR_elections_of_1912
+					NOT = {
+						has_completed_focus = TUR_hurriyet_ve_itilaf_victory
+						has_completed_focus = TUR_ittihat_ve_terakki_victory
+					}
+				}
+				add_timed_idea = {
+					idea = TUR_idea_chaos_balkans
+					days = 15
 				}
 			}
-			add_timed_idea = {
-				idea = TUR_idea_chaos_balkans
-				days = 15
-			}
-		}
-		add_opinion_modifier = {
-			target = SER
-			modifier = large_decrease
-		}
-		add_opinion_modifier = {
-			target = GRE
-			modifier = small_decrease
-		}
-		add_opinion_modifier = {
-			target = MNT
-			modifier = small_decrease
-		}
-		add_opinion_modifier = {
-			target = BUL
-			modifier = large_decrease
-		}
-		hidden_effect = {
 			if = {
 				limit = {
 					has_country_leader = { character = TUR_ahmed_muhtar }
 				}
 				country_event = { id = ww1_ottoman.117 days = 5 }
+			}
+		}
+	}
+	option = {
+		name = ottoman.212.a
+		effect_tooltip = {			
+			if = {
+				limit = {
+					check_variable = { TUR_harbiyeli_officer_loyalty > 1 }
+				}
+				TUR_make_harbiyeli_officer_disloyalty = yes
+			}
+			if = {
+				limit = {
+					has_completed_focus = TUR_elections_of_1912
+					NOT = {
+						has_completed_focus = TUR_hurriyet_ve_itilaf_victory
+						has_completed_focus = TUR_ittihat_ve_terakki_victory
+					}
+				}
+				add_timed_idea = {
+					idea = TUR_idea_chaos_balkans
+					days = 15
+				}
 			}
 		}
 	}
@@ -15772,7 +15775,7 @@ country_event = { #balkan war event
 	fire_only_once = yes
 	trigger = {
 		original_tag = TUR
-		has_country_flag = great_war_ends
+		has_global_flag = great_war_ends
 		OR = {
 			has_country_flag = great_war_winner
 			has_country_flag = great_war_loser
@@ -18239,7 +18242,6 @@ country_event = {
 							state = 1255
 							state = 731
 							state = 1256
-							state = 1287
 							#state = 757
 							state = 758
 							state = 803
