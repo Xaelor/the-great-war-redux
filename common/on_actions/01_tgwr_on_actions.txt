@@ -8309,6 +8309,104 @@
 				}
 				relinguish_entente_leadership = yes
 			}
+			# BW1
+			if = {
+				limit = { 
+					has_global_flag = kis_firstbalkan_war
+					NOT = {
+						has_global_flag = kis_firstbalkanwar_lose
+						has_global_flag = kis_firstbalkanwar_victory
+					}
+					NOT = {
+						has_global_flag = balkan_league_success
+					}
+					OR = {
+						tag = BUL
+						tag = SER
+					}
+					FROM = {
+						OR = {
+							tag = TUR
+							is_ally_with = TUR
+						}
+					}
+				}
+				BW1_turkish_victory_effect = yes
+			}
+			if = {
+				limit = { 
+					has_global_flag = kis_firstbalkan_war
+					NOT = {
+						has_global_flag = kis_firstbalkanwar_lose
+						has_global_flag = kis_firstbalkanwar_victory
+					}
+					tag = TUR
+					FROM = {
+						OR = {
+							tag = SER
+							tag = BUL
+							is_ally_with = GRE
+							tag = GRE
+							tag = MNT
+						}
+					}
+				}
+				BW1_balkans_victory_effect = yes
+			}
+			# BW2
+			if = {
+				limit = { 
+					is_BW2_ongoing = yes
+					OR = {
+						tag = ROM
+						tag = SER
+						tag = GRE
+					}
+					FROM = {
+						tag = BUL
+					}
+				}
+				BW2_bulgaria_victory_effect = yes
+			}
+			if = {
+				limit = { 
+					is_BW2_ongoing = yes
+					tag = BUL
+					FROM = {
+						OR = {
+							tag = SER
+							tag = ROM
+							tag = GRE
+							tag = MNT
+						}
+					}
+				}
+				if = {
+					limit = { 
+						has_war_with = TUR
+					}
+					BW2_turkish_victory_effect = yes
+				}
+				BW2_balkans_victory_effect = yes
+			}
+			if = {
+				limit = { 
+					tag = WTH
+					FROM = {
+						tag = BUL
+					}
+				}
+				BUL = {
+					annex_country = {
+						target = WTH
+					}
+				}
+				WTH = {
+					every_core_state = {
+						remove_core_of = PREV
+					}
+				}
+			}
 			log = "[GetDateText]: [ROOT.GetName] has capitulated by [FROM.GetName]"
 		}
 	}
@@ -11697,18 +11795,6 @@
 					remove_idea = free_trade
 					add_idea = export_focus
 				}
-			}
-			if = {
-				limit = {
-					tag = BUL
-					has_country_flag = lozengradska_operacija
-					NOT = {
-						has_idea = BUL_idea_lozengradska_operacija
-					}
-					has_war_with = TUR
-				}
-				clr_country_flag = lozengradska_operacija
-				add_ideas = BUL_idea_lozengradska_operacija
 			}
 			country_event = ww1_firstbalkan.100 #adding major status during war
 			if = {
