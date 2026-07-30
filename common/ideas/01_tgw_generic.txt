@@ -4,34 +4,54 @@ ideas = {
 			name = idea_victors_of_wwi
 			allowed = { always = no }
 			allowed_civil_war = {
-				always = yes
+				always = no
+			}
+			available = {
+				has_war_with_major = no
+				has_capitulated = no
 			}
 			removal_cost = -1
 			picture = victor_of_the_great_war_france
 			modifier = {
-				land_doctrine_cost_factor = 0.75
-				air_doctrine_cost_factor = 0.75
-				naval_doctrine_cost_factor = 0.75
+				land_doctrine_cost_factor = 0.25
+				air_doctrine_cost_factor = 0.25
+				naval_doctrine_cost_factor = 0.25
 				ai_focus_defense_factor = 1.0
-				ai_get_ally_desire_factor = -1.0			
-				ai_desired_divisions_factor = -0.8
+				ai_get_ally_desire_factor = -1.0
+				experience_gain_air_factor = -0.1
+				experience_gain_army_factor = -0.1
+				experience_gain_navy_factor = -0.1
+				land_mastery_gain_factor = -0.5
+			}
+			rule = {
+				can_send_volunteers = yes
 			}
 		}
 		idea_victors_of_wwi_cp = {
 			name = idea_victors_of_wwi
 			allowed = { always = no }
 			allowed_civil_war = {
-				always = yes
+				always = no
+			}
+			available = {
+				has_war_with_major = no
+				has_capitulated = no
 			}
 			removal_cost = -1
 			picture = victor_of_the_great_war_germany
 			modifier = {
-				land_doctrine_cost_factor = 0.75
-				air_doctrine_cost_factor = 0.75
-				naval_doctrine_cost_factor = 0.75
+				land_doctrine_cost_factor = 0.25
+				air_doctrine_cost_factor = 0.25
+				naval_doctrine_cost_factor = 0.25
 				ai_focus_defense_factor = 1.0
 				ai_get_ally_desire_factor = -1.0			
-				ai_desired_divisions_factor = -0.8
+				experience_gain_air_factor = -0.1
+				experience_gain_army_factor = -0.1
+				experience_gain_navy_factor = -0.1
+				land_mastery_gain_factor = -0.5
+			}
+			rule = {
+				can_send_volunteers = yes
 			}
 		}
 		idea_armistice = {
@@ -56,26 +76,24 @@ ideas = {
 					has_defensive_war = yes
 					has_country_flag = end_the_armistice
 					has_civil_war = yes
-					any_other_country = {
-						is_major = yes
-						has_war_with = ROOT
-					}
-				}
-				has_global_flag = interbellum
+					has_war_with_major = yes
+					has_global_flag = interbellum
+				}		
 			}
 			on_remove = {
 				if = {
 					limit = {
 						has_country_flag = great_war_loser
 						has_country_flag = end_the_armistice
+						OR = {
+							has_war = yes
+							NOT = { has_idea = roaring_twenties }
+						}
 					}
 					every_other_country = {
 						limit = { is_major = yes has_country_flag = great_war_winner }
 						country_event = ww1_generic.27
 					}
-				}
-				set_rule = {
-					can_send_volunteers = yes
 				}
 			}
 			rule = {
@@ -88,7 +106,7 @@ ideas = {
 		}
 		idea_army_restrictions = {
 			picture = tfv_can_conscription_crisis
-			allowed = { always = yes }
+			allowed = { always = no }
 			allowed_civil_war = { always = yes }
 			
 			removal_cost = -1
@@ -109,6 +127,7 @@ ideas = {
 						}
 						NOT = {
 							original_tag = GER
+							original_tag = TUR
 						}
 					}
 				}
@@ -155,7 +174,10 @@ ideas = {
 				armor = {
 					build_cost_ic = 0.9
 				}
-				railway_gun = {
+				mio_cat_eq_railway_guns = {
+					build_cost_ic = 0.9
+				}
+				mio_cat_eq_gas = {
 					build_cost_ic = 0.9
 				}
 				# Naval
@@ -166,21 +188,18 @@ ideas = {
 					build_cost_ic = 0.9
 				}
 				# Air
-				fighter = {
+				mio_cat_eq_all_small_plane = {
 					build_cost_ic = 0.9
 				}
-				cas = {
+				mio_cat_eq_all_medium_plane = {
 					build_cost_ic = 0.9
 				}
-				naval_bomber = {
+				mio_cat_eq_all_large_plane = {
 					build_cost_ic = 0.9
 				}
-				tactical_bomber = {
+				mio_cat_eq_airships = {
 					build_cost_ic = 0.9
-				}
-				strategic_bomber = {
-					build_cost_ic = 0.9
-				}
+				}		
 			}
 			research_bonus = {
 				armor = -0.9
@@ -219,8 +238,6 @@ ideas = {
 			
 			modifier = {
 				war_support_factor = -0.05
-                                drift_defence_factor = -0.3
-				conscription_factor = -0.10
 				attrition = 0.10
 				supply_consumption_factor = 0.10
 			}
@@ -281,7 +298,6 @@ ideas = {
 				production_speed_buildings_factor = -0.2
 			}
 		}
-
 		idea_farm_crisis_2 = {
 			picture = generic_agrarian_society
 			name = idea_farm_crisis
@@ -294,8 +310,9 @@ ideas = {
 				production_speed_buildings_factor = -0.2
 			}
 		}
+
 		idea_desertion = {
-			picture = generic_army_problems
+			picture = generic_desertion
 			removal_cost = -1
 			available = { has_war = yes }
 			modifier = {
@@ -304,56 +321,13 @@ ideas = {
 			}
 		}
 		idea_mass_desertion = {
-			picture = generic_army_problems
+			picture = generic_desertion
 			removal_cost = -1
 			available = { has_war = yes }
 			modifier = {
 				conscription_factor = -0.20
 				weekly_manpower = -2500
 				war_support_factor = -0.10
-			}
-		}
-		protectorate = {
-			name = autonomy_tgwr_protectorate
-			picture = ast_abandon_the_westminster_system
-			removal_cost = -1
-			
-			modifier = {
-				political_power_cost = 0.1
-				ai_join_ally_desire_factor = -4000
-			}
-			rule = {
-				can_decline_call_to_war = yes
-				can_access_market = no
-				desc = can_not_access_market_closed_economy
-	        }
-			available = {
-				is_subject = yes
-			}
-		}
-		concession_state = {
-			name = autonomy_tgwr_concession
-			picture = generic_constitutional_guarantees
-			removal_cost = -1
-			
-			modifier = {
-				autonomy_manpower_share = 0
-				can_master_build_for_us = 1
-				extra_trade_to_overlord_factor = 1
-				overlord_trade_cost_factor = -1
-				cic_to_overlord_factor = 1
-				mic_to_overlord_factor = 1
-				research_sharing_per_country_bonus_factor = 1
-				ai_join_ally_desire_factor = -4000
-				ai_focus_aggressive_factor = -2
-			}
-			rule = {
-				can_decline_call_to_war = yes
-				can_access_market = no
-				desc = can_not_access_market_closed_economy
-	        }
-			available = {
-				is_subject = yes
 			}
 		}
 		authoritarianism = {
@@ -765,10 +739,87 @@ ideas = {
 				research_speed_factor = -0.05
 			}
 		}
+		idea_crossroad_of_empires = {
+			picture = can_wartime_prices_and_trade_board
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				always = yes
+			}
+
+			available = {
+				RUS = {
+					exists = yes
+					OR = {
+						has_government = neutrality
+						has_government = democratic
+					}
+				}
+				RAJ = {
+					exists = yes
+					is_subject = yes
+					OR = {
+						has_government = neutrality
+						has_government = democratic
+					}
+				}
+			}
+			
+			modifier = {
+				min_export = 0.05
+				production_speed_buildings_factor = 0.05
+			}
+		}
+		idea_russian_protectorate = {
+			picture = advisors_russia
+			removal_cost = -1
+
+			allowed = {
+				always = no
+			}
+
+			allowed_civil_war = {
+				is_subject_of = RUS
+				NOT = {
+					has_government = communism
+				}
+			}
+
+			available = {
+				is_subject_of = RUS
+				NOT = {
+					has_government = communism
+				}
+			}
+			
+			modifier = {
+				opinion_gain_monthly_factor = -0.5
+				improve_relations_maintain_cost_factor = 0.5
+				drift_defence_factor = 0.5
+				ai_get_ally_desire_factor = -50
+			}
+		}
+		idea_dominant_nomadic_population = {
+			picture = MON_ger
+			allowed = { always = no }
+			allowed_civil_war = { always = yes }
+			modifier = {
+				out_of_supply_factor = -0.2
+				supply_node_range = 0.5
+				supply_consumption_factor = -0.15
+				research_speed_factor = -0.2
+				equipment_capture = 0.03
+			}
+		}
 	}
 	hidden_ideas = {
 		ready_to_surrender = { #workaround to force-surrender tags in specific circumstances
 			on_add = { log = "[GetDateText]: [Root.GetName]: add idea ready_to_surrender" }
+			allowed = { always = no }
 			available = { has_war = yes }
 			modifier = {
 				forced_surrender_limit = -1

@@ -46,11 +46,13 @@ characters={
 			}
 		}
 		country_leader={
-			ideology=oligarchism		
+			ideology=civilian_dictatorship		
 		}
 	}
+
 	CAN_samuel_hughes={
 		name="CAN_samuel_hughes"
+		can_be_captured = no
 		advisor={
 			slot = theorist
 			cost = 100
@@ -106,10 +108,10 @@ characters={
 			}
 		}
 		corps_commander={
-			traits={ old_guard politically_connected }
+			traits={ old_guard war_hero cavalry_officer trait_cautious }
 			skill=4
 			attack_skill=3
-			defense_skill=2
+			defense_skill=1
 			planning_skill=3
 			logistics_skill=3
 			
@@ -141,7 +143,7 @@ characters={
 			}
 		}
 		corps_commander={
-			traits={ brilliant_strategist inflexible_strategist }
+			traits={ brilliant_strategist inflexible_strategist career_officer }
 			skill=4
 			attack_skill=1
 			defense_skill=3
@@ -172,7 +174,7 @@ characters={
 			}
 		}
 		country_leader={
-			ideology=marxism
+			ideology=revolutionary_socialism
 			
 			
 			
@@ -219,10 +221,8 @@ characters={
 	}
 	CAN_louis_lipsett={
 		name="CAN_louis_lipsett"
+		can_be_captured = no #should die instead
 		portraits={
-			army={
-				small="GFX_idea_generic_army_chief_off"
-			}
 			army={
 				large="gfx/leaders/CAN/CAN_louis_lipsett.png"
 			}
@@ -232,6 +232,16 @@ characters={
 			idea_token = CAN_louis_lipsett
 			allowed  = {
 				original_tag  = CAN
+			}
+			available = {
+				custom_trigger_tooltip = {
+					tooltip = character_not_dead
+				}
+			}
+			visible = {
+				NOT = {
+					has_character_flag = character_died
+				}
 			}
 			ledger  = army 
 			traits  = {
@@ -243,26 +253,32 @@ characters={
 			}
 		}
 		corps_commander={
-			traits={ brilliant_strategist }
+			traits={ brilliant_strategist trait_reckless inspirational_leader }
 			skill=3
 			attack_skill=3
 			defense_skill=3
 			planning_skill=4
 			logistics_skill=3
-			
+			visible = {
+				NOT = {
+					has_character_flag = character_died
+				}
+			}
+		
 		}
 	}
 	CAN_richard_turner={
 		name="CAN_richard_turner"
 		portraits={
 			army={
-				small="GFX_idea_generic_army_chief_def"
-			}
-			army={
+				small="gfx/interface/ideas/idea_generic_army_europe_5.dds"
 				large="gfx/leaders/CAN/CAN_richard_turner.png"
 			}
 		}
 		corps_commander={
+			traits = {
+				trait_reckless old_guard inspirational_leader trait_royalist
+			}
 			skill=2
 			attack_skill=2
 			defense_skill=3
@@ -273,35 +289,38 @@ characters={
 	}
 	CAN_malcolm_mercer={
 		name="CAN_malcolm_mercer"
+		can_be_captured = no #should die instead
 		portraits={
-			army={
-				small="GFX_idea_generic_army_art"
-			}
 			army={
 				large="gfx/leaders/CAN/CAN_malcom_mercer.png"
 			}
 		}
 		corps_commander={
-			traits={ trait_reckless }
+			traits={ trait_reckless militias_officer inspirational_leader }
 			skill=2
 			attack_skill=2
 			defense_skill=3
 			planning_skill=3
 			logistics_skill=3
-			
+			visible = {
+				NOT = {
+					has_character_flag = character_died
+				}
+			}			
 		}
 	}
 	CAN_herbert_cyril_thacker={
 		name="CAN_herbert_cyril_thacker"
 		portraits={
 			army={
-				small="GFX_idea_generic_army_log"
-			}
-			army={
+				small="gfx/interface/ideas/idea_generic_army_europe_3.dds"
 				large="gfx/leaders/CAN/CAN_herbert_thacker.png"
 			}
 		}
 		corps_commander={
+			traits = {
+				artillery_officer artillery_specialist
+			}
 			skill=2
 			attack_skill=2
 			defense_skill=2
@@ -315,20 +334,21 @@ characters={
 			slot = army_chief
 			idea_token = CAN_colin_mackenzie
 			allowed  = {
-					original_tag  = CAN
-				}
-				traits  = {
-					army_chief_defensive_2 
-				}
-				cost = 100
-				ai_will_do  = {
-					factor  = 1.000
-				}
+				original_tag  = CAN
+			}
+			traits  = {
+				army_chief_defensive_2 
+			}
+			cost = 100
+			ai_will_do  = {
+				factor  = 1.000
+			}
 		}
 		name="CAN_colin_mackenzie"
 		portraits={
 			army={
-				small="GFX_idea_generic_army_europe_2"
+				large="gfx/leaders/CAN/CAN_colin_mackenzie.png"
+				small="gfx/interface/ideas/CAN/idea_CAN_colin_mackenzie.png"			
 			}
 		}
 	}
@@ -359,21 +379,30 @@ characters={
 			slot = navy_chief
 			idea_token = CAN_charles_kingsmill
 			allowed  = {
-					original_tag  = CAN
-				}
-				traits  = {
-					navy_chief_decisive_battle_2 
-				}
-				cost = 100
-				ai_will_do  = {
-					factor  = 1.000
-				}
+				original_tag  = CAN
+			}
+			traits  = {
+				navy_chief_decisive_battle_2 
+			}
+			cost = 100
+			ai_will_do  = {
+				factor  = 1.000
+			}
 		}
 		name="CAN_charles_kingsmill"
 		portraits={
-			army={
-				small="GFX_idea_generic_navy_europe_3"
+			navy={
+				large="gfx/leaders/CAN/CAN_charles_kingsmill.png"
+				small="gfx/interface/ideas/CAN/idea_CAN_charles_kingsmill.png"
 			}
+		}
+		navy_leader={
+			traits={ old_guard_navy caustic_personality cuts_corners }
+			skill=2
+			attack_skill=2
+			defense_skill=2
+			maneuvering_skill=1
+			coordination_skill=1
 		}
 	}
 	CAN_george_halsey_perley={
@@ -418,20 +447,21 @@ characters={
 			slot = army_chief
 			idea_token = CAN_willoughby_gwatkin
 			allowed  = {
-					original_tag  = CAN
-				}
-				traits  = {
-					army_chief_offensive_2 
-				}
-				cost = 100
-				ai_will_do  = {
-					factor  = 1.000
-				}
+				original_tag  = CAN
+			}
+			traits  = {
+				army_chief_offensive_2 
+			}
+			cost = 100
+			ai_will_do  = {
+				factor  = 1.000
+			}
 		}
 		name="CAN_willoughby_gwatkin"
 		portraits={
 			army={
-				small="GFX_idea_generic_army_europe_5"
+				large="gfx/leaders/CAN/CAN_willoughby_gwatkin.png"
+				small="gfx/interface/ideas/CAN/idea_CAN_willoughby_gwatkin.png"
 			}
 		}
 	}

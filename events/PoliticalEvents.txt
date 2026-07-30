@@ -13,7 +13,6 @@ country_event = {
 	
     trigger = {
 		NOT = { has_government = communism }
-		NOT = { original_tag = GRE }
 		communism > 0.6
 		NOT = { communism > 0.7 }
 		NOT = { has_country_flag = dont_trigger_political_event }
@@ -157,11 +156,11 @@ country_event = {
 	
 	
 	trigger = {
+		NOT = { has_country_flag = dont_trigger_political_event }
 		has_idea_with_trait = communist_revolutionary
 		NOT = { has_government = communism }
 		communism > 0.2
 		NOT = { communism > 0.59 }
-		NOT = { has_country_flag = dont_trigger_political_event }
 	}
 
 	mean_time_to_happen = {
@@ -306,16 +305,9 @@ country_event = {
 	
 	trigger = {
 		NOT = { has_government = fascism }
-		NOT = { original_tag = GRE }
 		fascism > 0.6
 		NOT = { fascism > 0.7 }
 		check_has_focus_tree_to_switch_to_fascism = yes
-		NOT = { has_country_flag = dont_trigger_political_event }
-	}
-
-	trigger = {
-		NOT = { original_tag = GRE }
-		NOT = { has_government = fascism }
 		NOT = { has_country_flag = dont_trigger_political_event }
 	}
 	
@@ -644,7 +636,6 @@ country_event = {
 	picture = GFX_report_event_journalists_speech
 	
 	trigger = {
-		NOT = { original_tag = GRE }
 		NOT = { has_government = democratic }
 		democratic > 0.6
 		NOT = { democratic > 0.7 }
@@ -880,7 +871,7 @@ country_event = {
 	picture = GFX_report_event_fascist_militia
 
     trigger = {
-		NOT = { original_tag = GRE }
+		is_major = no
 		fascism > 0.7
 		num_of_controlled_states > 1
 		#has_idea = fascist_revolutionaries
@@ -976,7 +967,6 @@ country_event = {
 	picture = GFX_report_event_worker_protests
 
     trigger = {
-		NOT = { original_tag = GRE }
 		communism > 0.7
 		num_of_controlled_states > 1
 		#has_idea = communist_revolutionaries
@@ -1072,7 +1062,6 @@ country_event = {
 	picture = GFX_report_event_gathering_protest
 
     trigger = {
-		NOT = { original_tag = GRE }
 		democratic > 0.7
 		num_of_controlled_states > 1
 		#has_idea = democratic_revolutionaries
@@ -1275,16 +1264,13 @@ country_event = {
 		is_subject = no
 		has_civil_war = yes
 		NOT = {
-			has_country_flag = ENG_nationalist_britain_flag
-			has_country_flag = FRA_nationalist_france_flag
-			has_country_flag = FRA_socialist_france_flag
-			has_country_flag = ENG_socialist_britain_flag
+			original_tag = FRA
+			original_tag = ENG
 			has_country_flag = CHI_national_protection_flag
 			has_country_flag = CHI_kuomintang_flag
 			has_country_flag = CHI_soviet_republic_flag
 			has_country_flag = PER_gendarmerie_flag
 			has_country_flag = CHI_left_kuomintang_flag
-			has_cosmetic_tag = OST_LGC
 			has_cosmetic_tag = COG_belgium_in_exile
 			original_tag = GDC
 			original_tag = ITA
@@ -1292,10 +1278,12 @@ country_event = {
 			original_tag = QIN
 			tag = BAK
 			original_tag = ALB
+			original_tag = CHA
+			original_tag = ROM
 		}
-		any_other_country = {
+		any_country_with_original_tag = {
+			original_tag_to_check = ROOT
 			NOT = { tag = ROOT }
-			original_tag = ROOT
 			is_subject = no
 			has_government = ROOT
 			has_war_with = ROOT
@@ -1308,9 +1296,9 @@ country_event = {
 
 	option = {
 		name = political.28.a
-		random_country = {
+		random_country_with_original_tag = {
+			original_tag_to_check = ROOT
 			limit = {
-				original_tag = ROOT
 				NOT = { tag = ROOT }
 				has_civil_war = yes
 				is_subject = no
@@ -1331,17 +1319,18 @@ country_event = {
 	trigger = {
 		is_subject = no
 		has_country_flag = yes_to_unification_flag
-		any_other_country = {
+		any_country_with_original_tag = {
+			original_tag_to_check = ROOT
 			NOT = { tag = ROOT }
-			original_tag = ROOT
 			has_country_flag = yes_to_unification_flag
 			is_subject = no
 			has_government = ROOT
 			has_war = no
 		}
 		NOT = {
-			any_other_country = {
-				original_tag = ROOT
+			any_country_with_original_tag = {
+				original_tag_to_check = ROOT
+				NOT = { tag = ROOT }
 				has_government = ROOT
 				has_country_flag = unification_request_sent_flag
 			}
@@ -1363,9 +1352,10 @@ country_event = {
 		clr_country_flag = yes_to_unification_flag 
 		clr_country_flag = unification_request_sent_flag
 		#log = "Player ROOT [ROOT.GetName] to annex"
-		every_other_country = {
+		every_country_with_original_tag = {
+			original_tag_to_check = ROOT
 			limit = {
-				original_tag = ROOT
+				NOT = { tag = ROOT }
 				has_country_flag = yes_to_unification_flag
 				is_subject = no
 				has_government = ROOT
@@ -1387,9 +1377,9 @@ country_event = {
 		}
 		IF = {
 			limit = {
-				any_other_country = {
+				any_country_with_original_tag = {
+					original_tag_to_check = ROOT
 					NOT = { tag = ROOT }
-					original_tag = ROOT
 					has_country_flag = yes_to_unification_flag
 					is_subject = no
 					has_government = ROOT
@@ -1398,10 +1388,10 @@ country_event = {
 				}
 			}
 			log = "ai ROOT - Human player [ROOT.GetName] to annex"
-			random_other_country = {
+			random_country_with_original_tag = {
+				original_tag_to_check = ROOT
 				limit = { 
 					NOT = { tag = ROOT }
-					original_tag = ROOT
 					has_country_flag = yes_to_unification_flag
 					is_subject = no
 					has_government = ROOT

@@ -4,7 +4,7 @@ autonomy_state = {
 	default = yes
 	is_puppet = yes
 	
-	min_freedom_level = 0.4
+	min_freedom_level = 0.5	
 	
 	manpower_influence = 0.9
 	
@@ -40,39 +40,29 @@ autonomy_state = {
 	}
 
 	allowed = {
-	    NOT = { 
-		    has_country_flag = protectorate
-			AND = {
-				overlord = {
-					tag = TUR 
-					NOT = { tag = TRR }
-				}
-				OR = {
-					tag = LBA
-					tag = JBS
-					tag = SAU
-					tag = MSC
-					tag = OMA
-					tag = UAE
-					tag = SUD
-				}
-			}
+		NOT = {
+			has_country_flag = protectorate
 		}
 		if = {
 			limit = {
-				has_dlc = "Waking the Tiger"
-                OVERLORD = { 
-                    OR = {
-                    	original_tag = JAP 
-						original_tag = KOR 
-						original_tag = QIN 
+				OR = {
+					has_country_flag = monarchist_puppet
+					has_country_flag = colony
+					OVERLORD = {
+						OR = {
+							original_tag = JAP 
+							original_tag = KOR 
+							original_tag = QIN 
+						}
 					}
-				}
+				}				
 			}
 			OR = {
-                has_government = communism
-				has_government = democratic
-			}
+				has_government = communism
+				OVERLORD = {
+					has_government = communism
+				}
+			}			
 		}
 	}
 

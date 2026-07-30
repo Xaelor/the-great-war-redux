@@ -79,11 +79,25 @@ country_event = {
 	picture = GFX_report_event_generic_conference
 	is_triggered_only = yes
 	option = {
+		name = ww1_balkan.4.b
+		custom_effect_tooltip = historical_tt
+		set_global_flag = rejected_macedonia
+		BUL = {
+			country_event = {
+				id = ww1_balkan.9
+				days = 15
+			}
+		}
+		ai_chance = {
+			base = 200
+		}
+	}
+	option = {
 		name = ww1_balkan.4.a
 		set_global_flag = autonomous_macedonia
 		custom_effect_tooltip = autonomous_macedonia_tt
 		ai_chance = {
-			factor = 10
+			base = 10
 			modifier = {
 				factor = 0
 				is_historical_focus_on = yes
@@ -94,19 +108,6 @@ country_event = {
 				id = ww1_balkan.5
 				days = 15
 			}
-		}
-	}
-	option = {
-		name = ww1_balkan.4.b
-		set_global_flag = rejected_macedonia
-		BUL = {
-			country_event = {
-				id = ww1_balkan.9
-				days = 15
-			}
-		}
-		ai_chance = {
-			factor = 200
 		}
 	}
 }
@@ -120,7 +121,8 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_balkan.5.a
-		create_faction = balkan_league
+		create_faction_from_template = faction_template_balkan_league
+		set_faction_name = balkan_league
 		set_global_flag = balkan_league_success
 		add_to_faction = SER
 		add_to_faction = MNT
@@ -140,6 +142,9 @@ country_event = {
 					state = 731
 					state = 345
 					state = 184
+					state = 1140
+					state = 1141
+					state = 1213
 				}
 			}
 			add_core_of = MAC
@@ -164,6 +169,8 @@ country_event = {
 					OR = {
 						is_core_of = SER
 						state = 44
+						state = 1214
+						state = 1215
 					}
 				}
 				add_claim_by = SER
@@ -211,6 +218,7 @@ country_event = {
 				days = 5
 			}
 		}
+		custom_effect_tooltip = historical_tt
 		every_state = {
 			limit = {
 				is_owned_by = TUR
@@ -222,6 +230,8 @@ country_event = {
 						}
 					}
 					state = 803
+					state = 1225
+					state = 871
 				}
 			}
 			add_claim_by = GRE
@@ -287,12 +297,9 @@ country_event = {
 				days = 15
 			}
 		}
+		custom_effect_tooltip = historical_tt
 		ai_chance = {
-			base = 1
-			modifier = {
-				factor = 100
-				is_historical_focus_on = yes
-			}
+			base = 100
 		}
 	}
 	option = {
@@ -306,7 +313,7 @@ country_event = {
 			}
 		}
 		ai_chance = {
-			base = 1
+			base = 20
 			modifier = {
 				factor = 0
 				is_historical_focus_on = yes
@@ -330,6 +337,38 @@ country_event = {
 		add_political_power = -50
 		add_war_support = -0.05
 		hidden_effect = {
+			SER = {
+				add_opinion_modifier = {
+					target = BUL
+					modifier = refused_alliance
+				}
+				add_ai_strategy = {
+					type = alliance
+					id = BUL
+					value = -200
+				}
+				add_ai_strategy = {
+					type = befriend
+					id = BUL
+					value = -200
+				}
+			}
+			BUL = {
+				add_opinion_modifier = {
+					target = SER
+					modifier = refused_alliance
+				}
+				add_ai_strategy = {
+					type = alliance
+					id = SER
+					value = -200
+				}
+				add_ai_strategy = {
+					type = befriend
+					id = SER
+					value = -200
+				}
+			}
 			country_event = {
 				id = ww1_serbia.15
 				days = 10
@@ -347,6 +386,7 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_balkan.11.a
+		custom_effect_tooltip = historical_tt
 		every_state = {
 			limit = {
 				OR = {
@@ -356,6 +396,7 @@ country_event = {
 					state = 756
 					state = 849
 				}
+				NOT = { is_claimed_by = BUL }
 			}
 			add_claim_by = BUL
 		}
@@ -365,15 +406,21 @@ country_event = {
 					state = 847
 					state = 760
 					state = 44
+						state = 1214
+						state = 1215
 				}
+				NOT = { is_claimed_by = SER }
 			}
 			add_claim_by = SER
 		}
 		every_state = {
 			limit = {
 				OR = {
-					state = 74
+					state = 848
+					state = 761
+					state = 870
 				}
+				NOT = { is_claimed_by = MNT }
 			}
 			add_claim_by = MNT
 		}
@@ -498,30 +545,24 @@ country_event = {
 	picture = GFX_report_event_generic_conference
 	is_triggered_only = yes
 	option = {
+		name = ww1_balkan.15.b
+		custom_effect_tooltip = historical_tt
+		SER = {
+			country_event = {
+				id = ww1_balkan.16
+				days = 15
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	option = {
 		name = ww1_balkan.15.a
 		add_political_power = -50
 		add_war_support = -0.05
-		every_state = {
-			limit = {
-				is_owned_by = TUR
-				OR = {
-					state = 759
-					state = 225
-				}
-			}
-			add_claim_by = BUL
-		}
-		every_state = {
-			limit = {
-				is_owned_by = TUR
-				OR = {
-					state = 106
-					state = 203
-				}
-			}
-			add_claim_by = SER
-		}
-		create_faction = balkan_league
+		create_faction_from_template = faction_template_balkan_league
+		set_faction_name = balkan_league
 		add_to_faction = SER
 		add_to_faction = MNT
 		set_global_flag = balkan_league_success
@@ -539,18 +580,6 @@ country_event = {
 			}
 		}
 	}
-	option = {
-		name = ww1_balkan.15.b
-		SER = {
-			country_event = {
-				id = ww1_balkan.16
-				days = 15
-			}
-		}
-		ai_chance = {
-			base = 100
-		}
-	}
 }
 
 #Bulgaria refuses
@@ -562,6 +591,7 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_balkan.16.a
+		custom_effect_tooltip = historical_tt
 		add_political_power = -50
 		add_war_support = -0.05
 		BUL = {
@@ -609,6 +639,7 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_balkan.17.a
+		custom_effect_tooltip = historical_tt
 		add_political_power = -50
 		add_war_support = -0.05
 		give_guarantee = SER
@@ -620,27 +651,8 @@ country_event = {
 				days = 15
 			}
 		}
-		every_state = {
-			limit = {
-				is_owned_by = TUR
-				OR = {
-					state = 225
-					state = 203
-					state = 759
-				}
-			}
-			add_claim_by = BUL
-		}
-		every_state = {
-			limit = {
-				is_owned_by = TUR
-				OR = {
-					state = 106
-				}
-			}
-			add_claim_by = SER
-		}
-		create_faction = balkan_league
+		create_faction_from_template = faction_template_balkan_league
+		set_faction_name = balkan_league
 		set_global_flag = balkan_league_success
 		add_to_faction = SER
 		add_to_faction = MNT
@@ -676,6 +688,19 @@ country_event = {
 	option = {
 		name = ww1_balkan.18.a
 		add_political_power = 100
+		760 = {
+			remove_claim_by = MNT
+		}
+		every_state = {
+			limit = {
+				OR = {
+					is_claimed_by = MNT
+					is_owned_by = MNT
+					is_core_of = MNT
+				}
+			}
+			remove_claim_by = SER
+		}
 		GRE = {
 			country_event = {
 				id = ww1_balkan.19
@@ -694,6 +719,7 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_balkan.19.a
+		custom_effect_tooltip = historical_tt
 		BUL = {
 			add_to_faction = GRE
 		}
@@ -706,7 +732,11 @@ country_event = {
 					state = 758
 					state = 731
 					state = 803
+					state = 1225
 					state = 790
+					state = 974
+					state = 975
+					state = 871
 				}
 			}
 			add_claim_by = GRE
@@ -787,6 +817,7 @@ country_event = {
 						}
 						OR = {
 							region = 24
+							region = 14
 							region = 25
 							region = 26
 						}
@@ -831,12 +862,154 @@ country_event = {
 				}
 				OR = {
 					region = 24
+					region = 14
 					region = 25
 					region = 26
 				}
 			}
 			set_demilitarized_zone = no
 			transfer_state_to = FROM
+		}
+		hidden_effect = {
+			FROM = {
+				set_country_flag = won_balkan_war
+				if = {
+					limit = { is_faction_leader = yes }
+					dismantle_faction = yes
+				}
+			}
+			set_global_flag = kis_firstbalkan_war
+			set_global_flag = TUR_surrender_1st_balkan_war
+			set_global_flag = kis_firstbalkanwar_victory
+		}
+	}
+}
+
+# Balkan Alliance but Serbia Alone
+country_event = {
+	id = ww1_balkan.24
+	title = ww1_balkan.24.t
+	desc = ww1_balkan.24.d
+	picture = GFX_report_event_generic_conference
+	is_triggered_only = yes
+	trigger = {
+		is_subject = no
+		is_faction_leader = no
+	}
+	option = {
+		name = ww1_balkan.24.a
+		every_state = {
+			limit = {
+				OR = {
+					state = 44
+					state = 106
+					state = 203
+					state = 759
+					state = 760
+					state = 847
+					state = 1140
+					state = 1141
+					state = 1213
+					state = 1214
+					state = 1215
+				}
+				NOT = {
+					is_claimed_by = ROOT
+				}
+			}
+			add_claim_by = ROOT
+		}
+		create_faction_from_template = faction_template_balkan_league
+		set_faction_name = balkan_league
+		set_country_flag = ahistorical_serbian_alliance
+	}
+}
+
+# Serbia Invites to Balkan Alliance without Bulgaria
+country_event = {
+	id = ww1_balkan.25
+	title = ww1_balkan.25.t
+	desc = ww1_balkan.25.d
+	picture = GFX_report_event_generic_conference
+	is_triggered_only = yes
+	option = {
+		name = ww1_balkan.25.a
+		ai_chance = { factor = 100 }
+		FROM = {
+			add_to_faction = ROOT
+		}
+		if = {
+			limit = {
+				original_tag = GRE
+			}
+			every_state = {
+				limit = {
+					NOT = {
+						is_owned_by = ROOT
+						is_claimed_by = ROOT
+					}
+					OR = {
+						state = 184
+						state = 345
+						state = 731
+						state = 758
+						state = 790
+						state = 974
+						state = 975
+						state = 803
+						state = 1225
+						state = 826
+					}
+				}
+				add_claim_by = ROOT
+			}
+		}
+		else_if = {
+			limit = {
+				original_tag = MNT
+			}
+			every_state = {
+				limit = {
+					NOT = {
+						is_owned_by = ROOT
+						is_claimed_by = ROOT
+					}
+					OR = {
+						state = 761
+						state = 848
+						state = 870
+					}
+				}
+				add_claim_by = ROOT
+			}
+		}
+	}
+	option = {
+		name = ww1_balkan.25.b
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 1000
+				has_government = communism
+				FROM = {
+					NOT = { has_government = communism }
+				}
+			}
+			modifier = {
+				add = 1000
+				NOT = { has_government = communism }
+				FROM = { has_government = communism }
+			}
+		}
+		FROM = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = HOI4TGW_Opinion_alliance_malus
+			}
+		}
+		add_opinion_modifier = {
+			target = FROM
+			modifier = HOI4TGW_Opinion_alliance_malus
 		}
 	}
 }

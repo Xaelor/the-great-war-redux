@@ -66,11 +66,15 @@ focus_tree = {
 					}
 					transfer_state_to = ROOT
 				}
-				JAP = {
-					country_event = {
-						id = ww1_rcw.3
-						days = 60
-					}
+				#JAP = {
+				#	country_event = {
+				#		id = ww1_rcw.3
+				#		days = 60
+				#	}
+				#}
+				add_equipment_to_stockpile = {
+					type = convoy
+					amount = 20
 				}
 				CER = {
 					country_event = ww1_rcw.2
@@ -82,6 +86,15 @@ focus_tree = {
 					name = SIB_duma_party
 					elections_allowed = no
 				}
+				if = {
+					limit = {
+						country_exists = USS
+						964 = { is_owned_by = SOV }
+					}
+					964 = {
+						transfer_state_to = USS
+					}
+				}
 			}
 			set_politics = {
 				ruling_party = neutrality
@@ -92,7 +105,7 @@ focus_tree = {
 				remove_idea = SIB_high_eser_influence
 				add_idea = SIB_medium_eser_influence
 			}
-			add_political_power = 20
+			add_political_power = 150
 		}
 		ai_will_do = {
 			factor = 100
@@ -123,7 +136,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_ideas = limited_conscription
+			add_ideas = extensive_conscription
 			add_timed_idea = {
 				idea = SIB_mobilization_of_the_siberian_army
 				days = 120
@@ -215,7 +228,6 @@ focus_tree = {
 		cost = 4
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
-			FOCUS_FILTER_HISTORICAL
 		}
 		available = {
 			OR = {
@@ -286,6 +298,8 @@ focus_tree = {
 
 		completion_reward = {
 			country_event = ww1_siberia.26
+			custom_effect_tooltip = which_will_give_tt
+			event_option_tooltip = ww1_siberia.26.a
 		}
 		ai_will_do = {
 			factor = 100
@@ -311,9 +325,23 @@ focus_tree = {
 		prerequisite = { 
 			focus = SIB_root_out_the_monarchists
 		}
+		available = {
+			has_government = democratic
+			NOT = {
+				has_cosmetic_tag = POLITCENTRE
+			}
+		}
+		bypass = {
+			has_country_leader = {
+				character = RUS_viktor_chernov
+			}
+			has_government = communism
+		}
 
 		completion_reward = {
 			country_event = ww1_siberia.27
+			custom_effect_tooltip = which_will_give_tt
+			event_option_tooltip = ww1_siberia.27.a
 		}
 		ai_will_do = {
 			factor = 100
@@ -331,6 +359,9 @@ focus_tree = {
 		}
 		prerequisite = { 
 			focus = SIB_no_compromise_with_reaction
+		}
+		available = {
+			has_government = communism
 		}
 
 		completion_reward = {
@@ -357,6 +388,9 @@ focus_tree = {
 		prerequisite = { 
 			focus = SIB_redemocratization_of_the_army
 		}
+		available = {
+			has_government = communism
+		}
 
 		completion_reward = {
 			unlock_decision_tooltip = RUS_attack_FROM
@@ -377,6 +411,9 @@ focus_tree = {
 		}
 		prerequisite = { 
 			focus = SIB_no_compromise_with_reaction
+		}
+		available = {
+			has_government = communism
 		}
 
 		completion_reward = {
@@ -399,16 +436,24 @@ focus_tree = {
 		prerequisite = { 
 			focus = SIB_workers_control
 		}
+		available = {
+			has_government = communism
+		}
+		bypass = {
+			NOT = {
+				has_idea = SIB_red_partisans
+			}
+		}
 
 		completion_reward = {
 			remove_ideas = SIB_red_partisans
 			add_timed_idea = {
-    				idea = SIB_red_partisans
-    				days = 180
+    			idea = SIB_red_partisans
+    			days = 180
 			}
 			add_timed_idea = {
-    				idea = SIB_black_partition
-    				days = 180
+    			idea = SIB_black_partition
+    			days = 180
 			}
 		}
 		ai_will_do = {
@@ -462,6 +507,12 @@ focus_tree = {
 		prerequisite = { 
 			focus = SIB_progressive_coalition
 		}
+		available = {
+			has_government = democratic
+			NOT = {
+				has_cosmetic_tag = POLITCENTRE
+			}
+		}
 
 		completion_reward = {
 			unlock_decision_tooltip = RUS_purge_the_army
@@ -478,6 +529,33 @@ focus_tree = {
 				add_stability = 0.05
 				add_war_support = 0.05
 				add_political_power = 100
+			}
+			if = {
+				limit = { 
+					has_subject = ORE
+					NOT = {
+						AND = {
+							has_cosmetic_tag = ORE_RUS
+							has_government = democratic
+						}				
+					}
+				}
+				ORE = {
+					effect_tooltip = {
+						set_cosmetic_tag = ORE_RUS_democratic
+					}
+					set_politics = {
+						ruling_party = democratic
+						elections_allowed = no
+					}
+					add_popularity = {
+						ideology = democratic
+						popularity = 0.1
+					}
+					hidden_effect = {
+						set_cosmetic_tag = ORE_RUS
+					}
+				}
 			}
 		}
 		ai_will_do = {
@@ -497,12 +575,19 @@ focus_tree = {
 		prerequisite = { 
 			focus = SIB_depolitization_of_the_army
 		}
+		available = {
+			has_government = democratic
+			NOT = {
+				has_cosmetic_tag = POLITCENTRE
+			}
+		}
 
 		completion_reward = {
 			unlock_decision_tooltip = RUS_demand_recognition_FROM
-			create_faction = white_movement
+			create_faction_from_template = faction_template_regional_anti_communist
+			set_faction_name = white_movement
 			add_political_power = 50
-			add_war_support = 0.1
+			add_war_support = 0.1		
 		}
 		ai_will_do = {
 			factor = 100
@@ -523,7 +608,19 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_ideas = partial_economic_mobilisation
+			if = {
+				limit = {
+					NOT = {
+						has_idea = partial_economic_mobilisation
+						has_idea = war_economy
+						has_idea = tot_economic_mobilisation
+					}
+				}
+				add_ideas = partial_economic_mobilisation
+			}
+			else = {
+				add_political_power = 100
+			}			
 			add_ideas = SIB_emergency_economic_council
 			country_event = ww1_siberia.12
 		}
@@ -543,6 +640,12 @@ focus_tree = {
 		}
 		prerequisite = { 
 			focus = SIB_mobilize_the_economy
+		}
+		available = {
+			has_government = democratic
+			NOT = {
+				has_cosmetic_tag = POLITCENTRE
+			}
 		}
 
 		completion_reward = {
@@ -572,21 +675,25 @@ focus_tree = {
 		prerequisite = {
 			focus = SIB_land_to_the_peasants
 		}
+		available = {
+			has_government = communism
+		}
 		
 		completion_reward = {
 			division_template = {
    				name = "Diviziya Dobrovoltsev"
-    				is_locked = yes
-    				priority = 1
-    				regiments = {
-        				militia = { x = 0 y = 0 }
-        				militia = { x = 0 y = 1 }
-       					militia = { x = 0 y = 2 }
-        				militia = { x = 0 y = 3 }
-   	 			}
-    				support = {
-        				recon = { x = 0 y = 0 }
-    				}
+				division_names_group = RUS_MIL_01
+    			is_locked = yes
+    			priority = 1
+    			regiments = {
+        			militia = { x = 0 y = 0 }
+        			militia = { x = 0 y = 1 }
+       				militia = { x = 0 y = 2 }
+        			militia = { x = 0 y = 3 }
+				}
+				support = {
+					recon = { x = 0 y = 0 }
+				}
 			}
 			unlock_decision_tooltip = SIB_volunteers_of_constituent_assembly
 		}
@@ -610,20 +717,28 @@ focus_tree = {
 			focus = SIB_contact_the_white_forces
 			focus = SIB_legalize_black_partition
 		}
+		available = {
+			OR = {
+				has_government = democratic
+				has_government = communism
+			}
+			NOT = {
+				has_cosmetic_tag = POLITCENTRE
+			}
+		}
 
 		completion_reward = {
+			unlock_decision_tooltip = RUS_reunite_russia
 			unlock_decision_tooltip = RUS_invite_FROM_to_federation
+			set_country_flag = RUS_federation
 			if = {
 				limit = {
 					has_government = communism
 				}
-				set_cosmetic_tag = RUS
-			}
-			else_if = {
-				limit = {
-					has_government = democratic
+				set_cosmetic_tag = RUS_socialism
+				else = {
+					set_cosmetic_tag = RUS_federation
 				}
-				set_cosmetic_tag = SOV_federation
 			}
 		}
 		ai_will_do = {
@@ -646,6 +761,12 @@ focus_tree = {
 		prerequisite = {
 			focus = SIB_legalize_black_partition
 		}
+		available = {
+			has_government = democratic
+			NOT = {
+				has_cosmetic_tag = POLITCENTRE
+			}
+		}
 		
 		completion_reward = {
 			unlock_decision_category_tooltip = SIB_import_weapons_category
@@ -663,6 +784,7 @@ focus_tree = {
 		cost = 4
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_HISTORICAL
 		}
 		mutually_exclusive = { 
 			focus = SIB_recognize_alash_autonomy
@@ -744,6 +866,8 @@ focus_tree = {
 
 		completion_reward = {
 			country_event = ww1_siberia.10
+			custom_effect_tooltip = which_will_give_tt
+			event_option_tooltip = ww1_siberia.10.a
 		}
 		ai_will_do = {
 			factor = 100
@@ -751,7 +875,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SIB_lobby_for_foreign_aid
-		icon = GFX_focus_generic_commonwealth_build_infantry
+		icon = GFX_focus_generic_money_for_equipment
 		x = -2
 		y = 1
 		relative_position_id = SIB_a_strong_hand
@@ -801,17 +925,28 @@ focus_tree = {
 
 		completion_reward = {
 			unlock_decision_tooltip = RUS_demand_recognition_FROM
-			if = {
-				limit = {
-					is_faction_leader = yes
-				}
-				set_faction_name = white_movement
-				else = {
-					create_faction = white_movement
-				}
-			}		
+			# if = {
+			# 	limit = {
+			# 		is_faction_leader = yes
+			# 	}
+			# 	set_faction_name = white_movement
+			# 	else = {
+			# 		create_faction = white_movement
+			# 	}
+			# }		
 			add_political_power = 50
 			add_war_support = 0.1
+			if = {
+				limit = {
+					has_character = CZE_radola_gajda #dont where else to put him being fired
+				}
+				CZE_radola_gajda = {
+					set_nationality = CZE
+					hidden_effect = {
+						promote_character = yes
+					}
+				}	
+			}
 		}
 		ai_will_do = {
 			factor = 100
@@ -843,6 +978,19 @@ focus_tree = {
 			upgrade_conscription_law = yes
 			add_ideas = SIB_russian_army
 			add_war_support = 0.1
+			RUS = {
+				RUS_nikolai_lokhvitsky = {
+					set_nationality = ROOT
+				}			
+			}
+			show_unit_leaders_tooltip = RUS_nikolai_lokhvitsky
+			if = {
+				limit = {
+					has_character = RUS_nicholas_golovin
+				}
+				custom_effect_tooltip = available_theorist
+				show_ideas_tooltip = RUS_nicholas_golovin
+			}	
 		}
 		ai_will_do = {
 			factor = 100
@@ -898,7 +1046,19 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_ideas = partial_economic_mobilisation
+			if = {
+				limit = {
+					OR = {
+						has_idea = partial_economic_mobilisation
+						has_idea = war_economy
+						has_idea = tot_economic_mobilisation
+					}
+				}
+				add_political_power = 150
+			}
+			else = {
+				add_ideas = partial_economic_mobilisation
+			}
 			add_ideas = SIB_emergency_economic_council
 			country_event = ww1_siberia.12
 		}
@@ -965,7 +1125,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
+			unlock_decision_tooltip = RUS_reunite_russia
 		}
 		ai_will_do = {
 			factor = 100

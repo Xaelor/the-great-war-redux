@@ -16,9 +16,8 @@ news_event = {
 		GER = {
 			controls_state = 6
 			controls_state = 34
-			controls_state = 906
 		}
-		has_global_flag = kis_war
+		has_global_flag = great_war
 		NOT = {
 			has_global_flag = great_war_ends
 			has_global_flag = rape_of_belgium
@@ -34,13 +33,9 @@ news_event = {
 		trigger = {
 			has_war_with = GER
 			NOT = {
-				original_tag = GER
-				original_tag = ENG
-				original_tag = CAN
-				original_tag = AST
-				original_tag = NZL
-				original_tag = SAF
+				original_tag = GER			
 			}
+			is_commonwealth_tag = no
 		}
 	}
 	option = {
@@ -65,13 +60,7 @@ news_event = {
 	option = {
 		name = ww1_belgium.1.c
 		trigger = {
-			OR = {
-				original_tag = ENG
-				original_tag = CAN
-				original_tag = AST
-				original_tag = NZL
-				original_tag = SAF
-			}
+			is_commonwealth_tag = yes
 			has_war_with = GER
 		}
 	}
@@ -96,9 +85,8 @@ news_event = {
 		name = ww1_belgium.1.e
 		trigger = {
 			OR = {
-				tag = GER
-				is_in_faction_with = GER
-				is_subject_of = GER
+				original_tag = GER
+				is_ally_with = GER
 			}
 		}
 	}
@@ -224,9 +212,9 @@ country_event = {
 		ai_chance = {
 			factor = 0
 		}
-		random_other_country = {
+		random_country_with_original_tag  = {
+			original_tag_to_check = BEL
 			limit = {
-				original_tag = BEL
 				has_country_flag = belgian_resistance
 			}
 			change_tag_from = ROOT
@@ -248,9 +236,8 @@ country_event = {
 			base = 0
 			modifier = {
 				add = 1000
-				any_country = {
+				any_enemy_country = {
 					is_major = yes
-					has_war_with = PREV
 				}
 				surrender_progress > 0.15
 			}
@@ -262,9 +249,9 @@ country_event = {
 	}
 	option = {
 		name = ww1_belgium.7.b
-		random_other_country = {
+		random_country_with_original_tag  = {
+			original_tag_to_check = BEL
 			limit = {
-				original_tag = BEL
 				has_country_flag = belgian_resistance
 			}
 			ROOT = {
@@ -278,9 +265,8 @@ country_event = {
 			base = 100
 			modifier = {
 				factor = 0
-				any_country = {
+				any_enemy_country = {
 					is_major = yes
-					has_war_with = ROOT
 				}
 				surrender_progress > 0.15
 			}
@@ -299,63 +285,38 @@ country_event = {
 	title = ww1_belgium.8.t
 	desc = ww1_belgium.8.d
 	picture = GFX_report_event_generic_sign_treaty2
+	is_triggered_only = yes
 	trigger = {
-		tag = BEL
-		date > 1910.6.1
-		OR = {
-			AND = {
-				owns_state = 449
-				has_full_control_of_state = 449
-			}
-			AND = {
-				owns_state = 902
-				has_full_control_of_state = 902
-			}
-		}
-		ENG = { owns_state = 549 }
-	}
-	mean_time_to_happen = {
-		days = 10
-	}
-	fire_only_once = yes
-	option = {
-		name = ww1_belgium.8.a
-		trigger = {
-			NOT = { is_subject_of = ENG }
-		}
-		add_political_power = -100
-		ai_chance = {
-			base = 0
-			modifier = {
-				add = 100
-				NOT = { has_government = communism }
-				ENG = { has_government = communism }
-			}
-		}
+		has_start_date < 1914.1.1
 	}
 	option = {
 		name = ww1_belgium.8.b
 		trigger = {
-			NOT = { has_war_with = ENG }
+			original_tag = BEL
 		}
-		ENG = {
+		custom_effect_tooltip = historical_tt
+		every_owned_state = {
+			limit = {
+				OR = {
+					state = 449
+					state = 902
+				}
+			}		
+			remove_core_of = COG
+			add_core_of = SUD
+			add_claim_by = EGY
+			transfer_state_to = ENG
+		}
+	}
+	option = {
+		name = ww1_belgium.8.a
+		trigger = {
+			NOT = { original_tag = BEL }
+		}
+		custom_effect_tooltip = historical_tt
+		effect_tooltip = {
 			transfer_state = 449
-		}
-		hidden_effect = {
-			COG = {
-				remove_state_core = 449
-			}
-			SUD = {
-				add_state_core = 449
-			}
-		}
-		ai_chance = {
-			factor = 100
-			modifier = {
-				factor = 0
-				NOT = { has_government = communism }
-				ENG = { has_government = communism }
-			}
+			transfer_state = 902
 		}
 	}
 }
@@ -388,227 +349,6 @@ country_event = {
 		add_popularity = {
 			ideology = communism
 			popularity = 0.02
-		}
-	}
-}
-
-#fall of Schollaert
-country_event = {
-	id = ww1_belgium.11
-	title = ww1_belgium.11.t
-	desc = ww1_belgium.11.d
-	picture = GFX_report_event_picture_schollaert
-	is_triggered_only = yes
-	immediate = {
-		hidden_effect = {
-			retire_character = BEL_frans_schollaert
-			promote_character = BEL_charles_de_broqueville
-		}
-	}
-	option = {
-		name = ww1_belgium.11.a
-		add_political_power = -100
-		add_stability = -0.05
-		effect_tooltip = {
-			promote_character = BEL_charles_de_broqueville
-		}
-	}
-}
-
-#elections of 1912
-country_event = {
-	id = ww1_belgium.12
-	title = ww1_belgium.12.t
-	desc = ww1_belgium.12.d
-	picture = GFX_report_event_election_vote
-	is_triggered_only = yes
-	fire_only_once = yes
-	immediate = {
-		hidden_effect = {
-			unlock_national_focus = BEL_1912_elections
-		}
-	}
-	option = {
-		name = ww1_belgium.12.a
-		ai_chance = {
-			base = 100
-			modifier = {
-				factor = 0
-				OR = {
-					has_country_flag = BEL_AI_DEMOCRATIC_SOCDEM
-					has_game_rule = {
-						rule = BEL_ai_behavior
-						option = DEMOCRATIC_SOCDEM
-					}
-					has_country_flag = BEL_AI_SOCIALIST
-					has_game_rule = {
-						rule = BEL_ai_behavior
-						option = SOCIALIST
-					}
-				}
-			}
-		}
-		if = {
-			limit = {
-				NOT = {
-					AND = {
-						is_historical_focus_on = yes
-						has_game_rule = {
-							rule = BEL_ai_behavior
-							option = DEFAULT
-						}
-					}
-					has_country_flag = BEL_AI_DEMOCRATIC_HISTORICAL
-					has_game_rule = {
-						rule = BEL_ai_behavior
-						option = DEMOCRATIC_HISTORICAL
-					}
-					AND = {
-						OR = {
-							has_country_flag = BEL_AI_DEMOCRATIC_LIBERAL
-							has_game_rule = {
-								rule = BEL_ai_behavior
-								option = DEMOCRATIC_LIBERAL
-							}
-						}
-						is_ai = yes
-					}
-				}
-			}
-			random_list = {
-				60 = {
-					country_event = {
-						id = ww1_belgium.13
-						days = 1
-					}
-				}
-				30 = {
-					country_event = {
-						id = ww1_belgium.14
-						days = 1
-					}
-				}
-				10 = {
-					country_event = {
-						id = ww1_belgium.15
-						days = 1
-					}
-				}
-			}
-		}
-		if = {
-			limit = {
-				OR = {
-					AND = {
-						is_historical_focus_on = yes
-						has_game_rule = {
-							rule = BEL_ai_behavior
-							option = DEFAULT
-						}
-					}
-					has_country_flag = BEL_AI_DEMOCRATIC_HISTORICAL
-					has_game_rule = {
-						rule = BEL_ai_behavior
-						option = DEMOCRATIC_HISTORICAL
-					}
-				}
-			}
-			hidden_effect = {
-				country_event = {
-					id = ww1_belgium.13
-					days = 1
-				}				#to guarantee historical result without giving it away
-			}
-			effect_tooltip = {
-				random_list = {
-					60 = {
-						country_event = {
-							id = ww1_belgium.13
-							days = 1
-						}
-					}
-					30 = {
-						country_event = {
-							id = ww1_belgium.14
-							days = 1
-						}
-					}
-					10 = {
-						country_event = {
-							id = ww1_belgium.15
-							days = 1
-						}
-					}
-				}
-			}
-		}
-		if = {
-			limit = {
-				OR = {
-					has_country_flag = BEL_AI_DEMOCRATIC_LIBERAL
-					has_game_rule = {
-						rule = BEL_ai_behavior
-						option = DEMOCRATIC_LIBERAL
-					}
-				}
-				is_ai = yes
-			}
-			hidden_effect = {
-				country_event = {
-					id = ww1_belgium.13
-					days = 1
-				}				#to guarantee liberal result without giving it away
-			}
-			effect_tooltip = {
-				random_list = {
-					60 = {
-						country_event = {
-							id = ww1_belgium.13
-							days = 1
-						}
-					}
-					30 = {
-						country_event = {
-							id = ww1_belgium.14
-							days = 1
-						}
-					}
-					10 = {
-						country_event = {
-							id = ww1_belgium.15
-							days = 1
-						}
-					}
-				}
-			}
-		}
-	}
-	#in case player wants to go socialist - socialists rig elections
-	option = {
-		name = ww1_belgium.12.b
-		ai_chance = {
-			base = 0
-			modifier = {
-				add = 100
-				OR = {
-					has_country_flag = BEL_AI_DEMOCRATIC_SOCDEM
-					has_game_rule = {
-						rule = BEL_ai_behavior
-						option = DEMOCRATIC_SOCDEM
-					}
-					has_country_flag = BEL_AI_SOCIALIST
-					has_game_rule = {
-						rule = BEL_ai_behavior
-						option = SOCIALIST
-					}
-				}
-			}
-		}
-		add_stability = -0.25
-		add_political_power = -100
-		country_event = {
-			id = ww1_belgium.15
-			days = 1
 		}
 	}
 }
@@ -753,72 +493,64 @@ country_event = {
 				set_cosmetic_tag = COG_belgium_in_exile
 				add_ideas = BEL_idea_albert_i
 				set_country_flag = BEL_anti_GER_revolt
-				every_possible_country = {
-					limit = { has_character = BEL_albert_i }
+				BEL = {
 					BEL_albert_i = {
 						set_nationality = PREV.PREV
-					}
-				}
-				BEL_albert_i = {
-					set_portraits = {
-						civilian = {
-							large = "gfx/leaders/BEL/BEL_albert_general.png"
+						set_portraits = {
+							civilian = {
+								large = "gfx/leaders/BEL/BEL_albert_general.png"
+							}
 						}
-					}
-					if = {
-						limit = {
-							has_ideology = stratocracy
+						if = {
+							limit = {
+								has_ideology = stratocracy
+							}
+							promote_character = stratocracy
+							add_country_leader_trait = knight_king
 						}
-						promote_character = stratocracy
-						add_country_leader_trait = knight_king
-					}
-					else = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = stratocracy
-								traits = { knight_king }
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = stratocracy
+									traits = { knight_king }
+								}
+							}
+						}
+						if = {
+							limit = {
+								has_ideology = semi_constitutional_monarchy
+							}
+							promote_character = semi_constitutional_monarchy
+							add_country_leader_trait = knight_king
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = semi_constitutional_monarchy
+									traits = { knight_king }
+								}
 							}
 						}
 					}
-					if = {
-						limit = {
-							has_ideology = semi_constitutional_monarchy
-						}
-						promote_character = semi_constitutional_monarchy
-						add_country_leader_trait = knight_king
-					}
-					else = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = semi_constitutional_monarchy
-								traits = { knight_king }
-							}
-						}
-					}
-				}
-				every_possible_country = {
-					limit = { has_character = BEL_felix_fuchs }
 					BEL_felix_fuchs = {
 						set_nationality = PREV.PREV
-					}
-				}
-				BEL_felix_fuchs = {
-					if = {
-						limit = {
-							has_ideology = classical_liberalism
+						if = {
+							limit = {
+								has_ideology = classical_liberalism
+							}
+							promote_character = classical_liberalism
 						}
-						promote_character = classical_liberalism
-					}
-					else = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = classical_liberalism
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = classical_liberalism
+								}
 							}
 						}
-					}
+					}	
 				}
 				set_party_name = {
 					ideology = democratic
@@ -858,6 +590,8 @@ country_event = {
 		transfer_units_fraction = {
 			target = BLE
 			size = 0.1
+			target_organization = 1
+			source_organization = 1
 			stockpile_ratio = 0.1
 			army_ratio = 0.1
 			navy_ratio = 0.1
@@ -889,15 +623,10 @@ country_event = {
 				}
 			}
 			FRA = {
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = {
-						target = BLE
-						autonomous_state = autonomy_dominion
-						freedom_level = 0.1
-					}
+				set_autonomy = {
+					target = BLE
+					autonomous_state = autonomy_satellite
+					freedom_level = 0.1
 				}
 			}
 		}
@@ -1022,10 +751,10 @@ country_event = {
 				}
 			}
 		}
-		BEL = {
+		FROM = {
 			give_guarantee = ROOT
 		}
-		give_guarantee = BEL
+		give_guarantee = FROM
 	}
 	#fuck off bitchboy
 	option = {
@@ -1078,7 +807,7 @@ country_event = {
 				}
 			}
 		}
-		BEL = {
+		FROM = {
 			country_event = {
 				id = ww1_belgium.24
 				hours = 4
@@ -1206,6 +935,8 @@ country_event = {
 					transfer_units_fraction = {
 						target = BEL
 						size = 1
+						target_organization = 1
+						source_organization = 1
 						keep_unit_leaders_trigger = {
 							always = no
 						}
@@ -1262,21 +993,9 @@ country_event = {
 					limit = {
 						is_subject_of = HOL
 					}
-					if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
-						BEL = {
-							set_autonomy = {
-								target = PREV
-								autonomous_state = autonomy_dominion
-							}
-						}
-					}
-					else = {
-						BEL = {
-							puppet = PREV
-						}
+					set_autonomy = {
+						target = PREV
+						autonomous_state = autonomy_satellite
 					}
 				}
 				if = {
@@ -1285,25 +1004,20 @@ country_event = {
 							is_puppet_of = BEL
 						}
 					}
-					if = {
-						limit = {
-							has_dlc = "Together for Victory"
+					BEL = {
+						set_autonomy = {
+							target = INS
+							autonomous_state = autonomy_satellite
 						}
-						BEL = {
-							set_autonomy = {
-								target = INS
-								autonomous_state = autonomy_dominion
-							}
+					}
+					INS = {
+						set_popularities = {
+							democratic = 49
+							neutrality = 41
+							fascism = 0
+							communism = 10
 						}
-						INS = {
-							set_popularities = {
-								democratic = 49
-								neutrality = 41
-								fascism = 0
-								communism = 10
-							}
-							retire_country_leader = yes
-						}
+						retire_country_leader = yes
 					}
 				}
 			}
@@ -1345,6 +1059,8 @@ country_event = {
 					transfer_units_fraction = {
 						target = HOL
 						size = 1
+						target_organization = 1
+						source_organization = 1
 						keep_unit_leaders_trigger = {
 							always = no
 						}
@@ -1401,20 +1117,10 @@ country_event = {
 					limit = {
 						is_subject_of = BEL
 					}
-					if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
-						HOL = {
-							set_autonomy = {
-								target = PREV
-								autonomous_state = autonomy_dominion
-							}
-						}
-					}
-					else = {
-						HOL = {
-							puppet = PREV
+					HOL = {
+						set_autonomy = {
+							target = PREV
+							autonomous_state = autonomy_satellite
 						}
 					}
 				}
@@ -1481,7 +1187,7 @@ country_event = {
 				create_country_leader = {
 					name = HOL_pieter_jelles_troelstra
 					picture = "gfx/leaders/HOL/HOL_pieter_jelles_troelstra.png"
-					ideology = socialism
+					ideology = social_democracy
 				}
 				create_country_leader = {
 					name = HOL_pieter_jelles_troelstra
@@ -1529,9 +1235,9 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_belgium.29.a
-		every_other_country = {
+		every_country_with_original_tag = {
+			original_tag_to_check = HOL
 			limit = {
-				original_tag = HOL
 				has_cosmetic_tag = HOL_BAT
 			}
 			HOL = {
@@ -1544,8 +1250,7 @@ country_event = {
 			limit = {
 				has_war_with = BEL
 				OR = {
-					is_in_faction_with = HOL
-					is_subject_of = HOL
+					is_ally_with = HOL
 					tag = HOL
 					NOT = {
 						has_wargoal_against = BEL
@@ -1556,8 +1261,7 @@ country_event = {
 				limit = {
 					has_war = yes
 					OR = {
-						is_in_faction_with = BEL
-						is_subject_of = BEL
+						is_ally_with = BEL
 						tag = BEL
 					}
 				}
@@ -1580,9 +1284,9 @@ country_event = {
 	}
 	option = {
 		name = ww1_belgium.29.b
-		every_other_country = {
+		every_country_with_original_tag = {
+			original_tag_to_check = HOL
 			limit = {
-				original_tag = HOL
 				has_cosmetic_tag = HOL_BAT
 			}
 			HOL = {
@@ -1613,17 +1317,17 @@ country_event = {
 	trigger = {
 		tag = BEL
 		has_war = no
-		any_other_country = {
-			original_tag = HOL
+		any_country_with_original_tag = {
+			original_tag_to_check = HOL
 			has_cosmetic_tag = HOL_BAT
 			is_subject_of = ROOT
 		}
 	}
 	option = {
 		name = ww1_belgium.30.a
-		every_other_country = {
+		every_country_with_original_tag = {
+			original_tag_to_check = HOL
 			limit = {
-				original_tag = HOL
 				has_cosmetic_tag = HOL_BAT
 				is_subject_of = ROOT
 			}
@@ -1631,6 +1335,8 @@ country_event = {
 				transfer_units_fraction = {
 					target = ROOT
 					size = 1
+					target_organization = 1
+					source_organization = 1
 					keep_unit_leaders_trigger = {
 						always = no
 					}
@@ -1706,65 +1412,54 @@ country_event = {
 	title = ww1_belgium.32.t
 	desc = ww1_belgium.32.desc
 	picture = GFX_report_event_generic_parliament
-	trigger = {
-		tag = GER
-		has_global_flag = interbellum
-		has_country_flag = great_war_winner
-		OR = {
-			has_war = no
-			AND = {
-				has_completed_focus = GER_restore_burgundy
-				surrender_progress < 0.01
-			}
-		}
-		NOT = {
-			has_government = communism
-		}
-		BEL = {
-			is_subject_of = PREV
-			has_cosmetic_tag = BEL_GER
-		}
-	}
-	fire_only_once = yes
-	mean_time_to_happen = {
-		days = 300
-	}
+	is_triggered_only = yes
+	# trigger = {
+	# 	tag = GER
+	# 	has_global_flag = interbellum
+	# 	has_country_flag = great_war_winner
+	# 	OR = {
+	# 		has_war = no
+	# 		# AND = {
+	# 		# 	has_completed_focus = GER_restore_burgundy
+	# 		# 	surrender_progress < 0.01
+	# 		# }
+	# 	}
+	# 	NOT = {
+	# 		has_government = communism
+	# 	}
+	# 	BEL = {
+	# 		is_subject_of = PREV
+	# 		has_cosmetic_tag = BEL_GER
+	# 	}
+	# }
+	# fire_only_once = yes
+	# mean_time_to_happen = {
+	# 	days = 300
+	# }
 	immediate = {
 		hidden_effect = {
-			GER = {
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = {
-						target = BEL
-						autonomous_state = autonomy_colony
-					}
-				}
+			BEL = {
+				BEL_remove_GER_occupation = yes
+				get_current_government_type = yes
+			}
+			set_autonomy = {
+				target = BEL
+				autonomous_state = autonomy_puppet
 			}
 			BEL = {
 				set_stability = 0.40
 				set_war_support = 0.10
-				set_popularities = {
-					democratic = 10
-					neutrality = 60
-					fascism = 25
-					communism = 5
-				}
-				set_party_name = {
-					ideology = neutrality
+				restore_previous_government_type = yes
+				set_cosmetic_tag = BEL_flanders_wallonia
+				set_party_name = { 
+					ideology = neutrality 
 					long_name = GER_neutrality_party
 					name = GER_neutrality_party
-				}
-				set_cosmetic_tag = BEL_flanders_wallonia
-				set_politics = {
-					ruling_party = neutrality
-					elections_allowed = no
 				}
 				BEL_adalbert = {
 					add_country_leader_role = {
 						country_leader = {
-							ideology = despotism
+							ideology = semi_constitutional_monarchy_reserve
 							traits = {
 								german_agent
 								foreign_leader
@@ -1786,21 +1481,12 @@ country_event = {
 						coordination_skill = 2
 					}
 				}
-				retire_ideology_leader = fascism
-				set_party_name = {
-					ideology = fascism
-					long_name = BEL_fascism_party
-					name = BEL_fascism_party
-				}
 				hidden_effect = {
 					BEL_albert_i = {
 						remove_country_leader_role = {
 							ideology = semi_constitutional_monarchy
 						}
 					}
-				}
-				GER_ludwig_von_falkenhausen = {
-					set_nationality = GER
 				}
 			}
 		}
@@ -1833,26 +1519,6 @@ country_event = {
 		news_event = {
 			id = interwar_news.23
 			hours = 3
-		}
-	}
-	option = {
-		name = ww1_belgium.32.d		#Undead(
-		trigger = {
-			OR = {
-				is_historical_focus_on = no
-				has_completed_focus = GER_restore_burgundy
-			}
-			has_completed_focus = GER_backstab
-		}
-		add_political_power = -50
-		BEL = {
-			set_cosmetic_tag = BEL_burgundy
-			add_war_support = 0.05
-			add_stability = -0.1
-			add_political_power = 50
-		}
-		ai_chance = {
-			factor = 0
 		}
 	}
 }
@@ -1894,9 +1560,10 @@ country_event = {
 	}
 	trigger = {
 		tag = BEL
+		has_capitulated = yes
 		BEL = {
 			has_war = yes
-			date > 1914.9.9
+			longest_war_length > 6
 		}
 		any_enemy_country = {
 			is_major = yes
@@ -1909,39 +1576,56 @@ country_event = {
 		set_country_flag = BEL_ACM_corps
 		name = ww1_belgium.50.a
 		set_technology = {
-			basic_armored_car = 1
 			bicycle_infantry = 1
 		}
-		create_equipment_variant = {
-			type = armored_car_equipment_2
-			name = "ACM Minerva"
-			upgrades = {
-				tank_reliability_upgrade = 5
-				tank_armor_upgrade = 5
-				tank_gun_upgrade = 5
-				ac_engine_upgrade = 5
+		if = {
+			limit = { 
+				NOT = {
+					has_dlc = "No Step Back"
+				}
+			}
+			set_technology = {
+				basic_armored_car = 1
+			}
+			create_equipment_variant = {
+				type = armored_car_equipment_2
+				name = "ACM Minerva"
+				upgrades = {
+					tank_reliability_upgrade = 5
+					tank_armor_upgrade = 5
+					tank_gun_upgrade = 5
+					ac_engine_upgrade = 5
+				}
+			}
+		}
+		else = {
+			set_technology = {
+				basic_armored_car_chassis = 1
+			}
+			create_equipment_variant = {
+				type = armored_car_chassis_2
+				name = "ACM Minerva"
+				modules = {
+					main_armament_slot = tank_heavy_machine_gun
+				}
 			}
 		}
 		division_template = {
 			name = "Corps expéditionnaire des autos-canons mitrailleuses"
-			override_model = RUS_armoredcar_entity
+			override_model = RUS_armored_car_entity
 			template_counter = 0
 			regiments = {
 				armored_car = {
-					x = 0
+					x = 1
 					y = 0
 				}
 				armored_car = {
+					x = 1
+					y = 1
+				}
+				bicycle_battalion = {
 					x = 0
-					y = 1
-				}
-				bicycle_battalion = {
-					x = 1
 					y = 0
-				}
-				bicycle_battalion = {
-					x = 1
-					y = 1
 				}
 				
 			}
@@ -2014,17 +1698,1447 @@ country_event = {
 	option = {
 		set_country_flag = BEL_defeat
 		name = ww1_belgium.51.a
-		add_offsite_building = {
-			type = arms_factory
-			level = 3
-		}
-		remove_ideas = BEL_neglected_military
-		remove_ideas = BEL_nationalist_divides_1
-		hidden_effect = {
-			remove_ideas = BEL_nationalist_divides_2
-			remove_ideas = BEL_nationalist_divides_3
-			remove_ideas = BEL_nationalist_divides_4
-			remove_ideas = BEL_nationalist_divides_5
+		if = {
+			limit = {
+				has_idea = BEL_inefficient_conscription_law
+			}
+			remove_ideas = BEL_inefficient_conscription_law
 		}
 	}
 }
+
+
+####
+# Second belgian content wave. Making all of this accurate as much as possible - Le Vrai
+########
+
+#in august and september 1910, king albert I forced frans schollaert to change his ministers
+#Basicaly, schollaert was chosen minister by king leopold, but he died some month ago... So albert is now ruling and dont like this governement he didnt chosed.
+country_event = {
+	id = ww1_belgium.60
+	title = ww1_belgium.60.t
+	desc = ww1_belgium.60.d
+	picture = GFX_report_event_picture_broqueville_and_governement
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.60.a
+		add_stability = 0.02
+	}
+}
+
+# educational reform is not succeessfull, schollert is weaker than ever
+country_event = {
+	id = ww1_belgium.61
+	title = ww1_belgium.61.t
+	desc = ww1_belgium.61.d
+	picture = GFX_french_parliament
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.61.a
+		add_political_power = -50
+	}
+}
+
+# albert I speech on how he want the country to be reformed
+country_event = {
+	id = ww1_belgium.62
+	title = ww1_belgium.62.t
+	desc = ww1_belgium.62.d
+	picture = GFX_french_parliament
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.62.a
+		add_popularity = {
+			ideology = communism
+			popularity = 0.03
+		}
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.02
+		}
+	}
+}
+
+# albert I ask schollaert to resign
+country_event = {
+	id = ww1_belgium.63
+	title = ww1_belgium.63.t
+	desc = ww1_belgium.63.d
+	picture = GFX_report_event_picture_schollaert
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.63.a
+		add_stability = -0.03
+		hidden_effect = {
+			retire_character = BEL_frans_schollaert
+		}
+		promote_character = BEL_charles_de_broqueville
+	}
+}
+
+#anglo-belgian secret talks on national security
+country_event = {
+	id = ww1_belgium.64
+	title = ww1_belgium.64.t
+	desc = ww1_belgium.64.d
+	picture = GFX_report_event_picture_force_publique
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.64.a
+		add_war_support = 0.05
+		add_political_power = 25
+	}
+}
+
+#belgium think he is safe
+country_event = {
+	id = ww1_belgium.65
+	title = ww1_belgium.65.t
+	desc = ww1_belgium.65.d
+	picture = GFX_report_event_picture_force_publique
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.65.a
+		add_war_support = 0.1
+	}
+}
+
+#vote for second conscription law
+country_event = {
+	id = ww1_belgium.66
+	title = ww1_belgium.66.t
+	desc = ww1_belgium.66.d
+	picture = GFX_french_parliament
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.66.a
+		remove_ideas = BEL_inefficient_conscription_law
+	}
+}
+
+# 1913 general strike to end plural vote and get universal vote
+country_event = {
+	id = ww1_belgium.67
+	title = ww1_belgium.67.t
+	desc = ww1_belgium.67.d
+	picture = GFX_sfio_2
+	trigger = {
+		date > 1913.4.10
+		tag = BEL
+		has_capitulated = no
+		NOT = {
+			has_government = communism
+			has_country_flag = BEL_1913_strike
+		}
+		NOT = {
+			has_completed_focus = BEL_universal_male_suffrage
+			has_completed_focus = BEL_universal_suffrage_law
+		}
+	}
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.67.a
+		add_popularity = {
+			ideology = communism
+			popularity = 0.07
+		}
+		add_stability = -0.05
+		add_timed_idea = {
+			idea = strikes_3
+			days = 14
+		}
+		set_country_flag = BEL_1913_strike
+	}
+}
+
+#Albert is very active and become leader of the country
+country_event = {
+	id = ww1_belgium.68
+	title = ww1_belgium.68.t
+	desc = ww1_belgium.68.d
+	picture = GFX_albert_on_the_front
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.68.a
+		BEL_albert_i = {
+			promote_character = semi_constitutional_monarchy
+			add_country_leader_trait = knight_king		
+			set_portraits = {
+				civilian = {
+					large = "gfx/leaders/BEL/BEL_albert_general.png"
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = BEL_liberal_victory_1912
+				}
+			}		
+			activate_advisor = BEL_charles_de_broqueville
+			else = {
+				activate_advisor = BEL_paul_hymans
+			}
+		}	
+		hidden_effect = {
+			remove_ideas = BEL_idea_albert_i
+			remove_ideas = BEL_idea_albert_i2
+			set_politics = {
+				ruling_party = neutrality
+			}
+		}
+	}
+}
+
+#1916 belgian governement
+country_event = {
+	id = ww1_belgium.69
+	title = ww1_belgium.69.t
+	desc = ww1_belgium.69.d
+	picture = GFX_albert_on_the_front
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.69.a
+		
+	}
+}
+
+# ww1_belgium.70 moved to ww1_germanrework.200
+
+#frontistes are asking the army to be billingual, and not only french
+country_event = {
+	id = ww1_belgium.71
+	title = ww1_belgium.71.t
+	desc = ww1_belgium.71.d
+	picture = GFX_report_event_armored_cars
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.71.a
+		add_stability = 0.05
+		add_political_power = 50
+	}
+	option = {
+		name = ww1_belgium.71.b
+		add_timed_idea = {
+			idea = BEL_general_staff_communication_issues
+			days = 720
+		}
+	}
+}
+
+#frontistes are active
+country_event = {
+	id = ww1_belgium.72
+	title = ww1_belgium.72.t
+	desc = ww1_belgium.72.d
+	picture = GFX_report_event_picture_broqueville_and_governement
+	trigger = {
+		tag = BEL
+		longest_war_length > 12
+		has_war = yes	
+		has_idea = BEL_question_communautaire
+		NOT = {
+			has_country_flag = BEL_frontistes
+			has_country_flag = BEL_1918_Frontpartij
+			has_country_leader_ideology = stratocracy
+		}
+	}
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.72.a
+		set_country_flag = BEL_frontistes
+		add_ideas = BEL_frontbeweging
+		set_party_name = {
+			ideology = fascism
+			name = BEL_frontbeweging_party
+			long_name = BEL_frontbeweging_party
+		}
+	}
+}
+
+
+
+
+#charles de broqueville and albert relations are bad
+country_event = {
+	id = ww1_belgium.73
+	title = ww1_belgium.73.t
+	desc = ww1_belgium.73.d
+	picture = GFX_report_event_picture_broqueville_and_governement
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.73.a
+		set_country_flag = BEL_charles_broqueville_vs_albert
+		BEL_charles_de_broqueville = {
+			swap_country_leader_traits = {
+				remove = administration_reformer
+				add = political_conflict_with_the_king
+				ideology = conservatism
+			}
+		}	
+		hidden_effect = {
+			remove_trait = {
+				character = BEL_charles_de_broqueville
+				slot = political_advisor
+				trait = administration_reformer
+			}
+			add_trait = {
+				character = BEL_charles_de_broqueville
+				slot = political_advisor
+				trait = political_conflict_with_the_king
+			}
+		}
+	}
+}
+
+#albert try to negociate any way to go out the war with not too big maluses
+country_event = {
+	id = ww1_belgium.74
+	title = ww1_belgium.74.t
+	desc = ww1_belgium.74.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.74.a
+		BEL = {
+			country_event = {
+				id = ww1_belgium.75
+				days = 4
+			}
+		}
+	}
+}
+
+#germany refuse to let belgium peace out
+country_event = {
+	id = ww1_belgium.75
+	title = ww1_belgium.75.t
+	desc = ww1_belgium.75.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.75.a
+		
+	}
+}
+
+#1912 general elections PC victory
+country_event = {
+	id = ww1_belgium.76
+	title = ww1_belgium.76.t
+	desc = ww1_belgium.76.d
+	picture = GFX_report_event_hymans
+	trigger = {
+		date > 1912.5.1
+		tag = BEL
+		NOT = {
+			has_government = communism
+		}
+		NOT = {
+			has_country_flag = BEL_1912_elections
+		}
+		NOT = {
+			AND = {
+				has_completed_focus = BEL_CLS_PL_alliance
+				has_completed_focus = BEL_cut_local_school_funding
+			}
+		}
+	}
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.76.a
+		set_country_flag = BEL_1912_elections
+		set_country_flag = BEL_PC_victory_1912
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.05
+		}
+		promote_character = BEL_charles_de_broqueville
+		add_timed_idea = {
+			idea = strikes_3
+			days = 7
+		}
+		complete_national_focus = BEL_mantain_status_quo
+	}
+}
+
+#1914 general elections
+country_event = {
+	id = ww1_belgium.77
+	title = ww1_belgium.77.t
+	desc = ww1_belgium.77.d
+	picture = GFX_report_event_broqueville_working
+	trigger = {
+		date > 1914.4.1
+		tag = BEL
+		NOT = {
+			has_government = communism
+		}
+		NOT = {
+			has_country_flag = BEL_1914_elections
+		}
+		NOT = {
+			has_country_flag = BEL_liberal_victory_1912
+		}
+	}
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.77.a
+		set_country_flag = BEL_1914_elections
+		set_country_flag = BEL_PC_victory_1914
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.02
+		}
+	}
+}
+
+#belgium food insecurity, germany take 75% of the food production
+country_event = {
+	id = ww1_belgium.78
+	title = ww1_belgium.78.t
+	desc = ww1_belgium.78.d
+	picture = GFX_population_exodus
+	trigger = {
+		longest_war_length > 18
+		tag = BEL
+		has_capitulated = yes
+		has_war = yes
+		NOT = {
+			has_country_flag = BEL_food_insecurity
+		}
+	}
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.78.a
+		set_country_flag = BEL_food_insecurity
+		add_ideas = BEL_food_insecurity
+	}
+}
+
+#USA can help belgium
+country_event = {
+	id = ww1_belgium.79
+	title = ww1_belgium.79.t
+	desc = ww1_belgium.79.d
+	picture = GFX_report_event_usa_election_generic
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.79.a
+		FROM = {
+			country_event = {
+				id = ww1_belgium.80
+				days = 2
+			}
+		}
+		ai_chance = {
+			factor = 90
+		}
+	}
+	option = {
+		name = ww1_belgium.79.b
+		FROM = {
+			country_event = {
+				id = ww1_belgium.81
+				days = 2
+			}
+		}
+		ai_chance = {
+			factor = 10
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+	}
+}
+#yes
+country_event = {
+	id = ww1_belgium.80
+	title = ww1_belgium.80.t
+	desc = ww1_belgium.80.d
+	picture = GFX_report_event_usa_british_sailors_destroyers
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.80.a
+		remove_ideas = BEL_food_insecurity
+		add_ideas = BEL_commission_for_relief_in_belgium
+	}
+}
+#no
+country_event = {
+	id = ww1_belgium.81
+	title = ww1_belgium.81.t
+	desc = ww1_belgium.81.d
+	picture = GFX_population_exodus
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.81.a
+		remove_ideas = BEL_food_insecurity
+		add_political_power = -150
+		add_stability = -0.05
+	}
+}
+
+#Beligum integrate the british flanders group, france send generals to help the organization
+country_event = {
+	id = ww1_belgium.82
+	title = ww1_belgium.82.t
+	desc = ww1_belgium.82.d
+	picture = GFX_report_event_generic_army
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.82.a
+		if = {
+			limit = {
+				tag = FRA
+			}
+			FRA = {
+				FRA_jean_marie_degoutte = {
+					set_nationality = BEL
+				}
+			}
+			else = {
+				effect_tooltip = {
+					FRA = {
+						FRA_jean_marie_degoutte = {
+							set_nationality = BEL
+						}
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				tag = BEL
+			}
+			BEL = {
+				add_ideas = BEL_british_advisors
+			}
+			else = {
+				effect_tooltip = {
+					BEL = {
+						add_ideas = BEL_british_advisors
+					}
+				}
+			}
+		}
+
+	}
+}
+
+###charles broqueville politics
+country_event = {
+	id = ww1_belgium.83
+	title = ww1_belgium.83.t
+	desc = ww1_belgium.83.d
+	picture = GFX_report_event_broqueville
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.83.a
+		add_stability = 0.02
+		add_popularity = {
+			ideology = communism
+			popularity = -0.02
+		}
+		add_popularity = {
+			ideology = neutrality
+			popularity = -0.02
+		}
+	}
+}
+
+# 1912 general elections Liberal party victory
+country_event = {
+	id = ww1_belgium.84
+	title = ww1_belgium.84.t
+	desc = ww1_belgium.84.d
+	picture = GFX_report_event_hymans
+	trigger = {
+		tag = BEL
+		date > 1912.5.1
+		has_start_date < 1914.1.1
+		NOT = {
+			has_government = communism
+		}
+		NOT = {
+			has_country_flag = BEL_1912_elections
+		}
+		AND = {
+			has_completed_focus = BEL_CLS_PL_alliance
+			has_completed_focus = BEL_cut_local_school_funding
+		}
+	}
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.84.a
+		set_country_flag = BEL_1912_elections
+		set_country_flag = BEL_liberal_victory_1912
+		activate_mission = BEL_coalitionlifespan
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.05
+		}
+		add_stability = 0.02
+		set_party_name = {
+			ideology = democratic
+			long_name = BEL_liberal_party_long
+			name = BEL_liberal_party
+		}
+		BEL_paul_hymans = {
+			promote_character = yes
+		}
+		complete_national_focus = BEL_the_progressive_coalition
+	}
+}
+
+#1914 general elections Liberal party victory
+country_event = {
+	id = ww1_belgium.85
+	title = ww1_belgium.85.t
+	desc = ww1_belgium.85.d
+	picture = GFX_report_event_hymans
+	trigger = {
+		date > 1914.4.1
+		tag = BEL
+		NOT = {
+			has_government = communism
+		}
+		NOT = {
+			has_country_flag = BEL_1914_elections
+		}
+		has_country_flag = BEL_liberal_victory_1912
+	}
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.85.a
+		set_country_flag = BEL_1914_elections
+		set_country_flag = BEL_liberal_victory_1914
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.02
+		}
+	}
+}
+
+#1919 Belgium push claims on luxemburg, this trigger only if they won. Irl they did it but wasnt as influencal as a real WW1 winner.
+country_event = {
+	id = ww1_belgium.86
+	title = ww1_belgium.86.t
+	desc = ww1_belgium.86.d
+	picture = GFX_report_event_hymans
+	trigger = {
+		tag = BEL
+		NOT = {
+			has_country_flag = BEL_defeat
+			has_country_flag = BEL_decision_over_luxemburg
+		}
+		has_country_flag = great_war_winner
+	}
+	mean_time_to_happen = {
+		days = 7
+	}
+	immediate = {
+		set_country_flag = BEL_decision_over_luxemburg
+	}
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.86.a
+		set_country_flag = BEL_ask_luxemburg
+		8 = {
+			add_claim_by = BEL
+		}
+		FRA = {
+			set_country_flag = BEL_ask_luxemburg
+			country_event = {
+				id = ww1_luxembourg.6
+				days = 2
+			}
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+	option = {
+		name = ww1_belgium.86.b
+		hidden_effect = {
+			FRA = {
+				country_event = {
+					id = ww1_luxembourg.6
+					days = 2
+				}
+			}
+		}
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+#game start for belgium, explaining the last political events
+country_event = {
+	id = ww1_belgium.87
+	title = ww1_belgium.87.t
+	desc = ww1_belgium.87.d
+	picture = GFX_report_event_albert_i
+	trigger = {
+		tag = BEL
+		NOT = { has_country_flag = BEL_initial_event }
+	}
+	mean_time_to_happen = { days = 7 }
+	immediate = { set_country_flag = BEL_initial_event }
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.87.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#ahistorical event : Belgium vote universal vote earlier than historical (before 1918)
+country_event = {
+	id = ww1_belgium.88
+	title = ww1_belgium.88.t
+	desc = ww1_belgium.88.d
+	picture = GFX_french_parliament
+	is_triggered_only = yes
+	fire_only_once = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.88.a
+		swap_ideas = {
+			add_idea = BEL_question_communautaire2
+			remove_idea = BEL_question_communautaire
+		}
+		add_stability = -0.02
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.05
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#anglo-belgian secret talks on national security if liberal won
+country_event = {
+	id = ww1_belgium.89
+	title = ww1_belgium.89.t
+	desc = ww1_belgium.89.d
+	picture = GFX_report_event_picture_force_publique
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.89.a
+		ENG = {
+			add_opinion_modifier = {
+				target = BEL
+				modifier = large_increase
+			}
+		}
+		set_country_flag = BEL_1912_talks_success
+	}
+}
+
+#Belgium is discussing to join entente
+country_event = {
+	id = ww1_belgium.90
+	title = ww1_belgium.90.t
+	desc = ww1_belgium.90.d
+	picture = GFX_ruhr_occupation
+	is_triggered_only = yes
+	option = {
+		name = ww1_belgium.90.a
+		trigger = {
+			OR = {
+				tag = FRA
+				tag = ENG
+			}
+		}
+		custom_effect_tooltip = BEL_conditions_to_join_entente
+	}
+	option = {
+		name = ww1_belgium.90.b
+		trigger = {
+			tag = BEL
+		}
+		set_country_flag = BEL_tripartite_security_meeting
+		custom_effect_tooltip = BEL_conditions_to_join_entente
+		add_war_support = 0.05
+		unlock_decision_tooltip = BEL_apply_the_tripartite_pact
+	}
+}
+
+#news for belgium being neutral and letting german pass
+news_event = {
+	id = ww1_belgium.91
+	title = ww1_belgium.91.t
+	desc = ww1_belgium.91.d
+	picture = GFX_news_event_german_soldiers
+	is_triggered_only = yes
+	option = {
+		name = ww1_belgium.91.a
+	}
+}
+
+#hidden event to restore belgium
+country_event = {
+	id = ww1_belgium.92
+	title = ww1_belgium.92.t
+	desc = ww1_belgium.92.d
+	picture = GFX_ruhr_occupation
+	trigger = {
+		BEL = {
+			owns_state = 6
+		}
+		has_country_flag = BEL_granted_german_passage
+		has_global_flag = great_war_ends
+	}
+	fire_only_once = yes
+	hidden = yes
+	immediate = {
+		remove_ideas = BEL_idea_offshore_production
+		GER = {
+			if = {
+				limit = {
+					BEL = {
+						has_country_flag = great_war_loser
+					}
+				}
+				every_owned_state = {
+					limit = {
+						OR = {
+							state = 34
+							state = 907
+							state = 906
+						}
+						NOT = {
+							is_claimed_by = GER
+							is_core_of = GER
+						}
+					}
+					transfer_state_to = BEL
+				}
+				else = {
+					every_owned_state = {
+						limit = {
+							OR = {
+								state = 34
+								state = 907
+								state = 906
+							}
+						}
+						transfer_state_to = BEL
+					}
+				}
+			}			
+		}
+		BEL = {
+			clr_country_flag = BEL_granted_german_passage
+			if = {
+				limit = {
+					has_cosmetic_tag = FLA
+					any_owned_state = {
+						OR = {
+							state = 34
+							state = 907
+							state = 906
+						}
+					}
+				}
+				drop_cosmetic_tag = yes
+			}
+		}
+	}
+}
+
+
+#belgian governement is now unpopular, just as the king
+country_event = {
+	id = ww1_belgium.93
+	title = ww1_belgium.93.t
+	desc = ww1_belgium.93.d
+	picture = GFX_france_1910_riots
+	is_triggered_only = yes
+	option = {
+		name = ww1_belgium.93.a
+		add_country_leader_trait = unpopular_minister
+		hidden_effect = {
+			remove_ideas = BEL_idea_albert_i
+			remove_ideas = BEL_idea_albert_i2
+		}
+		add_ideas = BEL_idea_albert_i_bad
+	}
+}
+
+#all begian governement
+country_event = {
+	id = ww1_belgium.94
+	title = ww1_belgium.94.t
+	desc = ww1_belgium.94.d
+	picture = GFX_france_1910_riots
+	is_triggered_only = yes
+	option = {
+		name = ww1_belgium.94.a
+		effect_tooltip = {
+				set_party_name = {
+				ideology = democratic
+				long_name = BEL_all_party_long
+				name = BEL_all_party
+			}
+			promote_character = BEL_leon_delacroix
+			add_stability = 0.02
+		}		
+	}
+}
+
+#lettre au roi, Jules Destrée (1863-1936) 
+country_event = {
+	id = ww1_belgium.95
+	title = ww1_belgium.95.t
+	desc = ww1_belgium.95.d
+	picture = GFX_spa_conference
+	trigger = {
+		tag = BEL
+		date > 1912.8.15 #historical
+		OR = {
+			has_government = democratic
+			has_government = neutrality
+		}
+		NOT = {
+			has_country_flag = BEL_lettre_au_roi
+		}
+	}
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.95.a
+		set_country_flag = BEL_lettre_au_roi
+		add_political_power = 10
+	}
+}
+
+#spa conference in belgium
+country_event = {
+	id = ww1_belgium.96
+	title = ww1_belgium.96.t
+	desc = ww1_belgium.96.d
+	picture = GFX_spa_conference
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.96.a
+		add_stability = 0.025
+		if = {
+			limit = {
+				793 = {
+					NOT = {
+						is_owned_by = BEL
+					}
+				}
+			}
+			BEL = {
+				transfer_state = 793
+			}
+		}
+		if = {
+			limit = {
+				768 = {
+					NOT = {
+						is_owned_by = BEL
+					}
+				}
+			}
+			BEL = {
+				transfer_state = 768
+			}
+		}
+	}
+}
+
+#strike from mettalurgists
+country_event = {
+	id = ww1_belgium.97
+	title = ww1_belgium.97.t
+	desc = ww1_belgium.97.d
+	picture = GFX_cheminots_strike
+	trigger = {
+		tag = BEL
+		has_war = no
+		date > 1918.12.12
+		NOT = {
+			has_country_flag = BEL_1918_strike
+		}
+	}
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.97.a
+		add_stability = -0.025
+		add_timed_idea = {
+			idea = strikes_2
+			days = 7
+		}
+		set_country_flag = BEL_1918_strike
+	}
+}
+
+#Frontpartij formation in 1919
+country_event = {
+	id = ww1_belgium.98
+	title = ww1_belgium.98.t
+	desc = ww1_belgium.98.d
+	picture = report_event_damremont_manifestation
+	trigger = {
+		tag = BEL
+		has_war = no
+		date > 1919.2.2
+		NOT = {
+			has_country_flag = BEL_1918_Frontpartij
+			has_country_leader_ideology = stratocracy
+		}
+	}
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.98.a
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.05
+		}
+		set_country_flag = BEL_1918_Frontpartij
+		add_ideas = BEL_frontpartij
+		set_party_name = {
+			ideology = fascism
+			name = BEL_frontpartij_party
+			long_name = BEL_frontpartij_pat
+		}
+	}
+}
+
+#ahistorical liberal government want to pass old age pension
+country_event = {
+	id = ww1_belgium.99
+	title = ww1_belgium.99.t
+	desc = ww1_belgium.99.d
+	picture = report_event_damremont_manifestation
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.99.a
+		custom_effect_tooltip = FRA_vote_will_pass
+		add_popularity = {
+			ideology = communism
+			popularity = 0.1
+		}
+		add_popularity = {
+			ideology = ROOT
+			popularity = 0.05
+		}
+		add_stability = 0.1
+		
+	}
+	option = {
+		name = ww1_belgium.99.b
+		custom_effect_tooltip = FRA_vote_will_fail
+		add_popularity = {
+			ideology = communism
+			popularity = 0.05
+		}
+		add_popularity = {
+			ideology = ROOT
+			popularity = -0.05
+		}
+	}
+}
+
+# Ne Derde Content Golf is gearriveerd, tes ne keer vree tijd om da ier op te lossen -Overwinnaar
+#ahistorical coalition falls apart
+country_event = {
+	id = ww1_belgium.101
+	title = ww1_belgium.101.t
+	desc = ww1_belgium.101.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_belgium.101.a
+		add_popularity = {
+    		ideology = democratic
+    		popularity = -0.05
+			}
+		add_popularity = {
+    		ideology = communism
+    		popularity = -0.05
+			}
+		add_political_power = -100
+		add_stability = -0.05
+		add_timed_idea = {
+			idea = BEL_political_turmoil
+			days = 300
+		} 
+		set_country_flag = BEL_coalition_died
+		promote_character = BEL_charles_de_broqueville
+		effect_tooltip = {
+			promote_character = BEL_charles_de_broqueville
+		}
+		hidden_effect = {
+			remove_ideas = BEL_socialist_concessions1
+			remove_ideas = BEL_socialist_concessions2
+			remove_ideas = BEL_socialist_concessions3
+			remove_ideas = BEL_socialist_concessions4
+			remove_ideas = BEL_socialist_concessions5
+			remove_ideas = BEL_socialist_concessions6
+			remove_ideas = BEL_socialist_concessions7
+		}
+		complete_national_focus = BEL_mantain_status_quo
+		}
+}
+
+country_event = {
+	id = ww1_belgium.100
+	title = ww1_belgium.100.t
+	desc = ww1_belgium.100.d
+	picture = report_event_damremont_manifestation
+	trigger = {
+		tag = BEL
+		has_global_flag = FRA_capitulation_alone
+		has_country_flag = BEL_defeat		
+		is_government_in_exile = yes
+		has_war_with = GER
+		has_capitulated = yes
+		is_subject = no
+	}
+	fire_only_once = yes
+	option = {
+		name = ww1_france.305.a
+		white_peace = GER
+		set_country_flag = great_war_loser
+		set_country_flag = member_of_entente
+		effect_tooltip = {
+			set_cosmetic_tag = BEL_GER
+		}
+		hidden_effect = {
+			separate_peace_all_wars = yes
+			BEL_lost_to_CP_effects = yes
+		}		
+	}
+}
+
+# 1913 rubber crisis
+country_event = {
+	id = ww1_belgium.104
+	title = ww1_belgium.104.t
+	desc = ww1_belgium.104.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_belgium.104.a
+		add_political_power = -30
+		set_country_flag = BEL_unlock_decision_offer_minerals
+		set_country_flag = BEL_rubber_crisis
+		if = {
+			limit = { has_completed_focus = BEL_expand_the_agricultural_sector }
+			swap_ideas = {
+				remove_idea = BEL_congo_profits
+				add_idea = BEL_congo_profitsca
+			}
+		}
+		else = {
+			swap_ideas = {
+				remove_idea = BEL_congo_profits
+				add_idea = BEL_congo_profitsc
+			}
+		}
+	}
+}
+#force publique event
+country_event = {
+	id = ww1_belgium.103
+	title = ww1_belgium.103.t
+	desc = ww1_belgium.103.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_picture_force_publique
+	trigger = {
+		
+	}
+	option = {
+		name = ww1_belgium.103.a
+
+		538 = {
+		create_unit = {
+    		division = "name = \"Troupes du Congo Kasaï\" division_template = \"Troupes Coloniale\" start_equipment_factor = 0.1 start_experience_factor = 0.1" 
+    		owner = ROOT
+			}
+		}
+		295 = {
+			create_unit = {
+				division = "name = \"Troupes de l'Equateur\" division_template = \"Troupes Coloniale\" start_experience_factor = 0.1 start_equipment_factor = 0.1"
+				owner = ROOT
+			}
+		}
+		718 = {
+		create_unit = {
+				division = "name = \"Troupes de l'Orientale\" division_template = \"Troupes Coloniale\" start_experience_factor = 0.1 start_equipment_factor = 0.1"
+				owner = ROOT
+			}
+		}
+	}
+}
+#Assemblee Wallone
+country_event = {
+	id = ww1_belgium.105
+	title = ww1_belgium.105.t
+	desc = ww1_belgium.105.d
+	fire_only_once = yes
+	picture = GFX_report_event_SWE_summer_government
+	trigger = {
+		tag = BEL
+		date > 1912.10.20
+		has_start_date < 1914.1.1
+		owns_state = 34
+		owns_state = 907
+		has_country_flag = BEL_PC_victory_1912	
+		NOT = {
+			has_country_flag = BEL_frontistes
+			has_country_flag = BEL_1918_Frontpartij
+			has_country_leader_ideology = stratocracy
+		}
+	}
+	option = {
+		name = ww1_belgium.105.a
+		add_popularity = {
+    		ideology = fascism
+    		popularity = 0.03
+		}
+		# set_party_name = {
+    	# 	ideology = fascism
+    	# 	long_name = BEL_ultranationalism_party_long
+    	# 	name = BEL_ultranationalism_party
+		# }
+	}
+}
+#end of congo reform association
+country_event = {
+	id = ww1_belgium.106
+	title = ww1_belgium.106.t
+	desc = ww1_belgium.106.d
+	fire_only_once = yes
+	trigger = {
+		date > 1913.6.16
+		BEL = {
+			owns_state = 295
+			owns_state = 718
+			owns_state = 538
+		}
+		tag = BEL
+	}
+	option = {
+		name = ww1_belgium.106.a
+	}
+}
+#3 kraaiende hanen
+country_event = {
+	id = ww1_belgium.107
+	title = ww1_belgium.107.t
+	desc = ww1_belgium.107.d
+	fire_only_once = yes
+	picture = GFX_report_event_gathering_protest
+	trigger = {
+		date > 1910.12.18
+		owns_state = 6
+		tag = BEL
+	}
+	option = {
+		name = ww1_belgium.107.a
+		add_popularity = {
+    		ideology = fascism
+    		popularity = 0.02
+		}	
+		add_stability = -0.01
+	}
+}
+#belgian nationalism without socialist thingy
+country_event = {
+	id = ww1_belgium.110
+	title = ww1_belgium.110.t
+	desc = ww1_belgium.110.d
+	fire_only_once = yes
+	picture = GFX_french_parliament
+	trigger = {
+		has_war_with = GER
+		has_country_flag = BEL_liberal_victory_1912
+		tag = BEL
+	}
+	option = {
+		name = ww1_belgium.110.a
+		add_war_support = 0.1
+		add_manpower = 6000
+	}
+}
+#belgian nationalism
+country_event = {
+	id = ww1_belgium.108
+	title = ww1_belgium.108.t
+	desc = ww1_belgium.108.d
+	fire_only_once = yes
+	picture = GFX_french_parliament
+	trigger = {
+		has_war_with = GER
+		OR = {
+		has_country_flag = BEL_PC_victory_1912
+		has_country_flag = BEL_coalition_died
+		}
+	}
+	option = {
+		name = ww1_belgium.108.a
+		add_war_support = 0.05
+		add_manpower = 5000
+		hidden_effect = {
+			country_event = {
+				id = ww1_belgium.109
+				days = 7
+			}
+		}
+	}
+}
+#socialists pledge support for the defense of belgium
+country_event = {
+	id = ww1_belgium.109
+	title = ww1_belgium.109.t
+	desc = ww1_belgium.109.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	trigger = {
+		
+	}
+	option = {
+		name = ww1_belgium.109.a
+		add_war_support = 0.05
+		add_manpower = 1000
+	}
+}
+#garde civique
+country_event = {
+	id = ww1_belgium.111
+	title = ww1_belgium.111.t
+	desc = ww1_belgium.111.d
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = ww1_belgium.111.a
+		add_political_power = 75
+		add_stability = 0.05
+		add_tech_bonus = {
+    		bonus = 0.75
+    		uses = 1
+    		category = military_police_tech	
+		}
+	}
+	option = {
+		name = ww1_belgium.111.b
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = 750
+			producer = BEL
+		}
+		add_manpower = 10000
+		add_command_power = 25
+	}
+}
+#breakout worked
+country_event = {
+	id = ww1_belgium.112
+	title = ww1_belgium.112.t
+	desc = ww1_belgium.112.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = {
+		
+	}
+	option = {
+		name = ww1_belgium.112.a
+		add_manpower = 500
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = 50
+		}
+	}
+}
+#breakout failed
+country_event = {
+	id = ww1_belgium.113
+	title = ww1_belgium.113.t
+	desc = ww1_belgium.113.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = {
+		
+	}
+	option = {
+		name = ww1_belgium.113.a
+		add_manpower = -50
+		add_political_power = -5
+	}
+}
+#luba activity
+country_event = {
+	id = ww1_belgium.116
+	title = ww1_belgium.116.t
+	desc = ww1_belgium.116.d
+	is_triggered_only = yes
+	trigger = {
+		
+	}
+	option = {
+		name = ww1_belgium.116.a
+		add_stability = -0.015
+	}
+}
+#dutch conference, dutch accept
+#country_event = {
+#	id = ww1_belgium.114
+#	title = ww1_belgium.114.t
+#	desc = ww1_belgium.114.d
+#	is_triggered_only = yes
+#	fire_only_once = yes
+#	trigger = {
+#		
+#	}
+#	option = {
+#		name = ww1_belgium.114.a
+#		add_ideas = BEL_idea_dutch_trade_deal
+#	}
+#}
+#dutch conference, dutch decline
+#country_event = {
+#	id = ww1_belgium.115
+#	title = ww1_belgium.115.t
+#	desc = ww1_belgium.115.d
+#	is_triggered_only = yes
+#	fire_only_once = yes
+#	trigger = {
+#		
+#	}
+#	option = {
+#		name = ww1_belgium.115.a
+#	}
+#}

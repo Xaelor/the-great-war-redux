@@ -61,17 +61,17 @@ leader_traits = {
 		trait_type = personality_trait
 		
 		unit_type = {
-			type = artillery
-			type = artillery_brigade
-			#ype = howitzer
+			type = field_gun
+			type = field_gun_brigade
+			type = howitzer
 			type = howitzer_brigade
 		}
 		
 		unit_trigger = {
 			OR = {
-				division_has_battalion_in_template = artillery
-				division_has_battalion_in_template = artillery_brigade
-				#division_has_battalion_in_template = howitzer
+				division_has_battalion_in_template = field_gun
+				division_has_battalion_in_template = field_gun_brigade
+				division_has_battalion_in_template = howitzer
 				division_has_battalion_in_template = howitzer_brigade
 				
 				owner = {
@@ -112,9 +112,10 @@ leader_traits = {
 	artillery_specialist = {
 		type = corps_commander
 		gain_xp = {
-			set_temp_variable = { temp = num_units }
-			multiply_temp_variable = { temp = 0.3 }
-			check_variable = { num_artillery > temp }
+			check_expr = {
+				value = num_artillery
+				greater_than = { value = num_units  multiply = 0.3 }
+			}
 		}
 		custom_gain_xp_trigger_tooltip = artillery_ratio_over_30
 		
@@ -125,14 +126,14 @@ leader_traits = {
 
 		cost = 1000
 		modifier = {
-			army_artillery_attack_factor = 0.1
+			army_artillery_attack_factor = 0.075
 		}
 
 		ai_will_do = {
 			factor = 1
 		}
 
-		gui_row = 14
+		gui_row = 15
 	}
 
 	artillery_expert = {
@@ -142,7 +143,7 @@ leader_traits = {
 		}
 		cost = 500
 		modifier = {
-			army_artillery_attack_factor = 0.1
+			army_artillery_attack_factor = 0.075
 		}
 
 		ai_will_do = {
@@ -151,7 +152,7 @@ leader_traits = {
 
 		trait_type = assignable_trait
 		any_parent = { artillery_specialist }
-		gui_row = 14
+		gui_row = 15
 	}
 
 
@@ -165,67 +166,6 @@ leader_traits = {
 			
 		}
 		
-		ai_will_do = {
-			factor = 1
-		}
-		new_commander_weight = {
-			factor = 0
-		}
-	}
-   	ENG_new_guard = { #literally just a reverse of Old Guard
-		type = all
-		trait_type = personality_trait
-		gain_xp = {
-			always = no # not gainable
-		}
-		modifier = {
-	        land_reinforce_rate = -0.01
-		}
-		
-		non_shared_modifier = {
-			experience_gain_factor = 0.25
-		}
-		new_commander_weight = {
-			factor = 0
-		}
-	}
-   	ENG_hmmlr_member = { 
-		type = all
-		trait_type = personality_trait
-		gain_xp = {
-			always = no # not gainable
-		}
-		modifier = {
-			
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-		new_commander_weight = {
-			factor = 0
-		}
-	}
-	QIN_underage = { 
-		type = all
-		trait_type = personality_trait
-		gain_xp = {
-			always = no # not gainable
-		}
-		allowed = {
-			FROM = {
-				is_china_or_warlord = yes
-			}
-		}
-		modifier = {
-			experience_gain_factor = 0.15
-			army_attack_factor = -0.12
-			army_defence_factor = -0.12
-			army_org_factor = -0.12
-			max_commander_army_size = -20
-			promote_cost_factor = 100
-			custom_modifier_tooltip = QIN_effect_removed_when_age
-		}
 		ai_will_do = {
 			factor = 1
 		}
@@ -313,90 +253,6 @@ leader_traits = {
 			factor = 0
 		}
 	}
-	chinese_royalist = { 
-		type = all
-		trait_type = personality_trait
-		gain_xp = {
-			always = no # not gainable
-		}
-		allowed = {
-			FROM = {
-				is_china_or_warlord = yes
-			}
-		}
-		modifier = {
-			
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		new_commander_weight = {
-			factor = 0
-		}
-	}
-	chinese_nationalist = { 
-		type = all
-		trait_type = personality_trait
-		gain_xp = {
-			always = no # not gainable
-		}
-		allowed = {
-			FROM = {
-				is_china_or_warlord = yes
-			}
-		}
-		modifier = {
-			
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		new_commander_weight = {
-			factor = 0
-		}
-	}
-	yuan_shikai_loyalist = { 
-		type = all
-		trait_type = personality_trait
-		gain_xp = {
-			always = no # not gainable
-		}
-		allowed = {
-			FROM = {
-				is_china_or_warlord = yes
-			}
-		}
-		modifier = {
-			
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		new_commander_weight = {
-			factor = 0
-		}
-	}
-	chinese_federalist = { 
-		type = all
-		trait_type = personality_trait
-		gain_xp = {
-			always = no # not gainable
-		}
-		allowed = {
-			FROM = {
-				is_china_or_warlord = yes
-			}
-		}
-		modifier = {
-			
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		new_commander_weight = {
-			factor = 0
-		}
-	}
 	
 	trait_por_republican = {
 		type = all
@@ -463,4 +319,114 @@ leader_traits = {
 			factor = 0
 		}
 	}
+
+	politically_isolated = {
+		type = land
+		trait_type = personality_trait
+		gain_xp = {
+			always = no # not gainable
+		}
+		modifier = {
+			promote_cost_factor = 1
+			max_commander_army_size = -14
+		}
+		field_marshal_modifier = {
+			max_army_group_size = -3
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+		new_commander_weight = {
+			factor = 0
+		}
+	}
+	
+	technician_trait = {
+		type = corps_commander
+		gain_xp = {
+			#OR = {
+			#	division_has_battalion_in_template = rangers_support
+				#division_has_battalion_in_template = pioneer_support
+			#}
+		}
+		unit_trigger = {
+			OR = {
+				division_has_battalion_in_template = rangers_support
+				division_has_battalion_in_template = pioneer_support
+			}
+		}
+		cost = 500
+
+		modifier = {
+			pocket_penalty = -0.05
+			org_loss_when_moving = -0.05
+			dig_in_speed_factor = 0.05
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		new_commander_weight = {
+			factor = 1
+			modifier = {
+				FROM = { NOT = { has_idea = elevated_engineering_corps_spirit } }
+				factor = 5
+			}
+		}
+
+		gui_row = 17
+	}
+
+	rail_director = {
+		type = corps_commander
+
+		gain_xp = {
+			always = no
+		}
+		
+		cost = 500
+
+		modifier = {
+			coordination_bonus = 0.05
+			org_loss_when_moving = -0.05
+			planning_speed = 0.03
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+		trait_type = assignable_trait
+		any_parent = { technician_trait }
+
+		gui_row = 17
+	}
+
+	trait_trench_raider = {
+		type = corps_commander
+
+		gain_xp = {
+			always = no
+		}
+
+		cost = 500
+
+		modifier = {
+			land_night_attack = 0.1
+			recon_factor = 0.03
+			recon_factor_while_entrenched = 0.03
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		trait_type = assignable_trait 
+
+		any_parent = { trickster }
+
+		gui_row = 14
+	}
+
 }

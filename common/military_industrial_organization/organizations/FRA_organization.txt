@@ -134,7 +134,7 @@ FRA_renault_organization = {
 }
 
 FRA_peugeot_organization = {
-	include = generic_armored_car_organization
+	include = generic_infantry_tank_and_armored_car_organization
 	name = peugeot
 	icon = GFX_idea_peugeot
 	
@@ -182,12 +182,47 @@ FRA_panhard_organization = {
 	}
 }
 
-FRA_fcm_organization = {
+FRA_schneider_tanks_organization = {
+	name = schneider
+	include = generic_medium_tank_organization
+	icon = GFX_idea_schneider
+	available = {
+		FROM = {
+			if = {
+				limit = { tag = FRA }
+				has_country_flag = has_invested_in_schneider
+			}
+			else = {
+				NOT = {
+					has_war_with = FRA
+				}
+			}			
+		}
+	}
+	allowed = {	
+		OR = {
+			original_tag = FRA
+			original_tag = SPR
+		}	
+		has_dlc = "Arms Against Tyranny"
+	}
+}
+
+FRA_fcm_tanks_organization = {
 	include = generic_heavy_tank_organization
+	name = fcm
 	icon = GFX_idea_fcm
 	allowed = {	
 		original_tag = FRA
 		has_dlc = "Arms Against Tyranny"
+	}
+	available = {
+		owner = {
+			OR = {
+				has_completed_focus = FRA_ww1_char_b
+				has_completed_focus = FRA_ww1_char2c
+			}
+		}
 	}
 }
 #####################
@@ -239,9 +274,9 @@ FRA_a_c_de_la_loire_organization = {
 }
 
 
-FRA_chantiers_fcm_organization = {
+FRA_fcm_organization = {
 	include = generic_task_force_ship_organization
-	name = chantiers_fcm
+	name = fcm
 	icon = GFX_idea_fcm
 	allowed = {	
 		original_tag = FRA
@@ -344,6 +379,7 @@ FRA_farman_organization = {
 			original_tag = GRE
 			original_tag = BEL
 			original_tag = BUL
+			original_tag = BRA
 		}
 		has_dlc = "Arms Against Tyranny"
 	}
@@ -385,9 +421,9 @@ FRA_nieuport_organization = {
 				}
 				NOT = { has_war_with = FRA }
 			}
-			else = {
-				has_country_flag = has_invested_in_nieuport
-			}		
+			# else = {
+			# 	has_country_flag = has_invested_in_nieuport
+			# }		
 		}	
 	}
 }
@@ -395,7 +431,17 @@ FRA_nieuport_organization = {
 FRA_caudron_organization = {
 	include = generic_medium_aircraft_organization
 	name = caudron
-	icon = GFX_idea_generic_air_manufacturer_4
+	icon = GFX_idea_FRA_caudron
+	allowed = {	
+		original_tag = FRA
+		has_dlc = "Arms Against Tyranny"
+	}
+}
+
+FRA_astra_torres_organization = {
+	name = astra_torres
+	include = generic_heavy_aircraft_organization
+	icon = GFX_idea_generic_tank_manufacturer_2
 	allowed = {	
 		original_tag = FRA
 		has_dlc = "Arms Against Tyranny"
@@ -505,23 +551,12 @@ FRA_mas_organization = {
 FRA_mac_organization = {
 	include = generic_infantry_equipment_organization
 	name = mac
-	icon = GFX_idea_generic_air_manufacturer_4
+	icon = GFX_idea_generic_air_manufacturer_3
 	
 	allowed = {	 
 		original_tag = FRA
 	}
 }
-
-FRA_mab_organization = {
-	include = generic_infantry_equipment_organization
-	name = mab
-	icon = GFX_idea_FRA_mab
-	
-	allowed = {	 
-		original_tag = FRA
-	}
-}
-
 
 FRA_schneider_organization = {
 	include = generic_artillery_organization
@@ -533,6 +568,13 @@ FRA_schneider_organization = {
 		}	
 		has_dlc = "Arms Against Tyranny"
 	}
+	equipment_type = {
+		field_gun_equipment
+		anti_tank_equipment
+		anti_air_equipment
+		mio_cat_eq_howitzers
+		mio_cat_eq_railway_guns
+	}
 	available = {
 		FROM = {
 			if = {
@@ -542,9 +584,9 @@ FRA_schneider_organization = {
 					}
 				}
 				NOT = { has_war_with = FRA }
-				else = {
-					has_country_flag = has_invested_in_schneider
-				}
+				# else = {
+				# 	has_country_flag = has_invested_in_schneider
+				# }
 			}		
 		}			
 	}
@@ -613,16 +655,6 @@ FRA_de_dion_bouton_organization = {
 	include = generic_support_equipment_organization
 	name = de_dion_bouton
 	icon = GFX_idea_FRA_dion_bouton
-	
-	allowed = {	 
-		original_tag = FRA
-	}
-}
-
-FRA_rhone_poulenc_organization = {
-	include = generic_support_equipment_organization
-	name = rhone_poulenc
-	icon = GFX_idea_FRA_rhone_poulenc
 	
 	allowed = {	 
 		original_tag = FRA

@@ -1,18 +1,7 @@
 characters={
-	BUL_boris_iii={
-		name="BUL_boris_iii"
-		portraits={
-			civilian={
-				large="gfx/leaders/BUL/BUL_Young_Boris_III.png"
-			}
-		}
-		country_leader={
-			ideology=semi_constitutional_monarchy
-			traits={ popular_figurehead }
-		}
-	}
 	BUL_ferdinand_i={
 		name="BUL_ferdinand_i"
+		can_be_captured = no
 		portraits={
 			civilian={
 				large="gfx/leaders/BUL/BUL_ferdinand_i.png"
@@ -47,6 +36,29 @@ characters={
 			}
 		}
 	}
+	BUL_boris_iii={
+		name="BUL_boris_iii"
+		portraits={
+			civilian={
+				large="gfx/leaders/BUL/BUL_Young_Boris_III.png"
+			}
+		}
+		country_leader={
+			ideology=semi_constitutional_monarchy
+			traits={ popular_figurehead }
+		}
+	}
+	BUL_kiril_preslavski={
+		name="BUL_kiril_preslavski"
+		portraits={
+			civilian={
+				large="gfx/leaders/BUL/BUL_Kiril_Preslavski.png"
+			}
+		}
+		country_leader={
+			ideology=semi_constitutional_monarchy
+		}
+	}
 	BUL_nikola_mushanov={
 		name="BUL_nikola_mushanov"
 		portraits={
@@ -63,7 +75,7 @@ characters={
 			}
 		}
 		country_leader={
-			ideology=fascism_ideology
+			ideology=reactionism
 			traits={ anti_communist }
 		}
 	}
@@ -200,7 +212,7 @@ characters={
 		}
 		portraits={
 			army={
-				large="gfx/leaders/BUL/BUL_Radko_Dimitriev.png"
+				large="gfx/leaders/BUL/BUL_radko_dimitriev.png"
 				small="GFX_idea_BUL_radko_dimitriev"
 			}
 		}
@@ -311,16 +323,16 @@ characters={
 			slot = high_command
 			idea_token = BUL_rashko_serafimov
 			allowed  = {
-					original_tag  = BUL 
-				}
-				ledger  = navy 
-				traits  = {
-					navy_anti_submarine_2 
-				}
-				cost = 100
-				ai_will_do  = {
-					factor  = 1.000
-				}
+				original_tag  = BUL 
+			}
+			ledger  = navy 
+			traits  = {
+				navy_anti_submarine_2 
+			}				
+			cost = 100
+			ai_will_do  = {
+				factor  = 1.000
+			}
 		}
 		portraits={
 			army={
@@ -374,7 +386,7 @@ characters={
 		}
 		country_leader={
 			ideology=classical_liberalism
-			traits={ dislikes_russia  }
+			traits={ dislikes_russia corrupted_minister }
 		}
 	}
 	BUL_aleksandar_stamboliyski={
@@ -387,6 +399,25 @@ characters={
 		country_leader={
 			ideology=agrarianism
 			traits={ dislikes_germany  }
+		}
+	}
+	BUL_racho_petrov={
+		name="BUL_racho_petrov"
+
+		portraits = {
+			army = {
+				large = "gfx/leaders/BUL/BUL_Racho_Petrov.png"
+				small = "GFX_idea_BUL_racho_petrov"
+			}
+		}
+
+		corps_commander = {
+			traits={ old_guard war_hero politically_connected media_personality career_officer trait_reckless harsh_leader }
+			skill = 3
+			attack_skill = 2
+			defense_skill = 2
+			planning_skill = 1
+			logistics_skill = 1
 		}
 	}
 	BUL_vladimir_vazov={
@@ -429,7 +460,7 @@ characters={
 		}
 	}
 	BUL_panteley_kiselov={
-		name="Panteley Kiselov"
+		name=BUL_panteley_kiselov
 		portraits={
 			army={
 				small=GFX_Portrait_Europe_Generic_land_3_small
@@ -535,19 +566,28 @@ characters={
 			slot = political_advisor
 			idea_token = BUL_teodor_teodorov
 			allowed  = {
-					original_tag  = BUL 
+				original_tag  = BUL 
+			}
+			available = {
+				NOT = {
+					has_country_leader = {
+						character = BUL_teodor_teodorov
+						ruling_only = yes
+					}
 				}
-				traits  = {
-					backroom_backstabber 
-				}
-				ai_will_do  = {
-					factor  = 1.000
-				}
+			}
+			traits  = {
+				backroom_backstabber 
+			}
+			ai_will_do  = {
+				factor  = 1.000
+			}
 		}
 		name="BUL_teodor_teodorov"
 		portraits={
 			army={
 				small="GFX_idea_BUL_teodor_teodorov"
+				large = "gfx/leaders/BUL/BUL_teodor_teodorov.png"
 			}
 		}
 	}
@@ -635,17 +675,21 @@ characters={
 				navy_chief_decisive_battle_2 
 			}
 			cost = 100
-			available = {
-				date < 1913.4.13
+			available = {			
+				custom_trigger_tooltip = {
+					tooltip = character_not_dead
+					date < 1913.4.13
+					NOT = { has_character_flag = character_died }
+				}
 			}
 			visible = {
 				date < 1913.4.13
+				NOT = { has_character_flag = character_died }
 			}
 			ai_will_do  = {
 				factor  = 1.000
 			}
 		}
-		name="BUL_stancho_dimitriev"
 		portraits={
 			army={
 				large="gfx/leaders/BUL/BUL_Stancho_Dimitriev.png"
@@ -661,6 +705,7 @@ characters={
 			coordination_skill=3
 			visible = {
 				date < 1913.4.13
+				NOT = { has_character_flag = character_died }
 			}
 			
 		}
@@ -695,22 +740,23 @@ characters={
 			slot = political_advisor
 			idea_token = BUL_aleksandar_malinov
 			available  = {
-					has_government  = democratic 
-				}
-				allowed  = {
-					original_tag  = BUL 
-				}
-				traits  = {
-					democratic_reformer 
-				}
-				ai_will_do  = {
-					factor  = 1.000
-				}
+				has_government = democratic
+			}
+			allowed  = {
+				original_tag = BUL 
+			}
+			traits  = {
+				democratic_reformer
+			}
+			ai_will_do = {
+				factor = 1.000
+			}
 		}
 		name="BUL_aleksandar_malinov"
 		portraits={
-			army={
+			civilian = {
 				small="GFX_idea_BUL_aleksandar_malinov"
+				large = "gfx/leaders/BUL/BUL_aleksandar_malinov.png"
 			}
 		}
 	}
@@ -850,6 +896,14 @@ characters={
 		portraits={
 			army={
 				small="GFX_idea_BUL_mikhail_madzharov"
+			}
+		}
+	}
+	BUL_andrey_lyapchev = {
+		name = BUL_andrey_tasev_lyapchev
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/BUL/BUL_andrey_lyapchev.png"
 			}
 		}
 	}

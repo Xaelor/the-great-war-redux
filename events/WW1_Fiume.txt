@@ -64,10 +64,10 @@ country_event = {
 					name = "Legionari"
 					division_names_group = ITA_INF_01
 					regiments = {
-						irregular_infantry = { x = 0 y = 0 }
-						irregular_infantry = { x = 1 y = 0 }
-						irregular_infantry = { x = 0 y = 1 }
-						irregular_infantry = { x = 1 y = 1 }
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 1 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 1 y = 1 }
 					}
 					support = {
 						engineer = {
@@ -92,23 +92,26 @@ country_event = {
 					}
 				}
 			}
-		}
-		news_event = {
+			news_event = {
 			id = ww1_fiume.2
 			hours = 3
 		}
+		}
+		
 	}	
 	
 	option = {
 		name = ww1_fiume.1.a
-	}
-	option = {
-		name = ww1_fiume.1.b
-		trigger = {
-			is_ai = no
+		hidden_effect = {
+			ENG = {
+				country_event = {
+					id = ww1_iw_br_italy.26
+					days = 30
+				}
+			}
 		}
-		FIU = { change_tag_from = ROOT }
 	}
+	
 }
 
 # Impresa di Fiume
@@ -168,10 +171,17 @@ country_event = {
 	desc = ww1_fiume.3.desc
 	picture = GFX_report_event_generic_conference
 	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			FIU = {
+				set_cosmetic_tag = FIU_regency #had to be put somewhere
+			}	
+		}	
+	}	
 	option = {
 		# Neutralize Fiume and demand city of Zara
 		name = ww1_fiume.3.a
-		custom_effect_tooltip = event_historical_option_tt
+		custom_effect_tooltip = historical_tt
 		set_country_flag = fiume_historical
 		add_political_power = -25
 		custom_effect_tooltip = ww1_fiume.3.tt
@@ -180,12 +190,22 @@ country_event = {
 				limit = {
 					OR = {
 						state = 103
-						state = 163
+						state = 1006
 					}
 				}
 				208 = {
 					owner = {
 						transfer_state = PREV.PREV
+					}
+				}
+			}
+			if = {
+				limit = {
+					owns_state = 163
+				}
+				208 = {
+					owner = {
+						transfer_state = 163
 					}
 				}
 			}
@@ -244,6 +264,10 @@ country_event = {
 						state = 163
 						state = 513
 						state = 736
+						state = 1197
+						state = 1198
+						state = 1010
+						state = 1006
 					}
 				}
 				208 = {
@@ -301,6 +325,7 @@ country_event = {
 		effect_tooltip = {
 			transfer_state = 103
 			transfer_state = 163
+			transfer_state = 1006
 			create_wargoal = {
 				target = FIU
 				type = annex_everything
@@ -356,6 +381,7 @@ country_event = {
 			transfer_state = 103
 			transfer_state = 163
 			transfer_state = 208
+			transfer_state = 1006
 			create_wargoal = {
 				target = FIU
 				type = annex_everything
@@ -452,6 +478,7 @@ country_event = {
 						state = 103
 						state = 163
 						state = 208
+						state = 1006
 					}
 				}
 				transfer_state_to = FROM
@@ -485,12 +512,18 @@ country_event = {
 					owns_or_subject_of = yes
 					OR = {
 						state = 103
-						state = 163
+						state = 1006
 					}
 				}
 				transfer_state_to = FROM
 			}
 			FROM = {
+				if = {
+					limit = {
+						owns_state = 163
+					}
+					163 = { transfer_state_to = ROOT }
+				}
 				start_border_war = {
 					change_state_after_war = no
 					attacker = {
@@ -516,12 +549,18 @@ country_event = {
 					is_owned_by = FROM
 					OR = {
 						state = 103
-						state = 163
+						state = 1006
 					}
 				}
 				transfer_state_to = ROOT
 			}
 			FROM = {
+				if = {
+					limit = {
+						owns_state = 163
+					}
+					163 = { transfer_state_to = ROOT }
+				}
 				start_border_war = {
 					change_state_after_war = no
 					attacker = {
@@ -596,6 +635,7 @@ country_event = {
 						state = 163
 						state = 208
 						state = 513
+						state = 1006
 					}
 				}
 				transfer_state_to = ROOT
@@ -649,20 +689,22 @@ country_event = {
 						limit = { has_global_flag = league_of_nations }
 						join_the_league_of_nations = yes
 					}
-					ITA_alceste_de_ambris = {
-						set_nationality = ITA
+					ITA = {
+						ITA_alceste_de_ambris = {
+							set_nationality = ITA
+						}
+						ITA_filippo_tommaso_marinetti = {
+							set_nationality = ITA
+						}
+						ITA_maffeo_pantaleoni = {
+							set_nationality = ITA
+						}
+						ITA_gabriele_d_annunzio = {
+							remove_any_country_role_from_character = yes
+							set_nationality = ITA
+						}
+						give_guarantee = FIU
 					}
-					ITA_filippo_tommaso_marinetti = {
-						set_nationality = ITA
-					}
-					ITA_maffeo_pantaleoni = {
-						set_nationality = ITA
-					}
-					ITA_gabriele_d_annunzio = {
-						remove_any_country_role_from_character = yes
-						set_nationality = ITA
-					}
-					ITA = { give_guarantee = FIU }
 				}
 				else = {
 					ITA = {

@@ -1,17 +1,176 @@
 debug_decisions = {
-
-	test_popup = {
+	post_ww1_demobilization_debug = {
 		complete_effect = {
-			set_global_flag = diplomatic_crisis_alert
-			set_global_flag = agadir_crisis_alert
+			post_ww1_demobilization_effect = yes
 		}
 		available = {
 			is_ai = no
+		}
+		visible = {
 			is_debug = yes
 		}
 	}
 
+	post_ww1_demobilization_debug_everyone = {
+		complete_effect = {
+			every_country = {
+				post_ww1_demobilization_effect = yes
+			}
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
+	}
+
+	be_major = {
+		complete_effect = {
+			set_major = yes
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+			is_major = no
+		}
+	}
+
+	instant_famine = {
+		allowed	= {
+			tag = AUS
+		}
+	
+	
+		complete_effect = {
+			set_variable = {
+				var = famine_manpower
+				value = -500
+			}
+			set_variable = {
+				var = famine_manpower_growth
+				value = -0.75
+			}
+			set_variable = {
+				var = famine_stability
+				value = -0.0003
+			}
+			set_variable = {
+				var = famine_war_support
+				value = -0.0015
+			}
+			set_variable = {
+				var = famine_army_org
+				value = -0.25
+			}
+			add_dynamic_modifier = {
+				modifier = AUH_famine_effect
+				days = 360
+			}
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes			
+		}
+	}
+
+	clear_popup = {
+		complete_effect = {
+			delete_crisis = yes
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+			has_global_flag = crisis_in_progress
+		}
+	}
+
+	test_popup = {
+		complete_effect = {
+			delete_crisis = yes
+			set_global_flag = diplomatic_crisis_alert
+			set_global_flag = crisis_in_progress
+			set_global_flag = agadir_crisis_alert
+			start_agadir_crisis = yes
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+			NOT = { has_global_flag = crisis_in_progress }
+		}
+	}
+	test_july_crisis = {
+		complete_effect = {
+			delete_crisis = yes
+			set_global_flag = diplomatic_crisis_alert
+			set_global_flag = crisis_in_progress
+			set_global_flag = july_crisis_alert
+			start_july_crisis = yes
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+			NOT = { has_global_flag = crisis_in_progress }
+		}
+	}
+
+	join_crisis_as_aggressor = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+			has_global_flag = crisis_in_progress
+		}
+		complete_effect = {
+			join_aggressor_in_current_crisis = yes
+		}
+	}
+
+	join_crisis_as_defender = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+			has_global_flag = crisis_in_progress
+		}
+		complete_effect = {
+			join_defender_in_current_crisis = yes
+		}
+	}
+
+	leave_crisis = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+			has_global_flag = crisis_in_progress
+		}
+		complete_effect = {
+			leave_current_crisis = yes
+		}
+	}
+
 	tonnage_decision_for_all = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+			NOT = { has_global_flag = tonnage_visible_for_all }
+		}
 		complete_effect = {
 			set_global_flag = tonnage_visible_for_all
 			every_country = {
@@ -19,18 +178,13 @@ debug_decisions = {
 				setup_authorized_tons = yes
 			}
 		}
-		available = {
-			is_ai = no
-			is_debug = yes
-		}
 	}
 	calculate_max_divisions = {
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		visible = {
-			always = yes
+			is_debug = yes
 		}
 		fire_only_once = no
 		cost = 0
@@ -41,6 +195,8 @@ debug_decisions = {
 	set_post_bw2_borders = {
 		available = {
 			is_ai = no
+		}
+		visible = {
 			is_debug = yes
 		}
 		fire_only_once = yes
@@ -55,6 +211,10 @@ debug_decisions = {
 						state = 203
 						state = 759
 						state = 44
+						state = 1140
+						state = 1141
+						state = 1214
+						state = 1215
 					}
 				}
 				transfer_state_to = SER
@@ -66,9 +226,12 @@ debug_decisions = {
 						state = 826
 						state = 731
 						state = 803
+						state = 1225
 						state = 345
 						state = 184
 						state = 790
+						state = 974
+						state = 975
 					}
 				}
 				transfer_state_to = GRE
@@ -90,7 +253,7 @@ debug_decisions = {
 						state = 451
 						state = 788
 						state = 225
-						state = 757	
+						state = 757
 					}
 				}
 				transfer_state_to = BUL
@@ -103,13 +266,13 @@ debug_decisions = {
 	make_germany_surrender_now = {
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		visible = {
-			has_global_flag = kis_war
+			is_debug = yes
+			has_global_flag = great_war
 			NOT = {
 				has_global_flag = GER_capitulation
-				has_global_flag = FRA_capitulation
+				has_global_flag = ENT_capitulation
 			}
 		}
 		fire_only_once = no
@@ -119,15 +282,15 @@ debug_decisions = {
 			hidden_effect = {
 				every_country = {
 					limit = {
-						is_in_faction_with = FRA
+						is_ally_with = ENT
 						has_war_with = GER
 					}
 					set_country_flag = member_of_entente
 				}
 				every_other_country = {
 					limit = {
-						is_in_faction_with = GER
-						has_war_with = FRA
+						is_ally_with = GER
+						has_war_with = ENT
 					}
 					set_country_flag = member_of_central_powers
 				}
@@ -135,14 +298,14 @@ debug_decisions = {
 					limit = {
 						is_subject = no
 						NOT = {
-							is_in_faction_with = FRA
+							tag = ENT
+							is_ally_with = ENT
 							has_country_flag = member_of_entente
 							has_country_flag = member_of_central_powers
 							tag = SOV
-							is_in_faction_with = SOV
-							is_subject_of = SOV
-							any_country = {
-								original_tag = RUS
+							is_ally_with = SOV
+							any_country_with_original_tag = {
+								original_tag_to_check = RUS
 								has_war_with = SOV
 							}
 						}
@@ -159,7 +322,7 @@ debug_decisions = {
 					name = GER_capitulation
 				}
 			}
-			set_global_flag = france_accepts_GER_capitulation
+			set_global_flag = ENT_accepts_GER_capitulation
 			news_event = {
 				id = ww1_centre_capitulation.2
 			}
@@ -168,43 +331,41 @@ debug_decisions = {
 	make_france_surrender_now = {
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		visible = {
-			has_global_flag = kis_war
+			is_debug = yes
+			has_global_flag = great_war
 			NOT = {
 				has_global_flag = GER_capitulation
-				has_global_flag = FRA_capitulation
+				has_global_flag = ENT_capitulation
 				has_global_flag = FRA_capitulation_alone
 			}
 		}
 		fire_only_once = no
 		cost = 0
 		complete_effect = {
-			set_global_flag = FRA_capitulation
+			set_global_flag = ENT_capitulation
 			hidden_effect = {
 				every_country = {
 					limit = {
 						OR = {
-							has_country_flag = entente_leader
-							any_allied_country = {
-								OR = {
-									has_country_flag = entente_leader
-									tag = FRA
-								}
-							}
+							tag = ENT
+							is_ally_with = ENT
+							has_country_flag = FRA_surrender_alone
+							has_country_flag = RUS_surrender_alone
 						}
 						OR = {
 							has_war_with = GER
 							has_country_flag = FRA_surrender_alone
+							has_country_flag = RUS_surrender_alone
 						}
 					}
 					set_country_flag = member_of_entente
 				}
 				every_other_country = {
 					limit = {
-						is_in_faction_with = GER
-						has_war_with = FRA
+						is_ally_with = GER
+						has_war_with = ENT
 					}
 					set_country_flag = member_of_central_powers
 				}
@@ -212,36 +373,27 @@ debug_decisions = {
 					limit = {
 						is_subject = no
 						NOT = {
-							is_in_faction_with = GER
 							has_country_flag = member_of_entente
-							has_country_flag = member_of_central_powers
+							has_country_flag = refused_to_surrender
 							tag = SOV
 							AND = {
 								is_russian_tag = yes
 								has_war_with = SOV
 							}
-							AND = {
-								tag = SOV
-								any_country = {
-									is_russian_tag = yes
-									has_war_with = SOV
-								}
-							}
-							has_war_with = FRA
-							OR = {
-								is_faction_leader = yes
-								is_in_faction = no
-							}
+						}
+						OR = {
+							is_faction_leader = yes
+							is_in_faction = no
 						}
 					}
 					country_event = ww1_entente_capitulation.14
 				}
 				add_named_threat = {
 					threat = -10
-					name = FRA_capitulation
+					name = ENT_capitulation
 				}
 			}
-			set_global_flag = germany_accepts_FRA_capitulation
+			set_global_flag = GER_accepts_ENT_capitulation
 			news_event = {
 				id = ww1_entente_capitulation.2
 			}
@@ -250,14 +402,13 @@ debug_decisions = {
 	make_france_surrender_alone_now = {
 		available = {
 			is_ai = no
-			is_debug = yes
 			FRA = {
 				has_civil_war = no
-				has_global_flag = kis_war
+				has_global_flag = great_war
 				# surrender_progress > 0.10
 				NOT = {
 					has_global_flag = GER_capitulation
-					has_global_flag = FRA_capitulation
+					has_global_flag = ENT_capitulation
 				}
 			}
 			RUS = {
@@ -268,10 +419,11 @@ debug_decisions = {
 			}
 		}
 		visible = {
-			has_global_flag = kis_war
+			is_debug = yes
+			has_global_flag = great_war
 			NOT = {
 				has_global_flag = GER_capitulation
-				has_global_flag = FRA_capitulation
+				has_global_flag = ENT_capitulation
 				has_global_flag = FRA_capitulation_alone
 			}
 		}
@@ -279,56 +431,93 @@ debug_decisions = {
 		cost = 0
 		complete_effect = {
 			FRA = {
-				activate_decision = FRA_armistice
+				activate_targeted_decision = {
+					target = GER
+					decision = FRA_armistice
+				}
 			}
 		}
 	}
 	make_entente_honourable_peace_now = {
 		available = {
 			is_ai = no
-			is_debug = yes
-			any_country = {
+			FROM = {
 				has_war_with = GER
-				has_country_flag = entente_leader
-				has_global_flag = kis_war
+				has_global_flag = great_war
 				NOT = {
 					has_global_flag = GER_capitulation
-					has_global_flag = FRA_capitulation
+					has_global_flag = ENT_capitulation
 					# russian revolution be like
 				}
 				has_threat_of_revolution = no
 			}
-			RUS = {
-				is_in_faction_with = FRA
-				surrender_progress < 0.25
-				has_war_with = GER
-				has_civil_war = no
-			}
 		}
 		visible = {
-			has_global_flag = kis_war
+			has_global_flag = great_war
 			has_global_flag = FRA_capitulation_alone
 			NOT = {
 				has_global_flag = GER_capitulation
 			}
 		}
+		target_trigger = {
+			FROM = {
+				has_country_flag = entente_leader
+				is_faction_leader = yes
+				NOT = {
+					tag = RUS
+					tag = FRA
+				}
+			}
+		}
+		target_root_trigger = {
+			is_debug = yes
+		}
 		fire_only_once = no
 		cost = 0
 		complete_effect = {
-			random_country = {
-				limit = {
-					has_country_flag = entente_leader
+			FROM = {
+				activate_targeted_decision = {
+					target = GER
+					decision = ENT_armistice
 				}
-				activate_decision = FRA_armistice_ent
+			}
+		}
+	}
+	russian_revolution_now = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+			country_exists = RUS
+			RUS = {
+				has_country_leader = {
+					character = RUS_nikolai_ii
+				}
+				has_threat_of_revolution = yes
+				has_war_with = GER
+				SOV = { exists = no }
+				NOT = { has_completed_focus = RUS_force_tsar_abdtication }
+				NOT = { has_completed_focus = RUS_resist_the_duma }
+				NOT = { has_completed_focus = RUS_provisional_committee }
+				NOT = { has_global_flag = russian_revolution }
+			}
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			RUS = {
+				set_global_flag = russian_revolution
+				country_event = { id = rusrevolt.2 }
 			}
 		}
 	}
 	ww1_conference_now = {
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		visible = {
+			is_debug = yes
 			OR = {
 				has_active_mission = frankfurt_conference
 				has_active_mission = versallies_conference
@@ -374,9 +563,9 @@ debug_decisions = {
 	allow_elections = {
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		visible = {
+			is_debug = yes
 			has_elections = no
 		}
 		fire_only_once = no
@@ -385,12 +574,25 @@ debug_decisions = {
 			allow_elections = yes
 		}
 	}
+	hold_election = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+			has_elections = yes
+		}
+		cost = 0
+		complete_effect = {
+			hold_election = ROOT
+		}
+	}
 	new_term_elections = {
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		visible = {
+			is_debug = yes
 			has_elections = yes
 		}
 		fire_only_once = no
@@ -407,10 +609,12 @@ debug_decisions = {
 		}
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		visible = {
 			is_subject = yes
+		}
+		target_root_trigger = {
+			is_debug = yes
 		}
 		fire_only_once = no
 		cost = 0
@@ -430,10 +634,12 @@ debug_decisions = {
 		}
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		visible = {
 			is_subject = yes
+		}
+		target_root_trigger = {
+			is_debug = yes
 		}
 		fire_only_once = no
 		cost = 0
@@ -453,10 +659,12 @@ debug_decisions = {
 		}
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		visible = {
 			is_subject = yes
+		}
+		target_root_trigger = {
+			is_debug = yes
 		}
 		fire_only_once = no
 		cost = 0
@@ -468,12 +676,71 @@ debug_decisions = {
 			}
 		}
 	}
+	spawn_120_ships = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			for_loop_effect = {
+				end = 120
+				create_ship = {
+					type = ship_hull_heavy_1
+					equipment_variant = "Dreadnought Class"
+					creator = ENG
+				}
+			}
+		}
+	}
+	spawn_10_ships = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			for_loop_effect = {
+				end = 10
+				create_ship = {
+					type = ship_hull_heavy_1
+					equipment_variant = "Dreadnought Class"
+					creator = ENG
+				}
+			}
+		}
+	}
+	destroy_10_ships = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+			has_navy_size = {
+				size > 0
+			}
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			destroy_ships = {
+				type = ship_hull_heavy_1
+				count = 10
+			}
+		}
+	}
 	destroy_all_ships = {
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		visible = {
+			is_debug = yes
 			has_navy_size = {
 				size > 0
 			}
@@ -487,9 +754,9 @@ debug_decisions = {
 	remove_puppet_and_leave_faction = {
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		visible = {
+			is_debug = yes
 			OR = {
 				is_in_faction = yes
 				is_subject = yes
@@ -505,10 +772,10 @@ debug_decisions = {
 		icon = generic_research
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		visible = {
-			always = yes
+			is_debug = yes
+			NOT = { has_idea = add_production_efficiency }
 		}
 		fire_only_once = no
 		cost = 0
@@ -520,10 +787,13 @@ debug_decisions = {
 		icon = generic_research
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		visible = {
-			always = yes
+			is_debug = yes
+			OR = {
+				has_idea = add_production_efficiency
+				has_idea = decrease_production_efficiency
+			}
 		}
 		fire_only_once = no
 		cost = 0
@@ -546,10 +816,10 @@ debug_decisions = {
 		icon = generic_research
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		visible = {
-			always = yes
+			is_debug = yes
+			NOT = { has_idea = decrease_production_efficiency }
 		}
 		fire_only_once = no
 		cost = 0
@@ -563,10 +833,10 @@ debug_decisions = {
 	history_entry_debug = {
 		icon = generic_research
 		available = {
-			always = yes
+			is_ai = no
 		}
 		visible = {
-			always = yes
+			is_debug = yes
 		}
 		fire_only_once = no
 		cost = 0
@@ -586,10 +856,10 @@ debug_decisions = {
 	create_operative_debug = {
 		icon = generic_research
 		available = {
-			always = yes
+			is_ai = no
 		}
 		visible = {
-			always = yes
+			is_debug = yes
 		}
 		fire_only_once = no
 		cost = 0
@@ -601,15 +871,14 @@ debug_decisions = {
 		ai_will_do = {
 			base = 0
 		}
-		power_balance = _test_balance
 	}
 	create_recruitable_operative_not_to_spy_master_debug = {
 		icon = generic_research
 		available = {
-			always = yes
+			is_ai = no
 		}
 		visible = {
-			always = yes
+			is_debug = yes
 		}
 		fire_only_once = no
 		cost = 0
@@ -626,10 +895,10 @@ debug_decisions = {
 	create_recruitable_operative_debug = {
 		icon = generic_research
 		available = {
-			always = yes
+			is_ai = no
 		}
 		visible = {
-			always = yes
+			is_debug = yes
 		}
 		fire_only_once = no
 		cost = 0
@@ -644,13 +913,14 @@ debug_decisions = {
 	}
 	FRA_capture_operative_debug = {
 		available = {
+			is_ai = no
 			NOT = {
 				TAG = FRA
 			}
-			num_of_operatives > 0
 		}
 		visible = {
-			always = yes
+			is_debug = yes
+			num_of_operatives > 0
 		}
 		fire_only_once = no
 		cost = 0
@@ -670,13 +940,14 @@ debug_decisions = {
 	}
 	FRA_turn_operative_debug = {
 		available = {
+			is_ai = no
 			NOT = {
 				TAG = FRA
 			}
-			num_of_operatives > 0
 		}
 		visible = {
-			always = yes
+			is_debug = yes
+			num_of_operatives > 0
 		}
 		fire_only_once = no
 		cost = 0
@@ -698,10 +969,11 @@ debug_decisions = {
 	}
 	harm_operative_debug = {
 		available = {
-			num_of_operatives > 0
+			is_ai = no
 		}
 		visible = {
-			always = yes
+			is_debug = yes
+			num_of_operatives > 0
 		}
 		fire_only_once = no
 		cost = 0
@@ -720,10 +992,11 @@ debug_decisions = {
 	}
 	add_random_nationality = {
 		available = {
-			num_of_operatives > 0
+			is_ai = no
 		}
 		visible = {
-			always = yes
+			is_debug = yes
+			num_of_operatives > 0
 		}
 		fire_only_once = no
 		cost = 0
@@ -748,10 +1021,10 @@ debug_decisions = {
 	slot_machine = {
 		# we pegi 18 now
 		available = {
-			always = yes
+			is_ai = no
 		}
 		visible = {
-			always = yes
+			is_debug = yes
 		}
 		days_remove = 777
 		modifier = {
@@ -759,36 +1032,72 @@ debug_decisions = {
 		}
 	}
 	decryption_tech_1 = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
 		days_remove = 100
 		modifier = {
 			decryption = 1
 		}
 	}
 	decryption_tech_2 = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
 		days_remove = 100
 		modifier = {
 			decryption = 1
 		}
 	}
 	decryption_tech_3 = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
 		days_remove = 100
 		modifier = {
 			decryption = 1
 		}
 	}
 	encryption_tech_1 = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
 		days_remove = 100
 		modifier = {
 			encryption = 1
 		}
 	}
 	encryption_tech_2 = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
 		days_remove = 100
 		modifier = {
 			encryption = 1
 		}
 	}
 	encryption_tech_3 = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
 		days_remove = 100
 		modifier = {
 			encryption = 1
@@ -818,7 +1127,6 @@ debug_decisions = {
 	capitulate_em = {
 		available = {
 			is_ai = no
-			is_debug = yes
 		}
 		target_trigger = {
 			FROM = {
@@ -828,6 +1136,9 @@ debug_decisions = {
 				}
 				has_capitulated = no
 			}
+		}
+		target_root_trigger = {
+			is_debug = yes
 		}
 		visible = {
 		}
@@ -842,13 +1153,38 @@ debug_decisions = {
 	reload_focus_tree = {
 		available = {
 			is_ai = no
+		}
+		visible = {
 			is_debug = yes
 		}
-		visible = {}
 		fire_only_once = no
 		cost = 0
 		complete_effect = {
 			mark_focus_tree_layout_dirty = yes
+		}
+	}
+
+	relinguish_entente_leadership_debug = {
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+			is_faction_leader = yes
+			has_country_flag = entente_leader
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			if = {
+				limit = { 
+					has_war_with = GER
+				}
+				relinguish_entente_leadership = yes
+				else = {
+					relinguish_entente_leadership_peace = yes
+				}
+			}
 		}
 	}
 }
