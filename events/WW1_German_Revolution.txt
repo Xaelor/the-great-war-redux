@@ -544,8 +544,10 @@ add_namespace = ww1_german_revolution
 # 				is_ai = no
 # 			}
 # 			hidden_effect = {
+#				clear_superevents = yes
 # 				play_song = "SE_ger_civil_war"
 # 				set_country_flag = se_ger_civil_war
+#				update_superevents = yes
 # 			}
 # 		}	
 # 		ai_chance = { factor = 100 }
@@ -741,22 +743,28 @@ country_event = {
 				id = ww1_german_revolution.9
 				days = 2
 			}
+			GER_1918_revolution_effect = yes
+			if = {
+				limit = {
+					has_war = yes
+					is_great_war_ongoing = yes
+					NOT = {
+						has_global_flag = ENT_capitulation
+						has_global_flag = GER_capitulation
+					}
+				}
+				activate_targeted_decision = {
+					target = ENT
+					decision = GER_armistice
+				}
+			}
+			add_stability = -0.1
 		}
 	}
 	option = {
 		name = ww1_german_revolution.2.a
-		add_stability = -0.1
-		GER_1918_revolution_effect = yes
-		if = {
-			limit = {
-				has_war = yes
-				has_global_flag = great_war
-				NOT = {
-					has_global_flag = great_war_ends
-				}
-				has_decision = GER_armistice
-			}
-			activate_decision = GER_armistice
+		effect_tooltip = {
+			add_stability = -0.1
 		}
 	}
 }
@@ -1186,7 +1194,7 @@ country_event = {
 	# 	name = ww1_german_revolution.14.b
 	# 	trigger = {
 	# 		NOT = {
-	# 			has_global_flag = prussian_blue
+	# 			#has_global_flag = prussian_blue
 	# 		}	
 	# 	}
 	# 	ai_chance = {
@@ -1222,10 +1230,10 @@ country_event = {
 		has_civil_war = no
 		has_government = democratic
 		NOT = {
-			has_global_flag = treaty_of_berlin
+			#has_global_flag = treaty_of_berlin
 		}
 		has_global_flag = support_spartacists
-		has_global_flag = versallies_treaty
+		has_global_flag = versailles_treaty
 		has_war = no
 	}
 	mean_time_to_happen = {
@@ -1352,7 +1360,7 @@ country_event = {
 					has_government = communism
 				}
 				set_country_flag = great_war_loser
-				set_cosmetic_tag = BAY_germany
+				set_cosmetic_tag = GER_socialism
 				remove_ideas = idea_army_restrictions
 				set_stability = 0.4
 				GER_ernst_thalmann = {
@@ -1452,9 +1460,9 @@ country_event = {
 			is_ai = no
 		}
 		set_global_flag = red_germany
-		random_other_country = {
+		random_country_with_original_tag = {
+			original_tag_to_check = GER
 			limit = {
-				original_tag = GER
 				has_government = communism
 			}
 			change_tag_from = ROOT
@@ -1572,7 +1580,7 @@ country_event = {
 				has_government = communism
 			}
 			# has_global_flag = spartakist_in_bavaria
-			has_global_flag = prussian_blue
+			#has_global_flag = prussian_blue
 			AUS = {
 				has_country_flag = great_war_winner
 			}
@@ -1639,7 +1647,7 @@ country_event = {
 	picture = GFX_report_event_spartacist_captured
 	trigger = {
 		tag = GER
-		has_global_flag = versallies_treaty
+		has_global_flag = versailles_treaty
 		has_war = no
 		is_subject = no
 		BAY = {
@@ -1658,7 +1666,7 @@ country_event = {
 			}
 		}
 		# NOT = {
-		# 	has_global_flag = prussian_blue
+		# 	#has_global_flag = prussian_blue
 		# 	has_global_flag = spartakist_in_bavaria
 		# }
 	}
