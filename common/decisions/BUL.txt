@@ -1,51 +1,51 @@
 peace_deals = {
-	BUL_BW2_outcome_timer = {
-		icon = GFX_decision_eng_trade_unions_support
-		allowed = {
-			original_tag = BUL
-		}
-		activation = {
-			has_start_date < 1914.1.1
-			has_global_flag = kis_secondbalkan_war
-			NOT = {
-				is_in_faction_with = GER
-				has_war_together_with = GER
-				is_in_faction_with = FRA
-				has_war_together_with = FRA
-				has_global_flag = kis_secondbalkanwar_victory 
-				has_global_flag = kis_secondbalkanwar_lose
-			}
-			has_war_with = SER
-			is_subject = no
-		}
-		available = {
-			NOT = {
-				has_war_with = SER
-			}
-		}
-		visible = {
-			has_start_date < 1914.1.1
-			has_global_flag = kis_secondbalkan_war
-			NOT = {
-				is_in_faction_with = GER
-				has_war_together_with = GER
-				is_in_faction_with = FRA
-				has_war_together_with = FRA
-				has_global_flag = kis_secondbalkanwar_victory 
-				has_global_flag = kis_secondbalkanwar_lose
-			}
-			has_war_with = SER
-			is_subject = no
-		}
-		fire_only_once = yes
-		days_mission_timeout = 260
-		is_good = no
-		timeout_effect = {
-			country_event = {
-				id = ww1_bulgaria.63
-			}
-		}
-	}
+	#BUL_BW2_outcome_timer = {
+	#	icon = GFX_decision_eng_trade_unions_support
+	#	allowed = {
+	#		original_tag = BUL
+	#	}
+	#	activation = {
+	#		has_start_date < 1914.1.1
+	#		has_global_flag = kis_secondbalkan_war
+	#		NOT = {
+	#			is_in_faction_with = GER
+	#			has_war_together_with = GER
+	#			is_in_faction_with = FRA
+	#			has_war_together_with = FRA
+	#			has_global_flag = kis_secondbalkanwar_victory 
+	#			has_global_flag = kis_secondbalkanwar_lose
+	#		}
+	#		has_war_with = SER
+	#		is_subject = no
+	#	}
+	#	available = {
+	#		NOT = {
+	#			has_war_with = SER
+	#		}
+	#	}
+	#	visible = {
+	#		has_start_date < 1914.1.1
+	#		has_global_flag = kis_secondbalkan_war
+	#		NOT = {
+	#			is_in_faction_with = GER
+	#			has_war_together_with = GER
+	#			is_in_faction_with = FRA
+	#			has_war_together_with = FRA
+	#			has_global_flag = kis_secondbalkanwar_victory 
+	#			has_global_flag = kis_secondbalkanwar_lose
+	#		}
+	#		has_war_with = SER
+	#		is_subject = no
+	#	}
+	#	fire_only_once = yes
+	#	days_mission_timeout = 260
+	#	is_good = no
+	#	timeout_effect = {
+	#		country_event = {
+	#			id = ww1_bulgaria.63
+	#		}
+	#	}
+	#}
 	BUL_sue_for_peace_SER = {
 		icon = GFX_decision_eng_trade_unions_support
 		allowed = {
@@ -58,100 +58,30 @@ peace_deals = {
 		# 	has_war_with = FROM
 		# }
 		available = {
-			has_war_with = FROM
-			OR = {
-				is_faction_leader = yes
-				is_in_faction = no
-			}
-			surrender_progress > 0.4
-			NOT = { 
-				is_in_faction_with = GER 
-				has_war_together_with = GER
-				is_in_faction_with = FRA 
-				has_war_together_with = FRA
-			}
+			surrender_progress > 0.5
 		}
 		visible = {
-			has_global_flag = kis_secondbalkan_war
-			NOT = {
-				is_in_faction_with = GER
-				has_war_together_with = GER
-				is_in_faction_with = FRA
-				has_war_together_with = FRA
-				has_global_flag = kis_secondbalkanwar_victory 
-				has_global_flag = kis_secondbalkanwar_lose
-			}
-			has_war_with = FROM
-			is_subject = no
+			is_BW2_ongoing = yes
 		}
 		fire_only_once = yes
 		ai_will_do = {
-			factor = 400
-		}
-		complete_effect = {
-			FROM = { country_event = {id = ww1_secondbalkan.5 } }
-			every_country = {
-				limit = {
-					has_war_with = ROOT
-					NOT = {
-						tag = TUR
-					}
+			base = 0
+			modifier = {
+				add = 100
+				war_length_with = {
+					tag = SER
+					months > 1
 				}
-				white_peace = ROOT
-				set_country_flag = kis_secondbalkan_war_winner
 			}
-		}
-	}
-	BUL_sue_for_peace_ROM = { #when they did not join the balkan leauge
-		icon = GFX_decision_eng_trade_unions_support
-		allowed = {
-			original_tag = BUL
-		}
-		targets = {
-			ROM
-		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
-		visible = {
-			has_start_date < 1914.1.1
-			has_global_flag = kis_secondbalkan_war
-			NOT = {
-				has_war_with = SER
-				is_in_faction_with = GER
-				has_war_together_with = GER
-				is_in_faction_with = FRA
-				has_war_together_with = FRA
-			}
-			has_war_with = FROM
-			FROM = { is_in_faction = no }
-			is_subject = no
-			owns_state = 77
-		}
-		available = {
-			has_war_with = FROM
-			OR = {
-				is_faction_leader = yes
-				is_in_faction = no
-			}
-			surrender_progress > 0.4
-			
-			NOT = {
-				is_in_faction_with = GER 
-				has_war_together_with = GER
-				is_in_faction_with = FRA 
-				has_war_together_with = FRA
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 400
 		}
 		complete_effect = {
-			FROM = {
-				white_peace = ROOT
-				transfer_state = 77
-				set_country_flag = kis_secondbalkan_war_winner
+			effect_tooltip = {				
+				SER = {
+					country_event = ww1_secondbalkan.5
+				}
+			}
+			hidden_effect = {			
+				BW2_balkans_victory_effect = yes
 			}
 		}
 	}
@@ -168,105 +98,81 @@ peace_deals = {
 		# 	has_war_with = FROM
 		# }
 		visible = {
-			has_start_date < 1914.1.1
-			OR = {
-				has_global_flag = kis_firstbalkanwar_victory
-				has_global_flag = lone_liberator_victorious
-			}
 			has_war_with = FROM
+			FROM = {
+				has_active_mission = BW2_turkey_intervention
+			}
 		}
 		available = {
-			NOT = {
-				has_war_with = SER
-				is_in_faction_with = GER 
-				has_war_together_with = GER
-				is_in_faction_with = FRA
-				has_war_together_with = FRA
-			}
-			any_country = {
-				NOT = {
-					tag = ROOT
-					is_in_faction_with = ROOT
-				}
-				OR = {
-					has_country_flag = kis_secondbalkan_war_winner
-					has_country_flag = defeated_in_bw2
-				}
-			}
+			surrender_progress > 0.6
 		}
 		ai_will_do = {
-			factor = 400
+			base = 0
 		}
 		fire_only_once = yes
-		days_remove = 30
 		complete_effect = {
 			effect_tooltip = {
-				white_peace = FROM
-			}
-			hidden_effect = {
-				FROM = {
+				TUR = {
 					country_event = ww1_secondbalkan.15
 				}
 			}
-		}
-		remove_effect = {
-			FROM = {
-				country_event = ww1_secondbalkan.10
+			hidden_effect = {				
+				BW2_turkish_victory_effect = yes
 			}
 		}
 	}
-	BUL_sue_for_peace_TUR = {
-		icon = GFX_decision_eng_trade_unions_support
-		name = sue_for_peace_TUR
-		allowed = {
-			original_tag = BUL
-		}
-		targets = {
-			TUR
-		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
-		visible = {
-			has_start_date < 1914.1.1
-			NOT = {
-				has_global_flag = kis_firstbalkanwar_victory
-				has_global_flag = lone_liberator_victorious
-			}
-			has_global_flag = balkan_league_fail
-			has_war_with = FROM
-		}
-		available = {
-			NOT = {
-				has_war_with = SER
-				is_in_faction_with = GER 
-				has_war_together_with = GER
-				is_in_faction_with = FRA
-				has_war_together_with = FRA
-			}
-		}
-		ai_will_do = {
-			factor = 400
-			modifier = {
-				factor = 0
-				surrender_progress < 0.4
-			}
-		}
-		fire_only_once = yes
-		complete_effect = {
-			effect_tooltip = {
-				white_peace = FROM
-			}
-			set_country_flag = kis_firstbalkanwar_lose
-			add_ideas = BUL_idea_first_national_catastrophe
-			complete_national_focus = BUL_our_darkest_hours
-			hidden_effect = {
-				FROM = {
-					country_event = ww1_bulgaria.74
-				}
-			}
-		}
-	}
+	#BUL_sue_for_peace_TUR = {
+	#	icon = GFX_decision_eng_trade_unions_support
+	#	name = sue_for_peace_TUR
+	#	allowed = {
+	#		original_tag = BUL
+	#	}
+	#	targets = {
+	#		TUR
+	#	}
+	#	# target_root_trigger = {
+	#	# 	has_war_with = FROM
+	#	# }
+	#	visible = {
+	#		has_start_date < 1914.1.1
+	#		NOT = {
+	#			has_global_flag = kis_firstbalkanwar_victory
+	#			has_global_flag = lone_liberator_victorious
+	#		}
+	#		has_global_flag = balkan_league_fail
+	#		has_war_with = FROM
+	#	}
+	#	available = {
+	#		NOT = {
+	#			has_war_with = SER
+	#			is_in_faction_with = GER 
+	#			has_war_together_with = GER
+	#			is_in_faction_with = FRA
+	#			has_war_together_with = FRA
+	#		}
+	#	}
+	#	ai_will_do = {
+	#		factor = 400
+	#		modifier = {
+	#			factor = 0
+	#			surrender_progress < 0.4
+	#		}
+	#	}
+	#	fire_only_once = yes
+	#	complete_effect = {
+	#		effect_tooltip = {
+	#			white_peace = FROM
+	#		}
+	#		set_country_flag = kis_firstbalkanwar_lose
+	#		add_ideas = BUL_idea_first_national_catastrophe
+	#		complete_national_focus = BUL_our_darkest_hours
+	#		hidden_effect = {
+	#			FROM = {
+	#				country_event = ww1_bulgaria.74
+	#			}
+	#		}
+	#	}
+	#}
 	BUL_salonika_armistice_timer = {
 		icon = GFX_decision_eng_blackshirt_march
 		allowed = {
@@ -444,7 +350,6 @@ BUL_form_byzantine_empire_category = {
 			}
 		}
 		visible = {
-			original_tag = BUL
 			NOT = { has_global_flag = form_byzantine_empire_flag }
 			has_completed_focus = BUL_new_byzantium
 		}
@@ -585,6 +490,7 @@ BUL_form_byzantine_empire_category = {
 			controls_state = 760
 			controls_state = 1214
 			controls_state = 1240
+			controls_state = 1284
 			controls_state = 1215
 			controls_state = 1206
 			controls_state = 1205
@@ -624,13 +530,13 @@ BUL_form_byzantine_empire_category = {
 				state = 760
 				state = 1214
 				state = 1240
+				state = 1284
 				state = 1215
 				state = 1206
 				state = 1205
 			}
 		}
 		visible = {
-			original_tag = BUL
 			has_global_flag = form_byzantine_empire_flag
 			NOT = { has_global_flag = BUL_reintegrate_illiyria_flag }
 			has_completed_focus = BUL_new_byzantium
@@ -672,6 +578,7 @@ BUL_form_byzantine_empire_category = {
 			add_state_core = 102
 			add_state_core = 1214
 			add_state_core = 1240
+			add_state_core = 1284
 			add_state_core = 1215
 			add_state_core = 1206
 			add_state_core = 1205
@@ -776,7 +683,6 @@ BUL_form_byzantine_empire_category = {
 			}
 		}
 		visible = {
-			original_tag = BUL
 			has_global_flag = form_byzantine_empire_flag
 			NOT = { has_global_flag = BUL_incorporate_anatolia_flag }
 			has_completed_focus = BUL_new_byzantium
@@ -873,7 +779,6 @@ BUL_form_byzantine_empire_category = {
 			}
 		}
 		visible = {
-			original_tag = BUL
 			has_global_flag = form_byzantine_empire_flag
 			NOT = { has_global_flag = BUL_crusade_against_levant_flag }
 			has_completed_focus = BUL_new_byzantium
@@ -934,7 +839,6 @@ BUL_form_byzantine_empire_category = {
 			}
 		}
 		visible = {
-			original_tag = BUL
 			has_global_flag = form_byzantine_empire_flag
 			NOT = { has_global_flag = BUL_return_to_africa_flag }
 			has_completed_focus = BUL_new_byzantium

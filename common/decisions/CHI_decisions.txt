@@ -55,7 +55,6 @@ CHI_warlord_era = {
 			}
 		}
 		visible = {
-			original_tag = CHI
 			has_global_flag = zhang_xun_in_beijing
 			NOT = {
 				has_global_flag = manchu_restoration
@@ -557,8 +556,22 @@ CHI_warlord_era = {
 		targets = {
 			ZHC
 		}
+		target_trigger = {
+			NOT = {
+				has_war_with = FROM
+			}			
+		}
 		target_root_trigger = {
 			has_global_flag = warlord_era
+			is_subject = no
+			NOT = {
+				has_global_flag = CHI_FNG_invade_ZHC
+				has_global_flag = second_zhili_fengtian_war
+				has_global_flag = second_zhili_fengtian_war_end
+			}
+			has_global_flag = zhili_anhui_war
+			has_global_flag = first_zhili_fengtian_war
+			has_global_flag = first_zhili_fengtian_war_end
 		}
 		cancel_trigger = {
 			OR = {
@@ -2518,18 +2531,13 @@ CHI_chinese_warlords = {
 		targets = {
 			KUM
 		}
-		# target_root_trigger = {
-		# 	is_neighbor_of = FROM
-		# }
-		visible = {
-			KUM = {
-				exists = yes
+		target_trigger = {
+			FROM = {
 				is_neighbor_of = ROOT
 			}
 		}
 		available = {
 			FROM = {
-				exists = yes
 				NOT = {
 					has_country_leader = {
 						character = KUM_maqsud_shah
@@ -2585,24 +2593,24 @@ CHI_chinese_warlords = {
 		targets = {
 			SOV
 		}
-		target_root_trigger = {
-			has_global_flag = xinjiang_collapsed
-		}
-		visible = {
-			has_country_leader = {
-				character = SIK_sheng_shicai
-				ruling_only = yes
-			}
-			is_subject = no
-			has_global_flag = xinjiang_collapsed
-			has_war_with = KHM
+		target_trigger = {
 			FROM = {
 				is_neighbor_of_subject = yes
-				has_russian_civil_war = no
+				has_russian_civil_war = no				
 			}
 			any_enemy_country = {
 				NOT = { is_in_faction_with = FROM }
 			}
+		}
+		target_root_trigger = {
+			has_global_flag = xinjiang_collapsed
+			has_country_leader = {
+				character = SIK_sheng_shicai
+				ruling_only = yes
+			}
+		}
+		visible = {
+			has_war_with = KHM
 		}
 		available = {
 			OR = {
@@ -3102,10 +3110,6 @@ CHI_chinese_warlords = {
 		allowed = {
 			original_tag = GXC
 		}
-		visible = {
-			has_war_with = FROM
-			is_subject = no
-		}
 		available = {
 			
 		}
@@ -3132,9 +3136,12 @@ CHI_chinese_warlords = {
 		targets = {
 			KMT
 		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
+		target_trigger = {
+			has_war_with = FROM
+		}
+		target_root_trigger = {
+			is_subject = no
+		}
 		fire_only_once = yes
 		ai_will_do = {
 			base = 0
@@ -3174,11 +3181,6 @@ CHI_chinese_warlords = {
 		icon = GFX_decision_eng_trade_unions_support
 		allowed = {
 			original_tag = GDC
-		}
-		visible = {
-			has_country_flag = CHI_zhigongdang_flag
-			has_war_with = FROM
-			is_subject = no
 		}
 		available = {
 			surrender_progress > 0.10
@@ -3232,9 +3234,13 @@ CHI_chinese_warlords = {
 		targets = {
 			KMT
 		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
+		target_trigger = {
+			has_war_with = FROM
+		}
+		target_root_trigger = {
+			has_country_flag = CHI_zhigongdang_flag
+			is_subject = no
+		}
 		fire_only_once = yes
 		ai_will_do = {
 			base = 0
@@ -3408,16 +3414,6 @@ CHI_chinese_warlords = {
 		allowed = {
 			tag = KHM
 		}
-		visible = {
-			has_war_with = SIK
-			SIK = {
-				is_subject = yes
-				OVERLORD = {
-					is_china_or_warlord_no_tt = no
-				}
-			}
-			is_subject = no
-		}
 		available = {
 			surrender_progress > 0.05
 		}
@@ -3456,9 +3452,18 @@ CHI_chinese_warlords = {
 		targets = {
 			SIK
 		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
+		target_trigger = {
+			has_war_with = FROM
+			FROM = {
+				is_subject = yes
+				OVERLORD = {
+					is_china_or_warlord_no_tt = no
+				}
+			}
+		}
+		target_root_trigger = {
+			is_subject = no
+		}
 		fire_only_once = yes
 		ai_will_do = {
 			base = 1000
@@ -5648,6 +5653,7 @@ economy_decisions = {
 		}
 		target_trigger = {
 			FROM = {
+				is_neighbor_of_subject = yes
 				NOT = {
 					gives_military_access_to = ROOT
 					is_ally_with = ROOT
@@ -5914,60 +5920,82 @@ peace_deals = {
 		fire_only_once = no
 		days_mission_timeout = 200
 		timeout_effect = {
-			every_country = {
+			if = {
 				limit = {
+					is_china_or_warlord_no_tt = no
 					has_country_flag = concessions_war
-					is_china_or_warlord = no
-					any_enemy_country = {
+				}
+				every_enemy_country = {
+					limit = {
+						is_china_or_warlord_no_tt = yes
 						has_country_flag = concessions_war
+					}
+					PREV = {
+						every_owned_state = {
+							limit = {
+								OR = {
+									state = 746
+									state = 744
+									state = 745
+									state = 326
+									state = 729
+									state = 728
+									state = 524
+									state = 593
+									state = 592
+									state = 613
+									state = 872
+									state = 591
+									state = 594
+								}
+							}
+							transfer_state_to = PREV.PREV
+						}
+					}
+					white_peace = PREV
+					if = {
+						limit = {
+							NOT = {
+								any_enemy_country = {
+									has_country_flag = concessions_war
+									is_china_or_warlord_no_tt = no
+								}
+							}
+						}
+						clr_country_flag = concessions_war
 					}
 				}
 				clr_country_flag = concessions_war
-				every_owned_state = {
-					limit = {
-						OR = {
-							state = 746
-							state = 744
-							state = 745
-							state = 326
-							state = 729
-							state = 728
-							state = 524
-							state = 593
-							state = 592
-							state = 613
-							state = 872
-							state = 591
-							state = 594
-						}
-					}
-					random_country = {
+			}
+			else = {
+				effect_tooltip = {
+					every_enemy_country = {
 						limit = {
+							is_china_or_warlord_no_tt = no
 							has_country_flag = concessions_war
-							is_china_or_warlord = yes
-							has_war_with = PREV.PREV
 						}
-						transfer_state = PREV
-						white_peace = PREV.PREV
-						hidden_effect = {
-							if = {
-								limit = {
-									NOT = {
-										any_enemy_country = {
-											has_country_flag = concessions_war
-										}
-									}
+						every_owned_state = {
+							limit = {
+								is_controlled_by_ROOT_or_ally = yes
+								OR = {
+									state = 746
+									state = 744
+									state = 745
+									state = 326
+									state = 729
+									state = 728
+									state = 524
+									state = 593
+									state = 592
+									state = 613
+									state = 872
+									state = 591
+									state = 594
 								}
-								clr_country_flag = concessions_war
 							}
-							every_other_country = {
-								limit = {
-									has_war_with = PREV.PREV.PREV
-									is_ally_with = PREV
-								}
-								white_peace = PREV.PREV.PREV
-							}
+							transfer_state_to = ROOT
 						}
+						white_peace = ROOT
 					}
 				}
 			}
@@ -6156,6 +6184,62 @@ crisis = {
 			set_country_flag = republican_plot_fired
 			custom_effect_tooltip = historical_tt
 			country_event = ww1_china.3
+		}
+	}
+}
+
+operations = {
+	CHI_annex_bhutan_exclaves = {
+		icon = generic_prepare_civil_war
+		allowed = {
+			is_china_or_warlord_no_tt = yes
+		}
+		target_trigger = {
+			FROM = {
+				owns_state = 1289
+			}
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 1289
+			}
+		}
+		visible = {
+			owns_state = 322
+		}
+		available = {
+			is_subject = no
+			has_capitulated = no
+			controls_state = 322
+		}
+		fire_only_once = yes
+		complete_effect = {
+			transfer_state = 1289
+			hidden_effect = {
+				FROM = {
+					country_event = ww1_bhutan.2
+				}
+			}
+		}
+		cost = 25
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 2
+				}
+			}
+			modifier = {
+				factor = 0
+				has_war = yes
+			}
+			modifier = {
+				factor = 0
+				tag = QIN
+				NOT = { has_global_flag = xinhai_revolution_ends }
+			}
 		}
 	}
 }
