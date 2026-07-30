@@ -1,3 +1,137 @@
+methodical_battle = {
+    track = ww1_operations
+    name = SUBDOCTRINE_METHODICAL_BATTLE
+    description = SUBDOCTRINE_METHODICAL_BATTLE_DESC
+    icon = GFX_doctrine_methodical_battle_medium
+
+    xp_cost = 250
+    xp_type = army
+
+    ai_will_do = {
+        base = 1
+        modifier = {
+            factor = 50
+            OR = {
+                original_tag = FRA
+                original_tag = ENG
+                original_tag = RUS  
+            }
+        }
+
+    }
+
+    available = {
+        always = yes
+    }
+    # EFFECTS
+    max_planning = 0.05
+    max_command_power_mult = 0.25
+
+    rewards = {
+        command_by_directive ={
+        #1
+            category_light_infantry = {
+                max_organisation = 2
+            }
+        }
+        centralized_fire_planning = {
+        #2
+            category_artillery = {
+                breakthrough = 0.05
+            }
+        }
+        scientific_conduct_of_battle = {
+        #3
+            land_reinforce_rate = 0.03
+            category_light_infantry = {
+                max_organisation = 2
+            }
+            
+        }
+        armor_integration = {
+        #4
+            category_tanks = {
+                max_organisation = 5
+                supply_consumption = -0.05
+            }
+        }
+        relentless_offensive = {
+        #5
+            category_light_infantry = {
+                soft_attack = 0.1
+            }
+            org_loss_when_moving = -0.25
+        }
+    }
+}
+
+attack_in_position_warfare = {
+    track = ww1_operations
+    name = SUBDOCTRINE_ATTACK_IN_POSITION_WARFARE
+    description = SUBDOCTRINE_ATTACK_IN_POSITION_WARFARE_DESC
+    icon = GFX_doctrine_attack_in_position_warfare_medium
+
+    xp_cost = 250
+    xp_type = army
+
+    ai_will_do = {
+        base = 1
+        modifier = {
+            factor = 50
+            original_tag = GER
+        }
+
+    }
+
+    available = {
+        always = yes
+    }
+    # EFFECTS
+    category_light_infantry = {
+        default_morale = 0.05
+        breakthrough = 0.05
+    }
+
+    rewards = {
+        auftragstaktik ={
+        #1
+            planning_speed = 0.1
+            experience_gain_army_unit_factor = 0.1
+            category_light_infantry = {
+                default_morale = 0.025
+            }
+        }
+        weak_point_study = {
+        #2
+            coordination_bonus = 0.1
+            category_light_infantry = {
+                breakthrough = 0.05
+            }
+        }
+        stormtrooper_assault = {
+        #3
+            stormtrooper = {
+                battalion_mult = {
+                    category = category_light_infantry
+                    soft_attack = 0.1
+                }
+            }
+
+        }
+        strongpoint_isolation = {
+        #4
+            org_loss_at_low_org_factor = -0.2
+        }
+        deep_breathrough = {
+        #5
+            army_speed_factor = 0.1
+            category_light_infantry = {
+                default_morale = 0.025
+            }
+        }
+    }
+}
+
 mission_type_tactics = {
     track = operations
     name = SUBDOCTRINE_MISSION_TYPE_TACTICS
@@ -12,12 +146,18 @@ mission_type_tactics = {
         base = 1
         modifier = {
             factor = 50
-            original_tag = GER
+            OR = {
+                original_tag = GER
+                original_tag = FIN
+            }
         }
 
         modifier = {
             factor = 0.5
             is_major = no 
+            NOT = {
+                original_tag = FIN 
+            }
         }
 
     }
@@ -37,7 +177,7 @@ mission_type_tactics = {
         low_level_delegation ={
         #1
             category_all_infantry = {
-                default_morale = 0.2
+                default_morale = 0.1
             }
         }
         flexible_command = {
@@ -45,10 +185,8 @@ mission_type_tactics = {
             org_loss_when_moving = -0.15
         }
         maneouver_drills = {
-        #3
-            category_all_infantry= {
-                default_morale = 0.2
-            }
+        #3           
+            land_reinforce_rate = 0.02
             category_all_armor = {
                 maximum_speed = 0.1
             }
@@ -66,10 +204,10 @@ mission_type_tactics = {
         #5
         
             category_all_infantry = {
-                default_morale = 0.4
+                default_morale = 0.2
             }
             category_tanks = {
-                default_morale = 0.4
+                default_morale = 0.1
             }
 
         }
@@ -85,7 +223,7 @@ last_stand = {
     xp_type = army
 
     available = {
-        always = yes
+        has_defensive_war = yes
     }
     # EFFECTS
     conscription = 0.05
@@ -145,17 +283,21 @@ infiltration_tactics = {
         base = 1
         modifier = {
             factor = 50
-            original_tag = JAP
+            OR = {
+                original_tag = JAP
+                original_tag = FIN
+            }
         }
 
     }
 
     # EFFECTS
+    enable_tactic = tactic_infantry_charge
     max_planning = 0.05 
-    
-    rewards = {
+
+     rewards = {
         infiltration_assault = {
-            #1
+        #1
             category_army = {
                 breakthrough = 0.10
                 max_organisation = 5
@@ -284,11 +426,8 @@ grand_assault = {
         #3
             army_bonus_air_superiority_factor = 0.05 
             coordination_bonus = 0.1
-            category_all_infantry = {
-                max_organisation = 5
-            }
             category_tanks = {
-                max_organisation = 2
+                max_organisation = 4
             }
 
             anti_air = {
@@ -312,10 +451,7 @@ grand_assault = {
 
             max_planning = 0.1
             category_all_infantry = {
-                max_organisation = 5
-            }
-            category_tanks = {
-                max_organisation = 2
+                max_organisation = 8
             }
        }
     }
