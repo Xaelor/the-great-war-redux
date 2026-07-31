@@ -18,6 +18,47 @@
 #}
 
 RAJ_viceroy_executive_council_category = {
+	RAJ_organise_the_delhi_durbar_mission = {
+		icon = GFX_decision_eng_trade_unions_support
+
+		days_mission_timeout = 950
+		available = { always = no }
+
+		activation = {
+			ENG = {
+				OR = {
+					has_idea = george_v
+					has_country_leader = {
+						character = ENG_george_v
+						ruling_only = yes
+					}
+				}
+			}
+		}
+
+		is_good = no
+
+		timeout_effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = RAJ_delhi_durbar
+					}
+				}
+				add_to_variable = {
+					RAJ_british_confidence_var = -10
+					tooltip = RAJ_british_confidence_var_modify
+				}
+				RAJ_british_confidence_scripted_effect = yes
+				add_political_power = -35
+			}
+			else = {
+				country_event = {
+					id = ww1_raj.3
+				}
+			}
+		}
+	}
 	RAJ_promote_western_education = {
 		icon = GFX_decision_eng_propaganda_campaigns
 		days_remove = 35
@@ -194,34 +235,6 @@ RAJ_viceroy_executive_council_category = {
 				add_command_power = -25
 			}
 			custom_effect_tooltip = RAJ_o_moore_creagh_take_field_command_reward
-		}
-	}
-	RAJ_organise_manoeuvres = {
-		icon = GFX_decision_hol_draw_up_staff_plans
-		days_remove = 70
-		custom_cost_trigger = {
-			command_power > 24
-			has_political_power > 24
-		}
-		custom_cost_text = decision_cost_CP_25_PP_25
-		allowed = {
-			original_tag = RAJ
-		}
-		available = {
-			has_completed_focus = RAJ_indian_army_act
-		}
-		modifier = {
-			experience_gain_army_factor = 0.5
-		}
-		complete_effect = {
-			hidden_effect = {
-				add_command_power = -25
-				add_political_power = -25
-			}
-		}
-		remove_effect = {
-			army_experience = RAJ_manoeuvres_xp_var
-			add_war_support = 0.025
 		}
 	}
 	RAJ_organise_public_works = {
