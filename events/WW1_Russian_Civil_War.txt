@@ -2665,19 +2665,10 @@ country_event = {
 				target = ROOT
 				end_wars = no
 				end_civil_wars = no
-				autonomy_state = autonomy_satellite
+				autonomy_state = autonomy_integrated_puppet
 			}
 		}
 		restore_previous_government_type = yes
-		if = {
-			limit = {
-				NOT = {
-					has_cosmetic_tag = TSCN
-					has_cosmetic_tag = TSCN_RUS
-				}
-			}
-			set_cosmetic_tag = RUS_puppet
-		}
 		if = {
 			limit = {
 				tag = MOU
@@ -2949,7 +2940,18 @@ country_event = {
 	is_triggered_only = yes
 	immediate = {
 		hidden_effect = {
-			set_cosmetic_tag = RUS
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = rule_russian_name
+						option = EMPIRE_RUSSIA_NAME
+					}
+				}
+				set_cosmetic_tag = RUS_empire
+			}
+			else = {
+				set_cosmetic_tag = RUS
+			}
 		}	
 	}
 	option = {
