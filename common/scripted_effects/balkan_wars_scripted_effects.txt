@@ -3,20 +3,22 @@
 BW1_init_effect = {
 	if = {
 		limit = { 
-			all_country_of = {
-				target = {
-					BUL
-					GRE
-					MNT
-					SER		
-				}
-				NOT = {
-					has_war_with = TUR
-				}
+			NOT = {
+				has_global_flag = kis_firstbalkan_war
 			}
 		}
 		set_global_flag = kis_firstbalkan_war
-		news_event = ww1_firstbalkan.2
+		if = {
+			limit = { 
+				BUL = {
+					has_completed_focus = BUL_lone_liberator
+				}
+			}
+			news_event = ww1_firstbalkan.116
+		}
+		else = {
+			news_event = ww1_firstbalkan.2
+		}
 		add_named_threat = {
 			threat = 3
 			name = kis_firstbalkan_war
@@ -991,7 +993,6 @@ BW2_bulgaria_victory_effect = {
 					state = 731
 					state = 1256
 					state = 846
-					state = 805
 					state = 756
 					state = 860
 					state = 341
@@ -1011,6 +1012,7 @@ BW2_stalemate_effect = {
 	set_global_flag = kis_secondbalkanwar_stalemate
 	hidden_effect = {		
 		BUL = {
+			complete_national_focus = BUL_relative_hegemony
 			country_event = ww1_secondbalkan.22
 			white_peace = SER
 			SER = {
