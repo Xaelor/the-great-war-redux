@@ -9,6 +9,7 @@ focus_tree = {
 				is_close_raj_politically = yes
 				is_princely_state_tag = yes
 			}
+			is_unplayable_tag = no
 		}
 	}	
 	default = no
@@ -389,8 +390,35 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			# every 180 days the british come to invest
-			# they give ROOT: pp, and EITHER: a random resource (very small amount) (15%), a building slot (35%), or a local construction speed state modifier that lasts until next (50%)
+			country_event = ww1_princely.6
+			custom_effect_tooltip = when_taken
+			effect_tooltip = {
+				random_list = {
+					10 = {
+						random_owned_controlled_state = {
+							add_resource = {
+								type = steel
+								amount = 2
+							}
+						}
+					}
+					40 = {
+						random_owned_controlled_state = {
+							add_extra_state_shared_building_slots = 1
+						}
+					}
+					50 = {
+						random_owned_controlled_state = {
+							add_dynamic_modifier = {
+								modifier = generic_local_investments
+								days = 365
+							}
+						}
+					}
+				}
+				custom_effect_tooltip = princely_british_investment_tt
+
+			}
 		}
 	}
 	focus = {
@@ -1125,7 +1153,7 @@ focus_tree = {
 	
 	focus = {
 		id = HYD_coronation_of_osman_ali_khan
-		icon = GFX_focus_generic_military_dictatorship
+		icon = GFX_focus_HYD_osman_ali_khan
 		x = 20
 		y = 0
 		cost = 10
@@ -1511,7 +1539,7 @@ focus_tree = {
 	}
 	focus = {
 		id = HYD_direct_rule
-		icon = GFX_focus_destroy_meclis
+		icon = GFX_focus_generic_military_dictatorship
 		x = 0
 		y = 5
 		relative_position_id = HYD_coronation_of_osman_ali_khan
