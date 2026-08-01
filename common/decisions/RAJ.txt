@@ -22,7 +22,12 @@ RAJ_viceroy_executive_council_category = {
 		icon = GFX_decision_eng_trade_unions_support
 
 		days_mission_timeout = 950
-		available = { always = no }
+		available = {
+			has_completed_focus = RAJ_delhi_durbar
+			hidden_trigger = {
+				always = no
+			}
+		}
 
 		activation = {
 			ENG = {
@@ -39,21 +44,33 @@ RAJ_viceroy_executive_council_category = {
 		is_good = no
 
 		timeout_effect = {
-			if = {
-				limit = {
-					NOT = {
-						has_completed_focus = RAJ_delhi_durbar
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_completed_focus = RAJ_delhi_durbar
+						}
+					}
+					add_to_variable = {
+						RAJ_british_confidence_var = -10
+						tooltip = RAJ_british_confidence_var_modify
+					}
+					RAJ_british_confidence_scripted_effect = yes
+					add_political_power = -35
+				}
+				else = {
+					country_event = {
+						id = ww1_raj.3
 					}
 				}
-				custom_effect_tooltip = if_completed_durbar_focus
-				add_to_variable = {
-					RAJ_british_confidence_var = -10
-					tooltip = RAJ_british_confidence_var_modify
-				}
-				RAJ_british_confidence_scripted_effect = yes
-				add_political_power = -35
 			}
-			else = {
+			effect_tooltip = {
+				add_to_variable = {
+						RAJ_british_confidence_var = -10
+						tooltip = RAJ_british_confidence_var_modify
+				}
+				add_political_power = -35
+				custom_effect_tooltip = RAJ_if_completed_durbar_focus
 				country_event = {
 					id = ww1_raj.3
 				}
