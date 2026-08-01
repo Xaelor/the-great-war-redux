@@ -65,6 +65,50 @@ debug_decisions = {
 		}
 		ai_will_do = { base = 0 }
 	}
+	debug_improve_armenian_loyalty = {
+		allowed = {
+			tag = TUR
+		}
+		complete_effect = {
+			add_to_variable = {
+				TUR_armenian_loyalty_var = 0.05
+			}
+			add_to_variable = {
+				TUR_armenian_loyalty_display_var = 5
+				tooltip = TUR_modify_armenian_loyalty_tt
+			}
+			TUR_recalculate_millet_system_modifiers = yes
+		}
+	}
+	debug_remove_armenians = {
+		allowed = {
+			tag = TUR
+		}
+		complete_effect = {
+			1022 = {
+				set_temp_variable = {
+					TUR_modify_armenian_pop_temp_var = {
+						value = THIS.TUR_armenian_state_pop_var
+						multiply = -0.39
+					}
+				}
+				set_temp_variable = {
+					TUR_modify_state_pop_temp_var = {
+						value = TUR_modify_armenian_pop_temp_var
+						multiply = 1000000
+					}
+				}
+				add_manpower = TUR_modify_state_pop_temp_var
+				add_to_variable = {
+					THIS.TUR_armenian_state_pop_var = TUR_modify_armenian_pop_temp_var
+					tooltip = TUR_modify_armenian_pop_tt
+				}
+			}
+			TUR_recalculate_total_pop = yes
+			TUR_recalculate_pop_percentages = yes
+			TUR_recalculate_millet_system_modifiers = yes
+		}
+	}
 }
 
 TGWR_great_power_politics = {
