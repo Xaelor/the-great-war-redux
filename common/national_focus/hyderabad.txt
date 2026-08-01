@@ -10,10 +10,382 @@ focus_tree = {
 	}	
 	default = no
 	reset_on_civilwar = no
-	shared_focus = princely_develop_capitalstate
-	shared_focus = princely_the_adj_army
+	
+	focus = {
+		id = princely_develop_capitalstate
+		icon = GFX_focus_generic_industry_1
+		x = 2
+		y = 0
+		cost = 10
+		available = {
+		}
+		completion_reward = {		
+			capital_scope = {
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+	focus = {
+		id = princely_pave_the_roads
+		icon = GFX_goal_reichsautobahn
+		prerequisite = { focus = princely_develop_capitalstate }
+		x = 2
+		y = 1
+		relative_position_id = princely_develop_capitalstate
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_tech_bonus = {
+				name = princely_pave_the_roads
+				bonus = 0.5
+				uses = 1
+				category = construction_tech
+			}
+		}
+	}
+	focus = {
+		id = princely_the_adjective_regional_development_fund
+		icon = GFX_focus_generic_money_deal
+		prerequisite = { focus = princely_develop_capitalstate }
+		dynamic = yes 
+		x = -1
+		y = 1
+		relative_position_id = princely_develop_capitalstate
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = princely_literacy_programs
+		icon = GFX_focus_research2
+		prerequisite = { focus = princely_pave_the_roads }
+		prerequisite = { focus = princely_the_adjective_regional_development_fund }
+		x = 1
+		y = 1
+		relative_position_id = princely_the_adjective_regional_development_fund
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = princely_mass_illiteracy
+				add_idea = princely_mass_illiteracy2
+			}
+		}
+	}
+	focus = {
+		id = princely_contract_british_mining_companies
+		icon = GFX_focus_generic_resource_extraction
+		prerequisite = { focus = princely_pave_the_roads }
+		x = 0
+		y = 1
+		relative_position_id = princely_pave_the_roads
+		cost = 10
+		available = {
+			NOT = {
+				has_war_with = ENG
+			}
+		}
+		bypass = {
+			has_war_with = ENG
+		}
+		bypass_effect = {
+			add_tech_bonus = {
+				name = excavation_effort
+				bonus = 0.25
+				category = excavation_tech
+				uses = 1
+			}
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					tag = HYD
+				}
+				random_owned_controlled_state = {
+					add_resource = {
+						type = chromium
+						amount = 2
+					}
+					add_resource = {
+						type = coal
+						amount = 2
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					tag = BAR
+				}
+				random_owned_controlled_state = {
+					add_resource = {
+						type = oil
+						amount = 2
+					}
+				}
+			}
+			else = {
+				random_owned_controlled_state = {
+					add_resource = {
+						type = chromium
+						amount = 2
+					}
+				}
+			}
+			add_tech_bonus = {
+				name = excavation_effort
+				bonus = 1
+				category = excavation_tech
+				uses = 1
+			}
+		}
+	}
+	focus = {
+		id = princely_efficent_farming
+		icon = GFX_focus_generic_wheat
+		prerequisite = { focus = princely_the_adjective_regional_development_fund }
+		x = -1
+		y = 1
+		relative_position_id = princely_the_adjective_regional_development_fund
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+	focus = {
+		id = princely_invest_into_infrastructure_projects
+		icon = GFX_goal_generic_construct_infrastructure
+		prerequisite = { 
+			focus = princely_efficent_farming
+		}
+		x = 0
+		y = 2
+		relative_position_id = princely_the_adjective_regional_development_fund
+		cost = 10
+		available = {
+			has_tech = construction1
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = princely_basic_schools
+		icon = GFX_focus_generic_education
+		prerequisite = { focus = princely_state_funded_projects }
+		prerequisite = { focus = princely_literacy_programs }
+		prerequisite = { focus = princely_invest_into_infrastructure_projects }
+		x = 1
+		y = 3
+		relative_position_id = princely_the_adjective_regional_development_fund
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			add_research_slot = 1
+			custom_effect_tooltip = empty_space_tt
+			else = {
+				swap_ideas = {
+					remove_idea = princely_mass_illiteracy2
+					add_idea = princely_mass_illiteracy3
+				}
+			}
+		}
+	}
+	focus = {
+		id = princely_improved_irrigation_systems
+		icon = GFX_goal_generic_construction2
+		x = -2
+		y = 2
+		relative_position_id = princely_the_adjective_regional_development_fund
+		prerequisite = {
+			focus = princely_efficent_farming
+		}
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			every_owned_state = {
+				limit = {
+					is_core_of = ROOT
+				}
+				add_dynamic_modifier = {
+					modifier = princely_improved_irrigation
+				}
+			}
+		}
+	}
+	focus = {
+		id = princely_expand_our_agriculture
+		icon = GFX_focus_generic_agricultural_subsidies
+		x = -1
+		y = 3
+		relative_position_id = princely_the_adjective_regional_development_fund
+		prerequisite = {
+			focus = princely_improved_irrigation_systems
+		}
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = princely_state_funded_projects
+		icon = GFX_goal_generic_construction
+		x = 2
+		y = 2
+		relative_position_id = princely_the_adjective_regional_development_fund
+		prerequisite = {
+			focus = princely_contract_british_mining_companies
+		}
+		mutually_exclusive = {
+			focus = princely_follow_british_laissez_faire
+		}
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			capital_scope = {
+				increase_state_category = yes
+			}
+			add_tech_bonus = {
+				name = princely_state_funded_projects
+				category = construction_tech
+				bonus = 0.5
+				uses = 1
+			}
+		}
+	}
+	focus = {
+		id = princely_follow_british_laissez_faire
+		icon = GFX_focus_generic_industry_investment
+		x = 4
+		y = 2
+		relative_position_id = princely_the_adjective_regional_development_fund
+		prerequisite = {
+			focus = princely_contract_british_mining_companies
+		}
+		mutually_exclusive = {
+			focus = princely_state_funded_projects
+		}
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					NOT = {
+						has_idea = free_trade
+					}
+				}
+				add_ideas=free_trade
+			}
+			add_ideas = princely_follow_british_liberalism
+		}
+	}
+	focus = {
+		id = princely_hydro_power_projects
+		icon = GFX_focus_generic_hydroelectric_energy
+		x = 3
+		y = 3
+		relative_position_id = princely_the_adjective_regional_development_fund
+		prerequisite = {
+			focus = princely_state_funded_projects
+			focus = princely_follow_british_laissez_faire
+		}
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = princely_hydro_power_projects
+				category = electronics
+				uses = 2
+				bonus = 0.75
+			}
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = princely_british_investments
+		icon = GFX_ENG_westerminster_dec
+		x = 5
+		y = 3
+		relative_position_id = princely_the_adjective_regional_development_fund
+		prerequisite = {
+			focus = princely_follow_british_laissez_faire
+		}
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			country_event = ww1_princely.6
+			custom_effect_tooltip = when_taken
+			effect_tooltip = {
+				random_list = {
+					10 = {
+						random_owned_controlled_state = {
+							add_resource = {
+								type = steel
+								amount = 2
+							}
+						}
+					}
+					40 = {
+						random_owned_controlled_state = {
+							add_extra_state_shared_building_slots = 1
+						}
+					}
+					50 = {
+						random_owned_controlled_state = {
+							add_dynamic_modifier = {
+								modifier = generic_local_investments
+								days = 365
+							}
+						}
+					}
+				}
+				custom_effect_tooltip = princely_british_investment_tt
 
-	##
+			}
+		}
+	}
 	focus = {
 		id = HYD_focus_on_cotton_production
 		icon = GFX_focus_RAJ_khadi_movement
@@ -66,14 +438,251 @@ focus_tree = {
 		}
 	}
 
-	## HYDERABAD-SPECIFIC
+	## ARMY
 	
+	focus = {
+		id = princely_the_adj_army
+		icon = GFX_goal_generic_occupy_states_ongoing_war
+		x = 9
+		y = 0
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			army_experience = 25
+		}
+	}
+	focus = {
+		id = princely_warrior_tradition
+		icon = GFX_focus_RAJ_lions_of_the_great_war
+		x = 0
+		y = 1
+		relative_position_id = princely_the_adj_army
+		prerequisite = {
+			focus = princely_the_adj_army
+		}
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			add_ideas = princely_warrior_traditions_idea
+		}
+	}
+	focus = {
+		id = princely_martial_races
+		icon = GFX_focus_generic_manpower
+		x = -1
+		y = 2
+		mutually_exclusive = {
+			focus = princely_every_man_can_fight
+		}
+		relative_position_id = princely_the_adj_army
+		prerequisite = {
+			focus = princely_warrior_tradition
+		}
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = princely_martial_races1
+				add_idea = princely_martial_races3
+			}			
+		}
+	}
+	focus = {
+		id = princely_every_man_can_fight
+		icon = GFX_focus_generic_soldier_salute
+		x = 1
+		y = 2
+		mutually_exclusive = {
+			focus = princely_martial_races
+		}
+		relative_position_id = princely_the_adj_army
+		prerequisite = {
+			focus = princely_warrior_tradition
+		}
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = princely_martial_races1
+				add_idea = princely_martial_races2
+			}
+		}
+	}
+	focus = {
+		id = princely_train_cavalry
+		icon = GFX_generic_cavalry
+		x = -2
+		y = 3
+		relative_position_id = princely_the_adj_army
+		prerequisite = {
+			focus = princely_martial_races
+		}
+		cost = 10
+		available = {
+		}
+		allow_branch = {
+			NOT = {
+				is_close_raj_politically = yes
+			}
+		}
+		completion_reward = {
+			add_ideas = princely_trained_cavalry_idea
+		}
+	}
+	focus = {
+		id = princely_use_everything_we_have
+		icon = GFX_focus_ETH_freedom_at_gunpoint
+		x = 0
+		y = 3
+		relative_position_id = princely_the_adj_army
+		prerequisite = {
+			focus = princely_martial_races
+			focus = princely_every_man_can_fight
+		}
+		cost = 10
+		available = {
+
+		}
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 1000
+			}
+			add_equipment_to_stockpile = {
+				type = field_gun_equipment
+				amount = 50
+			}
+		}
+	}
+	focus = {
+		id = princely_reform_the_conscription_system
+		icon = GFX_focus_beiyang_army_regulations
+		x = 2
+		y = 3
+		relative_position_id = princely_the_adj_army
+		prerequisite = {
+			focus = princely_every_man_can_fight
+		}
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = princely_martial_races2
+				add_idea = princely_martial_races4
+			}
+		}
+	}
+	focus = {
+		id = princely_fortifications_focus
+		icon = GFX_goal_generic_fortify_city
+		x = -1
+		y = 4
+		relative_position_id = princely_the_adj_army
+		prerequisite = {
+			focus = princely_train_cavalry
+			focus = princely_use_everything_we_have
+		}
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = princely_fortifications_focus
+				category = fortification_tech
+				uses = 2
+				bonus = 0.75
+			}
+		}
+	}
+	focus = {
+		id = princely_military_academies
+		icon = GFX_focus_generic_military_academy
+		x = 1
+		y = 4
+		relative_position_id = princely_the_adj_army
+		prerequisite = {
+			focus = princely_reform_the_conscription_system
+			focus = princely_use_everything_we_have
+		}
+		cost = 10
+		available = {
+		}
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.75
+				name = princely_military_academies
+				category = land_doctrine
+				uses = 1
+			}
+			if = {
+				limit = {
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				add_doctrine_cost_reduction = {
+					cost_reduction = 0.5
+					name = princely_military_academies
+					category = naval_doctrine
+					uses = 1
+				}
+			}
+		}
+	}
+	focus = {
+		id = princely_army_reform
+		icon = GFX_goal_generic_british_soldier_hall
+		x = 0
+		y = 5
+		relative_position_id = princely_the_adj_army
+		prerequisite = {
+			focus = princely_military_academies
+		}
+		prerequisite = {
+			focus = princely_fortifications_focus
+		}
+		cost = 5
+		available = {
+			OR = {
+				has_war = yes
+				is_great_war_ongoing = yes
+			}
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					is_princely_state_tag = yes
+				}
+				country_lock_all_division_template = no
+			}
+			else_if = {
+				limit = {
+					tag = NEP
+				}
+				remove_ideas = NEP_nepotism_in_the_army
+				swap_ideas = {
+					remove_idea = NEP_royal_army
+					add_idea = NEP_royal_army2
+				}
+			}
+		}
+	}
+
+	## POLTIICAL
 	focus = {
 		id = HYD_coronation_of_osman_ali_khan
 		icon = GFX_focus_HYD_osman_ali_khan
 		x = 20
 		y = 0
 		cost = 10
+		allow_branch = {
+			tag = HYD
+		}
 		available = {
 			has_country_leader = {
 				character = HYD_osman_ali_khan
@@ -146,7 +755,6 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_political_power = 120
-			country_event = ww1_princely.7
 		}
 	}
 	focus = {
@@ -170,7 +778,6 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_political_power = 120
-			country_event = ww1_princely.7
 		}
 	}
 	focus = {
@@ -628,6 +1235,9 @@ focus_tree = {
 		cost = 10
 		available = {
 			always = no
+		}
+		allow_branch = {
+			tag = HYD
 		}
 		bypass = {
 			has_global_flag = great_war
