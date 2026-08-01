@@ -96,24 +96,25 @@ BW1_balkans_victory_effect = {
 				set_country_flag = BW1_loser
 			}
 		}
+		SER = {
+			set_country_flag = BW1_winner
+		}
+		BUL = {
+			set_country_flag = BW1_winner
+		}
+		GRE = {
+			set_country_flag = BW1_winner
+		}
+		MNT = {
+			set_country_flag = BW1_winner
+		}
 		if = {
 			limit = { 
 				has_global_flag = balkan_league_success
 			}
 			TUR = {
 				white_peace = BLL
-				effect_tooltip = {
-					white_peace = SER
-					white_peace = GRE
-					white_peace = MNT
-				}
 			}
-
-			BLL = {
-				every_faction_member = {
-					set_country_flag = BW1_winner
-				}
-			}		
 			TUR = {
 				every_state = {
 					limit = {
@@ -181,22 +182,10 @@ BW1_balkans_victory_effect = {
 		}
 		else = {				
 			TUR = {
-				every_enemy_country = {
-					limit = {
-						OR = {
-							tag = SER
-							tag = BUL
-							tag = GRE
-							tag = IKR
-							tag = SMS
-							tag = MNT
-						}
-					}
-					set_country_flag = BW1_winner
-					PREV = {
-						white_peace = PREV
-					}
-				}
+				white_peace = BUL
+				white_peace = SER
+				white_peace = MNT
+				white_peace = GRE
 
 				every_state = {
 					limit = {
@@ -423,6 +412,18 @@ BW1_status_quo_effect = {
 				set_country_flag = BW1_winner
 			}
 		}
+		SER = {
+			set_country_flag = BW1_loser
+		}
+		BUL = {
+			set_country_flag = BW1_loser
+		}
+		GRE = {
+			set_country_flag = BW1_loser
+		}
+		MNT = {
+			set_country_flag = BW1_loser
+		}
 		BUL = {
 			add_ideas = BUL_idea_first_national_catastrophe
 			complete_national_focus = BUL_our_darkest_hours
@@ -434,30 +435,15 @@ BW1_status_quo_effect = {
 			}
 			BLL = {
 				white_peace = TUR
-			}
-			BLL = {
-				hidden_effect = {
-					every_faction_member = {
-						set_country_flag = BW1_loser
-					}
-				}
 				dismantle_faction = yes
 			}
 		}
 		else = {				
 			TUR = {
-				every_enemy_country = {
-					limit = {
-						OR = {
-							tag = SER
-							tag = BUL
-							tag = GRE
-							tag = MNT
-						}
-					}
-					set_country_flag = BW1_loser
-					white_peace = PREV
-				}
+				white_peace = BUL
+				white_peace = SER
+				white_peace = GRE
+				white_peace = MNT
 			}
 		}
 		TUR = {
@@ -525,12 +511,7 @@ BW1_peace_effect = {
 		BW1_balkans_victory_effect = yes
 	}
 	else = {
-		BW1_status_quo_effect = yes
-		if = {
-			limit = { tag = TUR }
-			custom_effect_tooltip = skip_line
-			custom_effect_tooltip = BW1_turkish_crushing_victory_tt
-		}
+		BW1_turkish_victory_effect = yes
 	}
 }
 
@@ -563,44 +544,6 @@ BW1_TUR_truce_with_FROM = {
 		else_if = {
 			limit = { 
 				FROM = {
-					tag = MNT
-				}				
-			}
-			add_ideas = BW1_armistice_TUR_mnt
-		}
-	}
-}
-
-BW1_TUR_truce_with_ROOT = {
-	add_ideas = BW1_armistice_balkans
-	TUR = {
-		if = {
-			limit = { 
-				ROOT = {
-					tag = BUL
-				}
-			}
-			add_ideas = BW1_armistice_TUR_bul
-		}
-		else_if = {
-			limit = { 
-				ROOT = {
-					tag = SER
-				}				
-			}
-			add_ideas = BW1_armistice_TUR_ser
-		}
-		else_if = {
-			limit = { 
-				ROOT = {
-					tag = GRE
-				}				
-			}
-			add_ideas = BW1_armistice_TUR_gre
-		}
-		else_if = {
-			limit = { 
-				ROOT = {
 					tag = MNT
 				}				
 			}
@@ -736,23 +679,6 @@ BW2_init_effect = {
 				country_event = {
 					id = ww1_secondbalkan.21
 					days = 2
-				}
-			}
-			if = {
-				limit = {
-					has_dlc = "No Compromise, No Surrender"
-					SER = {
-						is_faction_leader = yes
-						has_faction_template = faction_template_balkan_league
-					}
-				}
-				SER = {
-					set_faction_name = anti_bulgarian_league
-					add_faction_goal_slot = {
-						category  = long_term 
-						value = 1 
-					}
-					add_faction_goal = faction_goal_balkan_league_defeat_bulgaria
 				}
 			}
 		}
@@ -916,6 +842,7 @@ BW2_balkans_victory_effect = {
 				white_peace = PREV
 			}
 		}
+		BW2_dissolve_balkan_alliance = yes
 	}
 }
 
@@ -1004,6 +931,7 @@ BW2_bulgaria_victory_effect = {
 			}
 			transfer_state_to = BUL
 		}
+		BW2_dissolve_balkan_alliance = yes
 	}
 }
 
@@ -1012,6 +940,33 @@ BW2_stalemate_effect = {
 	set_global_flag = kis_secondbalkanwar_stalemate
 	hidden_effect = {		
 		BUL = {
+			if = {
+				limit = { 
+					has_global_flag = balkan_league_success
+				}
+				if = {
+					limit = { 
+						ROM = {
+							has_capitulated = yes
+							846 = {
+								is_owned_by = PREV
+							}
+						}
+					}
+					transfer_state = 846
+				}
+				else_if = {
+					limit = { 
+						GRE = {
+							has_capitulated = yes
+							345 = {
+								is_owned_by = PREV
+							}
+						}
+					}
+					transfer_state = 345
+				}
+			}
 			complete_national_focus = BUL_relative_hegemony
 			country_event = ww1_secondbalkan.22
 			white_peace = SER
@@ -1041,6 +996,7 @@ BW2_stalemate_effect = {
 				}
 			}
 		}
+		BW2_dissolve_balkan_alliance = yes
 	}
 }
 
@@ -1125,7 +1081,6 @@ BW2_peace_effect = {
 	else = {
 		BW2_stalemate_effect = yes
 	}
-	BW2_dissolve_balkan_alliance = yes
 }
 
 # Turkish Intervention
