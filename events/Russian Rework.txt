@@ -1,4 +1,5 @@
 add_namespace = ww1_russia_common
+add_namespace = ww1_russia_flavor
 add_namespace = ww1_russia_foreign
 add_namespace = ww1_russia_war
 add_namespace = ww1_february_revolution
@@ -1235,6 +1236,21 @@ country_event = {
 		name = ww1_russia_common.38.a
 	}
 }
+#FLAVOR EVENTS
+################
+#Death of Lev Tolstoy
+country_event = {
+	id = ww1_russia_flavor.1
+	title = ww1_russia_flavor.1.t
+	desc = ww1_russia_flavor.1.d
+	picture = GFX_report_event_rus_tolstoy
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_russia_flavor.1.a
+		add_stability = -0.01
+	}
+}
 
 #STOLYPIN EVENTS
 ################
@@ -1306,7 +1322,7 @@ country_event = {
 	id = ww1_stolypin.5
 	title = ww1_stolypin.5.t
 	desc = ww1_stolypin.5.d
-	picture = ww1_russia_muromtsev
+	picture = GFX_report_event_rus_muromtsev
 	fire_only_once = yes
 	is_triggered_only = yes
 	immediate = {
@@ -1317,6 +1333,7 @@ country_event = {
 			}
 		}
 	}
+	timeout_days = 3
 	option = {
 		name = ww1_stolypin.5.a
 	}
@@ -1326,29 +1343,46 @@ country_event = {
 	id = ww1_stolypin.6
 	title = ww1_stolypin.6.t
 	desc = ww1_stolypin.6.d
-	picture = ww1_russia_student_protests
+	picture = GFX_report_event_rus_student_protests
 	fire_only_once = yes
 	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			country_event = {
+				id = ww1_stolypin.54
+				days = 51
+			}
+		}
+	}
 	option = {
 		name = ww1_stolypin.6.a
 		add_stability = -0.01
 		add_timed_idea = {
 			idea = RUS_student_protests
-			days = 180
+			days = 100
 		}
 	}
 }
-#Death of Lev Tolstoy
+#Zerentui tragedy
 country_event = {
 	id = ww1_stolypin.7
 	title = ww1_stolypin.7.t
 	desc = ww1_stolypin.7.d
-	picture = ww1_russia_61
+	picture = GFX_report_event_rus_zerentui_tragedy
 	fire_only_once = yes
 	is_triggered_only = yes
 	option = {
 		name = ww1_stolypin.7.a
 		add_stability = -0.01
+		if = {
+			limit = { 
+				has_idea = RUS_student_protests
+			}
+			modify_timed_idea = {
+				idea = RUS_student_protests
+				days = 80
+			}
+		}
 	}
 }
 #Deal with Student protests
@@ -1356,7 +1390,7 @@ country_event = {
 	id = ww1_stolypin.8
 	title = ww1_stolypin.8.t
 	desc = ww1_stolypin.8.d
-	picture = ww1_russia_student_protests
+	picture = GFX_report_event_rus_student_protests
 	fire_only_once = yes
 	is_triggered_only = yes
 	#Close the universities
@@ -1760,6 +1794,7 @@ news_event = {
 		}
 	}
 }
+
 
 #DURNOVO'S CABINET
 ##################
