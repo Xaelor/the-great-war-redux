@@ -4896,8 +4896,8 @@ country_event = {
 					has_cosmetic_tag = AUS_USGA
 				}
 			}
-			set_cosmetic_tag = AUH_empire
-			set_country_flag = AUH_empire
+			set_cosmetic_tag = AUS_empire
+			set_country_flag = AUS_empire
 		}
 		hidden_effect = {
 			AUS = {
@@ -6855,8 +6855,8 @@ country_event = {
 			name = AUH_conrad_junta_party
 			elections_allowed = no
 		}
-		set_cosmetic_tag = AUH_empire
-		set_country_flag = AUH_empire
+		set_cosmetic_tag = AUS_empire
+		set_country_flag = AUS_empire
 		ai_chance = {
 			base = 100
 		}
@@ -7401,6 +7401,7 @@ country_event = {
 				owns_state = 871
 				owns_state = 1214
 				owns_state = 1240
+				owns_state = 1284
 				owns_state = 1215
 			}
 		}	
@@ -7430,7 +7431,6 @@ country_event = {
 		ai_chance = {
 			base = 70
 		}
-		custom_effect_tooltip = historical_tt
 		give_guarantee = ALB
 		every_other_country = {
 			limit = {
@@ -7440,6 +7440,7 @@ country_event = {
 					owns_state = 871
 					owns_state = 1214
 					owns_state = 1240
+					owns_state = 1284
 					owns_state = 1215
 				}
 				NOT = {
@@ -7453,44 +7454,46 @@ country_event = {
 			country_event = { id = ww1_auh.124 hours = 3 }
 		}
 	}
-	option = {
-		trigger = { country_exists = ALB }
-		ai_chance = {
-			base = 30
-			modifier = {
-				factor = 0
-				has_game_rule = {
-					rule = ultimatum_on_albania
-					option = WAR_ON_ALBANIA
-				}
-			}
-			modifier = {
-				is_historical_focus_on = yes
-				factor = 0
-			}
-		}
-		name = ww1_auh.123.c #guarantee their independence only
-		add_political_power = -25
-		give_guarantee = ALB
-	}
-	option = {
-		ai_chance = {
-			base = 30
-			modifier = {
-				factor = 0
-				has_game_rule = {
-					rule = ultimatum_on_albania
-					option = WAR_ON_ALBANIA
-				}
-			}
-			modifier = {
-				is_historical_focus_on = yes
-				factor = 0
-			}
-		}
-		name = ww1_auh.123.b #do nothing
-		add_political_power = -50
-	}
+	#option = {
+	#	trigger = {
+	#		country_exists = ALB
+	#	}
+	#	ai_chance = {
+	#		base = 30
+	#		modifier = {
+	#			factor = 0
+	#			has_game_rule = {
+	#				rule = ultimatum_on_albania
+	#				option = WAR_ON_ALBANIA
+	#			}
+	#		}
+	#		modifier = {
+	#			is_historical_focus_on = yes
+	#			factor = 0
+	#		}
+	#	}
+	#	name = ww1_auh.123.c #guarantee their independence only
+	#	add_political_power = -25
+	#	give_guarantee = ALB
+	#}
+	#option = {
+	#	ai_chance = {
+	#		base = 30
+	#		modifier = {
+	#			factor = 0
+	#			has_game_rule = {
+	#				rule = ultimatum_on_albania
+	#				option = WAR_ON_ALBANIA
+	#			}
+	#		}
+	#		modifier = {
+	#			is_historical_focus_on = yes
+	#			factor = 0
+	#		}
+	#	}
+	#	name = ww1_auh.123.b #do nothing
+	#	add_political_power = -50
+	#}
 }
 
 #######
@@ -7516,331 +7519,20 @@ country_event = {
 		}
 		ai_chance = {
 			base = 70
-			modifier = {
-				add = 50
-				strength_ratio = {
-					tag = FROM
-					ratio < 0.5
-				}
-			}
-			modifier = {
-				add = 50
-				has_war_support < 0.5
-			}
-			modifier = {
-				factor = 0
-				tag = SER
-				any_country = { has_character = ALB_esad_toptani }
-			}
-			modifier = {
-				factor = 0
-				tag = MNT
-				any_country = { has_character = ALB_prenk_bib_doda }
-			}
-			modifier = {
-				factor = 0
-				has_game_rule = {
-					rule = ultimatum_on_albania
-					option = WAR_ON_ALBANIA
-				}
-			}
 		}
-	}
-	option = {
-		name = ww1_auh.124.b #yes
-		trigger = {
-			tag = SER
-			any_country = { has_character = ALB_esad_toptani }
-			NOT = { any_country = { has_country_leader = { character = ALB_esad_toptani ruling_only = yes } } }
-		}
-		#create toptani
-		create_dynamic_country = {
-			original_tag = ALB
-			every_state = {
-				limit = {
-					is_owned_by = PREV.PREV
-					OR = {
-						state = 44
-						state = 803
-						state = 870
-						state = 871
-						state = 1214
-						state = 1240
-						state = 1215
-					}
-				}
-				hidden_effect = { transfer_state_to = PREV }
-				custom_effect_tooltip = becomes_owned_and_controlled_by_central_albania
-			}
-			hidden_effect = {
-				set_popularities = { neutrality = 100 }
-				set_politics = { ruling_party = neutrality elections_allowed = no }
-				set_cosmetic_tag = ALB_central_albania
-			}
-			every_other_country = {
-				limit = { has_character = ALB_esad_toptani }
-				ALB_esad_toptani = {
-					custom_effect_tooltip = joins_central_albania
-					hidden_effect = {
-						set_nationality = PREV.PREV
-						if = {
-							limit = { has_ideology = personalistic_dictatorship }
-							promote_character = personalistic_dictatorship
-						}
-						else = {
-							add_country_leader_role = {
-								promote_leader = yes
-								country_leader = {
-									ideology = personalistic_dictatorship
-									traits = { ALB_wicked_ambitions }
-								}
-							}
-						}
-						promote_character = stratocracy
-						swap_country_leader_traits = {
-							remove = ALB_pasha_of_central_albania
-							add = ALB_wicked_ambitions
-							ideology = stratocracy
-						}
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = conservatism
-								traits = { ALB_wicked_ambitions }
-							}
-						}
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = vanguardism
-								traits = { ALB_wicked_ambitions }
-							}
-						}
-					}
-				}
-			}
-			custom_effect_tooltip = toptani_becomes_country_leader
-			hidden_effect = {
-				set_country_flag = ALB_toptani_independence
-				set_portraits = {
-					character = ALB_esad_toptani
-					civilian = {
-						large = "gfx/leaders/ALB/ALB_esad_toptani.png"
-						small = "gfx/interface/ideas/ALB/ALB_esad_toptani.png"
-					}
-				}
-				set_capital = {
-					state = 44
-					remember_old_capital = no
-				}
-				set_party_name = {
-					ideology = neutrality
-					name = ALB_toptani_party
-					long_name = ALB_toptani_party
-				}
-				set_party_name = {
-					ideology = democratic
-					name = ALB_toptani_party
-					long_name = ALB_toptani_party
-				}
-				set_party_name = {
-					ideology = fascism
-					name = ALB_toptani_party
-					long_name = ALB_toptani_party
-				}
-				set_party_name = {
-					ideology = communism
-					name = ALB_toptani_party
-					long_name = ALB_toptani_party
-				}
-				set_country_flag = ALB_toptani_government
-				if = {
-					limit = { has_completed_focus = ALB_international_gendarmerie }
-					uncomplete_national_focus = {
-						focus = ALB_international_gendarmerie
-						uncomplete_children = yes
-						refund_political_power = no
-					}
-				}
-				if = {
-					limit = { has_completed_focus = ALB_international_control_commission }
-					uncomplete_national_focus = {
-						focus = ALB_international_control_commission
-						uncomplete_children = yes
-						refund_political_power = no
-					}
-				}
-				if = {
-					limit = { has_completed_focus = ALB_establish_the_ottoman_regency }
-					uncomplete_national_focus = {
-						focus = ALB_establish_the_ottoman_regency
-						uncomplete_children = no
-						refund_political_power = no
-					}
-				}
-				if = {
-					limit = { has_completed_focus = ALB_set_up_the_prizren_government }
-					uncomplete_national_focus = {
-						focus = ALB_set_up_the_prizren_government
-						uncomplete_children = no
-						refund_political_power = no
-					}
-				}
-				if = {
-					limit = { has_completed_focus = ALB_establish_the_kimza_government }
-					uncomplete_national_focus = {
-						focus = ALB_establish_the_kimza_government
-						uncomplete_children = no
-						refund_political_power = no
-					}
-				}
-				if = {
-					limit = { has_completed_focus = ALB_secure_the_vlora_triangle }
-					uncomplete_national_focus = {
-						focus = ALB_secure_the_vlora_triangle
-						uncomplete_children = no
-						refund_political_power = no
-					}
-				}
-				if = {
-					limit = { has_completed_focus = ALB_recrown_abdulhamid_II }
-					uncomplete_national_focus = {
-						focus = ALB_recrown_abdulhamid_II
-						uncomplete_children = yes
-						refund_political_power = no
-					}
-				}
-				if = {
-					limit = { has_completed_focus = ALB_ideals_of_romantic_independence }
-					uncomplete_national_focus = {
-						focus = ALB_ideals_of_romantic_independence
-						uncomplete_children = yes
-						refund_political_power = no
-					}
-				}
-				if = {
-					limit = { has_completed_focus = ALB_albanian_vilayet }
-					uncomplete_national_focus = {
-						focus = ALB_albanian_vilayet
-						uncomplete_children = yes
-						refund_political_power = no
-					}
-				}
-				unlock_national_focus = ALB_central_albanian_government
-				unlock_national_focus = ALB_foreign_policy_priority
-			}
-		}
+		name = ww1_auh.124.a #yes
 		every_owned_state = {
 			limit = {
-				has_resistance = yes
-				is_core_of = ALB
-				NOT = {
+				OR = {
 					state = 44
 					state = 803
+					state = 1225
 					state = 870
 					state = 871
 					state = 1214
 					state = 1240
+					state = 1284
 					state = 1215
-				}
-			}
-			add_resistance = -15
-		}
-		hidden_effect = {
-			FROM = { country_event = { id = ww1_auh.125 hours = 8 } }
-			ALB = { country_event = { id = albania.42 } }
-		}
-		ai_chance = {
-			base = 100
-			modifier = {
-				add = 50
-				strength_ratio = {
-					tag = FROM
-					ratio < 0.5
-				}
-			}
-			modifier = {
-				add = 50
-				has_war_support < 0.5
-			}
-			modifier = {
-				factor = 0
-				has_game_rule = {
-					rule = ultimatum_on_albania
-					option = WAR_ON_ALBANIA
-				}
-			}
-		}
-	}
-	option = {
-		name = ww1_auh.124.e #yes
-		trigger = {
-			tag = MNT
-			any_country = { has_character = ALB_prenk_bib_doda }
-			NOT = { any_country = { has_country_leader = { character = ALB_prenk_bib_doda ruling_only = yes } } }
-		}
-		#create doda
-		create_dynamic_country = {
-			original_tag = ALB
-			every_state = {
-				limit = {
-					is_owned_by = PREV.PREV
-					OR = {
-						AND = {
-							state = 870
-							NOT = { ROOT = { has_global_flag = montenegrin_occupy_shkoder } }
-						}
-						state = 1214
-						state = 1240
-					}
-				}
-				hidden_effect = { transfer_state_to = PREV }
-				custom_effect_tooltip = becomes_owned_and_controlled_by_catholic_albania
-			}
-			hidden_effect = {
-				set_popularities = { neutrality = 100 }
-				set_politics = { ruling_party = neutrality elections_allowed = no }
-				set_cosmetic_tag = ALB_catholic_albania
-			}
-			every_other_country = {
-				limit = { has_character = ALB_prenk_bib_doda }
-				ALB_prenk_bib_doda = {
-					custom_effect_tooltip = joins_catholic_albania
-					hidden_effect = {
-						set_nationality = PREV.PREV
-						add_country_leader_role = {
-							character = ALB_prenk_bib_doda
-							promote_leader = yes
-							country_leader = {
-								ideology = warlordism
-								traits = { ALB_kapedan_of_the_mirdita }
-							}
-						}
-						add_country_leader_role = {
-							character = ALB_prenk_bib_doda
-							promote_leader = yes
-							country_leader = {
-								ideology = fundamentalism
-								traits = { ALB_kapedan_of_the_mirdita }
-							}
-						}
-						add_country_leader_role = {
-							character = ALB_prenk_bib_doda
-							promote_leader = yes
-							country_leader = {
-								ideology = conservatism
-								traits = { ALB_kapedan_of_the_mirdita }
-							}
-						}
-						add_country_leader_role = {
-							character = ALB_prenk_bib_doda
-							promote_leader = yes
-							country_leader = {
-								ideology = religious_communism
-								traits = { ALB_kapedan_of_the_mirdita }
-							}
-						}
-					}
 				}
 			}
 			custom_effect_tooltip = doda_becomes_country_leader
@@ -7985,49 +7677,53 @@ country_event = {
 			}
 		}
 	}
-	option = {
-		name = ww1_auh.124.c #no
-		create_wargoal = { type = take_core_state target = ALB }
-		FROM = {
-			effect_tooltip = {
-				give_guarantee = ALB
-				create_wargoal = {
-					type = take_state_focus
-					target = ROOT
-					generator = { 44 803 870 871 }
-				}
-			}
-			hidden_effect = { country_event = ww1_auh.126 }
-		}
-		add_political_power = -50
-		ai_chance = {
-			base = 30
-			modifier = {
-				add = 50
-				strength_ratio = {
-					tag = FROM
-					ratio > 0.7
-				}
-			}
-			modifier = {
-				NOT = {
-					original_tag = SER
-					original_tag = MNT
-				}
-				factor = 0.5
-			}
-			modifier = {
-				is_historical_focus_on = yes
-				NOT = {
-					has_game_rule = {
-						rule = ultimatum_on_albania
-						option = WAR_ON_ALBANIA
-					}
-				}
-				factor = 0
-			}		
-		}
-	}
+	#option = {
+	#	ai_chance = {
+	#		base = 30
+	#		modifier = {
+	#			add = 50
+	#			strength_ratio = {
+	#				tag = FROM
+	#				ratio > 0.7
+	#			}
+	#		}
+	#		modifier = {
+	#			NOT = {
+	#				original_tag = SER
+	#			}
+	#			factor = 0.5
+	#		}
+	#		modifier = {
+	#			is_historical_focus_on = yes
+	#			NOT = {
+	#				has_game_rule = {
+	#					rule = ultimatum_on_albania
+	#					option = WAR_ON_ALBANIA
+	#				}
+	#			}
+	#			factor = 0
+	#		}		
+	#	}
+	#	create_wargoal = {
+	#		type = take_core_state
+	#		target = ALB
+	#	}
+	#	FROM = {
+	#		effect_tooltip = {
+	#			give_guarantee = ALB
+	#			create_wargoal = {
+	#				type = take_state_focus
+	#				target = ROOT
+	#				generator = { 44 803 1225 870 871 }
+	#			}
+	#		}
+	#		hidden_effect = {
+	#			country_event = ww1_auh.126
+	#		}
+	#	}
+	#	name = ww1_auh.124.b #no
+	#	add_political_power = -50
+	#}
 }
 
 #######
@@ -11781,6 +11477,7 @@ country_event = {
 						transfer_state = 44
 						transfer_state = 1214
 						transfer_state = 1240
+						transfer_state = 1284
 						transfer_state = 1215
 						105 = { #Montenegro
 							owner = {
