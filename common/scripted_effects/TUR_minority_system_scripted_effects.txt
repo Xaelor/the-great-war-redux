@@ -195,8 +195,62 @@ TUR_recalculate_pop_percentages = {
 		}
 	}
 }
+TUR_recalculate_total_centalization = {
+	hidden_effect = {
+		every_owned_state = {
+			limit = {
+				OR = {
+					check_variable = {
+						THIS.TUR_albanian_state_pop_var > 0
+					}
+					check_variable = {
+						THIS.TUR_kurdish_state_pop_var > 0
+					}
+					check_variable = {
+						THIS.TUR_arab_state_pop_var > 0
+					}
+				}
+			}
+			set_variable = {
+				THIS.TUR_muslim_state_var = 1
+			}
+		}
+		set_variable = {
+			TUR_total_muslim_states_var = 0
+		}
+		every_owned_state = {
+			limit = {
+				check_variable = {
+					THIS.TUR_muslim_state_var > 0
+				}
+			}
+			add_to_variable = {
+				TUR.TUR_total_muslim_states_var = THIS.TUR_muslim_state_var
+			}
+		}
+		set_variable = {
+			TUR_total_centralization_var = 0
+		}
+		every_owned_state = {
+			limit = {
+				check_variable = {
+					THIS.TUR_state_centralization_var > 0
+				}
+			}
+			add_to_variable = {
+				TUR.TUR_total_centralization_var = THIS.TUR_state_centralization_var
+			}
+		}
+		divide_variable = {
+			TUR_total_centralization_var = TUR_total_muslim_states_var
+		}
+	}
+}
 TUR_recalculate_millet_system_modifiers = {
 	hidden_effect = {
+		TUR_recalculate_total_pop = yes
+		TUR_recalculate_pop_percentages = yes
+		TUR_recalculate_total_centalization = yes
 		set_variable = {
 			TUR_south_slav_loyalty_stability_var = {
 				value = TUR_south_slav_pop_percentage_var
@@ -264,52 +318,11 @@ TUR_recalculate_millet_system_modifiers = {
 				add = TUR.TUR_kurdish_loyalty_stability_var
 			}
 		}
-		set_variable = {
-			TUR_greek_loyalty_recruitable_pop_var = {
-				value = TUR_greek_pop_percentage_var
-				multiply = TUR.TUR_greek_loyalty_var
-			}
-		}
-		set_variable = {
-			TUR_armenian_loyalty_recruitable_pop_var = {
-				value = TUR_armenian_pop_percentage_var
-				multiply = TUR.TUR_armenian_loyalty_var
-			}
-		}
-		set_variable = {
-			TUR_jewish_loyalty_recruitable_pop_var = {
-				value = TUR_jewish_pop_percentage_var
-				multiply = TUR.TUR_jewish_loyalty_var
-			}
-		}
-		set_variable = {
-			TUR_aromanian_loyalty_recruitable_pop_var = {
-				value = TUR_aromanian_pop_percentage_var
-				multiply = TUR.TUR_aromanian_loyalty_var
-			}
-		}
-		set_variable = {
-			TUR_assyrian_loyalty_recruitable_pop_var = {
-				value = TUR_assyrian_pop_percentage_var
-				multiply = TUR.TUR_assyrian_loyalty_var
-			}
-		}
-		set_variable = {
-			TUR_albanian_loyalty_recruitable_pop_var = {
-				value = TUR_albanian_pop_percentage_var
-				multiply = TUR.TUR_albanian_loyalty_var
-			}
-		}
-		set_variable = {
-			TUR_kurdish_loyalty_recruitable_pop_var = {
-				value = TUR_kurdish_pop_percentage_var
-				multiply = TUR.TUR_kurdish_loyalty_var
-			}
-		}
-		set_variable = {
-			TUR_arab_loyalty_recruitable_pop_var = {
-				value = TUR_arab_pop_percentage_var
-				multiply = TUR.TUR_arab_loyalty_var
+		set_temp_variable = {
+			TUR.TUR_recruitable_pop_temp_var = {
+				value = 1
+				subtract = TUR_total_centralization_var
+				multiply = -1
 			}
 		}
 		if = {
@@ -319,15 +332,16 @@ TUR_recalculate_millet_system_modifiers = {
 			set_variable = {
 				TUR_millet_system_recruitable_population_var = {
 					value = 0
+					add = TUR.TUR_albanian_pop_percentage_var
+					add = TUR.TUR_kurdish_pop_percentage_var
+					add = TUR.TUR_arab_pop_percentage_var
+					multiply = TUR_recruitable_pop_temp_var
 					subtract = TUR_south_slav_pop_percentage_var
 					subtract = TUR_greek_pop_percentage_var
 					subtract = TUR_armenian_pop_percentage_var
 					subtract = TUR_jewish_pop_percentage_var
 					subtract = TUR_aromanian_pop_percentage_var
 					subtract = TUR_assyrian_loyalty_recruitable_pop_var
-					add = TUR.TUR_albanian_loyalty_recruitable_pop_var
-					add = TUR.TUR_kurdish_loyalty_recruitable_pop_var
-					add = TUR.TUR_arab_loyalty_recruitable_pop_var
 				}
 			}
 		}
@@ -335,15 +349,10 @@ TUR_recalculate_millet_system_modifiers = {
 			set_variable = {
 				TUR_millet_system_recruitable_population_var = {
 					value = 0
-					add = TUR.TUR_arab_loyalty_stability_var
-					add = TUR.TUR_greek_loyalty_recruitable_pop_var
-					add = TUR.TUR_armenian_loyalty_recruitable_pop_var
-					add = TUR.TUR_jewish_loyalty_recruitable_pop_var
-					add = TUR.TUR_aromanian_loyalty_recruitable_pop_var
-					add = TUR.TUR_assyrian_loyalty_recruitable_pop_var
-					add = TUR.TUR_albanian_loyalty_recruitable_pop_var
-					add = TUR.TUR_kurdish_loyalty_recruitable_pop_var
-					add = TUR.TUR_arab_loyalty_recruitable_pop_var
+					add = TUR.TUR_albanian_pop_percentage_var
+					add = TUR.TUR_kurdish_pop_percentage_var
+					add = TUR.TUR_arab_pop_percentage_var
+					multiply = TUR_recruitable_pop_temp_var
 				}
 			}
 		}
@@ -438,6 +447,4 @@ TUR_recalculate_millet_system_modifiers = {
 #		tooltip = TUR_modify_armenian_pop_tt
 #	}
 #}
-#TUR_recalculate_total_pop = yes
-#TUR_recalculate_pop_percentages = yes
 #TUR_recalculate_millet_system_modifiers = yes
