@@ -64,7 +64,29 @@
 		}
 		cost = 5
 		completion_reward = {
-			add_political_power = 67
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
+			add_to_variable = {
+				RAJ_ind_civ_construction_speed = 0.05
+				tooltip = production_speed_industrial_complex_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_mil_construction_speed = 0.05
+				tooltip = production_speed_arms_factory_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_factory_output = 0.025
+				tooltip = industrial_capacity_factory_tt
+			}
+			add_to_variable = {
+				RAJ_ind_efficiency_cap = 0.025
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+			custom_effect_tooltip = RAJ_skip_a_line
+			add_to_variable = {
+				RAJ_indian_confidence_var = 2.5
+				tooltip = RAJ_indian_confidence_var_modify
+			}
+			RAJ_indian_confidence_scripted_effect = yes
 		}
 		ai_will_do = {
 			factor = 1
@@ -91,7 +113,7 @@
 		prerequisite = {
 		}
 		completion_reward = {
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
 			add_to_variable = {
 				RAJ_ind_civ_construction_speed = 0.1
 				tooltip = production_speed_industrial_complex_factor_tt
@@ -137,7 +159,7 @@
 		}
 		completion_reward = {
 			add_stability = 0.1
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
 			add_to_variable = {
 				RAJ_ind_civ_construction_speed = -0.1
 				tooltip = production_speed_industrial_complex_factor_tt
@@ -314,7 +336,6 @@
 		}
 		completion_reward = {
 			add_research_slot = 1
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
 			add_to_variable = {
 				RAJ_ind_research_speed = 0.05
 				tooltip = research_speed_factor_tt
@@ -343,11 +364,14 @@
 			focus = RAJ_indian_electricity_act
 		}
 		completion_reward = {
-			add_stability = 0.02
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
 			add_to_variable = {
-				RAJ_ind_max_factories = 0.025
+				RAJ_ind_max_factories = 0.02
 				tooltip = global_building_slots_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_stability = 0.02
+				tooltip = stability_factor_tt
 			}
 			429 = {
 				add_extra_state_shared_building_slots = 1
@@ -387,11 +411,14 @@
 			focus = RAJ_invest_in_delhi
 		}
 		completion_reward = {
-			add_stability = 0.02
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
 			add_to_variable = {
-				RAJ_ind_max_factories = 0.025
+				RAJ_ind_max_factories = 0.02
 				tooltip = global_building_slots_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_stability = 0.02
+				tooltip = stability_factor_tt
 			}
 			288 = {
 				add_extra_state_shared_building_slots = 1
@@ -430,7 +457,7 @@
 			focus = RAJ_invest_in_burma
 		}
 		completion_reward = {
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
 			add_to_variable = {
 				RAJ_ind_consumer_goods = -0.05
 				tooltip = consumer_goods_factor_tt
@@ -502,11 +529,14 @@
 			focus = RAJ_hardinge_bridge_railway
 		}
 		completion_reward = {
-			add_stability = 0.02
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
 			add_to_variable = {
-				RAJ_ind_max_factories = 0.025
+				RAJ_ind_max_factories = 0.02
 				tooltip = global_building_slots_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_stability = 0.02
+				tooltip = stability_factor_tt
 			}
 			430 = {
 				add_extra_state_shared_building_slots = 1
@@ -546,11 +576,14 @@
 			focus = RAJ_invest_in_madras
 		}
 		completion_reward = {
-			add_stability = 0.02
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
 			add_to_variable = {
-				RAJ_ind_max_factories = 0.025
+				RAJ_ind_max_factories = 0.02
 				tooltip = global_building_slots_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_stability = 0.02
+				tooltip = stability_factor_tt
 			}
 			440 = {
 				add_extra_state_shared_building_slots = 1
@@ -649,7 +682,7 @@
 		completion_reward = {
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = RAJ_ludovic_porter
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
 			add_to_variable = {
 				RAJ_ind_research_speed = 0.05
 				tooltip = research_speed_factor_tt
@@ -736,23 +769,12 @@
 			focus = RAJ_invest_in_punjab
 		}
 		completion_reward = {
+			custom_effect_tooltip = 
 			if = {
 				limit = {
-					has_dlc = "Arms Against Tyranny"
+					has_completed_focus = RAJ_invest_in_bombay
 				}
-				show_mio_tooltip = RAJ_ishapore_rifle_factory_organization
-				mio:RAJ_ishapore_rifle_factory_organization = {
-					add_mio_funds = 1000
-				}
-				show_mio_tooltip = RAJ_gcf_jabalpur_organization
-				mio:RAJ_gcf_jabalpur_organization = {
-					add_mio_funds = 1000
-				}
-				else = {
-					custom_effect_tooltip = available_designer
-					show_ideas_tooltip = ishapore_rifle_factory
-					show_ideas_tooltip = RAJ_gcf_jabalpur
-				}
+				
 			}
 		}
 		ai_will_do = {
@@ -778,11 +800,14 @@
 			focus = RAJ_indian_electricity_act
 		}
 		completion_reward = {
-			add_stability = 0.02
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
 			add_to_variable = {
-				RAJ_ind_max_factories = 0.025
+				RAJ_ind_max_factories = 0.02
 				tooltip = global_building_slots_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_stability = 0.02
+				tooltip = stability_factor_tt
 			}
 			439 = {
 				add_extra_state_shared_building_slots = 1
@@ -821,11 +846,14 @@
 			focus = RAJ_indian_electricity_act
 		}
 		completion_reward = {
-			add_stability = 0.02
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
 			add_to_variable = {
-				RAJ_ind_max_factories = 0.025
+				RAJ_ind_max_factories = 0.02
 				tooltip = global_building_slots_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_stability = 0.02
+				tooltip = stability_factor_tt
 			}
 			423 = {
 				add_extra_state_shared_building_slots = 1
@@ -868,6 +896,22 @@
 				bonus = 1
 				uses = 2
 				category = industry
+			}
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				mio:RAJ_ishapore_rifle_factory_organization = {
+					add_mio_funds = 1000
+				}
+				mio:RAJ_gcf_jabalpur_organization = {
+					add_mio_funds = 1000
+				}
+				else = {
+					custom_effect_tooltip = available_designer
+					show_ideas_tooltip = ishapore_rifle_factory
+					show_ideas_tooltip = RAJ_gcf_jabalpur
+				}
 			}
 			custom_effect_tooltip = RAJ_use_the_industrials_reward
 			custom_effect_tooltip = available_political_advisor
@@ -1014,7 +1058,7 @@
 				}
 				custom_effect_tooltip = RAJ_tata_steel_ltd_reward_2
 			}
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
 			add_to_variable = {
 				RAJ_ind_local_resources_factor = 0.025
 				tooltip = local_resources_factor_tt
@@ -1088,7 +1132,7 @@
 					}
 				}
 			}
-			custom_effect_tooltip = RAJ_deindustrialisation_reward
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
 			add_to_variable = {
 				RAJ_ind_local_resources_factor = 0.025
 				tooltip = local_resources_factor_tt
@@ -3958,6 +4002,10 @@
 		y = 1
 		relative_position_id = RAJ_matters_of_the_council
 		available = {
+			has_country_leader = {
+				character = RAJ_charles_hardinge
+				ruling_only = yes
+			}
 			ENG = {
 				OR = {
 					has_idea = george_v
