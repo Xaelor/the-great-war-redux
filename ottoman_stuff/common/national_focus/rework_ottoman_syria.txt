@@ -1,0 +1,4873 @@
+focus_tree = {
+	id = ottoman_syria_focus_tree
+	country = {
+		factor = 0
+		modifier = {
+			add = 100
+			has_country_flag = TUR_ottoman_syria
+		}
+	}
+	default = no
+	continuous_focus_position = {
+		x = 0
+		y = 2350
+	}
+	initial_show_position = { focus = TUR_uncrowned_king_of_syria }
+	focus = {
+		id = TUR_uncrowned_king_of_syria
+		icon = GFX_TUR_uncrowned_king_of_syria
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL_CHARACTER
+			FOCUS_FILTER_HISTORICAL
+		}
+		x = 5
+		y = 0
+		available = { has_country_leader = { character = TUR_ahmed_cemal } }
+		completion_reward = { add_country_leader_trait = TUR_uncrowned_king }
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_cemals_personal_territory
+		icon = GFX_focus_generic_home_defense
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_BALANCE_OF_POWER
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_uncrowned_king_of_syria }
+		x = -4
+		y = 1
+		relative_position_id = TUR_uncrowned_king_of_syria
+		available = { has_country_leader = { character = TUR_ahmed_cemal } }
+		completion_reward = {
+			custom_effect_tooltip = TUR_cemals_personal_territory_tt
+			hidden_effect = {
+				remove_dynamic_modifier = { modifier = TUR_ottoman_4th_army }
+				remove_dynamic_modifier = { modifier = TUR_sublime_realm }
+				add_dynamic_modifier = { modifier = TRS_cemals_syria }
+				add_dynamic_modifier = { modifier = TUR_ottoman_4th_army }
+				add_dynamic_modifier = { modifier = TUR_sublime_realm }
+			}
+			set_variable = { TRS_cs_max_command_power_mult = 0.1 }
+			set_variable = { TRS_cs_political_power_factor = 0 }
+			set_variable = { TRS_cs_stability_factor = 0 }
+			set_variable = { TRS_cs_war_support_factor = 0 }
+			set_variable = { TRS_cs_stability_weekly = 0 }
+			set_variable = { TRS_cs_industrial_capacity_factory = 0 }
+			set_variable = { TRS_cs_production_speed_buildings_factor = 0 }
+			set_variable = { TRS_cs_production_speed_infrastructure_factor = 0 }
+			set_variable = { TRS_cs_production_speed_rail_way_factor = 0 }
+			set_variable = { TRS_cs_production_speed_industrial_complex_factor = 0 }
+			set_variable = { TRS_cs_production_speed_arms_factory_factor = 0 }
+			set_variable = { TRS_cs_consumer_goods_factor = 0 }
+			set_variable = { TRS_cs_forced_surrender_limit = 0 }
+			set_variable = { TRS_cs_research_speed_factor = 0 }
+			set_variable = { TRS_cs_war_stability_factor = 0 }
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = -0.1
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_rewarding_loyalties
+		icon = GFX_goal_generic_major_alliance
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_BALANCE_OF_POWER
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_cemals_personal_territory }
+		x = 1
+		y = 1
+		relative_position_id = TUR_cemals_personal_territory
+		available = { has_country_leader = { character = TUR_ahmed_cemal } }
+		completion_reward = {
+			custom_effect_tooltip = TUR_rewarding_loyalties_tt
+			add_to_variable = { TRS_cs_political_advisor_cost_factor = -0.5 }
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = -0.3
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_mobile_headquarters
+		icon = GFX_focus_generic_truck
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_WAR_SUPPORT
+			FOCUS_FILTER_BALANCE_OF_POWER
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_cemals_personal_territory }
+		x = -1
+		y = 1
+		relative_position_id = TUR_cemals_personal_territory
+		available = { has_country_leader = { character = TUR_ahmed_cemal } }
+		complete_tooltip = {
+			every_state = {
+				limit = { has_state_flag = TUR_mobile_headquarters }
+				add_dynamic_modifier = { modifier = TRS_mobile_headquarters_dm }
+				ROOT = { set_capital = { state = PREV } }
+			}
+			custom_effect_tooltip = TUR_mobile_headquarters_tt
+			add_war_support = 0.05
+		}
+		completion_reward = {
+			random_controlled_state = {
+				limit = { is_demilitarized_zone = no }
+				prioritize = { 554 }
+				add_dynamic_modifier = { modifier = TRS_mobile_headquarters_dm }
+				set_state_flag = TUR_mobile_headquarters
+				ROOT = { set_capital = { state = PREV } }
+			}
+			custom_effect_tooltip = TUR_mobile_headquarters_tt
+			add_to_variable = { TRS_cs_forced_surrender_limit = 0.05 }
+			add_war_support = 0.05
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = -0.15
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_governor_of_aleppo
+		icon = GFX_TUR_governor_of_aleppo
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_BALANCE_OF_POWER
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_cemals_personal_territory }
+		x = 0
+		y = 2
+		relative_position_id = TUR_cemals_personal_territory
+		available = { has_country_leader = { character = TUR_ahmed_cemal } }
+		select_effect = {
+			activate_advisor = TUR_bekir_sami
+			set_can_be_fired_in_advisor_role = { character = TUR_bekir_sami value = no }
+			country_event = { id = ottoman_syria.26 days = 7 }
+		}
+		completion_reward = {
+			custom_effect_tooltip = tooltip_immediate_effect_upon_focus_start
+			effect_tooltip = {
+				activate_advisor = TUR_bekir_sami
+				set_can_be_fired_in_advisor_role = { character = TUR_bekir_sami value = no }
+			}
+			custom_effect_tooltip = TUR_governor_of_aleppo_tt
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_bring_halide_edib_hanim
+		icon = GFX_focus_AFG_education_reform
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_governor_of_aleppo }
+		x = -1
+		y = 1
+		relative_position_id = TUR_governor_of_aleppo
+		available = { has_country_leader = { character = TUR_ahmed_cemal } }
+		complete_tooltip = {
+			custom_effect_tooltip = TUR_bring_halide_edib_hanim_tt1
+			if = {
+				limit = { has_country_flag = TUR_bring_halide_edib_hanim1 }
+				custom_effect_tooltip = ottoman_syria.34.tt
+			}
+			if = {
+				limit = { has_country_flag = TUR_bring_halide_edib_hanim2 }
+				TUR = { country_event = { id = ottoman_syria.33 hours = 8 } }
+				custom_effect_tooltip = if_they_accept_tt
+				event_option_tooltip = ottoman_syria.34.a
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = TUR_bring_halide_edib_hanim_tt1
+			add_to_variable = { TRS_cs_research_speed_factor = 0.05 }
+			if = {
+				limit = { has_character = TUR_halide_edib_adivar }
+				custom_effect_tooltip = ottoman_syria.34.tt
+				add_to_variable = { TUR_ci_monthly_population = 0.07 }
+				add_to_variable = { TUR_ci_research_speed_factor = 0.03 }
+				set_country_flag = TUR_halide_edib_adivar_event_has_illiteracy
+				TUR_add_remove_illiterate_society = yes
+				set_country_flag = TUR_bring_halide_edib_hanim1
+			}
+			else = {
+				TUR = { country_event = { id = ottoman_syria.33 hours = 8 } }
+				custom_effect_tooltip = if_they_accept_tt
+				event_option_tooltip = ottoman_syria.34.a
+				set_country_flag = TUR_bring_halide_edib_hanim2
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_war_taxes
+		icon = GFX_focus_RAJ_war_taxes
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_BALANCE_OF_POWER
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_governor_of_aleppo }
+		x = 1
+		y = 1
+		relative_position_id = TUR_governor_of_aleppo
+		available = {
+			OR = {
+				threat > 0.4
+				has_war = yes
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = TUR_war_taxes_tt
+			add_to_variable = { TRS_cs_stability_weekly = -0.002 }
+			add_to_variable = { TRS_cs_consumer_goods_factor = -0.3 }
+			set_country_flag = TRS_war_tax
+			unlock_decision_tooltip = TRS_abolish_war_taxes
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = -0.1
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_enforce_turkish_in_administration
+		icon = GFX_focus_AUS_lawmaking_leniency
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_BALANCE_OF_POWER
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_governor_of_aleppo }
+		x = 0
+		y = 2
+		relative_position_id = TUR_governor_of_aleppo
+		complete_tooltip = {
+			custom_effect_tooltip = TUR_enforce_turkish_in_administration_tt
+			add_to_variable = { TRS_cs_political_power_factor = 0.08 }
+			add_to_variable = { TRS_cs_stability_factor = 0.1 }
+			add_to_variable = { TRS_cs_war_support_factor = 0.05 }
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = -0.2
+				}
+			}
+			if = {
+				limit = { has_country_flag = TUR_enforce_turkish_in_administration1 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+			}
+			if = {
+				limit = { has_country_flag = TUR_enforce_turkish_in_administration2 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+			}
+			if = {
+				limit = { has_country_flag = TUR_enforce_turkish_in_administration3 }
+				add_popularity = { ideology = democratic popularity = 0.03 }
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = TUR_enforce_turkish_in_administration_tt
+			add_to_variable = { TRS_cs_political_power_factor = 0.07 }
+			add_to_variable = { TRS_cs_stability_factor = -0.05 }
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = -0.2
+				}
+			}
+			if = {
+				limit = { has_idea = TRS_arab_opposition_0 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_0
+						add_idea = TRS_arab_opposition_1
+					}
+				}
+				set_country_flag = TUR_enforce_turkish_in_administration1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_1 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_1
+						add_idea = TRS_arab_opposition_2
+					}
+				}
+				set_country_flag = TUR_enforce_turkish_in_administration2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_2 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_2
+						add_idea = TRS_arab_opposition_3
+					}
+				}
+				set_country_flag = TUR_enforce_turkish_in_administration1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_3 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_3
+						add_idea = TRS_arab_opposition_4
+					}
+				}
+				set_country_flag = TUR_enforce_turkish_in_administration2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_4 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_4
+						add_idea = TRS_arab_opposition_5
+					}
+				}
+				set_country_flag = TUR_enforce_turkish_in_administration1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_5 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_5
+						add_idea = TRS_arab_opposition_6
+					}
+				}
+				set_country_flag = TUR_enforce_turkish_in_administration2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_6 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_6
+						add_idea = TRS_arab_opposition_7
+					}
+				}
+				set_country_flag = TUR_enforce_turkish_in_administration1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_7 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_7
+						add_idea = TRS_arab_opposition_8
+					}
+				}
+				set_country_flag = TUR_enforce_turkish_in_administration2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_8 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_8
+						add_idea = TRS_arab_opposition_9
+					}
+				}
+				set_country_flag = TUR_enforce_turkish_in_administration1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_9 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_9
+						add_idea = TRS_arab_opposition_10
+					}
+				}
+				set_country_flag = TUR_enforce_turkish_in_administration2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_10 }
+				add_popularity = { ideology = democratic popularity = 0.03 }
+				set_country_flag = TUR_enforce_turkish_in_administration3
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_syrian_education_campaign
+		icon = GFX_focus_research2
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+			FOCUS_FILTER_BALANCE_OF_POWER
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_bring_halide_edib_hanim }
+		prerequisite = { focus = TUR_enforce_turkish_in_administration }
+		x = -1
+		y = 1
+		relative_position_id = TUR_enforce_turkish_in_administration
+		completion_reward = {
+			unlock_decision_category_tooltip = TRS_education_reforms_category
+			custom_effect_tooltip = TUR_syrian_education_campaign_tt
+			hidden_effect = {
+				swap_ideas = {
+					remove_idea = TUR_crippling_illiteracy
+					add_idea = TUR_indoctrinated_education
+				}
+			}
+			add_to_variable = { TUR_ci_research_speed_factor = 0.05 }
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = -0.1
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_forced_labor
+		icon = GFX_focus_generic_limited_social_mobilization
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_BALANCE_OF_POWER
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_enforce_turkish_in_administration }
+		x = 1
+		y = 1
+		relative_position_id = TUR_enforce_turkish_in_administration
+		completion_reward = {
+			custom_effect_tooltip = TUR_forced_labor_tt
+			add_to_variable = { TRS_cs_stability_factor = -0.1 }
+			add_to_variable = { TRS_cs_war_support_factor = -0.1 }
+			add_to_variable = { TRS_cs_industrial_capacity_factory = 0.1 }
+			add_to_variable = { TRS_cs_production_speed_buildings_factor = 0.1 }
+			set_country_flag = TUR_forced_labor
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = -0.1
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_open_up_syrian_factories
+		icon = GFX_goal_generic_construct_civ_factory
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_BALANCE_OF_POWER
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_enforce_turkish_in_administration }
+		x = 3
+		y = 1
+		relative_position_id = TUR_enforce_turkish_in_administration
+		complete_tooltip = {
+			every_state = {
+				limit = { has_state_flag = TUR_open_up_syrian_factories }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = -0.05
+				}
+			}
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					OR = {
+						state = 859
+						state = 677
+						state = 852
+						state = 554
+						state = 1023
+						state = 553
+						state = 1021
+						state = 858
+						state = 454
+						state = 856
+						state = 455
+					}
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				prioritize = { 554 }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = TUR_open_up_syrian_factories
+			}
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = -0.05
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_syrian_industrialization
+		icon = GFX_focus_generic_industry_3
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_BALANCE_OF_POWER
+		}
+		prerequisite = { focus = TUR_open_up_syrian_factories }
+		x = 0
+		y = 1
+		relative_position_id = TUR_open_up_syrian_factories
+		completion_reward = {
+			unlock_decision_tooltip = TRS_syrian_industrialization_initiative
+			custom_effect_tooltip = TUR_syrian_industrialization_tt
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = -0.1
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_workshops_for_weapons
+		icon = GFX_focus_generic_military_industry
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_BALANCE_OF_POWER
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_enforce_turkish_in_administration }
+		x = 5
+		y = 1
+		relative_position_id = TUR_enforce_turkish_in_administration
+		completion_reward = {
+			add_ideas = TRS_weapon_workshops
+			unlock_decision_tooltip = TRS_disband_weapon_workshops
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = -0.1
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_syrian_reforms
+		icon = GFX_TUR_central_administration_in_syria
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_MINORITY
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_uncrowned_king_of_syria }
+		x = 4
+		y = 1
+		relative_position_id = TUR_uncrowned_king_of_syria
+		completion_reward = {
+			add_to_variable = {
+				var = global.TUR_aleppo_centralization
+				value = 5
+				tooltip = TUR_change_aleppo_centralization
+			}
+			add_to_variable = {
+				var = global.TUR_deir_ez_zor_centralization
+				value = 5
+				tooltip = TUR_change_deir_ez_zor_centralization
+			}
+			add_to_variable = {
+				var = global.TUR_damascus_centralization
+				value = 5
+				tooltip = TUR_change_damascus_centralization
+			}
+			add_to_variable = {
+				var = global.TUR_beirut_centralization
+				value = 5
+				tooltip = TUR_change_beirut_centralization
+			}
+			add_to_variable = {
+				var = global.TUR_jerusalem_centralization
+				value = 5
+				tooltip = TUR_change_jerusalem_centralization
+			}
+			add_political_power = 25
+			set_global_flag = TUR_syrian_reforms
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_arab_value = yes
+				set_temp_variable = {
+					TUR_syrian_reforms = {
+						value = old_arab_value
+						divide = TUR_arab_population_factor_new
+						multiply = {
+							value = TUR_arab_population_factor_new
+							add = 0.1
+						}
+						subtract = old_arab_value
+					}
+				}
+			}
+			add_to_variable = { TUR_arab_population_factor_new = 0.1 }
+			custom_effect_tooltip = TUR_syrian_reforms_tt
+
+			TUR_reload_minority_values = yes
+			ottoman_centralization_variable_check = yes
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_revive_the_ottomanism_dream_syria
+		icon = GFX_TUR_revive_the_ottomanism_dream
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_MINORITY
+			FOCUS_FILTER_STABILITY
+			FOCUS_FILTER_WAR_SUPPORT
+		}
+		mutually_exclusive = { focus = TUR_one_language_one_religion_one_nation_syria }
+		x = 2
+		y = 0
+		relative_position_id = TUR_syrian_reforms
+		available = {
+			NOT = { has_government = fascism }
+			if = {
+				limit = { tag = TRS }
+				OR = {
+					NOT = { has_autonomy_state = autonomy_tgwr_ottoman_committee_government }
+					overlord = { has_completed_focus = TUR_revive_the_ottomanism_dream }
+				}
+			}
+		}
+		available_if_capitulated = yes
+		completion_reward = {
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_sunni_value = yes
+				set_temp_variable = {
+					TUR_revive_the_ottomanism_dream_sunni = {
+						value = old_sunni_value
+						divide = TUR_sunni_population_factor_new
+						multiply = {
+							value = TUR_sunni_population_factor_new
+							add = 0.3
+						}
+					}
+				}
+				
+				TUR_set_old_shia_value = yes
+				set_temp_variable = {
+					TUR_revive_the_ottomanism_dream_shia = {
+						value = old_shia_value
+						divide = TUR_shia_population_factor_new
+						multiply = {
+							value = TUR_shia_population_factor_new
+							add = 0.1
+						}
+					}
+				}
+
+				TUR_set_old_orthodox_value = yes
+				set_temp_variable = {
+					TUR_revive_the_ottomanism_dream_orthodox = {
+						value = old_orthodox_value
+						divide = TUR_orthodox_population_factor_new
+						multiply = {
+							value = TUR_orthodox_population_factor_new
+							add = -0.3
+						}
+					}
+				}
+
+				TUR_set_old_catholic_value = yes
+				set_temp_variable = {
+					TUR_revive_the_ottomanism_dream_catholic = {
+						value = old_catholic_value
+						divide = TUR_catholic_population_factor_new
+						multiply = {
+							value = TUR_catholic_population_factor_new
+							add = -0.3
+						}
+					}
+				}
+
+				TUR_set_old_jewish_value = yes
+				set_temp_variable = {
+					TUR_revive_the_ottomanism_dream_jewish = {
+						value = old_jewish_value
+						divide = TUR_jewish_population_factor_new
+						multiply = {
+							value = TUR_jewish_population_factor_new
+							add = -0.3
+						}
+					}
+				}
+
+				TUR_set_old_armenian_value = yes
+				set_temp_variable = {
+					TUR_revive_the_ottomanism_dream_armenian = {
+						value = old_armenian_value
+						divide = TUR_armenian_population_factor_new
+						multiply = {
+							value = TUR_armenian_population_factor_new
+							add = -0.3
+						}
+					}
+				}
+
+				TUR_set_old_assyrian_value = yes
+				set_temp_variable = {
+					TUR_revive_the_ottomanism_dream_assyrian = {
+						value = old_assyrian_value
+						divide = TUR_assyrian_population_factor_new
+						multiply = {
+							value = TUR_assyrian_population_factor_new
+							add = -0.3
+						}
+					}
+				}
+				
+				set_temp_variable = {
+					TUR_revive_the_ottomanism_dream = {
+						value = TUR_revive_the_ottomanism_dream_sunni
+						add = TUR_revive_the_ottomanism_dream_shia
+						add = TUR_revive_the_ottomanism_dream_catholic
+						add = TUR_revive_the_ottomanism_dream_orthodox
+						add = TUR_revive_the_ottomanism_dream_jewish
+						add = TUR_revive_the_ottomanism_dream_armenian
+						add = TUR_revive_the_ottomanism_dream_assyrian
+						subtract = {
+							value = old_sunni_value
+							add = old_shia_value
+							add = old_catholic_value
+							add = old_orthodox_value
+							add = old_jewish_value
+							add = old_armenian_value
+							add = old_assyrian_value
+						}
+					}
+				}
+				if = {
+					limit = { has_variable = TUR_ottoman_syria_value_calculate }
+					multiply_temp_variable = { TUR_revive_the_ottomanism_dream = TUR_ottoman_syria_value_calculate }
+				}
+			}
+			add_to_variable = { TUR_sunni_population_factor_new = 0.3 }
+			add_to_variable = { TUR_shia_population_factor_new = 0.1 }
+			add_to_variable = { TUR_orthodox_population_factor_new = -0.3 }
+			add_to_variable = { TUR_apostolic_population_factor_new = -0.3 }
+			add_to_variable = { TUR_judaic_population_factor_new = -0.3 }
+			add_to_variable = { TUR_syriac_population_factor_new = -0.3 }
+			add_to_variable = { TUR_catholic_population_factor_new = -0.3 }
+			if = {
+				limit = { has_variable = TUR_ottoman_syria_value_calculate }
+				multiply_variable = { TUR_sunni_population_factor_new = TUR_ottoman_syria_value_calculate }
+				multiply_variable = { TUR_shia_population_factor_new = TUR_ottoman_syria_value_calculate }
+				multiply_variable = { TUR_orthodox_population_factor_new = TUR_ottoman_syria_value_calculate }
+				multiply_variable = { TUR_apostolic_population_factor_new = TUR_ottoman_syria_value_calculate }
+				multiply_variable = { TUR_judaic_population_factor_new = TUR_ottoman_syria_value_calculate }
+				multiply_variable = { TUR_syriac_population_factor_new = TUR_ottoman_syria_value_calculate }
+				multiply_variable = { TUR_catholic_population_factor_new = TUR_ottoman_syria_value_calculate }
+			}
+			custom_effect_tooltip = TUR_revive_the_ottomanism_dream_tt
+			TUR_reload_minority_values = yes
+		}
+	}
+	focus = {
+		id = TUR_one_language_one_religion_one_nation_syria
+		icon = GFX_TUR_one_language_one_religion_one_nation
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_MINORITY
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_WAR_SUPPORT
+		}
+		mutually_exclusive = { focus = TUR_revive_the_ottomanism_dream_syria }
+		x = 2
+		y = 0
+		relative_position_id = TUR_revive_the_ottomanism_dream_syria
+		available = {
+			if = {
+				limit = { tag = TRS }
+				OR = {
+					NOT = { has_autonomy_state = autonomy_tgwr_ottoman_committee_government }
+					overlord = { has_completed_focus = TUR_one_language_one_religion_one_nation }
+				}
+			}
+		}
+		available_if_capitulated = yes
+		completion_reward = {
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_armenian_value = yes
+				set_temp_variable = {
+					TUR_one_language_one_religion_one_nation_armenian = {
+						value = old_armenian_value
+						divide = TUR_armenian_population_factor_new
+						multiply = {
+							value = TUR_armenian_population_factor_new
+							add = 0.1
+						}
+					}
+				}
+
+				TUR_set_old_arab_value = yes
+				set_temp_variable = {
+					TUR_one_language_one_religion_one_nation_arab = {
+						value = old_arab_value
+						divide = TUR_arab_population_factor_new
+						multiply = {
+							value = TUR_arab_population_factor_new
+							add = 0.1
+						}
+					}
+				}
+				
+				TUR_set_old_kurdish_value = yes
+				set_temp_variable = {
+					TUR_one_language_one_religion_one_nation_kurdish = {
+						value = old_kurdish_value
+						divide = TUR_kurdish_population_factor_new
+						multiply = {
+							value = TUR_kurdish_population_factor_new
+							add = 0.1
+						}
+					}
+				}
+
+				TUR_set_old_jewish_value = yes
+				set_temp_variable = {
+					TUR_one_language_one_religion_one_nation_jewish = {
+						value = old_jewish_value
+						divide = TUR_jewish_population_factor_new
+						multiply = {
+							value = TUR_jewish_population_factor_new
+							add = 0.1
+						}
+					}
+				}
+				
+				set_temp_variable = {
+					TUR_one_language_one_religion_one_nation = {
+						value = TUR_one_language_one_religion_one_nation_armenian
+						add = TUR_one_language_one_religion_one_nation_arab
+						add = TUR_one_language_one_religion_one_nation_kurdish
+						add = TUR_one_language_one_religion_one_nation_jewish
+						subtract = {
+							value = old_armenian_value
+							add = old_arab_value
+							add = old_kurdish_value
+							add = old_jewish_value
+						}
+					}
+				}
+
+				if = {
+					limit = { has_variable = TUR_ottoman_syria_value_calculate }
+					multiply_temp_variable = { TUR_one_language_one_religion_one_nation = TUR_ottoman_syria_value_calculate }
+				}
+			}
+			add_to_variable = { TUR_arab_population_factor_new = 0.1 }
+			add_to_variable = { TUR_kurdish_population_factor_new = 0.1 }
+			add_to_variable = { TUR_jewish_population_factor_new = 0.1 }
+			if = {
+				limit = { has_variable = TUR_ottoman_syria_value_calculate }
+				multiply_variable = { TUR_arab_population_factor_new = TUR_ottoman_syria_value_calculate }
+				multiply_variable = { TUR_kurdish_population_factor_new = TUR_ottoman_syria_value_calculate }
+				multiply_variable = { TUR_jewish_population_factor_new = TUR_ottoman_syria_value_calculate }
+			}
+			custom_effect_tooltip = TUR_one_language_one_religion_one_nation_tt
+			custom_effect_tooltip = TUR_modify_TUR_cemals_syria_tt
+			add_to_variable = {
+				tooltip = command_power_gain_10
+				TRS_cs_command_power_gain = 0.1
+			}
+			custom_effect_tooltip = empty_space
+			add_political_power = 120
+			add_war_support = 0.1
+			set_variable = { TUR_suppress_dissent_time = 7 }
+			TUR_reload_minority_values = yes
+		}
+	}
+	focus = {
+		id = TUR_dealing_with_the_arabist_movement
+		icon = GFX_generic_crush_al_fatat
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_syrian_reforms }
+		x = -4
+		y = 1
+		relative_position_id = TUR_syrian_reforms
+		available = {
+			TRS_has_arab_opposition = yes
+			custom_trigger_tooltip = {
+				tooltip = TRS_arab_opposition_no_effect
+				OR = {
+					has_idea = TRS_arab_opposition_1
+					has_idea = TRS_arab_opposition_2
+					has_idea = TRS_arab_opposition_3
+					has_idea = TRS_arab_opposition_4
+					has_idea = TRS_arab_opposition_5
+					has_idea = TRS_arab_opposition_6
+					has_idea = TRS_arab_opposition_7
+					has_idea = TRS_arab_opposition_8
+					has_idea = TRS_arab_opposition_9
+					has_idea = TRS_arab_opposition_10
+				}
+			}
+		}
+		complete_tooltip = {
+			if = {
+				limit = { has_country_flag = TUR_dealing_with_the_arabist_movement1 }
+				custom_effect_tooltip = TRS_arab_opposition_decrease_2_tt
+			}
+			if = {
+				limit = { has_country_flag = TUR_dealing_with_the_arabist_movement2 }
+				custom_effect_tooltip = TRS_arab_opposition_decrease_1_tt
+			}
+			if = {
+				limit = { has_country_flag = TUR_dealing_with_the_arabist_movement3 }
+				add_popularity = { ideology = democratic popularity = -0.03 }
+			}
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_arab_value = yes
+				set_temp_variable = {
+					TUR_dealing_with_the_arabist_movement = {
+						value = old_arab_value
+						divide = TUR_arab_population_factor_new
+						multiply = {
+							value = TUR_arab_population_factor_new
+							add = 0.1
+						}
+						subtract = old_arab_value
+					}
+				}
+			}
+			custom_effect_tooltip = TUR_dealing_with_the_arabist_movement_tt
+			TUR_ahmed_cemal = { add_country_leader_trait = TUR_kasap_cemal }
+		}
+		completion_reward = {
+			set_variable = { TRS_oppression_justification = 0 }
+			if = {
+				limit = { has_idea = TRS_arab_opposition_10 }
+				custom_effect_tooltip = TRS_arab_opposition_decrease_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_10
+						add_idea = TRS_arab_opposition_9
+					}
+				}
+				set_country_flag = TUR_dealing_with_the_arabist_movement1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_9 }
+				custom_effect_tooltip = TRS_arab_opposition_decrease_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_9
+						add_idea = TRS_arab_opposition_8
+					}
+				}
+				set_country_flag = TUR_dealing_with_the_arabist_movement2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_8 }
+				custom_effect_tooltip = TRS_arab_opposition_decrease_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_8
+						add_idea = TRS_arab_opposition_7
+					}
+				}
+				set_country_flag = TUR_dealing_with_the_arabist_movement1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_7 }
+				custom_effect_tooltip = TRS_arab_opposition_decrease_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_7
+						add_idea = TRS_arab_opposition_6
+					}
+				}
+				set_country_flag = TUR_dealing_with_the_arabist_movement2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_6 }
+				custom_effect_tooltip = TRS_arab_opposition_decrease_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_6
+						add_idea = TRS_arab_opposition_5
+					}
+				}
+				set_country_flag = TUR_dealing_with_the_arabist_movement1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_5 }
+				custom_effect_tooltip = TRS_arab_opposition_decrease_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_5
+						add_idea = TRS_arab_opposition_4
+					}
+				}
+				set_country_flag = TUR_dealing_with_the_arabist_movement2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_4 }
+				custom_effect_tooltip = TRS_arab_opposition_decrease_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_4
+						add_idea = TRS_arab_opposition_3
+					}
+				}
+				set_country_flag = TUR_dealing_with_the_arabist_movement1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_3 }
+				custom_effect_tooltip = TRS_arab_opposition_decrease_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_3
+						add_idea = TRS_arab_opposition_2
+					}
+				}
+				set_country_flag = TUR_dealing_with_the_arabist_movement2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_2 }
+				custom_effect_tooltip = TRS_arab_opposition_decrease_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_2
+						add_idea = TRS_arab_opposition_1
+					}
+				}
+				set_country_flag = TUR_dealing_with_the_arabist_movement1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_1 }
+				custom_effect_tooltip = TRS_arab_opposition_decrease_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_1
+						add_idea = TRS_arab_opposition_0
+					}
+				}
+				set_country_flag = TUR_dealing_with_the_arabist_movement2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_0 }
+				add_popularity = { ideology = democratic popularity = -0.03 }
+				set_country_flag = TUR_dealing_with_the_arabist_movement3
+			}
+			else = {
+				add_popularity = { ideology = democratic popularity = -0.03 }
+				set_country_flag = TUR_dealing_with_the_arabist_movement3
+			}
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_arab_value = yes
+				set_temp_variable = {
+					TUR_dealing_with_the_arabist_movement = {
+						value = old_arab_value
+						divide = TUR_arab_population_factor_new
+						multiply = {
+							value = TUR_arab_population_factor_new
+							add = 0.1
+						}
+						subtract = old_arab_value
+					}
+				}
+			}
+			add_to_variable = { TUR_arab_population_factor_new = 0.1 }
+			custom_effect_tooltip = TUR_dealing_with_the_arabist_movement_tt
+
+			TUR_reload_minority_values = yes
+			TUR_ahmed_cemal = { add_country_leader_trait = TUR_kasap_cemal }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_raid_foreign_consulates
+		icon = GFX_goal_demand_sudetenland
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_dealing_with_the_arabist_movement }
+		x = 0
+		y = 1
+		relative_position_id = TUR_dealing_with_the_arabist_movement
+		available = {
+			TRS_has_arab_opposition = yes
+			any_enemy_country = { is_major = yes }
+		}
+		complete_tooltip = {
+			custom_effect_tooltip = TRS_add_1_oppression_justification_for_every_major_at_war
+			every_enemy_country = {
+				limit = { has_country_flag = TUR_raid_foreign_consulates1 }
+				add_opinion_modifier = {
+					target = TRS
+					modifier = diplomatic_incident
+				}
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = TRS_add_1_oppression_justification_for_every_major_at_war
+			every_enemy_country = {
+				limit = { is_major = yes }
+				add_opinion_modifier = {
+					target = TRS
+					modifier = diplomatic_incident
+				}
+				set_country_flag = TUR_raid_foreign_consulates1
+				hidden_effect = { TUR = { add_to_variable = { TRS_oppression_justification = 1 } } }
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_frame_disloyal_elements
+		icon = GFX_focus_generic_infiltration
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_dealing_with_the_arabist_movement }
+		x = -2
+		y = 1
+		relative_position_id = TUR_dealing_with_the_arabist_movement
+		available = { TRS_has_arab_opposition = yes }
+		completion_reward = {
+			unlock_decision_tooltip = TRS_fabricate_claims
+			custom_effect_tooltip = TUR_frame_disloyal_elements_tt
+			unlock_decision_tooltip = TRS_bribe_sources
+			unlock_decision_tooltip = TRS_plant_documents
+			unlock_decision_tooltip = TRS_extract_information
+			TUR_ahmed_cemal = { add_country_leader_trait = TUR_el_cezzar }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_punishment_for_traitors
+		icon = GFX_focus_FIN_parmis_devils
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_frame_disloyal_elements }
+		x = 1
+		y = 1
+		relative_position_id = TUR_frame_disloyal_elements
+		available = { TRS_has_arab_opposition = yes }
+		completion_reward = {
+			unlock_decision_tooltip = TRS_execute_traitors
+			unlock_decision_tooltip = TRS_exile_agitators
+			unlock_decision_tooltip = TRS_imprison_opposition
+			set_variable = { TRS_successful_imprisonment = 60 }
+			set_variable = { TRS_unsuccessful_imprisonment = 40 }
+			custom_effect_tooltip = TUR_punishment_for_traitors_tt
+			TUR_ahmed_cemal = { add_country_leader_trait = TUR_seffah_cemal }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_reward_and_persuasion
+		icon = GFX_goal_tripartite_pact
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_dealing_with_the_arabist_movement }
+		x = 1
+		y = 2
+		relative_position_id = TUR_dealing_with_the_arabist_movement
+		available = { TRS_has_arab_opposition = yes }
+		completion_reward = {
+			every_character = {
+				limit = {
+					OR = {
+						is_character = TUR_ohannes_kuyumcuyan
+						is_character = TUR_shakib_arslan
+						is_character = TUR_as_ad_shukeiri
+						is_character = TUR_abdul_raman_al_yusuf
+						is_character = TUR_muhammad_kurd_ali
+						is_character = TUR_ahmed_macid_goren
+						is_character = TUR_hussein_bey_al_husayni
+					}
+				}
+				custom_effect_tooltip = TUR_reward_and_persuasion_tt
+			}
+			effect_tooltip = { TRS_decrease_arab_opposition = yes }
+			hidden_effect = {
+				if = {
+					limit = { TUR_ohannes_kuyumcuyan = { is_hired_as_advisor = yes } }
+					TRS_decrease_arab_opposition = yes
+				}
+				if = {
+					limit = { TUR_shakib_arslan = { is_hired_as_advisor = yes } }
+					TRS_decrease_arab_opposition = yes
+				}
+				if = {
+					limit = { TUR_as_ad_shukeiri = { is_hired_as_advisor = yes } }
+					TRS_decrease_arab_opposition = yes
+				}
+				if = {
+					limit = { TUR_abdul_raman_al_yusuf = { is_hired_as_advisor = yes } }
+					TRS_decrease_arab_opposition = yes
+				}
+				if = {
+					limit = { TUR_muhammad_kurd_ali = { is_hired_as_advisor = yes } }
+					TRS_decrease_arab_opposition = yes
+				}
+				if = {
+					limit = { TUR_ahmed_macid_goren = { is_hired_as_advisor = yes } }
+					TRS_decrease_arab_opposition = yes
+				}
+				if = {
+					limit = { TUR_hussein_bey_al_husayni = { is_hired_as_advisor = yes } }
+					TRS_decrease_arab_opposition = yes
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_crush_the_arabist_movement
+		icon = GFX_goal_generic_attack_allies
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_punishment_for_traitors }
+		prerequisite = { focus = TUR_reward_and_persuasion }
+		x = 1
+		y = 1
+		relative_position_id = TUR_punishment_for_traitors
+		available = {
+			TRS_has_arab_opposition = yes
+			custom_trigger_tooltip = {
+				tooltip = TRS_arab_opposition_has_no_effect
+				has_idea = TRS_arab_opposition_0
+			}
+			democratic < 0.05
+		}
+		completion_reward = {
+			TRS_remove_arab_opposition = yes
+			add_political_power = 50
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_deport_jewish_settlements
+		icon = GFX_goal_generic_more_territorial_claims
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_MINORITY
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_syrian_reforms }
+		prerequisite = { focus = TUR_revive_the_ottomanism_dream_syria focus = TUR_one_language_one_religion_one_nation_syria }
+		x = -1
+		y = 1
+		relative_position_id = TUR_syrian_reforms
+		completion_reward = {
+			add_to_variable = {
+				var = global.TUR_jerusalem_centralization
+				value = 10
+				tooltip = TUR_change_jerusalem_centralization
+			}
+			custom_effect_tooltip = TUR_deport_jewish_settlements_tt2
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_jewish_value = yes
+				set_temp_variable = {
+					TUR_deport_jewish_settlements = {
+						value = old_jewish_value
+						divide = TUR_jewish_population_factor_new
+						multiply = {
+							value = TUR_jewish_population_factor_new
+							add = 0.1
+						}
+						subtract = old_jewish_value
+					}
+				}
+				if = {
+					limit = { has_variable = TUR_ottoman_syria_value_calculate }
+					multiply_temp_variable = { TUR_deport_jewish_settlements = TUR_ottoman_syria_value_calculate }
+				}
+			}
+			add_to_variable = { TUR_jewish_population_factor_new = 0.1 }
+			if = {
+				limit = { has_variable = TUR_ottoman_syria_value_calculate }
+				multiply_variable = { TUR_jewish_population_factor_new = TUR_ottoman_syria_value_calculate }
+			}
+			custom_effect_tooltip = TUR_deport_jewish_settlements_tt
+
+			TUR_reload_minority_values = yes
+			ottoman_centralization_variable_check = yes
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_subjugate_christians
+		icon = GFX_goal_generic_catholic_cross
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_MINORITY
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_syrian_reforms }
+		prerequisite = { focus = TUR_revive_the_ottomanism_dream_syria focus = TUR_one_language_one_religion_one_nation_syria }
+		x = 3
+		y = 1
+		relative_position_id = TUR_syrian_reforms
+		completion_reward = {
+			unlock_decision_tooltip = TRS_subjugate_the_maronite_patriarch
+			unlock_decision_tooltip = TRS_exile_unruly_bishops
+			unlock_decision_tooltip = TRS_fund_regional_churches
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_exile_armenian_separatists
+		icon = GFX_goal_generic_small_arms
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_MINORITY
+		}
+		prerequisite = { focus = TUR_subjugate_christians }
+		prerequisite = { focus = TUR_revive_the_ottomanism_dream_syria focus = TUR_one_language_one_religion_one_nation_syria }
+		mutually_exclusive = { focus = TUR_deportations_in_syria }
+		x = -1
+		y = 1
+		relative_position_id = TUR_subjugate_christians
+		available = {
+			OR = {
+				any_controlled_state = { has_dynamic_modifier = { modifier = TUR_armenian_minority } }
+				any_controlled_state = { has_dynamic_modifier = { modifier = TUR_assyrian_minority } }
+			}
+		}
+		completion_reward = { custom_effect_tooltip = TUR_combat_armenian_separatists_tt }
+		ai_will_do = { base = 30 }
+	}
+	focus = {
+		id = TUR_deportations_in_syria
+		icon = GFX_TUR_temporary_law_of_deportation
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_MINORITY
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_subjugate_christians }
+		prerequisite = { focus = TUR_one_language_one_religion_one_nation_syria }
+		mutually_exclusive = { focus = TUR_exile_armenian_separatists }
+		x = 1
+		y = 1
+		relative_position_id = TUR_subjugate_christians
+		available = {
+			OR = {
+				any_controlled_state = { has_dynamic_modifier = { modifier = TUR_armenian_minority } }
+				any_controlled_state = { has_dynamic_modifier = { modifier = TUR_assyrian_minority } }
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = TUR_temporary_law_of_deportation_tt
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_armenian_value = yes
+				set_temp_variable = {
+					TUR_temporary_law_of_deportation_armenia = {
+						value = old_armenian_value
+						divide = TUR_armenian_population_factor_new
+						multiply = {
+							value = TUR_armenian_population_factor_new
+							add = 0.1
+						}
+					}
+				}
+				
+				TUR_set_old_assyrian_value = yes
+				set_temp_variable = {
+					TUR_temporary_law_of_deportation_assyrian = {
+						value = old_assyrian_value
+						divide = TUR_assyrian_population_factor_new
+						multiply = {
+							value = TUR_assyrian_population_factor_new
+							add = 0.1
+						}
+					}
+				}
+
+				set_temp_variable = {
+					TUR_temporary_law_of_deportation = {
+						value = TUR_temporary_law_of_deportation_armenia
+						add = TUR_temporary_law_of_deportation_assyria
+						subtract = {
+							value = old_armenian_value
+							add = old_assyrian_value
+						}
+					}
+				}
+
+				if = {
+					limit = { has_variable = TUR_ottoman_syria_value_calculate }
+					multiply_temp_variable = { TUR_temporary_law_of_deportation = TUR_ottoman_syria_value_calculate }
+				}
+			}
+			add_to_variable = { TUR_armenian_population_factor_new = 0.1 }
+			add_to_variable = { TUR_assyrian_population_factor_new = 0.1 }
+			if = {
+				limit = { has_variable = TUR_ottoman_syria_value_calculate }
+				multiply_variable = { TUR_armenian_population_factor_new = TUR_ottoman_syria_value_calculate }
+				multiply_variable = { TUR_assyrian_population_factor_new = TUR_ottoman_syria_value_calculate }
+			}
+			custom_effect_tooltip = TUR_temporary_law_of_deportation_tt2
+			reverse_add_opinion_modifier = {
+				target = ARM
+				modifier = TUR_exterminating_our_population
+			}
+			reverse_add_opinion_modifier = {
+				target = ASY
+				modifier = TUR_exterminating_our_population
+			}
+			hidden_effect = { country_event = { id = ottoman.104 days = 4 } }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_ottoman_state_in_syria
+		icon = GFX_focus_generic_improve_the_administration
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_MINORITY
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_syrian_reforms }
+		prerequisite = { focus = TUR_revive_the_ottomanism_dream_syria focus = TUR_one_language_one_religion_one_nation_syria }
+		x = 1
+		y = 1
+		relative_position_id = TUR_syrian_reforms
+		completion_reward = {
+			custom_effect_tooltip = TUR_ottoman_state_in_syria_tt
+			unlock_decision_tooltip = TRS_introduce_paper_money
+			add_stability = 0.05
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_censor_the_opposition
+		icon = GFX_goal_generic_political_pressure
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_MINORITY
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_ottoman_state_in_syria }
+		x = -1
+		y = 1
+		relative_position_id = TUR_ottoman_state_in_syria
+		complete_tooltip = {
+			custom_effect_tooltip = TUR_censor_the_opposition_tt
+			add_political_power = 50
+			add_popularity = { ideology = neutrality popularity = 0.03 }
+			add_popularity = { ideology = democratic popularity = -0.05 }
+			if = {
+				limit = { has_country_flag = TUR_censor_the_opposition1 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+			}
+			if = {
+				limit = { has_country_flag = TUR_censor_the_opposition2 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+			}
+			if = {
+				limit = { has_country_flag = TUR_censor_the_opposition3 }
+				add_popularity = { ideology = democratic popularity = 0.03 }
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = TUR_censor_the_opposition_tt
+			add_political_power = 50
+			add_popularity = { ideology = neutrality popularity = 0.03 }
+			add_popularity = { ideology = democratic popularity = -0.05 }
+			if = {
+				limit = { has_idea = TRS_arab_opposition_0 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_0
+						add_idea = TRS_arab_opposition_1
+					}
+				}
+				set_country_flag = TUR_censor_the_opposition1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_1 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_1
+						add_idea = TRS_arab_opposition_2
+					}
+				}
+				set_country_flag = TUR_censor_the_opposition2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_2 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_2
+						add_idea = TRS_arab_opposition_3
+					}
+				}
+				set_country_flag = TUR_censor_the_opposition1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_3 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_3
+						add_idea = TRS_arab_opposition_4
+					}
+				}
+				set_country_flag = TUR_censor_the_opposition2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_4 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_4
+						add_idea = TRS_arab_opposition_5
+					}
+				}
+				set_country_flag = TUR_censor_the_opposition1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_5 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_5
+						add_idea = TRS_arab_opposition_6
+					}
+				}
+				set_country_flag = TUR_censor_the_opposition2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_6 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_6
+						add_idea = TRS_arab_opposition_7
+					}
+				}
+				set_country_flag = TUR_censor_the_opposition1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_7 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_7
+						add_idea = TRS_arab_opposition_8
+					}
+				}
+				set_country_flag = TUR_censor_the_opposition2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_8 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_8
+						add_idea = TRS_arab_opposition_9
+					}
+				}
+				set_country_flag = TUR_censor_the_opposition1
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_9 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_9
+						add_idea = TRS_arab_opposition_10
+					}
+				}
+				set_country_flag = TUR_censor_the_opposition2
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_10 }
+				add_popularity = { ideology = democratic popularity = 0.03 }
+				set_country_flag = TUR_censor_the_opposition3
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_nationalize_railways
+		icon = GFX_focus_generic_railroad
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_MINORITY
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_ottoman_state_in_syria }
+		x = 0
+		y = 2
+		relative_position_id = TUR_ottoman_state_in_syria
+		completion_reward = {
+			if = {
+				limit = { NOT = { has_war_with = FRA } }
+				unlock_decision_tooltip = TRS_purchase_damascus_aleppo_railway
+				unlock_decision_tooltip = TRS_purchase_beirut_port_rights
+				unlock_decision_tooltip = TRS_purchase_beirut_damascus_railway
+				unlock_decision_tooltip = TRS_purchase_hauran_railway
+				unlock_decision_tooltip = TRS_purchase_jaffa_jerusalem_railway
+				custom_effect_tooltip = TUR_nationalize_railways_tt
+			}
+			if = {
+				limit = { has_war_with = FRA }
+				unlock_decision_tooltip = TRS_seize_damascus_aleppo_railway
+				unlock_decision_tooltip = TRS_seize_beirut_port_rights
+				unlock_decision_tooltip = TRS_seize_beirut_damascus_railway
+				unlock_decision_tooltip = TRS_seize_hauran_railway
+				unlock_decision_tooltip = TRS_seize_jaffa_jerusalem_railway
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_occupy_mount_lebanon
+		icon = GFX_focus_renounce_the_treaty_of_trianon
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_MINORITY
+			FOCUS_FILTER_FRA_OCCUPATION_COST
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_ottoman_state_in_syria }
+		prerequisite = { focus = TUR_subjugate_christians }
+		x = 2
+		y = 2
+		relative_position_id = TUR_ottoman_state_in_syria
+		available = {
+			553 = {
+				is_controlled_by = ROOT
+				has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+			}
+		}
+		complete_tooltip = {
+			if = {
+				limit = { has_country_flag = TUR_occupy_mount_lebanon1 }
+				deactivate_advisor = TUR_yusuf_franko_pasha
+				activate_advisor = TUR_ali_munif_yegenaga
+			}
+			if = {
+				limit = { has_country_flag = TUR_occupy_mount_lebanon2 }
+				deactivate_advisor = TUR_ohannes_kuyumcuyan
+				activate_advisor = TUR_ali_munif_yegenaga
+			}
+			553 = {
+				custom_effect_tooltip = TUR_occupy_mount_lebanon_mutasarrifate_tt
+				remove_core_of = ROOT
+				custom_effect_tooltip = TUR_occupy_mount_lebanon_mutasarrifate_tt2
+				start_resistance = yes
+				custom_effect_tooltip = empty_space
+				set_demilitarized_zone = no
+			}
+			activate_mission = TRS_integrating_mount_lebanon
+			custom_effect_tooltip = TUR_increase_beirut_centralization_15
+			if = {
+				limit = { has_country_flag = TUR_occupy_mount_lebanon3 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+			}
+			if = {
+				limit = { has_country_flag = TUR_occupy_mount_lebanon4 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+			}
+			if = {
+				limit = { has_country_flag = TUR_occupy_mount_lebanon5 }
+				add_popularity = { ideology = democratic popularity = 0.03 }
+			}
+		}
+		completion_reward = {
+			if = {
+				limit = { TUR_yusuf_franko_pasha = { is_hired_as_advisor = yes } }
+				deactivate_advisor = TUR_yusuf_franko_pasha
+				activate_advisor = TUR_ali_munif_yegenaga
+				set_country_flag = TUR_occupy_mount_lebanon1
+			}
+			if = {
+				limit = { TUR_ohannes_kuyumcuyan = { is_hired_as_advisor = yes } }
+				deactivate_advisor = TUR_ohannes_kuyumcuyan
+				activate_advisor = TUR_ali_munif_yegenaga
+				set_country_flag = TUR_occupy_mount_lebanon2
+			}
+			553 = {
+				custom_effect_tooltip = TUR_occupy_mount_lebanon_mutasarrifate_tt
+				hidden_effect = {
+					remove_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+					add_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+				}
+				remove_core_of = ROOT
+				hidden_effect = {
+					add_claim_by = ROOT
+					if = {
+						limit = { ROOT = { is_subject_of = TUR } }
+						remove_core_of = TUR
+						add_claim_by = TUR
+					}
+				}
+				custom_effect_tooltip = TUR_occupy_mount_lebanon_mutasarrifate_tt2
+				set_variable = { TUR_ottoman_resistance_target_arab = 0.5 }
+				start_resistance = yes
+				custom_effect_tooltip = empty_space
+				set_demilitarized_zone = no
+			}
+			activate_mission = TRS_integrating_mount_lebanon
+			add_to_variable = {
+				var = global.TUR_beirut_centralization
+				value = 15
+				tooltip = TUR_change_beirut_centralization
+			}
+			ottoman_centralization_variable_check = yes
+			every_country = {
+				limit = {
+					OR = {
+						tag = FRA
+						tag = ENG
+						tag = RUS
+						tag = AUS
+					}
+				}
+				country_event = { id = ottoman.145 hours = 8 }
+				custom_effect_tooltip = this_might_result_in_war
+			}
+			set_country_flag = {
+				flag = TUR_mount_lebanon_occupied
+				days = 700
+				value = 1
+			}
+			if = {
+				limit = { has_idea = TRS_arab_opposition_0 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_0
+						add_idea = TRS_arab_opposition_1
+					}
+				}
+				set_country_flag = TUR_occupy_mount_lebanon3
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_1 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_1
+						add_idea = TRS_arab_opposition_2
+					}
+				}
+				set_country_flag = TUR_occupy_mount_lebanon4
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_2 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_2
+						add_idea = TRS_arab_opposition_3
+					}
+				}
+				set_country_flag = TUR_occupy_mount_lebanon3
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_3 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_3
+						add_idea = TRS_arab_opposition_4
+					}
+				}
+				set_country_flag = TUR_occupy_mount_lebanon4
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_4 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_4
+						add_idea = TRS_arab_opposition_5
+					}
+				}
+				set_country_flag = TUR_occupy_mount_lebanon3
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_5 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_5
+						add_idea = TRS_arab_opposition_6
+					}
+				}
+				set_country_flag = TUR_occupy_mount_lebanon4
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_6 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_6
+						add_idea = TRS_arab_opposition_7
+					}
+				}
+				set_country_flag = TUR_occupy_mount_lebanon3
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_7 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_7
+						add_idea = TRS_arab_opposition_8
+					}
+				}
+				set_country_flag = TUR_occupy_mount_lebanon4
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_8 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_1_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_8
+						add_idea = TRS_arab_opposition_9
+					}
+				}
+				set_country_flag = TUR_occupy_mount_lebanon3
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_9 }
+				custom_effect_tooltip = TRS_arab_opposition_increase_2_tt
+				hidden_effect = {
+					swap_ideas = {
+						remove_idea = TRS_arab_opposition_9
+						add_idea = TRS_arab_opposition_10
+					}
+				}
+				set_country_flag = TUR_occupy_mount_lebanon4
+			}
+			else_if = {
+				limit = { has_idea = TRS_arab_opposition_10 }
+				add_popularity = { ideology = democratic popularity = 0.03 }
+				set_country_flag = TUR_occupy_mount_lebanon5
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_settle_unruly_tribes
+		icon = GFX_goal_generic_position_armies
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_MINORITY
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_censor_the_opposition }
+		x = -1
+		y = 1
+		relative_position_id = TUR_censor_the_opposition
+		completion_reward = {
+			custom_effect_tooltip = TUR_settle_unruly_tribes_tt
+			custom_effect_tooltip = TUR_suppress_arab_dissent_tt
+			add_to_variable = {
+				var = global.TUR_deir_ez_zor_centralization
+				value = 10
+				tooltip = TUR_change_deir_ez_zor_centralization
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_the_ideal_province
+		icon = GFX_TUR_the_ideal_province
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_MINORITY
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_settle_unruly_tribes }
+		prerequisite = { focus = TUR_nationalize_railways }
+		prerequisite = { focus = TUR_occupy_mount_lebanon }
+		x = 2
+		y = 1
+		relative_position_id = TUR_settle_unruly_tribes
+		completion_reward = {
+			custom_effect_tooltip = TUR_the_ideal_province_tt
+			hidden_effect = {
+				#for tooltip
+				TUR_set_old_arab_value = yes
+				set_temp_variable = {
+					TUR_the_ideal_province = {
+						value = old_arab_value
+						divide = TUR_arab_population_factor_new
+						multiply = {
+							value = TUR_arab_population_factor_new
+							add = -0.1
+						}
+						subtract = old_arab_value
+					}
+				}
+				if = {
+					limit = { has_variable = TUR_ottoman_syria_value_calculate }
+					multiply_temp_variable = { TUR_the_ideal_province = TUR_ottoman_syria_value_calculate }
+				}
+			}
+			add_to_variable = { TUR_arab_population_factor_new = -0.1 }
+			if = {
+				limit = { has_variable = TUR_ottoman_syria_value_calculate }
+				multiply_variable = { TUR_arab_population_factor_new = TUR_ottoman_syria_value_calculate }
+			}
+			custom_effect_tooltip = TUR_the_ideal_province_tt2
+			TUR_reload_minority_values = yes
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_a_job_well_done
+		icon = GFX_goal_tripartite_pact
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+		}
+		prerequisite = { focus = TUR_the_ideal_province }
+		prerequisite = { focus = TUR_enforce_turkish_in_administration }
+		mutually_exclusive = { focus = TUR_march_on_kostantiniyye }
+		x = 0
+		y = 5
+		relative_position_id = TUR_the_ideal_province
+		available = { is_subject_of = TUR }
+		completion_reward = {
+			random_country = {
+				limit = { has_subject = ROOT }
+				hidden_effect = {
+					change_tag_from = FROM
+					country_event = ottoman_syria.71
+				}
+				effect_tooltip = {
+					ROOT = { every_character = { set_nationality = PREV.PREV } }
+					hidden_effect = { change_tag_from = ROOT }
+					annex_country = {
+						target = TRS
+						transfer_troops = yes
+					}
+					activate_advisor = TUR_ahmed_cemal
+					set_can_be_fired_in_advisor_role = { character = TUR_ahmed_cemal value = no }
+					add_political_power = 100
+					change_tag_from = ROOT
+				}
+			}
+		}
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 100
+				check_variable = { global.TUR_aleppo_centralization = 100 }
+				check_variable = { global.TUR_deir_ez_zor_centralization = 100 }
+				check_variable = { global.TUR_beirut_centralization = 100 }
+				check_variable = { global.TUR_damascus_centralization = 100 }
+				check_variable = { global.TUR_jerusalem_centralization = 100 }
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					OR = {
+						NOT = { owns_state = 447 }
+						AND = {
+							owns_state = 447
+							check_variable = { global.TUR_suez_centralization = 100 }
+						}
+					}
+					OR = {
+						NOT = {
+							owns_state = 1146
+							owns_state = 452
+						}
+						AND = {
+							OR = {
+								owns_state = 1146
+								owns_state = 452
+							}
+							check_variable = { global.TUR_alexandria_centralization = 100 }
+						}
+					}
+					OR = {
+						NOT = { owns_state = 446 }
+						AND = {
+							owns_state = 446
+							check_variable = { global.TUR_cairo_centralization = 100 }
+						}
+					}
+					OR = {
+						NOT = {
+							owns_state = 456
+							owns_state = 457
+						}
+						AND = {
+							OR = {
+								owns_state = 456
+								owns_state = 457
+							}
+							check_variable = { global.TUR_aswan_centralization = 100 }
+						}
+					}
+					OR = {
+						NOT = { owns_state = 551 }
+						AND = {
+							owns_state = 551
+							check_variable = { global.TUR_khartoum_centralization = 100 }
+						}
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = TUR_uneasy_alliance
+		icon = {
+			GFX_TUR_uneasy_alliance_entente = {
+				OR = {
+					FRA = {
+						is_major = yes
+						is_faction_leader = yes
+						has_war_with = ROOT
+					}
+					ENG = {
+						is_major = yes
+						is_faction_leader = yes
+						has_war_with = ROOT
+					}
+					check_variable = { global.TRS_country_cemal_negotiating = FRA }
+					check_variable = { global.TRS_country_cemal_negotiating = ENG }
+				}
+			}
+			GFX_TUR_uneasy_alliance_central_powers = {
+				OR = {
+					GER = {
+						is_major = yes
+						is_faction_leader = yes
+						has_war_with = ROOT
+					}
+					AUS = {
+						is_major = yes
+						is_faction_leader = yes
+						has_war_with = ROOT
+					}
+					check_variable = { global.TRS_country_cemal_negotiating = GER }
+					check_variable = { global.TRS_country_cemal_negotiating = AUS }
+				}
+			}
+			GFX_TUR_uneasy_alliance_empty = yes
+		}
+		cost = 5
+		prerequisite = { focus = TUR_enforce_turkish_in_administration }
+		mutually_exclusive = { focus = TUR_loyalty_to_the_porte }
+		x = 2
+		y = 3
+		relative_position_id = TUR_enforce_turkish_in_administration
+		available = {
+			is_subject_of = TUR
+			has_war_together_with = TUR
+			any_country = {
+				is_major = yes
+				is_faction_leader = yes
+				has_war_with = ROOT
+			}
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				is_power_balance_in_range = {
+					id = TUR_local_central_rule
+					range < TUR_local_central_rule_local_low_control
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = TUR_uneasy_alliance_tt
+				NOT = { has_global_flag = TRS_cemal_entente_negotiations_failure }
+			}
+		}
+		select_effect = {
+			country_event = ottoman_syria.36
+			random_country = {
+				limit = {
+					is_major = yes
+					is_faction_leader = yes
+					has_war_with = ROOT
+				}
+				set_variable = { global.TRS_country_cemal_negotiating = THIS }
+				country_event = ottoman_syria.37
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = tooltip_immediate_effect_upon_focus_start
+			effect_tooltip = {
+				country_event = ottoman_syria.36
+				every_country = {
+					limit = {
+						OR = {
+							check_variable = { global.TRS_country_cemal_negotiating = THIS }
+							AND = {
+								is_major = yes
+								is_faction_leader = yes
+								has_war_with = ROOT
+								NOT = { has_variable = global.TRS_country_cemal_negotiating }
+							}
+						}
+					}
+					country_event = ottoman_syria.37
+				}
+			}
+			custom_effect_tooltip = TUR_uneasy_alliance_tt2
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_loyalty_to_the_porte
+		icon = GFX_ottoman_friendship
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_WAR_SUPPORT
+			FOCUS_FILTER_BALANCE_OF_POWER
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_enforce_turkish_in_administration }
+		mutually_exclusive = { focus = TUR_uneasy_alliance }
+		x = 2
+		y = 0
+		relative_position_id = TUR_uneasy_alliance
+		available = {
+			is_subject_of = TUR
+			has_war_together_with = TUR
+			any_country = {
+				is_major = yes
+				is_faction_leader = yes
+				has_war_with = ROOT
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = TUR_loyalty_to_the_porte_tt
+			add_to_variable = { TRS_cs_war_stability_factor = 0.1 }
+			add_war_support = 0.05
+			reverse_add_opinion_modifier = {
+				target = TUR
+				modifier = TUR_commitment_to_the_war
+			}
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = 0.1
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_deal_with_the_sharifian_revolt
+		icon = GFX_generic_attack_arab_revolt
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_ANNEXATION
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_loyalty_to_the_porte focus = TUR_uneasy_alliance }
+		x = 1
+		y = 1
+		relative_position_id = TUR_uneasy_alliance
+		available = { has_war_with = HJZ }
+		complete_tooltip = {
+			add_ideas = TRS_armistice_in_the_revolt
+			if = {
+				limit = { has_country_flag = TUR_deal_with_the_sharifian_revolt }
+				TUR = { country_event = ottoman_syria.60 }
+			}
+			HJZ = { country_event = ottoman_syria.61 }
+			country_event = ottoman_syria.54
+			custom_effect_tooltip = TUR_deal_with_the_sharifian_revolt_tt
+		}
+		completion_reward = {
+			add_ideas = TRS_armistice_in_the_revolt
+			if = {
+				limit = { is_subject_of = TUR }
+				TUR = { country_event = ottoman_syria.60 }
+				set_country_flag = TUR_deal_with_the_sharifian_revolt
+			}
+			HJZ = { country_event = ottoman_syria.61 }
+			country_event = ottoman_syria.54
+			custom_effect_tooltip = TUR_deal_with_the_sharifian_revolt_tt
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_a_necessary_backstab
+		icon = GFX_focus_generic_conspiracy
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_ANNEXATION
+		}
+		prerequisite = { focus = TUR_uneasy_alliance }
+		x = 0
+		y = 2
+		relative_position_id = TUR_uneasy_alliance
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TUR_a_necessary_backstab_tt
+				has_global_flag = TRS_cemal_entente_negotiations_dropping_out_of_war
+			}
+		}
+		complete_tooltip = {
+			TUR = { end_puppet = TRS }
+			set_cosmetic_tag = TUR_ottoman_cemal
+			remove_ideas = TRS_the_regent_of_sultan
+			if = {
+				limit = { has_country_flag = TUR_a_necessary_backstab }
+				remove_power_balance = { id = TUR_local_central_rule }
+			}
+			every_state = {
+				limit = { has_state_flag = TUR_a_necessary_backstab }
+				add_claim_by = ROOT
+			}
+			declare_war_on = {
+		    	target = TUR
+		    	type = annex_everything
+			}
+			var:global.TRS_country_cemal_negotiating = { add_to_faction = ROOT }
+		}
+		completion_reward = {
+			TUR = { end_puppet = TRS }
+			set_cosmetic_tag = TUR_ottoman_cemal
+			remove_ideas = TRS_the_regent_of_sultan
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				remove_power_balance = { id = TUR_local_central_rule }
+				set_country_flag = TUR_a_necessary_backstab
+			}
+			TUR = { end_puppet = ROOT }
+			every_state = {
+				limit = { is_owned_by = TUR }
+				add_claim_by = ROOT
+				set_state_flag = TUR_a_necessary_backstab
+			}
+			declare_war_on = {
+		    	target = TUR
+		    	type = annex_everything
+			}
+			set_country_flag = TUR_cemal_backstab_central_government
+			hidden_effect = { add_civil_war_target = TUR }
+			var:global.TRS_country_cemal_negotiating = { add_to_faction = ROOT }
+			hidden_effect = { news_event = { id = ottoman_syria.64 hours = 6 } }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_sultan_of_egypt
+		icon = GFX_TUR_sultan_of_egypt
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_MINORITY
+			FOCUS_FILTER_ANNEXATION
+			FOCUS_FILTER_BALANCE_OF_POWER
+		}
+		prerequisite = { focus = TUR_loyalty_to_the_porte }
+		mutually_exclusive = { focus = TUR_ottoman_provinces_in_egypt }
+		x = 1
+		y = 1
+		relative_position_id = TUR_loyalty_to_the_porte
+		available = {
+			OR = {
+				owns_state = 447
+				owns_state = 1146
+				owns_state = 446
+				owns_state = 452
+				owns_state = 456
+				owns_state = 457
+				owns_state = 551
+			}
+			controls_state = 446
+		}
+		completion_reward = {
+			add_country_leader_trait = TUR_sultan_of_egypt
+			if = {
+				limit = { has_autonomy_state = autonomy_tgwr_ottoman_committee_government }
+				overlord = {
+					set_autonomy = {
+						target = ROOT
+						autonomous_state = autonomy_tgwr_ottoman_autonomous_vilayet
+					}
+				}
+			}
+			reverse_add_opinion_modifier = {
+				target = TUR
+				modifier = TUR_self_declared_sultan_of_egyp
+			}
+			unlock_decision_tooltip = TRS_move_capital_to_cairo
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = -0.2
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_ottoman_provinces_in_egypt
+		icon = GFX_TUR_ottoman_provinces_in_egypt
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_MINORITY
+			FOCUS_FILTER_ANNEXATION
+			FOCUS_FILTER_BALANCE_OF_POWER
+		}
+		prerequisite = { focus = TUR_loyalty_to_the_porte }
+		prerequisite = { focus = TUR_the_ideal_province }
+		mutually_exclusive = { focus = TUR_sultan_of_egypt }
+		x = 3
+		y = 1
+		relative_position_id = TUR_loyalty_to_the_porte
+		available = {
+			OR = {
+				owns_state = 447
+				owns_state = 1146
+				owns_state = 446
+				owns_state = 452
+				owns_state = 456
+				owns_state = 457
+				owns_state = 551
+			}
+		}
+		completion_reward = {
+			TUR_create_suez_vilayet = yes
+			TUR_create_alexandria_vilayet = yes
+			TUR_create_cairo_vilayet = yes
+			TUR_create_aswan_vilayet = yes
+			TUR_create_khartoum_vilayet = yes
+			set_temp_variable = { TUR_ottoman_provinces_in_egypt = 0 }
+			hidden_effect = {
+				if = { #SUEZ
+					limit = { 447 = { TUR_is_controlled_by_us_or_committee_government = yes } }
+					if = { #SUEZ ORTHODOX ARAB
+						limit = {
+							447 = {
+								TUR_is_controlled_by_us_or_committee_government = yes
+								check_variable = { TUR_arab_orthodox_state_variable < 0 }
+							}
+						}
+						set_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_suez = 0 }
+						if = {
+							limit = {
+								447 = {
+									TUR_is_controlled_by_us_or_committee_government = yes
+									check_variable = { TUR_arab_orthodox_state_variable < 0 }
+								}
+							}
+							add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_suez = 447.TUR_arab_orthodox_state_variable }
+							if = {
+								limit = {
+									447 = {
+										OR = {
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+										}
+									}
+								}
+								multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_suez = 0 }
+							}
+							if = {
+								limit = { 447 = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+								divide_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_suez = 2 }
+							}
+						}
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_suez = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_suez = TUR_orthodox_population_factor_new }
+						divide_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_suez = 100 }
+					}
+					if = { #SUEZ SUNNI ARAB
+						limit = {
+							447 = {
+								TUR_is_controlled_by_us_or_committee_government = yes
+								check_variable = { TUR_arab_sunni_state_variable < 0 }
+							}
+						}
+						set_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_suez = 0 }
+						if = {
+							limit = {
+								447 = {
+									TUR_is_controlled_by_us_or_committee_government = yes
+									check_variable = { TUR_arab_sunni_state_variable < 0 }
+								}
+							}
+							add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_suez = 447.TUR_arab_sunni_state_variable }
+							if = {
+								limit = {
+									447 = {
+										OR = {
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+										}
+									}
+								}
+								multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_suez = 0 }
+							}
+							if = {
+								limit = { 447 = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+								divide_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_suez = 2 }
+							}
+						}
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_suez = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_suez = TUR_sunni_population_factor_new }
+						divide_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_suez = 100 }
+					}
+					#CALCULATE TOTAL VALUE
+					set_temp_variable = { TUR_minority_value_suez = 0 }
+					add_to_temp_variable = { TUR_minority_value_suez = TUR_ottoman_provinces_in_egypt_orthodox_suez }
+					add_to_temp_variable = { TUR_minority_value_suez = TUR_ottoman_provinces_in_egypt_sunni_suez }
+				}
+				add_to_temp_variable = { TUR_ottoman_provinces_in_egypt = TUR_minority_value_suez }
+				add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_pp = TUR_political_power_value_suez }
+
+				if = { #ALEXANDRIA
+					limit = {
+						OR = {
+							1146 = { TUR_is_controlled_by_us_or_committee_government = yes }
+							452 = { TUR_is_controlled_by_us_or_committee_government = yes }
+						}
+					}
+					if = { #ALEXANDRIA ORTHODOX ARAB
+						limit = {
+							1146 = {
+								TUR_is_controlled_by_us_or_committee_government = yes
+								check_variable = { TUR_arab_orthodox_state_variable < 0 }
+							}
+						}
+						set_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_alexandria = 0 }
+						if = {
+							limit = {
+								1146 = {
+									TUR_is_controlled_by_us_or_committee_government = yes
+									check_variable = { TUR_arab_orthodox_state_variable < 0 }
+								}
+							}
+							add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_alexandria = 1146.TUR_arab_orthodox_state_variable }
+							if = {
+								limit = {
+									1146 = {
+										OR = {
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+										}
+									}
+								}
+								multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_alexandria = 0 }
+							}
+							if = {
+								limit = { 1146 = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+								divide_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_alexandria = 2 }
+							}
+						}
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_alexandria = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_alexandria = TUR_orthodox_population_factor_new }
+						divide_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_alexandria = 100 }
+					}
+					if = { #ALEXANDRIA SUNNI ARAB
+						limit = {
+							1146 = {
+								TUR_is_controlled_by_us_or_committee_government = yes
+								check_variable = { TUR_arab_sunni_state_variable < 0 }
+							}
+						}
+						set_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_alexandria = 0 }
+						if = {
+							limit = {
+								1146 = {
+									TUR_is_controlled_by_us_or_committee_government = yes
+									check_variable = { TUR_arab_sunni_state_variable < 0 }
+								}
+							}
+							add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_alexandria = 1146.TUR_arab_sunni_state_variable }
+							if = {
+								limit = {
+									1146 = {
+										OR = {
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+										}
+									}
+								}
+								multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_alexandria = 0 }
+							}
+							if = {
+								limit = { 1146 = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+								divide_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_alexandria = 2 }
+							}
+						}
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_alexandria = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_alexandria = TUR_sunni_population_factor_new }
+						divide_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_alexandria = 100 }
+					}
+					if = { #ALEXANDRIA ORTHODOX ARAB
+						limit = {
+							452 = {
+								TUR_is_controlled_by_us_or_committee_government = yes
+								check_variable = { TUR_arab_orthodox_state_variable < 0 }
+							}
+						}
+						set_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_matrouh = 0 }
+						if = {
+							limit = {
+								452 = {
+									TUR_is_controlled_by_us_or_committee_government = yes
+									check_variable = { TUR_arab_orthodox_state_variable < 0 }
+								}
+							}
+							add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_matrouh = 452.TUR_arab_orthodox_state_variable }
+							if = {
+								limit = {
+									452 = {
+										OR = {
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+										}
+									}
+								}
+								multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_matrouh = 0 }
+							}
+							if = {
+								limit = { 452 = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+								divide_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_matrouh = 2 }
+							}
+						}
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_matrouh = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_matrouh = TUR_orthodox_population_factor_new }
+						divide_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_matrouh = 100 }
+					}
+					if = { #ALEXANDRIA SUNNI ARAB
+						limit = {
+							452 = {
+								TUR_is_controlled_by_us_or_committee_government = yes
+								check_variable = { TUR_arab_sunni_state_variable < 0 }
+							}
+						}
+						set_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_matrouh = 0 }
+						if = {
+							limit = {
+								452 = {
+									TUR_is_controlled_by_us_or_committee_government = yes
+									check_variable = { TUR_arab_sunni_state_variable < 0 }
+								}
+							}
+							add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_matrouh = 452.TUR_arab_sunni_state_variable }
+							if = {
+								limit = {
+									452 = {
+										OR = {
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+										}
+									}
+								}
+								multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_matrouh = 0 }
+							}
+							if = {
+								limit = { 452 = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+								divide_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_matrouh = 2 }
+							}
+						}
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_matrouh = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_matrouh = TUR_sunni_population_factor_new }
+						divide_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_matrouh = 100 }
+					}
+					#CALCULATE TOTAL VALUE
+					set_temp_variable = { TUR_minority_value_alexandria = 0 }
+					add_to_temp_variable = { TUR_minority_value_alexandria = TUR_ottoman_provinces_in_egypt_orthodox_alexandria }
+					add_to_temp_variable = { TUR_minority_value_alexandria = TUR_ottoman_provinces_in_egypt_sunni_alexandria }
+					add_to_temp_variable = { TUR_minority_value_alexandria = TUR_ottoman_provinces_in_egypt_orthodox_matrouh }
+					add_to_temp_variable = { TUR_minority_value_alexandria = TUR_ottoman_provinces_in_egypt_sunni_matrouh }
+				}
+				add_to_temp_variable = { TUR_ottoman_provinces_in_egypt = TUR_minority_value_alexandria }
+				add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_pp = TUR_political_power_value_alexandria }
+
+				if = { #CAIRO
+					limit = { 446 = { TUR_is_controlled_by_us_or_committee_government = yes } }
+					if = { #CAIRO ORTHODOX ARAB
+						limit = {
+							446 = {
+								TUR_is_controlled_by_us_or_committee_government = yes
+								check_variable = { TUR_arab_orthodox_state_variable < 0 }
+							}
+						}
+						set_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_cairo = 0 }
+						if = {
+							limit = {
+								446 = {
+									TUR_is_controlled_by_us_or_committee_government = yes
+									check_variable = { TUR_arab_orthodox_state_variable < 0 }
+								}
+							}
+							add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_cairo = 446.TUR_arab_orthodox_state_variable }
+							if = {
+								limit = {
+									446 = {
+										OR = {
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+										}
+									}
+								}
+								multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_cairo = 0 }
+							}
+							if = {
+								limit = { 446 = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+								divide_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_cairo = 2 }
+							}
+						}
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_cairo = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_cairo = TUR_orthodox_population_factor_new }
+						divide_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_cairo = 100 }
+					}
+					if = { #CAIRO SUNNI ARAB
+						limit = {
+							446 = {
+								TUR_is_controlled_by_us_or_committee_government = yes
+								check_variable = { TUR_arab_sunni_state_variable < 0 }
+							}
+						}
+						set_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_cairo = 0 }
+						if = {
+							limit = {
+								446 = {
+									TUR_is_controlled_by_us_or_committee_government = yes
+									check_variable = { TUR_arab_sunni_state_variable < 0 }
+								}
+							}
+							add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_cairo = 446.TUR_arab_sunni_state_variable }
+							if = {
+								limit = {
+									446 = {
+										OR = {
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+										}
+									}
+								}
+								multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_cairo = 0 }
+							}
+							if = {
+								limit = { 446 = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+								divide_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_cairo = 2 }
+							}
+						}
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_cairo = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_cairo = TUR_sunni_population_factor_new }
+						divide_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_cairo = 100 }
+					}
+					#CALCULATE TOTAL VALUE
+					set_temp_variable = { TUR_minority_value_cairo = 0 }
+					add_to_temp_variable = { TUR_minority_value_cairo = TUR_ottoman_provinces_in_egypt_orthodox_cairo }
+					add_to_temp_variable = { TUR_minority_value_cairo = TUR_ottoman_provinces_in_egypt_sunni_cairo }
+				}
+				add_to_temp_variable = { TUR_ottoman_provinces_in_egypt = TUR_minority_value_cairo }
+				add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_pp = TUR_political_power_value_cairo }
+
+				if = { #ASWAN
+					limit = { 456 = { TUR_is_controlled_by_us_or_committee_government = yes } }
+					if = { #ASWAN ORTHODOX ARAB
+						limit = {
+							456 = {
+								TUR_is_controlled_by_us_or_committee_government = yes
+								check_variable = { TUR_arab_orthodox_state_variable < 0 }
+							}
+						}
+						set_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_aswan = 0 }
+						if = {
+							limit = {
+								456 = {
+									TUR_is_controlled_by_us_or_committee_government = yes
+									check_variable = { TUR_arab_orthodox_state_variable < 0 }
+								}
+							}
+							add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_aswan = 456.TUR_arab_orthodox_state_variable }
+							if = {
+								limit = {
+									456 = {
+										OR = {
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+										}
+									}
+								}
+								multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_aswan = 0 }
+							}
+							if = {
+								limit = { 456 = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+								divide_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_aswan = 2 }
+							}
+						}
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_aswan = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_aswan = TUR_orthodox_population_factor_new }
+						divide_temp_variable = { TUR_ottoman_provinces_in_egypt_orthodox_aswan = 100 }
+					}
+					if = { #ASWAN SUNNI ARAB
+						limit = {
+							456 = {
+								TUR_is_controlled_by_us_or_committee_government = yes
+								check_variable = { TUR_arab_sunni_state_variable < 0 }
+							}
+						}
+						set_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_aswan = 0 }
+						if = {
+							limit = {
+								456 = {
+									TUR_is_controlled_by_us_or_committee_government = yes
+									check_variable = { TUR_arab_sunni_state_variable < 0 }
+								}
+							}
+							add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_aswan = 456.TUR_arab_sunni_state_variable }
+							if = {
+								limit = {
+									456 = {
+										OR = {
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+										}
+									}
+								}
+								multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_aswan = 0 }
+							}
+							if = {
+								limit = { 456 = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+								divide_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_aswan = 2 }
+							}
+						}
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_aswan = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_aswan = TUR_sunni_population_factor_new }
+						divide_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_aswan = 100 }
+					}
+					#CALCULATE TOTAL VALUE
+					set_temp_variable = { TUR_minority_value_aswan = 0 }
+					add_to_temp_variable = { TUR_minority_value_aswan = TUR_ottoman_provinces_in_egypt_orthodox_aswan }
+					add_to_temp_variable = { TUR_minority_value_aswan = TUR_ottoman_provinces_in_egypt_sunni_aswan }
+				}
+				add_to_temp_variable = { TUR_ottoman_provinces_in_egypt = TUR_minority_value_aswan }
+				add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_pp = TUR_political_power_value_aswan }
+
+				if = { #KHARTOUM
+					limit = { 551 = { TUR_is_controlled_by_us_or_committee_government = yes } }
+					if = { #KHARTOUM SUNNI ARAB
+						limit = {
+							551 = {
+								TUR_is_controlled_by_us_or_committee_government = yes
+								check_variable = { TUR_arab_sunni_state_variable < 0 }
+							}
+						}
+						set_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_khartoum = 0 }
+						if = {
+							limit = {
+								551 = {
+									TUR_is_controlled_by_us_or_committee_government = yes
+									check_variable = { TUR_arab_sunni_state_variable < 0 }
+								}
+							}
+							add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_khartoum = 551.TUR_arab_sunni_state_variable }
+							if = {
+								limit = {
+									551 = {
+										OR = {
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet_lebanon }
+											has_dynamic_modifier = { modifier = TUR_autonomous_vilayet }
+										}
+									}
+								}
+								multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_khartoum = 0 }
+							}
+							if = {
+								limit = { 551 = { has_dynamic_modifier = { modifier = TUR_semi_autonomous_vilayet } } }
+								divide_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_khartoum = 2 }
+							}
+						}
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_khartoum = TUR_arab_population_factor_new }
+						multiply_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_khartoum = TUR_sunni_population_factor_new }
+						divide_temp_variable = { TUR_ottoman_provinces_in_egypt_sunni_khartoum = 100 }
+					}
+					#CALCULATE TOTAL VALUE
+					set_temp_variable = { TUR_minority_value_khartoum = 0 }
+					add_to_temp_variable = { TUR_minority_value_khartoum = TUR_ottoman_provinces_in_egypt_sunni_khartoum }
+				}
+				add_to_temp_variable = { TUR_ottoman_provinces_in_egypt = TUR_minority_value_khartoum }
+				add_to_temp_variable = { TUR_ottoman_provinces_in_egypt_pp = TUR_political_power_value_khartoum }
+			}
+			if = {
+				limit = {
+					OR = {
+						controls_state = 447
+						controls_state = 446
+						controls_state = 1146
+						controls_state = 452
+						controls_state = 456
+						controls_state = 551
+					}
+				}
+				custom_effect_tooltip = TUR_ottoman_provinces_in_egypt_tt
+			}
+			unlock_decision_tooltip = TUR_caliphs_authority_in_egypt
+			unlock_decision_tooltip = TUR_integrate_the_egyptian_elite
+			unlock_decision_tooltip = TUR_integrate_the_egyptian_economy
+			unlock_decision_tooltip = TUR_integrate_the_egyptian_society
+			custom_effect_tooltip = TUR_ottoman_provinces_in_egypt_tt2
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = 0.1
+				}
+			}
+			TUR_reload_minority_values = yes
+			ottoman_centralization_variable_check = yes
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_march_on_kostantiniyye
+		icon = GFX_goal_generic_more_territorial_claims
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_ANNEXATION
+		}
+		prerequisite = { focus = TUR_loyalty_to_the_porte }
+		mutually_exclusive = { focus = TUR_a_job_well_done }
+		will_lead_to_war_with = TUR
+		available = {
+			has_country_flag = great_war_winner
+			NOT = { has_war_together_with = TUR }
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				is_power_balance_in_range = {
+					id = TUR_local_central_rule
+					range = TUR_local_central_rule_local_high_control
+				}
+			}
+		}
+		x = 0
+		y = 2
+		relative_position_id = TUR_loyalty_to_the_porte
+		completion_reward = {
+			TUR = { end_puppet = ROOT }
+			set_country_flag = TUR_ottoman_cemal
+			set_cosmetic_tag = TUR_ottoman_cemal
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				remove_power_balance = { id = TUR_local_central_rule }
+				set_country_flag = TUR_a_necessary_backstab
+			}
+			every_state = {
+				limit = { is_owned_by = TUR }
+				add_claim_by = ROOT
+				set_state_flag = TUR_a_necessary_backstab
+			}
+			declare_war_on = {
+		    	target = TUR
+		    	type = annex_everything
+			}
+			hidden_effect = { add_civil_war_target = TUR }
+			add_ideas = TRS_push_for_kostantiniyye
+			custom_effect_tooltip = TUR_march_on_kostantiniyye_tt
+			hidden_effect = {
+				country_event = { id = ottoman_syria.69 days = 15 random_days = 30 }
+				country_event = { id = ottoman_syria.66 days = 14 random_days = 14 }
+				news_event = { id = ottoman_syria.65 hours = 6 }
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_fate_of_the_empire
+		icon = GFX_TUR_our_place_in_the_world
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_STABILITY
+			FOCUS_FILTER_WAR_SUPPORT
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+		}
+		prerequisite = { focus = TUR_a_necessary_backstab focus = TUR_march_on_kostantiniyye }
+		x = 1
+		y = 1
+		relative_position_id = TUR_a_necessary_backstab
+		available = { NOT = { country_exists = OTM } }
+		complete_tooltip = {
+			custom_effect_tooltip = TUR_fate_of_the_empire_tt1
+			every_state = {
+				limit = { has_state_flag = TUR_fate_of_the_empire1 }
+				add_core_of = ROOT
+			}
+			every_state = {
+				limit = { has_state_flag = TUR_fate_of_the_empire2 }
+				add_claim_by = ROOT
+			}
+			set_capital = {
+				state = 347
+				remember_old_capital = no
+			}
+			if = {
+				limit = { has_country_flag = TUR_fate_of_the_empire1 }
+				set_can_be_fired_in_advisor_role = { character = TUR_bekir_sami value = yes }
+			}
+			if = {
+				limit = { has_country_flag = TUR_fate_of_the_empire2 }
+				set_can_be_fired_in_advisor_role = { character = TUR_hasan_mazhar value = yes }
+			}
+			if = {
+				limit = { has_country_flag = TUR_fate_of_the_empire3 }
+				set_can_be_fired_in_advisor_role = { character = TUR_huseyin_kazim_kadri value = yes }
+			}
+			if = {
+				limit = { has_country_flag = TUR_fate_of_the_empire4 }
+				set_can_be_fired_in_advisor_role = { character = TUR_abdulhalik_renda value = yes }
+			}
+			every_possible_country = {
+				limit = { any_character = { has_character_flag = TUR_transferred_to_cemals_ottoman } }
+				every_character = {
+					limit = { has_character_flag = TUR_transferred_to_cemals_ottoman }
+					set_nationality = ROOT
+				}
+			}
+			custom_effect_tooltip = TUR_fate_of_the_empire_tt2
+			remove_country_leader_trait = TUR_uncrowned_king
+			country_event = ottoman_syria.70
+		}
+		completion_reward = {
+			custom_effect_tooltip = TUR_fate_of_the_empire_tt1
+			every_state = {
+				limit = { is_core_of = TUR }
+				add_core_of = ROOT
+				hidden_effect = { remove_core_of = OTM }
+				set_state_flag = TUR_fate_of_the_empire1
+			}
+			every_state = {
+				limit = { is_claimed_by = TUR }
+				add_claim_by = ROOT
+				hidden_effect = { remove_claim_by = OTM }
+				set_state_flag = TUR_fate_of_the_empire2
+			}
+			set_capital = {
+				state = 347
+				remember_old_capital = no
+			}
+			set_country_flag = TUR_no_longer_change_capital
+			if = {
+				limit = { TUR_bekir_sami = { advisor_can_be_fired = no } }
+				set_can_be_fired_in_advisor_role = { character = TUR_bekir_sami value = yes }
+				set_country_flag = TUR_fate_of_the_empire1
+			}
+			if = {
+				limit = { TUR_hasan_mazhar = { advisor_can_be_fired = no } }
+				set_can_be_fired_in_advisor_role = { character = TUR_hasan_mazhar value = yes }
+				set_country_flag = TUR_fate_of_the_empire2
+			}
+			if = {
+				limit = { TUR_huseyin_kazim_kadri = { advisor_can_be_fired = no } }
+				set_can_be_fired_in_advisor_role = { character = TUR_huseyin_kazim_kadri value = yes }
+				set_country_flag = TUR_fate_of_the_empire3
+			}
+			if = {
+				limit = { TUR_abdulhalik_renda = { advisor_can_be_fired = no } }
+				set_can_be_fired_in_advisor_role = { character = TUR_abdulhalik_renda value = yes }
+				set_country_flag = TUR_fate_of_the_empire4
+			}
+			every_possible_country = {
+				limit = { tag = OTM }
+				every_character = {
+					set_nationality = ROOT
+					set_character_flag = TUR_transferred_to_cemals_ottoman
+				}
+			}
+			set_temp_variable = { TUR_fate_of_the_empire = TUR_sublime_realm_variable }
+			divide_temp_variable = { TUR_fate_of_the_empire = -4 }
+			multiply_temp_variable = { TUR_fate_of_the_empire = 3 }
+			custom_effect_tooltip = TUR_fate_of_the_empire_tt2
+			divide_variable = { TUR_armenian_population_factor_new = 4 }
+			divide_variable = { TUR_greek_population_factor_new = 4 }
+			divide_variable = { TUR_jewish_population_factor_new = 4 }
+			divide_variable = { TUR_arab_population_factor_new = 4 }
+			divide_variable = { TUR_bulgarian_population_factor_new = 4 }
+			divide_variable = { TUR_albanian_population_factor_new = 4 }
+			divide_variable = { TUR_serbian_population_factor_new = 4 }
+			divide_variable = { TUR_kurdish_population_factor_new = 4 }
+			divide_variable = { TUR_assyrian_population_factor_new = 4 }
+			divide_variable = { TUR_georgian_population_factor_new = 4 }
+			divide_variable = { TUR_turkish_population_factor_new = 4 }
+			clear_variable = TUR_ottoman_syria_value_calculate
+			remove_country_leader_trait = TUR_uncrowned_king
+			country_event = ottoman_syria.70
+			hidden_effect = {
+				promote_character = TUR_prens_sabahaddin
+				set_party_name = {
+					ideology = democratic
+					name = TUR_democratic_party
+					long_name = TUR_democratic_party_long
+				}
+				promote_character = TUR_huseyin_hilmi
+				set_party_name = {
+					ideology = communism
+					name = TUR_socialist_party
+					long_name = TUR_socialist_party_long
+				}
+			}
+			TUR_reload_minority_values = yes
+			ottoman_centralization_variable_check = yes
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_ottoman_fourth_army
+		icon = GFX_focus_generic_little_entente
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_ARMY_XP
+		}
+		x = 19
+		y = 0
+		completion_reward = {
+			custom_effect_tooltip = TUR_ottoman_fourth_army_tt
+			add_to_variable = { TUR_o4a_experience_gain_army = 0.02 }
+			add_to_variable = { TUR_o4a_max_command_power = 30 }
+			add_to_variable = { TUR_o4a_command_power_gain_mult = 0.15 }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_rely_on_civilian_shipyards
+		icon = GFX_goal_generic_construct_naval_dockyard
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_NAVY_XP
+		}
+		prerequisite = { focus = TUR_ottoman_fourth_army }
+		x = -4
+		y = 1
+		relative_position_id = TUR_ottoman_fourth_army
+		available = {
+			any_core_state = {
+				is_controlled_by = ROOT
+				dockyard < 1
+			}
+		}
+		completion_reward = {
+			navy_experience = 5
+			add_ideas = TRS_local_shipyards
+			custom_effect_tooltip = TRS_local_shipyards_instant_desc
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_reorganize_the_army
+		icon = GFX_focus_chi_army_reform
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_ottoman_fourth_army }
+		x = -2
+		y = 1
+		relative_position_id = TUR_ottoman_fourth_army
+		available = { has_army_experience > 15 }
+		completion_reward = {
+			army_experience = -15
+			custom_effect_tooltip = TUR_reorganize_the_army_tt
+			add_to_variable = { TUR_o4a_army_org_factor = 0.05 }
+			add_to_variable = { TUR_o4a_army_morale_factor = 0.05 }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_import_firearms
+		icon = GFX_focus_vickers
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_ARMY_XP
+		}
+		prerequisite = { focus = TUR_reorganize_the_army }
+		x = -1
+		y = 1
+		relative_position_id = TUR_reorganize_the_army
+		completion_reward = {
+			army_experience = 10
+			unlock_decision_tooltip = TRS_import_weapons
+			custom_effect_tooltip = TUR_import_firearms_tt
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_acquire_heavy_artillery
+		icon = GFX_goal_generic_army_artillery2
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_ARMY_XP
+		}
+		prerequisite = { focus = TUR_import_firearms }
+		x = -1
+		y = 1
+		relative_position_id = TUR_import_firearms
+		completion_reward = {
+			army_experience = 5
+			unlock_decision_tooltip = TRS_import_artillery
+			custom_effect_tooltip = TUR_acquire_heavy_artillery_tt
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_syrian_conscriptions
+		icon = GFX_focus_generic_manpower
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_MANPOWER
+		}
+		prerequisite = { focus = TUR_reorganize_the_army }
+		x = 1
+		y = 1
+		relative_position_id = TUR_reorganize_the_army
+		available = { has_army_experience > 30 }
+		completion_reward = {
+			army_experience = -30
+			custom_effect_tooltip = TUR_syrian_conscriptions_tt
+			set_variable = { TUR_o4a_conscription = 0.015 }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_desert_reconnisance
+		icon = GFX_focus_prc_infiltration
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_import_firearms focus = TUR_syrian_conscriptions }
+		x = 1
+		y = 1
+		relative_position_id = TUR_import_firearms
+		available = { has_army_experience > 30 }
+		completion_reward = {
+			army_experience = -30
+			custom_effect_tooltip = TUR_desert_reconnisance_tt
+			set_variable = { TUR_o4a_recon_factor = 0.1 }
+			set_variable = { TUR_o4a_recon_factor_while_entrenched = 0.05 }
+			set_variable = { TUR_o4a_terrain_penalty_reduction = 0.1 }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_desert_training
+		icon = GFX_focus_PER_desert_training
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_syrian_conscriptions }
+		prerequisite = { focus = TUR_desert_reconnisance }
+		x = 0
+		y = 2
+		relative_position_id = TUR_syrian_conscriptions
+		available = { has_army_experience > 30 }
+		completion_reward = {
+			army_experience = -30
+			custom_effect_tooltip = TUR_desert_training_tt
+			set_variable = { TUR_o4a_heat_attrition_factor = -0.1 }
+			set_variable = { TUR_o4a_acclimatization_hot_climate_gain_factor = 0.2 }
+			set_variable = { TUR_o4a_training_time_factor = -0.05 }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_utilize_camel_companies
+		icon = GFX_focus_generic_camel_corps
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_desert_reconnisance }
+		x = -1
+		y = 1
+		relative_position_id = TUR_desert_reconnisance
+		available = { has_army_experience > 30 }
+		completion_reward = {
+			army_experience = -30
+			custom_effect_tooltip = TUR_utilize_camel_companies_tt
+			set_variable = { TUR_o4a_unit_camelry_design_cost_factor = -1 }
+			hidden_effect = { set_technology = { TUR_camelry_recon = 1 popup = no } }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_reorganize_the_syrian_army_groups
+		icon = GFX_focus_generic_military_mission
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_utilize_camel_companies }
+		prerequisite = { focus = TUR_desert_training }
+		x = 1
+		y = 1
+		relative_position_id = TUR_utilize_camel_companies
+		available = { has_army_experience > 50 }
+		completion_reward = {
+			army_experience = -50
+			custom_effect_tooltip = TUR_reorganize_the_syrian_army_groups_tt
+			unlock_decision_tooltip = TRS_modernize_of_the_high_command
+			add_doctrine_cost_reduction = {
+				name = TUR_reorganize_the_syrian_army_groups
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+			set_country_flag = TUR_reorganize_the_syrian_army_groups
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_promote_yasin_hilmi
+		icon = GFX_TUR_promote_yasin_hilmi
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_reorganize_the_syrian_army_groups }
+		x = 1
+		y = 1
+		relative_position_id = TUR_reorganize_the_syrian_army_groups
+		available = {
+			has_army_experience > 25
+			OR = {
+				AND = {
+					NOT = { has_completed_focus = TUR_promote_ali_fuat }
+					has_country_flag = {
+						flag = TUR_reorganize_the_syrian_army_groups_flag
+						days > 365
+					}
+					custom_trigger_tooltip = {
+						tooltip = TUR_reorganize_the_syrian_army_groups_days_tt
+						has_country_flag = {
+							flag = TUR_reorganize_the_syrian_army_groups_flag
+							days > 365
+						}
+					}
+				}
+				AND = {
+					has_country_flag = {
+						flag = TUR_promote_ali_fuat_flag
+						days > 365
+					}
+					custom_trigger_tooltip = {
+						tooltip = TUR_promote_ali_fuat_days_tt
+						has_country_flag = {
+							flag = TUR_promote_ali_fuat_flag
+							days > 365
+						}
+					}
+				}
+			}
+		}
+		completion_reward = {
+			army_experience = -25
+			add_corps_commander_role = {
+				character = TUR_yasin_el_hasimi
+				traits = { desert_fox trait_cautious }
+				skill = 2
+				attack_skill = 2
+				defense_skill = 3
+				planning_skill = 2
+				logistics_skill = 3
+			}
+			TUR_ali_ihsan_sabis = { set_character_name = TUR_ali_ihsan_sabis_pasha }
+			custom_effect_tooltip = TRS_modernize_of_the_high_command_tt2
+			add_to_variable = { TUR_o4a_army_org_factor = 0.05 }
+			set_country_flag = TUR_promote_yasin_hilmi_flag
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_promote_ali_fuat
+		icon = GFX_TUR_promote_ali_fuat
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_reorganize_the_syrian_army_groups }
+		x = 3
+		y = 1
+		relative_position_id = TUR_reorganize_the_syrian_army_groups
+		available = {
+			has_army_experience > 25
+			OR = {
+				AND = {
+					NOT = { has_completed_focus = TUR_promote_yasin_hilmi }
+					has_country_flag = {
+						flag = TUR_reorganize_the_syrian_army_groups_flag
+						days > 365
+					}
+					custom_trigger_tooltip = {
+						tooltip = TUR_reorganize_the_syrian_army_groups_days_tt
+						has_country_flag = {
+							flag = TUR_reorganize_the_syrian_army_groups_flag
+							days > 365
+						}
+					}
+				}
+				AND = {
+					has_country_flag = {
+						flag = TUR_promote_yasin_hilmi_flag
+						days > 365
+					}
+					custom_trigger_tooltip = {
+						tooltip = TUR_promote_yasin_hilmi_days_tt
+						has_country_flag = {
+							flag = TUR_promote_yasin_hilmi_flag
+							days > 365
+						}
+					}
+				}
+			}
+		}
+		completion_reward = {
+			army_experience = -25
+			add_corps_commander_role = {
+				character = TUR_ali_fuat_erden
+				traits = { career_officer desert_fox }
+				skill = 1
+				attack_skill = 1
+				defense_skill = 1
+				planning_skill = 2
+				logistics_skill = 1
+			}
+			TUR_ali_fuat_erden = { set_character_name = TUR_cafer_tayyar_pasha }
+			custom_effect_tooltip = TRS_modernize_of_the_high_command_tt2
+			add_to_variable = { TUR_o4a_army_org_factor = 0.05 }
+			set_country_flag = TUR_promote_ali_fuat_flag
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_subjugate_the_yildirim_army_group
+		icon = GFX_focus_otto_stormtrooper
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_reorganize_the_syrian_army_groups }
+		x = 0
+		y = 2
+		relative_position_id = TUR_reorganize_the_syrian_army_groups
+		available = { overlord = { has_completed_focus = TUR_arrival_of_yildirim_army_group } }
+		completion_reward = {
+			custom_effect_tooltip = TUR_subjugate_the_yildirim_army_group_tt
+			set_variable = { TUR_aoabe_army_speed_factor = 0.05 }
+			set_variable = { TUR_aoabe_breakthrough_factor = 0.05 }
+			overlord = { country_event = ottoman_syria.72 }
+			effect_tooltip = {
+				overlord = { delete_unit = { division_template = "Yıldırım Birlikleri" } }
+				custom_effect_tooltip = TUR_yildirim_army_group
+				division_template = {
+					name = "Yıldırım Birlikleri"
+					division_names_group = TUR_INF_01
+					template_counter = 4
+					priority = 2
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						infantry = { x = 1 y = 0 }
+						infantry = { x = 1 y = 1 }
+						infantry = { x = 1 y = 2 }
+						field_gun_brigade = { x = 2 y = 0 }
+						field_gun_brigade = { x = 2 y = 1 }
+					}
+					support = {
+						engineer = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						field_gun = { x = 0 y = 2 }
+						logistics_company = { x = 0 y = 3 }
+					}
+				}
+				random_owned_controlled_state = {
+					prioritize = {
+						291
+					}
+					create_unit = {
+						division = "name = \"1. Ordu\" division_template = \"Yıldırım Birlikleri\" start_experience_factor = 0.4"
+						owner = TUR
+					}
+					create_unit = {
+						division = "name = \"2. Ordu\" division_template = \"Yıldırım Birlikleri\" start_experience_factor = 0.4"
+						owner = TUR
+					}
+					create_unit = {
+						division = "name = \"3. Ordu\" division_template = \"Yıldırım Birlikleri\" start_experience_factor = 0.4"
+						owner = TUR
+					}
+					create_unit = {
+						division = "name = \"4. Ordu\" division_template = \"Yıldırım Birlikleri\" start_experience_factor = 0.4"
+						owner = TUR
+					}
+					create_unit = {
+						division = "name = \"5. Ordu\" division_template = \"Yıldırım Birlikleri\" start_experience_factor = 0.4"
+						owner = TUR
+					}
+					create_unit = {
+						division = "name = \"6. Ordu\" division_template = \"Yıldırım Birlikleri\" start_experience_factor = 0.4"
+						owner = TUR
+					}
+					create_unit = {
+						division = "name = \"7. Ordu\" division_template = \"Yıldırım Birlikleri\" start_experience_factor = 0.4"
+						owner = TUR
+					}
+					create_unit = {
+						division = "name = \"8. Ordu\" division_template = \"Yıldırım Birlikleri\" start_experience_factor = 0.4"
+						owner = TUR
+					}
+				}
+			}
+			if = {
+				limit = { overlord = { has_character = GER_erich_von_falkenhayn } }
+				overlord = { GER_erich_von_falkenhayn = { set_nationality = ROOT } }
+			}
+			if = {
+				limit = { overlord = { has_character = GER_otto_liman_von_sanders } }
+				overlord = { GER_otto_liman_von_sanders = { set_nationality = ROOT } }
+			}
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = 0.1
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_appoint_kucuk_cemal
+		icon = GFX_TUR_appoint_kucuk_cemal
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_MILITARY_CHARACTER
+		}
+		prerequisite = { focus = TUR_ottoman_fourth_army }
+		x = 0
+		y = 1
+		relative_position_id = TUR_ottoman_fourth_army
+		completion_reward = {
+			custom_effect_tooltip = TUR_appoint_kucuk_cemal_tt
+			hidden_effect = { TUR = { country_event = ottoman_syria.1 } }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_defense_of_syria
+		icon = GFX_goal_generic_military_sphere
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_MILITARY_CHARACTER
+		}
+		prerequisite = { focus = TUR_ottoman_fourth_army }
+		mutually_exclusive = { focus = TUR_prepare_for_the_egyptian_expedition }
+		x = 2
+		y = 1
+		relative_position_id = TUR_ottoman_fourth_army
+		completion_reward = {
+			unlock_decision_tooltip = TRS_palestine_defense_plan
+			unlock_decision_tooltip = TRS_damascus_defense_plan
+			custom_effect_tooltip = TUR_defense_of_syria_tt
+			hidden_effect = { TUR_zeki_pasha = { add_defense = 1 } }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_prepare_for_the_egyptian_expedition
+		icon = GFX_focus_PER_march_to_nile
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_POLITICAL_CHARACTER
+			FOCUS_FILTER_BALANCE_OF_POWER
+		}
+		prerequisite = { focus = TUR_ottoman_fourth_army }
+		mutually_exclusive = { focus = TUR_defense_of_syria }
+		x = 4
+		y = 1
+		relative_position_id = TUR_ottoman_fourth_army
+		completion_reward = {
+			unlock_decision_tooltip = TRS_first_egyptian_offensive
+			unlock_decision_tooltip = TRS_second_egyptian_offensive
+			custom_effect_tooltip = TUR_prepare_for_the_egyptian_expedition_tt
+			hidden_effect = { TUR = { country_event = ottoman_syria.2 } }
+			add_state_claim = 453
+			add_state_claim = 1207
+			add_state_claim = 447
+			add_state_claim = 1146
+			add_state_claim = 446
+			add_state_claim = 452
+			add_state_claim = 457
+			add_state_claim = 456
+			add_state_claim = 551
+			create_wargoal = {
+				type = annex_everything
+				target = EGY
+				expire = 730
+			}
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = -0.15
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_integrate_intelligence_to_the_army
+		icon = GFX_TUR_empower_the_special_organization
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_defense_of_syria focus = TUR_prepare_for_the_egyptian_expedition }
+		x = 1
+		y = 1
+		relative_position_id = TUR_defense_of_syria
+		complete_tooltip = {
+			if = {
+				limit = { has_dlc = "La Resistance" }
+				create_intelligence_agency = {
+					name = "Teşkilât-ı Mahsusa"
+					icon = GFX_intelligence_agency_logo_tur_ww1_1
+				}
+				if = {
+					limit = { has_country_flag = TUR_integrate_intelligence_to_the_army }
+					upgrade_intelligence_agency = upgrade_commando_training
+				}
+				custom_effect_tooltip = TUR_integrate_intelligence_to_the_army_tt
+			}
+			else = { custom_effect_tooltip = TUR_integrate_intelligence_to_the_army_tt_no_lar }
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = 0.05
+				}
+			}
+		}
+		completion_reward = {
+			if = {
+				limit = { has_dlc = "La Resistance" }
+				create_intelligence_agency = {
+					name = "Teşkilât-ı Mahsusa"
+					icon = GFX_intelligence_agency_logo_tur_ww1_1
+				}
+				if = {
+					limit = { NOT = { has_done_agency_upgrade = upgrade_commando_training } }
+					upgrade_intelligence_agency = upgrade_commando_training
+					set_country_flag = TUR_integrate_intelligence_to_the_army
+				}
+				custom_effect_tooltip = TUR_integrate_intelligence_to_the_army_tt
+				set_variable = { TUR_o4a_operative_slot = 1 }
+				set_variable = { TUR_o4a_intel_network_gain_factor = 0.15 }
+				set_variable = { TUR_o4a_subversive_activites_upkeep = -0.05 }
+			}
+			else = {
+				custom_effect_tooltip = TUR_integrate_intelligence_to_the_army_tt_no_lar
+				set_variable = { TUR_o4a_subversive_activites_upkeep = -0.25 }
+			}
+			if = {
+				limit = { has_power_balance = { id = TUR_local_central_rule } }
+				add_power_balance_value = {
+					id = TUR_local_central_rule
+					value = 0.05
+				}
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_allign_with_bedouin_tribes
+		icon = GFX_focus_ETH_expand_the_levy
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_MANPOWER
+			FOCUS_FILTER_MINORITY
+		}
+		prerequisite = { focus = TUR_integrate_intelligence_to_the_army }
+		x = 0
+		y = 1
+		relative_position_id = TUR_integrate_intelligence_to_the_army
+		available = {
+			OR = {
+				controls_state = 856
+				controls_state = 455
+				controls_state = 453
+			}
+		}
+		complete_tooltip = {
+			add_ideas = TRS_bedouin_support_1
+			custom_effect_tooltip = TUR_allign_with_bedouin_tribes_tt
+			if = {
+				limit = { has_country_flag = TUR_allign_with_bedouin_tribes1 }
+				856 = {
+					create_unit = { division = "name = \"Beersheba Bedouin Camelry\" division_template = \"Bedouin Camelry Corp\" start_experience_factor = 0.6 start_equipment_factor = 0.7 " owner = ROOT }
+					custom_effect_tooltip = TUR_allign_with_bedouin_tribes_tt2
+				}
+				custom_effect_tooltip = TUR_decrease_jerusalem_centralization_5
+			}
+			if = {
+				limit = { has_country_flag = TUR_allign_with_bedouin_tribes2 }
+				455 = {
+					create_unit = { division = "name = \"Beersheba Bedouin Camelry\" division_template = \"Bedouin Camelry Corp\" start_experience_factor = 0.6 start_equipment_factor = 0.7 " owner = ROOT }
+					custom_effect_tooltip = TUR_allign_with_bedouin_tribes_tt2
+				}
+				custom_effect_tooltip = TUR_decrease_damascus_centralization_5
+			}
+			if = {
+				limit = { has_country_flag = TUR_allign_with_bedouin_tribes3 }
+				453 = {
+					create_unit = { division = "name = \"Beersheba Bedouin Camelry\" division_template = \"Bedouin Camelry Corp\" start_experience_factor = 0.6 start_equipment_factor = 0.7 " owner = ROOT }
+					custom_effect_tooltip = TUR_allign_with_bedouin_tribes_tt2
+				}
+				custom_effect_tooltip = TUR_decrease_jerusalem_centralization_5
+			}
+			custom_effect_tooltip = TUR_allign_with_bedouin_tribes_tt3
+		}
+		completion_reward = {
+			add_ideas = TRS_bedouin_support_1
+			division_template = {
+				name = "Bedouin Camelry Corp"
+				is_locked = yes
+				division_names_group = EGY_CAV_01
+				priority = 0
+				template_counter = 66
+				regiments = {
+					camelry = { x = 0 y = 0 }
+					camelry = { x = 0 y = 1 }
+					camelry = { x = 0 y = 2 }
+					camelry = { x = 1 y = 0 }
+					camelry = { x = 1 y = 1 }
+					camelry = { x = 1 y = 2 }
+				}
+				support = { recon = { x = 0 y = 0 } }
+			}
+			custom_effect_tooltip = TUR_allign_with_bedouin_tribes_tt
+			if = {
+				limit = { controls_state = 856 }
+				856 = {
+					create_unit = { division = "name = \"Beersheba Bedouin Camelry\" division_template = \"Bedouin Camelry Corp\" start_experience_factor = 0.7 start_equipment_factor = 0.72 " owner = ROOT }
+					create_unit = { division = "name = \"Beersheba Bedouin Camelry\" division_template = \"Bedouin Camelry Corp\" start_experience_factor = 0.7 start_equipment_factor = 0.72 " owner = ROOT }
+					custom_effect_tooltip = TUR_allign_with_bedouin_tribes_tt2
+					set_state_flag = TUR_bedouins_raised
+					hidden_effect = { add_to_variable = { TUR_arab_temp_variable = 0.001 } }
+				}
+				add_to_variable = {
+					var = global.TUR_jerusalem_centralization
+					value = -5
+					tooltip = TUR_change_jerusalem_centralization
+				}
+				set_country_flag = TUR_allign_with_bedouin_tribes1
+			}
+			else_if = {
+				limit = { controls_state = 455 }
+				455 = {
+					create_unit = { division = "name = \"Karak Bedouin Camelry\" division_template = \"Bedouin Camelry Corp\" start_experience_factor = 0.7 start_equipment_factor = 0.72 " owner = ROOT }
+					create_unit = { division = "name = \"Karak Bedouin Camelry\" division_template = \"Bedouin Camelry Corp\" start_experience_factor = 0.7 start_equipment_factor = 0.72 " owner = ROOT }
+					custom_effect_tooltip = TUR_allign_with_bedouin_tribes_tt2
+					set_state_flag = TUR_bedouins_raised
+					hidden_effect = { add_to_variable = { TUR_arab_temp_variable = 0.001 } }
+				}
+				add_to_variable = {
+					var = global.TUR_damascus_centralization
+					value = -5
+					tooltip = TUR_change_damascus_centralization
+				}
+				set_country_flag = TUR_allign_with_bedouin_tribes2
+			}
+			else_if = {
+				limit = { controls_state = 453 }
+				453 = {
+					create_unit = { division = "name = \"Sinai Bedouin Camelry\" division_template = \"Bedouin Camelry Corp\" start_experience_factor = 0.7 start_equipment_factor = 0.72 " owner = ROOT }
+					create_unit = { division = "name = \"Sinai Bedouin Camelry\" division_template = \"Bedouin Camelry Corp\" start_experience_factor = 0.7 start_equipment_factor = 0.72 " owner = ROOT }
+					custom_effect_tooltip = TUR_allign_with_bedouin_tribes_tt2
+					set_state_flag = TUR_bedouins_raised
+					hidden_effect = { add_to_variable = { TUR_arab_temp_variable = 0.001 } }
+				}
+				add_to_variable = {
+					var = global.TUR_jerusalem_centralization
+					value = -5
+					tooltip = TUR_change_jerusalem_centralization
+				}
+				set_country_flag = TUR_allign_with_bedouin_tribes3
+			}
+			custom_effect_tooltip = TUR_allign_with_bedouin_tribes_tt3
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_fortify_syria
+		icon = GFX_goal_generic_construct_military
+		cost = 5
+		search_filters = {
+		}
+		prerequisite = { focus = TUR_defense_of_syria }
+		x = -1
+		y = 1
+		relative_position_id = TUR_defense_of_syria
+		complete_tooltip = {
+			if = {
+				limit = { has_country_flag = TUR_fortify_syria1 }
+				856 = {
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 4088
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 11970
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 1015
+					}
+				}
+			}
+			if = {
+				limit = { has_country_flag = TUR_fortify_syria2 }
+				454 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 4206
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						instant_build = yes
+						province = 4206
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 1086
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 1065
+					}
+				}
+			}
+			if = {
+				limit = { has_country_flag = TUR_fortify_syria3 }
+				858 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 4455
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						instant_build = yes
+						province = 4455
+					}
+				}
+			}
+			if = {
+				limit = { has_country_flag = TUR_fortify_syria4 }
+				455 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 4017
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						instant_build = yes
+						province = 4151
+					}
+				}
+			}
+			if = {
+				limit = { has_country_flag = TUR_fortify_syria5 }
+				554 = {
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 1074
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 4486
+					}
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 4111
+					}
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 1056
+					}
+				}
+			}
+			if = {
+				limit = { has_country_flag = TUR_fortify_syria6 }
+				553 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 792
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						instant_build = yes
+						province = 792
+					}
+				}
+			}
+			if = {
+				limit = { has_country_flag = TUR_fortify_syria7 }
+				677 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 12473
+					}
+				}
+			}
+			if = {
+				limit = { has_country_flag = TUR_fortify_syria8 }
+				680 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 3942
+					}
+				}
+			}
+		}
+		completion_reward = {
+			if = {
+				limit = { controls_state = 856 }
+				856 = {
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 4088
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 11970
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 1015
+					}
+				}
+				set_country_flag = TUR_fortify_syria1
+			}
+			if = {
+				limit = { controls_state = 454 }
+				454 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 4206
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						instant_build = yes
+						province = 4206
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 1086
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 1065
+					}
+				}
+				set_country_flag = TUR_fortify_syria2
+			}
+			if = {
+				limit = { controls_state = 858 }
+				858 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 4455
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						instant_build = yes
+						province = 4455
+					}
+				}
+				set_country_flag = TUR_fortify_syria3
+			}
+			if = {
+				limit = { controls_state = 455 }
+				455 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 4017
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						instant_build = yes
+						province = 4151
+					}
+				}
+				set_country_flag = TUR_fortify_syria4
+			}
+			if = {
+				limit = { controls_state = 554 }
+				554 = {
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 1074
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						instant_build = yes
+						province = 4486
+					}
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 4111
+					}
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 1056
+					}
+				}
+				set_country_flag = TUR_fortify_syria5
+			}
+			if = {
+				limit = { controls_state = 553 }
+				553 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 792
+					}
+					add_building_construction = {
+						type = coastal_bunker
+						level = 1
+						instant_build = yes
+						province = 792
+					}
+				}
+				set_country_flag = TUR_fortify_syria6
+			}
+			if = {
+				limit = { controls_state = 677 }
+				677 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 12473
+					}
+				}
+				set_country_flag = TUR_fortify_syria7
+			}
+			if = {
+				limit = { controls_state = 680 }
+				680 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						instant_build = yes
+						province = 3942
+					}
+				}
+				set_country_flag = TUR_fortify_syria8
+			}
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_popular_egyptian_resistance
+		icon = GFX_goal_generic_military_deal
+		cost = 5
+		search_filters = {
+		}
+		prerequisite = { focus = TUR_fortify_syria }
+		x = 0
+		y = 1
+		relative_position_id = TUR_fortify_syria
+		available = { EGY = { NOT = { has_government = fascism } } }
+		completion_reward = {
+			if = {
+				limit = { has_dlc = "La Resistance" }
+				custom_effect_tooltip = TUR_popular_egyptian_resistance_tt
+			}
+			else = { unlock_decision_tooltip = TUR_boost_egyptian_opposition }
+			unlock_decision_tooltip = TUR_contact_with_the_national_party
+			unlock_decision_tooltip = TUR_promote_pro_independence_voices
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_war_propaganda
+		icon = GFX_goal_generic_propaganda
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_WAR_SUPPORT
+		}
+		prerequisite = { focus = TUR_prepare_for_the_egyptian_expedition }
+		x = 1
+		y = 1
+		relative_position_id = TUR_prepare_for_the_egyptian_expedition
+		completion_reward = {
+			add_war_support = 0.15
+			custom_effect_tooltip = TUR_war_propaganda_tt
+			set_variable = { TUR_war_propaganda_cost = 50 }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_instigate_egyptian_rebellion
+		icon = GFX_focus_ETH_freedom_at_gunpoint
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		prerequisite = { focus = TUR_war_propaganda }
+		x = 0
+		y = 1
+		relative_position_id = TUR_war_propaganda
+		available = { EGY = { NOT = { has_government = fascism } } }
+		completion_reward = {
+			if = {
+				limit = { has_dlc = "La Resistance" }
+				custom_effect_tooltip = TUR_instigate_egyptian_rebellion_tt
+			}
+			else = { unlock_decision_tooltip = TUR_start_the_egyptian_uprising }
+			unlock_decision_tooltip = TUR_allign_with_the_egyptian_bureaucracy
+			unlock_decision_tooltip = TUR_allign_with_the_egyptian_clergy
+			unlock_decision_tooltip = TUR_allign_with_the_egyptian_conscripts
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TRS_dissolve_the_debt_council
+		icon = GFX_TUR_ottoman_public_debt_administration
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_OTTOMAN_DEBT
+		}
+		prerequisite = { focus = TUR_fate_of_the_empire }
+		x = 4
+		y = 1
+		relative_position_id = TUR_fate_of_the_empire
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = TUR_OPDA_trigger_idea_tooltip
+				OR = {
+					has_idea = TUR_OPD_idea
+					has_idea = TUR_OPD_idea_2
+					has_idea = TUR_OPD_idea_3
+				}
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = TRS_dissolve_the_debt_council_tt
+			hidden_effect = {
+				remove_ideas = TUR_OPD_idea
+				add_ideas = TUR_OPD_idea_2
+			}
+			add_to_variable = { opda_improve_relations_maintain_cost_factor = -0.05 }
+			add_to_variable = { opda_resources_to_market = -0.2 }
+			unlock_decision_tooltip = TRS_dissolve_the_debt_council_decision
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TUR_the_new_ottoman_army
+		icon = GFX_TUR_harbiye_nezareti
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_ARMY_XP
+		}
+		prerequisite = { focus = TUR_fate_of_the_empire }
+		prerequisite = { focus = TUR_reorganize_the_syrian_army_groups }
+		x = 12
+		y = 1
+		relative_position_id = TUR_fate_of_the_empire
+		completion_reward = {
+			custom_effect_tooltip = TUR_the_new_ottoman_army_tt
+			set_variable = { TUR_o4a_experience_gain_army_factor = 0.1 }
+			add_to_variable = { TUR_o4a_army_org_factor = 0.05 }
+			add_to_variable = { TUR_o4a_army_morale_factor = 0.05 }
+		}
+		ai_will_do = {
+			base = 50
+		}
+	}
+	focus = {
+		id = TRS_domestic_weapon_companies
+		icon = GFX_goal_generic_military_sphere
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		prerequisite = { focus = TUR_the_new_ottoman_army }
+		x = 0
+		y = 1
+		relative_position_id = TUR_the_new_ottoman_army
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = debt_less_than_75
+				check_variable = { opda_consumer_goods < 0.75 }
+			}
+			has_army_experience > 30
+		}
+		completion_reward = {
+			army_experience = -30
+			custom_effect_tooltip = TRS_domestic_weapon_companies_tt
+			if = {
+				limit = { has_dlc = "Arms Against Tyranny" }
+				custom_effect_tooltip = available_mio_tt
+				show_mio_tooltip = TUR_sarsilmaz_organization
+				show_mio_tooltip = TUR_basak_traktor_organization
+				show_mio_tooltip = TUR_tulomsas_organization
+				custom_effect_tooltip = TRS_domestic_weapon_companies_tt2
+			}
+			else = {
+				custom_effect_tooltip = available_designer
+				show_ideas_tooltip = TUR_sarsilmaz
+				show_ideas_tooltip = TUR_basak_traktor
+				show_ideas_tooltip = tulomsas
+				custom_effect_tooltip = TRS_domestic_weapon_companies_tt3
+			}
+			set_variable = { TUR_o4a_materiel_manufacturer_cost_factor = -0.25 }
+			set_variable = { TUR_o4a_tank_manufacturer_cost_factor = -0.25 }
+		}
+		ai_will_do = { base = 30 }
+	}
+	focus = {
+		id = TRS_open_up_domestic_arms_industries
+		icon = GFX_goal_generic_construct_mil_factory
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+		prerequisite = { focus = TRS_domestic_weapon_companies }
+		x = -1
+		y = 1
+		relative_position_id = TRS_domestic_weapon_companies
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = debt_less_than_75
+				check_variable = { opda_consumer_goods < 0.75 }
+			}
+			has_army_experience > 50
+		}
+		complete_tooltip = {
+			army_experience = -50
+			custom_effect_tooltip = TRS_open_up_domestic_arms_industries_tt
+			every_state = {
+				limit = { has_state_flag = TRS_open_up_domestic_arms_industries1 }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			every_state = {
+				limit = { has_state_flag = TRS_open_up_domestic_arms_industries2 }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = TRS_open_up_domestic_arms_industries_tt
+			set_variable = { TUR_o4a_industrial_capacity_factory = 0.05 }
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = TRS_open_up_domestic_arms_industries1
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = TRS_open_up_domestic_arms_industries2
+			}
+		}
+	}
+	focus = {
+		id = TRS_finance_weapon_producers
+		icon = GFX_goal_generic_small_arms
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		prerequisite = { focus = TRS_domestic_weapon_companies }
+		x = 1
+		y = 1
+		relative_position_id = TRS_domestic_weapon_companies
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = debt_less_than_75
+				check_variable = { opda_consumer_goods < 0.75 }
+			}
+			has_army_experience > 50
+		}
+		completion_reward = {
+			army_experience = -50
+			if = {
+				limit = { has_dlc = "Arms Against Tyranny" }
+				mio:TUR_imalat_i_harbiye_organization = {
+					add_mio_size = 2
+				}
+				mio:TUR_sarsilmaz_organization = {
+					add_mio_size = 2
+				}
+				mio:TUR_basak_traktor_organization = {
+					add_mio_size = 2
+				}
+				mio:TUR_tulomsas_organization = {
+					add_mio_size = 2
+				}
+				custom_effect_tooltip = TRS_finance_weapon_producers_tt
+			}
+			else = {
+				effect_tooltip = {
+					swap_ideas = {
+						remove_idea = TUR_imalat_i_harbiye
+						add_idea = TUR_imalat_i_harbiye2
+					}
+					swap_ideas = {
+						remove_idea = TUR_sarsilmaz
+						add_idea = TUR_sarsilmaz2
+					}
+					swap_ideas = {
+						remove_idea = TUR_basak_traktor
+						add_idea = TUR_basak_traktor2
+					}
+				}
+				custom_effect_tooltip = TRS_finance_weapon_producers_tt2
+				hidden_effect = {
+					if = {
+						limit = { has_idea = TUR_imalat_i_harbiye }
+						swap_ideas = {
+							remove_idea = TUR_imalat_i_harbiye
+							add_idea = TUR_imalat_i_harbiye2
+						}
+					}
+					if = {
+						limit = { has_idea = TUR_sarsilmaz }
+						swap_ideas = {
+							remove_idea = TUR_sarsilmaz
+							add_idea = TUR_sarsilmaz2
+						}
+					}
+					if = {
+						limit = { has_idea = TUR_basak_traktor }
+						swap_ideas = {
+							remove_idea = TUR_basak_traktor
+							add_idea = TUR_basak_traktor2
+						}
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = TRS_national_research_institutes
+		icon = GFX_goal_generic_scientific_exchange
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		prerequisite = { focus = TRS_open_up_domestic_arms_industries }
+		prerequisite = { focus = TRS_finance_weapon_producers }
+		x = 1
+		y = 1
+		relative_position_id = TRS_open_up_domestic_arms_industries
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = debt_less_than_45
+				check_variable = { opda_consumer_goods < 0.45 }
+			}
+			has_army_experience > 80
+		}
+		completion_reward = {
+			army_experience = -80
+			custom_effect_tooltip = TRS_national_research_institutes_tt
+			hidden_effect = { add_ideas = TUR_encouraged_national_research }
+			set_country_flag = TUR_council_of_military_scientific_research
+		}
+	}
+	focus = {
+		id = TRS_reopen_the_bahriye_nezareti
+		icon = GFX_TUR_bahriye_nezareti
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_NAVY_XP
+		}
+		prerequisite = { focus = TUR_the_new_ottoman_army }
+		x = -3
+		y = 1
+		relative_position_id = TUR_the_new_ottoman_army
+		completion_reward = {
+			custom_effect_tooltip = TRS_reopen_the_bahriye_nezareti_tt
+			hidden_effect = {
+				add_dynamic_modifier = { modifier = TUR_donanma_yi_humayun }
+				remove_dynamic_modifier = { modifier = TUR_sublime_realm }
+				add_dynamic_modifier = { modifier = TUR_sublime_realm }
+			}
+			set_variable = { TUR_dh_experience_gain_navy = 0.02 }
+			set_variable = { TUR_dh_naval_coordination = 0.05 }
+			set_variable = { TUR_dh_naval_manufacturer_cost_factor = -0.25 }
+			add_country_leader_trait = TUR_supreme_commander_of_the_navy
+		}
+		ai_will_do = { base = 30 }
+	}
+	focus = {
+		id = TRS_recommission_the_ottoman_fleet
+		icon = GFX_goal_generic_navy_cruiser
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		prerequisite = { focus = TRS_reopen_the_bahriye_nezareti }
+		x = 0
+		y = 1
+		relative_position_id = TRS_reopen_the_bahriye_nezareti
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = debt_less_than_75
+				check_variable = { opda_consumer_goods < 0.75 }
+			}
+			has_navy_experience > 50
+		}
+		complete_tooltip = {
+			navy_experience = -50
+			custom_effect_tooltip = TRS_recommission_the_ottoman_fleet_tt
+			if = {
+				limit = { has_country_flag = TRS_recommission_the_ottoman_fleet }
+				add_ideas = TUR_council_of_military_scientific_research_navy
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = TUR_council_of_military_scientific_research_army_air
+					add_idea = TUR_council_of_military_scientific_research_army_air_navy
+				}
+			}
+		}
+		completion_reward = {
+			navy_experience = -50
+			custom_effect_tooltip = TRS_recommission_the_ottoman_fleet_tt
+			set_variable = { TUR_dh_naval_equipment_upgrade_xp_cost = -0.15 }
+			if = {
+				limit = {
+					OR = {
+						has_idea = TUR_council_of_military_scientific_research_army
+						has_idea = TUR_council_of_military_scientific_research_air
+						has_idea = TUR_council_of_military_scientific_research_army_air
+					}
+				}
+				effect_tooltip = {
+					swap_ideas = {
+						remove_idea = TUR_council_of_military_scientific_research_army_air
+						add_idea = TUR_council_of_military_scientific_research_army_air_navy
+					}
+				}
+				hidden_effect = {
+					if = {
+						limit = { has_idea = TUR_council_of_military_scientific_research_army }
+						swap_ideas = {
+							remove_idea = TUR_council_of_military_scientific_research_army
+							add_idea = TUR_council_of_military_scientific_research_army_navy
+						}
+					}
+					else_if = {
+						limit = { has_idea = TUR_council_of_military_scientific_research_air }
+						swap_ideas = {
+							remove_idea = TUR_council_of_military_scientific_research_air
+							add_idea = TUR_council_of_military_scientific_research_air_navy
+						}
+					}
+					else_if = {
+						limit = { has_idea = TUR_council_of_military_scientific_research_army_air }
+						swap_ideas = {
+							remove_idea = TUR_council_of_military_scientific_research_army_air
+							add_idea = TUR_council_of_military_scientific_research_army_air_navy
+						}
+					}
+				}
+			}
+			else = {
+				add_ideas = TUR_council_of_military_scientific_research_navy
+				set_country_flag = TRS_recommission_the_ottoman_fleet
+			}
+		}
+		ai_will_do = { base = 30 }
+	}
+	focus = {
+		id = TRS_improving_our_naval_tactics
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		cost = 10
+		prerequisite = { focus = TRS_recommission_the_ottoman_fleet }
+		x = 0
+		y = 1
+		relative_position_id = TRS_recommission_the_ottoman_fleet
+		available = { has_navy_experience > 100 }
+		completion_reward = {
+			navy_experience = -100
+			custom_effect_tooltip = TUR_improving_our_naval_tactics_tt
+			add_to_variable = { TUR_dh_naval_hit_chance = 0.05 }
+			add_to_variable = { TUR_dh_naval_accidents_chance = -0.05 }
+			add_to_variable = { TUR_dh_naval_critical_score_chance_factor = 0.1 }
+			set_variable = { TUR_dh_navy_org_factor = 0.05 }
+			set_variable = { TUR_dh_positioning = 0.1 }
+			add_doctrine_cost_reduction = {
+				name = TUR_naval_maneuvres
+				cost_reduction = 0.5
+				uses = 2
+				category = naval_doctrine
+			}
+		}
+		ai_will_do = { base = 30 }
+	}
+	focus = {
+		id = TRS_found_the_aircraft_committee
+		icon = GFX_TUR_found_the_aircraft_committee
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_AIR_XP
+		}
+		prerequisite = { focus = TUR_the_new_ottoman_army }
+		x = 3
+		y = 1
+		relative_position_id = TUR_the_new_ottoman_army
+		completion_reward = {
+			custom_effect_tooltip = TRS_found_the_aircraft_committee_tt
+			set_variable = { TUR_hk_experience_gain_air = 0.05 }
+			set_variable = { TUR_hk_air_accidents_factor = -0.1 }
+			set_variable = { TUR_hk_air_ace_generation_chance_factor = 0.2 }
+			hidden_effect = {
+				add_dynamic_modifier = { modifier = TUR_havacilik_komisyonu }
+				remove_dynamic_modifier = { modifier = TUR_sublime_realm }
+				add_dynamic_modifier = { modifier = TUR_sublime_realm }
+			}
+		}
+	}
+	focus = {
+		id = TRS_fund_independent_researchers
+		icon = GFX_focus_generic_air_research_boost
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_RESEARCH
+		}
+		prerequisite = { focus = TRS_found_the_aircraft_committee }
+		x = 0
+		y = 1
+		relative_position_id = TRS_found_the_aircraft_committee
+		available = { has_air_experience > 50 }
+		continue_if_invalid = yes
+		complete_tooltip = {
+			air_experience = -50
+			if = {
+				limit = { has_country_flag = TRS_fund_independent_researchers }
+				add_ideas = TUR_council_of_military_scientific_research_air
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = TUR_council_of_military_scientific_research_army_navy
+					add_idea = TUR_council_of_military_scientific_research_army_air_navy
+				}
+			}
+			if = {
+				limit = { has_dlc = "Arms Against Tyranny" }
+				custom_effect_tooltip = available_mio_tt
+				show_mio_tooltip = TUR_vecihi_hurkus_organization
+			}
+			else = {
+				custom_effect_tooltip = available_designer
+				show_ideas_tooltip = TUR_vecihi_hurkus
+			}
+		}
+		completion_reward = {
+			air_experience = -50
+			if = {
+				limit = {
+					OR = {
+						has_idea = TUR_council_of_military_scientific_research_army
+						has_idea = TUR_council_of_military_scientific_research_navy
+						has_idea = TUR_council_of_military_scientific_research_army_navy
+					}
+				}
+				effect_tooltip = {
+					swap_ideas = {
+						remove_idea = TUR_council_of_military_scientific_research_army_navy
+						add_idea = TUR_council_of_military_scientific_research_army_air_navy
+					}
+				}
+				hidden_effect = {
+					if = {
+						limit = { has_idea = TUR_council_of_military_scientific_research_army }
+						swap_ideas = {
+							remove_idea = TUR_council_of_military_scientific_research_army
+							add_idea = TUR_council_of_military_scientific_research_army_air
+						}
+					}
+					else_if = {
+						limit = { has_idea = TUR_council_of_military_scientific_research_navy }
+						swap_ideas = {
+							remove_idea = TUR_council_of_military_scientific_research_navy
+							add_idea = TUR_council_of_military_scientific_research_air_navy
+						}
+					}
+					else_if = {
+						limit = { has_idea = TUR_council_of_military_scientific_research_army_navy }
+						swap_ideas = {
+							remove_idea = TUR_council_of_military_scientific_research_army_navy
+							add_idea = TUR_council_of_military_scientific_research_army_air_navy
+						}
+					}
+				}
+			}
+			else = {
+				add_ideas = TUR_council_of_military_scientific_research_air
+				set_country_flag = TRS_fund_independent_researchers
+			}
+			if = {
+				limit = { has_dlc = "Arms Against Tyranny" }
+				custom_effect_tooltip = available_mio_tt
+				show_mio_tooltip = TUR_vecihi_hurkus_organization
+			}
+			else = {
+				custom_effect_tooltip = available_designer
+				show_ideas_tooltip = TUR_vecihi_hurkus
+			}
+		}
+	}
+	focus = {
+		id = TRS_general_inspectorate_of_air_forces
+		icon = GFX_focus_usa_escort_fighters
+		cost = 10
+		prerequisite = { focus = TRS_fund_independent_researchers }
+		x = 0
+		y = 1
+		relative_position_id = TRS_fund_independent_researchers
+		available = { has_air_experience > 80 }
+		completion_reward = {
+			air_experience = -80
+			custom_effect_tooltip = TRS_general_inspectorate_of_air_forces_tt
+			add_to_variable = { TUR_hk_air_agility_factor = 0.05 }
+			set_variable = { TUR_hk_air_mission_efficiency = 0.1 }
+			set_variable = { TUR_hk_air_range_factor = 0.1 }
+			set_variable = { TUR_hk_air_maximum_speed_factor = 0.05 }
+			add_doctrine_cost_reduction = {
+				name = TUR_general_inspectorate_of_air_forces
+				cost_reduction = 0.5
+				uses = 2
+				category = air_doctrine
+			}
+			set_country_flag = TUR_general_inspectorate_of_air_forces
+		}
+	}
+}
