@@ -8310,19 +8310,17 @@
 				relinguish_entente_leadership = yes
 			}
 			# BW1
+			# greece, ser and mnt separated peace in case of lone liberator
 			if = {
 				limit = { 
-					has_global_flag = kis_firstbalkan_war
-					NOT = {
-						has_global_flag = kis_firstbalkanwar_lose
-						has_global_flag = kis_firstbalkanwar_victory
-					}
 					NOT = {
 						has_global_flag = balkan_league_success
 					}
+					is_BW1_ongoing = yes
 					OR = {
-						tag = BUL
+						tag = GRE
 						tag = SER
+						tag = MNT
 					}
 					FROM = {
 						OR = {
@@ -8331,21 +8329,26 @@
 						}
 					}
 				}
-				BW1_turkish_victory_effect = yes
+				white_peace = TUR
+				set_country_flag = BW1_separated_peace
+				if = {
+					limit = { 
+						BW1_balkans_crushing_defeat = no
+					}
+					TUR = {
+						country_event = ww1_firstbalkan.128
+					}
+				}
 			}
 			if = {
 				limit = { 
-					has_global_flag = kis_firstbalkan_war
-					NOT = {
-						has_global_flag = kis_firstbalkanwar_lose
-						has_global_flag = kis_firstbalkanwar_victory
-					}
+					is_BW1_ongoing = yes
 					tag = TUR
 					FROM = {
 						OR = {
 							tag = SER
 							tag = BUL
-							is_ally_with = GRE
+							tag = CRE
 							tag = GRE
 							tag = MNT
 						}
@@ -8354,20 +8357,6 @@
 				BW1_balkans_victory_effect = yes
 			}
 			# BW2
-			if = {
-				limit = { 
-					is_BW2_ongoing = yes
-					OR = {
-						tag = ROM
-						tag = SER
-						tag = GRE
-					}
-					FROM = {
-						tag = BUL
-					}
-				}
-				BW2_bulgaria_victory_effect = yes
-			}
 			if = {
 				limit = { 
 					is_BW2_ongoing = yes
@@ -8380,12 +8369,6 @@
 							tag = MNT
 						}
 					}
-				}
-				if = {
-					limit = { 
-						has_war_with = TUR
-					}
-					BW2_turkish_victory_effect = yes
 				}
 				BW2_balkans_victory_effect = yes
 			}
@@ -11796,7 +11779,6 @@
 					add_idea = export_focus
 				}
 			}
-			country_event = ww1_firstbalkan.100 #adding major status during war
 			if = {
 				limit = {
 					NOT = {
@@ -12178,29 +12160,29 @@
 					country_event = { id = ww1_england.232 hours = 3 }
 				}
 			}
-			if = {
-				limit = {
-					tag = BUL
-					has_global_flag = balkan_league_fail
-					NOT = {
-						has_global_flag = great_war
-						is_in_faction_with = SER
-						is_in_faction_with = GRE
-						is_in_faction_with = MNT
-					}
-					FROM = {
-						tag = TUR
-						NOT = {
-							has_war_with = SER
-							has_global_flag = kis_firstbalkanwar_victory
-						}
-					}
-				}
-				news_event = {
-					id = ww1_firstbalkan.116
-					hours = 3
-				}
-			}
+			#if = {
+			#	limit = {
+			#		tag = BUL
+			#		has_global_flag = balkan_league_fail
+			#		NOT = {
+			#			has_global_flag = great_war
+			#			is_in_faction_with = SER
+			#			is_in_faction_with = GRE
+			#			is_in_faction_with = MNT
+			#		}
+			#		FROM = {
+			#			tag = TUR
+			#			NOT = {
+			#				has_war_with = SER
+			#				has_global_flag = kis_firstbalkanwar_victory
+			#			}
+			#		}
+			#	}
+			#	news_event = {
+			#		id = ww1_firstbalkan.116
+			#		hours = 3
+			#	}
+			#}
 		}
 	}
 	on_offer_join_faction = {
@@ -12278,41 +12260,41 @@
 			#	}
 			#}
 			#Bulgaria get Solun
-			if = {
-				limit = {
-					FROM.FROM = {
-						state = 345
-					}				
-				}
-				if = {
-					limit = {
-						ROOT = {
-							original_tag = BUL
-						}
-						FROM = {
-							original_tag = TUR
-							owns_state = 345
-						}
-						OR = {
-							BUL = {
-								OR = {
-									is_ai = no
-									has_completed_focus = BUL_lone_liberator
-								}	
-							}
-							GRE = {
-								is_ai = no
-							}
-							is_historical_focus_on = no
-						}
-						has_global_flag = kis_firstbalkan_war
-						NOT = {
-							has_global_flag = kis_firstbalkanwar_victory
-						}
-					}
-					set_global_flag = bulgarian_solun
-				}
-			}
+			#if = {
+			#	limit = {
+			#		FROM.FROM = {
+			#			state = 345
+			#		}				
+			#	}
+			#	if = {
+			#		limit = {
+			#			ROOT = {
+			#				original_tag = BUL
+			#			}
+			#			FROM = {
+			#				original_tag = TUR
+			#				owns_state = 345
+			#			}
+			#			OR = {
+			#				BUL = {
+			#					OR = {
+			#						is_ai = no
+			#						has_completed_focus = BUL_lone_liberator
+			#					}	
+			#				}
+			#				GRE = {
+			#					is_ai = no
+			#				}
+			#				is_historical_focus_on = no
+			#			}
+			#			has_global_flag = kis_firstbalkan_war
+			#			NOT = {
+			#				has_global_flag = kis_firstbalkanwar_victory
+			#			}
+			#		}
+			#		set_global_flag = bulgarian_solun
+			#	}
+			#}
 			if = {
 				limit = {
 					tag = GER
