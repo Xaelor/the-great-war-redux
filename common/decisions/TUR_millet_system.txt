@@ -1,0 +1,195 @@
+debug_decisions = {
+	debug_improve_armenian_loyalty = {
+		allowed = {
+			tag = TUR
+		}
+		complete_effect = {
+			add_to_variable = {
+				TUR_armenian_loyalty_var = 0.05
+			}
+			add_to_variable = {
+				TUR_armenian_loyalty_display_var = 5
+				tooltip = TUR_modify_armenian_loyalty_tt
+			}
+			clamp_variable = {
+				var = TUR_armenian_loyalty_var
+				min = -1
+				max = 1
+			}
+			TUR_recalculate_millet_system_modifiers = yes
+		}
+	}
+	debug_remove_armenians = {
+		allowed = {
+			tag = TUR
+		}
+		complete_effect = {
+			352 = {
+				set_temp_variable = {
+					TUR_modify_armenian_pop_temp_var = {
+						value = THIS.TUR_armenian_state_pop_var
+						multiply = -0.23
+					}
+				}
+				set_temp_variable = {
+					TUR_modify_armenian_state_pop_temp_var = {
+						value = TUR_modify_armenian_pop_temp_var
+						multiply = 1000000
+					}
+				}
+				set_temp_variable = {
+					TUR_modify_state_pop_temp_var = {
+						value = 0
+						add = TUR_modify_armenian_state_pop_temp_var
+					}
+				}
+				add_manpower = TUR_modify_state_pop_temp_var
+				add_to_variable = {
+					THIS.TUR_armenian_state_pop_var = TUR_modify_armenian_pop_temp_var
+					tooltip = TUR_modify_armenian_pop_tt
+				}
+			}
+			TUR_recalculate_millet_system_modifiers = yes
+		}
+	}
+	debug_improve_centralization = {
+		allowed = {
+			tag = TUR
+		}
+		complete_effect = {
+			every_owned_state = {
+				limit = {
+					check_variable = {
+						THIS.TUR_muslim_state_var = 1
+					}
+				}
+				add_to_variable = {
+					THIS.TUR_state_centralization_var = 0.1
+					tooltip = TUR_modify_centralization_tt
+				}
+			}
+			hidden_effect = {
+				every_owned_state = {
+					limit = {
+						check_variable = {
+							THIS.TUR_muslim_state_var = 1
+						}
+					}
+					clamp_variable = {
+						var = THIS.TUR_state_centralization_var
+						min = 0
+						max = 1
+					}
+				}
+			}
+			TUR_recalculate_millet_system_modifiers = yes
+		}
+	}
+}
+
+TUR_millet_system_category = {
+	TUR_adrianople_vilayet_onmap = {
+		icon = GFX_decision_eng_blackshirt_march
+		allowed = {
+			original_tag = TUR
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				or = {
+					state = 200
+					state = 341
+					state = 451
+					state = 756
+					state = 757
+					state = 849
+					state = 860
+				}
+				is_owned_by = ROOT
+				is_core_of = ROOT
+			}
+		}
+		on_map_mode = map_and_decisions_view
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+		visible = {
+			756 = {
+				is_owned_by = ROOT
+			}
+		}
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
+	}
+	TUR_salonica_vilayet_onmap = {
+		icon = GFX_decision_eng_blackshirt_march
+		allowed = {
+			original_tag = TUR
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				or = {
+					state = 184
+					state = 225
+					state = 345
+					state = 731
+					state = 759
+					state = 788
+					state = 1257
+					state = 1258
+				}
+				is_owned_by = ROOT
+				is_core_of = ROOT
+			}
+		}
+		on_map_mode = map_and_decisions_view
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+		visible = {
+			345 = {
+				is_owned_by = ROOT
+			}
+		}
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
+	}
+	TUR_damascus_vilayet_onmap = {
+		icon = GFX_decision_eng_blackshirt_march
+		allowed = {
+			original_tag = TUR
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				OR = {
+					state = 554
+					state = 455
+				}
+				is_owned_by = ROOT
+				is_core_of = ROOT
+			}
+		}
+		on_map_mode = map_and_decisions_view
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+		visible = {
+			554 = {
+				is_owned_by = ROOT
+			}
+		}
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
+	}
+}
