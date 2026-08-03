@@ -146,12 +146,28 @@ BW1_has_turkey_lost_european_territories = {
 	}
 }
 
+is_BW1_ongoing = {
+	has_global_flag = kis_firstbalkan_war
+	NOT = {
+		has_global_flag = kis_firstbalkanwar_lose
+		has_global_flag = kis_firstbalkanwar_victory
+	}	
+}
+
 BW1_turkey_crushing_defeat = {
 	custom_trigger_tooltip = {
 		tooltip = BW1_turkey_crushing_defeat_tt
 		TUR = {
 			OR = {
-				surrender_progress > 0.3
+				if = {
+					limit = { 
+						has_war_with = ITA
+					}
+					surrender_progress > 0.4
+				}
+				else = {
+					surrender_progress > 0.3
+				}
 				NOT = {
 					controls_province = 9833
 				}
@@ -164,11 +180,22 @@ BW1_balkans_crushing_defeat = {
 	custom_trigger_tooltip = {
 		tooltip = BW1_balkans_crushing_defeat_tt
 		OR = {
-			SER = {
-				has_capitulated = yes
-			}
 			BUL = {
 				has_capitulated = yes
+			}
+			AND = {
+				SER = {
+					OR = {
+						has_country_flag = BW1_separated_peace
+						has_capitulated = yes
+					}
+				}
+				GRE = {
+					OR = {
+						has_country_flag = BW1_separated_peace
+						has_capitulated = yes
+					}
+				}
 			}
 		}
 	}
@@ -199,13 +226,17 @@ BW2_is_antibulgarian_alliance_satiesfied = {
 	}
 }
 
-is_BW2_ongoing = {
-	has_global_flag = kis_secondbalkan_war
-	NOT = {
+has_BW_ended = {
+	OR = {
 		has_global_flag = kis_secondbalkanwar_lose
 		has_global_flag = kis_secondbalkanwar_victory
 		has_global_flag = kis_secondbalkanwar_stalemate
-	}
+	}	
+}
+
+is_BW2_ongoing = {
+	has_global_flag = kis_secondbalkan_war
+	has_BW_ended = no
 }
 
 BW2_bulgaria_partly_defeat = {
@@ -250,16 +281,23 @@ BW2_balkans_crushing_defeat = {
 	custom_trigger_tooltip = {
 		tooltip = BW2_balkans_crushing_defeat_tt
 		OR = {
-			GRE = {
-				has_war_with = BUL
-				surrender_progress > 0.9
-			}
-			ROM = {
-				has_war_with = BUL
-				surrender_progress > 0.9
-			}
 			SER = {
-				surrender_progress > 0.9
+				has_capitulated = yes
+			}
+			AND = {
+				GRE = {
+					has_capitulated = yes
+				}
+				OR = {
+					ROM = {
+						has_capitulated = yes
+					}
+					ROM = {
+						NOT = {
+							has_war_with = BUL
+						}
+					}
+				}
 			}
 		}	
 	}
@@ -276,6 +314,20 @@ BW2_turkish_intervention_turkey_fail_of_intervention = {
 				state = 200
 			}
 		}
+		NOT = {
+			451 = {
+				OR = {
+					is_controlled_by = WTH
+					is_controlled_by = TUR
+				}
+			}
+			757 = {
+				OR = {
+					is_controlled_by = WTH
+					is_controlled_by = TUR
+				}
+			}
+		}
 	}
 }
 
@@ -284,7 +336,15 @@ BW2_turkish_intervention_turkey_total_defeat = {
 		tooltip = BW2_turkish_intervention_turkey_total_defeat_tt
 		TUR = {
 			OR = {
-				surrender_progress > 0.1
+				if = {
+					limit = { 
+						has_war_with = ITA
+					}
+					surrender_progress > 0.2
+				}
+				else = {
+					surrender_progress > 0.1
+				}
 				NOT = {
 					controls_province = 9833
 				}
