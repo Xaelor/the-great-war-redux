@@ -77,7 +77,7 @@
 				RAJ_ind_efficiency_cap = 0.025
 				tooltip = production_factory_max_efficiency_factor_tt
 			}
-			custom_effect_tooltip = RAJ_skip_a_line
+			custom_effect_tooltip = escape_line
 			add_to_variable = {
 				RAJ_indian_confidence_var = 2.5
 				tooltip = RAJ_indian_confidence_var_modify
@@ -455,17 +455,18 @@
 		completion_reward = {
 			custom_effect_tooltip = RAJ_modify_deindustrialisation
 			add_to_variable = {
-				RAJ_ind_consumer_goods = -0.05
+				RAJ_ind_consumer_goods = -0.025
 				tooltip = consumer_goods_factor_tt
 			}
 			add_to_variable = {
-				RAJ_ind_local_resources_factor = 0.05
+				RAJ_ind_local_resources_factor = 0.025
 				tooltip = local_resources_factor_tt
 			}
 			add_to_variable = {
-				RAJ_ind_min_export = 0.05
+				RAJ_ind_min_export = 0.02
 				tooltip = min_export_tt
 			}
+			custom_effect_tooltip = escape_line
 			if = {
 				limit = {
 					RAJ_harcourt_butler = {
@@ -475,11 +476,11 @@
 				288 = {
 					add_resource = {
 						type = oil
-						amount = 9
+						amount = 6
 					}
 					add_building_construction = {
 						type = infrastructure
-						level = 2
+						level = 1
 						instant_build = yes
 					}
 				}
@@ -488,7 +489,7 @@
 				288 = {
 					add_resource = {
 						type = oil
-						amount = 5
+						amount = 3
 					}
 					add_building_construction = {
 						type = infrastructure
@@ -496,7 +497,7 @@
 						instant_build = yes
 					}
 				}
-				custom_effect_tooltip = RAJ_burmah_oil_reward_2
+				custom_effect_tooltip = RAJ_burmah_oil_tt
 			}
 		}
 		ai_will_do = {
@@ -710,8 +711,26 @@
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = available_industrial_concern
-			show_ideas_tooltip = RAJ_indian_railways
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				custom_effect_tooltip = available_mio_tt
+				show_mio_tooltip = RAJ_indian_railways_organization
+				custom_effect_tooltip = escape_line
+
+				custom_effect_tooltip = available_industrial_concern
+				show_ideas_tooltip = RAJ_indian_railways
+				custom_effect_tooltip = escape_line
+
+				mio:RAJ_indian_railways_organization = {
+					add_mio_funds = 1500
+				}
+				else = {
+					show_ideas_tooltip = RAJ_indian_railways
+					custom_effect_tooltip = escape_line
+				}
+			}
 		}
 		ai_will_do = {
 			factor = 1
@@ -736,7 +755,13 @@
 			focus = RAJ_indian_tramways_act
 		}
 		completion_reward = {
-			add_political_power = 67
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				custom_effect_tooltip = available_mio_tt
+				show_mio_tooltip = ENG_sopwith_aviation_co_organization
+			}
 		}
 		ai_will_do = {
 			factor = 1
@@ -803,7 +828,7 @@
 						}
 					}
 				}
-				custom_effect_tooltip = RAJ_skip_a_line
+				custom_effect_tooltip = escape_line
 			}
 			
 			if = {
@@ -1001,27 +1026,19 @@
 		completion_reward = {
 			add_tech_bonus = {
 				name = RAJ_use_the_industrials
-				bonus = 1
+				bonus = 0.75
 				uses = 2
 				category = industry
 			}
-			if = {
-				limit = {
-					has_dlc = "Arms Against Tyranny"
-				}
-				mio:RAJ_ishapore_rifle_factory_organization = {
-					add_mio_funds = 1000
-				}
-				mio:RAJ_gcf_jabalpur_organization = {
-					add_mio_funds = 1000
-				}
-				else = {
-					custom_effect_tooltip = available_designer
-					show_ideas_tooltip = ishapore_rifle_factory
-					show_ideas_tooltip = RAJ_gcf_jabalpur
-				}
-			}
-			custom_effect_tooltip = RAJ_use_the_industrials_reward
+
+			custom_effect_tooltip = escape_line
+			
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = RAJ_andrew_yule_and_co
+			show_ideas_tooltip = RAJ_wadia_group
+
+			custom_effect_tooltip = escape_line
+
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = RAJ_dorabji_tata
 		}
@@ -1048,7 +1065,37 @@
 			focus = RAJ_use_the_industrials
 		}
 		completion_reward = {
-			add_political_power = 67
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
+			add_to_variable = {
+				RAJ_ind_research_speed = 0.025
+				tooltip = research_speed_factor_tt
+			}
+			custom_effect_tooltip = escape_line
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				add_political_power = 35
+				custom_effect_tooltip = escape_line
+				mio:RAJ_ishapore_rifle_factory_organization = {
+					add_mio_funds = 500
+				}
+				mio:RAJ_gcf_jabalpur_organization = {
+					add_mio_funds = 500
+				}
+				mio:RAJ_indian_railways_organization = {
+					add_mio_funds = 500
+				}
+				mio:RAJ_bombay_dockyard_organisation = {
+					add_mio_funds = 500
+				}
+				mio:RAJ_garden_reach_workshop_organization = {
+					add_mio_funds = 500
+				}
+			}
+			else = {
+				add_political_power = 75
+			}
 		}
 		ai_will_do = {
 			factor = 1
@@ -1075,7 +1122,31 @@
 			focus = RAJ_invest_in_bombay
 		}
 		completion_reward = {
-			add_political_power = 67
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				custom_effect_tooltip = available_mio_tt
+				show_mio_tooltip = RAJ_bombay_dockyard_organisation
+				custom_effect_tooltip = escape_line
+				mio:RAJ_bombay_dockyard_organisation = {
+					add_mio_funds = 500
+				}
+
+				else = {
+					custom_effect_tooltip = available_designer
+					show_ideas_tooltip = RAJ_bombay_dockyard
+				}
+			}
+			custom_effect_tooltip = escape_line
+			429 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 		ai_will_do = {
 			factor = 1
@@ -1132,6 +1203,20 @@
 			focus = RAJ_inventions_and_designs_act
 		}
 		completion_reward = {
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
+			add_to_variable = {
+				RAJ_ind_consumer_goods = -0.025
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_local_resources_factor = 0.025
+				tooltip = local_resources_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_min_export = 0.02
+				tooltip = min_export_tt
+			}
+			custom_effect_tooltip = escape_line
 			if = {
 				limit = {
 					RAJ_dorabji_tata = {
@@ -1141,13 +1226,13 @@
 				431 = {
 					add_resource = {
 						type = steel
-						amount = 7
+						amount = 6
 					}
 				}
 				430 = {
 					add_resource = {
 						type = steel
-						amount = 4
+						amount = 6
 					}
 				}
 			}
@@ -1155,7 +1240,7 @@
 				431 = {
 					add_resource = {
 						type = steel
-						amount = 6
+						amount = 3
 					}
 				}
 				430 = {
@@ -1164,12 +1249,7 @@
 						amount = 3
 					}
 				}
-				custom_effect_tooltip = RAJ_tata_steel_ltd_reward_2
-			}
-			custom_effect_tooltip = RAJ_modify_deindustrialisation
-			add_to_variable = {
-				RAJ_ind_local_resources_factor = 0.025
-				tooltip = local_resources_factor_tt
+				custom_effect_tooltip = RAJ_tata_steel_ltd_tt
 			}
 		}
 		ai_will_do = {
@@ -1197,7 +1277,52 @@
 			focus = RAJ_burmah_oil
 		}
 		completion_reward = {
-			add_political_power = 67
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
+			add_to_variable = {
+				RAJ_ind_consumer_goods = -0.025
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_local_resources_factor = 0.025
+				tooltip = local_resources_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_min_export = 0.02
+				tooltip = min_export_tt
+			}
+			custom_effect_tooltip = escape_line
+			if = {
+				limit = {
+					RAJ_harcourt_butler = {
+						is_hired_as_advisor = yes
+					}
+				}
+				288 = {
+					add_resource = {
+						type = tungsten
+						amount = 6
+					}
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			else = {
+				288 = {
+					add_resource = {
+						type = tungsten
+						amount = 3
+					}
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
+				custom_effect_tooltip = RAJ_burmah_oil_tt
+			}
 		}
 		ai_will_do = {
 			factor = 1
@@ -1229,6 +1354,10 @@
 			focus = RAJ_nullify_the_partition_of_bengal
 		}
 		completion_reward = {
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = RAJ_bengal_iron_and_steel_company
+			custom_effect_tooltip = escape_line
+			
 			if = {
 				limit = {
 					has_full_control_of_state = 430
@@ -1236,26 +1365,17 @@
 				430 = {
 					add_resource = {
 						type = steel
-						amount = 5
+						amount = 3
 					}
 				}
 			}
-			custom_effect_tooltip = RAJ_modify_deindustrialisation
-			add_to_variable = {
-				RAJ_ind_local_resources_factor = 0.025
-				tooltip = local_resources_factor_tt
-			}
-			if = {
-				limit = {
-					has_dlc = "Arms Against Tyranny"
-				}
+			custom_effect_tooltip = escape_line
 
-				else = {
-					custom_effect_tooltip = available_industrial_concern
-					show_ideas_tooltip = RAJ_bengal_iron_and_steel_company
-				}
+			add_to_variable = {
+				RAJ_british_confidence_var = 2.5
+				tooltip = RAJ_british_confidence_var_modify
 			}
-			
+			RAJ_british_confidence_scripted_effect = yes
 		}
 		ai_will_do = {
 			factor = 1
@@ -1490,7 +1610,7 @@
 				RAJ_state_of_the_raj_stability_dynamic = 0.025
 				tooltip = stability_factor_tt
 			}
-			custom_effect_tooltip = RAJ_skip_a_line
+			custom_effect_tooltip = escape_line
 			add_to_variable = {
 				RAJ_british_confidence_var = 2.5
 				tooltip = RAJ_british_confidence_var_modify
@@ -1877,7 +1997,7 @@
 				RAJ_state_of_the_raj_political_power_factor_dynamic = 0.05
 				tooltip = political_power_factor_tt
 			}
-			custom_effect_tooltip = RAJ_skip_a_line
+			custom_effect_tooltip = escape_line
 			add_to_variable = {
 				RAJ_british_confidence_var = 2.5
 				tooltip = RAJ_british_confidence_var_modify
@@ -2196,7 +2316,7 @@
 				RAJ_state_of_the_raj_stability_dynamic = 0.05
 				tooltip = stability_factor_tt
 			}
-			custom_effect_tooltip = RAJ_skip_a_line
+			custom_effect_tooltip = escape_line
 			add_to_variable = {
 				RAJ_indian_confidence_var = -2.5
 				tooltip = RAJ_indian_confidence_var_modify
@@ -2235,7 +2355,7 @@
 				RAJ_state_of_the_raj_neutrality_drift_dynamic = 0.02
 				tooltip = neutrality_drift_tt
 			}
-			custom_effect_tooltip = RAJ_skip_a_line
+			custom_effect_tooltip = escape_line
 			add_to_variable = {
 				RAJ_indian_confidence_var = 2.5
 				tooltip = RAJ_indian_confidence_var_modify
@@ -2298,7 +2418,7 @@
 				RAJ_state_of_the_raj_neutrality_drift_dynamic = 0.02
 				tooltip = neutrality_drift_tt
 			}
-			custom_effect_tooltip = RAJ_skip_a_line
+			custom_effect_tooltip = escape_line
 			add_popularity = {
 				ideology = neutrality
 				popularity = 0.035
@@ -2456,7 +2576,7 @@
 				RAJ_state_of_the_raj_monthly_population_dynamic = 0.075
 				tooltip = monthly_population_tt
 			}
-			custom_effect_tooltip = RAJ_skip_a_line
+			custom_effect_tooltip = escape_line
 			add_to_variable = {
 				RAJ_indian_confidence_var = 5
 				tooltip = RAJ_indian_confidence_var_modify
