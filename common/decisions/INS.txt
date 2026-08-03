@@ -1875,7 +1875,7 @@ INS_dc_absolute_power = {
 				has_dynamic_modifier = INS_rebelling_region
 			}
 		}
-		fire_only_once = yes
+		fire_only_once = no
 		days_remove = 30
 		ai_will_do = {
 			base = 0
@@ -1929,7 +1929,7 @@ INS_dc_absolute_power = {
 				has_dynamic_modifier = INS_undiscovered_state
 			}
 		}
-		fire_only_once = yes
+		fire_only_once = no
 		days_remove = 30
 		ai_will_do = {
 			base = 0
@@ -2089,6 +2089,54 @@ INS_dc_bop = {
 		days_re_enable = INS_var_christian_reenable
 		ai_will_do = {
 			factor = 200
+		}
+	}
+	INS_church_state = {
+		icon = GFX_decision_generic_decision
+		allowed = {
+			original_tag = INS
+		}
+		visible = {
+			has_completed_focus = INS_build_christian_churches
+		}
+		available = {
+			
+		}
+		target_root_trigger = {
+			tag = INS
+		}
+		state_target = any_owned_state
+		target_trigger = {
+			FROM = {
+				is_fully_controlled_by = ROOT
+				NOT = {
+					OR = {
+						has_dynamic_modifier = INS_rebelling_region
+						has_dynamic_modifier = INS_undiscovered_state
+					}
+					state = 1222
+				}
+			}
+		}
+		fire_only_once = yes
+		days_remove = 30
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_political_power < 5
+			}
+		}
+		cost = 5
+		complete_effect = {
+			set_global_flag = INS_creating_church
+		}
+		remove_effect = {
+			clr_global_flag = INS_creating_church
+			add_power_balance_value = {
+				id = INS_native_loyalty
+				value = 0.01
+			}
 		}
 	}
 }
