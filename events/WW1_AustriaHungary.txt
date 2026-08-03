@@ -83,9 +83,8 @@ country_event = {
 	fire_only_once = yes
 	trigger = {
 		tag = AUS
-		any_country = {
+		any_enemy_country = {
 			is_major = yes
-			has_war_with = AUS
 		}
 		has_country_flag = AUH_ITA_trentino_proposal
 		NOT = {
@@ -799,13 +798,7 @@ country_event = {
 			}
 			clr_country_flag = AUS_empire_flag
 			set_country_flag = AUS_republic_flag
-			every_state = {
-				ROOT = {
-					delete_unit = {
-						state = PREV
-					}
-				}
-			}
+			delete_unit = {}
 			load_oob = AUS_1918
 			set_party_name = {
 				ideology = communism
@@ -1009,7 +1002,7 @@ country_event = {
 				}
 				set_popularities = {
 					neutrality = 64
-					fascism = 17
+					fascism = 19
 					communism = 17
 				}
 				add_ideas = AUH_ww1_House_Habsburg_Lorraine
@@ -1056,8 +1049,8 @@ country_event = {
 		has_global_flag = italian_civil_war
 		has_country_flag = great_war_winner
 		has_war = no
-		any_country = {
-			original_tag = ITA
+		any_country_with_original_tag = {
+			original_tag_to_check = ITA
 			has_country_flag = ITA_socialist_italy_flag
 			has_war = yes
 			is_neighbor_of = PREV
@@ -1289,6 +1282,39 @@ country_event = {
 		name = ww1_auh.29.a
 		ITA = {
 			hidden_effect = {
+				ITA_emanuele_filiberto = {
+					set_nationality = SRD
+					set_character_name = ITA_emanuele_filiberto_i
+					promote_leader = yes
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = semi_constitutional_monarchy
+							traits = { duke_of_aosta }
+						}
+					}
+				}
+				ITA_amedeo_di_savoy_aosta = {
+					set_nationality = SRD
+				}
+				ITA_luigi_amedeo= {
+					set_nationality = SRD
+				}
+				ITA_vittorio_emanuele_di_savoy_aosta = {
+					set_nationality = SRD
+				}
+				ITA_vittorio_emanuele_iii = {
+					remove_country_leader_role = {
+						ideology = semi_constitutional_monarchy
+					}
+					set_nationality = SRD
+				}
+				ITA_umberto_ii = {
+					remove_country_leader_role = {
+						ideology = semi_constitutional_monarchy
+					}
+					set_nationality = SRD
+				}
 				every_owned_state = {
 					limit = {
 						OR = {
@@ -1416,20 +1442,45 @@ country_event = {
 					}
 				}
 				AUS = {
-					set_autonomy = {
-						target = SRD
-						autonomous_state = autonomy_dominion
-					}
-					set_autonomy = {
-						target = TTS
-						autonomous_state = autonomy_dominion
-					}
+					PAP = { get_current_government_type = yes }
 					set_autonomy = {
 						target = PAP
 						autonomous_state = autonomy_tgwr_protectorate
 					}
+					PAP = { restore_previous_government_type = yes }
+
+					set_autonomy = {
+						target = SRD
+						autonomous_state = autonomy_satellite
+					}
+					SRD = {
+						set_politics = {
+							ruling_party = neutrality
+							elections_allowed = yes
+						}
+						set_popularities = {
+							fascism = 11
+							communism = 12
+							democratic = 33
+							neutrality = 44
+						}
+					}
+
+					TTS = { get_current_government_type = yes }
+					set_autonomy = {
+						target = TTS
+						autonomous_state = autonomy_satellite
+					}
+					TTS = { restore_previous_government_type = yes }
+
+					TUS = { get_current_government_type = yes }
 					puppet = TUS
+					TUS = { restore_previous_government_type = yes }
+
+					EMI = { get_current_government_type = yes }
 					puppet = EMI
+					EMI = { restore_previous_government_type = yes }
+
 					add_ai_strategy = {
 						type = protect
 						id = "SRD"
@@ -1507,14 +1558,12 @@ country_event = {
 		if = {
 			limit = {
 				any_country = {
-					exists = yes
 					has_country_flag = joined_brothers_war
 				}
 			}
 			hidden_effect = {
 				every_other_country = {
 					limit = {
-						exists = yes
 						has_country_flag = joined_brothers_war
 						NOT = {
 							has_war_with = PREV
@@ -1704,6 +1753,12 @@ country_event = {
 				target = CZE
 				autonomous_state = autonomy_tgwr_real_union
 			}
+			AUS = {
+				AUH_ernst_kletter = {
+					set_character_name = CZE_ernst_kletter
+					set_nationality = CZE
+				}
+			}
 			hidden_effect = {
 				add_ai_strategy = {
 					type = protect
@@ -1865,7 +1920,7 @@ country_event = {
 				AUS = {
 					set_autonomy = {
 						target = GER
-						autonomous_state = autonomy_dominion
+						autonomous_state = autonomy_satellite
 					}
 					add_ai_strategy = {
 						type = protect
@@ -1906,14 +1961,12 @@ country_event = {
 		if = {
 			limit = {
 				any_country = {
-					exists = yes
 					has_country_flag = joined_brothers_war
 				}
 			}
 			hidden_effect = {
 				every_other_country = {
 					limit = {
-						exists = yes
 						has_country_flag = joined_brothers_war
 						NOT = {
 							has_war_with = PREV
@@ -2247,42 +2300,42 @@ country_event = {
 	}
 }
 
-country_event = {
-	id = ww1_auh.54
-	title = ww1_auh.54.t
-	desc = ww1_auh.54.d
-	picture = GFX_report_event_ger_civil_war
-	fire_only_once = yes
-	trigger = {
-		104 = {
-			CONTROLLER = {
-				OR = {
-					tag = AUS
-					is_puppet_of = AUS
-				}
-			}
-			NOT = {
-				has_state_flag = BOS_pacified
-			}	
-		}
-		has_global_flag = BOS_independence_war
-		NOT = {
-			has_country_flag = BOS_independence_war_triggered
-		}
-	}
-	option = {
-		name = ww1_auh.54.a
-		set_country_flag = BOS_independence_war_triggered
-		104 = {
-			set_state_flag = BOS_pacified
-			add_core_of = AUS
-			add_manpower = -25000
-		}
-		annex_country = {
-			target = BOS
-		}
-	}
-}
+#country_event = {
+#	id = ww1_auh.54
+#	title = ww1_auh.54.t
+#	desc = ww1_auh.54.d
+#	picture = GFX_report_event_ger_civil_war
+#	fire_only_once = yes
+#	trigger = {
+#		104 = {
+#			CONTROLLER = {
+#				OR = {
+#					tag = AUS
+#					is_puppet_of = AUS
+#				}
+#			}
+#			NOT = {
+#				has_state_flag = BOS_pacified
+#			}	
+#		}
+#		has_global_flag = BOS_independence_war
+#		NOT = {
+#			has_country_flag = BOS_independence_war_triggered
+#		}
+#	}
+#	option = {
+#		name = ww1_auh.54.a
+#		set_country_flag = BOS_independence_war_triggered
+#		104 = {
+#			set_state_flag = BOS_pacified
+#			add_core_of = AUS
+#			add_manpower = -25000
+#		}
+#		annex_country = {
+#			target = BOS
+#		}
+#	}
+#}
 
 country_event = {
 	id = ww1_auh.55
@@ -7321,6 +7374,7 @@ country_event = {
 			OR = {
 				owns_state = 44
 				owns_state = 803
+				owns_state = 1225
 				owns_state = 871
 				owns_state = 1214
 				owns_state = 1215
@@ -7457,6 +7511,7 @@ country_event = {
 				OR = {
 					state = 44
 					state = 803
+					state = 1225
 					state = 870
 					state = 871
 					state = 1214
@@ -7511,7 +7566,7 @@ country_event = {
 				create_wargoal = {
 					type = take_state_focus
 					target = ROOT
-					generator = { 44 803 870 871 }
+					generator = { 44 803 1225 870 871 }
 				}
 			}
 			hidden_effect = {
@@ -7561,7 +7616,7 @@ country_event = {
 		create_wargoal = {
 			type = take_state_focus
 			target = FROM
-			generator = { 44 803 870 871 }
+			generator = { 44 803 1225 870 871 }
 		}
 	}
 }
@@ -8573,6 +8628,13 @@ country_event = {
 			}
 		}
 		set_global_flag = AUH_franz_ferdinand_killed
+		if = {
+			limit = { has_character = AUH_alexander_von_broschaarenau }
+			AUH_alexander_von_broschaarenau = {
+				add_unit_leader_trait = trait_reckless
+				set_character_flag = unit_leader_can_be_KIA
+			}
+		}
 		AUH_karl_i = {
 			set_character_name = AUH_karl_i
 			promote_character = semi_constitutional_monarchy
@@ -10914,13 +10976,10 @@ country_event = {
 			base = 100
 			modifier = {
 				add = 100
-				OR = {
-					has_cosmetic_tag = GER_HRE
-					AUS = {
-						is_subject_of = ROOT
-						has_autonomy_state = autonomy_tgwr_unilateral_union
-					}
-				}			
+				AUS = {
+					is_subject_of = ROOT
+					has_autonomy_state = autonomy_tgwr_unilateral_union
+				}
 			}
 		}
 		add_political_power = -100
@@ -10928,9 +10987,9 @@ country_event = {
 			threat = 10
 			name = GER_anschluss
 		}
-		every_other_country = {
+		random_country_with_original_tag = {
+			original_tag_to_check = AUS
 			limit = {
-				original_tag = AUS
 				is_neighbor_of = ROOT
 			}
 			if = {
@@ -11180,8 +11239,8 @@ country_event = {
 				limit = {
 					has_war_with = AUS
 				}
+				custom_effect_tooltip = FRA_AUH_negociation_free_serbia_and_sea
 			}
-			custom_effect_tooltip = FRA_AUH_negociation_free_serbia_and_sea
 		}
 		custom_effect_tooltip = FRA_AUH_negociation_alsace_lorraine_b2
 		custom_effect_tooltip = FRA_AUH_negociation_free_belgium
@@ -11190,8 +11249,8 @@ country_event = {
 				limit = {
 					has_war_with = AUS
 				}
+				custom_effect_tooltip = AUH_negociation_give_galicia_to_RUS
 			}
-			custom_effect_tooltip = AUH_negociation_give_galicia_to_RUS
 		}
 		if = {
 			limit = {
@@ -11388,10 +11447,10 @@ news_event = {
 				limit = {
 					NOT = {
 						HUN = {
-							is_puppet_of = AUS
+							is_subject_of = AUS
 						}
 						AUS = {
-							is_puppet = yes
+							is_subject = yes
 						}
 					}
 				}
@@ -11835,13 +11894,7 @@ country_event = {
 		}
 		hidden_effect = {
 			HUN = {
-				every_state = {
-					HUN = {
-						delete_unit = {
-							state = PREV
-						}
-					}
-				}
+				delete_unit = {}
 				load_oob = HUN_1910
 			}
 		}
@@ -11921,7 +11974,7 @@ country_event = {
 		FROM = {
 			set_autonomy = {
 				target = PREV
-				autonomy_state = autonomy_dominion
+				autonomy_state = autonomy_satellite
 				freedom_level = 0.8
 			}
 		}

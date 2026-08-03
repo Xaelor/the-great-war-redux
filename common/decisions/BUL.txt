@@ -5,6 +5,7 @@ peace_deals = {
 			original_tag = BUL
 		}
 		activation = {
+			has_start_date < 1914.1.1
 			has_global_flag = kis_secondbalkan_war
 			NOT = {
 				is_in_faction_with = GER
@@ -23,6 +24,7 @@ peace_deals = {
 			}
 		}
 		visible = {
+			has_start_date < 1914.1.1
 			has_global_flag = kis_secondbalkan_war
 			NOT = {
 				is_in_faction_with = GER
@@ -49,8 +51,8 @@ peace_deals = {
 		allowed = {
 			original_tag = BUL
 		}
-		target_trigger = {
-			FROM = { tag = SER }
+		targets = {
+			SER
 		}
 		# target_root_trigger = {
 		# 	has_war_with = FROM
@@ -88,9 +90,8 @@ peace_deals = {
 		}
 		complete_effect = {
 			FROM = { country_event = {id = ww1_secondbalkan.5 } }
-			every_country = {
+			every_enemy_country = {
 				limit = {
-					has_war_with = ROOT
 					NOT = {
 						tag = TUR
 					}
@@ -105,12 +106,27 @@ peace_deals = {
 		allowed = {
 			original_tag = BUL
 		}
-		target_trigger = {
-			FROM = { tag = ROM }
+		targets = {
+			ROM
 		}
 		# target_root_trigger = {
 		# 	has_war_with = FROM
 		# }
+		visible = {
+			has_start_date < 1914.1.1
+			has_global_flag = kis_secondbalkan_war
+			NOT = {
+				has_war_with = SER
+				is_in_faction_with = GER
+				has_war_together_with = GER
+				is_in_faction_with = FRA
+				has_war_together_with = FRA
+			}
+			has_war_with = FROM
+			FROM = { is_in_faction = no }
+			is_subject = no
+			owns_state = 77
+		}
 		available = {
 			has_war_with = FROM
 			OR = {
@@ -125,20 +141,6 @@ peace_deals = {
 				is_in_faction_with = FRA 
 				has_war_together_with = FRA
 			}
-		}
-		visible = {
-			has_global_flag = kis_secondbalkan_war
-			NOT = {
-				has_war_with = SER
-				is_in_faction_with = GER
-				has_war_together_with = GER
-				is_in_faction_with = FRA
-				has_war_together_with = FRA
-			}
-			has_war_with = FROM
-			FROM = { is_in_faction = no }
-			is_subject = no
-			owns_state = 77
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -158,12 +160,20 @@ peace_deals = {
 		allowed = {
 			original_tag = BUL
 		}
-		target_trigger = {
-			FROM = { tag = TUR }
+		targets = {
+			TUR
 		}
 		# target_root_trigger = {
 		# 	has_war_with = FROM
 		# }
+		visible = {
+			has_start_date < 1914.1.1
+			OR = {
+				has_global_flag = kis_firstbalkanwar_victory
+				has_global_flag = lone_liberator_victorious
+			}
+			has_war_with = FROM
+		}
 		available = {
 			NOT = {
 				has_war_with = SER
@@ -183,24 +193,18 @@ peace_deals = {
 				}
 			}
 		}
-		visible = {
-			OR = {
-				has_global_flag = kis_firstbalkanwar_victory
-				has_global_flag = lone_liberator_victorious
-			}
-			has_war_with = FROM
-		}
 		ai_will_do = {
 			factor = 400
 		}
 		fire_only_once = yes
 		days_remove = 30
 		complete_effect = {
-			white_peace = FROM
-			FROM = {
-				country_event = {
-					id = ww1_secondbalkan.15
-					days = 7
+			effect_tooltip = {
+				white_peace = FROM
+			}
+			hidden_effect = {
+				FROM = {
+					country_event = ww1_secondbalkan.15
 				}
 			}
 		}
@@ -223,7 +227,7 @@ peace_deals = {
 			is_great_war_ongoing = yes
 			OR = {
 				has_war_with = GER
-				has_war_with = FRA
+				has_war_with = ENT
 			}
 			is_in_faction = yes
 			is_faction_leader = no
@@ -256,7 +260,7 @@ peace_deals = {
 				has_civil_war = yes
 				NOT = {
 					has_war_with = GER
-					has_war_with = FRA
+					has_war_with = ENT
 				}
 				is_in_faction = no
 				is_faction_leader = yes
@@ -275,11 +279,7 @@ peace_deals = {
 		days_mission_timeout = 30
 		fire_only_once = no
 		timeout_effect = {
-			force_capitulate = yes
-			news_event = {
-				id = ww1_bulgaria.65
-				hours = 10
-			}
+			salonika_armistice_effect = yes
 		}
 	}
 }
@@ -400,6 +400,7 @@ BUL_form_byzantine_empire_category = {
 			add_state_core = 203
 			add_state_core = 1140
 			add_state_core = 803
+			add_state_core = 1225
 			add_state_core = 871
 			# Bulgaria
 			custom_effect_tooltip = form_country_bulgaria_coring_states_tt
@@ -507,6 +508,7 @@ BUL_form_byzantine_empire_category = {
 			controls_state = 44
 			controls_state = 871
 			controls_state = 803
+			controls_state = 1225
 			controls_state = 870
 			controls_state = 847
 			controls_state = 848
@@ -516,6 +518,9 @@ BUL_form_byzantine_empire_category = {
 			controls_state = 760
 			controls_state = 1214
 			controls_state = 1215
+			controls_state = 1203
+			controls_state = 1206
+			controls_state = 1205
 		}
 		highlight_states = {
 			highlight_state_targets = {
@@ -541,6 +546,7 @@ BUL_form_byzantine_empire_category = {
 				state = 44
 				state = 871
 			    state = 803
+				state = 1225
 				state = 870
 				state = 847
 				state = 848
@@ -550,6 +556,9 @@ BUL_form_byzantine_empire_category = {
 				state = 760
 				state = 1214
 				state = 1215
+				state = 1203
+				state = 1206
+				state = 1205
 			}
 		}
 		visible = {
@@ -579,6 +588,7 @@ BUL_form_byzantine_empire_category = {
 			add_state_core = 44
 			add_state_core = 871
 			add_state_core = 803
+			add_state_core = 1225
 			add_state_core = 870
 			add_state_core = 847
 			add_state_core = 848
@@ -593,6 +603,9 @@ BUL_form_byzantine_empire_category = {
 			add_state_core = 102
 			add_state_core = 1214
 			add_state_core = 1215
+			add_state_core = 1203
+			add_state_core = 1206
+			add_state_core = 1205
 			hidden_effect = {
 				set_global_flag = BUL_reintegrate_illiyria_flag
 			}
@@ -884,8 +897,8 @@ BUL_weapon_order = {
 		allowed = {
 			original_tag = BUL
 		}
-		target_trigger = {
-			FROM = { tag = GER }
+		targets = {
+			GER
 		}
 		days_re_enable = 180
 		custom_cost_trigger = {
@@ -905,7 +918,6 @@ BUL_weapon_order = {
 			factor = 1
 		}
 		visible = {
-			tag = BUL
 			NOT = {
 				has_idea = idea_army_restrictions
 			}
@@ -935,8 +947,8 @@ BUL_weapon_order = {
 		allowed = {
 			original_tag = BUL
 		}
-		target_trigger = {
-			FROM = { tag = FRA }
+		targets = {
+			FRA
 		}
 		days_re_enable = 180
 		custom_cost_trigger = {
@@ -962,7 +974,6 @@ BUL_weapon_order = {
 			}
 		}
 		visible = {
-			tag = BUL
 			NOT = {
 				has_idea = idea_army_restrictions
 			}
@@ -992,8 +1003,8 @@ BUL_weapon_order = {
 		allowed = {
 			original_tag = BUL
 		}
-		target_trigger = {
-			FROM = { tag = ENG }
+		targets = {
+			ENG
 		}
 		days_re_enable = 180
 		custom_cost_trigger = {
@@ -1019,7 +1030,6 @@ BUL_weapon_order = {
 			}
 		}
 		visible = {
-			tag = BUL
 			NOT = {
 				has_idea = idea_army_restrictions
 			}
@@ -1049,8 +1059,8 @@ BUL_weapon_order = {
 		allowed = {
 			original_tag = BUL
 		}
-		target_trigger = {
-			FROM = { tag = AUS }
+		targets = {
+			AUS
 		}
 		days_re_enable = 180
 		custom_cost_trigger = {
@@ -1070,7 +1080,6 @@ BUL_weapon_order = {
 			factor = 1
 		}
 		visible = {
-			tag = BUL
 			NOT = {
 				has_idea = idea_army_restrictions
 			}
@@ -1081,6 +1090,10 @@ BUL_weapon_order = {
 		}
 
 		complete_effect = {
+			
+		}
+		
+		remove_effect = {
 			add_equipment_to_stockpile = {
 				producer = AUS
 				type = field_gun_equipment
@@ -1090,14 +1103,6 @@ BUL_weapon_order = {
 				producer = AUS
 				type = howitzer_equipment
 				amount = 100
-			}
-		}
-		
-		remove_effect = {
-			add_equipment_to_stockpile = {
-				producer = GER
-				type = infantry_equipment
-				amount = 2500
 			}
 			custom_effect_tooltip = back_in_180_days
 		}
@@ -1126,7 +1131,6 @@ BUL_weapon_order = {
 			factor = 1
 		}
 		visible = {
-			tag = BUL
 			NOT = {
 				has_idea = idea_army_restrictions
 			}
@@ -1151,9 +1155,11 @@ BUL_weapon_order = {
 AUH_investment_in_BUL = {
 	BUL_tighten_private_companies_control = {
 		icon = generic_civil_support
+		allowed = {
+			tag = BUL
+		}
 		available = {
 			has_war = no
-			tag = BUL
 		}
 		fire_only_once = yes
 		days_remove = 60
@@ -1185,9 +1191,11 @@ AUH_investment_in_BUL = {
 	}
 	BUL_nationalize_foreign_industry = {
 		icon = generic_civil_support
+		allowed = {
+			tag = BUL
+		}
 		available = {
 			has_war = no
-			tag = BUL
 		}
 		fire_only_once = yes
 		cost = 150
@@ -1215,9 +1223,11 @@ AUH_investment_in_BUL = {
 	}
 	BUL_Complicate_investment_bureaucracy = {
 		icon = generic_civil_support
+		allowed = {
+			tag = BUL
+		}
 		available = {
 			has_war = no
-			tag = BUL
 		}
 		fire_only_once = yes
 		cost = 50
@@ -1245,9 +1255,11 @@ AUH_investment_in_BUL = {
 	}
 	BUL_counter_investments = {
 		icon = generic_civil_support
+		allowed = {
+			tag = BUL
+		}
 		available = {
 			has_war = no
-			tag = BUL
 		}
 		
 		fire_only_once = yes
@@ -1312,9 +1324,9 @@ crisis = {
 		}
 		icon = GFX_decision_revolt
 		activation = {
-			has_war_with = FRA
+			has_war_with = ENT
 			war_length_with = {
-				tag = FRA
+				tag = ENT
 				months > 28
 			}
 			OR = {
@@ -1366,6 +1378,37 @@ crisis = {
 		timeout_effect = {
 			country_event = ww1_bulgaria.25
 			set_global_flag = march_on_sofia
+		}
+	}
+}
+
+debug_decisions = {
+	BUL_salonika_debug = {
+		allowed = {
+			original_tag = BUL
+		}
+		visible = {
+			is_debug = yes
+			is_subject = no
+			is_great_war_ongoing = yes
+			OR = {
+				has_war_with = GER
+				has_war_with = ENT
+			}
+			is_in_faction = yes
+			is_faction_leader = no
+			has_capitulated = no
+			has_civil_war = no
+			NOT = {
+				has_global_flag = salonika_armistice
+			}
+		}
+		available = {
+
+		}
+		fire_only_once = yes
+		complete_effect = {
+			salonika_armistice_effect = yes
 		}
 	}
 }
