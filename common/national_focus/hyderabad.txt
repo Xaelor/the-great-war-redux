@@ -212,11 +212,9 @@ focus_tree = {
 		completion_reward = {
 			add_research_slot = 1
 			custom_effect_tooltip = empty_space_tt
-			else = {
-				swap_ideas = {
-					remove_idea = princely_mass_illiteracy2
-					add_idea = princely_mass_illiteracy3
-				}
+			swap_ideas = {
+				remove_idea = princely_mass_illiteracy2
+				add_idea = princely_mass_illiteracy3
 			}
 		}
 	}
@@ -398,9 +396,6 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = HYD_partner_with_british_export_channels
 		}
-		allow_branch = {
-			tag = HYD
-		}
 		cost = 10
 		available = {
 
@@ -423,9 +418,6 @@ focus_tree = {
 		}
 		mutually_exclusive = {
 			focus = HYD_focus_on_cotton_production
-		}
-		allow_branch = {
-			tag = HYD
 		}
 		cost = 10
 		available = {
@@ -523,11 +515,6 @@ focus_tree = {
 		}
 		cost = 10
 		available = {
-		}
-		allow_branch = {
-			NOT = {
-				is_close_raj_politically = yes
-			}
 		}
 		completion_reward = {
 			add_ideas = princely_trained_cavalry_idea
@@ -680,9 +667,6 @@ focus_tree = {
 		x = 20
 		y = 0
 		cost = 10
-		allow_branch = {
-			tag = HYD
-		}
 		available = {
 			has_country_leader = {
 				character = HYD_osman_ali_khan
@@ -711,7 +695,11 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			add_political_power = 120
+			add_to_variable = {
+				HYD_mulki_loyalty = 10
+				tooltip = HYD_mulki_loyalty_tt
+			}
+			HYD_loyalty_scripted_effect=yes
 		}
 	}
 	focus = {
@@ -731,7 +719,30 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			add_political_power = 120
+			every_country = {
+				limit = {
+					OR = {
+						tag = ENG
+						if = {
+							limit = {
+								RAJ = {
+									is_subject_of = ENG
+								}
+							}
+							tag = RAJ
+						}
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = medium_increase
+				}
+			}
+			add_to_variable = {
+				HYD_outsiders_loyalty = 15
+				tooltip = HYD_outsiders_loyalty_tt
+			}
+			HYD_loyalty_scripted_effect=yes
 		}
 	}
 	focus = {
@@ -755,6 +766,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_political_power = 120
+			HYD_loyalty_scripted_effect=yes
 		}
 	}
 	focus = {
@@ -777,7 +789,19 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			add_political_power = 120
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.05
+			}
+			add_to_variable = {
+				HYD_mulki_loyalty = 15
+				tooltip = HYD_mulki_loyalty_tt
+			}
+			add_to_variable = {
+				HYD_outsiders_loyalty = -10
+				tooltip = HYD_outsiders_loyalty_tt
+			}
+			HYD_loyalty_scripted_effect=yes
 		}
 	}
 	focus = {
@@ -821,7 +845,19 @@ focus_tree = {
 			has_completed_focus = HYD_integrate_mulkis_in_political_life
 		}
 		completion_reward = {
-			add_political_power = 120
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.05
+			}
+			add_to_variable = {
+				HYD_mulki_loyalty = 20
+				tooltip = HYD_mulki_loyalty_tt
+			}
+			add_to_variable = {
+				HYD_outsiders_loyalty = -30
+				tooltip = HYD_outsiders_loyalty_tt
+			}
+			HYD_loyalty_scripted_effect=yes
 		}
 	}
 	focus = {
@@ -1235,9 +1271,6 @@ focus_tree = {
 		cost = 10
 		available = {
 			always = no
-		}
-		allow_branch = {
-			tag = HYD
 		}
 		bypass = {
 			has_global_flag = great_war
