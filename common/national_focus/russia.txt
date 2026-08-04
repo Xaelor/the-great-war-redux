@@ -346,13 +346,7 @@ focus_tree = {
 				name = RUS_democratic_party_SR
 			}
 			RUS_nikolai_ii = {
-				remove_country_leader_trait = inept_autocrat
-				set_character_flag = RUS_nicholas_romanov_democratic
-				set_portraits = {
-					civilian = {
-						large="gfx/leaders/RUS/RUS_nicholas_romanov_democratic.png"
-					}
-				}				
+				remove_country_leader_trait = inept_autocrat				
 			}
 			hidden_effect = {
 				news_event = {
@@ -961,21 +955,25 @@ focus_tree = {
 				swap_ruler_traits = { remove = inept_autocrat add = autocratic_imperialist }
 				set_country_leader_ideology = absolute_monarchy	
 			}		
-			RUS_nikolai_ii = {
-				set_character_flag = RUS_nicholas_romanov_dictator
-				set_portraits = {
-					civilian = {
-						large="gfx/leaders/RUS/RUS_nicholas_romanov_dictator.png"
-					}
-				}
-			}
 			custom_effect_tooltip = RUS_orthodoxy_autocracy_nationality_tt
 			set_politics={
 				ruling_party = neutrality
 				elections_allowed = no 
 			}
-			hidden_effect = {			
-				set_cosmetic_tag = RUS_absolutism
+			hidden_effect = {
+				set_country_flag = RUS_romanov_flag
+				if = {
+					limit = {
+						has_game_rule = {
+							rule = rule_russian_name
+							option = EMPIRE_RUSSIA_NAME
+						}
+					}
+					set_cosmetic_tag = RUS_romanov_empire
+				}
+				else = {
+					set_cosmetic_tag = RUS_romanov
+				}
 				every_state = {
 					limit = {
 						is_core_of = UKR
@@ -2724,6 +2722,7 @@ focus_tree = {
 					}
 				}
 				set_cosmetic_tag = RUS_republic
+				set_country_flag = RUS_republic_flag
 			}
 			if = {
 				limit = {
@@ -2953,6 +2952,7 @@ focus_tree = {
 		completion_reward = {
 			set_global_flag = russian_revolution
 			set_cosmetic_tag = RUS_republic
+			set_country_flag = RUS_republic_flag
 			set_politics = {
 				ruling_party = democratic
 			}
