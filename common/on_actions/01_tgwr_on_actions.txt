@@ -769,19 +769,12 @@
 					tag = RUS
 					has_country_leader = {
 						character = RUS_nikolai_ii
-						ruling_only = yes
-					}
-					RUS_nikolai_ii = {
-						NOT = {
-							has_character_flag = RUS_nicholas_romanov_dictator
-							has_character_flag = RUS_nicholas_romanov_democratic
-						}
 					}					
 				}
 				RUS_nikolai_ii = {
 					set_portraits = {
 						civilian = {
-							large="gfx/leaders/RUS/RUS_nicholas_romanov.png"
+							large="gfx/leaders/RUS/RUS_nikolai_ii.png"
 						}
 					}
 				}				
@@ -8299,6 +8292,87 @@
 				}
 				relinguish_entente_leadership = yes
 			}
+			# BW1
+			# greece, ser and mnt separated peace in case of lone liberator
+			if = {
+				limit = { 
+					NOT = {
+						has_global_flag = balkan_league_success
+					}
+					is_BW1_ongoing = yes
+					OR = {
+						tag = GRE
+						tag = SER
+						tag = MNT
+					}
+					FROM = {
+						OR = {
+							tag = TUR
+							is_ally_with = TUR
+						}
+					}
+				}
+				white_peace = TUR
+				set_country_flag = BW1_separated_peace
+				if = {
+					limit = { 
+						BW1_balkans_crushing_defeat = no
+					}
+					TUR = {
+						country_event = ww1_firstbalkan.128
+					}
+				}
+			}
+			if = {
+				limit = { 
+					is_BW1_ongoing = yes
+					tag = TUR
+					FROM = {
+						OR = {
+							tag = SER
+							tag = BUL
+							tag = CRE
+							tag = GRE
+							tag = MNT
+						}
+					}
+				}
+				BW1_balkans_victory_effect = yes
+			}
+			# BW2
+			if = {
+				limit = { 
+					is_BW2_ongoing = yes
+					tag = BUL
+					FROM = {
+						OR = {
+							tag = SER
+							tag = ROM
+							tag = GRE
+							tag = MNT
+						}
+					}
+				}
+				BW2_balkans_victory_effect = yes
+			}
+			if = {
+				limit = { 
+					tag = WTH
+					FROM = {
+						tag = BUL
+					}
+				}
+				BUL = {
+					annex_country = {
+						target = WTH
+					}
+				}
+				WTH = {
+					every_core_state = {
+						remove_core_of = PREV
+					}
+				}
+			}
 			log = "[GetDateText]: [ROOT.GetName] has capitulated by [FROM.GetName]"
 		}
 	}
@@ -9877,11 +9951,12 @@
 					if = {
 						limit = {
 							OR = {
-								has_cosmetic_tag = AUH
-								has_cosmetic_tag = AUH_empire
+								has_cosmetic_tag = CIS
+								has_cosmetic_tag = AUS_empire
+								has_cosmetic_tag = AUS_lands
 							}			
 						}
-						set_cosmetic_tag = AUH_communism
+						set_cosmetic_tag = CIS_communism
 						else_if = {
 							limit = { 
 								OR = {
@@ -10740,16 +10815,22 @@
 					}
 					if = {
 						limit = {
-							has_cosmetic_tag = AUH_communism		
+							has_cosmetic_tag = CIS_communism		
 						}
 						if = {
 							limit = {
-								has_country_flag = AUH_empire
+								has_country_flag = AUS_empire
 							}
-							set_cosmetic_tag = AUH_empire
+							set_cosmetic_tag = AUS_empire
+						}
+						else_if = {
+							limit = {
+								has_country_flag = AUS_lands
+							}
+							set_cosmetic_tag = AUS_lands
 						}
 						else = {
-							set_cosmetic_tag = AUH
+							set_cosmetic_tag = CIS
 						}
 						else_if = {
 							limit = { 
@@ -10939,11 +11020,18 @@
 						set_cosmetic_tag = AUR_vaterland
 						else_if = {
 							limit = {
-								has_cosmetic_tag = AUH
-								has_country_flag = AUH_empire
+								has_cosmetic_tag = CIS
+								has_country_flag = AUS_empire
 							}
-							set_cosmetic_tag = AUH_empire
-						}	
+							set_cosmetic_tag = AUS_empire
+						}
+						else_if = {
+							limit = {
+								has_cosmetic_tag = CIS
+								has_country_flag = AUS_lands
+							}
+							set_cosmetic_tag = AUS_lands
+						}
 					}
 				}
 				else_if = {
@@ -11625,17 +11713,11 @@
 							original_tag = RUS
 						}
 					}
-					RUS_nikolai_ii = {
-						NOT = {
-							has_character_flag = RUS_nicholas_romanov_dictator
-							has_character_flag = RUS_nicholas_romanov_democratic
-						}
-					}
 				}
 				RUS_nikolai_ii = {
 					set_portraits = {
 						civilian = {
-							large="gfx/leaders/RUS/RUS_nicholas_romanov_war.png"
+							large="gfx/leaders/RUS/RUS_nikolai_ii_war.png"
 						}
 					}
 				}				
@@ -11674,19 +11756,6 @@
 					add_idea = export_focus
 				}
 			}
-			if = {
-				limit = {
-					tag = BUL
-					has_country_flag = lozengradska_operacija
-					NOT = {
-						has_idea = BUL_idea_lozengradska_operacija
-					}
-					has_war_with = TUR
-				}
-				clr_country_flag = lozengradska_operacija
-				add_ideas = BUL_idea_lozengradska_operacija
-			}
-			country_event = ww1_firstbalkan.100 #adding major status during war
 			if = {
 				limit = {
 					NOT = {
@@ -12068,29 +12137,29 @@
 					country_event = { id = ww1_england.232 hours = 3 }
 				}
 			}
-			if = {
-				limit = {
-					tag = BUL
-					has_global_flag = balkan_league_fail
-					NOT = {
-						has_global_flag = great_war
-						is_in_faction_with = SER
-						is_in_faction_with = GRE
-						is_in_faction_with = MNT
-					}
-					FROM = {
-						tag = TUR
-						NOT = {
-							has_war_with = SER
-							has_global_flag = kis_firstbalkanwar_victory
-						}
-					}
-				}
-				news_event = {
-					id = ww1_firstbalkan.116
-					hours = 3
-				}
-			}
+			#if = {
+			#	limit = {
+			#		tag = BUL
+			#		has_global_flag = balkan_league_fail
+			#		NOT = {
+			#			has_global_flag = great_war
+			#			is_in_faction_with = SER
+			#			is_in_faction_with = GRE
+			#			is_in_faction_with = MNT
+			#		}
+			#		FROM = {
+			#			tag = TUR
+			#			NOT = {
+			#				has_war_with = SER
+			#				has_global_flag = kis_firstbalkanwar_victory
+			#			}
+			#		}
+			#	}
+			#	news_event = {
+			#		id = ww1_firstbalkan.116
+			#		hours = 3
+			#	}
+			#}
 		}
 	}
 	on_offer_join_faction = {
@@ -12168,41 +12237,41 @@
 			#	}
 			#}
 			#Bulgaria get Solun
-			if = {
-				limit = {
-					FROM.FROM = {
-						state = 345
-					}				
-				}
-				if = {
-					limit = {
-						ROOT = {
-							original_tag = BUL
-						}
-						FROM = {
-							original_tag = TUR
-							owns_state = 345
-						}
-						OR = {
-							BUL = {
-								OR = {
-									is_ai = no
-									has_completed_focus = BUL_lone_liberator
-								}	
-							}
-							GRE = {
-								is_ai = no
-							}
-							is_historical_focus_on = no
-						}
-						has_global_flag = kis_firstbalkan_war
-						NOT = {
-							has_global_flag = kis_firstbalkanwar_victory
-						}
-					}
-					set_global_flag = bulgarian_solun
-				}
-			}
+			#if = {
+			#	limit = {
+			#		FROM.FROM = {
+			#			state = 345
+			#		}				
+			#	}
+			#	if = {
+			#		limit = {
+			#			ROOT = {
+			#				original_tag = BUL
+			#			}
+			#			FROM = {
+			#				original_tag = TUR
+			#				owns_state = 345
+			#			}
+			#			OR = {
+			#				BUL = {
+			#					OR = {
+			#						is_ai = no
+			#						has_completed_focus = BUL_lone_liberator
+			#					}	
+			#				}
+			#				GRE = {
+			#					is_ai = no
+			#				}
+			#				is_historical_focus_on = no
+			#			}
+			#			has_global_flag = kis_firstbalkan_war
+			#			NOT = {
+			#				has_global_flag = kis_firstbalkanwar_victory
+			#			}
+			#		}
+			#		set_global_flag = bulgarian_solun
+			#	}
+			#}
 			if = {
 				limit = {
 					tag = GER
