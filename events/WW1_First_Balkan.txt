@@ -1783,6 +1783,21 @@ news_event = {
 	major = yes
 	option = {
 		name = ww1_firstbalkan.2.a
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = rule_superevent
+					option = DEFAULT
+				}
+				is_ai = no
+			}
+			hidden_effect = {
+				clear_superevents = yes
+				play_song = "SE_balkan_war_1"
+				set_country_flag = SE_balkan_war_1
+				update_superevents = yes
+			}
+		}
 	}
 }
 
@@ -1896,22 +1911,66 @@ country_event = {
 	timeout_days = 4
 	option = {
 		name = ww1_firstbalkan.121.a
-		add_stability = 0.01
+		add_stability = 0.005
 		effect_tooltip = {
 			activate_mission = BW1_london_conference
 		}
-		custom_effect_tooltip = if_they_accept
-		effect_tooltip = {
-			BW1_TUR_truce_with_ROOT = yes
-		}
 		hidden_effect = {
-			TUR = {
+			every_enemy_country = {
+				limit = {
+					OR = {
+						tag = BUL
+						tag = SER
+						tag = GRE
+						tag = MNT
+					}
+				}
 				country_event = {
 					id = ww1_firstbalkan.122
 					days = 1
 					random_hours = 12
 				}
-			}			
+			}
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = ww1_firstbalkan.121.b
+		add_war_support = 0.01
+		effect_tooltip = {
+			activate_mission = BW1_london_conference
+		}
+		ai_chance = {
+			base = 50
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+	}
+}
+
+# armistice TUR
+country_event = {
+	id = ww1_firstbalkan.122
+	title = ww1_firstbalkan.122.t
+	desc = ww1_firstbalkan.122.d
+	is_triggered_only = yes
+	timeout_days = 4
+	option = {
+		name = ww1_firstbalkan.122.a
+		add_stability = 0.005
+		effect_tooltip = {
+			activate_mission = BW1_london_conference
+		}
+		custom_effect_tooltip = if_we_accept_newline_tt
+		add_ideas = BW1_armistice_balkans
+		hidden_effect = {
+			FROM = {
+				country_event = ww1_firstbalkan.126
+			}
 		}
 		ai_chance = {
 			base = 0
@@ -1927,52 +1986,6 @@ country_event = {
 		}
 	}
 	option = {
-		name = ww1_firstbalkan.121.b
-		add_war_support = 0.01
-		effect_tooltip = {
-			activate_mission = BW1_london_conference
-		}
-		ai_chance = {
-			base = 0
-			modifier = {
-				add = 100
-				is_historical_focus_on = yes
-				OR = {
-					tag = GRE
-					tag = MNT
-				}
-			}
-		}
-	}
-}
-
-# armistice TUR
-country_event = {
-	id = ww1_firstbalkan.122
-	title = ww1_firstbalkan.122.t
-	desc = ww1_firstbalkan.122.d
-	is_triggered_only = yes
-	timeout_days = 4
-	option = {
-		name = ww1_firstbalkan.122.a
-		add_stability = 0.01
-		effect_tooltip = {
-			activate_mission = BW1_london_conference
-		}
-		custom_effect_tooltip = if_we_accept_newline_tt
-		effect_tooltip = {
-			BW1_TUR_truce_with_FROM = yes
-		}
-		hidden_effect = {
-			FROM = {
-				country_event = ww1_firstbalkan.126
-			}
-		}
-		ai_chance = {
-			base = 50
-		}
-	}
-	option = {
 		name = ww1_firstbalkan.122.b
 		add_war_support = 0.01
 		effect_tooltip = {
@@ -1985,6 +1998,14 @@ country_event = {
 		}
 		ai_chance = {
 			base = 0
+			modifier = {
+				add = 100
+				is_historical_focus_on = yes
+				OR = {
+					tag = GRE
+					tag = MNT
+				}
+			}
 		}
 	}
 }
@@ -2016,7 +2037,7 @@ country_event = {
 }
 
 
-# turkey accepted truce
+# balkan country accepted truce
 country_event = {
 	id = ww1_firstbalkan.126
 	title = ww1_firstbalkan.126.t
@@ -2024,18 +2045,18 @@ country_event = {
 	is_triggered_only = yes
 	immediate = {
 		hidden_effect = {
-			BW1_TUR_truce_with_ROOT = yes
+			BW1_TUR_truce_with_FROM = yes
 		}
 	}
 	option = {
 		name = ww1_firstbalkan.126.a
 		effect_tooltip = {
-			BW1_TUR_truce_with_ROOT = yes
+			BW1_TUR_truce_with_FROM = yes
 		}
 	}	
 }
 
-# turkey declined peace
+# balkan country declined peace
 country_event = {
 	id = ww1_firstbalkan.127
 	title = ww1_firstbalkan.127.t
@@ -2043,5 +2064,19 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_firstbalkan.127.a
+	}	
+}
+
+country_event = {
+	id = ww1_firstbalkan.128
+	title = ww1_firstbalkan.128.t
+	desc = ww1_firstbalkan.128.d
+	is_triggered_only = yes
+	option = {
+		name = ww1_firstbalkan.128.a
+		effect_tooltip = {
+			white_peace = FROM
+		}
+		custom_effect_tooltip = BW1_separated_peace_tt
 	}	
 }
