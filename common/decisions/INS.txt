@@ -2054,6 +2054,66 @@ INS_dc_absolute_power = {
 			factor = 200
 		}
 	}
+	INS_tax_state = {
+		icon = GFX_decision_generic_decision
+		allowed = {
+			original_tag = INS
+		}
+		visible = {
+			has_completed_focus = INS_tax_natives
+		}
+		available = {
+			NOT = {
+				has_global_flag = INS_taxing_the_shit_out_of_them
+			}
+		}
+		target_root_trigger = {
+			tag = INS
+		}
+		state_target = any_owned_state
+		target_trigger = {
+			FROM = {
+				is_fully_controlled_by = ROOT
+				NOT = {
+					has_dynamic_modifier = INS_rebelling_region
+					has_dynamic_modifier = INS_undiscovered_state
+				}
+			}
+		}
+		fire_only_once = yes
+		days_remove = 10
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_political_power < 5
+			}
+		}
+		cost = 5
+		complete_effect = {
+			set_global_flag = INS_taxing_the_shit_out_of_them
+		}
+		remove_effect = {
+			clr_global_flag = INS_taxing_the_shit_out_of_them
+			custom_effect_tooltip = INS_modify_ethical_policy_tt
+			add_to_variable = {
+				INS_variable_ep_consumer = -0.005
+				tooltip = consumer_goods_factor_tt
+			}
+			random_list = {
+				75 = {
+
+				}
+				25 = {
+					FROM = {
+						add_dynamic_modifier = {
+							modifier = INS_rebelling_region
+						}
+					}
+				}
+			}
+		}
+	}
 }
 INS_dc_bop = {
 	INS_spread_propoganda = {
