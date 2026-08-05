@@ -107,7 +107,8 @@ TUR_arab_total_pop = {
 		set_variable = { TUR_arab_total_pop_var = 0 }
 		every_owned_state = {
 			limit = {
-				check_variable = { THIS.TUR_arab_state_pop_var > 0 }
+				is_core_of = ROOT
+				has_variable = TUR_arab_state_pop_var
 			}
 			add_to_variable = {
 				TUR.TUR_arab_total_pop_var = TUR_arab_state_pop_var
@@ -198,933 +199,106 @@ TUR_recalculate_pop_percentages = {
 TUR_recalculate_total_vilayet_pop = {
 	hidden_effect = {
 		every_owned_state = {
-				limit = {
-					is_core_of = ROOT
-				}
-				set_variable = {
-					THIS.TUR_local_state_population_var = THIS.state_population_k
-				}
-		}
-		#CONSTANTINOPLE VILAYET
-		if = {
-				limit = {
-					owns_state = 347
-				}
-				set_temp_variable = {
-					TUR.TUR_347_population_temp_var = 0
-				}
-				347 = {
-					set_variable = {
-						TUR_vilayet_population_var = {
-							value = 0
-							add = THIS.state_population_k
-							divide = 1000
-						}
-					}
-				}
-		}
-		#IZMIR VILAYET
-		if = {
 			limit = {
-					owns_state = 339
+				is_core_of = ROOT
+				has_variable = THIS.TUR_state_centralization_var
 			}
-			339 = {
-				set_variable = {
-					THIS.TUR_vilayet_population_var = 0
-				}
+			set_variable = {
+				THIS.TUR_vilayet_population_var = 0
 			}
-			every_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 339
-							state = 340
-							state = 342
-							state = 824
-						}
-					}
-					add_to_variable = {
-						339.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-					}
-			}
-			divide_variable = {
-					339.TUR_vilayet_population_var = 1000
-			}
-		}
-		#ANKARA VILAYET
-		if = {
-			limit = {
-				owns_state = 49
-			}
-			49 = {
-				set_variable = {
-					THIS.TUR_vilayet_population_var = 0
-				}
-			}
-			every_owned_state = {
-				limit = {
-					is_core_of = ROOT
-						OR = {
-							state = 49
-						state = 348
-					}
-				}
-					add_to_variable = {
-						49.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-			divide_variable = {
-					49.TUR_vilayet_population_var = 1000
-			}
-		}
-		#ADANA VILAYET
-		if = {
-			limit = {
-					owns_state = 344
-			}
-			344 = {
-				set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-				}
-			}
-			every_owned_state = {
-				limit = {
-					is_core_of = ROOT
-					OR = {
-						state = 344
-						state = 857
-					}
-				}
-				add_to_variable = {
-						344.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-			divide_variable = {
-					344.TUR_vilayet_population_var = 1000
-			}
-		}
-		#ERZURUM VILAYET
-		if = {
-			limit = {
-					owns_state = 353
-			}
-			353 = {
-				set_variable = {
-					TUR_vilayet_population_var = {
-							value = 0
-							add = THIS.state_population_k
-							divide = 1000
-					}
-				}
-			}
-		}
-		#BITLIS VILAYET
-		if = {
-			limit = {
-				owns_state = 1022
-			}
-			1022 = {
-				set_variable = {
-						TUR_vilayet_population_var = {
-							value = 0
-							add = THIS.state_population_k
-							divide = 1000
-						}
-				}
-			}
-		}
-		#RODOS VILAYET
-		if = {
-			limit = {
-					owns_state = 790
-			}
-			790 = {
-				set_variable = {
-					THIS.TUR_vilayet_population_var = 0
-				}
-			}
-			every_owned_state = {
-				limit = {
-					is_core_of = ROOT
-					OR = {
-							state = 164
-							state = 790
-							state = 899
-							state = 975
-					}
-				}
-				add_to_variable = {
-						790.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-			divide_variable = {
-					790.TUR_vilayet_population_var = 1000
-			}
-		}
-		#BURSA VILAYET
-			if = {
-				limit = {
-					owns_state = 854
-				}
-				854 = {
-					set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-					}
-				}
-				every_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 825
-							state = 854
-						}
-					}
-					add_to_variable = {
-						854.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-					}
-				}
-				divide_variable = {
-					854.TUR_vilayet_population_var = 1000
-				}
-			}
-			#DIYAKBAKIR VILAYET
-			if = {
-			limit = {
-				owns_state = 350
-			}
-			350 = {
-				set_variable = {
-					THIS.TUR_vilayet_population_var = 0
-				}
-			}
-			every_owned_state = {
-				limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 350
-							state = 884
-							state = 1028
-						}
-				}
-				add_to_variable = {
-						350.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-				divide_variable = {
-					350.TUR_vilayet_population_var = 1000
-				}
-			}
-			#SIVAS VILAYET
-			if = {
-				limit = {
-					owns_state = 349
-				}
-				349 = {
-				set_variable = {
-					THIS.TUR_vilayet_population_var = 0
-				}
-			}
-			every_owned_state = {
-				limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 349
-							state = 1026
-							state = 1030
-						}
-				}
-					add_to_variable = {
-						349.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-			divide_variable = {
-				349.TUR_vilayet_population_var = 1000
-			}
-		}
-		#TRABZON VILAYET
-			if = {
-				limit = {
-					owns_state = 354
-				}
-				354 = {
-					set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-					}
-				}
-				every_owned_state = {
-				limit = {
-					is_core_of = ROOT
-						OR = {
-							state = 354
-						state = 355
-						state = 1034
-					}
-				}
-				add_to_variable = {
-					354.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-			divide_variable = {
-				354.TUR_vilayet_population_var = 1000
-			}
-			}
-			#KONYA VILAYET
-			if = {
-				limit = {
-					owns_state = 346
-				}
-			346 = {
-				set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-				}
-			}
-			every_owned_state = {
-				limit = {
-					is_core_of = ROOT
-					OR = {
-						state = 346
-						state = 911
-					}
-				}
-					add_to_variable = {
-						346.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-			divide_variable = {
-				346.TUR_vilayet_population_var = 1000
-			}
-		}
-			#KASTAMONU
-			if = {
-				limit = {
-					owns_state = 356
-			}
-			356 = {
-				set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-				}
-			}
-			every_owned_state = {
-				limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 356
-							state = 1031
-						}
-				}
-				add_to_variable = {
-					356.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-				divide_variable = {
-					356.TUR_vilayet_population_var = 1000
-			}
-			}
-			#MAMURETULAZIZ
-			if = {
-				limit = {
-					owns_state = 881
-				}
-				881 = {
-					set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-					}
-				}
-				every_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 881
-							state = 1025
-							state = 1033
-						}
-					}
-					add_to_variable = {
-						881.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-					}
-				}
-				divide_variable = {
-					881.TUR_vilayet_population_var = 1000
-			}
-		}
-		#BEIRUT VILAYET
-		if = {
-			limit = {
-				owns_state = 553
-			}
-				553 = {
-					set_variable = {
-					THIS.TUR_vilayet_population_var = 0
-					}
-				}
-				every_owned_state = {
-					limit = {
-						is_core_of = ROOT
-					OR = {
-						state = 553
-						state = 852
-						state = 1021
-					}
-				}
-				add_to_variable = {
-					553.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-			divide_variable = {
-				553.TUR_vilayet_population_var = 1000
-			}
-		}
-		#BAGDAT VILAYET
-		if = {
-			limit = {
-				owns_state = 291
-			}
-			291 = {
-				set_variable = {
-					THIS.TUR_vilayet_population_var = 0
-				}
-			}
-			every_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 291
-							state = 853
-						}
-					}
-					add_to_variable = {
-						291.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-					}
-			}
-			divide_variable = {
-				291.TUR_vilayet_population_var = 1000
-			}
-		}
-		#BASRA VILAYET
-			if = {
-				limit = {
-					owns_state = 874
-				}
-				874 = {
-					set_variable = {
-					THIS.TUR_vilayet_population_var = 0
-				}
-				}
-				every_owned_state = {
-					limit = {
-					is_core_of = ROOT
-					OR = {
-							state = 804
-							state = 874
-					}
-				}
-					add_to_variable = {
-						874.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-					}
-				}
-				divide_variable = {
-					874.TUR_vilayet_population_var = 1000
-				}
-			}
-			#ALEPPO VILAYET
-			if = {
-				limit = {
-					owns_state = 677
-				}
-				677 = {
-					set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-					}
-				}
-				every_owned_state = {
-					limit = {
-						is_core_of = ROOT
-					OR = {
-						state = 677
-						state = 829
-							state = 859
-							state = 1024
-						state = 1027
-						state = 1029
-							state = 1057
-						state = 1058
-					}
-					}
-					add_to_variable = {
-						677.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-					}
-				}
-				divide_variable = {
-					677.TUR_vilayet_population_var = 1000
-				}
-			}
-			#SYRIA VILAYET
-			if = {
-				limit = {
-					owns_state = 554
-				}
-				554 = {
-					set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-					}
-				}
-				every_owned_state = {
-					limit = {
-					is_core_of = ROOT
-					OR = {
-							state = 455
-							state = 554
-					}
-				}
-				add_to_variable = {
-						554.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-			divide_variable = {
-					554.TUR_vilayet_population_var = 1000
-			}
-		}
-		#TRABLUSGARP VILAYET
-			if = {
-				limit = {
-					owns_state = 448
-				}
-				448 = {
-					set_variable = {
-					THIS.TUR_vilayet_population_var = 0
-					}
-				}
-				every_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 273
-							state = 448
-						state = 450
-						state = 661
-							state = 663
-							state = 1060
-						state = 1061
-						state = 1122
-							state = 1124
-							state = 1128
-							state = 1154
-							state = 1155
-							state = 1156
-							state = 1157
-						}
-					}
-					add_to_variable = {
-						448.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-					}
-				}
-				divide_variable = {
-					448.TUR_vilayet_population_var = 1000
-				}
-			}
-			#MOSUL VILAYET
-			if = {
-				limit = {
-					owns_state = 676
-				}
-				676 = {
-					set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-					}
-				}
-				every_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 676
-						state = 879
-							state = 883
-						}
-					}
-					add_to_variable = {
-					676.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-					}
-				}
-				divide_variable = {
-					676.TUR_vilayet_population_var = 1000
-				}
-			}
-			#VAN VILAYET
-			if = {
-				limit = {
-					owns_state = 352
-				}
-				352 = {
-					set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-					}
-				}
-				every_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 352
-							state = 828
-						}
-					}
-					add_to_variable = {
-					352.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-			divide_variable = {
-					352.TUR_vilayet_population_var = 1000
-			}
-		}
-		#ISKODRA VILAYET
-			if = {
-				limit = {
-					owns_state = 870
-				}
-				870 = {
-					set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-					}
-				}
-				every_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 44
-							state = 870
-							state = 1214
-						}
-					}
-					add_to_variable = {
-						870.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-					}
-				}
-				divide_variable = {
-					870.TUR_vilayet_population_var = 1000
-				}
-			}
-			#SALONICA VILAYET
-			if = {
-				limit = {
-					owns_state = 345
-				}
-				345 = {
-					set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-				}
-			}
-			every_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 184
-							state = 225
-							state = 345
-							state = 731
-							state = 759
-							state = 788
-							state = 1257
-							state = 1258
-						}
-					}
-					add_to_variable = {
-						345.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-					}
-			}
-			divide_variable = {
-				345.TUR_vilayet_population_var = 1000
-			}
-		}
-		#ADRIANOPLE VILAYET
-			if = {
-				limit = {
-					owns_state = 756
-				}
-				756 = {
-					set_variable = {
-					THIS.TUR_vilayet_population_var = 0
-				}
-			}
-				every_owned_state = {
-					limit = {
-					is_core_of = ROOT
-					OR = {
-							state = 200
-							state = 341
-							state = 451
-							state = 756
-							state = 757
-							state = 849
-							state = 860
-					}
-				}
-				add_to_variable = {
-					756.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-			divide_variable = {
-					756.TUR_vilayet_population_var = 1000
-			}
-		}
-		#KOSOVA VILAYET
-			if = {
-				limit = {
-					owns_state = 106
-				}
-				106 = {
-					set_variable = {
-					THIS.TUR_vilayet_population_var = 0
-				}
-				}
-				every_owned_state = {
-					limit = {
-					is_core_of = ROOT
-						OR = {
-							state = 106
-							state = 760
-							state = 761
-							state = 847
-							state = 848
-							state = 1140
-							state = 1141
-							state = 1240
-							state = 1284
-						}
-					}
-					add_to_variable = {
-						106.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-					}
-				}
-				divide_variable = {
-					106.TUR_vilayet_population_var = 1000
-				}
-			}
-			#MANASTIR VILAYET
-			if = {
-				limit = {
-					owns_state = 203
-				}
-				203 = {
-					set_variable = {
-					THIS.TUR_vilayet_population_var = 0
-					}
-				}
-			every_owned_state = {
-				limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 203
-							state = 826
-							state = 1213
-							state = 1215
-							state = 1225
-							state = 1256
-						}
-				}
-				add_to_variable = {
-					203.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-			divide_variable = {
-					203.TUR_vilayet_population_var = 1000
-			}
-		}
-		#YANYA VILAYET
-		if = {
-			limit = {
-					owns_state = 758
-			}
-			758 = {
-				set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-				}
-			}
-			every_owned_state = {
-				limit = {
-					is_core_of = ROOT
-					OR = {
-						state = 758
-							state = 803
-							state = 871
-					}
-				}
-				add_to_variable = {
-						758.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-			divide_variable = {
-					758.TUR_vilayet_population_var = 1000
-			}
-		}
-		#BIGA SANJAK
-		if = {
-			limit = {
-				owns_state = 861
-			}
-			861 = {
-				set_variable = {
-						TUR_vilayet_population_var = {
-							value = 0
-							add = THIS.state_population_k
-							divide = 1000
-						}
-				}
-			}
-		}
-		#IZMIT SANJAK
-		if = {
-				limit = {
-					owns_state = 1019
-				}
-				1019 = {
-					set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-					}
-				}
-				every_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 1019
-							state = 1035
-						}
-					}
-					add_to_variable = {
-						1019.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-					}
-				}
-				divide_variable = {
-					1019.TUR_vilayet_population_var = 1000
-				}
-		}
-		#ZOR VILAYET
-		if = {
-			limit = {
-				owns_state = 1023
-			}
-			1023 = {
-					set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-					}
-			}
-			every_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 680
-							state = 1023
-						}
-					}
-					add_to_variable = {
-						1023.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-					}
-			}
-			divide_variable = {
-				1023.TUR_vilayet_population_var = 1000
-			}
-		}
-		#AL-KUDS MUTASARRIFATE
-		if = {
-			limit = {
-					owns_state = 454
-			}
-			454 = {
-					set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-					}
-			}
-			every_owned_state = {
-				limit = {
-					is_core_of = ROOT
-					OR = {
-							state = 454
-							state = 856
-					}
-				}
-				add_to_variable = {
-					454.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-			divide_variable = {
-				454.TUR_vilayet_population_var = 1000
-			}
-		}
-		#CATALCA SANJAK
-		if = {
-			limit = {
-				owns_state = 1018
-			}
-			1018 = {
-				set_variable = {
-					TUR_vilayet_population_var = {
-							value = 0
-							add = THIS.state_population_k
-							divide = 1000
-					}
-				}
-			}
-		}
-		#HEJAZ VILAYET
-			if = {
-				limit = {
-					owns_state = 679
-			}
-			679 = {
-				set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-				}
-			}
-			every_owned_state = {
-				limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 679
-							state = 878
-							state = 1149
-						}
-				}
-				add_to_variable = {
-					679.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-				}
-			}
-			divide_variable = {
-				679.TUR_vilayet_population_var = 1000
-			}
-			}
-			#YEMEN VILAYET
-		if = {
-				limit = {
-					owns_state = 654
-				}
-				654 = {
-					set_variable = {
-						THIS.TUR_vilayet_population_var = 0
-					}
-				}
-				every_owned_state = {
-					limit = {
-						is_core_of = ROOT
-						OR = {
-							state = 293
-							state = 654
-							state = 662
-							state = 747
-						}
-					}
-					add_to_variable = {
-						654.TUR_vilayet_population_var = THIS.TUR_local_state_population_var
-					}
-				}
-				divide_variable = {
-					654.TUR_vilayet_population_var = 1000
-				}
 		}
 		every_owned_state = {
 			limit = {
-				check_variable = {
-					TUR_local_state_population_var > 0
-				}
+				is_core_of = ROOT
+				has_variable = THIS.TUR_vilayet_var
 			}
-			clear_variable = THIS.TUR_local_state_population_var
+			set_variable = {
+				THIS.TUR_local_state_population_var = THIS.state_population_k
+			}
+		}
+		every_owned_state = {
+			limit = {
+				is_core_of = ROOT
+				has_variable = THIS.TUR_vilayet_var
+			}
+			add_to_variable = {
+				var:THIS.TUR_vilayet_var:TUR_vilayet_population_var = THIS.TUR_local_state_population_var
+			}
+		}
+		every_owned_state = {
+			limit = {
+				is_core_of = ROOT
+				has_variable = THIS.TUR_state_centralization_var
+			}
+			divide_variable = {
+				THIS.TUR_vilayet_population_var = 1000
+			}
+		}
+		every_owned_state = {
+			limit = {
+				is_core_of = ROOT
+				has_variable = THIS.TUR_vilayet_var
+			}
+			set_variable = {
+				var:THIS.TUR_vilayet_var:TUR_south_slav_vilayet_pop_var = 0
+			}
+			set_variable = {
+				var:THIS.TUR_vilayet_var:TUR_greek_vilayet_pop_var = 0
+			}
+			set_variable = {
+				var:THIS.TUR_vilayet_var:TUR_aromanian_vilayet_pop_var = 0
+			}
+			set_variable = {
+				var:THIS.TUR_vilayet_var:TUR_armenian_vilayet_pop_var = 0
+			}
+			set_variable = {
+				var:THIS.TUR_vilayet_var:TUR_assyrian_vilayet_pop_var = 0
+			}
+			set_variable = {
+				var:THIS.TUR_vilayet_var:TUR_jewish_vilayet_pop_var = 0
+			}
+			set_variable = {
+				var:THIS.TUR_vilayet_var:TUR_albanian_vilayet_pop_var = 0
+			}
+			set_variable = {
+				var:THIS.TUR_vilayet_var:TUR_kurdish_vilayet_pop_var = 0
+			}
+			set_variable = {
+				var:THIS.TUR_vilayet_var:TUR_arab_vilayet_pop_var = 0
+			}
+		}
+		every_owned_state = {
+			limit = {
+				is_core_of = ROOT
+				has_variable = THIS.TUR_vilayet_var
+			}
+			add_to_variable = {
+				var:THIS.TUR_vilayet_var:TUR_south_slav_vilayet_pop_var = THIS.TUR_south_slav_state_pop_var
+			}
+			add_to_variable = {
+				var:THIS.TUR_vilayet_var:TUR_greek_vilayet_pop_var = THIS.TUR_greek_state_pop_var
+			}
+			add_to_variable = {
+				var:THIS.TUR_vilayet_var:TUR_aromanian_vilayet_pop_var = THIS.TUR_aromanian_state_pop_var
+			}
+			add_to_variable = {
+				var:THIS.TUR_vilayet_var:TUR_armenian_vilayet_pop_var = THIS.TUR_armenian_state_pop_var
+			}
+			add_to_variable = {
+				var:THIS.TUR_vilayet_var:TUR_assyrian_vilayet_pop_var = THIS.TUR_assyrian_state_pop_var
+			}
+			add_to_variable = {
+				var:THIS.TUR_vilayet_var:TUR_jewish_vilayet_pop_var = THIS.TUR_jewish_state_pop_var
+			}
+			add_to_variable = {
+				var:THIS.TUR_vilayet_var:TUR_albanian_vilayet_pop_var = THIS.TUR_albanian_state_pop_var
+			}
+			add_to_variable = {
+				var:THIS.TUR_vilayet_var:TUR_kurdish_vilayet_pop_var = THIS.TUR_kurdish_state_pop_var
+			}
+			add_to_variable = {
+				var:THIS.TUR_vilayet_var:TUR_arab_vilayet_pop_var = THIS.TUR_arab_state_pop_var
+			}
 		}
 	}
 }
@@ -1139,57 +313,10 @@ TUR_recalculate_total_centalization = {
 		every_owned_state = {
 			limit = {
 				is_core_of = ROOT
-				OR = {
-					state = 347
-					state = 339
-					state = 49
-					state = 344
-					state = 353
-					state = 1022
-					state = 790
-					state = 854
-					state = 350
-					state = 349
-					state = 354
-					state = 346
-					state = 356
-					state = 881
-					state = 553
-					state = 291
-					state = 874
-					state = 677
-					state = 554
-					state = 448
-					state = 676
-					state = 353
-					state = 870
-					state = 345
-					state = 756
-					state = 106
-					state = 203
-					state = 758
-					state = 861
-					state = 1019
-					state = 1023
-					state = 454
-					state = 1018
-					state = 679
-					state = 654
-				}
-			}
-			set_variable = {
-				THIS.TUR_vilayet_capital_var = 1
-			}
-		}
-		every_owned_state = {
-			limit = {
-				is_core_of = ROOT
-				check_variable = {
-					TUR_vilayet_capital_var > 0
-				}
+				has_variable = TUR_state_centralization_var
 			}
 			add_to_variable = {
-				TUR.TUR_vilayet_capital_total_var = THIS.TUR_vilayet_capital_var
+				TUR.TUR_vilayet_capital_total_var = 1
 			}
 			add_to_variable = {
 				TUR.TUR_total_centralization_var = THIS.TUR_state_centralization_var
