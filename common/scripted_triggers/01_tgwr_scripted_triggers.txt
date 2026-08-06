@@ -967,8 +967,40 @@ is_austria_hungary = {
 	custom_trigger_tooltip = {
 		tooltip = is_AUH_tt
 		OR = {
-			original_tag = AUS
-			original_tag = HUN
+			AND = {
+				original_tag = AUS
+				has_monarchy = yes
+				OR = {
+					has_subject = HUN
+					HUN = { is_subject_of = PREV }
+				}
+			}
+			AND = {
+				original_tag = HUN
+				has_monarchy = yes
+				OR = {
+					has_subject = AUS
+					AUS = { is_subject_of = PREV }
+				}
+			}
+			AND = {
+				OR = {
+					original_tag = AUS
+					original_tag = HUN
+				}
+				has_monarchy = yes
+				4 = { # Vienna
+					is_core_of = PREV
+					is_owned_by = PREV
+				}
+				43 = { # Budapest
+					is_core_of = PREV
+					is_owned_by = PREV
+				}
+			}
+			has_cosmetic_tag = AUSHUN
+			# original_tag = AUS
+			# original_tag = HUN
 		}
 	}	
 }
