@@ -240,6 +240,7 @@ debug_decisions = {
 						state = 1141
 						state = 1214
 						state = 1240
+						state = 1284
 						state = 1215
 					}
 				}
@@ -252,7 +253,7 @@ debug_decisions = {
 						state = 826
 						state = 1257
 						state = 731 
-						state = 1256 
+						state = 1256
 						state = 803
 						state = 1225
 						state = 345
@@ -488,10 +489,18 @@ debug_decisions = {
 				has_global_flag = GER_capitulation
 			}
 		}
+		target_root_trigger = {
+			has_global_flag = great_war
+			has_global_flag = FRA_capitulation_alone
+			NOT = {
+				has_global_flag = GER_capitulation
+			}
+		}
+		targets = {
+			ENT
+		}
 		target_trigger = {
 			FROM = {
-				has_country_flag = entente_leader
-				is_faction_leader = yes
 				NOT = {
 					tag = RUS
 					tag = FRA
@@ -631,19 +640,15 @@ debug_decisions = {
 		}
 	}
 	subject_copy_overlord_government = {
-		target_trigger = {
-			FROM = {
-				has_subject = ROOT
-			}
+		targets = {
+			OVERLORD
 		}
 		available = {
 			is_ai = no
 		}
-		visible = {
-			is_subject = yes
-		}
 		target_root_trigger = {
 			is_debug = yes
+			is_subject = yes
 		}
 		fire_only_once = no
 		cost = 0
@@ -656,19 +661,15 @@ debug_decisions = {
 		}
 	}
 	subject_copy_overlord_popularities = {
-		target_trigger = {
-			FROM = {
-				has_subject = ROOT
-			}
+		targets = {
+			OVERLORD
 		}
 		available = {
 			is_ai = no
 		}
-		visible = {
-			is_subject = yes
-		}
 		target_root_trigger = {
 			is_debug = yes
+			is_subject = yes
 		}
 		fire_only_once = no
 		cost = 0
@@ -681,19 +682,15 @@ debug_decisions = {
 		}
 	}
 	subject_copy_overlord_laws = {
-		target_trigger = {
-			FROM = {
-				has_subject = ROOT
-			}
+		targets = {
+			OVERLORD
 		}
 		available = {
 			is_ai = no
 		}
-		visible = {
-			is_subject = yes
-		}
 		target_root_trigger = {
 			is_debug = yes
+			is_subject = yes
 		}
 		fire_only_once = no
 		cost = 0
@@ -703,6 +700,39 @@ debug_decisions = {
 					copy_laws_of_PREV = yes
 				}
 			}
+		}
+	}
+	subject_end_vassalage = {
+		targets = {
+			OVERLORD
+		}
+		available = {
+			is_ai = no
+		}
+		target_root_trigger = {
+			is_debug = yes
+			is_subject = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			FROM = {
+				end_puppet = ROOT
+			}
+		}
+	}
+	overlord_free_subject = {
+		target_array = subjects
+		available = {
+			is_ai = no
+		}
+		target_root_trigger = {
+			is_debug = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			end_puppet = FROM
 		}
 	}
 	spawn_120_ships = {
@@ -1157,12 +1187,9 @@ debug_decisions = {
 		available = {
 			is_ai = no
 		}
+		target_array = enemies
 		target_trigger = {
 			FROM = {
-				OR = {
-					tag = ROOT
-					has_war_with = ROOT
-				}
 				has_capitulated = no
 			}
 		}
