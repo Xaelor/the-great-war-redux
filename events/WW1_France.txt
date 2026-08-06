@@ -949,23 +949,22 @@ country_event = {
 }
 
 # Joseph Gallieni died in 1916 may 27
-country_event = {
+unit_leader_event = {
 	title = ww1_france.67.t
 	desc = ww1_france.67.d
 	id = ww1_france.67
 	picture = GFX_report_event_generic_funeral
 	fire_only_once = yes
-	trigger = {
-		original_tag = FRA
-		date > 1916.05.01
-		has_character = FRA_joseph_gallieni
+	is_triggered_only = yes
+
+	immediate = {
+		THIS = {
+			set_character_flag = character_died
+		}	
 	}
 
-	mean_time_to_happen = {
-		days = 10
-	}
 	option = {
-		name = event_generic_ok
+		name = ww1_generic.6.a
 		retire_character = FRA_joseph_gallieni
 	}
 }
@@ -5771,7 +5770,7 @@ country_event = {
 #
 # for russia : maurice janin join us
 #
-country_event = {
+unit_leader_event = {
 	id = ww1_france.240
 	title = ww1_france.240.t
 	desc = ww1_france.240.d
@@ -5779,11 +5778,7 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_france.240.a
-		FROM = {
-			FRA_maurice_janin = {
-				set_nationality = ROOT
-			}
-		}
+		show_unit_leaders_tooltip = FRA_maurice_janin
 		add_command_power = 25
 	}
 }
@@ -6987,10 +6982,6 @@ country_event = {
 				if = {
 					limit = { has_country_flag = protectorate }
 					clr_country_flag = protectorate
-				}
-				if = {
-					limit = { has_cosmetic_tag = FRA_classic_blue }
-					drop_cosmetic_tag = yes
 				}
 				ROOT = { end_puppet = PREV }
 			}
@@ -9701,7 +9692,7 @@ country_event = {
 					drop_cosmetic_tag = yes
 				}
 				else = {
-					set_cosmetic_tag = FRA_classic_blue
+					set_cosmetic_tag = FRA
 				}
 			}
 			else_if = {
@@ -10796,9 +10787,6 @@ country_event = {
 						has_cosmetic_tag = FRA_KINGDOM_legitimist
 						has_cosmetic_tag = FRA_THIRD_EMPIRE
 						has_cosmetic_tag = FRA_socialism
-						has_cosmetic_tag = FRA_socialism_not_commune
-						has_cosmetic_tag = FRA_socialism_syndicalist
-						has_cosmetic_tag = FRA_socialism_republic_of
 					}
 				}
 				set_cosmetic_tag = FRA_alt_blue
@@ -10989,9 +10977,6 @@ country_event = {
 						has_cosmetic_tag = FRA_KINGDOM_legitimist
 						has_cosmetic_tag = FRA_THIRD_EMPIRE
 						has_cosmetic_tag = FRA_socialism
-						has_cosmetic_tag = FRA_socialism_not_commune
-						has_cosmetic_tag = FRA_socialism_syndicalist
-						has_cosmetic_tag = FRA_socialism_republic_of
 						# has_completed_focus = FRA_ww1_authoritarian_coup
 					}
 				}
@@ -11358,7 +11343,7 @@ country_event = {
 						owner = NFA
 					}
 				}
-				set_cosmetic_tag = FRA_classic_blue
+				set_cosmetic_tag = FRA
 				transfer_units_fraction = {
 					target = NFA
 					size = 0.45	#NFA has more soldiers
@@ -12804,49 +12789,14 @@ country_event = {
 	id = ww1_france.349
 	picture = GFX_paris_1910
 	is_triggered_only = yes
-	option = {	## Just "France"
+	trigger = {
+		NOT = {
+			has_cosmetic_tag = FRA_socialism
+		}
+	}
+	option = {
 		name = ww1_france.349.a	
-		if = {
-			limit = {
-				NOT = {
-					has_cosmetic_tag = FRA_socialism_not_commune
-				}
-			}
-			set_cosmetic_tag = FRA_socialism_not_commune
-		}
-	}
-	option = {	## Syndicalist France
-		name = ww1_france.349.b
-		if = {
-			limit = {
-				NOT = {
-					has_cosmetic_tag = FRA_socialism_syndicalist
-				}
-			}
-			set_cosmetic_tag = FRA_socialism_syndicalist
-		}
-	}
-	option = {	## Commune of France
-		name = ww1_france.349.c
-		if = {
-			limit = {
-				NOT = {
-					has_cosmetic_tag = FRA_socialism
-				}
-			}
-			set_cosmetic_tag = FRA_socialism
-		}
-	}
-	option = {	## French Republic
-		name = ww1_france.349.e
-		if = {
-			limit = {
-				NOT = {
-					has_cosmetic_tag = FRA_socialism_republic_of
-				}
-			}
-			set_cosmetic_tag = FRA_socialism_republic_of
-		}
+		set_cosmetic_tag = FRA_socialism
 	}
 }
 
@@ -15697,6 +15647,7 @@ country_event = {
 	title = ww1_france.421.t
 	desc = ww1_france.421.d
 	trigger = {
+		original_tag = FRA
 		has_character = FRA_jules_guesde
 		date > 1922.06.28
 	}
@@ -18328,9 +18279,29 @@ country_event = {
 		owns_state = 969
 		NOT = {
 			has_war_with = CHA
+			has_subject = CHA
 		}
 		NOT = {
 			has_country_flag = FRA_resistance_in_chad
+		}
+	}
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					CHF = { exists = no }
+				}
+				CHF = {
+					every_state = {
+						limit = { is_claimed_by = PREV }
+						remove_claim_by = PREV
+					}
+					every_core_state = {
+						remove_core_of = PREV
+					}
+					reserve_dynamic_country = no
+				}
+			}
 		}
 	}
 	fire_only_once = yes
@@ -21571,7 +21542,7 @@ country_event = {
 		name = ww1_france.584.a
 		SPR = {
 			country_event = {
-				id = ww1_morocco.20
+				id = ww1_agadir.8
 				days = 2
 			}
 		}
@@ -21612,6 +21583,7 @@ country_event = {
 				OR = {
 					is_core_of = MOR
 					is_core_of = RMO #moroccan resistance
+					is_core_of = GUD
 				}
 				NOT = {
 					is_owned_by = ROOT
@@ -21671,6 +21643,7 @@ country_event = {
 					OR = {
 						is_core_of = MOR
 						is_core_of = RMO #moroccan resistance
+						is_core_of = GUD
 					}
 					NOT = {
 						is_owned_by = FROM

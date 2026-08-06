@@ -1,4 +1,4 @@
-GER_great_war = {
+TGWR_great_power_politics = {
 	SIA_great_war_intervention = {
 		allowed = {
 			tag = SIA
@@ -9,20 +9,29 @@ GER_great_war = {
 		}
 		available = {
 			has_capitulated = no
+			is_great_war_ongoing = yes
 		}
 		visible = {
-			is_great_war_ongoing = yes
+			great_power_politics_great_war_visible = yes		
+		}
+		target_root_trigger = {
 			is_subject = no
 			NOT = {
-				is_in_faction_with = FRA
+				is_in_faction_with = ENT
 				is_in_faction_with = GER
 				has_war_with = GER
-				has_war_with = FRA
-			}
+				has_war_with = ENT
+			}		
 		}
-		cancel_if_not_visible = yes
 		cancel_trigger = {
-			has_capitulated = yes
+			OR = {
+				has_capitulated = yes
+				is_subject = no
+				is_in_faction_with = ENT
+				is_in_faction_with = GER
+				has_war_with = GER
+				has_war_with = ENT
+			}		
 		}
 		fire_only_once = no
 		days_remove = 365
@@ -187,7 +196,8 @@ form_rattanakosin_kingdom_category = {
 			PLS
 			TRG
 			LAO
-			CAM			
+			CAM
+			SET
 		}
 		available = {
 			has_capitulated = no
@@ -227,6 +237,7 @@ form_rattanakosin_kingdom_category = {
 						tag = KEL
 						tag = PLS
 						tag = TRG
+						tag = SET
 					}
 				}
 			}
@@ -249,6 +260,7 @@ form_rattanakosin_kingdom_category = {
 			934
 			935
 			936
+			1291
 		}
 		on_map_mode = map_only
 		days_remove = 30
@@ -291,6 +303,14 @@ form_rattanakosin_kingdom_category = {
 		}
 		ai_will_do = {
 			base = 100
+			modifier = {
+				factor = 0
+				FROM = {
+					date < 1917.1.1
+					state = 1291
+					OWNER = { is_subject_of = ROOT }
+				}
+			}
 		}
 	}
 }
