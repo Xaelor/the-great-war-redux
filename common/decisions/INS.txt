@@ -1714,6 +1714,63 @@ INS_dc_economy_decisions = {
 			factor = 200
 		}
 	}
+	INS_economic_zone = {
+		icon = GFX_decision_generic_decision
+		allowed = {
+			original_tag = INS
+		}
+		on_map_mode = map_only
+		visible = {
+			has_completed_focus = INS_restrained_capitalism
+		}
+		available = {
+			NOT = {
+				any_owned_state = {
+					has_dynamic_modifier = INS_development_zone
+				}
+			}
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = FROM
+			}
+		}
+		target_root_trigger = {
+			tag = INS
+		}
+		state_target = any_owned_state
+		target_trigger = {
+			FROM = {
+				is_fully_controlled_by = ROOT
+				NOT = {
+					has_dynamic_modifier = INS_development_zone
+				}
+			}
+		}
+		fire_only_once = no
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+			}
+		}
+		complete_effect = {
+			any_state = {
+				limit = {
+					has_dynamic_modifier = INS_development_zone
+				}
+				remove_dynamic_modifier = {
+					modifier = INS_development_zone
+				}
+			}
+			FROM = {
+				add_dynamic_modifier = {
+					modifier = INS_development_zone
+				}
+			}
+		}
+		cost = 10
+	}
 }
 INS_dc_absolute_power = {
 	INS_invade_tidore = {
