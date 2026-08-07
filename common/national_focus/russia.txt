@@ -319,7 +319,7 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = RUS_centrist_duma
 		}
-		x = 10
+		x = 11
 		y = 1
 		available_if_capitulated = yes
 		available = {
@@ -378,7 +378,7 @@ focus_tree = {
 		prerequisite = {
 			focus = RUS_revolutionaries_in_duma
 		}
-		x = 9
+		x = 13
 		y = 2
 		available_if_capitulated = yes
 		bypass = {
@@ -2654,9 +2654,10 @@ focus_tree = {
 		icon = GFX_focus_generic_concessions
 		cost = 5
 		prerequisite = {
+			focus = RUS_self_determination_of_nations
 			focus = RUS_for_the_good_of_peasantry
 		}
-		x = 9
+		x = 11
 		y = 4
 		completion_reward = {
 			add_ideas = RUS_idea_combat_organization
@@ -2937,9 +2938,9 @@ focus_tree = {
 			focus = RUS_amnesty_of_military_organization
 		}
 		mutually_exclusive = {
-			focus = RUS_provisional_committee
+			focus = RUS_Soviet_Russia
 		}
-		x = 9
+		x = 12
 		y = 5
 		available = {
 			OR = {
@@ -3066,6 +3067,117 @@ focus_tree = {
 			factor = 100
 		}
 	}
+
+	focus = {
+		id = RUS_negotiations_with_Lenin
+		icon = GFX_goal_tfv_burn_the_royal_portraits
+		cost = 10
+		prerequisite = {
+			focus = RUS_revolutionaries_in_duma
+		}
+		mutually_exclusive = {
+			focus = RUS_spirit_of_social_populism
+		}
+		x = 9
+		y = 2
+		bypass = {
+			has_government = communism
+		}
+		available = {
+			NOT = {
+				SOV = {
+					exists = yes
+				}
+			}
+		}
+		completion_reward = {
+			add_popularity = {
+				ideology = communism
+				popularity = 0.1
+			}
+			country_event = {
+				id = ww1_russia.40
+			}
+			hidden_effect = {
+				SOV_vladimir_lenin = {
+					set_nationality = ROOT
+				}
+			}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = SOV_vladimir_lenin
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+
+	focus = {
+		id = RUS_Soviet_Russia
+		icon = GFX_focus_chi_mission_to_the_soviet_union
+		cost = 10
+		prerequisite = {
+			focus = RUS_amnesty_of_military_organization
+		}
+		prerequisite = {
+			focus = RUS_legalization_of_marxist_literature
+		}
+		mutually_exclusive = {
+			focus = RUS_force_tsar_abdtication
+		}
+		x = 10
+		y = 5
+		available = {
+			has_stability > 0.2
+			communism > 0.35
+			NOT = {
+				SOV = {
+					exists = yes
+				}
+			}
+			has_country_leader = {
+				character = RUS_nikolai_ii
+				ruling_only = no
+			}	
+		}
+		completion_reward = {			
+			add_stability = -0.2
+			news_event = ww1_russia.73
+			set_politics = {
+				ruling_party = communism
+				elections_allowed = no
+			}
+			RUS_nikolai_ii = {
+				add_country_leader_role = {
+					Promote_leader = yes
+					Country_leader = {
+						ideology = religious_communism						
+					    traits = {
+							socialist_autocrat							
+					    }
+					}
+				}
+			}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = RUS_viktor_chernov
+			show_ideas_tooltip = RUS_georgi_plekhanov
+			show_ideas_tooltip = RUS_pyotr_kropotkin
+			hidden_effect = {
+				set_cosmetic_tag = RUS_absolutism
+				every_other_country = {
+					limit = {
+						is_subject_of = ROOT
+					}
+					add_popularity = {
+						ideology = communism
+						popularity = 0.5
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 50
+		}
+	}	
 	
 	focus = {
 		id = RUS_spirit_of_social_populism
@@ -3095,10 +3207,11 @@ focus_tree = {
 		icon = GFX_goal_generic_propaganda
 		cost = 10
 		prerequisite = {
-			focus = RUS_for_the_good_of_peasantry
+			focus = RUS_spirit_of_social_populism
+			focus = RUS_negotiations_with_Lenin
 		}
-		x = 12
-		y = 4
+		x = 10
+		y = 3
 		available = {
 			is_subject = no
 		}
@@ -3474,7 +3587,7 @@ focus_tree = {
 		prerequisite = {
 			focus = RUS_fight_for_trade_unions
 		}
-		x = 10
+		x = 12
 		y = 3
 		completion_reward = {
 			add_offsite_building = {
@@ -3490,6 +3603,159 @@ focus_tree = {
 			FOCUS_FILTER_INDUSTRY
 		}
 	}
+
+	focus = {
+		id = RUS_focus_on_scandinavia
+		icon = GFX_goal_tripartite_pact
+		cost = 5
+		prerequisite = {
+			focus = RUS_for_the_good_of_peasantry
+		}
+		x = 13
+		y = 4
+		bypass = {
+			has_war_with = DEN
+			has_war_with = SWE
+			has_war_with = NOR
+		}
+		completion_reward = {
+			NOR = {
+				add_opinion_modifier = {
+					target = RUS
+					modifier = medium_increase
+				}
+				add_ai_strategy = {
+					type = befriend
+					id = "RUS"
+					value = 10
+				}
+				add_ai_strategy = {
+					type = alliance
+					id = "RUS"
+					value = 100
+				}
+			}
+			SWE = {
+				add_opinion_modifier = {
+					target = RUS
+					modifier = medium_increase
+				}
+				add_ai_strategy = {
+					type = befriend
+					id = "RUS"
+					value = 10
+				}
+				add_ai_strategy = {
+					type = alliance
+					id = "RUS"
+					value = 100
+				}
+			}
+			DEN = {
+				add_opinion_modifier = {
+					target = DEN
+					modifier = medium_increase
+				}
+				add_ai_strategy = {
+					type = befriend
+					id = "RUS"
+					value = 10
+				}
+				add_ai_strategy = {
+					type = alliance
+					id = "RUS"
+					value = 100
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 10
+		}
+	}
+
+	focus = {
+		id = RUS_legalization_of_marxist_literature
+		icon = GFX_focus_eng_liberate_the_home_of_marx
+		cost = 10
+		prerequisite = {
+			focus = RUS_negotiations_with_Lenin
+		}
+		prerequisite = {
+			focus = RUS_self_determination_of_nations
+		}
+		x = 9
+		y = 4
+		available = {
+			UKR = {
+				exists = yes
+			}
+			POL = {
+				exists = yes
+			}
+			FIN = {
+				exists = yes
+			}
+			LAT = {
+				exists = yes
+			}
+			LIT = {
+				exists = yes
+			}
+			EST = {
+				exists = yes
+			}
+			GEO = {
+				exists = yes
+			}
+			ARM = {
+				exists = yes
+			}
+			AZR = {
+				exists = yes
+			}
+			KAZ = {
+				exists = yes
+			}
+			TRK = {
+				exists = yes
+			}
+		}
+		completion_reward = {
+			add_timed_idea = {
+				idea = RUS_idea_legal_marxism
+				days = 480
+			}
+			every_country = {
+				limit = {
+					has_country_flag = released_by_russia
+				}
+				add_timed_idea = {
+					idea = RUS_idea_legal_marxism
+					days = 480
+				}
+			}
+			clr_country_flag = dont_trigger_political_event
+			if = {
+				limit = {
+					has_idea = RUS_threat_of_revolution
+				}
+				remove_ideas = RUS_threat_of_revolution
+			}
+			if = {
+				limit = {
+					has_idea = RUS_threat_of_revolution2
+				}
+				remove_ideas = RUS_threat_of_revolution2
+			}
+			if = {
+				limit = {
+					has_idea = RUS_threat_of_revolution3
+				}
+				remove_ideas = RUS_threat_of_revolution3
+			}
+		}
+	}
+
 	focus = {
 		id = RUS_safety_of_amur_road
 		icon = GFX_focus_SOV_south_manchuria_railway
@@ -3953,15 +4219,13 @@ focus_tree = {
 		icon = GFX_focus_generic_strike_at_democracy2
 		cost = 10
 		prerequisite = {
-			focus = RUS_self_determination_of_nations
-		}
-		prerequisite = {
 			focus = RUS_force_tsar_abdtication
+			focus = RUS_Soviet_Russia
 		}
 		mutually_exclusive = {
 			focus = RUS_fireman_of_europe
 		}
-		x = 13
+		x = 11
 		y = 6
 		available = {
 			NOT = {
@@ -4087,7 +4351,7 @@ focus_tree = {
 		icon = GFX_goal_generic_neutrality_focus
 		cost = 10
 		prerequisite = {
-			focus = RUS_self_determination_of_nations
+			focus = RUS_focus_on_scandinavia
 		}
 		prerequisite = {
 			focus = RUS_force_tsar_abdtication
@@ -4096,7 +4360,7 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = RUS_shatter_of_empires
 		}
-		x = 11
+		x = 13
 		y = 6
 		available = {
 			is_subject = no
