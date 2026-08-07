@@ -1375,26 +1375,6 @@ focus = {
 		}
 	}
 
-	# focus = {
-	# 	id = GRE_treaty_of_mutual_protection_with_serbia
-	# 	icon = goal_unknown
-	# 	cost = 1
-	# 	x = -1
-	# 	y = 1
-	# 	relative_position_id = GRE_unite_with_crete
-	# 	prerequisite = {
-	# 		focus = GRE_unite_with_crete
-	# 	}
-	# 	completion_reward = {
-	# 	}
-	# 	ai_will_do = {
-	# 		factor = 25
-	# 		modifier = {
-	# 			has_decision = GRE_leave_northern_epirus_mission
-	# 			factor = 100
-	# 		}
-	# 	}
-	# }
 	focus = {
 		id = GRE_construct_new_forts
 		icon = GFX_goal_generic_fortify_city
@@ -1466,46 +1446,6 @@ focus = {
 			}
 		}
 	}
-	# focus = {
-	# 	id = GRE_support_northern_epirot_autonomists
-	# 	icon = goal_unknown
-	# 	cost = 1
-	# 	x = -1
-	# 	y = 1
-	# 	relative_position_id = GRE_florence_protocol
-	# 	prerequisite = {
-	# 		focus = GRE_florence_protocol
-	# 	}
-	# 	completion_reward = {
-	# 	}
-	# }
-	# focus = {
-	# 	id = GRE_send_ministers_to_epirot_government
-	# 	icon = goal_unknown
-	# 	cost = 1
-	# 	x = 1
-	# 	y = 1
-	# 	relative_position_id = GRE_florence_protocol
-	# 	prerequisite = {
-	# 		focus = GRE_florence_protocol
-	# 	}
-	# 	completion_reward = {
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = GRE_annex_northern_epirus
-	# 	icon = goal_unknown
-	# 	cost = 1
-	# 	x = 0
-	# 	y = 1
-	# 	relative_position_id = GRE_protocol_of_corfu
-	# 	prerequisite = {
-	# 		focus = GRE_protocol_of_corfu
-	# 	}
-	# 	completion_reward = {
-	# 	}
-	# }
 	focus = {
 		id = GRE_commit_to_neutrality
 		icon = GFX_goal_generic_neutrality_focus
@@ -6509,18 +6449,11 @@ focus = {
 			factor = 100
 		}
 		completion_reward = {
-			set_rule = {
-				can_send_volunteers = yes
-			}
 			SRA = {
 				add_timed_idea = {
 					idea = GRE_support_to_russia
 					days = 120
 				}
-			}
-			add_timed_idea = {
-				idea = GRE_support_to_russia2
-				days = 120
 			}
 		}
 	}
@@ -6537,13 +6470,11 @@ focus = {
 		available = {
 			TRR_exists = yes
 			NOT = {
-				AND = {
-					any_country_with_original_tag = {
-						original_tag_to_check = TUR
-						has_country_flag = TUR_kostantiniye_government_tag
-						NOT = { has_country_flag = TUR_national_movement_tag }
-					}
-				}			
+				any_country_with_original_tag = {
+					original_tag_to_check = TUR
+					has_country_flag = TUR_kostantiniye_government_tag
+					exists = yes
+				}
 			}	
 			has_country_leader = {
 				character = GRE_eleftherios_venizelos
@@ -9375,6 +9306,9 @@ focus = {
 			}
 			army_experience = 15
 		}
+		ai_will_do = {
+			base = 10
+		}
 	}
 	focus = {
 		id = GRE_continue_army_reforms
@@ -9394,6 +9328,9 @@ focus = {
 				remove_idea = gre_shadow_of_97_2
 				add_idea = gre_shadow_of_97_3
 			}
+		}
+		ai_will_do = {
+			base = 10
 		}
 	}
 	focus = {
@@ -9424,6 +9361,9 @@ focus = {
 				days = 1461
 			}
 			hidden_effect = { country_event = { id = ww1_greece.124 days = 31 } }
+		}
+		ai_will_do = {
+			base = 10
 		}
 	}
 	focus = {
@@ -9483,6 +9423,9 @@ focus = {
 				category = land_doctrine
 			}
 		}
+		ai_will_do = {
+			base = 10
+		}
 	}
 	focus = {
 		id = GRE_reorganize_the_staff_service
@@ -9513,6 +9456,9 @@ focus = {
 			}
 			add_ideas = GRE_generous_promotions
 		}
+		ai_will_do = {
+			base = 10
+		}
 	}
 	focus = {
 		id = GRE_create_a_recruitment_plan
@@ -9530,6 +9476,9 @@ focus = {
 		completion_reward = {
 			add_ideas = gre_conscription_plan
 			upgrade_conscription_law = yes
+		}
+		ai_will_do = {
+			base = 10
 		}
 	}
 	focus = {
@@ -9565,6 +9514,9 @@ focus = {
 				uses = 1
 				category = motorized_equipment
 			}
+		}
+		ai_will_do = {
+			base = 10
 		}
 	}
 	focus = {
@@ -9622,6 +9574,9 @@ focus = {
 			FOCUS_FILTER_HISTORICAL
 			FOCUS_FILTER_MANPOWER
 		}
+		ai_will_do = {
+			base = 10
+		}
 	}
 	focus = {
 		id = GRE_finance_epk
@@ -9658,6 +9613,9 @@ focus = {
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
 			FOCUS_FILTER_RESEARCH
+		}
+		ai_will_do = {
+			base = 10
 		}
 	}
 	focus = {
@@ -10164,11 +10122,29 @@ focus = {
 					owner = ROOT
 				}
 			}
+			if = {
+				limit = {
+					has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } 
+				}
+				add_to_variable = {
+					var = global.GRE_IFC_var
+					value = 0.1
+				}
+				custom_effect_tooltip = GRE_IFC_plus_10_tt
+			}
 			add_equipment_to_stockpile = {
 				type = infantry_equipment_0
-				amount = 2000
+				amount = 10000
 				producer = AUS
 			}
+			add_equipment_to_stockpile = {
+				type = field_gun_equipment
+				amount = 250
+				producer = FRA
+			}
+		}
+		ai_will_do = {
+			base = 10
 		}
 	}
 	focus = {
@@ -10195,6 +10171,9 @@ focus = {
 				limit = { has_war = no }
 				add_stability = -0.1
 			}
+		}
+		ai_will_do = {
+			base = 10
 		}
 	}
 	focus = {

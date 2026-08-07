@@ -1186,18 +1186,25 @@ TGWR_great_power_politics = {
 		allowed = {
 			original_tag = ROM
 		}
+		targets = {
+			RUC
+		}
 		target_trigger = {
 			FROM = {
+				owns_state = 78
 				controls_state = 78		
 				is_subject = yes
-				tag = RUC
 				NOT = {
 					is_in_faction_with = ENT
 					is_in_faction_with = GER
 				}
 			}
 		}
-		target_array = 78.owner
+		highlight_states = {
+			highlight_state_targets = {
+				state = 78
+			}
+		}
 		fire_only_once = yes
 		available = {
 			has_war = no
@@ -1535,6 +1542,14 @@ TGWR_great_power_politics = {
 				idea_armistice
 				standing_alone
 			}
+			if = {
+				limit = { 
+					has_dynamic_modifier = ROM_occupation_costs
+				}
+				remove_dynamic_modifier = {
+					modifier = ROM_occupation_costs
+				}
+			}
 			ENT = {
 				if = {
 					limit = {
@@ -1713,96 +1728,123 @@ TGWR_great_power_politics = {
 	}
 }
 
-foreign_politics = {
-	ROM_balkan_war_intervention_decision = {
-		icon = GFX_decision_generic_prepare_civil_war
-		allowed = {
-			original_tag = ROM
-		}
-		available = {
-			is_subject = no
-			BUL = {
-				has_war_with = SER
-				owns_state = 77
-			}
-			is_in_faction = no
-		}
-		visible = {
-			NOT = {
-				has_war_together_with = GER
-				has_war_together_with = FRA
-			}
-			NOT = {
-				has_global_flag = kis_secondbalkanwar_victory
-			}
-			NOT = {
-				has_global_flag = kis_secondbalkanwar_lose
-			}
-			SER = {
-				NOT = {
-					is_in_faction_with = GER
-					has_war_together_with = GER
-					is_in_faction_with = FRA
-					has_war_together_with = FRA
-				}
-			}
-			BUL = {
-				NOT = {
-					is_in_faction_with = GER
-					has_war_together_with = GER
-					is_in_faction_with = FRA
-					has_war_together_with = FRA
-				}
-			}
-			BUL = {
-				has_war_with = SER
-			}
-		}
-		war_with_on_remove = BUL
-		fire_only_once = yes
-		days_remove = 7
-		ai_will_do = {
-			factor = 200
-			modifier = {
-				factor = 0
-				OR = {
-					SER = {
-						OR = {
-							has_capitulated = yes
-							surrender_progress > 0.1
-						}
-					}
-					has_war = yes
-					AND = {
-						GRE = {
-							has_war_with = BUL
-							OR = {
-								has_capitulated = yes
-								surrender_progress > 0.1
-							}
-						}
-					}
-				}
-			}
-		}
-		remove_effect = {
-			if = {
-				limit = { 
-					BUL = {
-						has_war = yes
-					}
-				}
-				country_event = {
-					id = ww1_secondbalkan.4
-				}
-			}
-			add_state_claim = 77
-		}
-	}
+TGWR_great_power_politics = {
+	#great_power_politics_balkan_powder_keg
+	#ROM_balkan_war_intervention_decision = {
+	#	icon = GFX_decision_generic_prepare_civil_war
+	#	allowed = {
+	#		original_tag = ROM
+	#	}
+	#	targets = {
+	#		BUL
+	#	}
+	#	target_trigger = {
+	#		FROM = {
+	#			has_war_with = SER
+	#		}
+	#	}
+	#	target_root_trigger = {
+	#		NOT = {
+	#			has_global_flag = kis_secondbalkanwar_victory
+	#			has_global_flag = kis_secondbalkanwar_lose
+	#		}
+	#	}
+	#	available = {
+	#		is_subject = no
+	#		BUL = {
+	#			has_war_with = SER
+	#			owns_state = 77
+	#		}
+	#		is_in_faction = no
+	#	}
+	#	visible = {
+	#		great_power_politics_balkan_powder_keg_visible = yes
+	#		NOT = {
+	#			has_war_together_with = GER
+	#			has_war_together_with = FRA
+	#		}
+	#		NOT = {
+	#			has_global_flag = kis_secondbalkanwar_victory
+	#		}
+	#		NOT = {
+	#			has_global_flag = kis_secondbalkanwar_lose
+	#		}
+	#		SER = {
+	#			NOT = {
+	#				is_in_faction_with = GER
+	#				has_war_together_with = GER
+	#				is_in_faction_with = FRA
+	#				has_war_together_with = FRA
+	#			}
+	#		}
+	#		BUL = {
+	#			NOT = {
+	#				is_in_faction_with = GER
+	#				has_war_together_with = GER
+	#				is_in_faction_with = FRA
+	#				has_war_together_with = FRA
+	#			}
+	#		}
+	#	}
+	#	war_with_target_on_remove = yes
+	#	fire_only_once = yes
+	#	days_remove = 7
+	#	ai_will_do = {
+	#		factor = 200
+	#		modifier = {
+	#			factor = 0
+	#			OR = {
+	#				SER = {
+	#					OR = {
+	#						has_capitulated = yes
+	#						surrender_progress > 0.1
+	#					}
+	#				}
+	#				has_war = yes
+	#				AND = {
+	#					GRE = {
+	#						has_war_with = BUL
+	#						OR = {
+	#							has_capitulated = yes
+	#							surrender_progress > 0.1
+	#						}
+	#					}
+	#				}
+	#			}
+	#		}
+	#	}
+	#	remove_effect = {
+	#		if = {
+	#			limit = { 
+	#				BUL = {
+	#					has_war = yes
+	#				}
+	#			}
+	#			country_event = {
+	#				id = ww1_secondbalkan.4
+	#			}
+	#		}
+	#		add_state_claim = 77
+	#	}
+	#}
 	ROM_balkan_war_intervention_german_pressure = {
 		icon = GFX_decision_generic_prepare_civil_war
 		allowed = {
 			original_tag = ROM
+		}
+		targets = {
+			BUL
+		}
+		target_trigger = {
+			FROM = {
+				has_war_with = SER
+			}
+		}
+		target_root_trigger = {
+			NOT = {
+				has_global_flag = kis_secondbalkanwar_victory
+				has_global_flag = kis_secondbalkanwar_lose
+			}
 		}
 		available = {
 			is_subject = no
@@ -1813,35 +1855,7 @@ foreign_politics = {
 			is_in_faction_with = GER
 		}
 		visible = {
-			NOT = {
-				has_war_together_with = GER
-				has_war_together_with = FRA
-			}
-			NOT = {
-				has_global_flag = kis_secondbalkanwar_victory
-			}
-			NOT = {
-				has_global_flag = kis_secondbalkanwar_lose
-			}
-			SER = {
-				NOT = {
-					is_in_faction_with = GER
-					has_war_together_with = GER
-					is_in_faction_with = FRA
-					has_war_together_with = FRA
-				}
-			}
-			BUL = {
-				NOT = {
-					is_in_faction_with = GER
-					has_war_together_with = GER
-					is_in_faction_with = FRA
-					has_war_together_with = FRA
-				}
-			}
-			BUL = {
-				has_war_with = SER
-			}
+			is_BW2_ongoing = yes
 		}
 		fire_only_once = yes
 		days_remove = 15
@@ -1871,10 +1885,10 @@ foreign_politics = {
 		}
 		remove_effect = {
 			GER = {
-			country_event = {
-				id = ww1_romania.167
+				country_event = {
+					id = ww1_romania.167
+				}
 			}
-		}
 			add_state_claim = 77
 		}
 	}
@@ -1892,9 +1906,6 @@ peace_deals = {
 		targets = {
 			HUN
 		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
 		visible = {
 			has_war_with = HUN
 			is_subject = no
@@ -1915,47 +1926,6 @@ peace_deals = {
 		complete_effect = {
 			HUN = {
 				country_event = ww1_hungary.8
-			}
-		}
-	}
-	ROM_sue_for_peace_BUL = {
-		icon = GFX_decision_eng_trade_unions_support
-		allowed = {
-			tag = ROM
-		}
-		available = {
-			surrender_progress > 0.4
-		}
-		visible = {
-			has_war_with = BUL
-			NOT = { has_global_flag = great_war }
-			BUL = { 
-				OR = { 
-					has_war_with = SER 
-					has_war_with = GRE 
-				} 
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 1000
-			modifier = {
-				factor = 0
-				surrender_progress < 0.6
-			}
-		}
-		complete_effect = {
-			white_peace = BUL
-			add_political_power = -100
-			leave_faction = yes
-			every_owned_state = {
-				limit = {
-					OR = {
-						state = 805
-						state = 846
-					}
-				}
-				transfer_state_to = BUL
 			}
 		}
 	}

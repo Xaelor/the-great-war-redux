@@ -141,15 +141,7 @@ SER_big_army_before_ww1 = {
 	enable = {
 		NOT = {
 			has_global_flag = great_war_ends
-		}
-		has_army_manpower = {
-			size < 230000
-		}
-		AND = {
-			has_war = no
-			NOT = {
-				has_global_flag = july_crisis_alert
-			}
+			has_global_flag = july_crisis_alert
 		}
 	}
 	abort_when_not_enabled = yes
@@ -166,31 +158,38 @@ SER_big_army_before_ww1 = {
 	}
 }
 
-SER_fight_bulgaria_in_bw2 = {
-	allowed = { 
-		original_tag = SER 
+SER_second_balkan_war = {
+	allowed = {
+		original_tag = SER
 	}
-
 	enable = {
-		has_war_with = BUL
-		has_global_flag = kis_secondbalkan_war
-		NOT = {
-			has_global_flag = kis_secondbalkanwar_victory
-			has_global_flag = kis_secondbalkanwar_lose
-			has_global_flag = great_war
+		has_global_flag = kis_firstbalkanwar_victory
+		BUL = {
+			NOT = {
+				has_completed_focus = BUL_relative_hegemony
+			}
 		}
+		has_BW_ended = no
 	}
 	abort_when_not_enabled = yes
-
 	ai_strategy = {
 		type = front_unit_request
 		tag = BUL
 		value = 100
 	}
 	ai_strategy = {
+		type = dont_defend_ally_borders
+		id = GRE
+		value = 1
+	}
+	ai_strategy = {
 		type = prepare_for_war
 		id = BUL
 		value = 1
+	}
+	ai_strategy = {
+		type = garrison
+		value = -1000
 	}
 }
 
@@ -224,10 +223,8 @@ MNT_help_SER_bw2 = {
 	}
 	enable = {
 		has_war_with = BUL
-		has_global_flag = kis_secondbalkan_war
+		is_BW2_ongoing = yes
 		NOT = {
-			has_global_flag = kis_secondbalkanwar_victory
-			has_global_flag = kis_secondbalkanwar_lose
 			has_global_flag = great_war
 		}
 	}

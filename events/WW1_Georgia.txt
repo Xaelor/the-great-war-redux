@@ -261,21 +261,21 @@ country_event = {
 		}
 		GEO = { country_event = ww1_georgia.8 }
 	}
-	option = {
-		name = ww1_georgia.7.b
-		ai_chance = {
-			base = 0
-			modifier = {
-				add = 50
-				OR = {
-					has_war_with = RUS
-					has_war_with = SOV
-					has_wargoal_against = RUS
-					has_wargoal_against = SOV
-				}
-			}
-		}
-	}
+	#option = {
+	#	name = ww1_georgia.7.b
+	#	ai_chance = {
+	#		base = 0
+	#		modifier = {
+	#			add = 50
+	#			OR = {
+	#				has_war_with = RUS
+	#				has_war_with = SOV
+	#				has_wargoal_against = RUS
+	#				has_wargoal_against = SOV
+	#			}
+	#		}
+	#	}
+	#}
 }
 
 # British Withdrawl From Georgia
@@ -438,6 +438,12 @@ country_event = {
 				}
 				white_peace = ROOT
 			}
+			if = {
+				limit = {
+					has_war_with = ABK
+				}
+				set_country_flag = war_with_abk
+			}
 			GEO_withdraw_from_persia = yes
 			# Remove divisions
 			delete_unit = { disband = yes }
@@ -581,11 +587,14 @@ country_event = {
 					}				
 					if = {
 						limit = {
-							ROOT = { has_war_with = ABK }
+							ROOT = { has_country_flag = war_with_abk }
 						}
-						add_to_war = {
-							targeted_alliance = ROOT
-							enemy = ABK
+						declare_war_on = {
+							target = ABK
+							type = annex_everything
+						}
+						ROOT = {
+							clr_country_flag = war_with_abk
 						}
 					}
 				}
@@ -1216,7 +1225,6 @@ country_event = {
 	id = ww1_abkhazia.4
 	title = ww1_abkhazia.4.t
 	desc = ww1_abkhazia.4.d
-	fire_only_once = yes
 	is_triggered_only = yes
 	option = {
 		name = ww1_abkhazia.4.a
@@ -1266,7 +1274,6 @@ country_event = {
 	title = ww1_abkhazia.5.t
 	desc = ww1_abkhazia.5.d
 	is_triggered_only = yes
-	fire_only_once = yes
 	trigger = {
 		NOT = {
 			has_country_leader_ideology = vanguardism

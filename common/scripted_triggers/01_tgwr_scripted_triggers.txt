@@ -505,6 +505,8 @@ is_islamic_core = {
 		is_core_of = JMA
 		is_core_of = AFA
 		is_core_of = GOB
+		is_core_of = SET
+		is_core_of = SLU
 	}
 }
 
@@ -720,6 +722,8 @@ is_unplayable_tag = {
 		original_tag = TAN
 		original_tag = NFL
 		original_tag = JMA
+		original_tag = SET
+		original_tag = SLU
 	}
 
 }
@@ -742,6 +746,7 @@ is_disabled_tag = {
 		original_tag = FUJ
 		original_tag = TON
 		original_tag = GOB
+		original_tag = SET
 	}
 
 }
@@ -955,8 +960,40 @@ is_austria_hungary = {
 	custom_trigger_tooltip = {
 		tooltip = is_AUH_tt
 		OR = {
-			original_tag = AUS
-			original_tag = HUN
+			AND = {
+				original_tag = AUS
+				has_monarchy = yes
+				OR = {
+					has_subject = HUN
+					HUN = { is_subject_of = PREV }
+				}
+			}
+			AND = {
+				original_tag = HUN
+				has_monarchy = yes
+				OR = {
+					has_subject = AUS
+					AUS = { is_subject_of = PREV }
+				}
+			}
+			AND = {
+				OR = {
+					original_tag = AUS
+					original_tag = HUN
+				}
+				has_monarchy = yes
+				4 = { # Vienna
+					is_core_of = PREV
+					is_owned_by = PREV
+				}
+				43 = { # Budapest
+					is_core_of = PREV
+					is_owned_by = PREV
+				}
+			}
+			has_cosmetic_tag = AUSHUN
+			# original_tag = AUS
+			# original_tag = HUN
 		}
 	}	
 }
@@ -975,6 +1012,9 @@ is_indian_tag = {
 		original_tag = SKK
 		original_tag = NEP
 		original_tag = BHU
+		original_tag = BHO
+		original_tag = GWA
+		original_tag = BAR
 	}
 }
 
