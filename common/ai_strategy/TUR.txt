@@ -39,44 +39,6 @@ TUR_alone = {
 	}
 }
 
-balkans_contain_ottomans = {
-	allowed = {
-		OR = {
-			tag = SER
-			tag = BUL
-			tag = GRE
-			tag = MNT
-		}
-	}
-	enable = {
-		always = yes
-	}
-	abort = {
-		OR = {
-			has_global_flag = great_war
-			is_subject_of = TUR
-		}
-		if = {
-			limit = {
-				tag = BUL
-			}
-			TUR = {
-				has_completed_focus = TUR_ottoman_bulgarian_alliance
-			}
-		}
-	}
-	ai_strategy = {
-		type = alliance
-		id = TUR
-		value = -500
-	}
-	ai_strategy = {
-		type = antagonize
-		id = TUR
-		value = 50
-	}
-}
-
 TUR_prepare_for_great_war = {
 	allowed = {
 		original_tag = TUR
@@ -1156,17 +1118,9 @@ TUR_sinai_campaign = {
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
-		type = front_control
-		state = 856
-		ratio = 0.7
-		ordertype = front
-		priority = 9999
-		execution_type = rush
-	}
-	ai_strategy = {
 		type = front_unit_request
-		state = 856
-		value = 120
+		strategic_region = 228
+		value = 90
 		#priority = 9999
 	}
 }
@@ -1186,32 +1140,6 @@ TUR_prepare_for_russian = {
 	}
 }
 
-TUR_underestimate_russia = {
-	allowed = {
-		original_tag = TUR
-	}
-	enable = {
-		longest_war_length < 6
-		surrender_progress < 0.12
-		has_full_control_of_state = 1025
-		has_full_control_of_state = 1026
-		has_full_control_of_state = 884
-		has_full_control_of_state = 1027
-		has_full_control_of_state = 355
-		has_full_control_of_state = 349
-		OR = {
-			has_war_with = RUS
-			has_active_mission = TUR_black_sea_raid_mission
-		}
-	}
-	abort_when_not_enabled = yes
-	ai_strategy = {
-		type = front_unit_request
-		tag = RUS
-		value = -50
-	}
-}
-
 TUR_in_fact_russia_is_too_strong = {
 	allowed = {
 		original_tag = TUR
@@ -1226,10 +1154,7 @@ TUR_in_fact_russia_is_too_strong = {
 			has_full_control_of_state = 355
 			has_full_control_of_state = 349
 		}
-		OR = {
-			has_war_with = RUS
-			has_active_mission = TUR_black_sea_raid_mission
-		}
+		has_war_with = RUS
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
@@ -1635,10 +1560,31 @@ TUR_istanbul_garrison = {
 	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = put_unit_buffers
-		ratio = 0.18
+		ratio = 0.17
 		states = {
 			347
 			1018
+		}
+	}
+}
+
+TUR_canakkale_garrison = {
+	allowed = {
+		tag = TUR
+	}
+	enable = {
+		OR = {
+			controls_state = 860
+			controls_state = 861
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = put_unit_buffers
+		ratio = 0.1
+		states = {
+			860
+			861
 		}
 	}
 }
