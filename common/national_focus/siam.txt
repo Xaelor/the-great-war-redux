@@ -7,6 +7,10 @@ focus_tree = {
 			original_tag = SIA
 		}
 	}
+	continuous_focus_position = {
+		x = 1200
+		y = 600
+	}
 	focus = {
 		id = SIA_phra_piya_maharat
 		icon = GFX_focus_generic_monarchist_sentiment
@@ -29,7 +33,7 @@ focus_tree = {
 		}
 		bypass_if_unavailable = yes
 		completion_reward = {
-			
+			add_political_power = 120
 		}
 		ai_will_do = {
 			base = 100
@@ -102,7 +106,7 @@ focus_tree = {
 				uses = 1
 				category = land_doctrine
 			}
-			army_experience = 10
+			army_experience = 50
 		}
 		ai_will_do = {
 			base = 100
@@ -246,6 +250,10 @@ focus_tree = {
 						autonomy_state = autonomy_tgwr_protectorate
 					}
 				}
+				swap_ideas = {
+					add_idea = SIA_british_treaties2
+					remove_idea = SIA_british_treaties
+				}
 			}
 		}
 		ai_will_do = {
@@ -269,16 +277,8 @@ focus_tree = {
 			focus = SIA_1909_siam_british_treaty
 		}
 		available = {
-			if = {
-				limit = {
-					is_ai = no
-				}
-				USA = {
-					has_opinion = {
-						target = ROOT
-						value > 50
-					}
-				}
+			NOT = {
+				has_war_with = USA
 			}
 		}
 		mutually_exclusive = {
@@ -315,16 +315,8 @@ focus_tree = {
 			focus = SIA_maintain_british_french_counterbalance
 		}
 		available = {
-			if = {
-				limit = {
-					is_ai = no
-				}
-				GER = {
-					has_opinion = {
-						target = ROOT
-						value > 50
-					}
-				}
+			NOT = {
+				has_war_with = GER
 			}
 		}
 		completion_reward = {
@@ -411,6 +403,12 @@ focus_tree = {
 					days = 180
 				}
 			}
+			custom_effect_tooltip = empty_space_tt
+			custom_effect_tooltip = SIA_modify_siamese_domestic_economy
+			add_to_variable = {
+				SIA_ind_factory_output = 0.05
+				tooltip = industrial_capacity_factory_tt
+			}
 		}
 		ai_will_do = {
 			base = 100
@@ -436,7 +434,24 @@ focus_tree = {
 			focus = SIA_repair_old_canals
 		}
 		completion_reward = {
-
+			capital_scope = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = SIA_modify_siamese_domestic_economy
+			add_to_variable = {
+				SIA_ind_consumer_goods = 0.15
+				tooltip = consumer_goods_factor_tt
+			}
 		}
 		ai_will_do = {
 			base = 100
@@ -462,7 +477,19 @@ focus_tree = {
 			
 		}
 		completion_reward = {
-
+			capital_scope = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = SIA_modify_siamese_domestic_economy
+			add_to_variable = {
+				SIA_ind_stability = 0.05
+				tooltip = stability_factor_tt
+			}
 		}
 		ai_will_do = {
 			base = 100
@@ -512,6 +539,15 @@ focus_tree = {
 						instant_build = yes
 					}
 				}
+				custom_effect_tooltip = SIA_modify_siamese_domestic_economy
+				add_to_variable = {
+					SIA_ind_consumer_goods = -0.05
+					tooltip = consumer_goods_factor_tt
+				}
+				add_to_variable = {
+					SIA_ind_stability = 0.025
+					tooltip = stability_factor_tt
+				}
 			}
 			else = {
 				random_owned_controlled_state = {
@@ -526,6 +562,15 @@ focus_tree = {
 					}
 				}
 				custom_effect_tooltip = SIA_if_water_works
+				custom_effect_tooltip = SIA_modify_siamese_domestic_economy
+				add_to_variable = {
+					SIA_ind_consumer_goods = -0.025
+					tooltip = consumer_goods_factor_tt
+				}
+				add_to_variable = {
+					SIA_ind_stability = 0.025
+					tooltip = stability_factor_tt
+				}
 			}
 		}
 		ai_will_do = {
@@ -606,7 +651,51 @@ focus_tree = {
 			
 		}
 		completion_reward = {
-			
+			custom_effect_tooltip = SIA_modify_siamese_domestic_economy
+			add_to_variable = {
+				SIA_ind_consumer_goods = -0.05
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				SIA_ind_stability = -0.05
+				tooltip = stability_factor_tt
+			}
+			every_country = {
+				limit = {
+					OR = {
+						tag = ENG
+						if = {
+							limit = {
+								RAJ = {
+									is_subject_of = ENG
+								}
+							}
+							tag = RAJ
+						}
+						if = {
+							limit = {
+								BRM = {
+									is_subject_of = ENG
+									exists = yes
+								}
+							}
+							tag = BRM
+						}
+						if = {
+							limit = {
+								MAL = {
+									is_subject_of = ENG
+								}
+							}
+							tag = MAL
+						}
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = SIA_increased_opium_trade_modifier
+				}
+			}
 		}
 		ai_will_do = {
 			base = 100
@@ -630,7 +719,11 @@ focus_tree = {
 			
 		}
 		completion_reward = {
-			
+			custom_effect_tooltip = SIA_modify_siamese_domestic_economy
+			add_to_variable = {
+				SIA_ind_political_power_factor = 0.1
+				tooltip = political_power_factor_tt
+			}
 		}
 		ai_will_do = {
 			base = 100

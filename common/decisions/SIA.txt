@@ -323,7 +323,10 @@ SIA_army_king_relations = {
 			tag = SIA
 		}
 		available = {
-			has_global_flag = yut_ratted_out_coup
+			custom_trigger_tooltip = {
+				tooltip = if_army_relations_less_than_30
+				has_global_flag = yut_ratted_out_coup
+			}
 		}
 		visible = {
 			has_country_leader = {
@@ -344,6 +347,33 @@ SIA_army_king_relations = {
 			country_event = ww1_siam.22
 		}
 	}
+	SIA_attempt_to_amend_relations = {
+		icon = GFX_decision_generic_ignite_civil_war
+		allowed = {
+			tag = SIA
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = if_army_relations_less_than_30
+				has_global_flag = yut_ratted_out_coup
+			}
+		}
+		visible = {
+			has_country_leader = {
+				character = SIA_vajiravudh
+				ruling_only = yes
+			}
+		}
+		fire_only_once = yes
+		days_remove = 150
+		remove_effect = {
+			add_to_variable = {
+				SIA_relations_army_king = 5
+				tooltip = SIA_army_king_tt
+			}
+			clamp_army_king_relations = yes
+		}
+	}
 }
 political_actions = {
 	SIA_organize_formal_coronation = {
@@ -352,10 +382,10 @@ political_actions = {
 			tag = SIA
 		}
 		available = {
-			has_completed_focus = SIA_maintain_british_french_counterbalance
+			has_completed_focus = SIA_organize_coronation
 		}
 		visible = {
-			has_completed_focus = SIA_maintain_british_french_counterbalance
+			has_completed_focus = SIA_organize_coronation
 		}
 		fire_only_once = yes
 		days_remove = 100
