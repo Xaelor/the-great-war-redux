@@ -10,7 +10,7 @@
 	default = no
 	continuous_focus_position = {
 		x = 125
-		y = 700
+		y = 800
 	}
 	shortcut = {
 		name = economic_tree_shortcut
@@ -70,7 +70,7 @@
 	focus = {
 		id = RAJ_indian_electricity_act
 		icon = GFX_focus_ARG_develop_the_electricity_sector
-		x = 7
+		x = 6
 		y = 0
 		available = {
 			has_country_flag = council_meeting_march_1910_held
@@ -645,8 +645,8 @@
 	focus = {
 		id = RAJ_support_irrigation_projects
 		icon = GFX_generic_canal
-		x = 0
-		y = 1
+		x = 1
+		y = 2
 		relative_position_id = RAJ_colonisation_of_government_lands
 		available = {
 		}
@@ -655,6 +655,9 @@
 		cost = 5
 		prerequisite = {
 			focus = RAJ_colonisation_of_government_lands
+		}
+		prerequisite = {
+			focus = RAJ_indian_iron_and_steel_company
 		}
 		completion_reward = {
 			custom_effect_tooltip = RAJ_support_irrigation_projects_reward
@@ -1181,36 +1184,9 @@
 		}
 	}
 	focus = {
-		id = RAJ_royal_institute_of_science
-		icon = GFX_focus_eng_imperial_federation
-		x = -1
-		y = 1
-		relative_position_id = RAJ_expansion_of_bombay_port
-		available = {
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_expansion_of_bombay_port
-		}
-		prerequisite = {
-			focus = RAJ_inventions_and_designs_act
-		}
-		completion_reward = {
-			add_political_power = 67
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
-		}
-	}
-	focus = {
 		id = RAJ_tata_steel_ltd
 		icon = GFX_focus_generic_steel_mill
-		x = -1
+		x = 0
 		y = 1
 		relative_position_id = RAJ_inventions_and_designs_act
 		available = {
@@ -1287,7 +1263,7 @@
 	focus = {
 		id = RAJ_burma_mines_ltd
 		icon = GFX_focus_generic_mining_industry
-		x = 3
+		x = 2
 		y = 1
 		relative_position_id = RAJ_tata_steel_ltd
 		available = {
@@ -1299,7 +1275,7 @@
 			focus = RAJ_tata_steel_ltd
 		}
 		prerequisite = {
-			focus = RAJ_burmah_oil
+			focus = RAJ_invest_in_burma
 		}
 		completion_reward = {
 			custom_effect_tooltip = RAJ_modify_deindustrialisation
@@ -1437,9 +1413,9 @@
 	focus = {
 		id = RAJ_cotton_cloth_act
 		icon = GFX_focus_RAJ_khadi_movement
-		x = -1
+		x = 0
 		y = 1
-		relative_position_id = RAJ_assam_labour_and_emigration_act
+		relative_position_id = RAJ_reap_the_rewards
 		available = {
 			has_country_flag = council_meeting_september_1918_held
 		}
@@ -1447,10 +1423,7 @@
 		}
 		cost = 5
 		prerequisite = {
-			focus = RAJ_assam_labour_and_emigration_act
-		}
-		prerequisite = {
-			focus = RAJ_support_irrigation_projects
+			focus = RAJ_reap_the_rewards
 		}
 		completion_reward = {
 			add_political_power = 67
@@ -1476,6 +1449,9 @@
 		cost = 5
 		prerequisite = {
 			focus = RAJ_indian_iron_and_steel_company
+		}
+		prerequisite = {
+			focus = RAJ_builder_of_the_raj
 		}
 		completion_reward = {
 			add_political_power = 67
@@ -1556,7 +1532,7 @@
 	focus = {
 		id = RAJ_provident_funds_act
 		icon = GFX_focus_SWE_refuge_from_war
-		x = 2
+		x = 1
 		y = 1
 		relative_position_id = RAJ_indigo_cess_act
 		available = {
@@ -2487,7 +2463,22 @@
 			focus = RAJ_indian_high_courts_act
 		}
 		completion_reward = {
-			add_political_power = 67
+			custom_effect_tooltip = RAJ_modify_state_of_the_raj
+			add_to_variable = {
+				RAJ_state_of_the_raj_political_power_factor_dynamic = 0.05
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				RAJ_state_of_the_raj_stability_dynamic = 0.025
+				tooltip = stability_factor_tt
+			}
+			custom_effect_tooltip = escape_line
+
+			add_to_variable = {
+				RAJ_indian_confidence_var = 2.5
+				tooltip = RAJ_indian_confidence_var_modify
+			}
+			RAJ_indian_confidence_scripted_effect = yes
 		}
 		ai_will_do = {
 			factor = 1
@@ -2618,7 +2609,7 @@
 			}
 			custom_effect_tooltip = escape_line
 			add_to_variable = {
-				RAJ_indian_confidence_var = 5
+				RAJ_indian_confidence_var = 2,5
 				tooltip = RAJ_indian_confidence_var_modify
 			}
 			RAJ_indian_confidence_scripted_effect = yes
@@ -2645,7 +2636,30 @@
 			focus = RAJ_indian_emigration_act
 		}
 		completion_reward = {
-			add_political_power = 67
+			custom_effect_tooltip = RAJ_modify_state_of_the_raj
+			add_to_variable = {
+				RAJ_state_of_the_raj_political_power_factor_dynamic = 0.05
+				tooltip = political_power_factor_tt
+			}
+			add_to_variable = {
+				RAJ_state_of_the_raj_monthly_population_dynamic = 0.025
+				tooltip = monthly_population_tt
+			}
+			add_to_variable = {
+				RAJ_state_of_the_raj_factory_output_dynamic = -0.025
+				tooltip = industrial_capacity_factory_tt
+			}
+			custom_effect_tooltip = escape_line
+
+			add_to_variable = {
+				RAJ_indian_confidence_var = 5
+				tooltip = RAJ_indian_confidence_var_modify
+			}
+			RAJ_indian_confidence_scripted_effect = yes
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.05
+			}
 		}
 
 		ai_will_do = {
@@ -2723,7 +2737,33 @@
 			focus = RAJ_indian_emigration_act
 		}
 		completion_reward = {
-			add_political_power = 67
+			custom_effect_tooltip = RAJ_modify_state_of_the_raj
+			add_to_variable = {
+				RAJ_state_of_the_raj_stability_dynamic = 0.035
+				tooltip = stability_factor_tt
+			}
+			add_to_variable = {
+				RAJ_state_of_the_raj_monthly_population_dynamic = 0.035
+				tooltip = monthly_population_tt
+			}
+			custom_effect_tooltip = escape_line
+
+			429 = {
+				remove_dynamic_modifier = {
+					modifier = RAJ_bombay_bubonic_plague_1
+				}
+				add_dynamic_modifier = {
+					modifier = RAJ_bombay_bubonic_plague_2
+					days = 3226
+				}
+			}
+			custom_effect_tooltip = escape_line
+
+			add_to_variable = {
+				RAJ_indian_confidence_var = 2.5
+				tooltip = RAJ_indian_confidence_var_modify
+			}
+			RAJ_indian_confidence_scripted_effect = yes
 		}
 		ai_will_do = {
 			factor = 1
@@ -2734,9 +2774,9 @@
 	focus = {
 		id = RAJ_white_phosphorus_matches_prohibition_act
 		icon = GFX_wip
-		x = 1
+		x = -1
 		y = 1
-		relative_position_id = RAJ_indian_factories_act
+		relative_position_id = RAJ_wild_birds_and_animals_protection_act
 		available = {
 			has_country_flag = council_meeting_march_1913_held
 		}
@@ -2744,10 +2784,10 @@
 		}
 		cost = 5
 		prerequisite = {
-			focus = RAJ_indian_factories_act
+			focus = RAJ_wild_birds_and_animals_protection_act
 		}
 		prerequisite = {
-			focus = RAJ_india_ports_act
+			focus = RAJ_indian_factories_act
 		}
 		completion_reward = {
 			add_political_power = 67
@@ -2790,7 +2830,7 @@
 		icon = GFX_focus_generic_land_reclamation
 		x = 0
 		y = 1
-		relative_position_id = RAJ_white_phosphorus_matches_prohibition_act
+		relative_position_id = RAJ_colonisation_of_government_lands
 		available = {
 			has_country_flag = council_meeting_february_1914_held
 		}
@@ -2798,7 +2838,7 @@
 		}
 		cost = 5
 		prerequisite = {
-			focus = RAJ_white_phosphorus_matches_prohibition_act
+			focus = RAJ_colonisation_of_government_lands
 		}
 		completion_reward = {
 			add_political_power = 67
@@ -2813,7 +2853,7 @@
 		id = RAJ_motor_vehicles_act
 		icon = GFX_focus_generic_truck
 		x = 1
-		y = 2
+		y = 1
 		relative_position_id = RAJ_white_phosphorus_matches_prohibition_act
 		available = {
 			has_country_flag = council_meeting_february_1914_held
@@ -2836,7 +2876,7 @@
 	focus = {
 		id = RAJ_wild_birds_and_animals_protection_act
 		icon = GFX_focus_generic_swooping_falcon
-		x = 1
+		x = 0
 		y = 1
 		relative_position_id = RAJ_india_ports_act
 		available = {
@@ -2844,7 +2884,7 @@
 		}
 		bypass = {
 		}
-		cost = 5
+		cost = 5-
 		prerequisite = {
 			focus = RAJ_india_ports_act
 		}
@@ -2860,7 +2900,7 @@
 	focus = {
 		id = RAJ_prevention_of_cruelty_to_animals_act
 		icon = GFX_focus_The_War_on_Goats
-		x = 0
+		x = 1
 		y = 1
 		relative_position_id = RAJ_wild_birds_and_animals_protection_act
 		available = {
@@ -3183,7 +3223,7 @@
 				tooltip = stability_factor_tt
 			}
 			add_to_variable = {
-				RAJ_state_of_the_raj_neutrality_drift_dynamic = 0.05
+				RAJ_state_of_the_raj_neutrality_drift_dynamic = 0.06
 				tooltip = neutrality_drift_tt
 			}
 			add_to_variable = {
