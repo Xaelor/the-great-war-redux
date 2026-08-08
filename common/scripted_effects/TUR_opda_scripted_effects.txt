@@ -1,0 +1,27 @@
+TUR_recalculate_total_debt = {
+	set_variable = {
+		TUR_foreign_debt_total_var = 0
+	}
+	every_country = {
+		limit = {
+			check_variable = {
+				TUR_foreign_debt_to_country_var > 0
+			}
+		}
+		add_to_variable = {
+			TUR.TUR_foreign_debt_total_var = THIS.TUR_foreign_debt_to_country_var
+		}
+	}
+	set_variable = {
+		TUR_opda_cic_var = {
+			value = TUR_foreign_debt_total_var
+			multiply = 0.0025
+		}
+	}
+	set_variable = {
+		TUR_opda_pp_gain_var = {
+			value = TUR_foreign_debt_total_var
+			multiply = -0.002
+		}
+	}
+}
