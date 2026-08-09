@@ -7,6 +7,9 @@ TUR_recalculate_total_debt = {
 			check_variable = {
 				TUR_foreign_debt_to_country_var > 0
 			}
+			NOT = {
+				has_war_with = TUR
+			}
 		}
 		add_to_variable = {
 			TUR.TUR_foreign_debt_total_var = THIS.TUR_foreign_debt_to_country_var
@@ -35,16 +38,28 @@ TUR_recalculate_total_debt = {
 }
 
 TUR_calculate_payments_to_countries = {
+	if = {
+		limit = {
+			NOT = {
+				has_war_with = TUR
+			}
+		}
+		set_temp_variable = {
+			TUR_debt_to_country_temp_var = 1
+		}
+	}
 	set_variable = {
 		TUR_debt_payment_from_TUR_cic_var = {
 			value = TUR_foreign_debt_to_country_var
 			multiply = -0.0015
+			multiply = TUR_debt_to_country_temp_var
 		}
 	}
 	set_variable = {
 		TUR_debt_payment_from_TUR_pp_gain_var = {
 			value = TUR_foreign_debt_to_country_var
 			multiply = 0.001
+			multiply = TUR_debt_to_country_temp_var
 		}
 	}
 }
