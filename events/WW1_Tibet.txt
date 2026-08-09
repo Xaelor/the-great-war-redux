@@ -58,22 +58,9 @@ country_event = {
 	desc = ww1_tibet.3.d
 	picture = GFX_report_event_generic_conference
 	trigger = {
-		owns_state = 432
-		is_china_or_warlord_no_tt = no
-		NOT = {
-			original_tag = TIB
-			has_war_with = TIB
-			any_enemy_country = {
-				is_china_or_warlord_no_tt = yes
-			}
-		}
-		TIB = {
-			is_subject = no
-			owns_state = 434
-		}
-		date > 1913.10.13
-		has_start_date < 1914.1.1
+		always = no
 	}
+	is_triggered_only = yes
 	fire_only_once = yes
 	option = {
 		name = ww1_tibet.3.a
@@ -96,26 +83,74 @@ country_event = {
 	}
 }
 
-# Simla Convention - The British Raj Invites
+# Simla Convention - The British Raj Invites - For China + Tibet
 country_event = {
 	id = ww1_tibet.4
-	title = ww1_tibet.4.t
-	desc = ww1_tibet.4.d
+	title = { text = ww1_tibet.4.t trigger = { NOT = { tag = TIB } } }
+	title = { text = ww1_tibet.4.t2 trigger = { tag = TIB } }
+	desc = { text = ww1_tibet.4.d trigger = { NOT = { tag = TIB } } }
+	desc = { text = ww1_tibet.4.d2 trigger = { tag = TIB } }
 	picture = GFX_report_event_generic_conference
 	is_triggered_only = yes
-	trigger = {
-		OR = {
-			owns_state = 434
-			owns_state = 608
+	option = {
+		name = ww1_tibet.4.a #Accept (only option) - Tibet
+		trigger = {
+			tag = TIB
+		}
+		#custom_effect_tooltip = historical_tt
+		add_opinion_modifier = {
+			target = RAJ
+			modifier = RAJ_simla_convention_relation
+		}
+		effect_tooltip = {
+			RAJ = {
+				add_stability = 0.02
+				diplomatic_relation = {
+					country = TIB
+					relation = military_access
+					active = yes
+				}
+			}
+			TIB = {
+				add_stability = 0.02
+			}
+			608 = {
+				owner = {
+					add_stability = 0.02
+				}
+			}
+		}
+		hidden_effect = {
+			country_event = {
+				id = ww1_tibet.5
+				days = 120
+			}
+		}
+		ai_chance = {
+			base = 2
+			modifier = {
+				add = 10
+				OR = {
+					is_guaranteed_by = FROM
+					FROM = {
+						OVERLORD = {
+							has_guaranteed = ROOT
+						}
+					}
+				}
+			}
 		}
 	}
 	option = {
-		name = ww1_tibet.4.a
-		if = {
-			limit = {
-				original_tag = TIB
+		name = ww1_tibet.4.a # Accept - ahistorical (China)
+		trigger = {
+			NOT = {
+				tag = TIB
 			}
-			custom_effect_tooltip = historical_tt
+		}
+		add_opinion_modifier = {
+			target = RAJ
+			modifier = RAJ_simla_convention_relation
 		}
 		hidden_effect = {
 			country_event = {
@@ -132,13 +167,13 @@ country_event = {
 		}
 	}
 	option = {
-		name = ww1_tibet.4.b
-		if = {
-			limit = {
-				is_china_or_warlord_no_tt = yes
+		name = ww1_tibet.4.b #Decline - Historical (China)
+		trigger = {
+			NOT = {
+				tag = TIB
 			}
-			custom_effect_tooltip = historical_tt
 		}
+		custom_effect_tooltip = historical_tt
 		set_global_flag = simla_convention_reject
 		hidden_effect = {
 			country_event = {
@@ -154,7 +189,14 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				is_guaranteed_by = FROM
+				OR = {
+					is_guaranteed_by = FROM
+					FROM = {
+						OVERLORD = {
+							has_guaranteed = ROOT
+						}
+					}
+				}
 			}
 		}
 	}
@@ -188,36 +230,86 @@ country_event = {
 			}
 		}
 	}
+	########################### ACCEPT ###########################
 	option = {
 		name = ww1_tibet.5.a
 		trigger = {
 			has_global_flag = simla_convention_reject
+			owns_state = 608 # tag = china
 		}
 		effect_tooltip = {
-			432 = {
-				owner = {
-					add_state_claim = 434
-				}
+			RAJ = {
+				add_state_claim = 434
+			}
+		}
+	}
+	option = {
+		name = ww1_tibet.5.a # TIB
+		trigger = {
+			has_global_flag = simla_convention_reject
+			tag = TIB
+		}
+		effect_tooltip = {
+			RAJ = {
+				add_state_claim = 434
 			}
 		}
 		hidden_effect = {
-			if = {
-				limit = {
-					owns_state = 432
-				}
-				add_state_claim = 434
-				give_guarantee = TIB
+			RAJ = { #Raj get event trigger
+				country_event = ww1_tibet.5
 			}
-			else_if = {
-				limit = {
-					owns_state = 322
-				}
-				432 = {
-					owner = {
-						country_event = ww1_tibet.5
-					}
+		}
+	}
+	option = {
+		name = ww1_tibet.5.a # RAJ
+		trigger = {
+			has_global_flag = simla_convention_reject
+			tag = RAJ
+		}
+		add_state_claim = 434
+		give_guarantee = TIB
+	}
+	########################### REJECT ###########################
+	option = {
+		name = ww1_tibet.5.b
+		trigger = {
+			NOT = {
+				has_global_flag = simla_convention_reject
+			}
+			tag = RAJ
+		}
+		add_state_core = 434
+		transfer_state = 434
+		give_guarantee = TIB
+		give_market_access = TIB
+	}
+	option = {
+		name = ww1_tibet.5.b
+		trigger = {
+			NOT = {
+				has_global_flag = simla_convention_reject
+			}
+			NOT = {
+				tag = RAJ
+				tag = TIB
+			}
+		}
+		give_guarantee = TIB
+		give_market_access = TIB
+		diplomatic_relation = {
+			country = TIB
+			relation = non_aggression_pact
+			active = yes
+		}
+		every_state = {
+			limit = {
+				is_core_of = TIB
+				is_claimed_by = ROOT
+				NOT = {
+					state = 1220
 				}
 			}
+			remove_claim_by = ROOT
 		}
 	}
 	option = {
@@ -226,83 +318,14 @@ country_event = {
 			NOT = {
 				has_global_flag = simla_convention_reject
 			}
+			tag = TIB
 		}
-		effect_tooltip = {
-			432 = {
-				owner = {
-					add_state_core = 434
-					transfer_state = 434
-					give_guarantee = TIB
-					give_market_access = TIB
-				}
-			}
-			608 = {
-				owner = {
-					give_guarantee = TIB
-					give_market_access = TIB
-					diplomatic_relation = {
-						country = TIB
-						relation = non_aggression_pact
-						active = yes
-					}
-					every_state = {
-						limit = {
-							is_core_of = TIB
-							is_claimed_by = PREV
-							NOT = {
-								state = 1220
-							}
-						}
-						remove_claim_by = PREV
-					}
-				}
-			}
-		}
-		hidden_effect = {
-			if = {
-				limit = {
-					owns_state = 432
-				}
-				add_state_core = 434
-				transfer_state = 434
-				give_guarantee = TIB
-				give_market_access = TIB
-			}
-			else_if = {
-				limit = {
-					owns_state = 608
-				}
-				give_guarantee = TIB
-				give_market_access = TIB
-				diplomatic_relation = {
-					country = TIB
-					relation = non_aggression_pact
-					active = yes
-				}
-				every_state = {
-					limit = {
-						is_core_of = TIB
-						is_claimed_by = ROOT
-						NOT = {
-							state = 1220
-						}
-					}
-					remove_claim_by = ROOT
-				}
-			}
-			else_if = {
-				limit = {
-					owns_state = 322
-				}
-				remove_ideas = TIB_de_facto_independence
-				432 = {
-					owner = {
-						country_event = ww1_tibet.5
-					}
-				}
-			}
+		remove_ideas = TIB_de_facto_independence
+		RAJ = {
+			country_event = ww1_tibet.5
 		}
 	}
+	########################### END ###########################
 }
 
 
