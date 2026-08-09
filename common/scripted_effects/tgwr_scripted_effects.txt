@@ -234,12 +234,33 @@ GER_release_POL = {
 				}
 			}
 			if = {
-				limit = { 
+				limit = {
 					NOT = { 
-						is_owned_by = POL 
+						is_owned_by = PLK 
 					} 
-				} 
-				transfer_state_to = POL # This will create Poland if it doesn't exist already
+				}
+				if = {
+					limit = {
+						is_owned_by = PLC
+						PLC = {
+							check_variable = {
+								owned_states > 1
+							}
+						}				
+					}
+					transfer_state_to = PLK
+					add_contested_owner = PLC
+				}
+				else_if = {
+					limit = {
+						PLC = {
+							check_variable = {
+								owned_states = 1
+							}
+						}
+					}
+					add_contested_owner = PLK
+				}			
 			}
 		}
 
@@ -261,14 +282,14 @@ GER_release_POL = {
 		# Step 3: Puppet Poland
 		if = {
 			limit = { 
-				country_exists = POL 
+				country_exists = PLK
 			}
 
-			puppet = POL
+			puppet = PLK
 
 			hidden_effect = {
-				POL = {			
-					drop_cosmetic_tag = yes
+				PLK = {			
+					set_cosmetic_tag = POL
 					inherit_technology = ROOT
 					delete_obsolete_russian_templates = yes
 					# load_oob = "POL_divisions"	
@@ -291,9 +312,12 @@ GER_release_POL = {
 							communism = 35
 							neutrality = 20
 						}
-						promote_character = POL_regency_council
-						# Original effect promoted POL_gabriel_narutowicz if Poland was a Russian puppet before, but I don't really understand why
-						# (Would also unnecessarily complicate logic)
+						PLC= {
+							POL_regency_council = {
+								set_nationality = PLK
+								promote_character = yes
+							}
+						}
 					}
 				}
 			}
@@ -305,7 +329,7 @@ GER_release_POL = {
 						has_idea = RUS_idea_armistice_cp 
 					} 
 				}
-				POL = { 
+				PLK = { 
 					add_ideas = RUS_idea_armistice_cp 
 				}
 			}
