@@ -131,20 +131,21 @@
 		completion_reward = {
 			custom_effect_tooltip = RAJ_modify_deindustrialisation
 			add_to_variable = {
-				RAJ_ind_civ_construction_speed = 0.1
+				RAJ_ind_civ_construction_speed = 0.025
 				tooltip = production_speed_industrial_complex_factor_tt
 			}
 			add_to_variable = {
-				RAJ_ind_mil_construction_speed = 0.1
-				tooltip = production_speed_arms_factory_factor_tt
-			}
-			add_to_variable = {
-				RAJ_ind_factory_output = 0.05
+				RAJ_ind_factory_output = 0.025
 				tooltip = industrial_capacity_factory_tt
 			}
+			add_to_variable = {
+				RAJ_ind_efficiency_cap = 0.025
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+
 			build_railway = {
 				path = {
-					11929
+					1609
 					4616
 				}
 			}
@@ -188,7 +189,7 @@
 				}
 			}
 			custom_effect_tooltip = empty_space_tt
-			
+
 			custom_effect_tooltip = RAJ_nullify_the_partition_of_bengal_tt
 			custom_effect_tooltip = empty_space_tt
 
@@ -1426,7 +1427,7 @@
 		prerequisite = {
 			focus = RAJ_indian_emigration_act
 		}
-		completion_reward = {
+		completion_reward = {RAJ_state_of_the_raj_consumer_goods_factor_dynamic
 			custom_effect_tooltip = RAJ_modify_state_of_the_raj
 			add_to_variable = {
 				RAJ_state_of_the_raj_political_power_factor_dynamic = 0.05
@@ -1435,6 +1436,10 @@
 			add_to_variable = {
 				RAJ_state_of_the_raj_monthly_population_dynamic = 0.025
 				tooltip = monthly_population_tt
+			}
+			add_to_variable = {
+				RAJ_state_of_the_raj_consumer_goods_factor_dynamic = -0.025
+				tooltip = consumer_goods_factor_tt
 			}
 			add_to_variable = {
 				RAJ_state_of_the_raj_factory_output_dynamic = -0.025
@@ -2499,30 +2504,6 @@
 		}
 	}
 	focus = {
-		id = RAJ_indian_lunacy_act
-		icon = GFX_focus_generic_bad_medical
-		x = -1
-		y = 1
-		relative_position_id = RAJ_civil_courts_act
-		available = {
-			has_country_flag = council_meeting_march_1912_held
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_civil_courts_act
-		}
-		completion_reward = {
-			add_political_power = 67
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
-		}
-	}
-	focus = {
 		id = RAJ_indian_high_courts_act
 		icon = GFX_focus_generic_sympathetic_judges
 		x = 1
@@ -2565,80 +2546,11 @@
 		}
 	}
 	focus = {
-		id = RAJ_civil_law_reform
-		icon = GFX_focus_sign_bills
-		x = 1
-		y = 1
-		relative_position_id = RAJ_civil_courts_act
-		available = {
-			has_country_flag = council_meeting_march_1911_held
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_civil_courts_act
-			focus = RAJ_indian_high_courts_act
-		}
-		completion_reward = {
-			custom_effect_tooltip = RAJ_modify_state_of_the_raj
-			add_to_variable = {
-				RAJ_state_of_the_raj_political_power_factor_dynamic = 0.05
-				tooltip = political_power_factor_tt
-			}
-			add_to_variable = {
-				RAJ_state_of_the_raj_stability_dynamic = 0.025
-				tooltip = stability_factor_tt
-			}
-			custom_effect_tooltip = empty_space_tt
-
-			add_to_variable = {
-				RAJ_british_confidence_var = 2.5
-				tooltip = RAJ_british_confidence_var_modify
-			}
-			RAJ_british_confidence_scripted_effect = yes
-			add_to_variable = {
-				RAJ_indian_confidence_var = 2.5
-				tooltip = RAJ_indian_confidence_var_modify
-			}
-			RAJ_indian_confidence_scripted_effect = yes
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
-		}
-	}
-	focus = {
-		id = RAJ_succession_reform
-		icon = GFX_wip
-		x = -1
-		y = 1
-		relative_position_id = RAJ_civil_law_reform
-		available = {
-			has_country_flag = council_meeting_march_1913_held
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_civil_law_reform
-		}
-		completion_reward = {
-			add_political_power = 67
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
-		}
-	}
-	focus = {
 		id = RAJ_repealing_and_ammending_act
 		icon = GFX_goal_generic_neutrality_focus
 		x = 0
-		y = 1
-		relative_position_id = RAJ_succession_reform
+		y = 3
+		relative_position_id = RAJ_civil_courts_act
 		available = {
 			has_country_flag = council_meeting_february_1914_held
 		}
@@ -2646,7 +2558,7 @@
 		}
 		cost = 5
 		prerequisite = {
-			focus = RAJ_succession_reform
+			focus = RAJ_civil_courts_act
 		}
 		completion_reward = {
 			add_political_power = 67
@@ -2749,9 +2661,9 @@
 	focus = {
 		id = RAJ_regulate_the_insurance_market
 		icon = GFX_focus_convention
-		x = 1
+		x = -1
 		y = 1
-		relative_position_id = RAJ_civil_law_reform
+		relative_position_id = RAJ_indian_factories_act
 		available = {
 			has_country_flag = council_meeting_march_1912_held
 		}
@@ -2759,16 +2671,13 @@
 		}
 		cost = 5
 		prerequisite = {
-			focus = RAJ_civil_law_reform
-		}
-		prerequisite = {
 			focus = RAJ_indian_factories_act
 		}
 		completion_reward = {
 			custom_effect_tooltip = RAJ_modify_state_of_the_raj
 			add_to_variable = {
-				RAJ_state_of_the_raj_political_power_factor_dynamic = 0.05
-				tooltip = political_power_factor_tt
+				RAJ_state_of_the_raj_stability_dynamic = 0.075
+				tooltip = stability_factor_tt
 			}
 			add_to_variable = {
 				RAJ_state_of_the_raj_consumer_goods_factor_dynamic = -0.025
@@ -2783,7 +2692,7 @@
 			RAJ_indian_confidence_scripted_effect = yes
 			add_popularity = {
 				ideology = neutrality
-				popularity = 0.05
+				popularity = 0.025
 			}
 		}
 		ai_will_do = {
@@ -2862,30 +2771,6 @@
 				tooltip = RAJ_indian_confidence_var_modify
 			}
 			RAJ_indian_confidence_scripted_effect = yes
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
-		}
-	}
-	focus = {
-		id = RAJ_white_phosphorus_matches_prohibition_act
-		icon = GFX_wip
-		x = 1
-		y = 1
-		relative_position_id = RAJ_regulate_the_insurance_market
-		available = {
-			has_country_flag = council_meeting_march_1913_held
-		}
-		bypass = {
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_regulate_the_insurance_market
-		}
-		completion_reward = {
-			add_political_power = 67
 		}
 		ai_will_do = {
 			factor = 1
