@@ -1,4 +1,159 @@
 INS_dc_faction_management = {
+	INS_crush_si = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+			original_tag = INS
+		}
+		available = {
+			NOT = {
+				has_country_flag  = INS_interacting_si
+			}
+			check_variable = {
+				INS_muslim_popularity = 0
+			}
+			check_variable = {
+				INS_muslim_loyalty = 0
+			}
+			custom_trigger_tooltip = {
+				tooltip = INS_ttt_cs
+			}
+		}
+		visible = {
+			has_completed_focus = INS_confiscate_si_propoganda
+		}
+		fire_only_once = yes
+		complete_effect = {
+			set_country_flag = INS_interacting_si
+		}
+		remove_effect = {
+			clr_country_flag = INS_interacting_si
+			set_country_flag = INS_flag_si_crushed
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.025
+			}
+			add_stability = -0.05
+			custom_effect_tooltip = INS_effect_cs_tt
+		}
+		days_remove = 30
+		cost = 150
+		ai_will_do = {
+			factor = 200
+		}
+	}
+	INS_bust_si_press = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+			original_tag = INS
+		}
+		available = {
+			NOT = {
+				has_country_flag  = INS_interacting_si
+			}
+		}
+		visible = {
+			has_completed_focus = INS_confiscate_si_propoganda
+			NOT = {
+				has_country_flag = INS_flag_si_crushed
+			}
+		}
+		fire_only_once = no
+		complete_effect = {
+			set_country_flag = INS_interacting_si
+		}
+		remove_effect = {
+			clr_country_flag = INS_interacting_si
+			add_to_variable = {
+				INS_muslim_popularity = -10
+				tooltip = INS_muslim_popularity_update_tt
+			}
+			INS_loyalty_popularity_change = yes
+		}
+		days_remove = 30
+		days_re_enable = 50
+		cost = INS_var_si_interaction_cost
+		ai_will_do = {
+			factor = 200
+		}
+	}
+	INS_crash_si_meetings = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+			original_tag = INS
+		}
+		available = {
+			NOT = {
+				has_country_flag  = INS_interacting_si
+			}
+		}
+		visible = {
+			has_completed_focus = INS_hate_si
+			NOT = {
+				has_country_flag = INS_flag_si_crushed
+			}
+		}
+		fire_only_once = no
+		complete_effect = {
+			set_country_flag = INS_interacting_si
+		}
+		remove_effect = {
+			clr_country_flag = INS_interacting_si
+			add_to_variable = {
+				INS_muslim_loyalty = -5
+				tooltip = INS_muslim_loyalty_update_tt
+			}
+			add_to_variable = {
+				INS_muslim_popularity = -5
+				tooltip = INS_muslim_popularity_update_tt
+			}
+			INS_loyalty_popularity_change = yes
+		}
+		days_remove = 30
+		days_re_enable = 50
+		cost = INS_var_si_interaction_cost
+		ai_will_do = {
+			factor = 200
+		}
+	}
+	INS_discredit_si = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+			original_tag = INS
+		}
+		available = {
+			NOT = {
+				has_country_flag  = INS_interacting_si
+			}
+		}
+		visible = {
+			has_completed_focus = INS_hate_si
+			NOT = {
+				has_country_flag = INS_flag_si_crushed
+			}
+		}
+		fire_only_once = no
+		complete_effect = {
+			set_country_flag = INS_interacting_si
+		}
+		remove_effect = {
+			clr_country_flag = INS_interacting_si
+			add_to_variable = {
+				INS_muslim_loyalty = -5
+				tooltip = INS_muslim_loyalty_update_tt
+			}
+			add_to_variable = {
+				INS_muslim_popularity = -5
+				tooltip = INS_muslim_popularity_update_tt
+			}
+			INS_loyalty_popularity_change = yes
+		}
+		days_remove = 30
+		days_re_enable = 50
+		cost = INS_var_si_interaction_cost
+		ai_will_do = {
+			factor = 200
+		}
+	}
 	INS_meet_si_officials = {
 		icon = GFX_decision_hol_war_on_pacifism
 		allowed = {
@@ -11,6 +166,9 @@ INS_dc_faction_management = {
 		}
 		visible = {
 			has_completed_focus = INS_friendly_si
+			NOT = {
+				has_country_flag = INS_flag_si_crushed
+			}
 		}
 		fire_only_once = no
 		complete_effect = {
@@ -25,6 +183,7 @@ INS_dc_faction_management = {
 			INS_loyalty_popularity_change = yes
 		}
 		days_remove = 30
+		days_re_enable = 50
 		cost = INS_var_si_interaction_cost
 		ai_will_do = {
 			factor = 200
@@ -42,6 +201,9 @@ INS_dc_faction_management = {
 		}
 		visible = {
 			has_completed_focus = INS_friendly_si
+			NOT = {
+				has_country_flag = INS_flag_si_crushed
+			}
 		}
 		fire_only_once = no
 		complete_effect = {
@@ -60,6 +222,7 @@ INS_dc_faction_management = {
 			INS_loyalty_popularity_change = yes
 		}
 		days_remove = 30
+		days_re_enable = 50
 		cost = INS_var_si_interaction_cost
 		ai_will_do = {
 			factor = 200
@@ -77,9 +240,15 @@ INS_dc_faction_management = {
 			check_variable = {
 				INS_muslim_popularity > 49 
 			}
+			custom_trigger_tooltip = {
+				tooltip = INS_ttt_acews
+			}
 		}
 		visible = {
 			has_country_flag = INS_flag_event_si_deal_1
+			NOT = {
+				has_country_flag = INS_flag_si_crushed
+			}
 		}
 		fire_only_once = no
 		complete_effect = {
@@ -93,6 +262,7 @@ INS_dc_faction_management = {
 			INS_loyalty_popularity_change = yes
 		}
 		days_remove = 30
+		days_re_enable = 100
 		cost = INS_var_si_interaction_cost
 		ai_will_do = {
 			factor = 200
