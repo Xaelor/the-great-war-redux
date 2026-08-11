@@ -1,0 +1,200 @@
+retire_SER_petar_i = {
+	if = {
+		limit = {
+			has_character = SER_aleksandar_karadjordjevic
+			NOT = {
+				AND = {
+					has_character = SER_dorde_obrenovic
+					has_country_flag = SER_george_regency
+				}
+				AND = {
+					has_character = SER_jelena_karadjordjevic
+					has_country_flag = SER_helen_regency
+				}
+				AND = {
+					has_character = SER_arsenije_karadjordjevic
+					has_country_flag = SER_arsenije_regency
+				}
+			}
+			
+		}
+		if = {
+			limit = {
+				OR = {
+					has_cosmetic_tag = SER_YUG
+					has_cosmetic_tag = YUG
+				}
+			}
+			SER_aleksandar_karadjordjevic = {
+				set_character_name = SER_aleksandar_i
+			}
+			else = {
+				SER_aleksandar_karadjordjevic = {
+					set_character_name = SER_aleksandar_ii
+					set_character_flag = SER_aleksandar_ii
+				}
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_idea = SER_petar_i
+					has_idea = SER_petar_i_2
+				}
+			}
+			hidden_effect = {
+				remove_ideas = {
+					SER_petar_i
+					SER_petar_i_2
+				}
+			}
+			add_ideas = SER_aleksandar_karadjordjevic
+		}
+		promote_character = SER_aleksandar_karadjordjevic
+	}
+	else_if = {
+		limit = {
+			has_character = SER_dorde_karadjordjevic
+			NOT = {
+				AND = {
+					has_character = SER_jelena_karadjordjevic
+					has_country_flag = SER_helen_regency
+				}
+				AND = {
+					has_character = SER_arsenije_karadjordjevic
+					has_country_flag = SER_arsenije_regency
+				}
+			}		
+		}
+		if = {
+			limit = {
+				OR = {
+					has_cosmetic_tag = SER_YUG
+					has_cosmetic_tag = YUG
+				}
+			}
+			SER_dorde_karadjordjevic = {
+				set_character_name = SER_dorde_i
+			}
+			else = {
+				SER_dorde_karadjordjevic = {
+					set_character_name = SER_dorde_ii
+					set_character_flag = SER_dorde_ii
+				}
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_idea = SER_petar_i
+					has_idea = SER_petar_i_2
+					has_idea = SER_dorde_karadjordjevic
+				}
+			}
+			hidden_effect = {
+				remove_ideas = {
+					SER_petar_i
+					SER_petar_i_2
+					SER_dorde_karadjordjevic
+				}
+			}
+			add_ideas = SER_dorde_karadjordjevic_king
+		}
+		SER_dorde_karadjordjevic = {
+			remove_country_leader_trait = insane_prince
+			add_country_leader_trait = insane_king
+		}
+		promote_character = SER_dorde_karadjordjevic
+	}
+	else_if = {
+		limit = {
+			has_character = SER_jelena_karadjordjevic
+			NOT = {
+				AND = {
+					has_character = SER_arsenije_karadjordjevic
+					has_country_flag = SER_arsenije_regency
+				}
+			}
+		}
+		SER_jelena_karadjordjevic = {
+			set_character_name = SER_jelena_i
+		}
+		if = {
+			limit = {
+				OR = {
+					has_idea = SER_petar_i
+					has_idea = SER_petar_i_2
+				}
+			}
+			hidden_effect = {
+				remove_ideas = {
+					SER_petar_i
+					SER_petar_i_2
+				}
+			}
+			add_ideas = SER_jelena_karadjordjevic
+		}
+		promote_character = SER_jelena_karadjordjevic
+	}
+	else_if = {
+		limit = {
+			has_character = SER_arsenije_karadjordjevic
+		}
+		SER_arsenije_karadjordjevic = {
+			set_character_name = SER_arsenije_i
+		}
+		if = {
+			limit = {
+				OR = {
+					has_idea = SER_petar_i
+					has_idea = SER_petar_i_2
+				}
+			}
+			hidden_effect = {
+				remove_ideas = {
+					SER_petar_i
+					SER_petar_i_2
+				}
+			}
+			add_ideas = SER_arsenije_karadjordjevic
+		}
+		promote_character = SER_arsenije_karadjordjevic
+	}
+	retire_character = SER_petar_i
+	mark_focus_tree_layout_dirty = yes
+}
+SER_YUG_regnal_number_change = {
+	if = {
+		limit = { 
+			has_character = SER_aleksandar_karadjordjevic
+			SER_aleksandar_karadjordjevic = {
+				has_character_flag = SER_aleksandar_ii
+			}
+		}
+		SER_aleksandar_karadjordjevic = {
+			clr_character_flag = SER_aleksandar_ii
+			set_character_name = SER_aleksandar_i
+		}
+	}
+	else_if = {
+		limit = { 
+			has_character = SER_dorde_karadjordjevic
+			SER_dorde_karadjordjevic = {
+				has_character_flag = SER_dorde_ii
+			}
+		}
+		SER_dorde_karadjordjevic = {
+			clr_character_flag = SER_dorde_ii
+			set_character_name = SER_dorde_i
+		}
+		if = {
+			limit = { 
+				has_idea = SER_dorde_ii
+			}
+			hidden_effect = {
+				remove_ideas = SER_dorde_ii
+				add_ideas = SER_dorde_i
+			}
+		}
+	}
+}

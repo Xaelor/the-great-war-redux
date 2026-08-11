@@ -60,6 +60,7 @@ operations = {
 				420 = { set_border_war = no }
 				877 = { set_border_war = no }
 				1212 = { set_border_war = no }
+				1245 = { set_border_war = no }
 			}
 			start_border_war = {
 				change_state_after_war = no
@@ -280,7 +281,8 @@ operations = {
 	# 	}
 	# }
 }
-foreign_politics = {
+TGWR_great_power_politics = {
+	#great_power_politics_balkan_powder_keg
 	RUS_help_balkans = {
 		icon = GFX_decision_generic_prepare_civil_war
 		allowed = {
@@ -289,7 +291,7 @@ foreign_politics = {
 		target_trigger = {
 			FROM = {
 				has_idea = SER_russian_protection
-				any_other_country = {
+				any_enemy_country = {
 					is_actual_major = yes
 					has_offensive_war_with = PREV
 					NOT = {
@@ -307,6 +309,7 @@ foreign_politics = {
 			}
 		}
 		visible = {
+			great_power_politics_balkan_powder_keg_visible = yes
 			is_subject = no
 			NOT = {
 				has_global_flag = great_war_ends
@@ -318,6 +321,14 @@ foreign_politics = {
 					is_subject = no
 				}
 				has_guaranteed = FROM
+			}
+		}
+		target_root_trigger = {
+			is_subject = no
+			NOT = {
+				has_global_flag = great_war_ends
+				has_global_flag = russian_revolution
+				has_government = communism
 			}
 		}
 		available = {
@@ -356,6 +367,8 @@ foreign_politics = {
 			}
 		}
 	}
+}	
+foreign_politics = {	
 	RUS_claim_762 = {
 		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
@@ -1492,7 +1505,6 @@ RUS_fight_for_trade_unions = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_fight_for_trade_unions
 		}
 		available = {
@@ -1530,7 +1542,6 @@ RUS_fight_for_trade_unions = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_fight_for_trade_unions
 		}
 		available = {
@@ -1562,7 +1573,6 @@ RUS_fight_for_trade_unions = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_fight_for_trade_unions
 		}
 		available = {
@@ -1593,7 +1603,6 @@ RUS_fight_for_trade_unions = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_fight_for_trade_unions
 		}
 		available = {
@@ -1623,7 +1632,6 @@ RUS_fight_for_trade_unions = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_fight_for_trade_unions
 		}
 		available = {
@@ -1654,7 +1662,6 @@ RUS_fight_for_trade_unions = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_fight_for_trade_unions
 		}
 		available = {
@@ -1711,7 +1718,10 @@ RUS_civil_war = {
 			}
 			if = {
 				limit = {
-					tag = SIB 
+					OR = {
+						tag = SIB
+						tag = KOM
+					}				
 				}
 				OR = {
 					has_completed_focus = SIB_national_constituent_assembly
@@ -1811,10 +1821,16 @@ RUS_civil_war = {
 		allowed = {
 			NOT = {
 				tag = SRA
+				tag = SOV
 			}
 		}
 		available = {
 			has_war_with = SOV
+		}
+		visible = {
+			NOT = {
+				has_government = communism
+			}
 		}
 		cost = 10
 		
@@ -2140,6 +2156,7 @@ RUS_release_country = {
 				}
 				OR = {
 					state = 766
+					state = 1263
 					state = 1017
 					NOT = {
 						is_core_of = BLR
@@ -2543,7 +2560,8 @@ RUS_release_country = {
 		}
 	}
 }
-GER_great_war = {
+TGWR_great_power_politics = {
+	#great_power_politics_great_war
 	RUS_send_AuH_battleplan_to_serbia = {
 		icon = GFX_decision_hol_draw_up_staff_plans
 		fire_only_once = yes
@@ -2562,6 +2580,7 @@ GER_great_war = {
 			}
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			NOT = {
 				tag = SOV
 				tag = STV
@@ -2599,39 +2618,33 @@ GER_great_war = {
 		allowed = {
 			NOT = { original_tag = RUS }
 		}
-		available = {
-			OR = {
-				AND = {
-					is_major = yes
-					is_in_faction_with = RUS
-					has_war_with = GER
-				}
-				original_tag = USA
-			}
-			RUS = {
-				NOT = {
-					has_government = communism
-				}
-				has_war_with = GER
+		targets = {
+			RUS
+		}
+		target_trigger = {
+			NOT = {
+				has_government = communism
 			}
 		}
-		visible = {
+		target_root_trigger = {
 			OR = {
 				AND = {
 					is_major = yes
 					is_in_faction_with = RUS
-					has_war_with = GER
 				}
 				original_tag = USA
 			}
 			NOT = {
 				has_war_with = RUS
 			}
-			RUS = {
-				NOT = {
-					has_government = communism
-				}
+		}
+		available = {
+			FROM = {
+				has_war_with = GER
 			}
+		}
+		visible = {		
+			great_power_politics_great_war_visible = yes
 		}
 		fire_only_once = no
 		custom_cost_trigger = {

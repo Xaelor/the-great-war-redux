@@ -187,17 +187,20 @@ country_event = {
 	picture = GFX_report_event_wrangel
 	
 	trigger = {
+		tag = SRA
 		has_country_flag = SRA_offensive_failed
+		has_country_leader = {
+			character = RUS_anton_denikin
+		}
 	}
 
 	fire_only_once = yes
-	is_triggered_only = no
 	
 	option = {
 		name = ww1_sra.4.a	
 		RUS_pyotr_wrangel = {
 			set_nationality = RXL
-		}	
+		}
 	}
 }
 # Entente intervention question
@@ -288,8 +291,8 @@ country_event = {
 		has_country_flag = SRA_offensive_failed
 		has_war_with = SOV
 		surrender_progress > 0.6
-		RUS_anton_denikin = {
-			is_country_leader = yes
+		has_country_leader = {
+			character = RUS_anton_denikin
 		}
 	}
 	mean_time_to_happen = {
@@ -326,6 +329,24 @@ country_event = {
 			}
 		}
 		set_cosmetic_tag = SRA_wrangel
+		if = {
+			limit = { 
+				has_character = RUS_alexander_krivoshein
+			}
+			RUS_alexander_krivoshein = {
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = { 
+						ideology = conservatism
+					}
+				}
+			}
+			set_party_name = {
+				ideology = democratic
+				long_name = RUS_russian_assembly_party
+				name = RUS_russian_assembly_party
+			}
+		}
 	}
 }
 #Death of Mikhail Alekseyev
@@ -361,10 +382,9 @@ country_event = {
 		hidden_effect = {
 			set_global_flag = RUS_SRA_spawned
 			941 = {
-				SRA = { add_state_core = PREV }
-			}
-			SRA = {
-				transfer_state = 941
+				SRA = { 
+					RCW_transfer_core_state_PREV = yes 
+				}
 			}
 			SOV = {
 				send_equipment_fraction = {
@@ -572,7 +592,8 @@ country_event = {
 				}
 				add_manpower = 15000
 				division_template = {
-					name = "Pekhotnaya Diviziya"
+					name = "Pekhotnaya Brigada"
+					division_names_group = RUS_INF_06
 					regiments = {
 						infantry = { x = 0 y = 0 }
 						infantry = { x = 0 y = 1 }
@@ -654,11 +675,11 @@ country_event = {
 					days = 3
 				}
 				delete_unit_template_and_units = {
-					division_template = "Volunteer Regiment"
+					division_template = "Dobrovol'cheskiy Polk"
 					disband = no
 				}
 				delete_unit_template_and_units = {
-					division_template = "Volunteer Cavalry Regiment"
+					division_template = "Dobrovol'cheskiy Kavaleriyskiy Polk"
 					disband = no
 				}
 			}
@@ -1038,21 +1059,16 @@ country_event = {
 		name = ww1_sra.26.a
 		if = {
 			limit = {
-				any_other_country = {
-					original_tag = KUB
+				KUB = {
 					exists = yes
 					NOT = {
 						has_government = communism
 						has_war_with = SRA
 					}
-					has_capitulated = no
 				}
 			}
 			SRA = {
-				annex_country = {
-					target = KUB
-					transfer_troops = yes
-				}
+				RCW_ROOT_fuze_with_FROM = yes
 			}
 			else = {
 				division_template = {
@@ -1076,16 +1092,12 @@ country_event = {
 						allow_spawning_on_enemy_provs = yes
 					}
 				}
+				KUB = {
+					KUB_viktor_pokrovsky = {
+						set_nationality = SRA
+					}		
+				}
 			}
-		}
-		KUB = {
-			KUB_viktor_pokrovsky = {
-				set_nationality = SRA
-			}		
-		}
-		every_state = {
-			limit = { is_core_of = KUB }
-			add_core_of = SRA
 		}
 	}
 }
@@ -1471,8 +1483,18 @@ country_event = {
 			state = 234
 			remember_old_capital = no
 		}
-		hidden_effect = {
-			set_state_owner = 234
+		if = {
+			limit = { 
+				NOT = {
+					owns_state = 234
+				}
+			}
+			hidden_effect = {
+				234 = {
+					add_contested_owner = OWNER
+					set_state_owner_to = ROOT
+				}
+			}
 		}
 		add_political_power = 75
 	}
