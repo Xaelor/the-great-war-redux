@@ -2,6 +2,12 @@
 import argparse
 import re
 
+### How to Use // This section was provided by the TGWR Team
+# Prior to use, install: https://marketplace.visualstudio.com/items?itemName=ms-python.python
+# Press "Run Python File" in the top right corner in VSC
+# Paste this command into terminal without quotes "python resources/focusgfxshine.py interface/ww1_goals.gfx interface/ww1_goals_shine.gfx" (note that to change the target file, you need to change the latter to not override it)
+### // End of section provided by the TGWR Team
+
 #############################
 ###
 ### HoI 4 Focus GFX entry generator by Yard1, originally for Equestria at War mod
