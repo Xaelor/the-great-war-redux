@@ -1,0 +1,1337 @@
+###	  #   #   #   #   ###    #
+#    # #  ##  #  # #  #  #  # #
+#   ##### # # # ##### #  # #####
+#   #   # #  ## #   # #  # #   #
+##  #   # #   # #   # ###  #   #
+focus_tree = {
+	id = canadian_focus
+	country = {
+		factor = 0
+		modifier = {
+			add = 10
+			tag = CAN
+		}
+	}
+	default = no
+
+	continuous_focus_position = {
+		x = 50
+		y = 1600
+	}
+
+	initial_show_position = {
+		focus = CAN_continue_lauriers_leadership
+	}
+
+	##################################
+	####Pre 1911 Election Politics####
+	##################################
+	focus = {
+		id = CAN_continue_lauriers_leadership
+		icon = GFX_CAN_laurier_premiership
+		cost = 5
+		x = 6
+		y = 0
+		completion_reward = {
+			add_to_variable = {
+				CAN_conservatives_popularity = -1
+			}
+			add_to_variable = {
+				CAN_liberals_popularity = 1
+			}
+			country_event = canada_rework.1
+			add_political_power = 50
+			custom_effect_tooltip = CAN_c_lose_1_L_gain_1
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CAN_fight_for_fishing_rights_in_the_atlantic
+		icon = GFX_goal_generic_fishing
+		cost = 2
+		x = 2
+		y = 1
+		relative_position_id = CAN_continue_lauriers_leadership
+		prerequisite = {
+			focus = CAN_continue_lauriers_leadership
+		}
+		completion_reward = {
+			unlock_decision_tooltip = CAN_atlantic_fishing_rights
+			custom_effect_tooltip = CAN_effects_when_sel_decision_tt
+			effect_tooltip = {
+				custom_effect_tooltip = CAN_modify_canadian_economy_tt
+				add_to_variable = {
+					CAN_economy_consumer_goods = -0.075
+					tooltip = consumer_goods_factor_tt
+				}
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CAN_ford_motors_dupont
+		icon = GFX_goal_CAN_ford
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = CAN_fight_for_fishing_rights_in_the_atlantic
+		prerequisite = {
+			focus = CAN_fight_for_fishing_rights_in_the_atlantic
+		}
+		mutually_exclusive = {
+			focus = CAN_subsidize_local_motor_companies
+		}
+		completion_reward = {
+			276 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_political_power = -20
+			add_to_variable = {
+				CAN_conservatives_popularity = 2
+			}
+			add_to_variable = {
+				CAN_liberals_popularity = -2
+			}
+			custom_effect_tooltip = CAN_c_gain_2_L_lose_2
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CAN_reciprocity_trade_agreement
+		icon = {
+			GFX_focus_anglo_american_deals = {
+				is_subject_of = ENG
+			}
+			GFX_focus_generic_befriend_usa = yes
+		}
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = CAN_ford_motors_dupont
+		prerequisite = {
+			focus = CAN_ford_motors_dupont
+		}
+		mutually_exclusive = {
+			focus = CAN_tackle_the_trade_deficit
+		}
+		completion_reward = {
+			USA = {
+				country_event = canada_rework.3
+			}
+			custom_effect_tooltip = CAN_us_trade_effect
+			add_to_variable = {
+				CAN_conservatives_popularity = 2
+			}
+			add_to_variable = {
+				CAN_liberals_popularity = -2
+			}
+			custom_effect_tooltip = CAN_c_gain_2_L_lose_2
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CAN_subsidize_local_motor_companies
+		icon = GFX_focus_Automobile
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = CAN_fight_for_fishing_rights_in_the_atlantic
+		prerequisite = {
+			focus = CAN_fight_for_fishing_rights_in_the_atlantic
+		}
+		mutually_exclusive = {
+			focus = CAN_ford_motors_dupont
+		}
+		completion_reward = {
+			add_to_variable = {
+				CAN_economy_construction_speed = 0.05
+			}
+			add_to_variable = {
+				CAN_economy_pp = -0.1
+			}
+			custom_effect_tooltip = CAN_subsidize_local_motor_companies_tt
+		}
+		search_filters = {
+			
+		}
+	}
+	focus = {
+		id = CAN_tackle_the_trade_deficit
+		icon = GFX_goal_generic_defence
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = CAN_subsidize_local_motor_companies
+		prerequisite = {
+			focus = CAN_ford_motors_dupont
+			focus = CAN_subsidize_local_motor_companies
+		}
+		mutually_exclusive = {
+			focus = CAN_reciprocity_trade_agreement
+		}
+		completion_reward = {
+			custom_effect_tooltip = CAN_modify_canadian_economy_tt
+			add_to_variable = {
+				CAN_economy_consumer_goods = -0.1
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				CAN_economy_construction_speed = 0.025
+				tooltip = production_speed_buildings_factor_tt
+			}
+			add_to_variable = {
+				CAN_economy_pp = 0.1
+				tooltip = political_power_factor_tt
+			}
+			custom_effect_tooltip = CAN_free_not_fair_tt
+		}
+		search_filters = {
+
+		}
+	}
+	##############################
+	##Pre Election Economy Stuff##
+	##############################
+	focus = {
+		id = CAN_continue_economic_growth_of_the_praries
+		icon = GFX_focus_control_economy
+		cost = 5
+		x = -4
+		y = 1
+		mutually_exclusive = {
+			focus = CAN_restrict_immigration
+		}
+		prerequisite = {
+			focus = CAN_continue_lauriers_leadership
+		}
+		relative_position_id = CAN_continue_lauriers_leadership
+		completion_reward = {
+			add_to_variable = {
+				CAN_conservatives_popularity = 2
+			}
+			add_to_variable = {
+				CAN_liberals_popularity = -2
+			}
+			custom_effect_tooltip = CAN_c_gain_2_L_lose_2
+			custom_effect_tooltip = CAN_modify_canadian_economy_tt
+			add_to_variable = {
+				CAN_economy_construction_speed = 0.05
+				tooltip = production_speed_buildings_factor_tt
+			}
+			custom_effect_tooltip = CAN_racial_tensions
+			hidden_effect = {
+				country_event = {
+					id = canada_rework.2
+					days = 90
+				}
+			}
+		}
+		search_filters = {
+		}
+	}
+	focus = {
+		id = CAN_restrict_immigration
+		icon = GFX_generic_closed_immigration
+		cost = 5
+		x = -2
+		y = 1
+		mutually_exclusive = {
+			focus = CAN_continue_economic_growth_of_the_praries
+		}
+		prerequisite = {
+			focus = CAN_continue_lauriers_leadership
+		}
+		relative_position_id = CAN_continue_lauriers_leadership
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = CAN_a_land_of_opportunity
+				add_idea = CAN_a_land_of_opportunity2
+			}
+			custom_effect_tooltip = CAN_modify_canadian_economy_tt
+			add_to_variable = {
+				CAN_economy_construction_speed = -0.02
+				tooltip = production_speed_buildings_factor_tt
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CAN_support_merge_of_shell_companies
+		icon = GFX_focus_GER_factories_for_resources
+		cost = 5
+		x = -1
+		y = 1
+		mutually_exclusive = {
+			focus = CAN_a_winning_economy
+		}
+		prerequisite = {
+			focus = CAN_restrict_immigration
+			focus = CAN_continue_economic_growth_of_the_praries
+		}
+		relative_position_id = CAN_restrict_immigration
+		completion_reward = {
+			custom_effect_tooltip = CAN_modify_canadian_economy_tt
+			add_to_variable = {
+				CAN_economy_factory_output = 0.05
+				tooltip = industrial_capacity_factory_tt
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CAN_explosives_limited
+		icon = GFX_goal_generic_construct_mil_factory
+		cost = 5
+		prerequisite = {
+			focus = CAN_support_merge_of_shell_companies
+		}
+		x = 1
+		y = 1
+		relative_position_id = CAN_support_merge_of_shell_companies
+		completion_reward = { 
+
+		}
+	}
+	focus = {
+		id = CAN_a_winning_economy
+		icon = GFX_focus_RAJ_special_economic_zones
+		cost = 5
+		x = -1
+		y = 1
+		mutually_exclusive = {
+			focus = CAN_support_merge_of_shell_companies
+		}
+		prerequisite = {
+			focus = CAN_restrict_immigration
+			focus = CAN_continue_economic_growth_of_the_praries
+		}
+		relative_position_id = CAN_continue_economic_growth_of_the_praries
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 20
+			add_to_variable = {
+				CAN_conservatives_popularity = -2
+			}
+			add_to_variable = {
+				CAN_liberals_popularity = 2
+			}
+			custom_effect_tooltip = CAN_c_lose_2_L_gain_2
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CAN_canadian_steel_foundries
+		icon = GFX_focus_generic_steel
+		cost = 5
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = CAN_a_winning_economy
+			focus = CAN_support_merge_of_shell_companies
+		}
+		relative_position_id = CAN_a_winning_economy
+		completion_reward = {
+			add_resource = {
+				type = steel
+				amount = 16
+				state = 466
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CAN_form_dome_mines
+		icon = GFX_CAN_victoronomics
+		cost = 5
+		x = -6
+		y = 1
+		prerequisite = {
+			focus = CAN_continue_lauriers_leadership
+		}
+		relative_position_id = CAN_continue_lauriers_leadership
+		completion_reward = {
+			custom_effect_tooltip = CAN_modify_canadian_economy_tt
+			add_to_variable = {
+				CAN_economy_consumer_goods = -0.1
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				CAN_economy_pp = 0.05
+				tooltip = political_power_factor_tt
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CAN_shell_oil
+		icon = GFX_goal_generic_oil_refinery
+		cost = 5
+		x = -1
+		y = 1
+		available = {
+			owns_state = 470
+		}
+		prerequisite = {
+			focus = CAN_form_dome_mines
+		}
+		relative_position_id = CAN_form_dome_mines
+		completion_reward = {
+			unlock_decision_tooltip = CAN_fund_oil_excavation
+			custom_effect_tooltip = CAN_effects_when_sel_decision_tt
+			effect_tooltip = {
+				add_resource = {
+					type = oil
+					amount = 18
+					state = 470
+				}
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CAN_export_newspaper_materials
+		icon = GFX_goal_generic_news
+		cost = 5
+		x = 0
+		y = 2
+		prerequisite = {
+			focus = CAN_form_dome_mines
+		}
+		relative_position_id = CAN_form_dome_mines
+		completion_reward = {
+			custom_effect_tooltip = CAN_modify_canadian_economy_tt
+			add_to_variable = {
+				CAN_economy_pp = 0.1
+				tooltip = political_power_factor_tt
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CAN_new_shell_factories
+		icon = GFX_focus_generic_military_industry
+		cost = 5
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = CAN_canadian_steel_foundries
+		}
+		prerequisite = {
+			focus = CAN_export_newspaper_materials
+		}
+		relative_position_id = CAN_export_newspaper_materials
+		completion_reward = {
+			276 = {
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = { 
+		id = CAN_dominion_park_branch
+		icon = GFX_focus_eng_imperial_federation
+		cost = 5
+		prerequisite = {
+			focus = CAN_continue_lauriers_leadership
+		}
+		x = 0
+		y = 1
+		relative_position_id = CAN_continue_lauriers_leadership
+		completion_reward = {
+			add_stability = 0.02
+			470 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			473 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CAN_telegraph_expansion
+		icon = GFX_focus_calmer_telegram
+		cost = 5
+		prerequisite = {
+			focus = CAN_continue_lauriers_leadership
+		}
+		x = 4
+		y = 1
+		relative_position_id = CAN_continue_lauriers_leadership
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = CAN_new_building_techniques
+		icon = GFX_goal_generic_construct_civilian
+		cost = 5
+		x = 6
+		y = 1
+		relative_position_id = CAN_continue_lauriers_leadership
+		prerequisite = {
+			focus = CAN_continue_lauriers_leadership
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = ENG_The_Best
+				bonus = 1
+				uses = 1
+				category = industry
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	focus = {
+		id = CAN_canadian_north_pacific_railway
+		icon = GFX_focus_Generic_Develop_Rail_Network
+		cost = 5
+		x = 1
+		y = 1
+		relative_position_id = CAN_telegraph_expansion
+		prerequisite = {focus = CAN_telegraph_expansion}
+		prerequisite = {focus = CAN_new_building_techniques}
+		completion_reward = {
+			add_stability = 0.02
+			unlock_decision_tooltip = CAN_canadian_north_pacific_railway_decision
+			custom_effect_tooltip = CAN_BUILD_THE_RAILWAYS_BRO
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+	}
+	################################
+	####Post 1911 Election Stuff####
+	################################
+	focus = {
+		id = CAN_election_of_1911
+		icon = GFX_goal_CAN_king
+		cost = 0
+		x = 20
+		y = 0
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_liberal_victory_1911
+		icon = GFX_focus_generic_red_flags
+		cost = 0
+		x = -5
+		y = 1
+		relative_position_id = CAN_election_of_1911
+		prerequisite = {
+			focus = CAN_election_of_1911
+		}
+		mutually_exclusive = {
+			focus = CAN_conservative_victory_1911
+		}
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_conservative_victory_1911
+		icon = GFX_focus_generic_blue_flags
+		cost = 0
+		x = 5
+		y = 1
+		relative_position_id = CAN_election_of_1911
+		prerequisite = {
+			focus = CAN_election_of_1911
+		}
+		mutually_exclusive = {
+			focus = CAN_liberal_victory_1911
+		}
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_fund_paper_mills
+		icon = GFX_goal_generic_construct_civ_factory
+		cost = 5
+		x = -3
+		y = 1
+		relative_position_id = CAN_conservative_victory_1911
+		prerequisite = {
+			focus = CAN_conservative_victory_1911
+		}
+		completion_reward = {
+			468 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			466 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	##########################
+	#### Pre War Army Tree ###
+	##########################
+	focus = {
+		id = CAN_army_reorganization
+		icon = GFX_focus_generic_little_entente
+		cost = 5
+		x = 35
+		y = 0
+		available = {
+			has_completed_focus = CAN_election_of_1911
+		}
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_liberal_army
+		icon = idk
+		cost = 0
+		x = -2
+		y = 1
+		prerequisite = { focus = CAN_army_reorganization }
+		available = {
+			has_completed_focus = CAN_liberal_victory_1911
+		}
+		relative_position_id = CAN_army_reorganization
+		mutually_exclusive = { focus = CAN_conservative_army}
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_conservative_army
+		icon = idk
+		cost = 0
+		x = 2
+		y = 1
+		prerequisite = { focus = CAN_army_reorganization }
+		available = {
+			has_completed_focus = CAN_liberal_victory_1911
+		}
+		relative_position_id = CAN_army_reorganization
+		mutually_exclusive = { focus = CAN_liberal_army}
+		completion_reward = {}
+	}
+	################################
+	### Conservative Army Reform ###
+	################################
+	focus = {
+		id = CAN_swiss_inspiration
+		icon = GFX_focus_SWI_federal_police
+		cost = 5
+		x = 0
+		y = 1
+		prerequisite= { focus = CAN_conservative_army}
+		relative_position_id = CAN_conservative_army
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_cheap_guns
+		icon = idk
+		cost = 5
+		x = -2
+		y = 1
+		prerequisite = {focus = CAN_swiss_inspiration }
+		relative_position_id = CAN_swiss_inspiration
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_training_camps
+		icon = idk
+		cost = 5
+		x = 0
+		y = 1
+		prerequisite = {focus = CAN_swiss_inspiration }
+		relative_position_id = CAN_swiss_inspiration
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_cut_professionals
+		icon = idk
+		cost = 5
+		x = 2
+		y = 1
+		prerequisite = {focus = CAN_swiss_inspiration }
+		relative_position_id = CAN_swiss_inspiration
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_expand_militia
+		icon = idk
+		cost = 5
+		x = 1
+		y = 1
+		prerequisite = { focus = CAN_cheap_guns }
+		prerequisite = { focus = CAN_training_camps}
+		relative_position_id = CAN_cheap_guns
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_citizen_soldier
+		icon = idk
+		cost = 5
+		x = 1
+		y = 1
+		prerequisite = { focus = CAN_training_camps }
+		prerequisite = { focus = CAN_cut_professionals }
+		relative_position_id = CAN_training_camps
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_true_spirit
+		icon = idk
+		cost = 5
+		x = 1
+		y = 1
+		prerequisite = { focus = CAN_expand_militia}
+		prerequisite = { focus = CAN_citizen_soldier }
+		relative_position_id = CAN_expand_militia
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_naval_debate
+		icon = GFX_goal_generic_occupy_states_coastal
+		cost = 5
+		x = 5
+		y = 1
+		prerequisite = { focus = CAN_conservative_army }
+		relative_position_id = CAN_conservative_army
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_tinpot_navy
+		icon = GFX_focus_generic_naval_ship
+		cost = 0
+		x = -1
+		y = 1
+		prerequisite = {focus = CAN_naval_debate}
+		relative_position_id = CAN_naval_debate
+		mutually_exclusive = {
+			focus = CAN_scrap_navy
+		}
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_scrap_navy
+		icon = idk
+		cost = 1
+		x = 1
+		y = 1
+		prerequisite = {focus = CAN_naval_debate}
+		relative_position_id = CAN_naval_debate
+		mutually_exclusive = {
+			focus = CAN_tinpot_navy
+		}
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_dreadnought_for_uk
+		icon = GFX_focus_dreadnought_UK
+		cost = 5
+		x = 0
+		y = 2
+		prerequisite = {
+			focus = CAN_tinpot_navy
+			focus = CAN_scrap_navy
+		}
+		relative_position_id = CAN_naval_debate
+		completion_reward = {}
+	}
+	######################
+	### Great War Tree ###
+	######################
+	focus = {
+		id = CAN_king_and_country
+		icon = GFX_focus_ENG_kitchener_wants_you
+		cost = 5
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		x = 6
+		y = 5
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_victory_loan
+		icon = GFX_focus_SWI_issue_war_bonds
+		cost = 5
+		x = 3
+		y = 1
+		prerequisite = { focus = CAN_king_and_country}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_king_and_country
+		completion_reward = {}
+	}
+	##########################
+	### The New War Branch ###
+	##########################
+	focus = {
+		id = CAN_the_new_war
+		icon = GFX_focus_generic_provoke_border_clashes
+		cost = 5
+		prerequisite = {
+			focus = CAN_king_and_country
+		}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		x = -6
+		y = 1
+		relative_position_id = CAN_king_and_country
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_trench_raids
+		icon = GFX_focus_SWE_varnplikt
+		cost = 5
+		prerequisite = {
+			focus = CAN_the_new_war
+		}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		x = -1
+		y = 1
+		relative_position_id = CAN_the_new_war
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_study_gas_warfare
+		icon = GFX_focus_gasmask
+		cost = 5
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = CAN_the_new_war
+		}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_the_new_war
+		completion_reward = { }
+	}
+	focus = {
+		id = CAN_Brunitels_Brigade
+		icon = GFX_focus_generic_schneider_medium_tank
+		cost = 5
+		x = -3
+		y = 1
+		prerequisite = {
+			focus = CAN_the_new_war
+		}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_the_new_war
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = CAN_cycle_corps
+		icon = GFX_focus_SWE_bicycle
+		cost = 5
+		x = 0
+		y = 1
+		prerequisite = {
+			focus = CAN_Brunitels_Brigade
+		}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_Brunitels_Brigade
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_promote_currie
+		icon = idk
+		cost = 5
+		x = 1
+		y = 1
+		prerequisite = { focus = CAN_trench_raids}
+		prerequisite = { focus = CAN_study_gas_warfare}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_trench_raids
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_war_of_artillery
+		icon = GFX_goal_generic_army_artillery2
+		prerequisite = { focus = CAN_promote_currie}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		cost = 5
+		x = -2
+		y = 1
+		relative_position_id = CAN_promote_currie
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_survey_land
+		icon = GFX_goal_generic_position_armies
+		prerequisite = { focus = CAN_promote_currie}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = CAN_promote_currie
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_staff_work
+		icon = GFX_focus_ITA_army_officer
+		x = 2
+		y = 1
+		prerequisite = { focus = CAN_promote_currie }
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		cost = 5
+		relative_position_id = CAN_promote_currie
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_creeping_barrage
+		icon = GFX_focus_SWE_let_fly_all_guns
+		x = 1
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_war_of_artillery }
+		prerequisite = { focus = CAN_survey_land }
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_war_of_artillery
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_armoured_warfare
+		icon = GFX_focus_generic_mark_IV_tank
+		x = 1
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_survey_land }
+		prerequisite = { focus = CAN_staff_work }
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_survey_land
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_stormtroopers
+		icon = GFX_goal_CAN_commit
+		x = 1
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_creeping_barrage}
+		prerequisite = { focus = CAN_armoured_warfare }
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_creeping_barrage
+		completion_reward = {}
+	}
+	###############################
+	### Wartime Industry Branch ###
+	###############################
+	focus = {
+		id = CAN_imperial_munitions_board
+		icon = GFX_focus_generic_reorient_production
+		x = 0
+		y = 1
+		cost = 5
+		prerequisite = {focus = CAN_king_and_country}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_king_and_country
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_crackdown_corruption
+		icon = GFX_focus_eng_move_to_secure_the_dominions
+		x = -1
+		y = 1
+		cost = 5
+		prerequisite = {focus = CAN_imperial_munitions_board}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_imperial_munitions_board
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_explosives_factories
+		icon = GFX_focus_generic_military_industry
+		x = 1
+		y = 1
+		cost = 5
+		prerequisite = {focus = CAN_imperial_munitions_board}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_imperial_munitions_board
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_increase_shell_production
+		icon = GFX_generic_war_economy
+		x = 0
+		y = 2
+		cost = 5
+		prerequisite = {focus = CAN_crackdown_corruption}
+		prerequisite = {focus = CAN_explosives_factories}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_imperial_munitions_board
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_expand_dominion_arms
+		icon = GFX_focus_generic_munitions
+		x = -2
+		y = 1
+		cost = 5
+		prerequisite = {focus = CAN_increase_shell_production}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_increase_shell_production
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_replace_ross
+		icon = GFX_goal_CAN_british_rifle_lease
+		x = 0
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_expand_dominion_arms }
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_expand_dominion_arms
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_develop_huot
+		icon = GFX_focus_vickers
+		x = 0
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_replace_ross}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_replace_ross
+		completion_reward = {}
+	}
+	#############################
+	## The New Theatres Branch ##
+	#############################
+	focus = {
+		id = CAN_new_theatres
+		icon = GFX_focus_generic_seaplane_tender
+		x = 6
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_king_and_country}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_king_and_country
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_canadian_vickers
+		icon = idk
+		x = 0
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_new_theatres}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_new_theatres
+		completion_reward = {}
+	}
+	################
+	## Air Branch ##
+	################
+	focus = {
+		id = CAN_air_war
+		icon = GFX_focus_red_sky
+		x = -2
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_new_theatres}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_new_theatres
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_royal_flying_corps
+		icon = GFX_focus_ENG_The_New_Frontier
+		x = 0
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_air_war}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_air_war
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_canadian_aeroplanes
+		icon = GFX_goal_CAN_canucks
+		x = -2
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_royal_flying_corps}
+		prerequisite = { focus = CAN_increase_shell_production}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_royal_flying_corps
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_flying_aces
+		icon = GFX_goal_CAN_pilots
+		x = 0
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_royal_flying_corps}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+		}
+		relative_position_id = CAN_royal_flying_corps
+		completion_reward = {}
+	}
+	################
+	## War at Sea ##
+	################
+	focus = {
+		id = CAN_naval_war
+		icon = GFX_focus_generic_trade_interdiction
+		x = 3
+		y = 1
+		cost = 5
+		prerequisite = {focus = CAN_new_theatres}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+			NOT = {has_completed_focus = CAN_scrap_navy}
+		}
+		relative_position_id = CAN_new_theatres
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_escort_convoys
+		icon = GFX_goal_CAN_fleet_doctrine
+		x = -2
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_naval_war}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+			NOT = {has_completed_focus = CAN_scrap_navy}
+		}
+		relative_position_id = CAN_naval_war
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_refit_civilian_vessels
+		icon = GFX_focus_generic_refit_civilian_ships
+		x = 1
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_escort_convoys}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+			NOT = {has_completed_focus = CAN_scrap_navy}
+		}
+		relative_position_id = CAN_escort_convoys
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_naval_drifters
+		icon = GFX_focus_POL_develop_polish_shipbuilding
+		x = -1
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_escort_convoys}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+			NOT = {has_completed_focus = CAN_scrap_navy}
+		}
+		relative_position_id = CAN_escort_convoys
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_naval_air_service
+		icon = GFX_goal_generic_air_naval_bomber
+		x = 1
+		y = 1
+		cost = 5
+		prerequisite = {focus = CAN_flying_aces}
+		prerequisite = {focus = CAN_naval_drifters focus = CAN_refit_civilian_vessels}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+			NOT = {has_completed_focus = CAN_scrap_navy}
+		}
+		relative_position_id = CAN_flying_aces
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_minesweeper_trawlers
+		icon = GFX_goal_generic_navy_cruiser
+		x = 0
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_refit_civilian_vessels}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+			NOT = {has_completed_focus = CAN_scrap_navy}
+		}
+		relative_position_id = CAN_refit_civilian_vessels
+		completion_reward = {}
+	}
+	### Submarine Stuff
+	focus = {
+		id = CAN_barnet_yard
+		icon = GFX_focus_generic_expand_the_naval_industry
+		x = 2
+		y = 1
+		cost = 5
+		prerequisite = { focus = CAN_naval_war}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+			NOT = {has_completed_focus = CAN_scrap_navy}
+		}
+		relative_position_id = CAN_naval_war
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_submarines_for_uk
+		icon = GFX_focus_chi_british_cooperation
+		x = 1
+		y = 1
+		cost = 5
+		prerequisite = {focus =CAN_barnet_yard}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+			NOT = {has_completed_focus = CAN_scrap_navy}
+		}
+		relative_position_id = CAN_barnet_yard
+		completion_reward = {}
+	}
+	focus = {
+		id = CAN_submarines_for_russia
+		icon = GFX_focus_befriend_white_russia
+		x = -1
+		y = 1
+		cost = 5
+		prerequisite = {focus =CAN_barnet_yard}
+		available = {
+			has_war = yes
+			has_global_flag = great_war
+			NOT = {has_completed_focus = CAN_scrap_navy}
+			is_in_faction_with = RUS
+		}
+		relative_position_id = CAN_barnet_yard
+		completion_reward = {}
+	}
+}
