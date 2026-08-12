@@ -1,83 +1,106 @@
-PER_persian_british_sphere_states = {
-	icon = eng_appeal_to_imperial_loyalists
+PER_constitutional_revolution_category = {
+	icon = generic_democracy
 
 	allowed = {
-		OR = {
-			tag = ENG
-			tag = PER
-		}
+		original_tag = PER
+	}
+	priority = 100
+}
+
+PER_guarded_domains = {
+	icon = ETH_disband_chitet
+
+	allowed = {
+		original_tag = PER
 	}
 	
 	visible_when_empty = yes
-	
+	priority = 51
 	on_map_area = {
 		targets = {
-			410
-			414
-		}	
+			266 #Tehran 10837
+			1117 #Hamadan 10523, Qazvin 4553
+			877 #Tabriz 1896, Ardabil 4901
+			411 #Isfahan 2026
+			416 #Mashhad 5029
+			1247 #Mazandaran Sari 10385
+			419 #Urmia 7604
+			420 #Gilan Rasht 4609
+		}
 		target_trigger = {
 			FROM = {
-				has_dynamic_modifier = { modifier = per_british_sphere }
+				OR = {
+					is_owned_and_controlled_by = ROOT
+					AND = {
+						is_owned_and_controlled_by = RUS
+						has_contested_owner = PER
+					}
+				
+				}
+				has_state_flag = PER_cossack_regiment_station
 			}
 		}
-		name = PER_persian_british_sphere_states
-		zoom = 150
-	}
-	
-	visible = {
-		any_state = { 
-			has_dynamic_modifier = { modifier = per_british_sphere }
-		}
-		ENG = {
-			is_subject = no
-			NOT = {
-				has_war_with = PER
+		target_root_trigger = {
+			has_template = "Ataryād-e Qazāqkhāneh"
+			check_variable = {
+				global.PER_cossack_cap > 0
 			}
-		}	
-	}
-}
-PER_persian_russian_sphere_states = {
-	icon = GFX_modifiers_PER_foreign_sphere
-
-	allowed = {
-		OR = {
-			tag = RUS
-			tag = PER
 		}
+		name = PER_cossack_recruitment
+		zoom = 100
 	}
-	
-	visible_when_empty = yes
-	
 	on_map_area = {
 		targets = {
-			420
-			419
-			266
-			416
-			418
 			877
 			1212
-		}	
+			1245
+			1251
+			420
+			1247
+			1211
+			1013 #Astrabad
+			584
+		}
 		target_trigger = {
 			FROM = {
-				has_dynamic_modifier = { modifier = per_russian_sphere }
+				OR = {
+					is_controlled_by = ROOT
+					is_controlled_by = OWNER
+				}
+				OR = {
+					has_contested_owner = PER #Root doesn't work
+					AND = {
+						is_owned_by = ROOT
+						is_in_home_area = yes
+					}							
+				}
 			}
 		}
-		name = PER_persian_russian_sphere_states
-		zoom = 150
+		target_root_trigger = {
+			has_template = "Nīrū-ye Eshāyer"
+		}
+		name = PER_tribal_recruitment
+		zoom = 100
 	}
-	
-	visible = {
-		any_state = { 
-			has_dynamic_modifier = { modifier = per_russian_sphere }
-		}
-		RUS = {
-			is_subject = no
-			NOT = {
-				has_war_with = PER
-				has_war_with = SOV
-				tag = SOV
+	on_map_area = {
+		target_array = ROOT.core_states
+		target_trigger = {
+			FROM = {
+				is_owned_and_controlled_by = ROOT
+				is_in_home_area = yes
+				impassable = no
+				NOT = { has_state_flag = PER_extorted_state }
 			}
-		}	
+		}
+		target_root_trigger = {
+			has_PER_constitutionalism = yes
+			has_completed_focus = PER_treasury_gendarmerie
+			has_character = PER_william_morgan_shuster
+			PER_william_morgan_shuster = {
+				is_hired_as_advisor = yes
+			}
+		}
+		name = PER_extortable_states
+		zoom = 100
 	}
 }
