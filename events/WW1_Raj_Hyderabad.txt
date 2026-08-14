@@ -1,49 +1,54 @@
-﻿add_namespace = ww1_princely
+﻿add_namespace = ww1_hyderabad
 
-#TRV: British hands back rubber rights
+# New Resident
 country_event = {
-	id = ww1_princely.1
-	title = ww1_princely.1.t
-	desc = ww1_princely.1.d
+	id = ww1_hyderabad.1
+	title = ww1_hyderabad.1.t
+	desc = ww1_hyderabad.1.d
 	picture = GFX_report_event_PLACEHOLDER
 	is_triggered_only = yes
 	fire_only_once = yes
 	option = {
-		name = ww1_princely.1.a
+		name = ww1_hyderabad.1.a
 		set_country_flag = HYD_1911_new_resident
 		activate_advisor = RAJ_alexander_pinhey
 	}
 }
-#GWA: British finish investment
+# Mahbub death event chain - reported dispute with wife
 country_event = {
-	id = ww1_princely.2
-	title = ww1_princely.2.t
-	desc = ww1_princely.2.d
+	id = ww1_hyderabad.2
+	title = ww1_hyderabad.2.t
+	desc = ww1_hyderabad.2.d
 	picture = GFX_report_event_PLACEHOLDER
-	trigger = {
-		NOT = {
-			has_war_with = ENG
-		}
-	}
 	is_triggered_only = yes
 	fire_only_once = yes
 	option = {
-		name = ww1_princely.2.a
-		random_owned_controlled_state = {
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = industrial_complex
-				level = 2
-				instant_build = yes
+		name = ww1_hyderabad.2.a
+		add_political_power = -5
+		hidden_effect = { #funny effect
+			if = {
+				limit = {
+					has_country_flag = nizam_death_delayed
+				}
+				country_event = {
+					id = ww1_hyderabad.3
+					days = 15
+				}
+			}
+			else = {
+				country_event = {
+					id = ww1_hyderabad.3
+					days = 3
+				}
 			}
 		}
 	}
 }
 #HYD: Mah-boob dies
 country_event = {
-	id = ww1_princely.3
-	title = ww1_princely.3.t
-	desc = ww1_princely.3.d
+	id = ww1_hyderabad.3
+	title = ww1_hyderabad.3.t
+	desc = ww1_hyderabad.3.d
 	picture = GFX_report_event_PLACEHOLDER
 	is_triggered_only = yes
 	fire_only_once = yes
@@ -54,52 +59,52 @@ country_event = {
 		}
 	}
 	option = {
-		name = ww1_princely.3.a
+		name = ww1_hyderabad.3.a
 		effect_tooltip = {
 			retire_character = HYD_mahbub_ali_khan
 			promote_character = HYD_osman_ali_khan
 		}
 		add_country_leader_trait = HYD_seventh_nizam
 		mark_focus_tree_layout_dirty = yes
+		country_event = {
+			id = ww1_hyderabad.5
+			days = 3
+		}
 	}
 }
 
 # HARDINGE letter to KISHEN PARSHAD
 
 country_event = {
-	id = ww1_princely.4
-	title = ww1_princely.4.t
-	desc = ww1_princely.4.d
-	picture = GFX_report_event_PLACEHOLDER
+	id = ww1_hyderabad.4
+	title = ww1_hyderabad.4.t
+	desc = ww1_hyderabad.4.d
+	picture = GFX_report_event_viceroy_visit_hyderabad
 	is_triggered_only = yes
 	fire_only_once = yes
 	option = {
-		name = ww1_princely.4.a
+		name = ww1_hyderabad.4.a
 		add_political_power = 15
 		add_stability = 0.01
 	}
 }
 # HARDINGE visit to HYDERABAD
 country_event = {
-	id = ww1_princely.5
-	title = ww1_princely.5.t
-	desc = ww1_princely.5.d
-	picture = GFX_report_event_PLACEHOLDER
-	trigger = {
-		date > 1911.10.01
-		tag = HYD
-		HYD = {
-			is_subject_of = RAJ
+	id = ww1_hyderabad.5
+	title = ww1_hyderabad.5.t
+	desc = ww1_hyderabad.5.d
+	picture = GFX_report_event_viceroy_visit_hyderabad
+	is_triggered_only = yes
+	option = {
+		name = ww1_hyderabad.5.a
+		trigger = {
+			tag = HYD
 		}
 		RAJ = {
-			has_completed_focus = RAJ_delhi_durbar
+			country_event = ww1_hyderabad.5
 		}
-	}
-	fire_only_once = yes
-	option = {
-		name = ww1_princely.5.a
 		country_event = {
-			id = ww1_princely.4
+			id = ww1_hyderabad.4
 			days = 2
 		}
 		add_political_power = 25
@@ -109,12 +114,19 @@ country_event = {
 			modifier = small_increase
 		}
 	}
+	option = {
+		name = ww1_hyderabad.5.b
+		trigger = {
+			tag = RAJ
+		}
+		add_political_power = 15
+	}
 }
 # BRITISH INVESTMENT event
 country_event = {
-	id = ww1_princely.6
-	title = ww1_princely.6.t
-	desc = ww1_princely.6.d
+	id = ww1_hyderabad.6
+	title = ww1_hyderabad.6.t
+	desc = ww1_hyderabad.6.d
 	picture = GFX_report_event_PLACEHOLDER
 	is_triggered_only = yes
 	trigger = {
@@ -125,10 +137,10 @@ country_event = {
 		}
 	}
 	option = {
-		name = ww1_princely.6.a
+		name = ww1_hyderabad.6.a
 		hidden_effect = {
 			country_event = {
-				id = ww1_princely.6
+				id = ww1_hyderabad.6
 				days = 365
 			}
 			add_to_variable = {
@@ -172,9 +184,9 @@ country_event = {
 }
 # JUNG appointed KEIR STARMER role
 country_event = {
-	id = ww1_princely.7
-	title = ww1_princely.7.t
-	desc = ww1_princely.7.d
+	id = ww1_hyderabad.7
+	title = ww1_hyderabad.7.t
+	desc = ww1_hyderabad.7.d
 	picture = GFX_report_event_PLACEHOLDER
 	is_triggered_only = yes
 	fire_only_once = yes
@@ -211,7 +223,7 @@ country_event = {
 		}
 	}
 	option = {
-		name = ww1_princely.7.a
+		name = ww1_hyderabad.7.a
 		effect_tooltip = {
 			deactivate_advisor = HYD_kishen_pershad
 			remove_trait = {
@@ -239,11 +251,11 @@ country_event = {
 	}
 }
 
-
+#Slow death of martial races theory
 country_event = {
-	id = ww1_princely.8
-	title = ww1_princely.8.t
-	desc = ww1_princely.8.d
+	id = ww1_hyderabad.8
+	title = ww1_hyderabad.8.t
+	desc = ww1_hyderabad.8.d
 	picture = GFX_report_event_PLACEHOLDER
 	is_triggered_only = yes
 	trigger = {
@@ -255,25 +267,24 @@ country_event = {
 		}
 	}
 	option = {
-		name = ww1_princely.8.a
+		name = ww1_hyderabad.8.a
 		HYD_degrade_martial_races_theory = yes
 		hidden_effect = {
 			country_event = {
-				id = ww1_princely.8
+				id = ww1_hyderabad.8
 				days = 365
-				hours = 6
 			}
 		}
 	}
 }
 country_event = {
-	id = ww1_princely.9
-	title = ww1_princely.9.t
-	desc = ww1_princely.9.d
+	id = ww1_hyderabad.9
+	title = ww1_hyderabad.9.t
+	desc = ww1_hyderabad.9.d
 	picture = GFX_report_event_PLACEHOLDER
 	is_triggered_only = yes
 	option = {
-		name = ww1_princely.9.a
+		name = ww1_hyderabad.9.a
 		trigger = {
 			tag = RAJ
 		}
@@ -281,7 +292,7 @@ country_event = {
 		#effects here
 	}
 	option = {
-		name = ww1_princely.9.b
+		name = ww1_hyderabad.9.b
 		trigger = {
 			tag = HYD
 		}
@@ -297,14 +308,14 @@ country_event = {
 	}
 }
 country_event = {
-	id = ww1_princely.10
-	title = ww1_princely.10.t
-	desc = ww1_princely.10.d
+	id = ww1_hyderabad.10
+	title = ww1_hyderabad.10.t
+	desc = ww1_hyderabad.10.d
 	picture = GFX_report_event_PLACEHOLDER
 	is_triggered_only = yes
 	fire_only_once = yes
 	option = {
-		name = ww1_princely.10.a
+		name = ww1_hyderabad.10.a
 		add_to_variable = {
 			HYD_mulki_loyalty = 2
 			tooltip = HYD_mulki_loyalty_tt
@@ -316,7 +327,7 @@ country_event = {
 		HYD_loyalty_scripted_effect = yes
 	}
 	option = {
-		name = ww1_princely.10.b
+		name = ww1_hyderabad.10.b
 		add_to_variable = {
 			HYD_mulki_loyalty = -2
 			tooltip = HYD_mulki_loyalty_tt
@@ -326,5 +337,18 @@ country_event = {
 			tooltip = HYD_outsiders_loyalty_tt
 		}
 		HYD_loyalty_scripted_effect = yes
+	}
+}
+country_event = {
+	id = ww1_hyderabad.11
+	title = ww1_hyderabad.11.t
+	desc = ww1_hyderabad.11.d
+	picture = GFX_report_event_PLACEHOLDER
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_hyderabad.11.a
+		custom_effect_tooltip = unlocks_focus_HYD_.11
+		set_country_flag = unlocks_focus_HYD_establish_co_operative_societies_tt
 	}
 }
