@@ -1,5 +1,9 @@
 ﻿add_namespace = ww1_raj
 
+###########################
+# Resignation of Viceroys #
+###########################
+
 # Earl of Minto resigns
 country_event = {
 	id = ww1_raj.1
@@ -30,39 +34,11 @@ country_event = {
 	}
 }
 
-# Third Delhi Durbar Event
-country_event = {
-	id = ww1_raj.3
-	title = ww1_raj.3.t
-	desc = ww1_raj.3.d
-	picture = GFX_report_event_third_delhi_durbar
-	fire_only_once = yes
-	is_triggered_only = yes
-	option = {
-		name = ww1_raj.3.a
-		add_stability = 0.02
-		army_experience = 25
-		set_country_flag = RAJ_held_delhi_durbar
-		hidden_effect = {
-			country_event = {
-				id = ww1_raj.23
-				days = 64
-				hours = 12
-				random_hours = 6
-			}
-			country_event = {
-				id = ww1_raj.59
-				days = 5
-			}
-		}
-	}
-}
-
 # Lord Hardinge resigns
 country_event = {
-	id = ww1_raj.5
-	title = ww1_raj.5.t
-	desc = ww1_raj.5.d
+	id = ww1_raj.2
+	title = ww1_raj.2.t
+	desc = ww1_raj.2.d
 	picture = GFX_report_event_charles_hardinge_resign
 	fire_only_once = yes
 	mean_time_to_happen = {
@@ -78,7 +54,7 @@ country_event = {
 		}
 	}
 	option = {
-		name = ww1_raj.5.a
+		name = ww1_raj.2.a
 		retire_character = RAJ_charles_hardinge
 		promote_character = {
 			character = RAJ_frederic_thesiger
@@ -86,6 +62,117 @@ country_event = {
 		}
 	}
 }
+
+# Creagh Resign
+country_event = {
+	id = ww1_raj.3
+	title = ww1_raj.3.t
+	desc = ww1_raj.3.d
+	picture = GFX_report_o_moore_creagh_resign
+	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 3
+	}
+	trigger = {
+		tag = RAJ
+		is_subject_of = ENG
+		date > 1916.4.1
+		has_country_leader = {
+			character = RAJ_garret_o_moore_creagh
+			ruling_only = yes
+		}
+	}
+	option = {
+		name = ww1_raj.3.a
+		promote_character = RAJ_frederic_thesiger
+	}
+}
+
+###############################
+# Delhi Durbar Related Events #
+###############################
+
+# Third Delhi Durbar
+country_event = {
+	id = ww1_raj.500
+	title = ww1_raj.500.t
+	desc = ww1_raj.500.d
+	picture = GFX_report_event_third_delhi_durbar
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_raj.500.a
+		army_experience = 35
+		country_event = {
+			id = ww1_raj.501
+		}
+
+		set_country_flag = RAJ_held_delhi_durbar
+
+		hidden_effect = {
+			country_event = {
+				id = ww1_raj.502
+				days = 64
+				hours = 12
+			}
+		}
+	}
+}
+
+# Gaekwad disrespects Emperor-King during Delhi Durbar
+country_event = {
+	id = ww1_raj.501
+	title = ww1_raj.501.t
+	desc = ww1_raj.501.d
+	picture = GFX_report_event_PLACEHOLDER
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ww1_raj.501.a
+		trigger = {
+			tag = RAJ
+		}
+		BAR = {
+			country_event = ww1_raj.501
+		}
+	}
+	option = {
+		name = ww1_raj.501.b
+		trigger = {
+			tag = BAR
+		}
+	}
+}
+
+# George V Adress the Parliament (Following Delhi Durbar)
+country_event = {
+	id = ww1_raj.502
+	title = ww1_raj.502.t
+	desc = ww1_raj.502.d
+	picture = GFX_report_event_third_delhi_durbar
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_raj.502.a
+		
+		add_to_variable = {
+			RAJ_british_confidence_var = 1
+			tooltip = RAJ_british_confidence_var_modify
+		}
+		RAJ_british_confidence_scripted_effect = yes
+		add_to_variable = {
+			RAJ_indian_confidence_var = 1
+			tooltip = RAJ_indian_confidence_var_modify
+		}
+		RAJ_indian_confidence_scripted_effect = yes
+		add_political_power = 10
+	}
+}
+
+################
+# Home Trouble #
+################
 
 # Closer cooperation with usa event
 country_event = {
@@ -169,8 +256,6 @@ country_event = {
 		}
 	}
 }
-
-
 
 # Indian Home Rule Movement
 country_event = {
@@ -278,20 +363,6 @@ country_event = {
 	}
 }
 
-# George V Adress the Parliament (Following Delhi Durbar)
-country_event = {
-	id = ww1_raj.23
-	title = ww1_raj.23.t
-	desc = ww1_raj.23.d
-	picture = GFX_report_event_third_delhi_durbar
-	fire_only_once = yes
-	is_triggered_only = yes
-	option = {
-		name = ww1_raj.23.a
-		add_stability = 0.02
-	}
-}
-
 # Muslim Indian doctors Sent to the Red Crescent
 country_event = {
 	id = ww1_raj.24
@@ -353,31 +424,6 @@ country_event = {
 		custom_effect_tooltip = RAJ_hardinge_fucking_dies
 		promote_character = RAJ_garret_o_moore_creagh
 		unlock_decision_tooltip = RAJ_o_moore_creagh_take_field_command
-	}
-}
-
-# Creagh Resign
-country_event = {
-	id = ww1_raj.28
-	title = ww1_raj.28.t
-	desc = ww1_raj.28.d
-	picture = GFX_report_o_moore_creagh_resign
-	fire_only_once = yes
-	mean_time_to_happen = {
-		days = 3
-	}
-	trigger = {
-		tag = RAJ
-		is_subject_of = ENG
-		date > 1916.4.1
-		has_country_leader = {
-			character = RAJ_garret_o_moore_creagh
-			ruling_only = yes
-		}
-	}
-	option = {
-		name = ww1_raj.28.a
-		promote_character = RAJ_frederic_thesiger
 	}
 }
 
@@ -916,31 +962,5 @@ country_event = {
 			tooltip = RAJ_indian_confidence_var_modify
 		}
 		RAJ_indian_confidence_scripted_effect = yes
-	}
-}
-
-# Gaekwad disrespects Emperor-King during Delhi Durbar
-country_event = {
-	id = ww1_raj.59
-	title = ww1_raj.59.t
-	desc = ww1_raj.59.d
-	picture = GFX_report_event_PLACEHOLDER
-
-	is_triggered_only = yes
-	
-	option = {
-		name = ww1_raj.59.a
-		trigger = {
-			tag = RAJ
-		}
-		BAR = {
-			country_event = ww1_raj.59
-		}
-	}
-	option = {
-		name = ww1_raj.59.b
-		trigger = {
-			tag = BAR
-		}
 	}
 }
