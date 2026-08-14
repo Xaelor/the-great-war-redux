@@ -193,7 +193,7 @@ focus_tree = {
 		id = princely_the_adj_army
 		icon = GFX_goal_generic_occupy_states_ongoing_war
 		x = 1
-		y = 6
+		y = 8
 		cost = 5
 		available = {
 		}
@@ -649,6 +649,7 @@ focus_tree = {
 				HYD_mulki_loyalty = 5
 				tooltip = HYD_mulki_loyalty_tt
 			}
+			HYD_improve_inefficient_departments = yes
 			add_to_variable = {
 				HYD_reforms_completed = 1
 			}
@@ -816,11 +817,7 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			custom_effect_tooltip = HYD_modify_nizams_domain
-			add_to_variable = {
-				HYD_nd_stability = 0.05
-				tooltip = stability_factor_tt
-			}
+			add_ideas = HYD_city_improvement_board_idea1
 			custom_effect_tooltip = empty_space_tt
 			add_tech_bonus = {
 				name = princely_pave_the_roads
@@ -1007,10 +1004,14 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
+			swap_ideas = {
+				remove_idea = HYD_city_improvement_board_idea1
+				add_idea = HYD_city_improvement_board_idea2
+			}
 			random_owned_controlled_state = {
 				add_building_construction = {
 					type = infrastructure
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
@@ -1239,7 +1240,10 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			
+			swap_ideas = {
+				add_idea = HYD_city_improvement_board_idea3
+				remove_idea = HYD_city_improvement_board_idea2
+			}
 		}
 	}
 	focus = {
@@ -1365,7 +1369,7 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			add_political_power = 120
+			HYD_improve_inefficient_departments = yes
 		}
 	}
 	focus = {
@@ -1435,6 +1439,7 @@ focus_tree = {
 			random_owned_controlled_state = {
 				add_extra_state_shared_building_slots = 1
 			}
+			HYD_improve_inefficient_departments = yes
 		}
 	}
 	focus = {
@@ -1455,6 +1460,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_political_power = 120
+			HYD_improve_inefficient_departments = yes
 		}
 	}
 	focus = {
@@ -1475,6 +1481,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_political_power = 120
+			HYD_improve_inefficient_departments = yes
 		}
 	}
 	focus = {
@@ -1495,6 +1502,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_political_power = 120
+			HYD_improve_inefficient_departments = yes
 		}
 	}
 	focus = {
@@ -1580,6 +1588,15 @@ focus_tree = {
 		}
 		cost = 10
 		available = {
+			OR = {
+				has_completed_focus = HYD_political_reforms
+				check_variable = {
+					var = HYD_mulki_loyalty
+					value = 25
+					compare = greater_than_or_equals
+					tooltip = HYD_mulki_loyalty_at_least_tt
+				}
+			}
 		}
 		completion_reward = {
 			add_to_variable = {
