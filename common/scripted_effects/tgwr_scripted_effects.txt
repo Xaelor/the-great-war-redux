@@ -689,26 +689,28 @@ GER_release_UBD = {
 GER_release_COU = {
 	if = {
 		limit = {
-			any_state = {
-				is_core_of = COU
-				OR = {
-					is_owned_by = RUS
-					is_owned_by = GER
+			COU = {
+				any_core_state = {
+					OR = {
+						is_owned_by = RUS
+						is_owned_by = GER
+					}
 				}
 			}
 		}
 		clr_country_flag = COU_should_be_released
-		every_state = {
-			limit = {
-				OR = {
-					is_owned_by = RUS
-					is_owned_by = GER
+		COU = {
+			every_core_state = {
+				limit = {
+					OR = {
+						is_owned_by = RUS
+						is_owned_by = GER
+					}
 				}
-				is_core_of = COU
+				transfer_state_to = COU
+				remove_russian_claims = yes
+				remove_russian_cores = yes
 			}
-			transfer_state_to = COU
-			remove_russian_claims = yes
-			remove_russian_cores = yes
 		}
 		puppet = COU
 		hidden_effect = {
