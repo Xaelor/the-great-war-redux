@@ -1,3 +1,30 @@
+declare_war_on_PREV = {
+	custom_effect_tooltip = declare_war_on_PREV_tt
+	hidden_effect = {
+		every_country = {
+			limit = {
+				OR = {
+					tag = PREV.PREV
+					AND = {
+						is_subject_of = PREV.PREV
+						NOT = {
+							has_autonomy_state = autonomy_tgwr_feudal_autonomy
+							has_autonomy_state = autonomy_tgwr_informal_protectorate
+							has_autonomy_state = autonomy_tgwr_protectorate
+							has_autonomy_state = autonomy_tgwr_ottoman_emirate
+						}
+					}
+				}
+			}
+			PREV = {
+				declare_war_on = {
+					target = PREV
+					type = annex_everything
+				}
+			}
+		}
+	}
+}
 abandon_puppet_tag = { #in testing
 	if = {
 		limit = {
@@ -13,8 +40,6 @@ abandon_puppet_tag = { #in testing
 				has_cosmetic_tag = ALS_GER
 
 				# French
-				has_cosmetic_tag = FRA_classic_blue
-				has_cosmetic_tag = FRA_socialist_red_alone
 				has_cosmetic_tag = ALG_FRA
 				has_cosmetic_tag = TUN_FRA
 				has_cosmetic_tag = FUJ_FRA
@@ -73,11 +98,9 @@ abandon_puppet_tag = { #in testing
 				has_cosmetic_tag = USA_FRA
 				has_cosmetic_tag = USA_UK
 				has_cosmetic_tag = USA_CSA
-				has_cosmetic_tag = USA_RUS
 				has_cosmetic_tag = USA_GER
 
 				has_cosmetic_tag = CHI_KOR
-				has_cosmetic_tag = CHI_RUS
 				has_cosmetic_tag = CHI_ENG
 				has_cosmetic_tag = CHI_GER
 				has_cosmetic_tag = CHI_JAP
@@ -666,26 +689,28 @@ GER_release_UBD = {
 GER_release_COU = {
 	if = {
 		limit = {
-			any_state = {
-				is_core_of = COU
-				OR = {
-					is_owned_by = RUS
-					is_owned_by = GER
+			COU = {
+				any_core_state = {
+					OR = {
+						is_owned_by = RUS
+						is_owned_by = GER
+					}
 				}
 			}
 		}
 		clr_country_flag = COU_should_be_released
-		every_state = {
-			limit = {
-				OR = {
-					is_owned_by = RUS
-					is_owned_by = GER
+		COU = {
+			every_core_state = {
+				limit = {
+					OR = {
+						is_owned_by = RUS
+						is_owned_by = GER
+					}
 				}
-				is_core_of = COU
+				transfer_state_to = COU
+				remove_russian_claims = yes
+				remove_russian_cores = yes
 			}
-			transfer_state_to = COU
-			remove_russian_claims = yes
-			remove_russian_cores = yes
 		}
 		puppet = COU
 		hidden_effect = {
@@ -3330,6 +3355,7 @@ set_up_syrian_monarchs = {
 					promote_leader = yes
 					country_leader = {
 						ideology = semi_constitutional_monarchy
+						traits = { sayyid }
 					}
 				}
 			}
@@ -3561,6 +3587,9 @@ GEO_withdraw_from_persia = {
 						state = 419
 						state = 877
 						state = 1212
+						state = 1245
+						state = 1250
+						state = 1251
 					}
 				}
 				if = {
@@ -3581,11 +3610,15 @@ GEO_withdraw_from_persia = {
 					}
 				}
 				else = {
-					transfer_state_to = PER
+					PER = {
+						safe_transfer_state_to = yes
+					}
 				}
 			}
 			else = {
-				transfer_state_to = PER
+				PER = {
+					safe_transfer_state_to = yes
+				}
 			}
 		}
 	}

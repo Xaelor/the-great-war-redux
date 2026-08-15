@@ -588,9 +588,11 @@ focus_tree = {
 			focus = JAP_ww1_assert_position_pacific
 		}
 		available = {
-			any_state = {
-				is_core_of = PHI
-				is_owned_by = USA
+			USA = {
+				any_owned_state = {
+					is_core_of = PHI
+					has_resistance = yes
+				}
 			}
 		}
 		bypass = {
@@ -601,16 +603,16 @@ focus_tree = {
 				country_exists = PHI
 			}		
 		}
-		completion_reward = {
-			every_state = {
-				limit = {
-					is_core_of = PHI
-					is_owned_by = USA
-				}
-				add_resistance = 30
-				add_compliance = -30
-			}
+		completion_reward = {		
 			USA = {
+				every_owned_state = {
+					limit = {
+						is_core_of = PHI
+						has_resistance = yes
+					}
+					add_resistance = 30
+					add_compliance = -30
+				}
 				add_opinion_modifier = {
 					target = PREV
 					modifier = HOI4TGW_Opinion_hostile_diplomatic_relations
@@ -806,7 +808,7 @@ focus_tree = {
 		will_lead_to_war_with = KOR
 		completion_reward = {
 			add_named_threat = {
-				threat = 5
+				threat = 2
 				name = JAP_ww1_Japan_Korea_Treaty
 			}
 			KOR = {
@@ -1355,13 +1357,8 @@ focus_tree = {
 		}
 		icon = GFX_focus_attack_britain
 		available = {
-			any_state = {
-				OR = {
-					state = 333
-					state = 336
-					state = 896
-					state = 897
-				}
+			any_state_of = {
+				target = { 333 336 896 897 }
 				owns_or_subject_of = no
 			}
 		}

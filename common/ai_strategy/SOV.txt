@@ -45,8 +45,7 @@ SOV_dont_leave_german_front = {
 	ai_strategy = {
 		type = front_control
 		tag = GER
-		ratio = 0.75 # the strategy is enabled only if ratio of the front covered by this strat's targets greater than this ratio 
-		#Le Vrai : It means that Germany wont do anything EXCEPT if France remove a lot of troops
+		ratio = 0.75
 		priority = 250
 		ordertype = front
 		execution_type = careful
@@ -260,97 +259,7 @@ VLN_dont_invite = {
 		value = -5000
 	}
 }
-SOV_tsaritsyn_offensive = {
-	allowed = {
-		tag = RUS
-	}
-	enable = {
-		tag = SOV
-		has_war_with = SRA
-	}
-	abort = {
-		OR = {
-			NOT = { has_war_with = SRA }
-			AND = {
-				236 = { is_fully_controlled_by = SOV }
-				217 = { is_fully_controlled_by = SOV }
-			}
-			date > 1920.1.1
-		}
-	}
-	ai_strategy = {
-		type = front_unit_request
-		country_trigger = {
-			original_tag = RUS
-			has_country_flag = RUS_volunteer_army_tag
-		}
-		state = 217
-		state = 236
-		state = 265
 
-		value = 100
-	}
-}
-SOV_focus_on_sra = {
-	allowed = {
-		tag = RUS
-	}
-	enable = {
-		tag = SOV
-		has_war_with = SRA
-		OR = {
-			NOT = {
-				has_idea = SOV_war_in_the_caucasus_1
-			}
-			NOT = {
-				has_idea = SOV_war_in_the_caucasus_2
-			}
-		}
-	}
-	abort = {
-		SRA = {
-			OR = {
-				exists = no
-				has_capitulated = yes
-			}
-		}
-	}
-	ai_strategy = {
-		type = front_unit_request
-		country_trigger = {
-			original_tag = RUS
-			has_country_flag = RUS_volunteer_army_tag
-		}
-		value = 300
-	}
-	ai_strategy = {
-		type = front_unit_request
-		tag = DON
-		value = 300
-	}
-}
-SOV_sib_is_danger = {
-	allowed = {
-		tag = RUS
-	}
-	enable = {
-		tag = SOV
-		has_war_with = SIB
-	}
-	abort = {
-		SIB = {
-			exists = no
-		}
-	}
-	ai_strategy = {
-		type = front_unit_request
-		country_trigger = {
-			original_tag = RUS
-			has_country_flag = RUS_siberia_tag
-		}
-		value = 100
-	}
-}
 SOV_caucasus_rush_kuban = {
 	allowed = {
 		OR = {
@@ -369,37 +278,18 @@ SOV_caucasus_rush_kuban = {
 
 	ai_strategy = {
 		type = front_control
-		state_trigger = {
-			state = 234
-		}
 		tag = KUB
 		priority = 9999
-		ratio = 0.9
+		ratio = 0
 		ordertype = front
 		execution_type = rush
 		manual_attack = yes
 		execute_order = yes
 	}
 	ai_strategy = {
-		type = ignore_army_incompetence
-		value = 9999
-	}
-	# ai_strategy = {
-	# 	type = put_unit_buffers
-	# 	ratio = 0.1
-	# 	states = {
-	# 		941
-	# 	}
-	# 	subtract_fronts_from_need = no
-	# }
-	ai_strategy = {
 		type = front_unit_request
-		state = 234
+		tag = KUB
 		value = 9999
-	}
-	ai_strategy = {
-		type = garrison
-		value = -1000
 	}
 }
 SOV_caucasus_garrison_kuban = {
@@ -407,8 +297,8 @@ SOV_caucasus_garrison_kuban = {
 		OR = {
 			tag = BSR
 			tag = STV
-			tag = TER
-			tag = KUB
+			original_tag = TER
+			original_tag = KUB
 		}
 	}
 	enable = {
@@ -432,68 +322,111 @@ SOV_caucasus_garrison_kuban = {
 		subtract_fronts_from_need = no
 	}
 }
-SOV_kom_is_danger = {
+
+SOV_save_equipment_for_militia = {
 	allowed = {
 		tag = RUS
 	}
 	enable = {
 		tag = SOV
-		has_war_with = KOM
-	}
-	abort = {
-		KOM = {
-			exists = no
+		has_equipment = {
+			infantry_equipment < 3000
 		}
+		is_in_russian_civil_war = yes
+		has_completed_focus = SOV_red_army
+		any_controlled_state = {
+			state_population_k > 50
+			OR = {
+				is_in_array = {
+					array = global.RCW_core_big_states_array
+					value = THIS.id
+				}
+				is_in_array = {
+					array = global.RCW_core_large_states_array
+					value = THIS.id
+				}
+				is_in_array = {
+					array = global.RCW_core_huge_states_array
+					value = THIS.id
+				}
+			}
+			NOT = { has_state_flag = SOV_has_mobilized_militia }
+			is_core_of = ROOT
+			any_neighbor_state = {
+				controller = {
+					has_war_with = ROOT
+				}
+			}
+			impassable = no
+			is_demilitarized_zone = no
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = build_army
+		id = infantry
+		value = -1000
 	}
 	ai_strategy = {
-		type = front_unit_request
-		country_trigger = {
-			original_tag = RUS
-			has_country_flag = RUS_komuch_tag
-		}
-		value = 100
+		type = build_army
+		id = infantry_rcw
+		value = -1000
+	}
+	ai_strategy = {
+		type = force_build_armies
+		value = -1000
 	}
 }
-SOV_north_is_danger = {
+
+SOV_petrograd_garrison = {
 	allowed = {
 		tag = RUS
 	}
 	enable = {
 		tag = SOV
-		has_war_with = RSO
-	}
-	abort = {
-		RSO = {
+		195 = {
+			is_owned_and_controlled_by = ROOT
+		}
+		926 = {
 			OR = {
-				exists = no
-				has_capitulated = yes
+				controller = {
+					has_war_with = ROOT
+				}
+				any_neighbor_state = {
+					controller = {
+						has_war_with = ROOT
+					}
+				}
 			}
 		}
 	}
+	abort_when_not_enabled = yes
+
 	ai_strategy = {
-		type = front_unit_request
-		country_trigger = {
-			tag = RSO
+		type = put_unit_buffers
+		ratio = 0.3
+		states = {
+			195
 		}
-		value = 50
+		subtract_fronts_from_need = yes
 	}
 }
-SOV_northwestern_army_front = {
+
+SOV_crush_nwa = {
 	allowed = {
 		tag = RUS
 	}
 	enable = {
 		tag = SOV
 		has_war_with = NWA
-	}
-	abort = {
 		NWA = {
 			OR = {
-				exists = no
-				has_capitulated = yes
+				has_capitulated = no
+				exists = yes
 			}
 		}
 	}
+	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = front_unit_request
 		country_trigger = {
@@ -501,199 +434,43 @@ SOV_northwestern_army_front = {
 		}
 		value = 100
 	}
+
 	ai_strategy = {
 		type = front_control
 		country_trigger = {
 			tag = NWA
 		}
-		priority = 100
+		ratio = 0 
+		priority = 250
 		ordertype = front
-		execution_type = balanced
+		execution_type = rush
 	}
 }
-SOV_estonian_front = {
-	allowed = {
-		tag = RUS
-	}
-	enable = {
-		tag = SOV
-		OR = {
-			has_war_with = EST
-			has_war_with = LAT
-			has_war_with = LIT
-		}
-	}
-	abort = {
-		EST = {
-			exists = no
-		}
-		LAT = {
-			exists = no
-		}
-		LIT = {
-			exists = no
-		}
-	}
-	ai_strategy = {
-		type = front_unit_request
-		tag = EST
-		value = 50
-	}
-	ai_strategy = {
-		type = front_unit_request
-		tag = LAT
-		value = 50
-	}
-	ai_strategy = {
-		type = front_unit_request
-		tag = LIT
-		value = 50
-	}
-}
-SOV_dont_ignore_ore = {
-	allowed = {
-		tag = RUS
-	}
-	enable = {
-		tag = SOV
-		has_war_with = ORE
-	}
-	abort = {
-		ORE = {
-			OR = {
-				exists = no
-				has_capitulated = yes
-			}
-		}
-	}
-	ai_strategy = {
-		type = front_unit_request
-		tag = ORE
-		value = 20
-	}
-}
-SOV_dont_ignore_UCH = {
-	allowed = {
-		tag = RUS
-	}
-	enable = {
-		tag = SOV
-		has_war_with = UCH
-	}
-	abort = {
-		UCH = {
-			OR = {
-				exists = no
-				has_capitulated = yes
-			}
-		}
-	}
-	ai_strategy = {
-		type = front_unit_request
-		tag = UCH
-		value = 20
-	}
-}
-SOV_ignore_caucasus_1 = {
-	allowed = {
-		is_russian_tag = yes
-	}
-	enable = {
-		tag = SOV
-		has_war_with = SRA
-		SOV = {
-			has_idea = SOV_war_in_the_caucasus_1
-		}	
-		any_country_with_original_tag = {
-			original_tag_to_check = DON
-			has_country_flag = DON_soviet_tag
-		}
-	}
-	abort_when_not_enabled = yes
-	ai_strategy = {
-		type = front_unit_request
-		country_trigger = {
-			original_tag = RUS
-			has_country_flag = RUS_volunteer_army_tag
-		}
-		value = -9999
-	}
-}
-SOV_ignore_caucasus_2 = {
-	allowed = {
-		is_russian_tag = yes
-	}
-	enable = {
-		tag = SOV
-		has_war_with = SRA
-		SOV = {
-			has_idea = SOV_war_in_the_caucasus_2
-		}
-		any_country_with_original_tag = {
-			original_tag_to_check = DON
-			has_country_flag = DON_soviet_tag
-		}
-	}
-	abort_when_not_enabled = yes
-	ai_strategy = {
-		type = front_unit_request
-		country_trigger = {
-			original_tag = RUS
-			has_country_flag = RUS_volunteer_army_tag
-		}
-		value = -9999
-	}
-	ai_strategy = {
-		type = front_unit_request
-		tag = DON
-		value = -9999
-	}
-}
-SOV_sra_front = {
+
+SOV_focus_on_sra = {
 	allowed = {
 		tag = RUS
 	}
 	enable = {
 		tag = SOV
 		has_war_with = SRA
-	}
-	abort = {
 		SRA = {
 			OR = {
-				exists = no
-				has_capitulated = yes
+				has_capitulated = no
+				exists = yes
 			}
-		}	
-	}
-
-	ai_strategy = {
-		type = front_unit_request
-		country_trigger = {
-			original_tag = RUS
-			has_country_flag = RUS_volunteer_army_tag
-		}
-		value = 100
-	}
-}
-SOV_POL_front = {
-	allowed = {
-		tag = RUS
-	}
-	enable = {
-		tag = SOV
-		has_war_with = POL
-		POL = {
-			is_subject = no
 		}
 	}
 	abort_when_not_enabled = yes
-
 	ai_strategy = {
 		type = front_unit_request
-		tag = POL
-		value = 100
+		country_trigger = {
+			tag = SRA
+		}
+		value = 15
 	}
 }
+
 SOV_hungaria_romanian_war = {
 	allowed = {
 		tag = RUS
@@ -1027,6 +804,29 @@ SOV_crush_rest_of_white_army = {
 				tag = RSO
 			}
 		}
+		value = 100
+	}
+}
+
+SOV_build_mils = {
+	allowed = {
+		tag = RUS
+	}
+	enable = {
+		tag = SOV
+		is_in_russian_civil_war = yes
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = build_building
+		id = arms_factory
+		target = 219
+		value = 100
+	}
+	ai_strategy = {
+		type = build_building
+		id = arms_factory
+		target = 195
 		value = 100
 	}
 }
