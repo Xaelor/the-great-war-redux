@@ -644,9 +644,6 @@ peace_deals = {
 		targets = {
 			POL
 		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
 		available = {
 			OR = {
 				surrender_progress > 0.05
@@ -2467,11 +2464,12 @@ SOV_decision_soviet_republics = {
 		icon = GFX_decision_SOV_secure_the_administration
 		available = {
 			has_completed_focus = SOV_soviet_republics
-			any_state = {
-				is_core_of = KAZ
-				NOT = {is_core_of = ROOT}
-				is_fully_controlled_by = ROOT
-    		}
+			KAZ = {
+				any_core_state = {
+					NOT = {is_core_of = ROOT}
+					is_fully_controlled_by = ROOT
+				}
+			}
 			OR = {
 				has_government = democratic
 				has_government = communism
@@ -3725,10 +3723,12 @@ SOV_decision_soviet_republics = {
 			base = 0
 			modifier = {
 				add = 100
-				any_state = {
-					is_controlled_by_ROOT_or_subject = yes
-					controller = {
-						is_neighbor_of = FROM
+				FROM = {
+					any_neighbor_country = {
+						OR = {
+							tag = ROOT
+							is_ally_with = ROOT
+						}
 					}
 				}
 			}
