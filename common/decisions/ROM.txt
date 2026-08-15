@@ -526,8 +526,37 @@ political_actions = {
 }
 
 ROM_kings_country_category = {
+	ROM_a_new_leader = {
+		icon = GFX_decision_generic_monarchy
+		allowed = {
+			tag = ROM
+		}
+		activation = {
+			always=no
+		}
+		available = {
+			OR = {
+				has_completed_focus = ROM_restore_civilian_control
+				has_completed_focus = ROM_appoint_a_directed_ministry
+			}
+		}
+		days_mission_timeout = 180
+		selectable_mission = no
+		is_good = no
+		complete_effect = {
+			add_political_power = 15
+		}
+		timeout_effect = {
+			add_political_power = -100
+			add_stability = -0.15
+			complete_national_focus = ROM_restore_civilian_control
+		}
+	}
 	ROM_king_appoints_new_government = {
 		icon = GFX_decision_generic_monarchy
+		allowed = {
+			tag = ROM
+		}
 		activation = {
 			check_variable = {
 				kings_approval_of_government < -3
@@ -575,6 +604,9 @@ ROM_kings_country_category = {
 	}
 	ROM_kings_rotation = {
 		icon = GFX_decision_generic_monarchy
+		allowed = {
+			tag = ROM
+		}
 		activation = {
 			original_tag = ROM
 			is_ai = no

@@ -816,29 +816,10 @@ country_event = {
 			}	
 		}
 		retire_character = ROM_carol_i
-		if = {
-			limit = {
-				has_ROM_conservative_government = yes
-			}
-			add_to_variable = {
-				kings_approval_of_government = -1
-			}
-			custom_effect_tooltip = king_opinion_worse.tt
-			ROM_king_effect = yes
-		}
-		if = {
-			limit = {
-				OR = {
-					has_ROM_liberal_government = yes
-					has_ROM_pcd_government = yes
-				}
-			}
-			add_to_variable = {
-				kings_approval_of_government = 1
-			}
-			custom_effect_tooltip = king_opinion_improve.tt
-			ROM_king_effect = yes
-		}
+		clr_country_flag = ROM_carol_king
+		set_country_flag = ROM_ferdinand_king
+		custom_effect_tooltip = king_opinion_set_n.tt
+		set_variable = { kings_approval_of_government = 0 }
 		ROM_king_effect = yes
 	}
 }
@@ -1894,7 +1875,7 @@ country_event = {
 		hidden_effect = {
 			country_event = {
 				id = ww1_romania.72
-				days = 20
+				days = 180
 			}
 		}
 		set_country_flag = ROM_make_it_safer
@@ -2179,35 +2160,35 @@ country_event = {
 		complete_national_focus = ROM_agrarianists_in_power
 		hidden_effect = { ROM_remove_pcd_leader_trait = yes }
 	}
-	#option = {
-	#	name = ww1_romania.77.e
-	#	trigger = {
-	#		NOT = {
-	#			has_completed_focus = ROM_the_conservative_conservatives
-	#		}
-	#	}
-	#	ROM_barbu_delavrancea = { promote_character = { ideology = authoritarian_democracy } }
-	#	set_politics = {
-	#		ruling_party = neutrality
-	#		elections_allowed = yes
-	#		name = ROM_conservative_party
-	#		long_name = ROM_conservative_party_long
-	#	}
-	#	add_ideas = ROM_divided_party
-	#	hidden_effect = {
-	#		add_popularity = {
-    #			ideology = neutrality
-    #			popularity = 0.1
-	#		}
-	#	}
-	#	set_variable = {
-	#		kings_approval_of_government = 0
-	#	}
-	#	ROM_king_effect = yes
-	#	add_stability = -0.1
-	#	complete_national_focus = ROM_the_conservative_conservatives
-	#	hidden_effect = { ROM_remove_pcd_leader_trait = yes }
-	#}
+	option = {
+		name = ww1_romania.77.e
+		trigger = {
+			NOT = {
+				has_completed_focus = ROM_the_conservative_conservatives
+			}
+		}
+		ROM_barbu_delavrancea = { promote_character = { ideology = authoritarian_democracy } }
+		set_politics = {
+			ruling_party = neutrality
+			elections_allowed = yes
+			name = ROM_conservative_party
+			long_name = ROM_conservative_party_long
+		}
+		add_ideas = ROM_divided_party
+		hidden_effect = {
+			add_popularity = {
+    			ideology = neutrality
+    			popularity = 0.1
+			}
+		}
+		set_variable = {
+			kings_approval_of_government = 0
+		}
+		ROM_king_effect = yes
+		add_stability = -0.1
+		complete_national_focus = ROM_the_conservative_conservatives
+		hidden_effect = { ROM_remove_pcd_leader_trait = yes }
+	}
 	option = {
 		name = ww1_romania.77.f
 		trigger = {
@@ -7196,5 +7177,51 @@ country_event = {
 	picture = GFX_report_event_generic_sign_treaty1
 	option = {
 		name = ww1_romania.214.a
+	}
+}
+#barbu D. dies
+country_event = {
+	id = ww1_romania.215
+	title = ww1_romania.215.t
+	desc = ww1_romania.215.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_sign_treaty1
+	trigger = {
+		tag=ROM
+		date > 1918.04.29
+	}
+	fire_only_once = yes
+	immediate = {
+		retire_character = ROM_barbu_delavrancea
+	}
+	option = {
+		name = ww1_romania.215.a
+		effect_tooltip = {
+			retire_character = ROM_barbu_delavrancea
+		}
+	}
+}
+# royalist coalition
+country_event = {
+	id = ww1_romania.216
+	title = ww1_romania.216.t
+	desc = ww1_romania.216.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_sign_treaty1
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_romania.216.a
+		promote_character = ROM_take_ionescu
+		complete_national_focus = ROM_the_house_always_wins
+		clr_global_flag = ROM_liberal_government
+		clr_global_flag = ROM_conservative_government
+		set_global_flag = ROM_pcd_government
+		set_politics = {
+		    ruling_party = democratic
+		    elections_allowed = no
+		    long_name = ROM_pcd_name_long
+		    name = ROM_pcd_name
+		}
 	}
 }
