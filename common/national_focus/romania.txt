@@ -11056,28 +11056,29 @@ focus_tree = {
 		}
 		relative_position_id = ROM_victory_in_hungarian_war
 		completion_reward = {
-			FRA = {
+			ENT = {
 				country_event = {
 					id = ww1_romania.110
 				}
 			}
-			FRA = {
+			ENT = {
 				add_opinion_modifier = {
 					target = ROOT
 					modifier = ROM_entente_condemned_actions
 				}
 			}
 			add_opinion_modifier = {
-				target = FRA
+				target = ENT
 				modifier = ROM_entente_condemned_actions
 			}
 			custom_effect_tooltip = event_chain_hungary.tt
 			HUN = {
 				get_current_government_type = yes
+				set_country_flag = occupied_state
 			}
 			set_autonomy = {
 				target = HUN
-				autonomous_state = autonomy_integrated_puppet
+				autonomous_state = autonomy_tgwr_occupied_state
 				end_wars = yes
 				end_civil_wars = yes
 			}
@@ -11186,9 +11187,7 @@ focus_tree = {
 			add_stability = -0.075
 			add_war_support = -0.05
 			custom_effect_tooltip = ROM_enables_secret_ending.tt
-			hidden_effect = {
-				set_country_flag = ROM_do_not_release_hungary
-			}
+			set_country_flag = ROM_do_not_release_hungary
 			if = {
 				limit = {
 					OR = {
@@ -11197,6 +11196,56 @@ focus_tree = {
 					}
 				}
 				leave_faction = yes
+			}
+		}
+		ai_will_do = {
+			factor = 0
+		}
+		search_filters = {
+			FOCUS_FILTER_ANNEXATION
+		}
+	}
+	focus = {
+		id = ROM_romania_hungary
+		icon = GFX_focus_HUN_establish_the_second_republic
+		cost = 3
+		x = 0
+		y = 1
+		available = {
+			NOT = {
+				has_country_flag = ROM_freed_hungary
+			}
+			has_subject = HUN
+		}
+		prerequisite = {
+			focus = ROM_ignore_the_entente_protests
+		}
+		allow_branch = {
+			OR = {
+				AND = {
+					HUN = {
+						is_subject_of = ROOT
+						has_country_flag = protectorate
+					}
+				}
+				has_country_flag = debug_mode_romania
+			}
+		}
+		relative_position_id = ROM_ignore_the_entente_protests
+		completion_reward = {
+			add_stability = 0.05
+			HUN = {
+				add_stability = 0.05
+				clr_country_flag = protectorate
+				get_current_government_type = yes
+				PREV = {
+					set_autonomy = {
+						target = PREV
+						autonomous_state = autonomy_puppet
+						end_wars = yes
+					}
+				}	
+				restore_previous_government_type = yes
 			}
 		}
 		ai_will_do = {
