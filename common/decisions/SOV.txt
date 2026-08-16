@@ -1723,17 +1723,11 @@ SOV_combat_the_counter_revolution = {
 	}
 	SOV_soviet_stavrapol = {
 		icon = GFX_decision_SOV_secure_the_administration
+		allowed = {
+			always = no
+		}
 		activation = {
-			has_completed_focus = SOV_combat_the_counter_revolution
-			is_subject = no
-			has_government = communism
-			NOT = {
-				any_country_with_original_tag = {
-					original_tag_to_check = RUS
-					has_country_flag = RUS_stavropol_tag
-				}
-			}
-			owns_state = 235
+			always = no
 		}
 		available = {
 			OR = {
@@ -1912,16 +1906,11 @@ SOV_combat_the_counter_revolution = {
 	# }
 	SOV_soviet_abkhazia = {
 		icon = GFX_decision_SOV_secure_the_administration
+		allowed = {
+			always = no
+		}
 		activation = {
-			has_completed_focus = SOV_combat_the_counter_revolution
-			is_subject = no
-			has_government = communism
-			ABK = {
-				exists = yes
-				NOT = {
-					has_government = communism
-				}
-			}
+			always = no
 		}
 		available = {
 			OR = {
@@ -2108,14 +2097,87 @@ SOV_decision_soviet_republics = {
 			}	
 		}
 	}
+	SOV_soviet_kazan = {
+		icon = GFX_decision_SOV_secure_the_administration
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		available = {
+			OR = {
+				NOT = {
+					has_government = communism
+					owns_state = 249
+				}
+				is_subject = yes
+				country_exists = TAT
+			}			
+		}
+		ai_will_do = {
+			base = 200
+		}
+		is_good = yes
+		days_mission_timeout = 23
+		fire_only_once = yes
+		timeout_effect = {
+			249 = {
+				TAT = {
+					RCW_ROOT_release_PREV = yes
+				}			
+			}
+			TAT = {
+				ROOT = {
+					puppet = PREV
+				}
+				set_politics = {
+					ruling_party = communism
+				}
+				set_cosmetic_tag = TAT_kazan_communism		
+				hidden_effect = {
+					set_popularities = {
+						communism = 69
+						democratic = 31
+					}
+					copy_SOV_army_idea = yes
+					set_country_flag = dont_trigger_political_event
+					load_focus_tree = empty_focus
+					if = {
+						limit = { ROOT = { has_idea = RUS_demobilizing_army }}
+						country_lock_all_division_template = yes 
+					}
+					division_template = {
+						name = "Krasnaya Gvardiya"
+						template_counter = 69
+						division_names_group = RUS_MIL_01
+						regiments = {
+							militia = { x = 0 y = 0 }
+							militia = { x = 0 y = 1 }
+							militia = { x = 1 y = 0 }
+						}
+						division_cap = 3
+					}
+				}
+				random_owned_state = {
+					create_unit = {
+						division = "division_template = \"Krasnaya Gvardiya\" start_experience_factor = 0.1 start_equipment_factor = 0.5"
+						owner = PREV
+						count = 3
+						prioritize_location = 6338
+					}
+					set_state_flag = SOV_has_mobilized_militia
+				}
+			}
+		}
+	}
 	SOV_soviet_amur = {
 		icon = GFX_decision_SOV_secure_the_administration
+		allowed = {
+			always = no
+		}
 		activation = {
-			has_completed_focus = SOV_soviet_republics
-			is_subject = no
-			has_government = communism
-			owns_state = 561
-			NOT = { country_exists = AMU }
+			always = no
 		}
 		available = {
 			OR = {
@@ -2198,12 +2260,11 @@ SOV_decision_soviet_republics = {
 	}
 	SOV_soviet_terek = {
 		icon = GFX_decision_SOV_secure_the_administration
+		allowed = {
+			always = no
+		}
 		activation = {
-			has_completed_focus = SOV_soviet_republics
-			is_subject = no
-			has_government = communism
-			NOT = { country_exists = TER }
-			owns_state = 232
+			always = no
 		}
 		available = {
 			OR = {
@@ -2437,7 +2498,9 @@ SOV_decision_soviet_republics = {
 							is_core_of = ROOT
 						}
 					}
-					add_core_of = ROOT
+					ROOT = {
+						RCW_core_state_PREV = yes
+					}
 				}
 				every_core_state = {
 					limit = {
@@ -2500,15 +2563,11 @@ SOV_decision_soviet_republics = {
 	SOV_soviet_belarus_mssion = {
 		name = SOV_soviet_belarus
 		icon = GFX_decision_SOV_secure_the_administration
+		allowed = {
+			always = no
+		}
 		activation = {
-			has_completed_focus = SOV_soviet_republics
-			is_subject = no
-			has_government = communism
-			OR = {
-				owns_state = 242
-				owns_state = 206
-			}
-			NOT = { country_exists = BRS }
+			always = no
 		}
 		available = {
 			has_global_flag = brest_litovsk_finished
