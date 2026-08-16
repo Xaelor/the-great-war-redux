@@ -562,13 +562,7 @@ ROM_kings_country_category = {
 			always = no
 		}
 		available = {
-			is_ai = yes
-		}
-		cancel_trigger = {
-			OR = {
-				has_completed_focus = ROM_law_and_order
-				has_ROM_conservative_government = no
-			}
+			always = no
 		}
 		days_mission_timeout = 90
 		selectable_mission = no
@@ -576,6 +570,38 @@ ROM_kings_country_category = {
 		}
 		timeout_effect = {
 			country_event = ww1_romania.218
+		}
+	}
+	ROM_the_clock_is_ticking = {
+		icon = GFX_decision_generic_monarchy
+		allowed = {
+			tag = ROM
+		}
+		activation = {
+			always = no
+		}
+		available = {
+			has_completed_focus = ROM_continue_democratization
+			has_completed_focus = ROM_the_party_of_thieves
+			check_variable = {
+				kings_approval_of_government < -2
+				tooltip = ROM_king_approval_rating_bad
+			}
+			has_ROM_conservative_government = yes
+			NOT = {
+				has_country_leader = {
+					character = ROM_titu_maiorescu
+					ruling_only = yes
+				}
+			}
+		}
+		days_mission_timeout = 600
+		selectable_mission = no
+		complete_effect = {
+			country_event = ww1_romania.217
+		}
+		timeout_effect = {
+			
 		}
 	}
 	#ROM_king_appoints_new_government = {
