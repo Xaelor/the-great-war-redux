@@ -68,6 +68,26 @@
 
 	# INDUSTRIAL TREE #
 	focus = {
+		id = RAJ_matters_of_the_council
+		icon = GFX_focus_matters_of_the_council
+		x = 20
+		y = 0
+		cancelable = no
+		available = {
+		}
+		cost = 5
+		completion_reward = {
+			country_event = {
+				id = ww1_council_raj.0
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		search_filters = {
+		}
+	}
+	focus = {
 		id = RAJ_indian_electricity_act
 		icon = GFX_focus_ARG_develop_the_electricity_sector
 		x = -16
@@ -114,43 +134,39 @@
 		}
 	}
 	focus = {
-		id = RAJ_hardinge_bridge_railway
-		icon = GFX_focus_generic_train
-		x = 0
-		y = 2
-		relative_position_id = RAJ_indian_iron_and_steel_company
+		id = RAJ_indian_tramways_act
+		icon = GFX_focus_generic_energy
+		x = 6
+		y = 1
+		relative_position_id = RAJ_indian_electricity_act
+
 		available = {
-			has_country_leader = {
-				character = RAJ_charles_hardinge
-				ruling_only = yes
-			}
+			has_country_flag = council_meeting_march_1911_held
 		}
 		cost = 5
 		prerequisite = {
-			focus = RAJ_indian_iron_and_steel_company
+			focus = RAJ_indian_electricity_act
 		}
-		prerequisite = {
-			focus = RAJ_builder_of_the_raj
-		}
-		completion_reward = {
-			custom_effect_tooltip = RAJ_modify_deindustrialisation
-			add_to_variable = {
-				RAJ_ind_civ_construction_speed = 0.025
-				tooltip = production_speed_industrial_complex_factor_tt
-			}
-			add_to_variable = {
-				RAJ_ind_factory_output = 0.025
-				tooltip = industrial_capacity_factory_tt
-			}
-			add_to_variable = {
-				RAJ_ind_efficiency_cap = 0.025
-				tooltip = production_factory_max_efficiency_factor_tt
-			}
 
-			build_railway = {
-				path = {
-					1609
-					4616
+		completion_reward = {
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				custom_effect_tooltip = available_mio_tt
+				show_mio_tooltip = RAJ_indian_railways_organization
+				custom_effect_tooltip = empty_space_tt
+
+				custom_effect_tooltip = available_industrial_concern
+				show_ideas_tooltip = RAJ_indian_railways
+				custom_effect_tooltip = empty_space_tt
+
+				mio:RAJ_indian_railways_organization = {
+					add_mio_funds = 1500
+				}
+				else = {
+					show_ideas_tooltip = RAJ_indian_railways
+					custom_effect_tooltip = empty_space_tt
 				}
 			}
 		}
@@ -209,6 +225,102 @@
 				tooltip = RAJ_indian_confidence_var_modify
 			}
 			RAJ_indian_confidence_scripted_effect = yes
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+	}
+	focus = {
+		id = RAJ_indian_iron_and_steel_company
+		icon = GFX_focus_generic_steel
+		x = -1
+		y = 1
+		relative_position_id = RAJ_calcutta_improvement_act
+		available = {
+			OR = {
+				has_full_control_of_state = 429
+				has_full_control_of_state = 430
+				has_full_control_of_state = 436
+			}
+		}
+		cost = 5
+		prerequisite = {
+			focus = RAJ_calcutta_improvement_act
+		}
+		completion_reward = {
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = RAJ_bengal_iron_and_steel_company
+			custom_effect_tooltip = empty_space_tt
+			
+			if = {
+				limit = {
+					has_full_control_of_state = 430
+				}
+				430 = {
+					add_resource = {
+						type = steel
+						amount = 3
+					}
+				}
+			}
+			custom_effect_tooltip = empty_space_tt
+
+			add_to_variable = {
+				RAJ_british_confidence_var = 2.5
+				tooltip = RAJ_british_confidence_var_modify
+			}
+			RAJ_british_confidence_scripted_effect = yes
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+		}
+	}
+	focus = {
+		id = RAJ_hardinge_bridge_railway
+		icon = GFX_focus_generic_train
+		x = 0
+		y = 2
+		relative_position_id = RAJ_indian_iron_and_steel_company
+		available = {
+			has_country_leader = {
+				character = RAJ_charles_hardinge
+				ruling_only = yes
+			}
+		}
+		cost = 5
+		prerequisite = {
+			focus = RAJ_indian_iron_and_steel_company
+		}
+		prerequisite = {
+			focus = RAJ_builder_of_the_raj
+		}
+		completion_reward = {
+			custom_effect_tooltip = RAJ_modify_deindustrialisation
+			add_to_variable = {
+				RAJ_ind_civ_construction_speed = 0.025
+				tooltip = production_speed_industrial_complex_factor_tt
+			}
+			add_to_variable = {
+				RAJ_ind_factory_output = 0.025
+				tooltip = industrial_capacity_factory_tt
+			}
+			add_to_variable = {
+				RAJ_ind_efficiency_cap = 0.025
+				tooltip = production_factory_max_efficiency_factor_tt
+			}
+
+			build_railway = {
+				path = {
+					1609
+					4616
+				}
+			}
 		}
 		ai_will_do = {
 			factor = 1
@@ -592,47 +704,44 @@
 		}
 	}
 	focus = {
-		id = RAJ_indian_tramways_act
-		icon = GFX_focus_generic_energy
-		x = 6
+		id = RAJ_indian_companies_act_m_1910
+		icon = GFX_focus_RAJ_just_good_business
+		x = -7
 		y = 1
 		relative_position_id = RAJ_indian_electricity_act
-
 		available = {
-			has_country_flag = council_meeting_march_1911_held
+			has_country_flag = council_meeting_march_1910_held
 		}
 		cost = 5
 		prerequisite = {
 			focus = RAJ_indian_electricity_act
 		}
-
 		completion_reward = {
-			if = {
-				limit = {
-					has_dlc = "Arms Against Tyranny"
-				}
-				custom_effect_tooltip = available_mio_tt
-				show_mio_tooltip = RAJ_indian_railways_organization
-				custom_effect_tooltip = empty_space_tt
-
-				custom_effect_tooltip = available_industrial_concern
-				show_ideas_tooltip = RAJ_indian_railways
-				custom_effect_tooltip = empty_space_tt
-
-				mio:RAJ_indian_railways_organization = {
-					add_mio_funds = 1500
-				}
-				else = {
-					show_ideas_tooltip = RAJ_indian_railways
-					custom_effect_tooltip = empty_space_tt
-				}
+			custom_effect_tooltip = RAJ_modify_state_of_the_raj
+			add_to_variable = {
+				RAJ_state_of_the_raj_consumer_goods_factor_dynamic = -0.025
+				tooltip = consumer_goods_factor_tt
 			}
+			add_to_variable = {
+				RAJ_state_of_the_raj_political_power_factor_dynamic = 0.05
+				tooltip = political_power_factor_tt
+			}
+			custom_effect_tooltip = empty_space_tt
+			add_to_variable = {
+				RAJ_british_confidence_var = 2.5
+				tooltip = RAJ_british_confidence_var_modify
+			}
+			RAJ_british_confidence_scripted_effect = yes
+			add_to_variable = {
+				RAJ_indian_confidence_var = 2.5
+				tooltip = RAJ_indian_confidence_var_modify
+			}
+			RAJ_indian_confidence_scripted_effect = yes
 		}
 		ai_will_do = {
 			factor = 1
 		}
 		search_filters = {
-			FOCUS_FILTER_INDUSTRY
 		}
 	}
 	focus = {
@@ -1294,74 +1403,6 @@
 		}
 	}
 	focus = {
-		id = RAJ_indian_iron_and_steel_company
-		icon = GFX_focus_generic_steel
-		x = -1
-		y = 1
-		relative_position_id = RAJ_calcutta_improvement_act
-		available = {
-			OR = {
-				has_full_control_of_state = 429
-				has_full_control_of_state = 430
-				has_full_control_of_state = 436
-			}
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_calcutta_improvement_act
-		}
-		completion_reward = {
-			custom_effect_tooltip = available_designer
-			show_ideas_tooltip = RAJ_bengal_iron_and_steel_company
-			custom_effect_tooltip = empty_space_tt
-			
-			if = {
-				limit = {
-					has_full_control_of_state = 430
-				}
-				430 = {
-					add_resource = {
-						type = steel
-						amount = 3
-					}
-				}
-			}
-			custom_effect_tooltip = empty_space_tt
-
-			add_to_variable = {
-				RAJ_british_confidence_var = 2.5
-				tooltip = RAJ_british_confidence_var_modify
-			}
-			RAJ_british_confidence_scripted_effect = yes
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
-		}
-	}
-	focus = {
-		id = RAJ_matters_of_the_council
-		icon = GFX_focus_matters_of_the_council
-		x = 20
-		y = 0
-		cancelable = no
-		available = {
-		}
-		cost = 5
-		completion_reward = {
-			country_event = {
-				id = ww1_council_raj.0
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
-		}
-	}
-	focus = {
 		id = RAJ_indian_penal_code_act
 		icon = GFX_focus_generic_court
 		x = 5
@@ -1397,6 +1438,47 @@
 			}
 			RAJ_indian_confidence_scripted_effect = yes
 			add_political_power = 35
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		search_filters = {
+		}
+	}
+	focus = {
+		id = RAJ_indian_paper_currency_act_m_1910
+		icon = GFX_generic_abolish_slavery
+		x = 11
+		y = 0
+		relative_position_id = RAJ_indian_electricity_act
+		available = {
+			has_country_flag = council_meeting_march_1910_held
+		}
+		cost = 5
+		prerequisite = {
+			focus = RAJ_matters_of_the_council
+		}
+		completion_reward = {
+			custom_effect_tooltip = RAJ_modify_state_of_the_raj
+			add_to_variable = {
+				RAJ_state_of_the_raj_consumer_goods_factor_dynamic = -0.075
+				tooltip = consumer_goods_factor_tt
+			}
+			add_to_variable = {
+				RAJ_state_of_the_raj_stability_dynamic = 0.025
+				tooltip = stability_factor_tt
+			}
+			custom_effect_tooltip = empty_space_tt
+			add_to_variable = {
+				RAJ_british_confidence_var = 2.5
+				tooltip = RAJ_british_confidence_var_modify
+			}
+			RAJ_british_confidence_scripted_effect = yes
+			add_to_variable = {
+				RAJ_indian_confidence_var = 2.5
+				tooltip = RAJ_indian_confidence_var_modify
+			}
+			RAJ_indian_confidence_scripted_effect = yes
 		}
 		ai_will_do = {
 			factor = 1
@@ -1530,47 +1612,6 @@
 		}
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY
-		}
-	}
-	focus = {
-		id = RAJ_indian_paper_currency_act_m_1910
-		icon = GFX_generic_abolish_slavery
-		x = 11
-		y = 0
-		relative_position_id = RAJ_indian_electricity_act
-		available = {
-			has_country_flag = council_meeting_march_1910_held
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_matters_of_the_council
-		}
-		completion_reward = {
-			custom_effect_tooltip = RAJ_modify_state_of_the_raj
-			add_to_variable = {
-				RAJ_state_of_the_raj_consumer_goods_factor_dynamic = -0.075
-				tooltip = consumer_goods_factor_tt
-			}
-			add_to_variable = {
-				RAJ_state_of_the_raj_stability_dynamic = 0.025
-				tooltip = stability_factor_tt
-			}
-			custom_effect_tooltip = empty_space_tt
-			add_to_variable = {
-				RAJ_british_confidence_var = 2.5
-				tooltip = RAJ_british_confidence_var_modify
-			}
-			RAJ_british_confidence_scripted_effect = yes
-			add_to_variable = {
-				RAJ_indian_confidence_var = 2.5
-				tooltip = RAJ_indian_confidence_var_modify
-			}
-			RAJ_indian_confidence_scripted_effect = yes
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
 		}
 	}
 	focus = {
@@ -1956,6 +1997,47 @@
 		}
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY
+		}
+	}
+	focus = {
+		id = RAJ_delhi_durbar
+		icon = GFX_focus_ENG_The_Royal_Prerogative
+		x = 0
+		y = 1
+		relative_position_id = RAJ_matters_of_the_council
+		available = {
+			has_country_leader = {
+				character = RAJ_charles_hardinge
+				ruling_only = yes
+			}
+			ENG = {
+				OR = {
+					has_idea = george_v
+					has_country_leader = {
+						character = ENG_george_v
+						ruling_only = yes
+					}
+				}
+			}
+		}
+		cost = 5
+		prerequisite = {
+			focus = RAJ_matters_of_the_council
+		}
+		completion_reward = {
+			add_to_variable = {
+				RAJ_british_confidence_var = 2.5
+				tooltip = RAJ_british_confidence_var_modify
+			}
+			RAJ_british_confidence_scripted_effect = yes
+			custom_effect_tooltip = RAJ_delhi_durbar_tt
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_HISTORICAL
 		}
 	}
 	focus = {
@@ -2532,47 +2614,6 @@
 		}
 		completion_reward = {
 			add_political_power = 67
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
-		}
-	}
-	focus = {
-		id = RAJ_indian_companies_act_m_1910
-		icon = GFX_focus_RAJ_just_good_business
-		x = -7
-		y = 1
-		relative_position_id = RAJ_indian_electricity_act
-		available = {
-			has_country_flag = council_meeting_march_1910_held
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_indian_electricity_act
-		}
-		completion_reward = {
-			custom_effect_tooltip = RAJ_modify_state_of_the_raj
-			add_to_variable = {
-				RAJ_state_of_the_raj_consumer_goods_factor_dynamic = -0.025
-				tooltip = consumer_goods_factor_tt
-			}
-			add_to_variable = {
-				RAJ_state_of_the_raj_political_power_factor_dynamic = 0.05
-				tooltip = political_power_factor_tt
-			}
-			custom_effect_tooltip = empty_space_tt
-			add_to_variable = {
-				RAJ_british_confidence_var = 2.5
-				tooltip = RAJ_british_confidence_var_modify
-			}
-			RAJ_british_confidence_scripted_effect = yes
-			add_to_variable = {
-				RAJ_indian_confidence_var = 2.5
-				tooltip = RAJ_indian_confidence_var_modify
-			}
-			RAJ_indian_confidence_scripted_effect = yes
 		}
 		ai_will_do = {
 			factor = 1
@@ -4522,47 +4563,6 @@
 		}
 		ai_will_do = {
 			factor = 1
-		}
-	}
-	focus = {
-		id = RAJ_delhi_durbar
-		icon = GFX_focus_ENG_The_Royal_Prerogative
-		x = 0
-		y = 1
-		relative_position_id = RAJ_matters_of_the_council
-		available = {
-			has_country_leader = {
-				character = RAJ_charles_hardinge
-				ruling_only = yes
-			}
-			ENG = {
-				OR = {
-					has_idea = george_v
-					has_country_leader = {
-						character = ENG_george_v
-						ruling_only = yes
-					}
-				}
-			}
-		}
-		cost = 5
-		prerequisite = {
-			focus = RAJ_matters_of_the_council
-		}
-		completion_reward = {
-			add_to_variable = {
-				RAJ_british_confidence_var = 2.5
-				tooltip = RAJ_british_confidence_var_modify
-			}
-			RAJ_british_confidence_scripted_effect = yes
-			custom_effect_tooltip = RAJ_delhi_durbar_tt
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-			FOCUS_FILTER_HISTORICAL
 		}
 	}
 	focus = {
