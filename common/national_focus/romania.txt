@@ -3527,6 +3527,93 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = ROM_the_second_great_disaster
+		icon = GFX_focus_spr_crush_the_revolution
+		cost = 0
+		x = -10
+		y = -1
+		relative_position_id = ROM_expanding_our_majority_in_parliament
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = ROM_autocomplete_19072
+				has_global_flag = ROM_the_second_great_disaster
+			}
+			has_completed_focus = ROM_ban_the_pnl_and_pcd
+		}
+		allow_branch = {
+			NOT = {
+				has_country_flag = ROM_collaborationist_tag
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = ROM_autocomplete_19072
+		}
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+			FOCUS_FILTER_COMPLETED_BY_EVENT
+		}
+	}
+	focus = {
+		id = ROM_install_a_royal_dictatorship
+		icon = GFX_focus_rom_royal_dictatorship
+		cost = 5
+		x = 0
+		y = 1
+		prerequisite = {
+			focus = ROM_the_second_great_disaster
+		}
+		relative_position_id = ROM_the_second_great_disaster
+		available = {
+			has_ROM_king_government = yes
+		}
+		completion_reward = {
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = ROM_nicolae_iorga
+			activate_mission = ROM_a_new_leader
+			custom_effect_tooltip = ROM_unban_pnl_pcd
+		}
+		search_filters = {
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+		}
+	}
+	focus = {
+		id = ROM_secure_the_countryside
+		icon = GFX_focus_generic_agricultural_subsidies
+		cost = 5
+		x = -1
+		y = 1
+		prerequisite = {
+			focus = ROM_install_a_royal_dictatorship
+		}
+		relative_position_id = ROM_install_a_royal_dictatorship
+		available = {
+			has_ROM_king_government = yes
+		}
+		completion_reward = {
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.15
+			}
+			add_stability = 0.1
+			add_manpower = -23193
+			every_owned_state = {
+				limit = {
+					is_demilitarized_zone = yes
+					OR = {
+						state = 79
+						state = 868
+						state = 867
+					}
+				}
+				set_demilitarized_zone = no
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_STABILITY
+			FOCUS_FILTER_INTERNAL_AFFAIRS
+		}
+	}
+	focus = {
 		id = ROM_the_house_always_wins
 		icon = GFX_focus_generic_monarchy_2
 		cost = 5
@@ -3715,56 +3802,6 @@ focus_tree = {
 				}
 				remove_ideas = ROM_blue_law_overturned
 			}
-		}
-		search_filters = {
-			FOCUS_FILTER_INTERNAL_AFFAIRS
-		}
-	}
-	focus = {
-		id = ROM_the_second_great_disaster
-		icon = GFX_focus_spr_crush_the_revolution
-		cost = 0
-		x = -10
-		y = -1
-		relative_position_id = ROM_expanding_our_majority_in_parliament
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = ROM_autocomplete_19072
-				has_global_flag = ROM_the_second_great_disaster
-			}
-			has_completed_focus = ROM_ban_the_pnl_and_pcd
-		}
-		allow_branch = {
-			NOT = {
-				has_country_flag = ROM_collaborationist_tag
-			}
-		}
-		completion_reward = {
-			custom_effect_tooltip = ROM_autocomplete_19072
-		}
-		search_filters = {
-			FOCUS_FILTER_INTERNAL_AFFAIRS
-			FOCUS_FILTER_COMPLETED_BY_EVENT
-		}
-	}
-	focus = {
-		id = ROM_install_a_royal_dictatorship
-		icon = GFX_focus_rom_royal_dictatorship
-		cost = 5
-		x = 0
-		y = 1
-		prerequisite = {
-			focus = ROM_the_second_great_disaster
-		}
-		relative_position_id = ROM_the_second_great_disaster
-		available = {
-			has_ROM_king_government = yes
-		}
-		completion_reward = {
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = ROM_nicolae_iorga
-			activate_mission = ROM_a_new_leader
-			custom_effect_tooltip = ROM_unban_pnl_pcd
 		}
 		search_filters = {
 			FOCUS_FILTER_INTERNAL_AFFAIRS
@@ -3969,43 +4006,6 @@ focus_tree = {
 			add_ideas = ROM_streamlined_appointment_system
 		}
 		search_filters = {
-			FOCUS_FILTER_INTERNAL_AFFAIRS
-		}
-	}
-	focus = {
-		id = ROM_secure_the_countryside
-		icon = GFX_focus_generic_agricultural_subsidies
-		cost = 5
-		x = -1
-		y = 1
-		prerequisite = {
-			focus = ROM_install_a_royal_dictatorship
-		}
-		relative_position_id = ROM_install_a_royal_dictatorship
-		available = {
-			has_ROM_king_government = yes
-		}
-		completion_reward = {
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.15
-			}
-			add_stability = 0.1
-			add_manpower = -23193
-			every_owned_state = {
-				limit = {
-					is_demilitarized_zone = yes
-					OR = {
-						state = 79
-						state = 868
-						state = 867
-					}
-				}
-				set_demilitarized_zone = no
-			}
-		}
-		search_filters = {
-			FOCUS_FILTER_STABILITY
 			FOCUS_FILTER_INTERNAL_AFFAIRS
 		}
 	}
@@ -7998,8 +7998,8 @@ focus_tree = {
 		id = ROM_new_times
 		icon = GFX_new_treaty
 		cost = 0
-		x = 36
-		y = 11
+		x = 34
+		y = 12
 		available = {
 			custom_trigger_tooltip = {
 				tooltip = ROM_war_has_ended
@@ -8353,9 +8353,8 @@ focus_tree = {
 				ROM_mass_payment = 0
 			}
 			unlock_decision_tooltip = {
-				show_effect_tooltip = yes
 				decision = ROM_repay_war_debt_bulk
-				show_modifiers = yes
+				show_effect_tooltip = yes
 			}
 			custom_effect_tooltip = ROM_save_pp.tt
 		}
@@ -8390,7 +8389,6 @@ focus_tree = {
 			unlock_decision_tooltip = {
 				decision = ROM_repay_war_debt_small
 				show_effect_tooltip = yes
-				show_modifiers = yes
 			}
 		}
 		ai_will_do = {
@@ -8696,10 +8694,19 @@ focus_tree = {
 		id = ROM_victory_of_the_peasants
 		icon = GFX_focus_agrarian_soldiers
 		cost = 2
-		x = -10
+		x = -7
 		y = 1
 		prerequisite = {
 			focus = ROM_new_times
+		}
+		allow_branch = {
+			OR = {
+				has_country_flag = debug_mode_romania
+				has_global_flag = great_war_ends
+			}
+			NOT = {
+				has_country_flag = ROM_collaborationist_tag
+			}
 		}
 		available = {
 			has_country_leader = {
@@ -8744,7 +8751,7 @@ focus_tree = {
 		id = ROM_future_of_the_dictatorship
 		icon = GFX_focus_generic_military_dictatorship
 		cost = 5
-		x = -15
+		x = -9
 		y = 1
 		prerequisite = {
 			focus = ROM_new_times
@@ -8758,7 +8765,10 @@ focus_tree = {
 					has_country_flag = ROM_collaborationist_tag
 				}
 			}
-			has_global_flag = great_war_ends
+			OR = {
+				has_country_flag = debug_mode_romania
+				has_global_flag = great_war_ends
+			}
 			NOT = {
 				has_country_flag = ROM_collaborationist_tag
 			}
@@ -8785,7 +8795,7 @@ focus_tree = {
 		id = ROM_restoration_of_democracy
 		icon = GFX_focus_generic_control_elections
 		cost = 5
-		x = 2
+		x = -2
 		y = 1
 		prerequisite = {
 			focus = ROM_future_of_the_dictatorship
@@ -8814,7 +8824,7 @@ focus_tree = {
 		id = ROM_consolidate_the_dictatorship2
 		icon = GFX_focus_LAT_suspend_constitution_of_latvia
 		cost = 2
-		x = -2
+		x = 0
 		y = 1
 		prerequisite = {
 			focus = ROM_future_of_the_dictatorship
@@ -8875,7 +8885,7 @@ focus_tree = {
 		id = ROM_crack_down_on_federalism
 		icon = GFX_focus_secret_police
 		cost = 5
-		x = -1
+		x = -2
 		y = 2
 		prerequisite = {
 			focus = ROM_beyond_the_old_allies
@@ -8935,7 +8945,7 @@ focus_tree = {
 		id = ROM_overturn_carpist_social_programs
 		icon = GFX_goal_anti_comintern_pact
 		cost = 5
-		x = 1
+		x = 0
 		y = 2
 		prerequisite = {
 			focus = ROM_right_the_wrongs_of_carp
@@ -8998,7 +9008,7 @@ focus_tree = {
 		id = ROM_fuse_with_the_peoples_party
 		icon = GFX_focus_prc_agrarian_socialism
 		cost = 5
-		x = -25
+		x = -18
 		y = 1
 		offset = {
 			x = 9
@@ -9020,7 +9030,10 @@ focus_tree = {
 					has_country_flag = ROM_collaborationist_tag
 				}
 			}
-			has_global_flag = great_war_ends
+			OR = {
+				has_country_flag = debug_mode_romania
+				has_global_flag = great_war_ends
+			}
 			NOT = {
 				has_country_flag = ROM_collaborationist_tag
 			}
@@ -9342,7 +9355,7 @@ focus_tree = {
 		id = ROM_bury_the_grudges_of_the_past
 		icon = GFX_focus_invite_romania
 		cost = 5
-		x = 1
+		x = 0
 		y = 1
 		prerequisite = {
 			focus = ROM_victory_of_the_peasants
@@ -9371,8 +9384,8 @@ focus_tree = {
 		id = ROM_court_the_stereianists
 		icon = GFX_focus_AUS_lawmaking_leniency
 		cost = 5
-		x = -1
-		y = 1
+		x = 1
+		y = 2
 		available = {
 			has_country_leader = {
 				character = TRA_alexandru_vaida_voevod
@@ -9400,8 +9413,8 @@ focus_tree = {
 		id = ROM_true_meaningful_land_reform
 		icon = GFX_focus_generic_land_reclamation
 		cost = 5
-		x = -1
-		y = 1
+		x = 0
+		y = 2
 		available = {
 			has_country_leader = {
 				character = TRA_alexandru_vaida_voevod
@@ -9802,7 +9815,7 @@ focus_tree = {
 		id = ROM_the_lame_duck
 		icon = GFX_focus_Aviator_Mandarin_Duck
 		cost = 2
-		x = -6
+		x = -5
 		y = 1
 		prerequisite = {
 			focus = ROM_new_times
@@ -9835,8 +9848,8 @@ focus_tree = {
 		id = ROM_restore_romanian_pride
 		icon = GFX_focus_rom_preserve_romania
 		cost = 2
-		x = -1
-		y = 1
+		x = 1
+		y = 2
 		prerequisite = {
 			focus = ROM_the_lame_duck
 		}
@@ -9863,7 +9876,7 @@ focus_tree = {
 		id = ROM_reunify_the_conservatives
 		icon = GFX_goal_generic_neutrality_focus
 		cost = 4
-		x = 1
+		x = 0
 		y = 1
 		prerequisite = {
 			focus = ROM_the_lame_duck
@@ -9897,7 +9910,7 @@ focus_tree = {
 		icon = GFX_goal_anti_comintern_pact
 		cost = 5
 		x = 0
-		y = 2
+		y = 3
 		prerequisite = {
 			focus = ROM_reunify_the_conservatives
 		}
@@ -9924,7 +9937,7 @@ focus_tree = {
 		id = ROM_torch_to_the_future
 		icon = GFX_focus_spr_torchbearers_of_tomorrow
 		cost = 2
-		x = -22
+		x = -14
 		y = 1
 		offset = {
 			x = 9
@@ -9944,7 +9957,10 @@ focus_tree = {
 					has_completed_focus = ROM_hostile_takeover_of_government
 				}
 			}
-			has_global_flag = great_war_ends
+			OR = {
+				has_country_flag = debug_mode_romania
+				has_global_flag = great_war_ends
+			}
 			NOT = {
 				has_country_flag = ROM_collaborationist_tag
 			}
@@ -9972,7 +9988,7 @@ focus_tree = {
 		id = ROM_end_antisemitism
 		icon = GFX_focus_jewish_money
 		cost = 5
-		x = 0
+		x = -1
 		y = 1
 		prerequisite = {
 			focus = ROM_torch_to_the_future
@@ -10005,7 +10021,7 @@ focus_tree = {
 		id = ROM_crack_down_on_radical_elements
 		icon = GFX_focus_spr_crush_the_revolution
 		cost = 5
-		x = 2
+		x = 1
 		y = 1
 		prerequisite = {
 			focus = ROM_torch_to_the_future
@@ -10035,7 +10051,7 @@ focus_tree = {
 		id = ROM_alliance_of_convience
 		icon = GFX_goal_tripartite_pact
 		cost = 5
-		x = 1
+		x = 0
 		y = 2
 		prerequisite = {
 			focus = ROM_crack_down_on_radical_elements
@@ -10063,7 +10079,7 @@ focus_tree = {
 		id = ROM_concede_on_the_tariff_issue
 		icon = GFX_focus_generic_money_deal
 		cost = 5
-		x = 0
+		x = -1
 		y = 3
 		prerequisite = {
 			focus = ROM_alliance_of_convience
@@ -10099,7 +10115,7 @@ focus_tree = {
 		id = ROM_land_reform
 		icon = GFX_focus_generic_land_reclamation
 		cost = 5
-		x = 2
+		x = 1
 		y = 3
 		prerequisite = {
 			focus = ROM_alliance_of_convience
@@ -10130,7 +10146,7 @@ focus_tree = {
 		id = ROM_new_constitution_interwar
 		icon = GFX_focus_generic_treaty
 		cost = 5
-		x = 1
+		x = 0
 		y = 4
 		prerequisite = {
 			focus = ROM_land_reform
@@ -10276,6 +10292,21 @@ focus_tree = {
 			add_to_variable = {
 				ROM_build_speed = 0.1
 				tooltip = production_speed_buildings_factor_tt
+			}
+			random_owned_controlled_state = {
+				limit = {
+					arms_factory > 0
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = -1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
 			}
 		}
 		ai_will_do = {
@@ -11564,7 +11595,10 @@ focus_tree = {
 					has_completed_focus = ROM_future_of_the_dictatorship
 				}
 			}
-			has_global_flag = great_war_ends
+			OR = {
+				has_country_flag = debug_mode_romania
+				has_global_flag = great_war_ends
+			}
 			NOT = {
 				has_country_flag = ROM_collaborationist_tag
 			}
