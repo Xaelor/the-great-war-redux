@@ -552,41 +552,22 @@ ROM_kings_country_category = {
 			complete_national_focus = ROM_restore_civilian_control
 		}
 	}
-	ROM_king_appoints_new_government = {
+	ROM_king_appoints_transitional_government = {
+		name = ROM_king_appoints_new_government
 		icon = GFX_decision_generic_monarchy
 		allowed = {
 			tag = ROM
 		}
 		activation = {
-			check_variable = {
-				kings_approval_of_government < -3
-			}
+			always = no
 		}
 		available = {
 			is_ai = yes
 		}
 		cancel_trigger = {
 			OR = {
-				check_variable = {
-					kings_approval_of_government > -3
-				}
-				is_ai = yes
-				has_completed_focus = ROM_deal_with_the_liberal_king
-				has_completed_focus = ROM_in_the_hall_of_the_mountain_king
-				has_completed_focus = ROM_new_constitution
-				has_completed_focus = ROM_new_times
-				has_completed_focus = ROM_political_unity
-				has_country_leader = {
-					character = ROM_carol_i
-					ruling_only = yes
-				}
-				has_country_leader = {
-					character = ROM_ferdinand_i
-					ruling_only = yes
-				}
-				hidden_trigger = {
-					has_global_flag = ROM_ferd_death
-				}
+				has_completed_focus = ROM_law_and_order
+				has_ROM_conservative_government = no
 			}
 		}
 		days_mission_timeout = 90
@@ -594,26 +575,28 @@ ROM_kings_country_category = {
 		complete_effect = {
 		}
 		timeout_effect = {
-			country_event = {
-				id = ww1_romania.18
-				days = 1
-			}
+			country_event = ww1_romania.218
 		}
 	}
-	#ROM_kings_rotation = {
+	#ROM_king_appoints_new_government = {
 	#	icon = GFX_decision_generic_monarchy
 	#	allowed = {
 	#		tag = ROM
 	#	}
 	#	activation = {
-	#		original_tag = ROM
-	#		is_ai = no
+	#		check_variable = {
+	#			kings_approval_of_government < -3
+	#		}
 	#	}
 	#	available = {
+	#		is_ai = yes
+	#	}
+	#	cancel_trigger = {
 	#		OR = {
-	#			hidden_trigger = {
-	#				is_ai = yes
+	#			check_variable = {
+	#				kings_approval_of_government > -3
 	#			}
+	#			is_ai = yes
 	#			has_completed_focus = ROM_deal_with_the_liberal_king
 	#			has_completed_focus = ROM_in_the_hall_of_the_mountain_king
 	#			has_completed_focus = ROM_new_constitution
@@ -632,26 +615,83 @@ ROM_kings_country_category = {
 	#			}
 	#		}
 	#	}
-	#	is_good = no
-	#	days_mission_timeout = 140
-	#	fire_only_once = yes
+	#	days_mission_timeout = 90
 	#	selectable_mission = no
-	#	timeout_effect = {
-	#		add_to_variable = {
-	#			var = kings_approval_of_government
-	#			value = -1
-	#		}
-	#		custom_effect_tooltip = king_opinion_worse.tt
-	#		activate_mission = ROM_kings_rotation
-	#		ROM_king_effect = yes
-	#	}
 	#	complete_effect = {
-	#		set_variable = {
-	#			kings_approval_of_government = 0
+	#	}
+	#	timeout_effect = {
+	#		country_event = {
+	#			id = ww1_romania.18
+	#			days = 1
 	#		}
-	#		ROM_king_effect = yes
 	#	}
 	#}
+	ROM_kings_rotation = {
+		icon = GFX_decision_generic_monarchy
+		allowed = {
+			tag = ROM
+		}
+		activation = {
+			original_tag = ROM
+			is_ai = no
+			has_war_with_major = no
+			NOT = {
+				has_completed_focus = ROM_deal_with_the_liberal_king #carp fascist path
+				has_completed_focus = ROM_new_constitution #stere
+				has_completed_focus = ROM_new_times # post war
+				has_country_leader = {
+					character = ROM_carol_i
+					ruling_only = yes
+				}
+				has_country_leader = {
+					character = ROM_ferdinand_i
+					ruling_only = yes
+				}
+				has_global_flag = ROM_ferd_death
+			}
+		}
+		available = {
+			OR = {
+				hidden_trigger = {
+					is_ai = yes
+				}
+				has_completed_focus = ROM_deal_with_the_liberal_king #carp fascist path
+				has_completed_focus = ROM_new_constitution #stere
+				has_completed_focus = ROM_new_times # post war
+				has_war_with_major = yes
+				has_country_leader = {
+					character = ROM_carol_i
+					ruling_only = yes
+				}
+				has_country_leader = {
+					character = ROM_ferdinand_i
+					ruling_only = yes
+				}
+				hidden_trigger = {
+					has_global_flag = ROM_ferd_death
+				}
+			}
+		}
+		is_good = no
+		days_mission_timeout = 140
+		fire_only_once = yes
+		selectable_mission = no
+		timeout_effect = {
+			add_to_variable = {
+				var = kings_approval_of_government
+				value = -1
+			}
+			custom_effect_tooltip = king_opinion_worse.tt
+			activate_mission = ROM_kings_rotation
+			ROM_king_effect = yes
+		}
+		complete_effect = {
+			set_variable = {
+				kings_approval_of_government = 0
+			}
+			ROM_king_effect = yes
+		}
+	}
 	ROM_adopt_a_workers_right_plank = {
 		icon = GFX_decision_eng_trade_unions_support
 		allowed = {
