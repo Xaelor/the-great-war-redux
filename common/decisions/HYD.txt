@@ -1,5 +1,5 @@
 HYD_factions = {
-	HYD_deteriorating_relations_with_british = {
+	HYD_deteriorating_influence_of_nizam = {
 		priority = 100
 		icon = GFX_decision_generic_ignite_civil_war
 		allowed = {
@@ -10,16 +10,15 @@ HYD_factions = {
 			always = no
 		}
 		activation = {
-			NOT = {
-				has_active_mission = HYD_deteriorating_relations_with_british
-			}
+			always = no
 		}
 		timeout_effect = {
-			activate_mission = HYD_deteriorating_relations_with_british
+			custom_effect_tooltip = HYD_modify_nizams_domain
 			add_to_variable = {
-				HYD_outsiders_loyalty = -10
-				tooltip = HYD_outsiders_loyalty_tt
+				HYD_nd_stability = -0.01
+				tooltip = stability_factor_tt
 			}
+			activate_mission = HYD_deteriorating_influence_of_nizam
 		}
 		complete_effect = {
 
@@ -113,6 +112,45 @@ HYD_nizam_vii_department_reforms = {
 		}
 		complete_effect = {
 			set_country_flag = HYD_is_doing_reform
+		}
+		fire_only_once = yes
+	}
+}
+economy_decisions = {
+	HYD_construct_reservoir = {
+		priority = 100
+		icon = GFX_decision_generic_ignite_civil_war
+		allowed = {
+			original_tag = HYD
+		}
+		cost = 25
+		available = {
+			has_completed_focus = HYD_construct_reservoirs
+		}
+		days_remove = HYD_reservoir_var
+		remove_effect = {
+			every_owned_state = {
+				limit = {
+					is_core_of = ROOT
+				}
+				add_dynamic_modifier = {
+					modifier = princely_improved_irrigation
+				}
+			}
+		}
+		complete_effect = {
+			if = {
+				limit = {
+					has_completed_focus = HYD_draft_a_blueprint_for_reservoir
+				}
+				random_owned_controlled_state = {
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
 		}
 		fire_only_once = yes
 	}
