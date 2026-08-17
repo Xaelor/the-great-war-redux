@@ -960,8 +960,40 @@ is_austria_hungary = {
 	custom_trigger_tooltip = {
 		tooltip = is_AUH_tt
 		OR = {
-			original_tag = AUS
-			original_tag = HUN
+			AND = {
+				original_tag = AUS
+				has_monarchy = yes
+				OR = {
+					has_subject = HUN
+					HUN = { is_subject_of = PREV }
+				}
+			}
+			AND = {
+				original_tag = HUN
+				has_monarchy = yes
+				OR = {
+					has_subject = AUS
+					AUS = { is_subject_of = PREV }
+				}
+			}
+			AND = {
+				OR = {
+					original_tag = AUS
+					original_tag = HUN
+				}
+				has_monarchy = yes
+				4 = { # Vienna
+					is_core_of = PREV
+					is_owned_by = PREV
+				}
+				43 = { # Budapest
+					is_core_of = PREV
+					is_owned_by = PREV
+				}
+			}
+			has_cosmetic_tag = AUSHUN
+			# original_tag = AUS
+			# original_tag = HUN
 		}
 	}	
 }
@@ -1000,13 +1032,14 @@ is_valid_peace_target = {
 is_neighbor_of_subject = {
 	OR = {
 		is_neighbor_of = ROOT
-		any_other_country = {
-			OR = {
-				is_subject_of = ROOT
-				is_subject_of = PREV
-			}
-			is_neighbor_of = ROOT
+		any_neighbor_country = {
+			is_subject_of = ROOT
 		}
+		ROOT = {
+			any_neighbor_country = {
+				is_subject_of = PREV.PREV
+			}
+		}	
 	}
 }
 
@@ -1120,15 +1153,16 @@ are_polish_criteria_states_controlled_by_ROOT_or_ally = {
 is_french_civil_war_ongoing = {
 	custom_override_tooltip = {
 		tooltip = is_french_civil_war_ongoing_tt
-		any_state = {
-			is_core_of = FRA
-			owner = {
-				original_tag = FRA
-				OR = {
-					any_enemy_country = {
-						original_tag = FRA
+		FRA = {
+			any_core_state = {
+				owner = {
+					original_tag = FRA
+					OR = {
+						any_enemy_country = {
+							original_tag = FRA
+						}
+						has_civil_war = yes
 					}
-					has_civil_war = yes
 				}
 			}
 		}

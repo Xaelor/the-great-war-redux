@@ -36,7 +36,6 @@ NDefines.NAI.MAX_DIST_PORT_RUSH = 20.0	--default 20.0			-- If a unit is in enemy
 NDefines.NAI.MIN_FIELD_STRENGTH_TO_BUILD_UNITS = 0.7	--default 0.7		-- Cancel unit production if below this to get resources out to units in the field
 NDefines.NAI.MIN_MANPOWER_TO_BUILD_UNITS = 0.7	--default 0.7				-- Cancel unit production if below this to get resources out to units in the field
 
-NDefines.NMilitary.PLAN_MIN_AUTOMATED_EMPTY_POCKET_SIZE = 15			 -- The battle plan system will only automatically attack provinces in pockets that has no resistance and are no bigger than these many provinces
 NDefines.NAI.POCKET_DISTANCE_MAX = 50000
 NDefines.NAI.MICRO_POCKET_SIZE = 6						-- Pockets with a size equal to or lower than this will be mocroed by the AI, for efficiency.
 

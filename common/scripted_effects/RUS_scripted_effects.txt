@@ -258,12 +258,6 @@ constituent_assembly_effect = {
 				RUS_nikolai_ii = {
 					set_nationality = PREV.PREV
 					set_character_name = RUS_nicholas_II
-					set_character_flag = RUS_nicholas_romanov_dictator
-					set_portraits = {
-						civilian = {
-							large = "gfx/leaders/RUS/RUS_nicholas_romanov_dictator.png"
-						}
-					}
 					hidden_effect = {
 						remove_country_leader_role = {
 							ideology = semi_constitutional_monarchy
@@ -1122,8 +1116,9 @@ create_UPRS = {
 		}
 	}
 	SOV = {
-		puppet = {
+		set_autonomy = {
 			target = USR
+			autonomy_state = autonomy_satellite
 			end_wars = no
 			end_civil_wars = no
 		}
@@ -1260,8 +1255,9 @@ create_USR = {
 		}
 	}
 	SOV = {
-		puppet = {
+		set_autonomy = {
 			target = USR
+			autonomy_state = autonomy_satellite
 			end_wars = no
 			end_civil_wars = no
 		}
@@ -1463,6 +1459,7 @@ create_KUB = {
 					state = 941
 					state = 940
 					state = 233
+					state = 1299
 				}
 			}	
 			KUB = {
@@ -1881,6 +1878,7 @@ create_TSCN = {
 				}
 				NOT = {
 					state = 233
+					state = 1299
 					state = 940
 					is_core_of = MOU
 				}
@@ -2059,6 +2057,94 @@ create_TSCN = {
 		}
 	}
 }
+create_BRS = {
+	hidden_effect = {
+		BPR = {
+			BLR_aliaksandr_carviakou = {
+				set_nationality = BRS
+				promote_character = vanguardism
+			}
+			BLR_zmicier_zylunovic = {
+				set_nationality = BRS
+				promote_character = vanguardism
+			}
+		}
+		every_state = {
+			limit = { is_core_of = BPR }
+			add_core_of = BRS
+		}
+		every_owned_state = {
+			limit = {
+				OR = {
+					region = 131
+					state = 1015
+				}
+				NOT = {
+					state = 189
+					state = 748
+					state = 96
+					state = 1232
+				}					
+			}
+			add_core_of = BRS
+			BRS = {
+				safe_transfer_state_to = yes
+			}
+		}
+		set_autonomy = {
+			target = BRS
+			autonomy_state = autonomy_satellite
+		}
+		BRS = {
+			set_politics = {
+				ruling_party = communism
+			}
+			copy_SOV_army_idea = yes
+			if = {
+				limit = { ROOT = { has_idea = RUS_demobilizing_army }}
+				country_lock_all_division_template = yes 
+			}
+			if = {
+				limit = { 
+					NOT = { owns_state = 206 }
+					owns_state = 242
+				}
+				set_capital = { state = 242 }
+				else = {
+					set_capital = { state = 206 }
+				}
+			}
+			inherit_technology = RUS
+			delete_obsolete_russian_templates = yes
+			division_template = {
+				name = "Krasnaya Gvardiya"
+				template_counter = 69
+				regiments = {
+					militia = { x = 0 y = 0 }
+					militia = { x = 0 y = 1 }
+					militia = { x = 1 y = 0 }
+				}
+				priority = 0
+				division_cap = 10
+			}
+			capital_scope = {				
+				create_unit = {
+					division = "division_template = \"Krasnaya Gvardiya\" start_experience_factor = 0.1 start_equipment_factor = 0.5"
+					owner = PREV
+					count = 4
+					allow_spawning_on_enemy_provs = yes
+				}
+				set_state_flag = SOV_has_mobilized_militia
+			}
+			set_cosmetic_tag = BLR_vanguardist
+			set_popularities = {
+				neutrality = 2
+				democratic = 25
+				communism = 73
+			}
+		}
+	}
+}
 
 create_LAT = {
 	if = {
@@ -2100,8 +2186,9 @@ create_LAT = {
 			delete_obsolete_russian_templates = yes
 			copy_SOV_army_idea = yes
 		}
-		puppet = {
+		set_autonomy = {
 			target = LAT
+			autonomy_state = autonomy_satellite
 			end_wars = no
 			end_civil_wars = no
 		}
@@ -2550,6 +2637,15 @@ SOV_destroy_black_fleet = {
 		ratio = yes
 		navy = yes
 	}
+	damage_units = {
+		state = 1299
+		limit = { tag = SOV }
+		damage = 1
+		org_damage = 1
+		str_damage = 1
+		ratio = yes
+		navy = yes
+	}
 }
 
 SOV_improve_peasant_support = {
@@ -2657,6 +2753,7 @@ restore_transcaucasian_cores = {
 				state = 855
 				state = 1034
 				state = 1068
+				state = 1299
 				state = 1069
 			}
 		}
