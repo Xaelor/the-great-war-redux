@@ -8934,10 +8934,79 @@ country_event = {
 
 
 # Historical, austria can now negotiate separate peace with France
+country_event = {
+	id = ww1_auh.179
+	title = ww1_auh.179.t
+	desc = ww1_auh.179.d
+	picture = GFX_report_event_generic_sign_treaty1
+	trigger = {
+		tag = AUS
+		is_in_faction_with = GER
+		has_war_with = FRA
+		has_war_with = RUS
+		FRA = {
+			surrender_progress < 0.3
+		}
+		has_dynamic_modifier = {
+			modifier = AUH_famine_effect
+		}
+		NOT = {
+			has_country_flag = AUH_can_negotiate_with_france
+		}
+	}
+	mean_time_to_happen = {
+		days = 14
+	}
+	option = {
+		name = ww1_auh.179.a	#all options are on the table
+		set_country_flag = AUH_can_negotiate_with_france
+		custom_effect_tooltip = AUH_negotiation_with_france
+		HUN = {
+			HUN_gyula_andrassy = {
+				set_nationality = AUS
+				set_character_name = AUH_gyula_andrassy
+			}
+		}
+	}
+}
 
-
-# Historical, austria ask secret negociation to france
-
+# Historical, austria ask secret negotiation to france
+country_event = {
+	id = ww1_auh.180
+	title = ww1_auh.180.t
+	desc = ww1_auh.180.d
+	picture = GFX_report_event_generic_sign_treaty1
+	is_triggered_only = yes
+	option = {
+		name = ww1_auh.180.a	# we agree in principe, but austria has to recognize our claims over alsace lorraine, belgium independence, serbia independence + access to sea
+		custom_effect_tooltip = historical_tt
+		custom_effect_tooltip = FRA_basic_demands_for_AUH
+		custom_effect_tooltip = FRA_AUH_negotiation_free_serbia_and_sea
+		custom_effect_tooltip = FRA_AUH_negotiation_alsace_lorraine
+		custom_effect_tooltip = FRA_AUH_negotiation_free_belgium
+		FROM = {
+			country_event = {
+				id = ww1_auh.182
+				days = 2
+			}
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = ww1_auh.180.b	# we just refuse
+		FROM = {
+			country_event = {
+				id = ww1_auh.181
+				days = 2
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
 
 
 # aHistorical, france dont even want to negotiate
@@ -8966,7 +9035,7 @@ country_event = {
 	option = {
 		name = ww1_auh.182.a	#theses terms are acceptable + we must convince germany for alsace lorraine
 		custom_effect_tooltip = historical_tt
-		custom_effect_tooltip = AUH_negociation_with_germany_means_no_secret
+		custom_effect_tooltip = AUH_negotiation_with_germany_means_no_secret
 		GER = {
 			country_event = {
 				id = ww1_auh.184
@@ -8983,8 +9052,8 @@ country_event = {
 		}
 	}
 	option = {
-		name = ww1_auh.182.b	#theses terms are acceptable + we cant guarantee alsace lorraine -> stick to secret negociations
-		custom_effect_tooltip = AUH_no_negociation_with_germany
+		name = ww1_auh.182.b	#theses terms are acceptable + we cant guarantee alsace lorraine -> stick to secret negotiations
+		custom_effect_tooltip = AUH_no_negotiation_with_germany
 		FRA = {
 			country_event = {
 				id = ww1_auh.205
@@ -9046,7 +9115,7 @@ country_event = {
 	picture = GFX_report_event_generic_sign_treaty1
 	is_triggered_only = yes
 	option = {
-		name = ww1_auh.184.a	#we can agree to participate negociations if needeed
+		name = ww1_auh.184.a	#we can agree to participate negotiations if needeed
 		custom_effect_tooltip = historical_tt
 		#custom_effect_tooltip = AUH_GER_FRA_deal_for_peace_on_alsace_lorraine
 		#custom_effect_tooltip = AUH_GER_FRA_deal_for_peace_on_alsace_lorraine_AUH_part
@@ -9645,7 +9714,7 @@ country_event = {
 	option = {
 		name = ww1_auh.194.c
 		trigger = {
-			has_global_flag = AUH_secret_negociations
+			has_global_flag = AUH_secret_negotiations
 		}
 		custom_effect_tooltip = ITA_london_pact_very_weak
 		add_war_support = -0.1
@@ -9764,7 +9833,7 @@ country_event = {
 		name = ww1_auh.196.b	#Okay, okay.
 		custom_effect_tooltip = italian_conditions_are
 		trigger = {
-			has_global_flag = AUH_secret_negociations
+			has_global_flag = AUH_secret_negotiations
 		}
 		if = {
 			limit = {
@@ -9842,7 +9911,7 @@ country_event = {
 	}
 }
 
-#Historical, negociations are dead, time to bully french pm
+#Historical, negotiations are dead, time to bully french pm
 country_event = {
 	id = ww1_auh.198
 	title = ww1_auh.198.t
@@ -9873,7 +9942,7 @@ country_event = {
 	}
 }
 
-#Historical, French is insulted because the negociation are broke
+#Historical, French is insulted because the negotiation are broke
 country_event = {
 	id = ww1_auh.199
 	title = ww1_auh.199.t
@@ -10168,7 +10237,7 @@ country_event = {
 	}
 }
 
-##austria accept secret negociations, but cant guarantee alsace lorraine
+##austria accept secret negotiations, but cant guarantee alsace lorraine
 country_event = {
 	id = ww1_auh.205
 	title = ww1_auh.205.t
@@ -10179,10 +10248,10 @@ country_event = {
 	option = {
 		name = ww1_auh.205.a
 		#okay its fine, lets talk
-		custom_effect_tooltip = FRA_negociation_deal_so_far
-		custom_effect_tooltip = FRA_AUH_negociation_free_serbia_and_sea
-		custom_effect_tooltip = FRA_AUH_negociation_alsace_lorraine_b2
-		custom_effect_tooltip = FRA_AUH_negociation_free_belgium
+		custom_effect_tooltip = FRA_negotiation_deal_so_far
+		custom_effect_tooltip = FRA_AUH_negotiation_free_serbia_and_sea
+		custom_effect_tooltip = FRA_AUH_negotiation_alsace_lorraine_b2
+		custom_effect_tooltip = FRA_AUH_negotiation_free_belgium
 		FROM = {
 			country_event = {
 				id = ww1_auh.206
@@ -10218,7 +10287,7 @@ country_event = {
 	option = {
 		name = ww1_auh.206.a
 		#we can sacrifice galicia and balance some lands with italy 
-		custom_effect_tooltip = AUH_negociation_give_galicia_to_RUS
+		custom_effect_tooltip = AUH_negotiation_give_galicia_to_RUS
 		custom_effect_tooltip = ITA_london_pact_very_weak
 		FRA = {
 			country_event = {
@@ -10240,7 +10309,7 @@ country_event = {
 	option = {
 		name = ww1_auh.206.b
 		# we can sacrifice galicia, but its out of question to lose trentino !
-		custom_effect_tooltip = AUH_negociation_give_galicia_to_RUS
+		custom_effect_tooltip = AUH_negotiation_give_galicia_to_RUS
 		FROM = {
 			country_event = {
 				id = ww1_auh.210
@@ -10284,7 +10353,7 @@ country_event = {
 	option = {
 		name = ww1_auh.207.a
 		#Lets validate with Italians
-		set_global_flag = AUH_secret_negociations
+		set_global_flag = AUH_secret_negotiations
 		trigger = {
 			ITA = {
 				has_war_together_with = FRA
@@ -10338,23 +10407,23 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_auh.208.a
-		custom_effect_tooltip = FRA_negociation_deal_so_far
+		custom_effect_tooltip = FRA_negotiation_deal_so_far
 		SER = {
 			if = {
 				limit = {
 					has_war_with = AUS
 				}
-				custom_effect_tooltip = FRA_AUH_negociation_free_serbia_and_sea
+				custom_effect_tooltip = FRA_AUH_negotiation_free_serbia_and_sea
 			}
 		}
-		custom_effect_tooltip = FRA_AUH_negociation_alsace_lorraine_b2
-		custom_effect_tooltip = FRA_AUH_negociation_free_belgium
+		custom_effect_tooltip = FRA_AUH_negotiation_alsace_lorraine_b2
+		custom_effect_tooltip = FRA_AUH_negotiation_free_belgium
 		RUS = {
 			if = {
 				limit = {
 					has_war_with = AUS
 				}
-				custom_effect_tooltip = AUH_negociation_give_galicia_to_RUS
+				custom_effect_tooltip = AUH_negotiation_give_galicia_to_RUS
 			}
 		}
 		if = {
