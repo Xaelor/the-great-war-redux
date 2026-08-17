@@ -79,7 +79,232 @@ TGWR_great_power_politics = {
 				BW2_turkish_victory_effect = yes
 			}
 		}
-	}	
+	}
+	
+	#BUL_surrender_to_entente = { #bulgaria rework shadow decision
+	#	icon = GFX_decision_eng_trade_unions_support
+	#	fire_only_once = yes
+	#	available = {
+	#		war_length_with = {
+	#			tag = FRA
+	#			months > 24
+	#		}
+	#		has_war_with = FRA
+	#		has_war_support < 0.6
+	#	}
+	#	visible = {
+	#		has_war_with = FRA
+	#		is_in_faction_with = GER
+	#	}
+	#	complete_effect = {
+	#		FRA = {
+	#			country_event = ww1_bulgaria.171
+	#		}
+	#	}
+	#}
+	BUL_declare_war_on_serbia_mission = {
+		icon = GFX_decision_revolt
+		fire_only_once = yes
+		days_mission_timeout = 51
+		activation = {
+			always = no
+		}
+		available = {
+			has_war_with = SER
+		}
+		timeout_effect = {
+			country_event = ww1_bulgaria.142
+		}
+		complete_effect = {
+			country_event = ww1_bulgaria.142
+			if = {
+				limit = { 
+					OR = {
+						has_country_flag = BUL_vasil_radoslavov_yes
+						has_country_leader = {
+							character = BUL_vasil_radoslavov
+						}
+					}
+				}
+				add_to_variable = {
+					var = BUL_radoslavov_approval_var
+					value = 1
+				}
+				custom_effect_tooltip = BUL_radoslavov_plus_one.tt
+			}
+		}
+	}
+	BUL_storm_serbia_mission = {
+		icon = GFX_decision_SWI_consolidate_council_power
+		fire_only_once = yes
+		days_mission_timeout = 100
+		highlight_states = { 
+			highlight_state_targets = { state = 106 } 
+			highlight_state_targets = { state = 809 } 
+			highlight_state_targets = { state = 876 } 
+			highlight_state_targets = { state = 821 } 
+			highlight_state_targets = { state = 203 } 
+		}
+		activation = {
+			always = no
+		}
+		available = {
+			OR = {
+				AND = {
+					controls_state = 809
+					controls_state = 876
+					controls_state = 821
+					controls_state = 106
+					controls_state = 203
+				}
+				hidden_trigger = {
+					NOT = {
+						SER = {
+							controls_state = 809
+							controls_state = 876
+							controls_state = 821
+							controls_state = 106
+							controls_state = 203
+						}
+					}
+				}
+			}
+		}
+		timeout_effect = {
+			add_war_support = -0.1
+		}
+		complete_effect = {
+			if = {
+				limit = { 
+					OR = {
+						has_country_flag = BUL_vasil_radoslavov_yes
+						has_country_leader = {
+							character = BUL_vasil_radoslavov
+						}
+					}
+				}
+				add_to_variable = {
+					var = BUL_radoslavov_approval_var
+					value = 1
+				}
+				custom_effect_tooltip = BUL_radoslavov_plus_one.tt
+			}
+		}
+	}
+	
+	BUL_further_resource_starvation = {
+		name = BUL_resource_starvation
+		icon = GFX_decision_generic_independence
+		fire_only_once = yes
+		days_mission_timeout = 200
+		activation = {
+			always = no
+		}
+		available = {
+			has_war = no
+		}
+		timeout_effect = {
+			swap_ideas = {
+				remove_idea = BUL_resource_starvation_1
+				add_idea = BUL_resource_starvation_2
+			}
+			if = {
+				limit = { 
+					OR = {
+						has_country_flag = BUL_vasil_radoslavov_yes
+						has_country_leader = {
+							character = BUL_vasil_radoslavov
+						}
+					}
+				}
+				add_to_variable = {
+					var = BUL_radoslavov_approval_var
+					value = -1
+				}
+				custom_effect_tooltip = BUL_radoslavov_minus_one.tt
+			}
+		}
+		complete_effect = {
+			remove_ideas = BUL_resource_starvation_1
+			add_stability = 0.15
+		}
+	}
+	BUL_cavalry_attack_against_rom = {
+		icon = GFX_decision_generic_cavalry
+		days_re_enable = 300
+		days_remove = 50
+		cost = 0
+		custom_cost_text = command_power_more_than_25
+		available = {
+			has_war_with = ROM
+		}
+		visible = {
+			has_completed_focus = BUL_the_cavalry_prevails
+			great_power_politics_great_war_visible = yes
+			has_war_with = ROM
+		}
+		modifier = {
+			cavalry_attack_factor = 0.15
+			dig_in_speed_factor = -0.15
+		}
+		complete_effect = {
+			hidden_effect = {
+				add_command_power = -25
+			}
+		}
+		remove_effect = {
+		}
+	}
+	BUL_economic_exploitation_morava = {
+		icon = GFX_decision_generic_forestry
+		fire_only_once = no
+		days_re_enable = 300
+		days_remove = 100
+		cost = 50
+		available = {
+			controls_state = 809
+		}
+		visible = {
+			has_completed_focus = BUL_moravia_macedonia_military_districts
+			great_power_politics_great_war_visible = yes
+		}
+		modifier = {
+			consumer_goods_factor = -0.1
+			supply_consumption_factor = -0.1
+		}
+		remove_effect = {
+			809 = {
+				add_manpower = -302
+				add_compliance = -0.05
+				add_resistance = -0.02
+			}
+		}
+	}
+	BUL_economic_exploitation_macedonia = {
+		icon = GFX_decision_generic_forestry
+		fire_only_once = no
+		days_re_enable = 300
+		days_remove = 100
+		cost = 50
+		available = {
+			controls_state = 106
+		}
+		visible = {
+			has_completed_focus = BUL_moravia_macedonia_military_districts
+			great_power_politics_great_war_visible = yes
+		}
+		modifier = {
+			consumer_goods_factor = -0.1
+			supply_consumption_factor = -0.1
+		}
+		remove_effect = {
+			106 = {
+				add_manpower = -302
+				add_compliance = -0.05
+				add_resistance = -0.02
+			}
+		}
+	}
 }
 
 peace_deals = {
@@ -383,6 +608,157 @@ crisis = {
 	}
 }
 
+
+#### Uh National Assembly ###
+BUL_national_assembly = {
+	BUL_sway_dems = {
+		icon = GFX_decision_generic_political_discourse
+		fire_only_once = no
+		cost = 15
+		days_remove = 3
+		days_re_enable = 30
+		visible = {
+			has_country_flag = BUL_voting_on_law
+			NOT = {
+				has_country_flag = BUL_democrats_opposing_law
+				has_country_flag = BUL_voting_dems_swayed
+			}
+		}
+		available = {
+		}
+		complete_effect = {
+			set_country_flag = BUL_voting_dems_swayed
+		}
+		remove_effect = {
+			if = {
+				limit = {
+					has_country_flag = BUL_democrat_gov
+				 }
+				 multiply_variable = {
+					var = BUL_people_in_favor_of_law
+					value = 1.05
+				 }
+				 round_variable = BUL_people_in_favor_of_law
+				 else = {
+					multiply_variable = {
+						var = BUL_people_in_favor_of_law
+						value = 1.01
+				 	}
+					round_variable = BUL_people_in_favor_of_law
+				 }
+			}
+		}
+	}
+	BUL_encourage_coal_mining_law = {
+		icon = GFX_decision_eng_trade_unions_support
+		fire_only_once = no
+		days_remove = 30
+		cost = 10
+		visible = {
+			has_completed_focus = BUL_encourage_coal_mining
+			has_country_flag = BUL_malinov_1
+			NOT = {
+				has_country_flag = BUL_encourage_coal_mining_law_passed
+			}
+		}
+		complete_effect = {
+			hidden_effect = {
+				set_variable = {
+					var = BUL_people_in_favor_of_law
+					value = 178
+				}
+				set_country_flag = BUL_passing_democrat_law
+				set_country_flag = BUL_voting_on_law
+				set_country_flag = BUL_agrarianists_and_socialists_opposing_law
+			}
+		}
+		remove_effect = {
+			custom_effect_tooltip = BUL_people_in_favor_of_law.tt
+			if = {
+				limit = { 
+					has_country_flag = BUL_has_majority_in_parliment
+				}
+				custom_effect_tooltip = BUL_law_will_pass
+				212 = {
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+				}
+				add_to_variable = {
+					var = BUL_local_resources_factor
+					value = 0.25
+				}
+				custom_effect_tooltip = BUL_encourage_mining.tt
+				set_country_flag = BUL_encourage_coal_mining_law_passed
+				set_variable = {
+					var = BUL_people_in_favor_of_law
+					value = 0
+				}
+				clr_country_flag = BUL_voting_on_law
+				clr_country_flag = BUL_passing_democrat_law
+				clr_country_flag = BUL_agrarianists_and_socialists_opposing_law
+				else = {
+					custom_effect_tooltip = BUL_law_will_fail
+					add_stability = -0.02
+					add_political_power = -15
+				}
+			}
+		}
+	}
+	BUL_bckb_law = {
+		icon = GFX_decision_eng_trade_unions_support
+		fire_only_once = no
+		days_remove = 30
+		cost = 10
+		visible = {
+			has_completed_focus = BUL_bccb
+			has_country_flag = BUL_malinov_1
+			NOT = {
+				has_country_flag = BUL_bckb_law_passed
+			}
+		}
+		complete_effect = {
+			hidden_effect = {
+				set_variable = {
+					var = BUL_people_in_favor_of_law
+					value = 92
+				}
+			}
+			set_country_flag = BUL_passing_democrat_law
+			set_country_flag = BUL_voting_on_law
+			set_country_flag = BUL_agrarianists_and_socialists_opposing_law
+		}
+		remove_effect = {
+			custom_effect_tooltip = BUL_people_in_favor_of_law.tt
+			if = {
+				limit = { 
+					has_country_flag = BUL_has_majority_in_parliment
+				}
+				custom_effect_tooltip = BUL_approve_farmer_financial_security.tt
+				custom_effect_tooltip = available_political_advisor
+				show_ideas_tooltip = BUL_nikola_stoyanov
+				add_to_variable = {
+					var = BUL_agr_army_eats
+					value = 0.05
+				}
+				add_to_variable = {
+					var = BUL_agr_stab
+					value = -0.02
+				}
+				clr_country_flag = BUL_voting_on_law
+				clr_country_flag = BUL_passing_democrat_law
+				clr_country_flag = BUL_agrarianists_and_socialists_opposing_law
+				else = {
+					custom_effect_tooltip = BUL_law_will_fail
+					add_stability = -0.02
+					add_political_power = -15
+				}
+			}
+		}
+	}
+}
+
 debug_decisions = {
 	BUL_salonika_debug = {
 		allowed = {
@@ -410,6 +786,1503 @@ debug_decisions = {
 		fire_only_once = yes
 		complete_effect = {
 			salonika_armistice_effect = yes
+		}
+	}
+	set_country_flag_voting_on_law = {
+		icon = GFX_decision_unknown
+		fire_only_once = no
+		allowed = {
+			original_tag = BUL
+		}
+		complete_effect = {
+			set_country_flag = BUL_voting_on_law
+		}
+	}
+	set_country_flag_balkan_league_yes = {
+		icon = GFX_decision_unknown
+		fire_only_once = no
+		complete_effect = {
+			set_country_flag = balkan_league_formed
+		}
+		allowed = {
+			original_tag = BUL
+		}
+	}
+	TUR_surrendur_to_balkan_league_dec_debug = {
+		allowed = {
+			original_tag = BUL
+		}
+		icon = GFX_decision_unknown
+		fire_only_once = no
+		days_remove = 2
+		remove_effect = {
+			hidden_effect = {
+				if = {
+					limit = { 
+						NOT = {
+							country_exists = ALB
+						}
+					}
+					GRE = {
+						transfer_state = 871
+					}
+					MNT = {
+						transfer_state = 870
+					}
+				}
+				if = {
+					limit = { 
+						country_exists = ALB
+					}
+					ALB = {
+						transfer_state = 871
+					}
+				}
+			}
+		}
+		complete_effect = {
+			hidden_effect = {
+				BUL = {
+					country_event = {
+						id = ww1_balkan_wars.12
+					}
+				}
+				SER = {
+					country_event = {
+						id = ww1_balkan_wars.13
+					}
+				}
+				GRE = {
+					country_event = {
+						id = ww1_balkan_wars.14
+					}
+				}
+				MNT = {
+					country_event = {
+						id = ww1_balkan_wars.15
+					}
+				}
+				if = {
+					limit = { 
+						has_global_flag =  balkan_league_all_of_macedonia_to_be_arbitrated
+					}
+					every_state = {
+						limit = {
+							has_state_flag = reserved_for_arbitration
+						}
+						transfer_state_to = RUS
+					}
+					every_state = {
+						limit = {
+							has_state_flag = SER_claimed
+						}
+						transfer_state_to = SER
+					}
+					every_state = {
+						limit = {
+							has_state_flag = BUL_ambigious
+						}
+						transfer_state_to = GRE
+					}
+					every_state = {
+						limit = {
+							has_state_flag = MNT_balkan_territory
+						}
+						transfer_state_to = MNT
+					}
+					849 = {
+						transfer_state_to = BUL
+					}
+					756 = {
+						transfer_state_to = BUL
+					}
+					757 = {
+						transfer_state_to = BUL
+					}
+					341 = {
+						transfer_state_to = BUL
+					}
+					451 = {
+						transfer_state_to = BUL
+					}
+					200 = {
+						transfer_state_to = BUL
+					}
+				}
+				if = {
+					limit = { 
+						has_global_flag = MAC_autonomy_yes
+					}
+					every_state = {
+						limit = {
+							has_state_flag = MAC_claimed
+						}
+						add_core_of = MAC
+						transfer_state_to = MAC
+					}
+					MAC = {
+						set_stability = 0.47
+						set_war_support = 0.35
+						set_politics = {
+							ruling_party = democratic
+							elections_allowed = yes
+						}
+						promote_character = MAC_yane_ivanov_sandanski
+					}
+				}
+			}
+		}
+	}
+	balkan_league_all_of_macedonia_to_be_arbitrated = {
+		allowed = {
+			original_tag = BUL
+		}
+		icon = GFX_decision_unknown
+		fire_only_once = no
+		complete_effect = {
+			set_global_flag = balkan_league_all_of_macedonia_to_be_arbitrated
+		}
+	}
+	ottoman_suicide_lol = {
+		allowed = {
+			original_tag = BUL
+		}
+		icon = GFX_decision_unknown
+		fire_only_once = no
+		complete_effect = {
+			set_global_flag = BW1_avoided
+			complete_national_focus = BUL_balkan_autonomy_achieved
+			TUR = {
+				country_event = ww1_firstbalkan.115
+			}
+		}
+	}
+	BUL_albanian_union = {
+		allowed = {
+			original_tag = BUL
+		}
+		icon = GFX_decision_unknown
+		fire_only_once = no
+		complete_effect = {
+			every_state = {
+				limit = {
+					is_core_of = BUL
+					NOT = {
+						state = 756
+					}
+				}
+				transfer_state_to = BUL
+			}
+			809 = {
+				transfer_state_to = BUL
+			}
+			876 = {
+				transfer_state_to = BUL
+			}
+			846 = {
+				transfer_state_to = BUL
+			}
+			731 = {
+				transfer_state_to = BUL
+			}
+			345 = {
+				transfer_state_to = BUL
+			}
+			every_state = {
+				limit = {
+					is_core_of = ALB
+					NOT = {
+						is_core_of = BUL
+					}
+				}
+				transfer_state_to = ALB
+			}
+			BUL_kiril_preslavski = {
+				set_nationality = ALB
+			}
+			ALB = {
+				set_politics = {
+					ruling_party = neutrality
+					elections_allowed = no
+				}
+				promote_character = BUL_kiril_preslavski
+			}
+			BUL = {
+				set_autonomy = {
+					target = ALB
+					autonomy_state = autonomy_tgwr_personal_union
+				}
+			}
+		}
+	}
+}
+operations = {
+	BUL_lozengradska_operacija_dec = {
+		name = BUL_lozengradska_operacija_dec
+		icon = GFX_decision_generic_operation
+		cost = 0
+		fire_only_once = yes
+		ai_will_do = {
+			factor = 100
+		}
+		available = {
+			hidden_trigger = {
+				original_tag = BUL
+			}
+			has_war_with = TUR
+		}
+		visible = {
+			has_completed_focus = BUL_appoint_savov
+		}
+		complete_effect = {
+			add_timed_idea = {
+				idea = BUL_idea_lozengradska_operacija
+				days = 100
+			}
+		}
+	}
+}
+
+economy_decisions = {
+	BUL_tarnovo_plachkovtsi_line = {
+		icon = GFX_decision_generic_train
+		cost = 10
+		days_remove = 30
+		fire_only_once = yes
+		visible = {
+			has_completed_focus = BUL_malinovs_cabinet
+		}
+		available = {
+			controls_state = 211
+		}
+		remove_effect = {
+			build_railway = {
+				path = { 6842 }
+				fallback = yes
+				start_province = 6842
+				target_province = 6842
+			}
+			add_to_variable = {
+				BUL_infra_speed = 0.02
+			}
+			custom_effect_tooltip = BUL_2_infra
+		}
+	}
+	BUL_sofia_gyueshevo_line = {
+		icon = GFX_decision_generic_train
+		cost = 5
+		days_remove = 34
+		fire_only_once = yes
+		visible = {
+			has_completed_focus = BUL_malinovs_cabinet
+			NOT = {
+				owns_state = 106
+			}
+		}
+		available = {
+			controls_state = 48
+		}
+		remove_effect = {
+			build_railway = {
+				path = { 935 }
+				fallback = yes
+				start_province = 935
+				target_province = 935
+			}
+			add_to_variable = {
+				BUL_infra_speed = 0.02
+			}
+			custom_effect_tooltip = BUL_2_infra
+		}
+	}
+}
+##############################Bulgaria BOP Stuff#####################################################################################
+
+BUL_managing_the_tsar_assembly_balance = {
+	BUL_royal_tours_dec = {
+		icon = GFX_decision_generic_monarchy
+		cost = 25
+		days_re_enable = 200
+		days_remove = 5
+		available = {
+			original_tag = BUL
+		}
+		visible = {
+			has_completed_focus = BUL_the_new_tsardom
+		}
+		complete_effect = {
+			add_power_balance_value = {
+				id = BUL_BoP
+				value = 0.05
+				tooltip_side = bul_tsar_authority_right_side
+			}
+			add_stability = 0.02
+		}
+	}
+	
+}
+
+#######################################################Bulgaria Industry Stuff##########################################################
+
+BUL_industry_stuff = {
+	BUL_invite_german_rhine_experts = {
+		icon = GFX_decision_steel
+		cost = 75
+		fire_only_once = yes
+		days_remove = 10
+		available = {
+			original_tag = BUL
+			NOT = {
+				has_war_with = GER
+				is_in_faction_with = FRA
+			}
+		}
+		visible = {
+			has_completed_focus = BUL_wonders_of_the_maritsa
+		}
+		complete_effect = {
+			add_resource = {
+				type = steel
+				amount = 3
+				state = 212
+			}
+			212 = {
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	} 
+
+	BUL_invite_british_midlands_experts = {
+		icon = GFX_decision_steel
+		cost = 75
+		fire_only_once = yes
+		days_remove = 5
+		available = {
+			original_tag = BUL
+			NOT = {
+				has_war_with = ENG
+			}
+		}
+		visible = {
+			has_completed_focus = BUL_wonders_of_the_maritsa
+		}
+		complete_effect = {
+			add_resource = {
+				type = steel
+				amount = 3
+				state = 212
+			}
+			212 = {
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+}
+
+#generic economic############################################################################################################################
+economy_decisions = {
+	BUL_tarnovo_plachkovtsi_line = {
+		icon = GFX_decision_generic_train
+		cost = 10
+		days_remove = 30
+		fire_only_once = yes
+		visible = {
+			has_completed_focus = BUL_malinovs_cabinet
+		}
+		available = {
+			controls_state = 211
+		}
+		remove_effect = {
+			build_railway = {
+				path = { 6842 }
+				fallback = yes
+				start_province = 6842
+				target_province = 6842
+			}
+			add_to_variable = {
+				BUL_infra_speed = 0.02
+			}
+			custom_effect_tooltip = BUL_2_infra
+		}
+	}
+	BUL_sofia_gyueshevo_line = {
+		icon = GFX_decision_generic_train
+		cost = 5
+		days_remove = 34
+		fire_only_once = yes
+		visible = {
+			has_completed_focus = BUL_malinovs_cabinet
+			NOT = {
+				owns_state = 106
+			}
+		}
+		available = {
+			controls_state = 48
+		}
+		remove_effect = {
+			build_railway = {
+				path = { 935 }
+				fallback = yes
+				start_province = 935
+				target_province = 935
+			}
+			add_to_variable = {
+				BUL_infra_speed = 0.02
+			}
+			custom_effect_tooltip = BUL_2_infra
+		}
+	}
+}
+##############################Bulgaria BOP Stuff#####################################################################################
+
+BUL_managing_the_tsar_assembly_balance = {
+	BUL_royal_tours_dec = {
+		icon = GFX_decision_generic_monarchy
+		cost = 25
+		days_re_enable = 200
+		days_remove = 5
+		available = {
+			original_tag = BUL
+		}
+		visible = {
+			has_completed_focus = BUL_the_new_tsardom
+		}
+		complete_effect = {
+			add_power_balance_value = {
+				id = BUL_BoP
+				value = 0.05
+				tooltip_side = bul_tsar_authority_right_side
+			}
+			add_stability = 0.02
+		}
+	}
+	
+}
+
+#######################################################Bulgaria Industry Stuff##########################################################
+
+BUL_industry_stuff = {
+	BUL_invite_german_rhine_experts = {
+		icon = GFX_decision_steel
+		cost = 75
+		fire_only_once = yes
+		days_remove = 10
+		available = {
+			original_tag = BUL
+			NOT = {
+				has_war_with = GER
+				is_in_faction_with = FRA
+			}
+		}
+		visible = {
+			has_completed_focus = BUL_wonders_of_the_maritsa
+		}
+		complete_effect = {
+			add_resource = {
+				type = steel
+				amount = 3
+				state = 212
+			}
+			212 = {
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	} 
+
+	BUL_invite_british_midlands_experts = {
+		icon = GFX_decision_steel
+		cost = 75
+		fire_only_once = yes
+		days_remove = 5
+		available = {
+			original_tag = BUL
+			NOT = {
+				has_war_with = ENG
+			}
+		}
+		visible = {
+			has_completed_focus = BUL_wonders_of_the_maritsa
+		}
+		complete_effect = {
+			add_resource = {
+				type = steel
+				amount = 3
+				state = 212
+			}
+			212 = {
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+}
+
+########################################################################Manuevering Around The Monopolies###############################
+
+BUL_manuevering_around_the_monopolies = {
+
+
+}
+
+#POLOTICAL ACTIONS
+political_actions = {
+	
+}
+
+########################################################################Bulgaria Arms Purchases##########################################
+
+BUL_arms_purchases = {
+    purchase_austrian_rifles = {
+        icon = GFX_decision_generic_prepare_civil_war
+        cost = 125
+        days_remove = 50
+        days_re_enable = 365
+        available = {
+			NOT = {
+				has_country_flag = BUL_weapon_purchase_activated
+			}
+        }
+		visible = {
+			NOT = {
+				has_completed_focus = BUL_attack_austrian_influence
+				has_war_with = AUS
+			}
+		}
+		complete_effect = {
+			set_country_flag = BUL_weapon_purchase_activated
+		}
+		remove_effect = {
+			add_equipment_to_stockpile = {
+                type = infantry_equipment_1
+                amount = 1000
+                producer = AUS
+            }
+			clr_country_flag = BUL_weapon_purchase_activated
+		}
+    }
+    
+    BUL_purchase_german_rifles = {
+        icon = GFX_decision_generic_prepare_civil_war
+        cost = 175
+        days_remove = 70
+        days_re_enable = 365
+        available = {
+		   NOT = {
+			has_country_flag = BUL_weapon_purchase_activated
+		}
+        }
+		visible = {
+			NOT = {
+				OR = {
+					has_war_with = GER
+					is_in_faction_with = FRA
+				}
+			}
+		}
+		complete_effect = {
+			set_country_flag = BUL_weapon_purchase_activated
+		}
+        remove_effect = {
+            add_equipment_to_stockpile = {
+                type = infantry_equipment_1
+                amount = 1000
+                producer = GER
+            }
+			clr_country_flag = BUL_weapon_purchase_activated
+        }
+    }
+    
+    BUL_purchase_russian_rifles = {
+        icon = GFX_decision_generic_prepare_civil_war
+        cost = 125
+        days_remove = 50
+        days_re_enable = 365
+		available = {
+			NOT = {
+				has_country_flag = BUL_weapon_purchase_activated
+			}
+		 }
+		 visible = {
+			NOT = {
+				has_war_with = RUS
+				has_global_flag = russian_revolution
+			}
+			RUS = {
+				has_war = no
+			}
+		 }
+        remove_effect = {
+            add_equipment_to_stockpile = {
+                type = infantry_equipment_1
+                amount = 1500
+                producer = RUS
+            }
+			clr_country_flag = BUL_weapon_purchase_activated
+        }
+		complete_effect = {
+			set_country_flag = BUL_weapon_purchase_activated
+		}
+    }
+    
+    BUL_purchase_french_rifles = {
+        icon = GFX_decision_generic_prepare_civil_war
+        cost = 150
+        days_remove = 70
+        days_re_enable = 365
+		available = {
+			NOT = {
+				has_country_flag = BUL_weapon_purchase_activated
+			}
+		 }
+		 visible = {
+			NOT = {
+				OR = {
+					has_war_with = FRA
+					is_in_faction_with = GER
+				}
+			}
+		 }
+        remove_effect = {
+            add_equipment_to_stockpile = {
+                type = infantry_equipment_1
+                amount = 1000
+                producer = FRA
+            }
+			clr_country_flag = BUL_weapon_purchase_activated
+        }
+		complete_effect = {
+			set_country_flag = BUL_weapon_purchase_activated
+		}
+    }
+
+	BUL_purchase_french_recon_planes = {
+		icon = GFX_decision_hol_attract_foreign_investors
+		cost = 175
+		days_remove = 70
+		days_re_enable = 365
+		available = {
+			NOT = {
+				has_country_flag = BUL_weapon_purchase_activated
+			}
+		}
+		visible = {
+			has_completed_focus = BUL_apply_french_aviation
+			NOT = {
+				OR = {
+					has_war_with = FRA
+					is_in_faction_with = GER
+				}
+			}
+		}
+		remove_effect = {
+			add_equipment_to_stockpile = {
+				type = scout_plane_equipment
+				amount = 5
+				producer = FRA
+			}
+			clr_country_flag = BUL_weapon_purchase_activated
+		}
+		complete_effect = {
+			set_country_flag = BUL_weapon_purchase_activated
+		}
+	}
+}
+
+##################################################################### State of the Tsardom ##########################################################
+BUL_state_of_the_tsardom = {
+	BUL_adopt_german_arms = {
+		icon = GFX_decision_FIN_weapon_caches
+		fire_only_once = yes
+		days_remove = 250
+		cost = 25
+		allowed = {
+			original_tag = BUL
+		}
+		available = {
+			NOT = {
+				OR = {
+					is_in_faction_with = FRA
+				}
+			}
+		}
+		visible = {
+			has_completed_focus = BUL_court_germany
+		}
+		modifier = {
+			production_factory_efficiency_gain_factor = -0.1
+			line_change_production_efficiency_factor = 0.15
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_2
+				amount = 5000
+				producer = GER
+			}
+		}
+	}
+	BUL_dismiss_radoslavov = {
+		icon = GFX_decision_SWI_dismiss_council
+		fire_only_once = yes
+		allowed = {
+			original_tag = BUL
+		}
+		available = {
+			OR = {
+				has_stability < 0.3
+				neutrality < 0.4
+			}
+		}
+		visible = {
+			BUL_vasil_radoslavov = {
+				is_hired_as_advisor = yes
+			}
+			has_completed_focus = BUL_the_new_school
+		}
+		complete_effect = {
+			uncomplete_national_focus = {
+				focus = BUL_the_new_school
+			}
+			complete_national_focus = BUL_young_libs
+			deactivate_advisor = BUL_vasil_radoslavov
+			activate_advisor = BUL_nikola_genadiev
+			clr_country_flag = BUL_vasil_radoslavov_yes
+		}
+	}
+		the_lethargic_tenure_of_malinov = {
+			activation = {
+				has_completed_focus = BUL_the_new_tsardom
+			}
+			available = {
+				has_completed_focus = BUL_appoint_geshov
+			}
+			fire_only_once = yes
+			icon = GFX_decision_generic_political_address
+			is_good = no
+			days_mission_timeout = 285
+			timeout_effect = {
+				complete_national_focus = BUL_appoint_geshov
+			}
+			complete_effect = {
+				add_political_power = 25
+			}
+		}
+		BUL_reshuffle_cabinet = {
+			icon = GFX_decision_SWI_dismiss_council
+			cost = 10
+			fire_only_once = yes
+			available = {
+				has_completed_focus = BUL_shuffle_malinov_cabaniet
+			}
+			visible = {
+				has_completed_focus = BUL_shuffle_malinov_cabaniet
+			}
+			days_remove = 50
+			modifier = {
+				political_advisor_cost_factor = -0.35
+			}
+			remove_effect = {
+				add_political_power = -15
+			}
+		}
+		BUL_crack_down_on_the_border = {
+			icon = GFX_decision_generic_police_action
+			custom_cost_text = command_power_more_than_25
+			custom_cost_trigger = {
+				command_power > 25
+			}
+			fire_only_once = yes
+			available = {
+				hidden_trigger = {
+					controls_state = 212
+					controls_state = 48
+				}
+				has_idea = BUL_TUR_border_chaos
+				army_manpower_in_state = { state = 212 amount > 5000 }
+			}
+			visible = {
+				hidden_trigger = {
+					controls_state = 212
+					controls_state = 48
+				}
+				has_idea = BUL_TUR_border_chaos
+			}
+			complete_effect = {
+				remove_ideas = BUL_TUR_border_chaos
+				add_equipment_to_stockpile = {
+					type = infantry_equipment_1
+					amount = -100
+				}
+				hidden_effect = {
+					add_command_power = -25
+				}
+			}
+		}
+	BUL_finish_urbanizing_sofia = {
+		icon = GFX_decision_generic_construction
+		cost = 40
+		fire_only_once = yes
+		available = {
+			has_completed_focus = BUL_arrival_of_the_industrial_revolution
+			controls_state = 48
+			hidden_trigger = {
+				original_tag = BUL
+			}
+		}
+		complete_effect = {
+			48 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+	BUL_reform_the_textile_industry = {
+		icon = GFX_decision_generic_factory
+		cost = 70
+		fire_only_once = yes
+		available = {
+			has_completed_focus = BUL_arrival_of_the_industrial_revolution
+			controls_state = 212
+			hidden_trigger = {
+				original_tag = BUL
+			}
+		}
+		complete_effect = {
+			212 = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+			}
+		}
+	}
+	BUL_negotiate_skijope_line = {
+		icon = GFX_decision_generic_train
+		cost = 25
+		fire_only_once = yes
+		available = {
+			has_completed_focus = BUL_finish_rail_production
+			hidden_trigger = {
+				original_tag = BUL
+			}
+		}
+		visible = {
+			has_country_flag = BUL_malinov_yes
+			country_exists = TUR
+			NOT = {
+				has_war_with = TUR
+			}
+		}
+		complete_effect = {
+			TUR = {
+				country_event = { 
+					id = ww1_BUL_TUR.80
+					days = 2
+				}
+			}
+		}
+	}
+}
+
+
+	BUL_lypachev_reforms = {
+		BUL_cultivate_fodder_crops = {
+			icon = GFX_decision_generic_consumer_goods
+			cost = 25
+			fire_only_once = yes
+			complete_effect = {
+				add_to_variable = {
+					var = BUL_agr_army_eats
+					value = -0.05
+				}
+				custom_effect_tooltip = BUL_cultivate_fodder_crops.tt
+			}
+		}
+		BUL_abolish_state_monopoly_on_salt = {
+			icon = GFX_decision_gre_investment_decisions
+			cost = 50
+			fire_only_once = yes
+			complete_effect = {
+				custom_effect_tooltip = BUL_abolish_state_monopoly_on_salt.tt
+				add_to_variable = {
+					var = BUL_peasant_pp
+					value = 0.1
+				}
+				add_to_variable = {
+					var = BUL_peasant_consumer
+					value = 0.025
+				}
+			}
+		}
+		BUL_lower_import_duties = {
+			icon = GFX_decision_generic_wreckers
+			cost = 35
+			fire_only_once = yes
+			complete_effect = {
+				add_to_variable = {
+					var = BUL_trade_opinion_factor
+					value = 0.5
+				}
+				211 = {
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = aluminium
+						amount = 2
+					}
+				}
+				custom_effect_tooltip = BUL_lower_import_duties.tt
+			}
+		}
+	}
+####################################### FARM SHIT ##############################
+
+BUL_farm_stuff_dec = {
+	BUL_help_fund_small_factories = {
+		icon = GFX_decision_eng_trade_unions_support
+		cost = 25
+		fire_only_once = yes
+		complete_effect = {
+			add_stability = 0.025
+		}
+	}
+	BUL_approve_farmer_financial_security = {
+		icon = GFX_decision_eng_trade_unions_support
+		cost = 50
+		days_remove = 5
+		fire_only_once = yes
+		complete_effect = {
+			add_stability = 0.03
+			add_to_variable = {
+				var = BUL_agr_army_eats
+				value = -0.03
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = -0.02
+			}
+			custom_effect_tooltip = BUL_approve_farmer_financial_security.tt
+		}
+	}
+	BUL_import_danish_goats = {
+		icon = GFX_decision_hol_attract_foreign_investors
+		cost = 25
+		days_remove = 5
+		fire_only_once = yes
+		visible = {
+			has_completed_focus = BUL_moo_moo
+		}
+		complete_effect = {
+			add_to_variable = {
+				var = BUL_agr_army_eats
+				value = -0.05
+			}
+			add_to_variable = {
+				var = BUL_agr_goud_factor
+				value = -0.05
+			}
+			add_stability = 0.02
+			DEN = {
+				add_opinion_modifier = {
+					target = BUL
+					modifier = small_increase
+				}
+			}
+			custom_effect_tooltip = BUL_import_danish_goats.tt
+		}
+	}
+	BUL_increase_tobacco_plantations = {
+		icon = GFX_decision_generic_welfare
+		cost = 30
+		days_remove = 5
+		fire_only_once = yes
+		visible = {
+			has_completed_focus = BUL_tobacco_plantations
+		}
+		complete_effect = {
+			add_to_variable = {
+				var = BUL_agr_army_eats
+				value = 0.05 
+			}
+			add_to_variable = {
+				var = BUL_agr_goud_factor
+				value = -0.20
+			}
+			if = {
+				limit = { 
+					NOT = {
+						has_war_with = TUR
+					}
+				}
+				TUR = {
+					add_opinion_modifier = {
+						target = BUL
+						modifier = small_increase
+					}
+				}
+			}
+			custom_effect_tooltip = BUL_increase_tobacco_plantations.tt
+		}
+	}
+}
+
+#Coalition Decision Category
+BUL_peoples_liberal_parties_coalition_cat = {
+	BUL_appease_liberals = {
+		name = BUL_appease_liberals
+		icon = GFX_decision_generic_political_discourse
+		fire_only_once = yes
+		available = {
+			OR = {
+				hidden_trigger = {
+					NOT = {
+						has_country_flag = BUL_political_coalition
+					}
+				}
+				AND = {
+					has_completed_focus = BUL_russia_relations
+					has_completed_focus = BUL_amending_the_silver_constitution
+					has_completed_focus = BUL_mediate_debt_situation
+					has_completed_focus = BUL_reform_ministries
+					has_completed_focus = BUL_pandect_system
+				}
+			}
+		}
+		activation = {
+			has_country_flag = BUL_political_coalition
+		}
+		visible = {
+			has_country_flag = BUL_political_coalition
+		}
+		is_good = no
+		days_mission_timeout = 300
+		timeout_effect = {
+			add_stability = -0.1
+			deactivate_advisor = BUL_stoyan_danev
+			clr_country_flag = BUL_political_coalition
+		}
+	}
+	BUL_disband_the_coalition = {
+		icon = GFX_decision_SWI_dismiss_council
+		cost = 100
+		fire_only_once = yes
+		complete_effect = {
+			add_stability = -0.1
+			deactivate_advisor = BUL_stoyan_danev
+			custom_effect_tooltip = BUL_disband_the_coalition.tt
+			clr_country_flag = BUL_political_coalition
+		}
+	}
+}
+
+################################### First National Catastrophe ####
+BUL_first_national_catastrophe_cat = {
+	national_assembly_elections_16 = {
+		name = national_assembly_elections_16
+		icon = GFX_decision_SWI_no_elected_president
+		fire_only_once = yes 
+		allowed = {
+			original_tag = BUL
+		}
+		available = {
+			has_completed_focus = BUL_blame_tsar
+		}
+		is_good = yes
+		activation = {
+			has_completed_focus = BUL_blame_assembly
+		}
+		visible = {
+			has_completed_focus = BUL_blame_assembly
+		}
+		days_mission_timeout = 90
+		timeout_effect = {
+			country_event = ww1_bulgaria.127
+		}
+	}
+	national_assembly_elections_17 = {
+		name = national_assembly_elections_17
+		icon = GFX_decision_SWI_no_elected_president
+		fire_only_once = yes 
+		allowed = {
+			original_tag = BUL
+		}
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+		is_good = yes
+		activation = {
+			always = no
+		}
+		days_mission_timeout = 54
+		timeout_effect = {
+			country_event = ww1_bulgaria.130
+		}
+	}
+	BUL_reorganize_the_thracian_muslims = {
+		icon = GFX_decision_FIN_weapon_caches
+		fire_only_once = yes
+		allowed = {
+			original_tag = BUL
+		}
+		available = {
+			has_war = no
+			any_owned_state = {
+				is_core_of = ROOT
+				is_core_of = TUR
+			}
+		}
+		cost = 35
+		visible = {
+			has_completed_focus = BUL_stabalize_realm
+		}
+		days_remove = 200
+		modifier = {
+			consumer_goods_factor = 0.1
+		}
+		remove_effect = {
+			add_stability = 0.04
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.05
+			}
+			add_to_variable = {
+				var = BUL_national_c_consumer
+				value = -0.05
+			}
+			custom_effect_tooltip = BUL_national_catastrophe_consumer_goods_1.tt
+		}
+	}
+	BUL_topple_western_thrace = {
+		icon = GFX_decision_revolt
+		fire_only_once = yes
+		allowed = {
+			original_tag = BUL
+		}
+		available = {
+			army_manpower_in_state = { state = 451 amount > 1000 }
+			army_manpower_in_state = { state = 757 amount > 1000 }
+		}
+		visible = {
+			country_exists = WTH
+			has_military_access_to = WTH
+		}
+		complete_effect = {
+			annex_country = {
+				target = WTH
+				transfer_troops = no
+			}
+		}
+	}
+	BUL_incoming_grain_crisis = {
+		icon = GFX_decision_POL_organize_strike_two
+		days_mission_timeout = 500
+		is_good = no
+		allowed = {
+			original_tag = BUL
+		}
+		activation = {
+			has_global_flag = great_war
+			is_in_faction = no
+			has_war = no
+			has_completed_focus = BUL_curbed_ambitions
+		}
+		available = {
+			is_in_faction_with = FRA
+		}
+		complete_effect = {
+		}
+		remove_effect = {
+			add_timed_idea = {
+				idea = BUL_grain_crisis
+				days = 600
+			}
+			if = {
+				limit = { 
+					OR = {
+						has_country_flag = BUL_vasil_radoslavov_yes
+						has_country_leader = {
+							character = BUL_vasil_radoslavov
+						}
+					}
+				}
+				add_to_variable = {
+					var = BUL_radoslavov_approval_var
+					value = -1
+				}
+				custom_effect_tooltip = BUL_radoslavov_minus_one.tt
+			}
+		}
+	}
+	BUL_arrest_grain_conspirators = {
+		icon = GFX_decision_generic_arrest
+		cost = 50
+		fire_only_once = yes
+		allowed = {
+			original_tag = BUL
+		}
+		available = {
+			has_active_mission = BUL_incoming_grain_crisis
+			has_completed_focus = BUL_agrarian_crackdown
+		}
+		visible = {
+			has_active_mission = BUL_incoming_grain_crisis
+		}
+		complete_effect = {
+			remove_mission = BUL_incoming_grain_crisis
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.05
+			}
+		}
+	}
+}
+
+## Eradicating Peasantry ##------------------------------------------------------------------------------------------------------------------------------
+BUL_fight_peasants = {
+	BUL_revigorate_land_holdings = {
+		icon = GFX_decision_POL_looming_peasants_strike
+		cost = 60
+		fire_only_once = yes
+		days_remove = 125
+		allowed = {
+			original_tag = BUL
+		}
+		available = {
+			has_dynamic_modifier = {
+				modifier = BUL_peasantry
+			}
+			has_war = no
+		}
+		visible = {
+			OR = {
+				has_completed_focus = BUL_open_the_markets
+			}
+		}
+		modifier = {
+			political_power_factor = -0.05
+			production_speed_buildings_factor = 0.1
+		}
+		complete_effect = {
+			add_to_variable = {
+				var = BUL_peasant_consumer
+				value = 0.05
+			}
+			custom_effect_tooltip = BUL_goudminus5_tt
+			add_to_variable = {
+				var = BUL_remove_peasantry
+				value = 1
+			}
+		}
+	}
+	BUL_muslim_education = {
+		icon = GFX_decision_POL_looming_peasants_strike
+		cost = 60
+		fire_only_once = yes
+		days_remove = 125
+		available = {
+			has_dynamic_modifier = {
+				modifier = BUL_peasantry
+			}
+			has_war = no
+		}
+		visible = {
+			OR = {
+				has_completed_focus = BUL_open_the_markets
+			}
+		}
+		modifier = {
+			political_power_factor = -0.05
+			production_speed_buildings_factor = 0.05
+		}
+		complete_effect = {
+			add_to_variable = {
+				var = BUL_dumb_peasants
+				value = 0.02
+			}
+			custom_effect_tooltip = BUL_equal_edu_for_women.tt
+			add_stability = 0.01
+			add_political_power = 15
+			add_to_variable = {
+				var = BUL_remove_peasantry
+				value = 1
+			}
+		}
+	}
+}
+
+BUL_sandanski_coup_cat = {
+	BUL_do_the_sandasnki_coup = {
+		icon = GFX_decision_eng_trade_unions_demand
+		cost = 25
+		fire_only_once = yes
+		days_remove = 5
+		available = {
+			check_variable = {
+				var = BUL_sandasnki_coup_chance_value
+				value > 7
+			}
+		}
+		complete_effect = {
+			set_variable = {
+				var = BUL_sandasnki_coup_chance_seen
+				value = 0
+			}
+		}
+		remove_effect = {
+			country_event = ww1_bulgaria.170
+		}
+	}
+	BUL_sandanski_coup_timer = {
+		icon = GFX_decision_eng_trade_unions_demand
+		fire_only_once = yes
+		days_mission_timeout = 115
+		activation = {
+			always = no
+		}
+		available = {
+			always = no
+		}
+		complete_effect = {
+			
+		}
+		timeout_effect = {
+			
+		}
+	}
+	BUL_sandanski_coup_approach_exarch = {
+		icon = GFX_decision_SWI_support_humanitarian_efforts
+		cost = 15
+		fire_only_once = yes
+		available = {
+			has_character = BUL_yosif_i
+		}
+		visible = {
+			has_character = BUL_yosif_i
+		}
+		complete_effect = {
+			custom_effect_tooltip = BUL_sandanski_coup_approach_exarch.tt
+			add_to_variable = {
+				var = BUL_sandasnki_coup_chance_value
+				value = 1
+			}
+			add_to_variable = {
+				var = BUL_sandasnki_coup_chance_seen
+				value = 1
+			}
+			add_days_mission_timeout = {
+				mission = BUL_sandanski_coup_timer
+				days = 15
+			}
+			if = {
+				limit = { 
+					has_country_flag = BUL_yosif_i_coup_bonus
+				}
+				add_to_variable = {
+					var = BUL_sandasnki_coup_chance_value
+					value = 1
+				}
+			}
+		}
+	}
+	BUL_sandanski_coup_approach_stamboliyski = {
+		icon = GFX_decision_SWI_support_humanitarian_efforts
+		cost = 35
+		available = {
+			has_character = BUL_aleksandar_stamboliyski
+		}
+		visible = {
+			has_character = BUL_aleksandar_stamboliyski
+		}
+		complete_effect = {
+			custom_effect_tooltip = BUL_sandanski_coup_approach_stamboliyski.tt
+			BUL_aleksandar_stamboliyski = {
+				set_character_flag = BUL_sandanski_coup_character
+			}
+			add_days_mission_timeout = {
+				mission = BUL_sandanski_coup_timer
+				days = 15
+			}
+			add_to_variable = {
+				var = BUL_sandasnki_coup_chance_seen
+				value = 3
+			}
+			add_to_variable = {
+				var = BUL_sandasnki_coup_chance_value
+				value = 4
+			}
+		}
+	}
+	BUL_approach_geshov = {
+		icon = GFX_decision_SWI_support_humanitarian_efforts
+		cost = 35
+		available = {
+			has_character = BUL_ivan_evstratiev_geshov
+			check_variable = {
+				var = BUL_sandasnki_coup_chance_value
+				value > 5
+			}
+		}
+		visible = {
+			has_character = BUL_ivan_evstratiev_geshov
+		}
+		complete_effect = {
+			add_days_mission_timeout = {
+				mission = BUL_sandanski_coup_timer
+				days = 15
+			}
+			custom_effect_tooltip = BUL_approach_geshov.tt
+			add_to_variable = {
+				var = BUL_sandasnki_coup_chance_seen
+				value = 1
+			}
+			add_to_variable = {
+				var = BUL_sandasnki_coup_chance_value
+				value = 2
+			}
+			BUL_ivan_evstratiev_geshov = {
+				set_character_flag = BUL_sandanski_coup_character
+			}
+		}
+	}
+	BUL_approach_malinov = {
+		icon = GFX_decision_SWI_support_humanitarian_efforts
+		cost = 35
+		available = {
+			has_character = BUL_aleksandar_malinov
+			check_variable = {
+				var = BUL_sandasnki_coup_chance_value
+				value > 5
+			}
+		}
+		visible = {
+			has_character = BUL_aleksandar_malinov
+		}
+		complete_effect = {
+			add_days_mission_timeout = {
+				mission = BUL_sandanski_coup_timer
+				days = 15
+			}
+			custom_effect_tooltip = BUL_approach_geshov.tt
+			add_to_variable = {
+				var = BUL_sandasnki_coup_chance_seen
+				value = 1
+			}
+			add_to_variable = {
+				var = BUL_sandasnki_coup_chance_value
+				value = 2
+			}
+			BUL_aleksandar_malinov = {
+				set_character_flag = BUL_sandanski_coup_character
+			}
 		}
 	}
 }
