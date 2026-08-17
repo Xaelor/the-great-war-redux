@@ -1,3 +1,79 @@
+joint_focus = {
+	id = BLL_form_the_alliance
+	icon = GFX_focus_balkan_league_defense
+	cost = 4
+	text_icon = joint_BUL_SER_focus_style
+	x = 0
+	y = 5
+	offset = {
+		x = 0
+		y = -5
+		trigger = {
+			has_focus_tree = bulgaria_focus
+		}
+	}
+	joint_trigger = {
+		OR = {
+			has_focus_tree = bulgaria_focus
+			has_focus_tree = ser_focus
+		}
+	}
+	available = {
+		NOT = {
+			has_global_flag = kis_firstbalkan_war
+		}
+	}
+	completion_reward_joint_originator = {
+		add_political_power = 50
+		country_event = ww1_balkan.1
+	}
+	ai_will_do = {
+		base = 1
+		modifier = {
+			factor = 0
+			is_historical_focus_on = yes
+			tag = SER
+		}
+	}
+	search_filters = {
+		FOCUS_FILTER_HISTORICAL
+	}
+}
+joint_focus = {
+	id = BLL_anti_ottoman_crusade
+	icon = GFX_TUR_balkan_war_experience
+	text_icon = joint_BUL_SER_focus_style
+	y = 1
+	x = -1
+	cost = 5
+	prerequisite = {
+		focus = BLL_form_the_alliance
+	}
+	relative_position_id = BLL_form_the_alliance
+	mutually_exclusive = {
+		focus = SER_rely_only_on_yourself
+		focus = BUL_lone_liberator
+	}
+	ai_will_do = {
+		base = 0
+	}
+	available = {
+		has_global_flag = balkan_league_success
+		hidden_trigger = {
+			always = no
+		}
+	}
+	completion_reward = {
+		custom_effect_tooltip = BLL_alliance_is_formed_tt
+		army_experience = 30
+		add_stability = 0.05
+		add_war_support = 0.05
+	}
+	search_filters = {
+		FOCUS_FILTER_HISTORICAL FOCUS_FILTER_COMPLETED_BY_EVENT
+	}
+}
+
 focus_tree = {
 	id = tgwr_bulgaria_rework
 	country = {
@@ -7,7 +83,7 @@ focus_tree = {
 			tag = BUL
 		}
 	}
-	shared_focus = BALKAN_LEAGUE_SHARED_balkan_strategy
+	shared_focus = BLL_form_the_alliance
 	focus = {
 		id = BUL_new_tsardom
 		icon = GFX_focus_BUL_promote_bulgarian_nationalism
