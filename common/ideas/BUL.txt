@@ -1,127 +1,82 @@
 ideas={
-	hidden_ideas = {
-		BW1_armistice_balkans = {
-			picture = generic_constitutional_guarantees
-			allowed = {
-				always = no
+
+	#Tech
+	naval_manufacturer = {
+		designer = yes
+		BUL_varna_naval_dockyard = {
+			picture = generic_naval_manufacturer_2
+			allowed = { original_tag = BUL }
+			research_bonus = { naval_equipment = 0.1 }
+			traits = { coastal_defence_naval_manufacturer }
+		}
+	}
+	
+	aircraft_manufacturer = {
+		designer = yes 
+		dar = {
+			picture = bul_dar
+			allowed = { 
+				original_tag = BUL 
 			}
-			removal_cost = -1
-			cancel = {
-				OR = {
-					TUR = {
-						has_country_flag = TUR_raid_on_sublime_porte
-					}
-					NOT = {
-						has_war_with = TUR
-					}
-				}
+			visible = { 
+				date > 1924.1.1 
 			}
-			targeted_modifier = {
-				tag = TUR
-				attack_bonus_against = -10
-				breakthrough_bonus_against = -10
-				defense_bonus_against = 10
+			traits = { 
+				light_aircraft_manufacturer 
+			}
+			research_bonus = {
+				air_equipment = 0.1
 			}
 		}
-		BW1_armistice_TUR_ser = {
-			picture = generic_constitutional_guarantees
-			allowed = {
-				always = no
-			}
-			removal_cost = -1
-			cancel = {
-				OR = {
-					TUR = {
-						has_country_flag = TUR_raid_on_sublime_porte
-					}
-					NOT = {
-						has_war_with = SER
-					}
-				}
-			}
-			targeted_modifier = {
-				tag = SER
-				attack_bonus_against = -10
-				breakthrough_bonus_against = -10
-				defense_bonus_against = 10
-			}
-		}		
-		BW1_armistice_TUR_bul = {
-			picture = generic_constitutional_guarantees
-			allowed = {
-				always = no
-			}
-			removal_cost = -1
-			cancel = {
-				OR = {
-					TUR = {
-						has_country_flag = TUR_raid_on_sublime_porte
-					}
-					NOT = {
-						has_war_with = BUL
-					}
-				}
-			}
-			targeted_modifier = {
-				tag = BUL
-				attack_bonus_against = -10
-				breakthrough_bonus_against = -10
-				defense_bonus_against = 10
-			}
-		}		
-		BW1_armistice_TUR_gre = {
-			picture = generic_constitutional_guarantees
-			allowed = {
-				always = no
-			}
-			removal_cost = -1
-			cancel = {
-				OR = {
-					TUR = {
-						has_country_flag = TUR_raid_on_sublime_porte
-					}
-					NOT = {
-						has_war_with = GRE
-					}
-				}
-			}
-			targeted_modifier = {
-				tag = GRE
-				attack_bonus_against = -10
-				breakthrough_bonus_against = -10
-				defense_bonus_against = 10
-			}
-			targeted_modifier = {
-				tag = CRE
-				attack_bonus_against = -10
-				breakthrough_bonus_against = -10
-				defense_bonus_against = 10
-			}
-		}		
-		BW1_armistice_TUR_mnt = {
-			picture = generic_constitutional_guarantees
-			allowed = {
-				always = no
-			}
-			removal_cost = -1
-			cancel = {
-				OR = {
-					TUR = {
-						has_country_flag = TUR_raid_on_sublime_porte
-					}
-					NOT = {
-						has_war_with = MNT
-					}
-				}
-			}
-			targeted_modifier = {
-				tag = MNT
-				attack_bonus_against = -10
-				breakthrough_bonus_against = -10
-				defense_bonus_against = 10
-			}
-		}		
 	}
+	materiel_manufacturer={
+		designer = yes 
+		sofia_artillery_arsenal = { 
+			picture = bul_darzhavna_voenna_fabrika 
+			allowed = { 
+				original_tag = BUL	
+			 } 
+			available = {
+					has_completed_focus = BUL_fund_sofia_artillery
+					owns_state = 48
+			}
+			research_bonus = { 
+				artillery = 0.10 
+			} 
+			traits = { 
+				artillery_manufacturer 
+			} 
+		}
+	}
+	industrial_concern = {
+		designer = yes
+		bdz = {
+			allowed = { original_tag = BUL }
+			available = { 
+				original_tag = BUL 
+				has_completed_focus = BUL_fund_the_BDZ
+			}
+			research_bonus = {
+				industry = 0.05
+				train_tech = 0.1
+			}
+			traits = { railway_company }
+			picture = generic_tank_manufacturer_2
+		}
+		pernik_complex = {
+			allowed = { original_tag = BUL }
+			available = {
+					 original_tag = BUL 
+					has_completed_focus = BUL_arrival_of_the_industrial_revolution
+				}
+			research_bonus = {
+				excavation_tech = 0.15
+			}
+			traits = { mining_company }
+			picture = generic_tank_manufacturer_2
+			}
+		}
+	#National Spirits
 	country = {
 		BUL_idea_national_assembly = {		
 			picture = generic_pp_unity_bonus
@@ -132,11 +87,17 @@ ideas={
 				has_government = democratic
 			}
 			modifier = {
-				political_power_factor = 0.1
+				stability_factor = 0.1
+				democratic_drift = 0.06
+				political_power_factor = -0.05
+				power_balance_weekly = -0.001
 				political_advisor_cost_factor = 0.15
 				trade_laws_cost_factor = 0.15
 				mobilization_laws_cost_factor = 0.15
 				economy_cost_factor = 0.15
+				guarantee_tension = 0.3
+				improve_relations_maintain_cost_factor = 0.25
+				neutrality_drift = 0.01
 			}
 		}
 		BUL_idea_national_assembly_2 = {		
@@ -148,7 +109,27 @@ ideas={
 				has_government = democratic
 			}
 			modifier = {
+				stability_factor = 0.1
+				democratic_drift = 0.04
+				power_balance_weekly = -0.001
+				political_power_factor = 0.05
+				political_advisor_cost_factor = 0.15
+				trade_laws_cost_factor = 0.15
+				mobilization_laws_cost_factor = 0.15
+				economy_cost_factor = 0.15
+				neutrality_drift = 0.01
+			}
+		}
+		BUL_idea_nullified_national_assembly = {
+			picture = generic_pp_unity_bonus
+			modifier = {
 				political_power_factor = 0.1
+				political_advisor_cost_factor = 0.5
+				trade_laws_cost_factor = 0.15
+				mobilization_laws_cost_factor = -0.15
+				economy_cost_factor = -0.15
+				neutrality_drift = 0.01
+				war_stability_factor = 0.05
 			}
 		}
 		BUL_idea_lozengradska_operacija = {
@@ -157,14 +138,36 @@ ideas={
 				always = no
 			}
 			modifier = {
-				planning_speed = 0.2
+				army_speed_factor = 0.1
 			}
 			targeted_modifier = {
 				tag = TUR
-				breakthrough_bonus_against = 0.4
+				breakthrough_bonus_against = 0.25
 			}
 			available = {
 				has_war = yes
+				OR = {
+					original_tag = BUL
+					is_in_faction_with = BUL
+				}
+				is_subject = no
+			}
+		}
+		BUL_idea_united_bulgarian_headquarters = {
+		    picture = HUN_secret_rearmament
+			allowed = {
+				always = no
+			}
+			modifier = {	
+				planning_speed = 0.15
+				max_planning_factor = 0.15
+			}
+			targeted_modifier = { tag = TUR attack_bonus_against = 0.15 }	
+			targeted_modifier = { tag = TUR defense_bonus_against = 0.15 }	
+			available = {
+				has_war = yes
+				is_in_faction_with = BUL
+				is_puppet = no
 			}
 		}
 		BUL_idea_refugee_crisis = {
@@ -211,8 +214,12 @@ ideas={
 				training_time_factor = 0.1
 				communism_drift = 0.03
 				democratic_drift = 0.05
+				consumer_goods_factor = 0.35
+				stability_factor = -0.15
                 join_faction_tension = 1.00
-				ai_get_ally_desire_factor = -100 				
+				ai_get_ally_desire_factor = -100 	
+				surrender_limit = -0.2
+				power_balance_weekly = -0.04
 			}
 		}
 		BUL_idea_first_national_catastrophe_2 = {		
@@ -235,6 +242,8 @@ ideas={
 				training_time_factor = 0.05
 				communism_drift = 0.01
 				democratic_drift = 0.03 
+				consumer_goods_factor = 0.35
+				stability_factor = -0.15
                 join_faction_tension = 1.00
 				ai_get_ally_desire_factor = -100 						
 			}
@@ -260,65 +269,8 @@ ideas={
 				training_time_factor = 0.05					
 			}
 		}
-		BUL_ferdinand_i = {
-			picture = BUL_ferdinand_i
-			allowed = {
-				always = no
-			}
-			allowed_civil_war = {
-				NOT = {
-					has_government = communism 
-					has_country_leader = {
-						character = BUL_ferdinand_i
-						ruling_only = yes
-					}
-				}
-			}
-			available = {
-				NOT = {
-					has_government = communism 
-					has_country_leader = {
-						character = BUL_ferdinand_i
-						ruling_only = yes
-					}
-					has_idea = BUL_idea_boris_iii
-					has_idea = BUL_idea_boris_iii_20s
-				}
-			}
-			removal_cost = -1
-		}
 		BUL_idea_boris_iii = {
 			picture = boris_iii
-			allowed = {
-				always = no
-			}
-			allowed_civil_war = {
-				NOT = {
-					has_government = communism 
-					has_country_leader = {
-						character = BUL_boris_iii
-						ruling_only = yes
-					}
-				}
-			}
-			available = {
-				NOT = {
-					has_government = communism 
-					has_country_leader = {
-						character = BUL_boris_iii
-						ruling_only = yes
-					}
-					has_idea = BUL_idea_boris_iii_20s
-				}
-			}
-			removal_cost = -1
-			modifier = {
-				stability_factor = 0.05	
-			}
-		}
-		BUL_idea_boris_iii_20s = {
-			name = BUL_idea_boris_iii
-			picture = boris_iii_20s
 			allowed = {
 				always = no
 			}
@@ -355,9 +307,6 @@ ideas={
 					is_owned_by = ROOT
 				}
 				203 = {
-					is_owned_by = ROOT
-				}
-				1258 = {
 					is_owned_by = ROOT
 				}
 				225 = {
@@ -735,77 +684,616 @@ ideas={
 			allowed_civil_war = { always = yes }
 			removal_cost = -1
 		}
-	}
-	naval_manufacturer = {
-		designer = yes
+		
+		BUL_ruse_blood_wedding_ordeal = {
+			picture = ROM_king_carol_ii_hedonist
+			allowed = {
+				original_tag = BUL
+			}
+			allowed_civil_war = { always = yes }
+			modifier = {
+				stability_factor = -0.05
+				war_support_factor = 0.05
 
-		BUL_varna_naval_dockyard = {
-			picture = generic_naval_manufacturer_2
+			}
+			cancel = {
+    			date > 1914.3.1
+			}
+		}
+
+		BUL_taxing_the_muslims = {
+			picture = NOR_printing_money
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				stability_weekly = -0.001
+				war_support_weekly = -0.001
+				consumer_goods_factor = -0.1
+			}
+		}
+
+		BUL_land_redistribution = {
+			picture = can_wartime_prices_and_trade_board
 			allowed = { 
-				original_tag = BUL 
+				original_tag = BUL
 			}
-			research_bonus = {
-				naval_equipment = 0.15
+			modifier = {
+				production_speed_infrastructure_factor = 0.15
+				political_power_gain = -0.02
 			}
-			
-			traits = { coastal_defence_naval_manufacturer }
+			allowed_civil_war = { always = no }
+	    }
+
+		BUL_vmoro = {
+			picture = bul_imro
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				war_support_factor = 0.1
+				improve_relations_maintain_cost_factor = 0.1
+				army_core_attack_factor = 0.05
+				army_core_defence_factor = 0.05
+				communism_drift = 0.01
+				custom_modifer_tooltip = BUL_vmoro_custom_tooltip
+			}
+			allowed_civil_war = { always = yes }
 		}
+		BUL_integrated_vmoro = {
+			picture = bul_imro
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				war_support_factor = 0.1
+				army_core_attack_factor = 0.075
+				army_core_defence_factor = 0.075
+				war_stability_factor = 0.05
+				drift_defence_factor = -0.1
+			}
+		}
+		BUL_sell_food_surplus = {
+			picture = generic_economic_increase
+			allowed = {
+				original_tag = BUL
+		}
+			modifier = {
+				consumer_goods_factor = -0.15
+				supply_consumption_factor = 0.05
+		}
+		allowed_civil_war = { always = yes }
+    	}
+
+		BUL_force_the_farmers_into_factories = {
+			picture = ARG_construction_guilds
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				industrial_capacity_factory = 0.1
+				industrial_capacity_dockyard = 0.1
+				industry_repair_factor = 0.15
+				supply_consumption_factor = 0.10
+				attrition = 0.05
+				recruitable_population_factor = -0.1
+				conversion_cost_civ_to_mil_factor = -0.15
+				conversion_cost_mil_to_civ_factor = -0.15
+				stability_factor = -0.1
+			}
+			allowed_civil_war = { always = no }
+		}
+
+		BUL_TUR_border_chaos = {
+			picture = citizen_militia_2
+			allowed = {
+				OR = {
+					owns_state = 451
+					owns_state = 757
+					owns_state = 200
+					owns_state = 849
+					owns_state = 788
+					owns_state = 212
+					owns_state = 225
+				}
+				OR = {
+					original_tag = TUR
+					original_tag = BUL
+					}
+				}
+			modifier = {
+				stability_factor = -0.05
+				political_power_factor = -0.05
+			}
+			targeted_modifier = {
+				tag = TUR
+				trade_opinion_factor = -0.25
+			}
+			cancel = {
+				has_war_with = TUR
+			}
+		}
+
+		BUL_TUR_border_chaos_dos = {
+			picture = citizen_militia_2
+			allowed = {
+				OR = {
+					owns_state = 451
+					owns_state = 757
+					owns_state = 200
+					owns_state = 849
+					owns_state = 788
+					owns_state = 212
+					owns_state = 225
+				}
+				OR = {
+					original_tag = TUR
+					original_tag = BUL
+					}
+				}
+			modifier = {
+				stability_factor = -0.05
+				consumer_goods_factor = 0.1
+			}
+			cancel = {
+				has_war_with = TUR
+			}
+		}
+
+		BUL_TUR_border_chaos_tres = {
+			picture = citizen_militia_2
+			allowed = {
+				OR = {
+					owns_state = 451
+					owns_state = 757
+					owns_state = 200
+					owns_state = 849
+					owns_state = 788
+					owns_state = 212
+					owns_state = 225
+				}
+				OR = {
+					original_tag = TUR
+					original_tag = BUL
+					}
+				}
+			modifier = {
+				stability_factor = -0.05
+			}
+			targeted_modifier = {
+				tag = BUL
+				trade_opinion_factor = -0.25
+			}
+			cancel = {
+				has_war_with = BUL
+			}
+		}
+
+		BUL_TUR_border_chaos_cuatro = {
+			picture = citizen_militia_2
+			allowed = {
+				OR = {
+					owns_state = 451
+					owns_state = 757
+					owns_state = 200
+					owns_state = 849
+					owns_state = 788
+					owns_state = 212
+					owns_state = 225
+				}
+				OR = {
+					original_tag = TUR
+					original_tag = BUL
+					}
+				}
+			modifier = {
+				stability_factor = -0.05
+				consumer_goods_factor = 0.1
+			}
+			cancel = {
+				has_war_with = BUL
+			}
+		}
+
+		BUL_mediterranean_oportunity = {
+			picture = generic_coastal_navy
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+					navy_org_factor = 0.1
+					production_speed_dockyard_factor = 0.2
+					industrial_capacity_dockyard = 0.25
+			}
+		}
+
+		BUL_tobacco_surplus = {
+			picture = bul_tobacco_exports
+			allowed = {
+				original_tag = BUL
+			}
+			available = {
+				NOT = {
+					has_country_flag = great_war_loser
+				}
+			}
+			modifier = {
+				stability_factor = 0.05
+				consumer_goods_factor = 0.1
+				trade_opinion_factor = 0.1
+			}
+		}
+
+		BUL_idea_awesome_alcohol = {
+			picture = SWE_vin_och_sprit_ab
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				consumer_goods_factor = -0.1
+				trade_opinion_factor = 0.05
+			}
+			allowed_civil_war = { always = no }
+		}
+
+		BUL_idea_legacy_of_the_great_game = {
+			picture = bul_the_fate_of_the_balkans
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				political_power_factor = -0.05
+			}
+			targeted_modifier = {
+				tag = ENG
+				trade_cost_for_target_factor = -0.1
+			}
+			targeted_modifier = {
+				tag = RUS
+				trade_cost_for_target_factor = -0.5
+			}
+			allowed_civil_war = { always = yes }
+		}
+
+		BUL_idea_legacy_of_the_great_game_geshov = {
+			picture = bul_the_fate_of_the_balkans
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				political_power_factor = -0.03
+			}
+			targeted_modifier = {
+				tag = AUS
+				trade_cost_for_target_factor = -0.5
+			}
+			targeted_modifier = {
+				tag = ENG
+				trade_cost_for_target_factor = -0.2
+			}
+			targeted_modifier = {
+				tag = RUS
+				trade_cost_for_target_factor = -0.2
+			}
+			allowed_civil_war = { always = yes }
+		}
+
+		BUL_peoples_liberal_coalition = {
+			picture = generic_volunteer_expedition_bonus
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				political_power_factor = 0.15
+				stability_factor = 0.05
+				drift_defence_factor = 0.25
+			}
+		}
+
+		BUL_national_bank_paying_debts = {
+			picture = EST_exploit_the_banks
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				political_power_factor = -0.05
+				stability_factor = -0.05
+				consumer_goods_factor = 0.25
+			}
+		}
+
+		BUL_balkan_league_armistice_idea = {
+			picture = BEL_the_kings_surrender
+			allowed = {
+				OR = {
+					original_tag = BUL
+					original_tag = SER
+					original_tag = MNT
+					original_tag = GRE
+					original_tag = CRE
+					original_tag = SMS
+				}
+			}
+			targeted_modifier = {
+				tag = TUR
+				attack_bonus_against = -1.0
+				defense_bonus_against = 1.0
+			}
+		}
+
+		BUL_ottoman_armistice_idea = {
+			picture = BEL_the_kings_surrender
+			allowed = {
+				OR = {
+					original_tag = TUR
+					original_tag = ALB
+				}
+			}
+			targeted_modifier = {
+				tag = BUL
+				attack_bonus_against = -1.0
+				defense_bonus_against = 1.0
+			}
+			targeted_modifier = {
+				tag = SER
+				attack_bonus_against = -1.0
+				defense_bonus_against = 1.0
+			}
+			targeted_modifier = {
+				tag = MNT
+				attack_bonus_against = -1.0
+				defense_bonus_against = 1.0
+			}
+		}
+
+		BUL_illprepped_army_idea = {
+			picture = SPR_disbanded_army
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				army_attack_factor = -0.25
+				army_defence_factor = -0.25
+				army_speed_factor = -0.25
+				army_org_factor = -0.25
+			}
+		}
+		BUL_grain_crisis = {
+			picture = generic_agrarian_reform
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				surrender_limit = 0.25
+				political_power_factor = -0.25
+				stability_factor = -0.15
+				war_support_factor = -0.3
+				neutrality_acceptance = -25
+			}
+		}
+		BUL_nis_operation = {
+			picture = bul_third_bulgarian_state
+			allowed = {
+				original_tag = BUL
+			}
+			available = {
+				has_war_with SER
+			}
+			targeted_modifier = {
+				tag = SER
+				army_attack_factor = 0.1
+			}
+			modifier = {
+				planning_speed = 0.15
+				army_speed_factor = 0.15
+			}
+		}
+		BUL_ZSGOP = {
+			picture = ARG_social_welfare_fund_ns
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				stability_factor = 0.05
+				war_support_factor = 0.05
+				political_power_factor = -0.05
+				drift_defence_factor = 0.25
+				local_resources_factor = 0.05
+				supply_consumption_factor = -0.02
+				civilian_factory_use = 1
+				consumer_goods_factor = 0.1
+			}
+		}
+		BUL_DSGOP = {
+			picture = ARG_social_welfare_fund_ns
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				war_support_factor = 0.1
+				drift_defence_factor = 0.25
+				local_resources_factor = 0.05
+				supply_consumption_factor = -0.02
+				consumer_goods_factor = 0.75
+			}
+		}
+		BUL_radoslavov_genadiev_conflict = {
+			picture = generic_disjointed_gov
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				political_power_factor = -0.1
+				democratic_drift = 0.01
+				custom_modifier_tooltip = BUL_radoslavov_minus_one.tt
+			}
+		}
+		BUL_food_shortages = {
+			picture = generic_agrarian_society
+			allowed = {
+				original_tag = BUL
+			}
+			available = {
+				has_war = yes
+			}
+			modifier = {
+				stability_weekly_factor = -0.01
+				political_power_factor = -0.1
+				supply_factor = -0.15
+			}
+		}
+		BUL_russo_bulgarian_black_sea_project_bulgaria = {
+			picture = AUS_naval_efficiency_idea
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				naval_coordination = 0.15
+				production_speed_dockyard_factor = 0.2
+				naval_enemy_retreat_chance = -0.05
+			}
+		}
+		BUL_russo_bulgarian_black_sea_project_russia = {
+			picture = AUS_naval_efficiency_idea
+			allowed = {
+				original_tag = RUS
+			}
+			modifier = {
+				naval_coordination = 0.10
+				production_speed_dockyard_factor = 0.1
+				naval_enemy_retreat_chance = -0.05
+				civilian_factory_use = 2
+			}
+		}
+		BUL_resource_starvation_1 = {
+			picture = generic_devalue_currency
+			allowed = {
+				original_tag = BUL
+			}
+			available = {
+				has_war = yes
+			}
+			modifier = {
+				local_resources_factor = -0.1
+				supply_factor = -0.05
+				war_stability_factor = -0.05
+			}
+		}
+		BUL_resource_starvation_2 = {
+			name = BUL_resource_starvation_1
+			picture = generic_devalue_currency
+			allowed = {
+				original_tag = BUL
+			}
+			available = {
+				has_war = yes
+			}
+			modifier = {
+				local_resources_factor = -0.2
+				supply_factor = -0.1
+				war_stability_factor = -0.15
+			}
+		}
+		BUL_reshuffle_cabinet = {
+			name = BUL_reshuffle_cabinet
+			picture = SWE_all_cards_on_deck
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				political_advisor_cost_factor = -0.5
+				political_power_factor = 0.1
+			}
+		}
+		#Dummies
+		BUL_prussia_of_balkans_dummy_1910 = {
+			picture = bul_bulgarian_irredentism
+			allowed = {
+				original_tag = BUL
+			}
+			modifier = {
+				experience_gain_army = 0.01
+				war_support_factor = 0.05
+				army_org_factor = 0.03
+				army_morale_factor = 0.03
+				training_time_factor = 1
+				production_speed_dockyard_factor = -0.15
+				ai_focus_aggressive_factor = 0.3
+			}
+		}
+		#
 	}
-	aircraft_manufacturer = {
-		designer = yes 
-		dar = {
-			picture = bul_dar
-			allowed = { 
-				original_tag = BUL 
+	#hidden ideas
+	hidden_ideas = {
+				BUL_cordial_traditionalist_idea = {
+				allowed = {
+					always = no
+				}
+				allowed_civil_war = {
+					always = no
+				}
+				available = { 
+				}
+				targeted_modifier = {
+					tag = FRA
+					trade_cost_for_target_factor = -0.3
+				}
+				targeted_modifier = {
+					tag = BEL
+					trade_cost_for_target_factor = -0.1
+				}
+				targeted_modifier = {
+					tag = RUS
+					trade_cost_for_target_factor = -0.1
+				}
+				targeted_modifier = {
+					tag = ENG
+					trade_cost_for_target_factor = -0.1
+				}
 			}
-			visible = { 
-				date > 1924.1.1 
+
+			BUL_austrian_arms_outsource = {
+				picture = GFX_idea_HABSBURG_industry
+				allowed = {
+					always = no
+				}
+				cancel = {
+					has_war_with = AUS
+				}
+				modifier = {
+					custom_modifier_tooltip = one_offmap_factory_BULAUS_outsource
+				}
+				on_add = {
+					add_offsite_building = {
+						type = industrial_complex
+						level = 1
+					}
+				}
+				on_remove = {
+					add_offsite_building = {
+						type = industrial_complex
+						level = -1
+					}
+				}
 			}
-			traits = { 
-				light_aircraft_manufacturer 
-			}
-			research_bonus = {
-				air_equipment = 0.1
+
+			BUL_heavy_austrian_trade_dominance = {
+				allowed = {
+					always = no
+				}
+				allowed_civil_war = {
+					always = no
+				}
+				targeted_modifier = {
+					tag = AUS
+					trade_cost_for_target_factor = -0.30
+				}
+				modifier = {
+					production_factory_efficiency_gain_factor = 0.2
+					production_speed_arms_factory_factor = 0.15
+					stability_factor = -0.1
+					political_power_factor = -0.05
+				}
 			}
 		}
-	}
-	materiel_manufacturer={
-		designer = yes 
-		sofia_artillery_arsenal = { 
-			picture = bul_darzhavna_voenna_fabrika 
-			allowed = { 
-				original_tag=BUL 
-			} 
-			research_bonus = { 
-				cat_artillery = 0.15 
-			} 
-			traits = { 
-				artillery_manufacturer 
-			} 
-			
-		}
-	}
-	industrial_concern = {
-		designer = yes 
-		bdz = {
-			allowed = { original_tag = BUL }
-			research_bonus = {
-				industry = 0.05
-				train_tech = 0.15
-			}
-			traits = {
-				railway_company
-			}
-		}
-		pernik_complex = { 
-			allowed = { 
-				original_tag = BUL 
-			}    
-			research_bonus = {
-				excavation_tech = 0.15
-			}
-			traits = { mining_company } 
-			picture=generic_tank_manufacturer_2 
-		}
-	}
 }

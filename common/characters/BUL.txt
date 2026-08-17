@@ -1,7 +1,6 @@
 characters={
 	BUL_ferdinand_i={
 		name="BUL_ferdinand_i"
-		can_be_captured = no
 		portraits={
 			civilian={
 				large="gfx/leaders/BUL/BUL_ferdinand_i.png"
@@ -9,7 +8,8 @@ characters={
 		}
 		country_leader={
 			ideology=semi_constitutional_monarchy
-			desc = BUL_ferdinand_i_desc
+			traits = { foxy_ferdinand }
+			desc="BUL_ferdinand_i_desc_1"
 		}
 		field_marshal = {
 			traits = {
@@ -17,22 +17,22 @@ characters={
 				media_personality
 				inspirational_leader
 				trickster
-				trait_cautious
 				trait_royal
+				trait_reckless
 			}
 			skill = 2
 			attack_skill = 2
 			defense_skill = 2
-			planning_skill = 3
+			planning_skill = 1
 			logistics_skill = 1
 			visible = {
-				has_completed_focus = BUL_increase_tsars_influence_in_army
 				NOT = {
 					has_government = communism
 				}
 				has_country_leader = {
 					character = BUL_ferdinand_i
 					ruling_only = no
+					
 				}
 			}
 		}
@@ -58,6 +58,7 @@ characters={
 		}
 		country_leader={
 			ideology=semi_constitutional_monarchy
+			traits = {  }
 		}
 	}
 	BUL_nikola_mushanov={
@@ -75,27 +76,82 @@ characters={
 				large="gfx/leaders/BUL/BUL_Aleksandar_Tsankov.png"
 			}
 		}
-		country_leader={
-			ideology=reactionism
-			traits={ anti_communist }
+		#country_leader={
+			#ideology=fascism_ideology
+		#	traits={ anti_communist }
+		#}
+	}
+	BUL_ivan_salabashev = {
+		name="BUL_ivan_salabashev"
+		advisor = {
+			slot = political_advisor
+			cost = 150
+			idea_token = BUL_ivan_salabashev
+			allowed = {
+		          original_tag = BUL
+		    }
+			available = {
+				has_country_flag = BUL_malinov_1
+			}
+			traits = { 
+				BUL_austrophile_financer
+			}
+		}
+	}
+	BUL_nikola_stoyanov={
+		name="BUL_nikola_stoyanov"
+		advisor = {
+			slot = political_advisor
+			cost = 100
+			idea_token = BUL_nikola_stoyanov
+			allowed = {
+		          original_tag = BUL
+		    }
+			available = {
+				has_country_flag = BUL_bckb_law_passed
+			}
+			traits = { 
+				financial_expert2
+			}
 		}
 	}
 	BUL_nikola_zhekov={
 		name="BUL_nikola_zhekov"
 		advisor={
-			slot = theorist
-			cost = 100
+	        slot = theorist
+	        cost = 200		        
 			idea_token = BUL_nikola_zhekov
-			allowed  = {
-					original_tag  = BUL 
-				}
-				ledger  = army 
-				traits  = {
-					military_theorist 
-				}
-				ai_will_do  = {
-					factor  = 1.000
-				}
+		    allowed = {
+		          original_tag = BUL
+		    }
+		    ledger = army
+		    traits = {
+	        	military_theorist
+			}
+		    ai_will_do = {
+				factor = 1.000
+		    }
+		    modifier = {
+		        planning_speed = 0.03
+		        max_planning = 0.03
+		        supply_consumption_factor = -0.03
+		    }
+			available = {
+				has_completed_focus = BUL_promote_zhekov
+			}
+		}
+		country_leader = {
+			ideology = fascism_ideology
+			traits = {
+				germanophile
+			}
+		}
+		country_leader = {
+			ideology = authoritarian_democracy
+			traits = {
+				germanophile
+				BUL_minister_of_war
+			}
 		}
 		portraits={
 			army={
@@ -105,14 +161,83 @@ characters={
 				large="gfx/leaders/BUL/BUL_Nikola_Zhekov.png"
 			}
 		}
-		corps_commander={
-			traits={ career_officer skilled_staffer }
-			skill=3
+		field_marshal = {
+			traits={ career_officer expert_delegator offensive_doctrine politically_connected infantry_officer  }
+			skill=4
 			attack_skill=2
 			defense_skill=2
 			planning_skill=3
 			logistics_skill=3
-			
+			visible = {
+				has_completed_focus = BUL_reinvugarate_the_general_staff
+			}
+		}
+	}
+	BUL_pantelei_kiselov = {
+		corps_commander = {
+			traits = { infantry_officer fortress_buster career_officer aggressive_assaulter }
+			skill = 3
+			attack_skill = 2
+			defense_skill = 2
+			planning_skill = 2
+			logistics_skill = 2
+			visible = {
+				has_completed_focus = BUL_romanian_campaign
+				NOT = {
+					has_global_flag = great_war_ends
+				}
+			}
+		}
+	}
+
+	BUL_hristofor_hesapchiev={
+		name = "BUL_hristofor_hesapchiev"
+
+		portraits = {
+			army = {
+				#small = "GFX_Portrait_Europe_Generic_land_1_small"
+				large = "gfx/leaders/BUL/BUL_Hristofor_Hesapchiev.png"
+			}
+		}
+
+		advisor = {
+			slot = political_advisor
+			idea_token = BUL_hristofor_hesapchiev 
+			allowed = {
+				original_tag = BUL
+			}
+			available = {
+				has_completed_focus = BUL_the_coming_storm
+			}
+			cost = 100
+			traits = {
+				tactical_boffin
+			}
+			name="hristophor_hesapchiev" # is this spelling intended?   Whoever asked, yes -Shadow
+		}
+
+		advisor = {
+			slot = theorist
+			cost = 150
+			idea_token = BUL_hristofor_hesapchiev_theorist
+			allowed = {
+					original_tag  = BUL 
+			}
+			visible = {
+				date > 1910.8.11
+			}
+			ledger  = army 
+			traits  = {
+				military_theorist 
+			}
+			ai_will_do  = {
+				factor  = 1.000
+			}
+			modifier = {
+				planning_speed = 0.05
+				max_planning = 0.05
+				recon_factor = 0.05
+			}
 		}
 	}
 	BUL_kimon_georgiev={
@@ -123,40 +248,76 @@ characters={
 			}
 		}
 	}
-	BUL_ivan_lukov={
-		name="BUL_ivan_lukov"
-		advisor={
-			slot = army_chief
-			idea_token = BUL_ivan_lukov
-			allowed  = {
-					original_tag  = BUL 
-				}
-				traits  = {
-					army_chief_defensive_2 
-				}
-				cost = 100
-				ai_will_do  = {
-					factor  = 1.000
-				}
-		}
-		portraits={
-			army={
-				small="GFX_idea_BUL_ivan_lukov"
+	BUL_dimitar_tonchev={
+		name="BUL_dimitar_tonchev"
+		advisor = {
+			cost = 100
+			slot = political_advisor
+			idea_token = BUL_dimitar_tonchev
+			traits = {
+				legal_expert_and_financer
+			 }
+			allowed = {
+				original_tag = BUL
 			}
-			army={
-				large="gfx/leaders/BUL/BUL_Ivan_Lukov.png"
+			visible = {
+				OR = {
+					has_completed_focus = BUL_the_man_thatll_get_it_done
+					has_completed_focus = BUL_young_libs
+				}
 			}
-		}
-		corps_commander={
-			traits={ infantry_officer }
-			skill=2
-			attack_skill=2
-			defense_skill=2
-			planning_skill=2
-			logistics_skill=2
-			
 		}
 	}
+	BUL_ivan_lukov={
+	    name="BUL_ivan_lukov"
+	    advisor={
+	        slot = army_chief
+	        idea_token = BUL_ivan_lukov
+	        allowed = {
+	            original_tag = BUL
+	        }
+	        available = {
+	            OR = {
+	                has_completed_focus = BUL_trial_of_savov
+	                has_completed_focus = BUL_glory_to_the_army
+	            }
+	        }
+	        visible = {
+	            has_country_flag = BUL_ivan_lukov_is_a_general
+	        }
+	        traits = {
+	            army_chief_defensive_2
+	        }
+	        cost = 100
+	        ai_will_do = {
+	            factor = 1.000
+	        }
+	        modifier = {
+	        	land_reinforce_rate = 0.03            
+		  		experience_loss_factor = -0.03  
+	        }
+	    }
+	    portraits={
+	        army={
+	            small="GFX_idea_BUL_ivan_lukov"
+	        }
+	        army={
+	            large="gfx/leaders/BUL/BUL_Ivan_Lukov.png"
+	        }
+	    }
+	    corps_commander={
+	        traits={ infantry_officer }
+	        skill=2
+	        attack_skill=2
+	        defense_skill=2
+	        planning_skill=2
+	        logistics_skill=2
+	        visible = {
+	            has_country_flag = BUL_ivan_lukov_is_a_general
+	        }
+	    }
+	}
+
 	BUL_ivan_fichev={
 		name="BUL_ivan_fichev"
 		advisor={
@@ -164,6 +325,12 @@ characters={
 			idea_token = BUL_ivan_fichev
 			allowed  = {
 					original_tag  = BUL 
+				}
+				available = {
+					OR = {
+						has_completed_focus = BUL_trial_of_savov
+						has_completed_focus = BUL_glory_to_the_army
+					}
 				}
 				traits  = {
 					army_chief_organizational_1 
@@ -181,7 +348,7 @@ characters={
 			}
 		}
 		field_marshal={
-			traits={ war_hero offensive_doctrine }
+			traits={ war_hero offensive_doctrine brilliant_strategist }
 			skill=3
 			attack_skill=3
 			defense_skill=2
@@ -209,16 +376,20 @@ characters={
 				NOT = {
 					has_war_with = RUS
 				}
+				OR = {
+					has_completed_focus = BUL_trial_of_savov
+					has_completed_focus = BUL_glory_to_the_army
+				}	
 			}
 		}
 		portraits={
 			army={
-				large="gfx/leaders/BUL/BUL_radko_dimitriev.png"
+				large="gfx/leaders/BUL/BUL_Radko_Dimitriev.png"
 				small="GFX_idea_BUL_radko_dimitriev"
 			}
 		}
 		corps_commander={
-			traits={ trait_cautious hidden_sympathies infantry_leader harsh_leader media_personality }
+			traits={ trait_cautious infantry_leader harsh_leader media_personality hidden_sympathies }
 			skill=3
 			attack_skill=2
 			defense_skill=3
@@ -258,7 +429,7 @@ characters={
 			}
 		}
 		navy_leader={
-			traits={ war_hero }
+			traits={ war_hero cruiser_captain gunnery_expert }
 			skill=2
 			attack_skill=2
 			defense_skill=2
@@ -275,16 +446,153 @@ characters={
 			}
 		}
 		corps_commander={
-			traits={ old_guard war_hero trait_cautious }
-			skill=2
+			traits={ old_guard war_hero trait_cautious politically_connected career_officer inflexible_strategist hidden_sympathies }
+			skill=3
 			attack_skill=2
 			defense_skill=3
 			planning_skill=2
 			logistics_skill=2
 			visible = {
 				NOT = {
-					has_war_with = RUS										
+					has_war_with = RUS
+					has_global_flag = great_war										
 				}
+			}
+		}
+	}
+	BUL_racho_petrov={
+		name="BUL_racho_petrov"
+
+		portraits = {
+			army = {
+				large = "gfx/leaders/BUL/BUL_Racho_Petrov.png"
+			}
+		}
+		
+		corps_commander = {
+			traits={ old_guard war_hero politically_connected media_personality career_officer trait_reckless harsh_leader }
+			skill = 3
+			attack_skill = 2
+			defense_skill = 2
+			planning_skill = 2
+			logistics_skill = 1
+		}
+	}
+	BUL_vasil_delov={
+		name="BUL_vasil_delov"
+		portraits = {
+			army = {
+				small = "GFX_Portrait_Europe_Generic_land_1_small"
+				large = "gfx/leaders/BUL/BUL_Vasil_Delov.png"
+			}
+		}
+		corps_commander = {
+			traits = { harsh_leader ambusher war_hero infantry_officer trait_reckless }
+			skill = 2
+			attack_skill = 2
+			defense_skill = 1
+			planning_skill = 1
+			logistics_skill = 1
+		}
+	}
+	BUL_stoyan_zagorski={
+		name="BUL_stoyan_zagorski"
+		corps_commander = {
+			traits = { career_officer trait_engineer artillery_officer }
+			skill = 3
+			attack_skill = 2
+			defense_skill = 2
+			planning_skill = 2
+			logistics_skill = 2
+			visible = {
+				has_completed_focus = BUL_reinvugarate_the_general_staff
+			}
+		}
+	}
+	BUL_nikifor_nikiforov={
+		name="BUL_nikifor_nikiforov"
+
+		portraits = {
+			army = {
+				large = "gfx/leaders/BUL/BUL_Nikifor_Nikiforov.png"
+			}
+		}
+		advisor = {
+			idea_token = BUL_nikifor_nikiforov
+			slot = high_command
+			traits = {
+				army_chief_planning_2
+			 }
+			 allowed = {
+				original_tag = BUL
+			 }
+			 available = {
+				has_completed_focus = BUL_military_bill
+			 }
+			 visible = {
+				NOT = {
+					has_country_flag = great_war_loser
+				}
+			 }
+		}
+		corps_commander = {
+			traits = { old_guard war_hero politically_connected trait_royalist infantry_officer }
+			skill = 2
+			attack_skill = 2
+			defense_skill = 2
+			planning_skill = 2
+			logistics_skill = 2
+			visible = {
+				NOT = {
+					has_completed_focus = BUL_balkan_war_experience
+				}
+			}
+		}
+	}
+
+	BUL_kalin_naydenov={
+		name="BUL_kalin_naydenov"
+		corps_commander = {
+			traits = { artillery_specialist artillery_officer engineer_officer politically_connected }
+			skill = 2
+			attack_skill = 2
+			defense_skill = 3
+			planning_skill = 2
+			logistics_skill = 1
+			visible = {
+				has_completed_focus = BUL_reinvugarate_the_general_staff
+			}
+		}
+	}
+	BUL_grigor_grancharov={
+		name="BUL_grigor_grancharov"
+		corps_commander = {
+			traits = { old_guard engineer_officer politically_connected war_hero }
+			skill = 2
+			attack_skill = 3
+			defense_skill = 3
+			planning_skill = 3
+			logistics_skill = 1
+			visible = {
+				NOT = {
+					has_global_flag = great_war
+				}
+			}
+		}
+	}
+	BUL_hristo_rachev_popov={
+		name="BUL_hristo_rachev_popov"
+		corps_commander = {
+			traits = {
+				trait_mountaineer infantry_officer
+			}
+			skill = 2
+			attack_skill = 2
+			defense_skill = 2
+			planning_skill = 1
+			logistics_skill = 1
+			visible = {
+				has_completed_focus = BUL_reinvugarate_the_general_staff
 			}
 		}
 	}
@@ -297,17 +605,27 @@ characters={
 					original_tag  = BUL 
 				}
 				ledger  = army 
-				available  = {
-					has_completed_focus  = BUL_cavalry_tactics 
-				}
 				traits  = {
 					army_cavalry_3 
 				}
-				# cost = 200
-				cost  = 50.000
+				cost  = 50.00
 				ai_will_do  = {
 					factor  = 2.000
 				}
+				available = {
+					has_completed_focus = BUL_ivan_kolev_focus
+				}
+		}
+		corps_commander = {
+			traits = { career_officer brilliant_strategist cavalry_expert cavalry_officer cavalry_leader inspirational_leader }
+			skill = 4
+			attack_skill = 2
+			defense_skill = 3
+			planning_skill = 3
+			logistics_skill = 2
+			visible = {
+				has_completed_focus = BUL_ivan_kolev_focus
+			}
 		}
 		portraits={
 			army={
@@ -318,22 +636,60 @@ characters={
 			}
 		}
 	}
+	BUL_mihail_savov={
+		portraits={
+			army = {
+				small="gfx/ideas/BUL/BUL_mihail_savov_idea.png"
+			}
+		}
+		name="BUL_mihail_savov"
+		advisor = {
+			slot = army_chief
+			idea_token = BUL_mihail_savov
+			allowed = {
+				original_tag = BUL
+			}
+			available = {
+				has_completed_focus = BUL_appoint_savov
+				NOT = {
+					has_completed_focus = BUL_trial_of_savov
+				}
+			}
+			traits = { 
+				army_chief_offensive_2
+			}
+			cost = 50.000
+		}
+		field_marshal = {
+			traits = { old_guard politically_connected media_personality trickster harsh_leader trait_reckless war_hero }
+			skill = 4
+			attack_skill = 3
+			defense_skill = 1
+			planning_skill = 1
+			logistics_skill = 3
+			visible = {
+				NOT = {
+					has_completed_focus = BUL_trial_of_savov
+				}
+			}
+		}
+	}
 	BUL_rashko_serafimov={
 		name="BUL_rashko_serafimov"
 		advisor={
 			slot = high_command
 			idea_token = BUL_rashko_serafimov
 			allowed  = {
-				original_tag  = BUL 
-			}
-			ledger  = navy 
-			traits  = {
-				navy_anti_submarine_2 
-			}				
-			cost = 100
-			ai_will_do  = {
-				factor  = 1.000
-			}
+					original_tag  = BUL 
+				}
+				ledger  = navy 
+				traits  = {
+					navy_anti_submarine_2 
+				}
+				cost = 100
+				ai_will_do  = {
+					factor  = 1.000
+				}
 		}
 		portraits={
 			army={
@@ -342,12 +698,12 @@ characters={
 			}
 		}
 		navy_leader={
-			skill=1
-			attack_skill=1
+			traits = { mine_layer mine_sweeper career_officer brilliant_strategist }
+			skill=2
+			attack_skill=2
 			defense_skill=1
 			maneuvering_skill=1
 			coordination_skill=1
-			
 		}
 	}
 	BUL_dimitar_blagoev={
@@ -373,9 +729,7 @@ characters={
 		}
 		country_leader={
 			ideology=conservatism
-			
-			
-			
+			traits = { BUL_temporary_option }
 		}
 	}
 	BUL_vasil_radoslavov={
@@ -384,11 +738,39 @@ characters={
 			civilian={
 				large="gfx/leaders/BUL/BUL_Vasil_Radoslavov.png"
 			}
+			army = {
+				small="gfx/ideas/BUL/BUL_radoslov_image.png"
+			}
+		}
+		advisor={
+			slot = political_advisor
+			idea_token = BUL_vasil_radoslavov
+			can_be_fired = no
+			allowed  = {
+				original_tag  = BUL 
+			}
+			available = {
+				custom_trigger_tooltip = { 
+					tooltip = BUL_malinov.tt
+				}
+				hidden_trigger = {
+					has_country_flag = BUL_vasil_radoslavov_yes
+				}
+			}
+			traits  = {
+				right_wing_liberal 
+				germanophile
+			}
+			ai_will_do  = {
+				factor  = 1.000
+			}
 		}
 		country_leader={
 			ideology=classical_liberalism
 			traits={ dislikes_russia corrupted_minister }
 		}
+
+
 	}
 	BUL_aleksandar_stamboliyski={
 		name="BUL_aleksandar_stamboliyski"
@@ -402,23 +784,10 @@ characters={
 			traits={ dislikes_germany  }
 		}
 	}
-	BUL_racho_petrov={
-		name="BUL_racho_petrov"
-
-		portraits = {
-			army = {
-				large = "gfx/leaders/BUL/BUL_Racho_Petrov.png"
-				small = "GFX_idea_BUL_racho_petrov"
-			}
-		}
-
-		corps_commander = {
-			traits={ old_guard war_hero politically_connected media_personality career_officer trait_reckless harsh_leader }
-			skill = 3
-			attack_skill = 2
-			defense_skill = 2
-			planning_skill = 1
-			logistics_skill = 1
+	BUL_aleksandar_dimitrov={
+		name="BUL_aleksandar_dimitrov"
+		country_leader = {
+			ideology=agrarianism
 		}
 	}
 	BUL_vladimir_vazov={
@@ -438,7 +807,9 @@ characters={
 			defense_skill=1
 			planning_skill=3
 			logistics_skill=2
-			
+			visible = {
+				has_country_flag = BUL_vlad_vazov_promoted
+			}
 		}
 	}
 	BUL_todor_kantardzhiev={
@@ -452,12 +823,15 @@ characters={
 			}
 		}
 		corps_commander={
-			skill=1
-			attack_skill=1
-			defense_skill=1
-			planning_skill=1
+			traits = { war_hero career_officer trait_engineer }
+			skill=2
+			attack_skill=2
+			defense_skill=3
+			planning_skill=2
 			logistics_skill=1
-			
+			visible = {
+				has_completed_focus = BUL_reinvugarate_the_general_staff
+			}
 		}
 	}
 	BUL_panteley_kiselov={
@@ -490,14 +864,28 @@ characters={
 				large="gfx/leaders/BUL/BUL_Kliment_Boyadzhiev.png"
 			}
 		}
+		advisor = {
+			slot = high_command
+			traits = { 
+				army_logistics_2
+			}
+			available = {
+				has_completed_focus = BUL_entry_into_great_war
+			}
+		}
 		corps_commander={
-			traits={ career_officer war_hero trait_engineer }
+			traits={ career_officer war_hero trait_engineer technician_trait ranger }
 			skill=3
 			attack_skill=3
 			defense_skill=1
 			planning_skill=2
 			logistics_skill=3
-			
+			visible = {
+				date > 1932.7.15
+				NOT = {
+					has_government = communism
+				}
+			}
 		}
 	}
 	BUL_vasil_kutinchev={
@@ -511,13 +899,17 @@ characters={
 			}
 		}
 		field_marshal={
-			traits={ old_guard war_hero }
+			traits={ old_guard war_hero inspirational_leader }
 			skill=3
 			attack_skill=2
 			defense_skill=3
 			planning_skill=2
 			logistics_skill=3
-			
+			visible = {
+				NOT = {
+					has_war_with = RUS
+				}
+			}
 		}
 	}
 	BUL_ivan_vazov={
@@ -527,8 +919,9 @@ characters={
 			allowed  = {
 					original_tag  = BUL 
 				}
+				cost = 175
 				traits  = {
-					popular_figurehead 
+					the_patriarch_of_bulgarian_literature 
 				}
 				ai_will_do  = {
 					factor  = 1.000
@@ -545,11 +938,20 @@ characters={
 		advisor={
 			slot = political_advisor
 			idea_token = BUL_stoyan_danev
+			can_be_fired = no
 			allowed  = {
 					original_tag  = BUL 
 				}
 				traits  = {
-					smooth_talking_charmer 
+					liberal_russophile 
+				}
+				available = {
+					custom_trigger_tooltip = {
+						tooltip = BUL_danev.tt
+					}
+					hidden_trigger = {
+						has_country_flag = BUL_political_coalition
+					}
 				}
 				ai_will_do  = {
 					factor  = 1.000
@@ -567,28 +969,23 @@ characters={
 			slot = political_advisor
 			idea_token = BUL_teodor_teodorov
 			allowed  = {
-				original_tag  = BUL 
-			}
-			available = {
-				NOT = {
-					has_country_leader = {
-						character = BUL_teodor_teodorov
-						ruling_only = yes
-					}
+					original_tag  = BUL 
 				}
-			}
-			traits  = {
-				backroom_backstabber 
-			}
-			ai_will_do  = {
-				factor  = 1.000
-			}
+				cost = 130
+				available = {
+					has_completed_focus = BUL_mediate_debt_situation
+				}
+				traits  = {
+					legal_expert_and_financer 
+				}
+				ai_will_do  = {
+					factor  = 1.000
+				}
 		}
 		name="BUL_teodor_teodorov"
 		portraits={
 			army={
 				small="GFX_idea_BUL_teodor_teodorov"
-				large = "gfx/leaders/BUL/BUL_teodor_teodorov.png"
 			}
 		}
 	}
@@ -596,11 +993,20 @@ characters={
 		advisor={
 			slot = political_advisor
 			idea_token = BUL_ivan_evstratiev_geshov
+			can_be_fired = no
 			allowed  = {
 					original_tag  = BUL 
 				}
 				traits  = {
-					armaments_organizer 
+					accomplished_humanitarian
+				}
+				available = {
+					custom_trigger_tooltip = {
+						tooltip = BUL_evstratiev.tt
+					}
+					hidden_trigger = {
+						has_completed_focus = BUL_appoint_geshov
+					}
 				}
 				ai_will_do  = {
 					factor  = 1.000
@@ -613,20 +1019,116 @@ characters={
 			}
 		}
 	}
+	BUL_dimitar_yablanski={
+		advisor = {
+			slot = political_advisor
+			idea_token = BUL_dimitar_yablanski_idea
+			allowed = {
+				original_tag = BUL
+			}
+			available = {
+				has_completed_focus = BUL_reform_ministries
+			}
+			traits = { 
+				BUL_infrastructure_reformer_banker
+			}
+			cost = 135
+		}
+		name="BUL_dimitar_yablanski" 
+	}
+	BUL_ivan_peev_plachkov={
+		advisor = {
+			slot = political_advisor
+			idea_token = BUL_ivan_peev_plachkov_idea
+			allowed = {
+				original_tag = BUL
+			}
+			available = {
+				has_completed_focus = BUL_reform_ministries
+			}
+			traits = {
+				BUL_education_advocate
+			 }
+			 name="BUL_ivan_peev_plachkov"
+		}
+	}
+	BUL_atanas_burov={
+		advisor = {
+			slot = political_advisor
+			idea_token = BUL_atanas_burov
+			allowed = {
+				original_tag = BUL
+			}
+			available = {
+				NOT = {
+					has_global_flag = kis_firstbalkan_war
+				}
+			}
+			traits = { 
+				ideologist_of_the_bourgeoisie
+			}
+			name="BUL_atanas_burov"
+		}
+	}
+	BUL_ivan_burov={
+		advisor = {
+			slot = political_advisor
+			idea_token = BUL_ivan_burov
+			allowed = {
+				original_tag = BUL
+			}
+			available = {
+				has_completed_focus = BUL_promote_the_tsar_kaiser_relationship
+				OR = {
+					has_war = no
+					is_in_faction_with = GER
+				}
+			}
+			traits = {
+				industrial_manager
+				germanophile
+			 }
+			name="BUL_ivan_burov"
+		}
+	}
+	BUL_andrey_lyapchev={
+		advisor = {
+			slot = political_advisor
+			idea_token = BUL_andrey_lypachev_idea
+			allowed = {
+				original_tag = BUL
+			}
+			available = {
+				NOT = {
+					has_global_flag = kis_firstbalkan_war
+				}
+			}
+			traits = { 
+				eleemosynary_reformer
+			}
+			cost = 135
+			name="BUL_andrey_lyapchev"
+		}
+	}
 	BUL_danail_nikolaev={
 		advisor={
 			slot = army_chief
 			idea_token = BUL_danail_nikolaev
 			allowed  = {
-				original_tag  = BUL 
+				original_tag = BUL 
 			}
 			traits  = {
 				army_chief_old_guard 
 			}
+			available = {
+				NOT = {
+					has_country_flag = BUL_danail_nikolaev_retired
+				}
+			}
 			ai_will_do  = {
 				factor  = 0.000
 			}
-			cost = 20
+			cost = 50
 		}
 		name="BUL_danail_nikolaev"
 		portraits={
@@ -635,6 +1137,156 @@ characters={
 			}
 		}
 	}
+	BUL_stiliyan_kovachev={
+		name="BUL_stiliyan_kovachev"
+
+		portraits = {
+			army = {
+				large = "gfx/leaders/BUL/BUL_Stiliyan_Kovachev.png"
+			}
+		}
+
+		corps_commander = {
+			traits = { trait_cautious war_hero old_guard engineer_officer }
+			skill = 2
+			attack_skill = 2
+			defense_skill = 2
+			planning_skill = 2
+			logistics_skill = 2
+		}
+	}
+	BUL_dimitar_kirkov={
+		name="BUL_dimitar_kirkov"
+		corps_commander = {
+			traits = { infantry_officer career_officer brilliant_strategist }
+			skill = 2
+			attack_skill = 1
+			defense_skill = 2
+			planning_skill = 3
+			logistics_skill = 2
+			visible = {
+				has_completed_focus = BUL_usher_in_new_blodd
+			}
+		}
+	}
+	BUL_petar_markov={
+		name="BUL_petar_markov"
+		portraits = {
+			army = {
+				large = "gfx/leaders/BUL/BUL_Petar_Markov.png"
+			}
+		}
+		corps_commander = {
+			traits = {
+				cavalry_officer trait_royalist
+			}
+			skill = 1
+			attack_skill = 1
+			defense_skill = 2
+			planning_skill = 1
+			logistics_skill = 1
+			visible = {
+				date < 1918.11.27
+			}
+		}
+	}
+	BUL_yanko_draganov={
+		name="BUL_yanko_draganov"
+		portraits = {
+			army = {
+				small = "GFX_Portrait_Europe_Generic_land_1_small"
+				large = "gfx/leaders/BUL/BUL_Yanko_Draganov.png"
+			}
+		}
+		corps_commander = {
+			traits = { trait_royalist career_officer trait_cautious }
+			skill = 2
+			attack_skill = 2
+			defense_skill = 2
+			planning_skill = 2
+			logistics_skill = 2
+			visible = {
+				has_completed_focus = BUL_usher_in_new_blodd
+			}
+		}
+	}
+	BUL_alexander_protogerov={
+		name="BUL_alexander_protogerov"
+		advisor = {
+			idea_token = BUL_alexander_protogerov
+			slot = political_advisor
+			traits = { 
+				BUL_granfather_angel
+			}
+			available = {
+				has_completed_focus = BUL_macedonian_struggle
+			}
+			cost = 150
+		}
+	}
+	BUL_peyo_yavorov={
+		name="BUL_peyo_yavorov"
+		advisor = {
+			idea_token = BUL_peyo_yavorov
+			slot = political_advisor
+			traits = { 
+				influential_wordsmith
+				armenophile
+			}
+			available = {
+				NOT = {
+					has_country_flag = firtbalkanwaractive
+				}
+				has_completed_focus = BUL_macedonian_struggle
+			}
+			visible = {
+				date < 1914.10.29
+			}
+			cost = 100
+		}
+	}
+	BUL_stefan_toshev={
+		name="BUL_stefan_toshev"
+		
+		portraits = {
+			army = {
+				small = "GFX_Portrait_Europe_Generic_land_1_small"
+				large = "gfx/leaders/BUL/BUL_Stefan_Toshev.png"
+			}
+		}
+		corps_commander = {
+			traits = { career_officer war_hero infantry_officer skirmisher }
+			skill = 3
+			attack_skill = 3
+			defense_skill = 3
+			planning_skill = 1
+			logistics_skill = 3
+			visible = {
+				NOT = {
+					has_country_flag = BUL_toshev_dismissed
+				}
+			}
+		}
+	}
+	BUL_georgi_todorov={
+		name="BUL_georgi_todorov"
+
+		portraits = {
+			army = {
+				large = "gfx/leaders/BUL/BUL_Georgi_Todorov.png"
+			}
+		}
+
+		corps_commander = {
+			traits = { career_officer war_hero old_guard media_personality expert_improviser }
+			skill = 3
+			attack_skill = 3
+			defense_skill = 2
+			planning_skill = 3
+			logistics_skill = 2
+		}
+	}
+
 	BUL_konstantin_zhostov={
 		advisor={
 			slot = army_chief
@@ -644,6 +1296,14 @@ characters={
 			}
 			traits  = {
 				army_chief_offensive_1 
+			}
+			visible = {
+				has_completed_focus = BUL_reinvugarate_the_general_staff
+			}
+			available = {
+				NOT = {
+					has_country_flag = BUL_zhostov_passed
+				}
 			}
 			ai_will_do  = {
 				factor  = 1.000
@@ -657,12 +1317,18 @@ characters={
 			}
 		}
 		corps_commander = {
-			traits={ artillery_officer career_officer fortress_buster trait_engineer }
+			traits={ artillery_officer career_officer fortress_buster trait_engineer thorough_planner }
 			skill=2
 			attack_skill=3
 			defense_skill=1
 			planning_skill=2
 			logistics_skill=2
+			visible = {
+				has_completed_focus = BUL_reinvugarate_the_general_staff
+				NOT = {
+					has_country_flag = BUL_zhostov_passed
+				}
+			}
 		}
 	}
 	BUL_stancho_dimitriev={
@@ -680,17 +1346,17 @@ characters={
 				custom_trigger_tooltip = {
 					tooltip = character_not_dead
 					date < 1913.4.13
-					NOT = { has_character_flag = character_died }
 				}
+				has_completed_focus = BUL_mechanical_school_of_his_majesty_fleet
 			}
 			visible = {
 				date < 1913.4.13
-				NOT = { has_character_flag = character_died }
 			}
 			ai_will_do  = {
 				factor  = 1.000
 			}
 		}
+		name="BUL_stancho_dimitriev"
 		portraits={
 			army={
 				large="gfx/leaders/BUL/BUL_Stancho_Dimitriev.png"
@@ -699,14 +1365,13 @@ characters={
 		}
 		navy_leader={
 			traits={ old_guard_navy gentlemanly }
-			skill=2
-			attack_skill=1
+			skill=3
+			attack_skill=2
 			defense_skill=3
 			maneuvering_skill=1
 			coordination_skill=3
 			visible = {
 				date < 1913.4.13
-				NOT = { has_character_flag = character_died }
 			}
 			
 		}
@@ -724,9 +1389,21 @@ characters={
 				NOT = {
 					has_war_with = RUS
 				}
+				has_country_flag = BUL_george_vazov_mobilized
 			}
 			ai_will_do  = {
 				factor  = 1.000
+			}
+		}
+		corps_commander={
+			traits={ trait_engineer artillery_officer career_officer artillery_specialist }
+			skill=2
+			attack_skill=3
+			defense_skill=2
+			planning_skill=2
+			logistics_skill=1
+			visible = {
+				has_country_flag = BUL_george_vazov_mobilized
 			}
 		}
 		name="BUL_george_vazov"
@@ -740,62 +1417,90 @@ characters={
 		advisor={
 			slot = political_advisor
 			idea_token = BUL_aleksandar_malinov
-			available  = {
-				has_government = democratic
-			}
-			allowed  = {
-				original_tag = BUL 
-			}
-			traits  = {
-				democratic_reformer
-			}
-			ai_will_do = {
-				factor = 1.000
-			}
-		}
-		name="BUL_aleksandar_malinov"
-		portraits={
-			civilian = {
-				small="GFX_idea_BUL_aleksandar_malinov"
-				large = "gfx/leaders/BUL/BUL_aleksandar_malinov.png"
-			}
-		}
-	}
-	BUL_prvan_prvanov={
-		advisor={
-			slot = high_command
-			idea_token = BUL_prvan_prvanov
-			allowed  = {
+			can_be_fired = no
+				allowed  = {
 					original_tag  = BUL 
 				}
-				ledger  = army 
 				traits  = {
-					army_artillery_2 
+					democratic_stabilizer 
 				}
-				cost = 100
+				available = {
+					custom_trigger_tooltip = { 
+						tooltip = BUL_malinov.tt
+					}
+					hidden_trigger = {
+						NOT = {
+							has_completed_focus = BUL_appoint_geshov
+						}
+					}
+				}
 				ai_will_do  = {
 					factor  = 1.000
 				}
+				
 		}
-		name="BUL_prvan_prvanov"
+		name="BUL_aleksandar_malinov"
 		portraits={
 			army={
-				small="GFX_idea_BUL_prvan_prvanov"
+				small="GFX_idea_BUL_aleksandar_malinov"
 			}
 		}
 	}
+			BUL_prvan_prvanov={
+		    advisor={
+		        slot = high_command
+		        idea_token = BUL_prvan_prvanov
+		        allowed = {
+		            original_tag = BUL
+		        }
+		        available = {
+		            has_completed_focus = BUL_proffessional_artilley_army
+		        }
+		        ledger = army
+		        traits = {
+		            army_artillery_2
+		        }
+		        cost = 100
+		        ai_will_do = {
+		            factor = 1.000
+		        }
+		        modifier = {
+		         out_of_supply_factor = -0.03
+		        }
+		    }
+		    name="BUL_prvan_prvanov"
+		    portraits={
+		        army={
+		            small="GFX_idea_BUL_prvan_prvanov"
+		        }
+		    }
+		}
+
 	BUL_nikola_genadiev={
 		advisor={
 			slot = political_advisor
 			idea_token = BUL_nikola_genadiev
+			can_be_fired = no
 			allowed  = {
 					original_tag  = BUL 
 				}
+				cost = 100
 				traits  = {
-					silent_workhorse 
+					steady_liberal 
+				}
+				available = {
+					has_country_flag = BUL_lib_concentration_vic
+					custom_trigger_tooltip = {
+						tooltip = BUL_danev.tt
+					}
 				}
 				ai_will_do  = {
 					factor  = 1.000
+				}
+				visible = {
+					NOT = {
+						has_country_flag = BUL_genadiev_imprisoned
+					}
 				}
 		}
 		name="BUL_nikola_genadiev"
@@ -811,6 +1516,9 @@ characters={
 			idea_token = BUL_vasil_zlatarov
 			allowed  = {
 					original_tag  = BUL 
+				}
+				available = {
+					has_completed_focus = BUL_founding_airforce
 				}
 				traits  = {
 					air_chief_all_weather_1 
@@ -833,6 +1541,9 @@ characters={
 			allowed  = {
 					original_tag  = BUL 
 				}
+				available = {
+					has_completed_focus = BUL_areoplane_grenades
+				}
 				ledger  = air 
 				traits  = {
 					air_close_air_support_1 
@@ -848,36 +1559,39 @@ characters={
 			}
 		}
 	}
-	BUL_nikola_ivanov={
-		advisor={
-			slot = high_command
-			idea_token = BUL_nikola_ivanov
-			allowed  = {
-				original_tag  = BUL 
-			}
-			ledger  = army 
-			traits  = {
-				army_infantry_1
-			}
-			ai_will_do  = {
-				factor  = 1
-			}
-		}
-		name="BUL_nikola_ivanov"
-		portraits={
-			army={
-				large="gfx/leaders/BUL/BUL_Nikola_Ivanov.png"
-				small="GFX_idea_BUL_nikola_ivanov"
-			}
-		}
-		corps_commander={
-			traits={ media_personality war_hero infantry_officer }
-			skill=3
-			attack_skill=2
-			defense_skill=3
-			planning_skill=3
-			logistics_skill=2
-		}
+		BUL_nikola_ivanov={
+	    advisor={
+	        slot = high_command
+	        idea_token = BUL_nikola_ivanov
+	        allowed = {
+	            original_tag = BUL
+	        }
+	        ledger = army
+	        traits = {
+	            army_infantry_1
+	        }
+	        ai_will_do = {
+	            factor = 1
+	        }
+	        modifier = {
+	         org_loss_when_moving = -0.03  
+	        }
+	    }
+	    name="BUL_nikola_ivanov"
+	    portraits={
+	        army={
+	            large="gfx/leaders/BUL/BUL_Nikola_Ivanov.png"
+	            small="GFX_idea_BUL_nikola_ivanov"
+	        }
+	    }
+	    corps_commander={
+	        traits={ media_personality war_hero infantry_officer politically_connected }
+	        skill=3
+	        attack_skill=2
+	        defense_skill=3
+	        planning_skill=3
+	        logistics_skill=2
+	    }
 	}
 	BUL_mikhail_madzharov={
 		advisor={
@@ -886,8 +1600,9 @@ characters={
 			allowed  = {
 					original_tag  = BUL 
 				}
+				cost = 85
 				traits  = {
-					captain_of_industry 
+					autodidact_and_liberal_journalist 
 				}
 				ai_will_do  = {
 					factor  = 1.000
@@ -900,12 +1615,163 @@ characters={
 			}
 		}
 	}
-	BUL_andrey_lyapchev = {
-		name = BUL_andrey_tasev_lyapchev
-		portraits = {
-			civilian = {
-				large = "gfx/leaders/BUL/BUL_andrey_lyapchev.png"
+	BUL_stefan_paprikov = {
+		advisor = {
+			slot = political_advisor
+			idea_token = BUL_stefan_paprikov
+			allowed = {
+				original_tag = BUL
+			}
+			traits = {
+				soldier_representive_diplomat
+			}
+			cost = 105
+			name="BUL_stefan_paprikov"
+			available = {
+				has_completed_focus = BUL_reform_ministries
+				custom_trigger_tooltip = {
+					tooltip = character_not_dead
+				}
+				hidden_trigger = {
+					NOT = {
+						date > 1920.5.30
+					}
+				}
 			}
 		}
 	}
+	BUL_alexander_lyudskanov = {
+		advisor = {
+			slot = political_advisor
+			idea_token = BUL_alexander_lyudskanov
+			allowed = {
+				original_tag = BUL
+			}
+			traits = { 
+				BUL_tested_minister
+			}
+			cost = 125
+			name="BUL_alexander_lyudskanov"
+			available = {
+				has_completed_focus = BUL_reform_ministries
+				custom_trigger_tooltip = {
+					tooltip = character_not_dead
+				}
+				hidden_trigger = {
+					NOT = {
+						date > 1922.4.22
+					}
+				}
+			}
+		}
+	}
+	BUL_dimitar_stancioff = {
+		advisor = {
+			slot = political_advisor
+			idea_token = BUL_dimitar_stancioff
+			allowed = {
+				original_tag = BUL
+			}
+			cost = 100
+			available = {
+				NOT = {
+					has_government = communism
+					has_government = fascism
+					has_war_with = FRA
+				}
+				has_completed_focus = BUL_our_slavic_godfather
+			}
+			traits = { 
+				cordial_traditionalist 
+			}
+			name="BUL_dimitar_stancioff"
+			on_add = {
+				add_ideas = BUL_cordial_traditionalist_idea
+			}
+			on_remove = {
+				remove_ideas = BUL_cordial_traditionalist_idea
+			}
+		}
+	}
+	BUL_yosif_i = {
+		advisor = {
+			slot = political_advisor
+			idea_token = BUL_yosif_i
+			allowed = {
+				original_tag = BUL
+			}
+			available = {
+				date < 1915.6.15
+				has_global_flag = first_balkan_war_start
+			}
+			cost = 50
+			traits = { 
+				exarch_of_bul_orthodox 
+			}
+			name="BUL_yosif_i"
+			on_add = {
+				set_country_flag = BUL_yosif_i_coup_bonus
+			}
+			on_remove = {
+				clr_country_flag = BUL_yosif_i_coup_bonus	
+			}
+		}
+	}
+	BUL_nikola_genev = {
+		name="BUL_nikola_genev"
+		corps_commander = {
+			traits = { BUL_vmoro_connections old_guard war_hero trickster militias_officer }
+			skill = 3
+			attack_skill = 2
+			defense_skill = 3
+			planning_skill = 2
+			logistics_skill = 2
+			visible = {
+				has_completed_focus = BUL_macedonian_adrianople_militia
+				NOT = {
+					has_war_with = RUS
+				}
+			}
+		}
+	}
+	BUL_dimitar_geshov = {
+		name="BUL_dimitar_geshov"
+		corps_commander = {
+			traits = { old_guard war_hero inflexible_strategist trait_mountaineer }
+			skill = 2
+			attack_skill = 1
+			defense_skill = 2
+			planning_skill = 2
+			logistics_skill = 2
+			visible = {
+				has_completed_focus = BUL_balkan_war_experience
+				NOT = {
+					has_global_flag = great_war_ends
+				}
+			}
+		}
+	}
+	BUL_stefan_nerezov = {
+		name="BUL_stefan_nerezov"
+		corps_commander = {
+			traits = { brilliant_strategist ranger organizer }
+			skill = 3
+			attack_skill = 3
+			defense_skill = 2
+			planning_skill = 3
+			logistics_skill = 2
+			visible = {
+				always = no
+				#Temporary until I make the focus
+			}
+		}
+	}
+	BUL_yane_sandasnki = {
+		name="BUL_yane_sandasnki"
+		country_leader = {
+			ideology = reformist_socialism
+		}
+	}
 }
+		
+		

@@ -1,11 +1,12 @@
 ﻿add_namespace = ww1_bulgaria
+#130
 # BULGARIA JOINS CENTRAL POWERS
 ################################
 country_event = {
 	id = ww1_bulgaria.1
 	title = ww1_bulgaria.1.t
 	desc = ww1_bulgaria.1.d
-	picture = GFX_report_event_military_planning
+	picture = GFX_BUL_william_thomas_stead
 	fire_only_once = yes
 	is_triggered_only = yes
 	option = {
@@ -22,12 +23,14 @@ country_event = {
 				}
 			}
 		}
-		send_equipment = {
-			target = BUL
-			type = infantry_equipment_1
-			amount = 800
+		GER = {
+			send_equipment = {
+				target = BUL
+				type = infantry_equipment_1
+				amount = 800
+			}
+			add_to_faction = BUL
 		}
-		add_to_faction = BUL
 		hidden_effect = {
 			BUL = {
 				remove_opinion_modifier = {
@@ -71,260 +74,6 @@ country_event = {
 	}
 }
 
-# BALKAN LEAGUE - SERBIA AGREEMENT
-####################################
-country_event = {
-	id = ww1_bulgaria.2
-	title = ww1_bulgaria.2.t
-	desc = ww1_bulgaria.2.d
-	picture = GFX_report_event_military_planning
-	fire_only_once = yes
-	is_triggered_only = yes
-	option = {
-		name = ww1_bulgaria.2.a
-		add_war_support = 0.1
-		set_country_flag = join_balkan_league
-		ai_chance = {
-			factor = 100
-		}
-	}
-}
-
-# BALKAN LEAGUE - SERBIA DISAGREEMENT
-#####################################
-country_event = {
-	id = ww1_bulgaria.3
-	title = ww1_bulgaria.3.t
-	desc = ww1_bulgaria.3.d
-	picture = GFX_report_event_military_planning
-	fire_only_once = yes
-	is_triggered_only = yes
-	option = {
-		name = ww1_bulgaria.3.a
-		add_war_support = 0.1
-		set_country_flag = join_balkan_league_sad
-		set_country_flag = join_balkan_league
-		ai_chance = {
-			factor = 100
-		}
-	}
-}
-
-# DEMAND MACEDONIA
-###################
-#country_event = {
-#	id = ww1_bulgaria.4 
-#	title = ww1_bulgaria.4.t
-#	desc = ww1_bulgaria.4.d
-#	picture = GFX_report_event_military_planning
-#	
-#	fire_only_once = yes
-#	trigger = {
-#		has_global_flag = kis_firstbalkanwar_victory
-#	}
-#	
-#	option={
-#		name = ww1_bulgaria.4.a
-#		leave_faction = yes
-#		
-#		set_country_flag = leave_balkan_league
-#		ai_chance = { factor = 100 }
-#	}
-#}
-# START BALKAN LEAGUE FORMING WITHOUT SERBIA
-#############################
-country_event = {
-	id = ww1_bulgaria.5
-	title = ww1_serbia.1.t
-	desc = ww1_bulgaria.5.d
-	picture = GFX_report_event_military_planning
-	fire_only_once = yes
-	is_triggered_only = yes
-	option = {
-		name = ww1_bulgaria.5.a
-		add_state_claim = 788
-		add_state_claim = 759
-		add_state_claim = 757
-		add_state_claim = 184
-		ai_chance = {
-			factor = 100
-		}
-	}
-}
-
-# 1. BALKAN LEAGUE WITHOUT SERBIA - MONTENEGRO AGREE
-################################
-country_event = {
-	id = ww1_bulgaria.6
-	title = ww1_serbia.2.t
-	desc = ww1_bulgaria.6.d
-	picture = GFX_report_event_military_planning
-	fire_only_once = yes
-	is_triggered_only = yes
-	option = {
-		name = ww1_serbia.2.a
-		MNT = {
-			add_state_claim = 761
-		}
-		ai_chance = {
-			factor = 100
-		}
-	}
-}
-
-# 2. BALKAN LEAGUE WITHOUT SERBIA - GREECE AGREE
-################################
-country_event = {
-	id = ww1_bulgaria.7
-	title = ww1_serbia.3.t
-	desc = ww1_bulgaria.7.d
-	picture = GFX_report_event_military_planning
-	fire_only_once = yes
-	is_triggered_only = yes
-	option = {
-		name = ww1_serbia.3.a
-		GRE = {
-			add_state_claim = 790
-			add_state_claim = 974
-			add_state_claim = 975
-			add_state_claim = 803
-			add_state_claim = 1225
-			add_state_claim = 757
-			add_state_claim = 184
-		}
-		ai_chance = {
-			factor = 100
-		}
-	}
-}
-
-# BALKAN LEAGUE FORMING WITHOUT SERBIA - SEND DIPLOMATS
-#############################
-country_event = {
-	id = ww1_bulgaria.8
-	title = ww1_serbia.5.t
-	desc = ww1_bulgaria.8.d
-	picture = GFX_report_event_military_planning
-	is_triggered_only = yes
-	option = {
-		name = ww1_serbia.5.a
-		ROOT = {
-			add_opinion_modifier = {
-				target = BUL
-				modifier = balkan_strategy_good
-			}
-		}
-		BUL = {
-			add_opinion_modifier = {
-				target = ROOT
-				modifier = balkan_strategy_good
-			}
-		}
-		if = {
-			limit = {
-				tag = MNT
-			}
-			add_state_claim = 761
-			BUL = {
-				country_event = {
-					id = ww1_bulgaria.6
-				}
-			}
-		}
-		if = {
-			limit = {
-				tag = GRE
-			}
-			add_state_claim = 790
-			add_state_claim = 974
-			add_state_claim = 975
-			add_state_claim = 803
-			add_state_claim = 1225
-			add_state_claim = 757
-			add_state_claim = 184
-			BUL = {
-				country_event = {
-					id = ww1_bulgaria.7
-				}
-			}
-		}
-		set_country_flag = join_bulgarian_balkan_league
-		ai_chance = {
-			factor = 100
-		}
-	}
-	option = {
-		name = ww1_serbia.5.b
-		if = {
-			limit = {
-				tag = MNT
-			}
-			BUL = {
-				country_event = {
-					id = ww1_bulgaria.9
-				}
-			}
-		}
-		if = {
-			limit = {
-				tag = GRE
-			}
-			BUL = {
-				country_event = {
-					id = ww1_bulgaria.10
-				}
-			}
-		}
-		set_country_flag = not_join_bulgarian_balkan_league
-		ai_chance = {
-			factor = 0
-		}
-	}
-}
-
-# 1. BALKAN LEAGUE WITHOUT SERBIA - MONTENEGRO DISAGREE
-################################
-country_event = {
-	id = ww1_bulgaria.9
-	title = ww1_serbia.9.t
-	desc = ww1_serbia.9.d
-	picture = GFX_report_event_military_planning
-	fire_only_once = yes
-	is_triggered_only = yes
-	option = {
-		name = ww1_serbia.9.a
-		ai_chance = {
-			factor = 100
-		}
-	}
-}
-
-# 2. BALKAN LEAGUE WITHOUT SERBIA - GREECE DISAGREE
-################################
-country_event = {
-	id = ww1_bulgaria.10
-	title = ww1_serbia.10.t
-	desc = ww1_serbia.10.d
-	picture = GFX_report_event_military_planning
-	fire_only_once = yes
-	is_triggered_only = yes
-	option = {
-		name = ww1_serbia.10.a
-		BUL = {
-			add_state_claim = 790
-			add_state_claim = 974
-			add_state_claim = 975
-			add_state_claim = 803
-			add_state_claim = 1225
-			add_state_claim = 757
-			add_state_claim = 184
-		}
-		ai_chance = {
-			factor = 100
-		}
-	}
-}
-
 # WW1 Aftermath
 ##################
 country_event = {
@@ -346,55 +95,6 @@ country_event = {
 	}
 	option = {
 		name = ww1_bulgaria.11.a
-
-		if = {
-			limit = {
-				is_subject = yes
-				has_autonomy_state = autonomy_satellite
-			}
-			clear_all_relations = yes
-		}
-
-		promote_character = BUL_aleksandar_stamboliyski
-		if = {
-			limit = {
-				GER = { has_country_flag = great_war_winner }
-			}
-			hidden_effect = {
-				set_popularities = {
-					neutrality = 55
-					democratic = 25
-					fascism = 20
-				}
-			}
-			set_politics = {
-				ruling_party = neutrality
-				elections_allowed = yes
-			}
-		}
-		else = {
-			hidden_effect = {
-				add_popularity = {
-					ideology = democratic
-					popularity = 0.3
-				}
-				add_popularity = {
-					ideology = communism
-					popularity = 0.1
-				}
-			}
-			set_politics = {
-				ruling_party = democratic
-				elections_allowed = yes
-			}
-		}
-		new_term_elections = yes
-		set_party_name = {
-			ideology = democratic
-			long_name = BUL_agrarian_party_long
-			name = BUL_agrarian_party
-		}
-
 		add_ideas = BUL_idea_second_national_catastrophe
 		add_timed_idea = {
 			idea = GER_idea_reparations
@@ -419,11 +119,13 @@ country_event = {
 	option = {
 		name = ww1_bulgaria.12.a
 		BUL = {
-			add_ideas = BUL_idea_first_national_catastrophe
+			set_country_flag = BUL_first_national_catostrophe
 			add_timed_idea = {
 				idea = BUL_idea_refugee_crisis
 				days = 200
 			}
+			complete_national_focus = BUL_first_national_catastrophe
+			unlock_decision_category_tooltip = BUL_first_national_catastrophe_cat
 		}
 	}
 }
@@ -435,18 +137,70 @@ news_event = {
 	title = ww1_bulgaria.13.t
 	desc = ww1_bulgaria.13.d
 	picture = ww1_bulgaria_1
+	fire_only_once = yes
 	major = yes
 	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			retire_character = BUL_ferdinand_i
+		}
+	}
+	#Bulgaria Option
 	option = {
 		name = ww1_bulgaria.13.a
-		retire_character = BUL_ferdinand_i
-		if = {
-			limit = {
-				has_idea = BUL_ferdinand_i
+		trigger = {
+			tag = BUL
+		}
+		set_politics = {
+			ruling_party = democratic
+			elections_allowed = yes
+		}
+		complete_national_focus = BUL_national_assembly_crisis
+	}
+	#Serbia, Greece, Romanian, Fake Serbia Option
+	option = {
+		name = ww1_bulgaria.13.b
+		trigger = {
+			OR = {
+				tag = ROM
+				tag = SER
+				tag = MNT
+				tag = GRE
 			}
-			swap_ideas = {
-				remove_idea = BUL_ferdinand_i
-				add_idea = BUL_idea_boris_iii
+		}
+	}
+	#Russian Option
+	option = {
+		name = ww1_bulgaria.13.c
+		trigger = {
+			tag = RUS
+		}
+	}
+	#Turk Option
+	option = {
+		name = ww1_bulgaria.13.dd
+		trigger = {
+			OR = {
+				original_tag = TUR
+				is_subject_of = TUR
+			}
+		}
+	}
+	#World Option
+	option = {
+		name = ww1_bulgaria.13.e
+		trigger = {
+			NOT = {
+				OR = {
+					original_tag = TUR
+					is_subject_of = TUR
+					tag = ROM
+					tag = SER
+					tag = MNT
+					tag = GRE
+					tag = RUS
+					tag = BUL
+				}
 			}
 		}
 	}
@@ -463,12 +217,9 @@ country_event = {
 	trigger = {
 		tag = BUL
 		has_country_flag = great_war_loser
-		OR = {
-			has_country_leader = {
-				character = BUL_ferdinand_i
-				ruling_only = yes
-			}
-			has_idea = BUL_ferdinand_i
+		has_country_leader = {
+			character = BUL_ferdinand_i
+			ruling_only = yes
 		}
 	}
 	mean_time_to_happen = {
@@ -477,34 +228,40 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			promote_character = BUL_boris_iii
-			if = {
-				limit = {
-					has_idea = BUL_ferdinand_i
+			BUL_teodor_teodorov = {
+				add_country_leader_role = {
+				promote_leader = yes
+				country_leader = { 
+					ideology = classical_liberalism
 				}
-				swap_ideas = {
-					remove_idea = BUL_ferdinand_i
-					add_idea = BUL_idea_boris_iii
-				}
+			}
+			}
+			set_cosmetic_tag = BUL_tsardom
+			set_party_name = {
+				ideology = democratic
+				long_name = BUL_peoples_party
+				name = BUL_peoples_party
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.3
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = 0.1
+			}
+			set_politics = {
+				ruling_party = democratic
+				elections_allowed = yes
+			}
+			add_ideas = {
+				BUL_idea_boris_iii
 			}
 		}
 	}
 	option = {
 		name = ww1_bulgaria.13.a
 		retire_character = BUL_ferdinand_i
-	}
-}
-
-# BALKAN LEAGUE AGAINST SERBIA
-##################
-news_event = {
-	id = ww1_bulgaria.15
-	title = kis_news.108.t
-	picture = EVENT_hoi4tgw_balkan_league
-	major = yes
-	is_triggered_only = yes
-	desc = ww1_bulgaria.15.d
-	option = {
-		name = kis_news.108.a
 	}
 }
 
@@ -516,29 +273,16 @@ news_event = {
 	desc = ww1_bulgaria.16.d
 	picture = ww1_bulgaria_2
 	major = yes
-	trigger = {
-		date > 1910.7.1
-		has_start_date < 1914.1.1
-		BUL = {
-			has_war = no
-			exists = yes
-			has_country_leader = {
-				character = BUL_ferdinand_i
-				ruling_only = yes
-			}
-		}
-		BEL = {
-			has_war = no
-			exists = yes
-		}
-		NOT = {
-			has_global_flag = ferdinand_flies
-		}
-	}
+	is_triggered_only = yes
 	mean_time_to_happen = { days = 15 }
 	immediate = {
 		hidden_effect = {
-			set_global_flag = ferdinand_flies
+			if = {
+				limit = {
+					original_tag = BUL
+				}
+				complete_national_focus = BUL_ferdinands_fly
+			}
 		}
 	}
 	option = {
@@ -551,7 +295,7 @@ news_event = {
 country_event = {
 	id = ww1_bulgaria.17
 	title = ww1_bulgaria.17.t
-	picture = GFX_report_event_gathering_protest
+	picture = GFX_GFX_report_event_gathering_protest
 	fire_only_once = yes
 	desc = ww1_bulgaria.17.d
 	option = {
@@ -577,7 +321,7 @@ country_event = {
 country_event = {
 	id = ww1_bulgaria.18
 	title = ww1_bulgaria.18.t
-	picture = GFX_report_event_gathering_protest
+	picture = GFX_GFX_report_event_gathering_protest
 	fire_only_once = yes
 	desc = ww1_bulgaria.18.d
 	option = {
@@ -603,7 +347,7 @@ country_event = {
 country_event = {
 	id = ww1_bulgaria.19
 	title = ww1_bulgaria.19.t
-	picture = GFX_report_event_gathering_protest
+	picture = GFX_GFX_report_event_gathering_protest
 	fire_only_once = yes
 	desc = ww1_bulgaria.19.d
 	option = {
@@ -659,333 +403,6 @@ country_event = {
 	}
 }
 
-# BULGARIA WANTS TO JOIN CENRAL POWERS
-country_event = {
-	id = ww1_bulgaria.21
-	title = ww1_bulgaria.21.t
-	picture = GFX_report_event_generic_read_write
-	is_triggered_only = yes
-	fire_only_once = yes
-	desc = ww1_bulgaria.21.d
-	immediate = {
-		hidden_effect = {
-			save_event_target_as = alliance_inviter
-			FROM = {
-				save_event_target_as = alliance_applicant
-			}
-		}
-	}
-	option = {
-		name = ww1_bulgaria.21.a
-		ai_chance = {
-			base = 10
-			modifier = {
-				factor = 0.5
-				has_war = no
-				BUL = {
-					has_war = yes
-				}
-			}
-			modifier = {
-				factor = 0.75
-				BUL = {
-					is_major = no
-				}
-			}
-		}
-		GER = {
-			send_equipment = {
-				target = BUL
-				type = infantry_equipment_1
-				amount = 800
-			}
-			add_to_faction = BUL
-		}
-		BUL = {
-			country_event = {
-				id = generic.3
-				hours = 6
-			}
-		}
-		hidden_effect = {
-			BUL = {
-				remove_opinion_modifier = {
-					target = TUR
-					modifier = HOI4TGW_Opinion_hostile_relations_post_balkan_war
-				}
-			}
-		}
-	}
-	option = {
-		name = ww1_bulgaria.21.b
-		BUL = {
-			country_event = {
-				id = generic.4
-				hours = 6
-			}
-		}
-		ai_chance = {
-			factor = 4
-			modifier = {
-				factor = 0.5
-				has_opinion = {
-					target = BUL
-					value > 65
-				}
-			}
-			modifier = {
-				factor = 0.5
-				has_opinion = {
-					target = BUL
-					value > 35
-				}
-			}
-			modifier = {
-				factor = 0.5
-				has_opinion = {
-					target = BUL
-					value > 5
-				}
-			}
-			modifier = {
-				factor = 2
-				has_opinion = {
-					target = BUL
-					value < 35
-				}
-			}
-			modifier = {
-				factor = 2
-				has_opinion = {
-					target = BUL
-					value < 65
-				}
-			}
-			modifier = {
-				factor = 0.1
-				has_war = yes
-				BUL = {
-					has_war = no
-				}
-			}
-			modifier = {
-				factor = 0.1
-				BUL = {
-					is_major = yes
-				}
-			}
-		}
-	}
-}
-
-# BULGARIA WANTS TO JOIN ENTENTE
-country_event = {
-	id = ww1_bulgaria.22
-	title = ww1_bulgaria.22.t
-	picture = GFX_report_event_generic_read_write
-	is_triggered_only = yes
-	fire_only_once = yes
-	desc = ww1_bulgaria.22.d
-	immediate = {
-		hidden_effect = {
-			save_event_target_as = alliance_inviter
-			FROM = {
-				save_event_target_as = alliance_applicant
-			}
-		}
-	}
-	option = {
-		name = ww1_bulgaria.22.a
-		ai_chance = {
-			base = 10
-			modifier = {
-				factor = 0.5
-				has_war = no
-				FROM = {
-					has_war = yes
-				}
-			}
-			modifier = {
-				factor = 0.75
-				FROM = {
-					is_major = no
-				}
-			}
-		}
-		add_to_faction = BUL
-		FROM = {
-			country_event = {
-				id = generic.3
-				hours = 6
-			}
-		}
-	}
-	option = {
-		name = ww1_bulgaria.22.b
-		FROM = {
-			country_event = {
-				id = generic.4
-				hours = 6
-			}
-		}
-		ai_chance = {
-			factor = 4
-			modifier = {
-				factor = 0.5
-				has_opinion = {
-					target = FROM
-					value > 65
-				}
-			}
-			modifier = {
-				factor = 0.5
-				has_opinion = {
-					target = FROM
-					value > 35
-				}
-			}
-			modifier = {
-				factor = 0.5
-				has_opinion = {
-					target = FROM
-					value > 5
-				}
-			}
-			modifier = {
-				factor = 2
-				has_opinion = {
-					target = FROM
-					value < 35
-				}
-			}
-			modifier = {
-				factor = 2
-				has_opinion = {
-					target = FROM
-					value < 65
-				}
-			}
-			modifier = {
-				factor = 0.1
-				has_war = yes
-				FROM = {
-					has_war = no
-				}
-			}
-			modifier = {
-				factor = 0.1
-				FROM = {
-					is_major = yes
-				}
-			}
-		}
-	}
-}
-
-# BULGARIA WANTS TO JOIN SOVIET RUSSIA
-country_event = {
-	id = ww1_bulgaria.23
-	title = ww1_bulgaria.23.t
-	picture = GFX_report_event_generic_read_write
-	is_triggered_only = yes
-	fire_only_once = yes
-	desc = ww1_bulgaria.23.d
-	immediate = {
-		hidden_effect = {
-			save_event_target_as = alliance_inviter
-			FROM = {
-				save_event_target_as = alliance_applicant
-			}
-		}
-	}
-	option = {
-		name = ww1_bulgaria.23.a
-		ai_chance = {
-			base = 10
-			modifier = {
-				factor = 0.5
-				has_war = no
-				BUL = {
-					has_war = yes
-				}
-			}
-			modifier = {
-				factor = 0.75
-				BUL = {
-					is_major = no
-				}
-			}
-		}
-		add_to_faction = BUL
-		BUL = {
-			country_event = {
-				id = generic.3
-				hours = 6
-			}
-		}
-	}
-	option = {
-		name = ww1_bulgaria.23.b
-		BUL = {
-			country_event = {
-				id = generic.4
-				hours = 6
-			}
-		}
-		ai_chance = {
-			factor = 4
-			modifier = {
-				factor = 0.5
-				has_opinion = {
-					target = BUL
-					value > 65
-				}
-			}
-			modifier = {
-				factor = 0.5
-				has_opinion = {
-					target = BUL
-					value > 35
-				}
-			}
-			modifier = {
-				factor = 0.5
-				has_opinion = {
-					target = BUL
-					value > 5
-				}
-			}
-			modifier = {
-				factor = 2
-				has_opinion = {
-					target = BUL
-					value < 35
-				}
-			}
-			modifier = {
-				factor = 2
-				has_opinion = {
-					target = BUL
-					value < 65
-				}
-			}
-			modifier = {
-				factor = 0.1
-				has_war = yes
-				BUL = {
-					has_war = no
-				}
-			}
-			modifier = {
-				factor = 0.1
-				BUL = {
-					is_major = yes
-				}
-			}
-		}
-	}
-}
-
 # Stamboliyski against central powers 
 country_event = {
 	id = ww1_bulgaria.24
@@ -1011,7 +428,6 @@ country_event = {
 		ai_chance = {
 			factor = 10
 		}
-		custom_effect_tooltip = historical_tt
 		add_political_power = -50
 		set_country_flag = stamboliyski_imprisoned
 	}
@@ -1061,14 +477,9 @@ country_event = {
 			has_country_flag = stamboliyski_imprisoned
 			has_government = neutrality
 		}
-		custom_effect_tooltip = historical_tt
-		add_political_power = 25
-		add_war_support = 0.01
-		hidden_effect = {
-			country_event = {
-				id = ww1_bulgaria.26
-				days = 14
-			}
+		country_event = {
+			id = ww1_bulgaria.26
+			days = 14
 		}
 	}
 	option = {
@@ -1119,12 +530,24 @@ country_event = {
 	id = ww1_bulgaria.26
 	title = ww1_bulgaria.26.t
 	picture = ww1_bulgaria_3
-	is_triggered_only = yes
 	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 200
+	}
 	trigger = {
+		tag = BUL
 		has_civil_war = no
 		has_government = neutrality
 		has_war = yes
+		has_global_flag = great_war
+		OR = {
+			democratic > 0.6
+			communism > 0.3
+		}
+		has_stability < 0.65
+		NOT = {
+			has_global_flag = great_war_ends
+		}
 	}
 	desc = ww1_bulgaria.26.d
 	immediate = {
@@ -1144,7 +567,6 @@ country_event = {
 				}
 			}
 		}
-		custom_effect_tooltip = historical_tt
 		set_country_flag = radomir_rebellion_failed
 		add_stability = -0.2
 		add_war_support = -0.3
@@ -1157,8 +579,31 @@ country_event = {
 			ideology = communism
 			popularity = 0.08
 		}
-		add_war_support = -0.20
-		add_ideas = mutiny_3
+
+		# Armistice of Salonika
+		if = {
+			limit = {
+				has_war_with = FRA
+				is_in_faction = yes
+				is_faction_leader = no
+				has_global_flag = great_war
+				NOT = { has_global_flag = great_war_ends }
+			}
+			if = {
+				limit = {
+					OR = {
+						has_war_support < 0.3
+						surrender_progress > 0.10
+						casualties > 150000
+					}
+				}
+				force_capitulate = yes
+			}
+			else = {
+				add_war_support = -0.20
+				add_ideas = mutiny_3
+			}
+		}
 	}
 	option = {
 		name = ww1_bulgaria.26.b
@@ -1260,7 +705,6 @@ country_event = {
 	trigger = {
 		tag = GER
 		has_war_with = FRA
-		is_great_war_ongoing = yes
 		has_navy_size = {
 			size > 10
 			type = submarine
@@ -1268,6 +712,9 @@ country_event = {
 		BUL = {
 			is_in_faction_with = ROOT
 			has_war_with = FRA
+		}
+		NOT = {
+			has_global_flag = great_war_ends
 		}
 	}
 	option = {
@@ -1406,8 +853,8 @@ unit_leader_event = {
 	}
 }
 
-#Radko Dimitriev resigns
-country_event = {
+ #Radko Dimitriev resigns
+ country_event = {
  	id = ww1_bulgaria.40
  	title = ww1_bulgaria.40.t
  	desc = ww1_bulgaria.40.d
@@ -1439,15 +886,13 @@ country_event = {
  			factor = 4
  		}
  	}
-}
-
-# Assassination of Aleksandar Stamboliyski and 1923 Bulgarian coup d'état
-###############################################################################
+ }
+ # Assassination of Aleksandar Stamboliyski and 1923 Bulgarian coup d'état
+ ###############################################################################
 country_event = {
 	id = ww1_bulgaria.42
 	title = ww1_bulgaria.42.t
 	desc = ww1_bulgaria.42.d
-	picture = GFX_report_event_bul_military_parade_vidin
 	fire_only_once = yes
 	trigger = {
 		has_country_flag = great_war_loser
@@ -1463,62 +908,53 @@ country_event = {
 	}
 	option = {
 		name = ww1_bulgaria.42.a
+		set_country_flag = bul_1923_coup
+		kill_ideology_leader = democratic
 		set_party_name = {
 			ideology = democratic
 			long_name = BUL_democratic_alliance
 			name = BUL_democratic_alliance
 		}
-		set_party_name = {
-			ideology = neutrality
-			long_name = BUL_democratic_alliance
-			name = BUL_democratic_alliance
-		}
-		new_term_elections = yes
 		set_politics = {
-			ruling_party = neutrality
+			ruling_party = fascism
 			elections_allowed = yes
-		}
-		add_popularity = {
-			ideology = neutrality
-			popularity = 0.2
+			last_election = "1919.11.18"
 		}
 		add_popularity = {
 			ideology = fascism
-			popularity = 0.1
+			popularity = 0.2
 		}
 		BUL_aleksandar_tsankov = {
 			add_country_leader_role = {
-				country_leader = {
-					ideology = civilian_dictatorship
-					traits = { anti_communist }
+				country_leader={
+					ideology=conservatism
+					traits={ anti_communist  }
+					
 				}
 				promote_leader = yes
 			}	
 		}
-		add_ideas = communism_banned
-		hidden_effect = {
-			BUL_andrey_lyapchev = {
-				add_country_leader_role = {
-					promote_leader = yes
-					country_leader = {
-						ideology = conservatism
-					}
+		if = {
+			limit = {
+				NOT = {
+					has_cosmetic_tag = BUL_radomir
 				}
 			}
-			if = {
-				limit = {
-					NOT = { has_cosmetic_tag = BUL_radomir }
+			set_cosmetic_tag = BUL_neutrality
+		}	
+		if = {
+			limit = {
+				NOT = {
+					has_idea = BUL_idea_boris_iii
+					has_cosmetic_tag = BUL_radomir
 				}
-				set_cosmetic_tag = BUL_neutrality
-				if = {
-					limit = {
-						NOT = { has_idea = BUL_idea_boris_iii }
-					}
-					add_ideas = BUL_idea_boris_iii
+				has_country_leader = {
+					character = BUL_boris_iii
+					ruling_only = no
 				}
 			}
+			add_ideas = BUL_idea_boris_iii
 		}
-		retire_character = BUL_aleksandar_stamboliyski
 	}
 }
 
@@ -1529,14 +965,14 @@ country_event = {
 	title = ww1_bulgaria.43.t
 	desc = ww1_bulgaria.43.d
 	fire_only_once = yes
-	picture = GFX_report_event_bul_military_parade_vidin
 	trigger = {
 		has_country_flag = great_war_loser
+		has_country_leader = {
+			character = BUL_nikola_mushanov
+			ruling_only = yes
+		}
 		date > 1934.5.1
 		has_war = no
-		NOT = {
-			has_government = communism
-		}
 	}
 	mean_time_to_happen = {
 		days = 19
@@ -1566,16 +1002,15 @@ country_event = {
 			ideology = neutrality
 			popularity = 0.2
 		}
-		new_term_elections = yes
 		set_politics = {
 			ruling_party = neutrality
-			elections_allowed = yes
+			elections_allowed = no
 		}
 		BUL_kimon_georgiev = {
 			add_country_leader_role = {
 				promote_leader = yes
 				country_leader = {
-					ideology = civilian_dictatorship
+					ideology = authoritarian_democracy
 					traits = { hardened_officer }
 				}
 			}
@@ -1584,11 +1019,14 @@ country_event = {
 			limit = {
 				NOT = {
 					has_idea = BUL_idea_boris_iii
-					has_idea = BUL_idea_boris_iii_20s
 					has_cosmetic_tag = BUL_radomir
 				}
+				has_country_leader = {
+					character = BUL_boris_iii
+					ruling_only = no
+				}
 			}
-			add_ideas = BUL_idea_boris_iii_20s
+			add_ideas = BUL_idea_boris_iii
 		}
 	}
 	option = {
@@ -1619,7 +1057,7 @@ country_event = {
 				add_country_leader_role = {
 					promote_leader = yes
 					country_leader = {
-						ideology = civilian_dictatorship
+						ideology = authoritarian_democracy
 						traits = { hardened_officer }
 					}
 				}
@@ -1636,100 +1074,66 @@ country_event = {
 		}
 	}
 }
-
-# # 1926 Elections
+# # 1923 Elections
 # ###############################################################################
 country_event = {
 	id = ww1_bulgaria.44
 	title = ww1_bulgaria.44.t
 	desc = ww1_bulgaria.44.d
 	fire_only_once = yes
-	picture = GFX_report_event_election_vote
 	trigger = {
-		date > 1926.1.1
-		has_elections = yes
+		has_country_flag = bul_1923_coup
+		has_country_leader = {
+			character = BUL_aleksandar_tsankov
+			ruling_only = yes
+		}
+		date > 1923.11.1
+		has_government = fascism
 	}
 	mean_time_to_happen = {
-		days = 4
+		days = 17
 	}
 	option = {
 		name = ww1_bulgaria.44.a
-		hidden_effect = {
-			if = {
-				limit = {
-					has_country_leader_ideology = civilian_dictatorship
-				}
-				set_party_name = {
-					ideology = neutrality
-					long_name = BUL_neutrality_party_long
-					name = BUL_neutrality_party
-				}
-				BUL_aleksandar_tsankov = {
-					remove_country_leader_role = {
-						ideology = civilian_dictatorship
-					}
-				}
-				remove_ideas = communism_banned
-			}
-			else = {
-				set_party_name = {
-					ideology = democratic
-					long_name = BUL_democratic_party
-					name = BUL_democratic_party
-				}
-			}
-			BUL_boris_iii = {
-				set_portraits = {
-					civilian = {
-						large="gfx/leaders/BUL/BUL_Boris_III_20s.png"
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_idea = BUL_idea_boris_iii
-				}
-				swap_ideas = {
-					remove_idea = BUL_idea_boris_iii
-					add_idea = BUL_idea_boris_iii_20s
-				}
-			}
-		}
-		new_term_elections = yes
 		set_politics = {
 			ruling_party = democratic
 			elections_allowed = yes
 		}
 		add_popularity = {
-			ideology = neutrality
+			ideology = fascism
 			popularity = -0.05
 		}
 		drop_cosmetic_tag = yes
+		BUL_boris_iii = {
+			set_portraits = {
+				civilian = {
+					large="gfx/leaders/BUL/BUL_Boris_III_20s.png"
+				}
+			}
+		}
 	}
 }
-
-# Death of PM Aleksandar Malinov
+# # 1931 Elections - Popular Block
+# ###############################################################################
 country_event = {
 	id = ww1_bulgaria.45
 	title = ww1_bulgaria.45.t
 	desc = ww1_bulgaria.45.d
 	fire_only_once = yes
-	picture = GFX_report_event_election_vote
 	trigger = {
-		has_elections = yes
-		date > 1931.10.1
+		tag = BUL
 		has_country_leader = {
-			character = BUL_aleksandar_malinov
+			character = BUL_aleksandar_tsankov
 			ruling_only = yes
 		}
+		date > 1931.6.1
+		has_government = democratic
 	}
 	mean_time_to_happen = {
-		days = 12
+		days = 20
 	}
 	option = {
 		name = ww1_bulgaria.45.a
-		retire_character = BUL_aleksandar_malinov
-		new_term_elections = yes
 		set_party_name = {
 			ideology = democratic
 			long_name = BUL_democratic_party
@@ -1737,86 +1141,35 @@ country_event = {
 		}
 		BUL_nikola_mushanov = {
 			add_country_leader_role = {
-				country_leader = {
-					ideology = classical_liberalism
-					traits = { appeaser }
+				country_leader={
+					ideology=classical_liberalism
+					traits={ appeaser  }
+					
 				}
 				promote_leader = yes
-			}
-		}
-		hidden_effect = {
-			set_party_name = {
-				ideology = neutrality
-				long_name = BUL_national_social_movement
-				name = BUL_national_social_movement
-			}
-			BUL_aleksandar_tsankov = {
-				add_country_leader_role = {
-					promote_leader = yes
-					country_leader = {
-						ideology = gen_nazism
-					}
-				}
 			}
 		}
 	}
 }
 
-#Konstantin Zhostov dies
+ #Konstantin Zhostov dies
 country_event = {
  	id = ww1_bulgaria.46
- 	title = ww1_bulgaria.46.t
- 	desc = ww1_bulgaria.46.d
- 	picture = GFX_report_event_bul_military_parade_vidin
+ 	title = ww1_bulgaria.96.t
+	desc = ww1_bulgaria.96.d
+ 	picture = ww1_bulgaria_48
  	fire_only_once = yes
+	mean_time_to_happen = { days = 30  }
  	trigger = {
  		original_tag = BUL
  		date > 1916.8.1
- 		has_character = BUL_konstantin_zhostov
+		has_character = BUL_konstantin_zhostov
+		has_war_with = SER
  	}
- 	desc = {
- 		text = ww1_bulgaria.46.d
-		trigger = {
- 			has_war_with = SER
- 		}
- 	}
- 	desc = {
- 		text = ww1_bulgaria.46.d_2
- 		trigger = {
- 			NOT = {
-				has_war_with = SER
- 			}
- 		}
- 	}
- 	mean_time_to_happen = { days = 30  }
- 	immediate = {
- 		hidden_effect = {
- 			retire_character = BUL_konstantin_zhostov
- 		}
- 	}
+ 	desc = ww1_bulgaria.96.d 
  	option = {
- 		name = ww1_bulgaria.46.a
- 		trigger = {
- 			has_war_with = SER
- 		}
- 		effect_tooltip = {
- 			BUL_konstantin_zhostov = {
- 				remove_unit_leader_role = yes
- 			}
- 		}
- 	}
- 	option = {
-		name = ww1_bulgaria.46.a_2
- 		trigger = {
- 			NOT = {
- 				has_war_with = SER
- 			}
- 		}
- 		effect_tooltip = {
- 			BUL_konstantin_zhostov = {
- 				remove_unit_leader_role = yes
- 			}
- 		}
+ 		name = ww1_bulgaria.96.a
+ 		retire_character = BUL_konstantin_zhostov
  	}
 }
 
@@ -1828,50 +1181,68 @@ country_event = {
 	picture = GFX_report_event_bul_troops_macedonia
 	fire_only_once = yes
 	trigger = {
-		tag = BUL
-		has_capitulated = no
-		is_subject = no
+		tag= BUL
 		NOT = {
 			has_country_flag = orestiada_restitued
 		}
-		OR = {
-			200 = {
-				OWNER = { is_in_faction_with = ROOT }
-			}	
-			has_country_flag = great_war_winner
-		}
 		200 = {
-			owner = {
-				controls_state = PREV
-				has_war_together_with = ROOT
-				OR = {
-					is_in_faction_with = ROOT
-					has_country_flag = great_war_winner
-				}
-			}
+			is_owned_and_controlled_by = TUR
 		}
-		451 = {
-			is_owned_and_controlled_by = ROOT
+		212 = {
+			is_owned_and_controlled_by = BUL
+		}
+		BUL = {
+			is_in_faction_with = TUR
 		}
 	}
 	option = {
 		name = ww1_bulgaria.51.a
-		custom_effect_tooltip = if_they_accept
-		effect_tooltip = {
+		BUL = {
 			transfer_state = 200
 		}
-		hidden_effect = {
-			set_country_flag = orestiada_restitued
-			200 = {
-				OWNER = { country_event = ww1_bulgaria.52 }
+		if = {
+			limit = {
+				TUR = {
+					any_owned_state = {
+						OR = {
+							is_core_of = BUL
+							is_claimed_by = BUL
+						}
+						is_on_continent = europe
+						NOT = {
+							state = 756
+							state = 849
+							state = 860
+							state = 341
+							state = 347
+							state = 347
+						}
+					}
+				}
+			}
+			every_state = {
+				limit = {
+					OR = {
+						is_core_of = BUL
+						is_claimed_by = BUL
+					}
+					is_on_continent = europe
+					NOT = {
+						state = 756
+						state = 849
+						state = 860
+						state = 341
+						state = 347
+						state = 347
+					}
+					is_owned_by = TUR
+				}
+				transfer_state_to = BUL
 			}
 		}
-	}
-	option = {
-		name = ww1_bulgaria.51.b
-		add_war_support = -0.01
-		ai_chance = {
-			base = 0
+		set_country_flag = orestiada_restitued
+		TUR = {
+			country_event = ww1_bulgaria.52
 		}
 	}
 }
@@ -1885,20 +1256,31 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_bulgaria.52.a
-		FROM = { transfer_state = 200 }
-	}
-	option = {
-		name = ww1_bulgaria.52.b
-		add_war_support = -0.01
-		FROM = {
-			add_opinion_modifier = {
-				target = ROOT
-				modifier = orestiada_malus
+		effect_tooltip = {
+			BUL = {
+				transfer_state = 200
+			}
+			every_state = {
+				limit = {
+					OR = {
+						is_core_of = BUL
+						is_claimed_by = BUL
+					}
+					is_on_continent = europe
+					NOT = {
+						state = 756
+						state = 849
+						state = 860
+						state = 341
+						state = 347
+						state = 347
+					}
+					is_owned_by = TUR
+				}
+				transfer_state_to = BUL
 			}
 		}
-		ai_chance = {
-			base = 0
-		}
+
 	}
 }
 
@@ -2035,6 +1417,145 @@ country_event = {
 	}
 }
 
+#BUL_united_balkan_HQ
+country_event = {
+	id = ww1_bulgaria.62
+	title = ww1_bulgaria.62.t
+	desc = ww1_bulgaria.62.d
+	picture = GFX_report_event_bul_troops_macedonia
+	trigger = {
+		tag = BUL
+		has_global_flag = BUL_united_balkan_HQ
+		has_war_with = TUR
+		OR = {
+			is_in_faction_with = BUL
+			tag = BUL
+		}
+		is_puppet = no
+		NOT = {
+			has_country_flag = BUL_idea_united_bulgarian_headquarters
+			has_global_flag = kis_firstbalkanwar_victory
+			has_global_flag = kis_firstbalkanwar_lose
+		}
+		capital_scope = {
+			OR = {
+				region = 24
+				region = 25
+				region = 26
+				region = 202
+			}
+		}
+	}
+	mean_time_to_happen = {
+		days = 14
+	}
+	option = {
+		name = ww1_bulgaria.62.a ## cool
+		set_country_flag = BUL_idea_united_bulgarian_headquarters
+		add_ideas = BUL_idea_united_bulgarian_headquarters
+	}
+}
+
+#second balkan war is lasting too long
+country_event = {
+	id = ww1_bulgaria.63
+	title = ww1_bulgaria.63.t
+	desc = ww1_bulgaria.63.d
+	picture = GFX_report_event_bul_troops_macedonia
+	is_triggered_only = yes
+	option = {
+		name = ww1_bulgaria.63.a ## cool
+		hidden_effect = {
+			set_global_flag = BUL_partial_defeat
+			every_controlled_state = {
+				limit = {
+					OR = {
+						is_claimed_by = BUL
+						is_core_of = BUL
+						is_core_of = MAC
+						state = 759
+						state = 203
+					}
+					any_neighbor_state = {
+						is_controlled_by = BUL #avoid floating states isolated from mainland
+					}
+				}
+				set_state_flag = under_bulgarian_control_for_partial_defeat
+			}
+			every_enemy_country = {
+				limit = {
+					OR = {
+						tag = SER
+						is_in_faction_with = SER
+						tag = GRE
+						tag = TUR
+						is_in_faction_with = TUR
+					}
+				}
+				set_country_flag = kis_secondbalkan_war_winner
+				white_peace = PREV
+			}
+			set_global_flag = kis_secondbalkanwar_lose
+			SER = { country_event = {id = ww1_secondbalkan.5 } }
+			if = {
+				limit = {
+					TUR = {
+						has_war_with = BUL
+						NOT = { has_country_flag = tur_no_peace_bw2 }
+					}
+				}
+				TUR = {
+					country_event = {
+						id = ww1_secondbalkan.15
+						days = 1
+					}
+					country_event = {
+						id = ww1_secondbalkan.10
+						days = 7
+					}
+				}
+				effect_tooltip = {
+					activate_decision = BUL_sue_for_peace_TUR_2
+				}
+			}
+		}
+		effect_tooltip = {
+			activate_decision = BUL_sue_for_peace_SER
+		}
+		ai_chance = {
+			factor = 500
+			modifier = {
+				has_game_rule = {
+					rule = second_balkan_war_outcome
+					option = BUL_BULGARIAN_VICTORY
+				}
+				factor = 0
+			}
+		}
+	}
+	option = {
+		name = ww1_bulgaria.63.b ## cool
+		add_timed_idea = {
+			idea = idea_famine
+			days = 180
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+			modifier = {
+				has_game_rule = {
+					rule = second_balkan_war_outcome
+					option = BUL_BULGARIAN_VICTORY
+				}
+				factor = 1000
+			}
+		}
+	}
+}
+
 # Lone Liberator Demand on Turkey
 country_event = {
 	id = ww1_bulgaria.64
@@ -2049,166 +1570,2971 @@ country_event = {
 			create_wargoal = {
 				target = ROOT
 				type = take_claimed_state
-				generator = {788 451 200 756 849 759 106 203 1258 184 757 345 1255 225 731 1256 1140 1141 1213}
+				generator = {788 451 200 756 849 759 106 203 184 757 345 225 731 1140 1141 1213}
 			}
 		}
+	}
+	option = {
+		name = ww1_bulgaria.64.a
+		trigger = {
+			NOT = {
+				has_war_with = BLL
+			}
+		}
+		ai_chance = { base = 0 }
+		every_owned_state = {
+			limit = {
+				OR = {
+					is_claimed_by = FROM
+					is_core_of = FROM
+				}
+			}
+			transfer_state_to = FROM
+		}
+		every_owned_state = {
+			limit = {
+				OR = {
+					region = 24
+					region = 25
+					region = 26
+				}
+			}
+			set_demilitarized_zone = yes
+		}
+		set_truce = {
+			target = FROM
+			days = 365
+		}
+		set_global_flag = lone_liberator_victorious
 		hidden_effect = {
-			RUS = {
-				country_event = {
-					id = ww1_firstbalkan.119
-					hours = 10
+			if = {
+				limit = {
+					NOT = { has_global_flag = TUR_surrender_1st_balkan_war }
+				}
+				every_other_country = {
+					limit = {
+						OR = {
+							tag = SER
+							tag = GRE
+							tag = MNT
+						}
+						is_subject = no
+						NOT = {
+							has_war_with = ROOT
+						}
+						ROOT = {
+							any_owned_state = {
+								OR = {
+									is_core_of = PREV.PREV
+									is_claimed_by = PREV.PREV
+								}
+								OR = {
+									region = 24
+									region = 25
+									region = 26
+								}
+							}
+						}
+					}
+					country_event = {
+						id = ww1_balkan.22
+						hours = 10
+						random_hours = 10
+					}
 				}
 			}
 		}
 	}
-	# option = {
-	# 	name = ww1_bulgaria.64.a
-	# 	trigger = {
-	# 		NOT = {
-	# 			has_war_with = BLL
-	# 		}
-	# 	}
-	# 	ai_chance = { base = 0 }
-	# 	every_owned_state = {
-	# 		limit = {
-	# 			OR = {
-	# 				is_claimed_by = FROM
-	# 				is_core_of = FROM
-	# 			}
-	# 			NOT = {
-	# 				state = 200
-	# 				state = 341
-	# 				state = 345
-	# 				state = 756
-	# 				state = 860
-	# 				state = 1018
-	# 				state = 1256
-	# 			}
-	# 		}
-	# 		transfer_state_to = FROM
-	# 	}
-	# 	every_owned_state = {
-	# 		limit = {
-	# 			OR = {
-	# 				region = 24
-	# 				region = 14
-	# 				region = 25
-	# 				region = 26
-	# 			}
-	# 		}
-	# 		set_demilitarized_zone = yes
-	# 	}
-	# 	set_truce = {
-	# 		target = FROM
-	# 		days = 365
-	# 	}
-	# 	set_global_flag = lone_liberator_victorious
-	# 	hidden_effect = {
-	# 		if = {
-	# 			limit = {
-	# 				NOT = { has_global_flag = TUR_surrender_1st_balkan_war }
-	# 			}
-	# 			every_other_country = {
-	# 				limit = {
-	# 					OR = {
-	# 						tag = SER
-	# 						tag = GRE
-	# 						tag = MNT
-	# 					}
-	# 					is_subject = no
-	# 					NOT = {
-	# 						has_war_with = ROOT
-	# 					}
-	# 					ROOT = {
-	# 						any_owned_state = {
-	# 							OR = {
-	# 								is_core_of = PREV.PREV
-	# 								is_claimed_by = PREV.PREV
-	# 							}
-	# 							OR = {
-	# 								region = 24
-	# 								region = 14
-	# 								region = 25
-	# 								region = 26
-	# 							}
-	# 						}
-	# 					}
-	# 				}
-	# 				country_event = {
-	# 					id = ww1_balkan.22
-	# 					hours = 10
-	# 					random_hours = 10
-	# 				}
-	# 			}
-	# 		}
-	# 	}
-	# }
 }
 
-# Armistice of Salonika
-news_event = {
-	id = ww1_bulgaria.65
-	title = ww1_bulgaria.65.t
-	desc = ww1_bulgaria.65.d
-	picture = GFX_news_event_salonika_armistice
+#Tobacco Surplus
+country_event = {
+	id = ww1_bulgaria.67
+	title = ww1_bulgaria.67.t
+	desc = ww1_bulgaria.67.d
+	fire_only_once = yes
+	mean_time_to_happen = { days = 300 }
+	timeout_days = 10
+	trigger = {
+		owns_state = 451
+		original_tag = BUL
+	}
+
+	#One of the many benefits of smoking!
+	option = {
+		name = ww1_bulgaria.67.a
+		#add_ideas = BUL_tobacco_surplus
+	}
+}
+
+#The Silver Constitution
+country_event = {
+	id = ww1_bulgaria.68
+	title = ww1_bulgaria.68.t
+	desc = ww1_bulgaria.68.d
+	fire_only_once = yes
 	is_triggered_only = yes
-	major = yes
-	immediate = {
-		hidden_effect = {
-			set_global_flag = salonika_armistice
+	mean_time_to_happen = { days = 1 }
+	timeout_days = 10
+	picture = ww1_bulgaria_49
+
+	#Empower the Tsar!
+	option = {
+		name = ww1_bulgaria.68.a
+		swap_ideas = {
+			remove_idea = BUL_idea_national_assembly
+			add_idea = BUL_idea_national_assembly_2
+		}
+		add_power_balance_value = {
+			id = BUL_BoP
+			value = 0.15
+			tooltip_side = bul_tsar_authority_right_side
+		}
+		effect_tooltip = {
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = BUL_industrial_priority
+					}
+					has_completed_focus = BUL_arrival_of_the_industrial_revolution
+				 }
+				 unlock_national_focus = BUL_agrarian_primacy
+			}
 		}
 	}
+}
+
+#Geshov Speech About Foreign Policy
+country_event = {
+	id = ww1_bulgaria.71
+	title = ww1_bulgaria.71.t
+	desc = ww1_bulgaria.71.d
+	picture = GFX_report_event_journalists_speech
+	fire_only_once = yes
+	is_triggered_only = yes
+	timeout_days = 10
+
 	option = {
-		name = ww1_bulgaria.65.a
+		name = ww1_bulgaria.71.a
+		add_war_support = -0.05
+		hidden_effect = {
+			country_event = {
+				id = ww1_bulgaria.72
+				days = 25
+			}
+		}
 	}
 }
 
-# 1931 Elections
+#Geshov Speech About Foreign Policy 2
+country_event = {
+	id = ww1_bulgaria.72
+	title = ww1_bulgaria.72.t
+	desc = ww1_bulgaria.72.d
+	picture = GFX_report_event_journalists_speech
+	fire_only_once = yes
+	is_triggered_only = yes
+	timeout_days = 10
+
+	option = {
+		name = ww1_bulgaria.72.a
+		add_war_support = -0.05
+	}
+}
+
+#Bulgarian Consul-General in Salonica, M. Shopoff's Report 
 country_event = {
 	id = ww1_bulgaria.73
 	title = ww1_bulgaria.73.t
 	desc = ww1_bulgaria.73.d
-	picture = GFX_report_event_election_vote
 	fire_only_once = yes
+	timeout_days = 10
 	trigger = {
-		tag = BUL
-		has_elections = yes
-		date > 1931.6.1
+		date > 1910.9.1
+		TUR = {
+			owns_state = 212
+		}
 	}
-	mean_time_to_happen = {
-		days = 30
-	}
+
 	option = {
 		name = ww1_bulgaria.73.a
-		new_term_elections = yes
-		if = {
-			limit = {
-				has_character = BUL_aleksandar_malinov
-			}
-			BUL_aleksandar_malinov = {
-				promote_leader = yes
-				add_country_leader_role = {
-					country_leader = {
-						ideology = classical_liberalism
-					}
-				}
-			}
+		#no effect
+	}
+}
+
+#Ivan Geshov talks to M. de Selves and Count Aehrenthal
+country_event = {
+	id = ww1_bulgaria.74
+	title = ww1_bulgaria.74.t
+	desc = ww1_bulgaria.74.d
+	fire_only_once = yes
+	picture = GFX_report_event_german_parade_paris
+	timeout_days = 10
+	mean_time_to_happen = { days = 3 }
+	trigger = {
+		TUR = {
+			has_war_with = ITA
 		}
-		else = {
-			BUL_nikola_mushanov = {
-				add_country_leader_role = {
-					promote_leader = yes
-					country_leader = {
-						ideology = classical_liberalism
-						traits = { appeaser }
-					}
-				}
-			}
-		}
-		set_party_name = {
-			ideology = democratic
-			long_name = BUL_democratic_party
-			name = BUL_democratic_party
+	}
+
+	option = {
+		name = ww1_bulgaria.74.a
+	}
+}
+
+#The case of Afiz Suleymanov (starting event)
+country_event = {
+	id = ww1_bulgaria.75
+	title = ww1_bulgaria.75.t
+	desc = ww1_bulgaria.75.d
+	fire_only_once = yes
+	timeout_days = 10
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_riot
+
+	option = {
+		name = ww1_bulgaria.75.a
+		add_stability = -0.01
+	}
+}
+
+#Navigation and Trade Agreement with Portugal (If Portugal is Monarchist)
+country_event = {
+	id = ww1_bulgaria.76
+	title = ww1_bulgaria.76.t
+	desc = ww1_bulgaria.76.d
+	fire_only_once = yes
+	timeout_days = 10
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_read_write
+
+	option = {
+		name = ww1_bulgaria.76.a
+		add_opinion_modifier = {
+			target = POR
+			modifier = small_increase
 		}
 	}
 }
+
+#Navigation and Trade Agreement with Portugal (If Portugal is Republican)
+country_event = {
+	id = ww1_bulgaria.77
+	title = ww1_bulgaria.77.t
+	desc = ww1_bulgaria.77.d
+	fire_only_once = yes
+	timeout_days = 10
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_read_write
+
+	option = {
+		name = ww1_bulgaria.77.a
+		add_opinion_modifier = {
+			target = POR
+			modifier = medium_increase
+		}
+	}
+}
+
+#Ferdinand Annoyed with Malinov
+country_event = {
+	id = ww1_bulgaria.83
+	title = ww1_bulgaria.83.t
+	desc = ww1_bulgaria.83.d
+	timeout_days = 10
+	is_triggered_only = yes
+
+	#Shoot
+	option = {
+		name = ww1_bulgaria.83.a
+		add_days_mission_timeout = {
+			mission = the_lethargic_tenure_of_malinov
+			days = -45
+		}
+		add_power_balance_value = {
+			id = BUL_BoP
+			value = 0.1
+			tooltip_side = bul_tsar_authority_right_side
+		}
+	}
+}
+
+#Which Horsies should we breed?
+country_event = {
+	id = ww1_bulgaria.82
+	title = ww1_bulgaria.82.t
+	desc = ww1_bulgaria.82.d
+	timeout_days = 10
+	is_triggered_only = yes
+	picture = GFX_report_event_yugoslavian_cavalry
+
+	#Destrier
+	option = {
+		name = ww1_bulgaria.82.a
+		add_to_variable = {
+			var = BUL_agr_build_speed
+			value = 0.02
+		}
+		add_to_variable = {
+			var = BUL_agr_war_horse
+			value = -0.05
+		}
+		army_experience = 15
+		custom_effect_tooltip = BUL_horse_destrier.tt
+	} 
+	#Draft 
+	option = {
+		name = ww1_bulgaria.82.b
+		add_to_variable = {
+			var = BUL_agr_build_speed
+			value = 0.05
+		}
+		add_to_variable = {
+			var = BUL_agr_bad_factories
+			value = 0.05
+		}
+		custom_effect_tooltip = BUL_horse_draft.tt
+	}
+}
+
+#Forming of a Coalition
+country_event = {
+	id = ww1_bulgaria.84
+	title = ww1_bulgaria.84.t
+	desc = ww1_bulgaria.84.d
+	timeout_days = 10
+	is_triggered_only = yes
+	picture = ww1_bulgaria_17
+
+	#Great!
+	option = {
+		name = ww1_bulgaria.84.a
+		activate_advisor = BUL_stoyan_danev 
+		unlock_decision_category_tooltip = BUL_peoples_liberal_parties_coalition_cat
+		activate_mission = BUL_appease_liberals
+		set_country_flag = BUL_political_coalition
+	}
+}
+
+#Founding of the Bulgarian Academy of Sciences
+country_event = {
+	id = ww1_bulgaria.85
+	title = ww1_bulgaria.85.t
+	desc = ww1_bulgaria.85.d
+	timeout_days = 10
+	is_triggered_only = yes
+	picture = GFX_report_event_SOV_national_academy_of_sciences
+
+	#Cool
+	option = {
+		name = ww1_bulgaria.85.a
+		add_stability = 0.02
+		add_to_variable = {
+			var = BUL_dumb_peasants
+			value = 0.05
+		}
+		custom_effect_tooltip = ww1_bulgaria.85.tt
+	}
+}
+
+#Retirement of BDZ locomotives 142-150
+country_event = {
+	id = ww1_bulgaria.86
+	title = ww1_bulgaria.86.t
+	desc = ww1_bulgaria.86.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_train
+
+	#They Served Us Well
+	option = {
+		name = ww1_bulgaria.86.a
+		add_equipment_to_stockpile = {
+			type = train_equipment
+			amount = -9
+		}
+	}
+}
+
+#Debt Concerns
+country_event = {
+	id = ww1_bulgaria.87
+	title = ww1_bulgaria.87.t
+	desc = ww1_bulgaria.87.d
+	is_triggered_only = yes
+	timeout_days = 10
+	picture = GFX_report_event_generic_read_write
+
+	#The National Bank Can handle it
+	option = {
+		name = ww1_bulgaria.87.a
+		add_timed_idea = {
+			idea = BUL_national_bank_paying_debts
+			days = 500
+		}
+	}
+	#Extend the debt ceiling
+	option = {
+		name = ww1_bulgaria.87.b
+		add_political_power = -125
+		add_popularity = {
+			ideology = neutrality
+			popularity = -0.05
+		}
+	}
+}
+
+#Easter Stuff w/ Greece
+country_event = {
+	id = ww1_bulgaria.90
+	title = ww1_bulgaria.90.t
+	desc = ww1_bulgaria.90.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	timeout_days = 10
+	picture = ww1_bulgaria_16
+	#
+	option = {
+		name = ww1_bulgaria.90.a
+		if = {
+			limit = { 
+				tag = GRE
+			}
+			add_opinion_modifier = {
+				target = BUL
+				modifier = BUL_GRE_1911_easter
+			}
+		}
+		if = {
+			limit = { 
+				tag = BUL
+			}
+			add_opinion_modifier = {
+				target = BUL
+				modifier = BUL_GRE_1911_easter
+			}
+		}
+		hidden_effect = {
+			set_country_flag = BUL_GRE_easter_yippee
+			GRE = {
+				country_event = ww1_bulgaria.133
+			}
+		}
+	}
+}
+
+#Economic Reliance on Austria
+country_event = {
+	id = ww1_bulgaria.91
+	title = ww1_bulgaria.91.t
+	desc = ww1_bulgaria.91.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	timeout_days = 30
+
+	#This is fine
+	option = {
+		name = ww1_bulgaria.91.a
+		add_political_power = 10
+	}
+
+	#We need to diversify our economy!
+	option = {
+		name = ww1_bulgaria.91.b
+		set_country_flag = BUL_back_off_austria_economy
+		add_stability = 0.01
+		BEL = {
+			add_opinion_modifier = {
+				target = BUL
+				modifier = small_increase
+			}
+		}
+		FRA = {
+			add_opinion_modifier = {
+				target = BUL
+				modifier = small_increase
+			}
+		}
+		RUS = {
+			add_opinion_modifier = {
+				target = BUL
+				modifier = small_increase
+			}
+		}
+		TUR = {
+			add_opinion_modifier = {
+				target = BUL
+				modifier = small_increase
+			}
+		}
+		custom_effect_tooltip = ww1_bulgaria.91.b.tt
+	}
+}
+
+#### St. Petersburg Conference Events ####
+
+#South Dubroja (Romania)
+country_event = {
+	id = ww1_bulgaria.97
+	title = ww1_bulgaria.97.t
+	desc = ww1_bulgaria.97.d
+	fire_only_once = yes
+	picture = ww1_bulgaria_20
+	mean_time_to_happen = {
+		days = 85
+	}
+	trigger = {
+		tag = ROM
+		BUL = {
+			has_war_with = TUR
+		}
+		77 = { is_owned_and_controlled_by = BUL }
+	}
+
+	#We need to bring this up!
+	option = {
+		name = ww1_bulgaria.97.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = ww1_bulgaria.97.tt
+		custom_effect_tooltip = historical_tt
+		hidden_effect = {
+			ITA = {
+				country_event = ww1_bulgaria.98
+			}
+			AUS = {
+				country_event = ww1_bulgaria.98
+			}
+			GER = {
+				country_event = {
+					id = ww1_bulgaria.98
+					days = 5
+				}
+			}
+		}
+	}
+	#nah
+	option = {
+		name = ww1_bulgaria.97.b
+		add_political_power = -15
+		add_war_support = -0.05
+	}
+}
+
+#A Conference over Southern Dubroja
+country_event = {
+	id = ww1_bulgaria.98
+	title = ww1_bulgaria.98.t
+	desc = ww1_bulgaria.98.d
+	is_triggered_only = yes
+	fire_only_once = no
+	picture = ww1_bulgaria_20
+
+	#Support Romania
+	option = {
+		name = ww1_bulgaria.98.a
+		trigger = {
+			OR = {
+				original_tag = AUS
+				original_tag = ITA
+			}
+		}
+		custom_effect_tooltip = historical_tt
+		ai_chance = {
+			factor = 100
+		}
+		ROM = {
+			country_event = {
+				id = ww1_bulgaria.102
+				days = 1 
+			}
+		}
+	}
+	option = {
+		name = ww1_bulgaria.98.a
+		trigger = {
+			original_tag = GER
+		}
+		custom_effect_tooltip = historical_tt
+		ai_chance = {
+			factor = 100
+		}
+		ROM = {
+			country_event = ww1_bulgaria.101
+		}
+	}
+	#None of our damn buisness
+	option = {
+		name = ww1_bulgaria.98.c
+		trigger = {
+			NOT = {
+				original_tag = GER
+			}
+		}
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+#Support from Germany (Romania)
+country_event = {
+	id = ww1_bulgaria.101
+	title = ww1_bulgaria.101.t
+	desc = ww1_bulgaria.101.d
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	#Yippie!
+	option = {
+		name = ww1_bulgaria.101.a
+		BUL = {
+			country_event = {
+				id = ww1_bulgaria.104
+				days = 5
+			}
+		}
+		RUS = {
+			country_event = {
+				id = ww1_bulgaria.105
+				days = 5
+			}
+		}
+		FRA = {
+			country_event = {
+				id = ww1_bulgaria.105
+				days = 5
+			}
+		}
+		ENG = {
+			country_event = {
+				id = ww1_bulgaria.105
+				days = 5
+			}
+		}
+	}
+}
+
+#Support from Austria/Italy (Romania)
+country_event = {
+	id = ww1_bulgaria.102
+	title = ww1_bulgaria.102.t
+	desc = ww1_bulgaria.102.d
+	is_triggered_only = yes
+
+	#Yippie!
+	option = {
+		name = ww1_bulgaria.102.a
+	}
+}
+
+#A Conference over Yuzhna Dubroja? (Bulgaria)
+country_event = {
+	id = ww1_bulgaria.104
+	title = ww1_bulgaria.104.t
+	desc = ww1_bulgaria.104.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = ww1_bulgaria_20
+
+	#This is some bullshit
+	option = {
+		name = ww1_bulgaria.104.a
+		country_event = {
+			id = ww1_bulgaria.108
+		}
+	}
+}
+
+#A Conference over Southern Dubroja? (Triple Entente)
+country_event = {
+	id = ww1_bulgaria.105
+	title = ww1_bulgaria.105.t
+	desc = ww1_bulgaria.105.d
+	is_triggered_only = yes
+	fire_only_once = yes	
+	picture = ww1_bulgaria_20
+
+	#The Triple Alliance is Pushing It!
+	option = {
+		name = ww1_bulgaria.105.a
+		custom_effect_tooltip = ww1_bulgaria.105.tt
+		hidden_effect = {
+			news_event = ww1_bulgaria.128
+		}
+	}
+}
+
+
+#Our Response to Romania (Bulgaria)
+country_event = {
+	id = ww1_bulgaria.108
+	title = ww1_bulgaria.108.t
+	desc = ww1_bulgaria.108.d
+	is_triggered_only = yes
+	fire_only_once = yes	
+	picture = GFX_report_event_generic_conference
+	#They Know Where They Can Shove It
+	option = {
+		name = ww1_bulgaria.108.a
+		custom_effect_tooltip = historical_tt
+		ai_chance = {
+			factor = 1000
+		}
+		ROM = {
+			country_event = ww1_bulgaria.109
+		}
+		GER = {
+			country_event = ww1_bulgaria.111
+		}
+		ITA = {
+			country_event = ww1_bulgaria.111
+		}
+		AUS = {
+			country_event = ww1_bulgaria.111
+		}
+		FRA = {
+			country_event = ww1_bulgaria.112
+		}
+		RUS = {
+			country_event = ww1_bulgaria.112
+		}
+		ENG = {
+			country_event = ww1_bulgaria.112
+		}
+	}
+	#Offer a Population Exchange
+	option = {
+		name = ww1_bulgaria.108.b
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+#Bulgaria is Stubborn! (Romania)
+country_event = {
+	id = ww1_bulgaria.109
+	title = ww1_bulgaria.109.t
+	desc = ww1_bulgaria.109.d
+	is_triggered_only = yes
+	picture = GFX_report_event_generic_conference
+	#Assholes
+	option = {
+		name = ww1_bulgaria.109.a
+	}
+}
+#Bulgaria is Stubborn! (Triple Alliance)
+country_event = {
+	id = ww1_bulgaria.111
+	title = ww1_bulgaria.109.t
+	desc = ww1_bulgaria.109.d
+	is_triggered_only = yes
+	fire_only_once = yes	
+	picture = GFX_report_event_generic_conference
+	#Assholes
+	option = {
+		name = ww1_bulgaria.109.a
+		trigger = {
+			OR = {
+				original_tag = AUS
+				original_tag = GER
+				original_tag = ITA
+			}
+		}
+	}
+	#It is Their land after all
+	option = {
+		name = ww1_bulgaria.109.b
+		trigger = {
+			NOT = {
+				original_tag = ROM
+			}
+		}
+	}
+}
+#Bulgaria is Stubborn! (Triple Entente)
+country_event = {
+	id = ww1_bulgaria.112
+	title = ww1_bulgaria.109.t
+	desc = ww1_bulgaria.109.d
+	is_triggered_only = yes
+	fire_only_once = yes	
+	picture = GFX_report_event_generic_conference
+	option = { #Offer the Solun proposal
+		ai_chance = {
+				base = 100
+			}
+		name = ww1_bulgaria.114.a
+		trigger = {
+			NOT = {
+				TUR = {
+					controls_state = 345
+				}
+				BUL = {
+					has_war_with = GRE
+				}
+			}
+			original_tag = FRA
+		}
+		BUL = {
+			country_event = {
+				id = ww1_bulgaria.117
+				days = 2
+			}
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+	#It is Their land after all
+	option = {
+		name = ww1_bulgaria.109.a
+		trigger = {
+			OR = {
+				original_tag = ENG
+				original_tag = FRA
+			}
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = ww1_bulgaria.112.a
+		trigger = {
+			original_tag = RUS
+		}
+		country_event = {
+			id = ww1_bulgaria.120
+			days = 10
+		}
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+
+#France Offers the Solun (Thessaloniki) Proposal
+country_event = {
+	id = ww1_bulgaria.117
+	title = ww1_bulgaria.117.t
+	desc = ww1_bulgaria.117.d
+	is_triggered_only = yes
+	fire_only_once = yes	
+	picture = GFX_report_event_generic_conference
+	#Nope!
+	option = {
+		name = ww1_bulgaria.117.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_effect_tooltip = historical_tt
+		FRA = {
+			country_event = {
+				id = ww1_bulgaria.118
+				hours = 2
+			}
+		}
+		# Give France an event about Bulgaria declining it; then romania proposing to buy it event; and an event about Russia suggesting Bulgaria cedes Silistria and destroy silistria fort, whic Bulgaria accepts
+	}
+	#A fair trade
+	option = {
+		name = ww1_bulgaria.117.b
+		#An event for everyone that Bulgaria accepts this, plus an event for Serbia, Greece and the Ottomans
+		every_country = {
+			limit = {
+				OR = {
+					original_tag = GER
+					original_tag = AUS
+					original_tag = ITA
+					original_tag = FRA
+					original_tag = ENG
+					original_tag = RUS
+					original_tag = ROM
+				}
+			}
+			country_event = ww1_bulgaria.119
+		}
+		every_country = {
+			limit = {
+				OR = {
+					original_tag = SER
+					original_tag = GRE
+					original_tag = TUR
+				}
+			}
+			country_event = ww1_bulgaria.106
+		}
+	}
+}
+
+# 1913 Cholera Outbreak in Romania - Bulgarian event
+country_event = {
+	id = ww1_bulgaria.110
+	title = ww1_bulgaria.110.t
+	desc = ww1_bulgaria.110.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = GFX_report_grim_reaper	
+
+	#lol
+	option = {
+		name = ww1_bulgaria.110.a
+		add_war_support = 0.01
+		hidden_effect = {
+			211 = {
+				add_dynamic_modifier = {
+					modifier = balkan_war_cholera_outbreak
+					days = 200
+				}
+			}
+			77 = {
+				add_dynamic_modifier = {
+					modifier = balkan_war_cholera_outbreak
+					days = 200
+				}
+			}
+			846 = {
+				add_dynamic_modifier = {
+					modifier = balkan_war_cholera_outbreak
+					days = 200
+				}
+			}
+		}
+	}
+}
+
+# Bulgaria rejects Solun proposal - France
+country_event = {
+	id = ww1_bulgaria.118
+	title = ww1_bulgaria.118.t
+	desc = ww1_bulgaria.118.d
+	is_triggered_only = yes
+	fire_only_once = yes	
+	picture = GFX_report_event_generic_conference
+	option = {
+		name = ww1_bulgaria.118.a
+		ROM = {
+			country_event = {
+				id = ww1_bulgaria.100
+				days = 1
+			}
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Romania option to buy Southern Dobruja
+country_event = {
+	id = ww1_bulgaria.100
+	title = ww1_bulgaria.100.t
+	desc = ww1_bulgaria.100.d
+	is_triggered_only = yes
+	fire_only_once = yes	
+	picture = GFX_report_event_generic_conference
+	option = {
+		name = ww1_bulgaria.100.a
+		BUL = {
+			country_event = {
+				id = ww1_bulgaria.107
+				days = 1
+			}
+		}
+		custom_effect_tooltip = if_they_accept
+		effect_tooltip = {
+			77 = { transfer_state_to = ROM }
+			add_political_power = -100
+			#more buy
+		}
+		ai_chance = {
+			factor = 1000
+		}
+	}
+}
+
+
+#Bulgarian response to romanian offer
+country_event = {
+	id = ww1_bulgaria.107
+	title = ww1_bulgaria.107.t
+	desc = ww1_bulgaria.107.d
+	is_triggered_only = yes
+	fire_only_once = yes	
+	picture = GFX_report_event_generic_conference
+	# No
+	option = {
+		name = ww1_bulgaria.107.a
+		ROM = {
+			country_event = ww1_bulgaria.109
+		}
+		ai_chance = {
+			factor = 1000
+		}
+		custom_effect_tooltip = historical_tt
+	}
+	#Yes
+	option = {
+		name = ww1_bulgaria.107.b
+		77 = { transfer_state_to = ROM }
+		add_political_power = 100
+		ROM = {
+			add_political_power = -100
+		}
+		#?? 
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+# Bulgaria accepts Solun proposal - Triple Entente
+country_event = {
+	id = ww1_bulgaria.119
+	title = ww1_bulgaria.119.t
+	desc = ww1_bulgaria.119.d
+	is_triggered_only = yes
+	fire_only_once = yes	
+	picture = ww1_bulgaria_19
+	# Great (everyone/not romania)
+	option = {
+		name = ww1_bulgaria.119.a
+		trigger = { NOT = { original_tag = ROM} }
+		effect_tooltip = {
+			#add something here
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+	#Romania
+	option = {
+		name = ww1_bulgaria.119.a
+		trigger = { original_tag = ROM }
+		#add something here
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Bulgaria accepts Solun proposal - Balkan countries
+country_event = {
+	id = ww1_bulgaria.106
+	title = ww1_bulgaria.106.t
+	desc = ww1_bulgaria.106.d
+	is_triggered_only = yes
+	fire_only_once = yes	
+	picture = ww1_bulgaria_19
+
+	# Great (everyone/not romania)
+	option = {
+		name = ww1_bulgaria.106.a
+		trigger = { NOT = { OR = { original_tag = GRE original_tag = TUR } } }
+		ai_chance = {
+			factor = 100
+		}
+	}
+	#Greece/Ottoman
+	option = {
+		name = ww1_bulgaria.106.b
+		trigger = { OR = { original_tag = GRE original_tag = TUR} }
+		#add something here
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+# (RUSSIA) - St. Petersburg Conference
+country_event = {
+	id = ww1_bulgaria.120
+	title = ww1_bulgaria.120.t
+	desc = ww1_bulgaria.120.d
+	is_triggered_only = yes
+	fire_only_once = yes	
+	picture = ww1_bulgaria_19
+
+	option = {
+		name = ww1_bulgaria.120.a
+		BUL = {
+			country_event = ww1_bulgaria.121
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+# (BULGARIA) - Silistria Trade
+
+country_event = {
+	id = ww1_bulgaria.121
+	title = ww1_bulgaria.121.t
+	desc = ww1_bulgaria.121.d
+	is_triggered_only = yes
+	fire_only_once = yes	
+	picture = ww1_bulgaria_19
+	# Yes
+	option = {
+		name = ww1_bulgaria.121.a
+		77 = {
+			set_building_level = {
+    			type = bunker
+    			level = 0
+   				province = 9614
+			}
+		}
+		ROM = { country_event = ww1_bulgaria.122}
+		ai_chance = {
+			factor = 100
+		}
+	}
+	option = {
+		name = ww1_bulgaria.121.b
+		RUS = {
+			add_opinion_modifier = {
+				target = BUL
+				modifier = small_decrease
+			}
+		}
+		ROM = {
+			add_opinion_modifier = {
+				target = BUL
+				modifier = small_decrease
+			}
+		}
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+#ROMANIA - St Petersburg?
+country_event = {
+	id = ww1_bulgaria.122
+	title = ww1_bulgaria.122.t
+	desc = ww1_bulgaria.122.d
+	is_triggered_only = yes
+	fire_only_once = yes	
+	picture = ww1_bulgaria_19
+	# Yes
+	option = {
+		name = ww1_bulgaria.122.a
+		hidden_effect = {
+			news_event = {
+				id = ww1_bulgaria.128
+				days = 2
+			}
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Starting Event
+country_event = {
+	id = ww1_bulgaria.123
+	title = ww1_bulgaria.123.t
+	desc = ww1_bulgaria.123.d
+	is_triggered_only = yes
+	fire_only_once = yes	
+	picture = ww1_bulgaria_21
+	option = {
+		name = ww1_bulgaria.123.a
+		
+	}
+}
+
+#Dragan Tsankov Passes
+country_event = {
+	id = ww1_bulgaria.124
+	title = ww1_bulgaria.124.t
+	desc = ww1_bulgaria.124.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = ww1_bulgaria_30
+	#His influence will last long
+	option = {
+		name = ww1_bulgaria.124.a
+		ai_chance = {
+			factor = 100
+		}
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.01
+		}
+		add_stability = 0.01
+		add_political_power = -10
+	}
+	#He sucked off Russia
+	option = {
+		name = ww1_bulgaria.124.b
+		add_war_support = 0.01
+		add_political_power = 15
+	}
+}
+
+#The Tsars Trip to the Sublime Porte
+country_event = {
+	id = ww1_bulgaria.125
+	title = ww1_bulgaria.125.t
+	desc = ww1_bulgaria.125.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = ww1_bulgaria_23
+	#Cool
+	option = {
+		name = ww1_bulgaria.125.a
+		add_opinion_modifier = {
+			target = TUR
+			modifier = small_increase
+		}
+	}
+}
+
+#The Tsars Trip to the Sublime Porte - - event for Ottomans
+country_event = {
+	id = ww1_bulgaria.126
+	title = ww1_bulgaria.126.t
+	desc = ww1_bulgaria.126.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = ww1_bulgaria_23
+	#Cool
+	option = {
+		name = ww1_bulgaria.126.a
+		add_opinion_modifier = {
+			target = BUL
+			modifier = small_increase
+		}
+		add_state_claim = 341
+		add_state_claim = 860
+		add_state_claim = 1018
+	}
+}
+
+#Post BW2 National Assembly Elections (historical)
+country_event = {
+	id = ww1_bulgaria.127
+	title = ww1_bulgaria.127.t
+	desc = ww1_bulgaria.127.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = GFX_report_event_election_vote
+	#Liberal Conentration Victory (Historical)
+	option = {
+		name = ww1_bulgaria.127.a
+		activate_advisor = BUL_vasil_radoslavov
+		activate_advisor = BUL_nikola_genadiev
+		activate_mission = national_assembly_elections_17
+		custom_effect_tooltip = ww1_bulgaria.127.tt
+		set_variable = {
+			var = BUL_election_radoslavov_chance
+			value = 3
+		}
+		set_variable = {
+			var = BUL_election_young_lib_chance
+			value = 1
+		}
+		set_variable = {
+			var = BUL_election_russophile_chance
+			value = 4
+		}
+		set_variable = {
+			var = BUL_election_agrarianist_chance
+			value = 2
+		}
+		trigger = {
+			NOT = {
+				has_completed_focus = BUL_unify_the_russophiles
+				#More to come
+			}
+		}
+		set_country_flag = BUL_lib_concentration_vic
+		if = {
+			limit = {
+				NOT = {
+					has_completed_focus = BUL_the_man_thatll_get_it_done
+				}
+			 }
+			 complete_national_focus = BUL_the_man_thatll_get_it_done
+		}
+	}
+	#Russophile Faction Victory
+	option = {
+		name = ww1_bulgaria.127.b
+		activate_mission = national_assembly_elections_17
+		custom_effect_tooltip = ww1_bulgaria.127.tt
+		trigger = {
+			has_completed_focus = BUL_unify_the_russophiles
+		}
+		set_country_flag = BUL_russophile_faction_vic
+		set_variable = {
+			var = BUL_election_radoslavov_chance
+			value = 3
+		}
+		set_variable = {
+			var = BUL_election_young_lib_chance
+			value = 0
+		}
+		set_variable = {
+			var = BUL_election_russophile_chance
+			value = 5
+		}
+		set_variable = {
+			var = BUL_election_agrarianist_chance
+			value = 2
+		}
+	}
+}
+
+#1913 St. Petersburg Conference
+news_event = {
+	id = ww1_bulgaria.128
+	title = ww1_bulgaria.128.t
+	desc = ww1_bulgaria.128.d
+	is_triggered_only = yes
+	fire_only_once = no
+	major = yes
+	picture = GFX_news_event_romania_parliament #No pics of this??
+	immediate = {
+
+	}
+	#Bulgaria option
+	option = {
+		name = ww1_bulgaria.128.a
+		trigger = {
+			tag = BUL
+		}
+	}
+	#Romanian Option
+	option = {
+		name = ww1_bulgaria.128.b
+		trigger = {
+			tag = ROM
+		}
+	}
+	#World Option
+	option = {
+		name = ww1_bulgaria.128.c
+		trigger = {
+			NOT = {
+				tag = ROM
+				tag = BUL
+			}
+		}
+	}
+}
+
+#Bulgaria Requests Air Advisors -Russia
+country_event = {
+	id = ww1_bulgaria.129
+	title = ww1_bulgaria.129.t
+	desc = ww1_bulgaria.129.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_bulgaria.129.a
+		ai_chance = {
+			base = 25
+			modifier = {
+				BUL = {
+					has_completed_focus = BUL_russia_relations
+				}
+				add = 100
+			}
+		}
+		air_experience = 25
+		BUL = {
+			air_experience = 25
+			add_political_power = 50
+			add_equipment_to_stockpile = {
+				type = scout_plane_equipment
+				amount = 1
+			}
+			add_doctrine_cost_reduction = {
+				name = BUL_russian_air_advisors
+				cost_reduction = 0.15
+				uses = 2
+				category = air_doctrine
+			}
+		}
+	}
+	option = {
+		name = ww1_bulgaria.129.b
+		ai_chance = {
+			base = 15
+		}
+	}
+}
+
+#17th National Assembly Elections (Historical)
+country_event = {
+	id = ww1_bulgaria.130
+	title = ww1_bulgaria.130.t
+	desc = {
+		text = ww1_bulgaria.130.da
+		trigger = {
+			check_variable = {
+				var = BUL_election_russophile_chance
+				value > 4
+			}
+		}
+	}
+	desc = {
+		text = ww1_bulgaria.130.db
+		trigger = {
+			check_variable = {
+				var = BUL_election_radoslavov_chance
+				value > 4
+			}
+		}
+	}
+	desc = {
+		text = ww1_bulgaria.130.dc
+		trigger = {
+			check_variable = {
+				var = BUL_election_young_lib_chance
+				value > 4
+			}
+		}
+	}
+	desc = {
+		text = ww1_bulgaria.130.de
+		trigger = {
+			check_variable = {
+				var = BUL_election_agrarianist_chance
+				value > 4
+			}
+		}
+	}
+	is_triggered_only = yes
+	fire_only_once = yes
+	#Russophile Faction Wins-Malinov!
+	option = {
+		name = ww1_bulgaria.130.a
+		trigger = {
+			check_variable = {
+				var = BUL_election_russophile_chance
+				value > 4
+			}
+		}
+		complete_national_focus = BUL_return_of_regularity
+		if = {
+			limit = { 
+				NOT = {
+					has_completed_focus = BUL_blame_tsar
+				}
+			}
+			deactivate_advisor = BUL_vasil_radoslavov
+			activate_advisor = BUL_aleksandar_malinov
+		}
+	}
+	#Russophile Faction Wins-Lyapchev!
+	option = {
+		name = ww1_bulgaria.130.b
+		trigger = {
+			check_variable = {
+				var = BUL_election_russophile_chance
+				value > 4
+			}
+		}
+		complete_national_focus = BUL_the_progressive
+		if = {
+			limit = { 
+				NOT = {
+					has_completed_focus = BUL_blame_tsar
+				}
+			}
+			deactivate_advisor = BUL_vasil_radoslavov
+			activate_advisor = BUL_andrey_lyapchev
+		}
+	}
+	#Radoslav Wins (Historical)
+	option = {
+		name = ww1_bulgaria.130.c
+		trigger = {
+			check_variable = {
+				var = BUL_election_radoslavov_chance
+				value > 4
+			}
+		}
+		complete_national_focus = BUL_the_new_school
+		add_ideas = BUL_radoslavov_genadiev_conflict
+	}
+	#Young Libs (Radoslav controversy)
+	option = {
+		name = ww1_bulgaria.130.e
+		trigger = {
+			check_variable = {
+				var = BUL_election_young_lib_chance
+				value > 4
+			}
+		}
+		if = {
+			limit = { 
+				NOT = {
+					has_completed_focus = BUL_blame_tsar
+				}
+			}
+			deactivate_advisor = BUL_vasil_radoslavov
+			activate_advisor = BUL_nikola_genadiev
+		}
+	}
+	#Agrarianists!?
+	option = {
+		name = ww1_bulgaria.130.f
+		trigger = {
+			check_variable = {
+				var = BUL_election_agrarianist_chance
+				value > 4
+			}
+		}
+		#Requires an event chain that I MIGHT DOO FUCKK
+	}
+}
+#Loan to Bulgaria (Event for Germany)
+country_event = {
+	id = ww1_bulgaria.131
+	title = ww1_bulgaria.131.t
+	desc = ww1_bulgaria.131.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = GFX_report_event_tur_industry
+	option = {
+		name = ww1_bulgaria.131.a
+	}
+}
+#Loan To Bul (Event for Fra)
+country_event = {
+	id = ww1_bulgaria.132
+	title = ww1_bulgaria.132.t
+	desc = ww1_bulgaria.132.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = GFX_report_event_tur_industry
+	option = {
+		name = ww1_bulgaria.132.a
+	}
+}
+
+country_event = {
+	id = ww1_bulgaria.133
+	title = ww1_bulgaria.90.t
+	desc = ww1_bulgaria.90.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	timeout_days = 10
+	picture = ww1_bulgaria_16
+	option = {
+		name = ww1_bulgaria.90.a
+		if = {
+			limit = { 
+				tag = GRE
+			}
+			add_opinion_modifier = {
+				target = BUL
+				modifier = BUL_GRE_1911_easter
+			}
+		}
+		if = {
+			limit = { 
+				tag = BUL
+			}
+			add_opinion_modifier = {
+				target = BUL
+				modifier = BUL_GRE_1911_easter
+			}
+		}
+		hidden_effect = {
+			set_country_flag = BUL_GRE_easter_yippee
+		}
+	}
+}
+
+#Bulgaria wants to join the Central Powers (Event for Germany)
+country_event = {
+	id = ww1_bulgaria.134
+	title = ww1_bulgaria.134.t
+	desc = ww1_bulgaria.134.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = GFX_report_event_generic_read_write
+	#Of Course!
+	option = {
+		name = ww1_bulgaria.134.a
+		ai_chance = {
+			base = 100
+		}
+		diplomatic_relation = {
+				country = BUL
+				relation = guarantee
+				active = yes
+		}
+		BUL = {
+			diplomatic_relation = {
+				country = GER
+				relation = non_aggression_pact
+				active = yes
+			}
+			country_event = {
+				id = ww1_bulgaria.135
+				hours = 2
+			}
+		}
+	}
+	#Hmmm... no
+	option = {
+		name = ww1_bulgaria.134.b
+		ai_chance = {
+			base = 0
+		}
+		custom_effect_tooltip = dangerous_tt
+		BUL = {
+			country_event = ww1_bulgaria.167
+		}
+	}
+}
+#Germany lets us join (Event for Bulgaria)
+country_event = {
+	id = ww1_bulgaria.135
+	title = ww1_bulgaria.135.t
+	desc = {
+		#Historical
+		text = ww1_bulgaria.135.d
+		trigger = {
+			always = yes
+		}
+	}
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = GFX_report_event_generic_read_write
+	#Historical option
+	option = {
+		name = ww1_bulgaria.135.a
+		trigger = {
+			NOT = {
+				has_global_flag = BUL_bulgarian_albania_agreemant
+				has_country_flag = SE_bul_bw2_winner
+				owns_state = 756
+			}
+		}
+		add_state_claim = 876
+		add_state_claim = 809
+		if = {
+			limit = { 
+				TUR = {
+					is_in_faction_with = GER
+				}
+			}
+			756 = {
+				transfer_state_to = TUR
+				remove_claim_by = BUL
+			}
+		}
+		country_event = {
+			id = ottoman.93
+			hours = 8
+		}
+		activate_mission = BUL_declare_war_on_serbia_mission
+	}
+}
+#A Personal union with Albania?
+country_event = {
+	id = ww1_bulgaria.136
+	title = ww1_bulgaria.136.t
+	desc = ww1_bulgaria.136.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	#Worthy of Mentioning
+	option = {
+		name = ww1_bulgaria.136.a
+		ai_chance = {
+			base = 100
+		}
+		custom_effect_tooltip = historical_tt
+		GER = {
+			country_event = {
+				id = ww1_bulgaria.137
+				days = 2
+			}
+		}
+	}
+	#Nah
+	option = {
+		name = ww1_bulgaria.136.b
+		add_war_support = -0.05
+	}
+}
+#Bulgaria wonders about a personal Union with Albania (Event for Germany)
+country_event = {
+	id = ww1_bulgaria.137
+	title = ww1_bulgaria.137.t
+	desc = ww1_bulgaria.137.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	#As long as Austria doesn't decline
+	option = {
+		name = ww1_bulgaria.137.a
+		ai_chance = {
+			base = 100
+		}
+		trigger = {
+			is_in_faction_with = AUS
+		}
+		custom_effect_tooltip = historical_tt
+		AUS = {
+			country_event = {
+				id = ww1_bulgaria.138
+				days = 2
+			}
+		}
+	}
+}
+#A Bulgarian-Albanian union!? (Event for Austria)
+country_event = {
+	id = ww1_bulgaria.138
+	title = ww1_bulgaria.138.t
+	desc = ww1_bulgaria.138.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	#Hell no!
+	option = {
+		name = ww1_bulgaria.138.a
+		ai_chance = {
+			base = 100
+		}
+		GER = {
+			country_event = ww1_bulgaria.139
+		}
+		BUL = {
+			country_event = ww1_bulgaria.140
+		}
+	}
+	#Sure pal
+	option = {
+		name = ww1_bulgaria.138.b
+		ai_chance = {
+			base = 0
+			modifier = {
+				BUL = {
+					has_completed_focus = BUL_rally_ferdinand
+				}
+				add = 30
+			}
+			modifier = {
+				ROOT = {
+					surrender_progress > 0.25
+				}
+				add = 100
+			}
+		}
+		set_global_flag = BUL_bulgarian_albania_agreemant
+		add_war_support = -0.1
+	}
+}
+#Austria Declines Bulgarian Albania
+country_event = {
+	id = ww1_bulgaria.139
+	title = ww1_bulgaria.139.t
+	desc = ww1_bulgaria.139.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_bulgaria.139.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+#Our Albanian Ambitions not realized
+country_event = {
+	id = ww1_bulgaria.140
+	title = ww1_bulgaria.140.t
+	desc = ww1_bulgaria.140.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_bulgaria.140.a
+		ai_chance = {
+			base = 100
+		}
+	}
+}
+#Our Albanian Ambitions Realized!
+country_event = {
+	id = ww1_bulgaria.141
+	title = ww1_bulgaria.141.t
+	desc = ww1_bulgaria.141.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_bulgaria.141.a
+		ai_chance = {
+			base = 100
+		}
+		every_state = {
+			limit = {
+				is_core_of = ALB
+			}
+			add_claim_by = ROOT
+		}
+	}
+}
+#Event for Bulgaria joining the war on behalf of the CP
+country_event = {
+	id = ww1_bulgaria.142
+	title = ww1_bulgaria.142.t
+	desc = ww1_bulgaria.142.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = ww1_bulgaria_43
+	option = {
+		name = ww1_bulgaria.142.a
+		declare_war_on = {
+			target = SER
+			type = annex_everything
+		}
+		GER = {
+			add_to_faction = BUL
+		}
+		activate_mission = BUL_storm_serbia_mission
+	}
+}
+
+#Founding of BNMORO - May 4th
+country_event = {
+	id = ww1_bulgaria.143
+	title = ww1_bulgaria.143.t
+	desc = ww1_bulgaria.143.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = ww1_bulgaria_39
+	immediate = {
+		hidden_effect = {
+			country_event = {
+				id = ww1_bulgaria.144
+				days = 298
+			}
+		}
+	}
+	option = {
+		name = ww1_bulgaria.143.a
+		add_popularity = {
+			ideology = communism
+			popularity = 0.01
+		}
+		add_war_support = 0.02
+	}
+}
+
+#The BNMORO rejoins the VMORO
+country_event = {
+	id = ww1_bulgaria.144
+	title = ww1_bulgaria.144.t
+	desc = ww1_bulgaria.144.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = GFX_report_event_bul_making_bricks_for_school
+	option = {
+		name = ww1_bulgaria.144.a
+	}
+}
+
+#Stip Massacre 
+country_event = {
+	id = ww1_bulgaria.145
+	title = ww1_bulgaria.145.t
+	desc = ww1_bulgaria.145.d
+	is_triggered_only = yes
+	fire_only_once = no
+	#No good pics at all :(
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = { 
+					original_tag = BUL
+				}
+				TUR = {
+					country_event = ww1_bulgaria.145
+				}
+			}
+		}
+	}
+	option = {
+		name = ww1_bulgaria.145.a
+		add_popularity = {
+			ideology = communism
+			popularity = 0.01
+		}
+		add_war_support = 0.02
+		trigger = {
+			original_tag = BUL
+		}
+	}
+	option = {
+		name = ww1_bulgaria.145.b
+		trigger = {
+			original_tag = TUR
+		}
+		add_war_support = 0.02
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.01
+		}
+	}
+}
+
+#Kochani Massacre
+country_event = {
+	id = ww1_bulgaria.146
+	title = ww1_bulgaria.146.t
+	desc = ww1_bulgaria.146.d
+	is_triggered_only = yes
+	fire_only_once = no
+	#No good pics at all :(
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = { 
+					original_tag = BUL
+				}
+				TUR = {
+					country_event = ww1_bulgaria.146
+				}
+			}
+		}
+	}
+	option = {
+		name = ww1_bulgaria.146.a
+		trigger = {
+			original_tag = BUL
+		}
+		add_war_support = 0.05
+		add_stability = -0.025
+		add_popularity = {
+			ideology = communism
+			popularity = 0.01
+		}
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.01
+		}
+		hidden_effect = {
+			news_event = {
+				id = ww1_bulgaria.147
+				days = 2
+			}
+		}
+	}
+	option = {
+		name = ww1_bulgaria.146.a
+		trigger = {
+			original_tag = TUR
+		}
+		add_war_support = 0.035
+		add_stability = -0.025
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.03
+		}
+	}
+}
+
+#Donkey Attacks news event
+news_event = {
+	id = ww1_bulgaria.147
+	title = ww1_bulgaria.147.t
+	desc = ww1_bulgaria.147.d
+	is_triggered_only = yes
+	major = yes
+	picture = GFX_news_event_spr_spanish_civil_war3
+	immediate = {
+		hidden_effect = {
+			set_global_flag = donkey_attacks
+		}
+	}
+	#World Option
+	option = {
+		name = ww1_bulgaria.147.a
+		trigger = {
+			NOT = {
+				OR = {
+					original_tag = BUL
+					original_tag = TUR
+					original_tag = SER
+					original_tag = GRE
+					original_tag = CRE
+				}
+			}
+		}
+	}
+	#Bulgaria Option
+	option = {
+		name = ww1_bulgaria.147.b
+		trigger = {
+			original_tag = BUL
+		}
+		complete_national_focus = BUL_aftermath_of_the_donkey_attacks
+	}
+	#Turk Option
+	option = {
+		name = ww1_bulgaria.147.c
+		trigger = {
+			original_tag = TUR
+		}
+	}
+	option = {
+		name = ww1_bulgaria.147.dd
+		trigger = {
+			OR = {
+				original_tag = SER
+				original_tag = GRE
+				original_tag = CRE
+			}
+		}
+	}
+}
+#Last Donkey Attack
+country_event = {
+	id = ww1_bulgaria.148
+	title = ww1_bulgaria.148.t
+	desc = ww1_bulgaria.148.d
+	is_triggered_only = yes
+	fire_only_once = no
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = { 
+					original_tag = BUL
+				}
+				TUR = {
+					country_event = ww1_bulgaria.148
+				}
+			}
+		}
+	}
+	option = {
+		name = ww1_bulgaria.148.a
+	}
+}
+#Forceful Baptism of Pomaks
+country_event = {
+	id = ww1_bulgaria.149
+	title = ww1_bulgaria.149.t
+	desc = ww1_bulgaria.149.d
+	fire_only_once = yes
+	picture = ww1_bulgaria_37
+	mean_time_to_happen = {
+		days = 60
+	}
+	trigger = {
+		has_war_with = TUR
+		OR = {
+			controls_state = 788
+			controls_state = 451
+			controls_state = 1141
+		}
+	}
+	option = {
+		name = ww1_bulgaria.149.a
+		add_stability = -0.01
+		add_popularity = {
+			ideology = neutrality
+			popularity = 0.01
+		}
+	}
+}
+#Germany Takes The Lead against Romania
+country_event = {
+	id = ww1_bulgaria.150
+	title = ww1_bulgaria.150.t
+	desc = ww1_bulgaria.150.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	#picture = 
+	option = {
+		name = ww1_bulgaria.150.a
+		add_command_power = -25
+		army_experience = -25
+		add_political_power = -25
+		BUL_stefan_toshev = {
+			add_trait = {
+				trait = disgruntled
+			}
+		}
+	}
+}
+#Sofia Casino attack 1915
+#Needs to be finished. Haven't accounted for stuff yet to be made regarding VMORO crackdown etc.
+country_event = {
+	id = ww1_bulgaria.151
+	title = ww1_bulgaria.151.t
+	#Fails (Historical)
+	desc = {
+		text = ww1_bulgaria.151.da
+		trigger = {
+			has_country_flag = BUL_vasil_radoslavov_yes
+			NOT = {
+				is_in_faction_with = FRA
+				has_completed_focus = BUL_blame_tsar
+			}
+		}
+	}
+	#Fails and Genadiev is PM AND NOT IN FACTION
+	desc = {
+		text = ww1_bulgaria.151.db
+		trigger = {
+			has_country_flag = BUL_nikola_genadiev_yes
+			NOT = {
+				is_in_faction_with = FRA
+				has_completed_focus = BUL_blame_tsar
+			}
+		}
+	}
+	#Fails and is in faction with FRA
+	desc = {
+		text = ww1_bulgaria.151.dc
+		trigger = {
+			is_in_faction_with = FRA
+			NOT = {
+				has_completed_focus = BUL_blame_tsar
+			}
+		}
+	}
+	fire_only_once = yes
+	is_triggered_only = yes
+	#picture = 
+	immediate = {
+		hidden_effect = {
+			set_country_flag = BUL_casino_attack
+			country_event = {
+				id = ww1_bulgaria.152
+				days = 146
+			}
+		}
+	}
+	#Fails (Historical)
+	option = {
+		name = ww1_bulgaria.151.a
+		retire_character = BUL_ivan_fichev
+		BUL_ferdinand_i = {
+			add_country_leader_trait = assassination_survivor
+		}
+		trigger = {
+			NOT = {
+				is_in_faction_with = FRA
+			}
+		}
+	}
+	#Fails and Genadiev is PM
+	option = {
+		name = ww1_bulgaria.151.b
+		BUL_ferdinand_i = {
+			add_country_leader_trait = assassination_survivor
+		}
+		trigger = {
+			has_country_flag = BUL_nikola_genadiev_yes
+			NOT = {
+				is_in_faction_with = FRA
+			}
+		}
+	}
+	#Fails while already in the Entente
+	option = {
+		name = ww1_bulgaria.151.c
+		BUL_ferdinand_i = {
+			add_country_leader_trait = assassination_survivor
+		}
+		retire_character = BUL_kliment_boyadzhiev
+		trigger = {
+			is_in_faction_with = FRA
+			NOT = {
+				has_completed_focus = BUL_blame_tsar
+			}
+		}
+	}
+}
+#Perpatrators Sentenced to death
+country_event = {
+	id = ww1_bulgaria.152
+	title = ww1_bulgaria.152.t
+	desc = ww1_bulgaria.152.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = ww1_bulgaria_44
+	option = {
+		name = ww1_bulgaria.152.a
+	}
+}
+
+#Food Shortages During Great War!
+country_event = {
+	id = ww1_bulgaria.153
+	title = ww1_bulgaria.153.t
+	desc = ww1_bulgaria.153.d
+	fire_only_once = yes
+	#picture = 
+	trigger = {
+		is_in_faction_with = GER
+		has_war = yes
+	}
+	mean_time_to_happen = {
+		days = 600
+	}
+	option = {
+		name = ww1_bulgaria.153.a
+		add_timed_idea = {
+			idea = BUL_food_shortages
+			days = 400
+		}
+		if = {
+			limit = { 
+				OR = {
+					has_country_flag = BUL_vasil_radoslavov_yes
+					has_country_leader = {
+						character = BUL_vasil_radoslavov
+					}
+				}
+			}
+			add_to_variable = {
+				var = BUL_radoslavov_approval_var
+				value = -1
+			}
+			custom_effect_tooltip = BUL_radoslavov_minus_one.tt
+		}
+	}
+}
+
+#Womens bread riots
+country_event = {
+	id = ww1_bulgaria.154
+	title = ww1_bulgaria.154.t
+	desc = ww1_bulgaria.154.d
+	fire_only_once = yes
+	#picture = 
+	trigger = {
+		has_idea = BUL_food_shortages
+		has_war = yes
+	}
+	mean_time_to_happen = {
+		days = 150
+	}
+	option = {
+		name = ww1_bulgaria.154.a
+		add_stability = -0.05
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.03
+		}
+		add_popularity = {
+			ideology = communism
+			popularity = 0.03
+		}
+		if = {
+			limit = { 
+				OR = {
+					has_country_flag = BUL_vasil_radoslavov_yes
+					has_country_leader = {
+						character = BUL_vasil_radoslavov
+					}
+				}
+			}
+			add_to_variable = {
+				var = BUL_radoslavov_approval_var
+				value = -2
+			}
+			custom_effect_tooltip = BUL_radoslavov_minus_one.tt
+		}
+	}
+}
+
+#Death of Exarch Yosif
+news_event = {
+	id = ww1_bulgaria.155
+	title = ww1_bulgaria.155.t
+	desc = ww1_bulgaria.155.d
+	fire_only_once = yes
+	picture = ww1_bulgaria_46
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			BUL = {
+				retire_character = BUL_yosif_i
+			}
+		}
+	}
+	option = {
+		name = ww1_bulgaria.155.a
+		trigger = {
+			tag = BUL
+		}
+	}
+	option = {
+		name = ww1_bulgaria.155.b
+		trigger = {
+			tag = TUR
+		}
+	}
+	option = {
+		name = ww1_bulgaria.155.c
+		trigger = {
+			NOT = {
+				tag = TUR
+			}
+			OR = {
+				has_war_with = BUL
+				tag = SER
+				tag = GRE
+				tag = ROM
+				tag = MNT
+				tag = ALB
+			}
+		}
+	}
+	option = {
+		name = ww1_bulgaria.155.e
+		trigger = {
+			NOT = {
+				has_war_with = BUL
+				tag = SER
+				tag = GRE
+				tag = ROM
+				tag = MNT
+				tag = ALB
+				tag = TUR
+				tag = BUL
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ww1_bulgaria.156
+	title = ww1_bulgaria.156.t
+	desc = ww1_bulgaria.156.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_bulgaria.156.a
+		ai_chance = {
+			base = 20
+		}
+		add_political_power = -50
+		876 = {
+			add_building_construction = {
+			type = bunker
+			level = 2
+			province = 11887
+				}
+			}
+		821 = {
+		 add_building_construction = {
+		 type = bunker
+		 level = 2
+		 province = 11868
+			}
+		add_building_construction = {
+			type = bunker
+			level = 2
+			province = 11857
+			}
+		}
+	}
+	option = {
+		name = ww1_bulgaria.156.b
+		ai_chance = {
+			base = 10
+		}
+		add_political_power = 15
+	}
+}
+
+#Bulgaria wants us to sponsor a black sea naval project
+country_event = {
+	id = ww1_bulgaria.157
+	title = ww1_bulgaria.157.t
+	desc = ww1_bulgaria.157.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_ast_navy
+	option = {
+		name = ww1_bulgaria.157.a
+		ai_chance = {
+			base = 20
+			modifier = {
+				has_war_with = TUR
+				add = 15
+			}
+			modifier = {
+				casualties > 100000
+				add = -15
+			}
+			modifier = {
+				is_in_faction_with = ROM
+				add = 10
+			}
+		}
+		add_timed_idea = {
+			idea = BUL_russo_bulgarian_black_sea_project_russia
+			days = 320
+		}
+		BUL = {
+			add_timed_idea = {
+				idea = BUL_russo_bulgarian_black_sea_project_bulgaria
+				days = 320
+			}
+			navy_experience = 35
+			country_event = ww1_bulgaria.158
+		}
+	}
+	option = {
+		name = ww1_bulgaria.157.b
+		ai_chance = {
+			base = 10
+		}
+		BUL = {
+			country_event = ww1_bulgaria.159
+		}
+	}
+}
+
+#Russia Accepts it
+country_event = {
+	id = ww1_bulgaria.158
+	title = ww1_bulgaria.158.t
+	desc = ww1_bulgaria.158.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_ast_navy
+	option = {
+		name = ww1_bulgaria.158.a
+	}
+}
+
+#Russia declines it
+country_event = {
+	id = ww1_bulgaria.159
+	title = ww1_bulgaria.159.t
+	desc = ww1_bulgaria.159.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = GFX_report_event_ast_navy
+	option = {
+		name = ww1_bulgaria.159.a
+		add_political_power = -50
+	}
+}
+
+#The Valandov Action
+country_event = {
+	id = ww1_bulgaria.160
+	title = ww1_bulgaria.160.t
+	desc = ww1_bulgaria.160.d
+	is_triggered_only = yes
+	picture = ww1_bulgaria_45
+	option = {
+		name = ww1_bulgaria.160.a
+		trigger = {
+			tag = BUL
+		}
+	}
+	option = {
+		name = ww1_bulgaria.160.b
+		trigger = {
+			tag = SER
+		}
+		203 = {
+			damage_building = {
+				type = infrastructure
+				damage = 1
+			}
+			damage_building = {
+				type = rail_way
+				damage = 1
+			}
+		}
+	}
+}
+
+#Bulgaria Cancels Contracts!
+country_event = {
+	id = ww1_bulgaria.161
+	title = ww1_bulgaria.161.t
+	desc = ww1_bulgaria.161.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	picture = GFX_report_event_generic_factory
+	option = {
+		name = ww1_bulgaria.161.a
+		add_opinion_modifier = {
+			target = BUL
+			modifier = small_decrease
+		}
+	}
+	option = {
+		name = ww1_bulgaria.161.b
+		add_opinion_modifier = {
+			target = BUL
+			modifier = small_decrease
+		}
+		diplomatic_relation = {
+			country = BUL
+			relation = embargo
+		}
+	}
+}
+
+#Bulgaria Applies for Social Investments (France)
+country_event = {
+	id = ww1_bulgaria.162
+	title = ww1_bulgaria.162.t
+	desc = ww1_bulgaria.162.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	#picture = GFX_report_event_generic_factory
+	option = {
+		name = ww1_bulgaria.162.a
+		ai_chance = {
+			base = 50
+			modifier = {
+				BUL = {
+					has_completed_focus = BUL_flirt_with_paris
+				}
+				add = 15
+			}
+			modifier = {
+				has_opinion = {
+					target = BUL
+					value > 50
+				}
+				add = 10
+			}
+			modifier = {
+				BUL = {
+					has_dynamic_modifier = {
+						modifier = BUL_first_national_catastrophe
+					}
+				}
+				add = 10
+			}
+		}
+		BUL = {
+			country_event = ww1_bulgaria.163
+		}
+	}
+	option = {
+		name = ww1_bulgaria.162.b
+		ai_chance = {
+			base = 40
+			modifier = {
+				has_opinion = {
+					target = BUL
+					value < 10
+				}
+				add = 10
+			}
+			modifier = {
+				BUL = {
+					has_country_flag = BUL_vasil_radoslavov_yes
+				}
+				add = 15
+			}
+		}
+		BUL = {
+			country_event = ww1_bulgaria.164
+		}
+	}
+}
+#France Invests!
+country_event = {
+	id = ww1_bulgaria.163
+	title = ww1_bulgaria.163.t
+	desc = ww1_bulgaria.163.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	#picture = GFX_report_event_generic_factory
+	option = {
+		name = ww1_bulgaria.163.a
+		if = {
+			limit = { 
+				has_dynamic_modifier = {
+					modifier = BUL_first_national_catastrophe
+				}
+			}
+			add_to_variable = {
+				var = BUL_national_c_consumer
+				value = -0.1
+			}
+			add_to_variable = {
+				var = BUL_national_c_stab
+				value = 0.03
+			}
+			add_to_variable = {
+				var = BUL_national_c_pp_factor
+				value = 0.05
+			}
+			custom_effect_tooltip = BUL_france_investsts.tt
+		}
+	}
+}
+#France doesn't invest
+country_event = {
+	id = ww1_bulgaria.164
+	title = ww1_bulgaria.164.t
+	desc = ww1_bulgaria.164.d
+	is_triggered_only = yes
+	fire_only_once = yes
+	#picture = GFX_report_event_generic_factory
+	option = {
+		name =  ww1_bulgaria.164.a
+		add_political_power = -15
+	}
+}
+
+#Germany Occupies North Dubroja
+country_event = {
+	id = ww1_bulgaria.165
+	title = ww1_bulgaria.165.t
+	desc = ww1_bulgaria.165.d
+	fire_only_once = yes
+	picture = ww1_bulgaria_20
+	mean_time_to_happen = {
+		days = 20
+	}
+	trigger = {
+		tag = BUL
+		has_global_flag = ROM_treaty_of_bucharest
+		GER = {
+			owns_state = 805
+		}
+		is_in_faction_with = GER
+	}
+	option = {
+		name = ww1_bulgaria.165.a
+		if = {
+			limit = {
+				has_country_flag = BUL_vasil_radoslavov_yes
+			 }
+			 add_to_variable = {
+				var = BUL_radoslavov_approval_var
+				value = -2
+			 }
+			 custom_effect_tooltip = BUL_radoslavov_minus_two.tt
+		}
+		add_war_support = -0.1
+	}
+}
+
+#Accuse Radoslavov of Corruption (succeeds)
+country_event = {
+	id = ww1_bulgaria.166
+	title = ww1_bulgaria.166.t
+	desc = ww1_bulgaria.166.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = ww1_bulgaria_6
+	option = {
+		name = ww1_bulgaria.166.a
+		add_to_variable = {
+			var = BUL_election_radoslavov_chance
+			value = -5
+		}
+		add_to_variable = {
+			var = BUL_election_young_lib_chance
+			value = -5
+		}
+	}
+}
+
+#Germany Declines Bulgarian Membership in the CP
+country_event = {
+	id = ww1_bulgaria.167
+	title = ww1_bulgaria.167.t
+	desc = ww1_bulgaria.167.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	#picture = ww1_bulgaria_6
+	option = {
+		name = ww1_bulgaria.167.a
+		set_country_flag = BUL_rejected_from_cp
+		uncomplete_national_focus = {
+			focus = BUL_german_bulgarian_treaty
+		}
+	}
+}
+
+#Yane Sadanski's wish for a coup
+#country_event = {
+#	id = ww1_bulgaria.168
+#	title = ww1_bulgaria.168.t
+#	desc = ww1_bulgaria.168.d
+#	fire_only_once = yes
+#	picture = ww1_bulgaria_33
+#	timeout_days = 150
+#	trigger = {
+#		tag = BUL
+#		has_character = BUL_yane_sandasnki
+#		date > 1915.1.1
+#		OR = {
+#			has_completed_focus = BUL_the_new_school
+#			is_in_faction_with = GER
+#		}
+#	}
+#	option = {
+#		name = ww1_bulgaria.168.a
+#		set_country_flag = BUL_yadanski_coup_chance
+#		unlock_decision_category_tooltip = BUL_sandanski_coup_cat
+#		activate_mission = BUL_sandanski_coup_timer
+#		set_variable = {
+#			var = BUL_sandasnki_coup_chance_value
+#			value = 2
+#		}
+#		set_variable = {
+#			var = BUL_sandasnki_coup_chance_seen
+#			value = 2
+#		}
+#	}
+#}
+
+#Sandanski is caught
+country_event = {
+	id = ww1_bulgaria.169
+	title = ww1_bulgaria.169.t
+	desc = ww1_bulgaria.169.d
+	fire_only_once = yes
+	picture = ww1_bulgaria_34
+	mean_time_to_happen = {
+		days = 5
+	}
+	trigger = {
+		check_variable = {
+			var = BUL_sandasnki_coup_chance_seen
+			value > 7
+		}
+	}
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = BUL_yadanski_coup_chance
+			set_country_flag = BUL_sandanski_jailed
+		}
+	}
+	option = {
+		name = ww1_bulgaria.169.a
+	}
+}
+
+#Sandanski Coup succeeds, civilwar time
+country_event = {
+	id = ww1_bulgaria.170
+	title = ww1_bulgaria.170.t
+	desc = ww1_bulgaria.170.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	#picture = ww1_bulgaria_34
+	immediate = {
+		hidden_effect = {
+			set_cosmetic_tag = BUL_DEM_YANE_SANDANSKI_COUP
+			BUL_sandanski_civilwar = yes
+			every_state = {
+				limit = {
+					is_owned_and_controlled_by = BUL
+					NOT = {
+						OR = {
+							state = 788
+							state = 451
+							state = 757
+							state = 225
+							state = 1141
+							state = 1140
+							state = 759
+							state = 203
+							state = 106
+							state = 756
+							state = 212
+							is_core_of = TUR
+						}
+					}
+				}
+				transfer_state_to = BFD
+			}
+			transfer_units_fraction = {
+				target = BFD
+				size = 0.60
+				stockpile_ratio = 0.6
+				army_ratio = 0.55
+				navy_ratio = 0.25
+				air_ratio = 0.5
+			}
+		}
+	}
+	option = {
+		name = ww1_bulgaria.170.a
+		BUL_yane_sandasnki = {
+			set_nationality = BUL
+			add_country_leader_role = {
+				promote_leader = yes
+				country_leader = { 
+					ideology = social_democracy
+				}
+			}
+		}
+		hidden_effect = {
+			promote_character = BUL_yane_sandasnki
+			BFD = {
+				declare_war_on = {
+					target = BUL
+					target = annex_everything
+				}
+			}
+		}
+	}
+}
+
+#Bulgaria Surrenders (Event for France)
+country_event = {
+	id = ww1_bulgaria.171
+	title = ww1_bulgaria.171.t
+	desc = ww1_bulgaria.171.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			BUL = {
+				white_peace = FRA
+				leave_faction = yes
+				set_country_flag = great_war_loser
+			}
+		}
+	}
+	option = {
+		name = ww1_bulgaria.171.a
+		every_state = {
+			limit = {
+				is_owned_by = BUL
+				OR = {
+					is_claimed_by = GRE
+					is_core_of = GRE
+				}
+			}
+			transfer_state_to = FRA
+		}
+		if = {
+			limit = { 
+				is_in_faction_with = SER
+			}
+			every_state = {
+				limit = {
+					is_owned_by = BUL
+					OR = {
+						is_core_of = SER
+						is_claimed_by = SER
+					}
+				}
+				transfer_state_to = SER
+			}
+		}
+	}
+}
+
+#Question of PM (Event for 'Rally Around Ferdinand')
+country_event = {
+	id = ww1_bulgaria.172
+	title = ww1_bulgaria.172.t
+	desc = ww1_bulgaria.172.d
+	fire_only_once = yes
+	is_triggered_only = yes
+	#A Man to do the tsar's bidding
+	immediate = {
+		hidden_effect = {
+			set_politics = {
+				ruling_party = neutrality
+				elections_allowed = yes
+				election_frequency = 48
+			}
+		}
+	}
+	option = {
+		name = ww1_bulgaria.172.a
+		complete_national_focus = BUL_an_interim_leader
+	}
+	#Malinov Has never failed us
+	option = {
+		name = ww1_bulgaria.172.b
+		complete_national_focus = BUL_return_of_regularity
+		hidden_effect = {
+			complete_national_focus = BUL_unify_the_russophiles
+		}
+	}
+}
+
+#Yane FUCKING DIES or does he?
+country_event = {
+	id = ww1_bulgaria.173
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = ww1_bulgaria_33
+	#He dies historically
+	title = {
+		text = ww1_bulgaria.173.ta
+		trigger = {
+			NOT = {
+				check_variable = {
+					var = BUL_sandasnki_coup_chance_value
+					value > 6
+				}
+				has_country_flag = BUL_sandanski_jailed
+			}
+		}
+	}
+	desc = {
+		text = ww1_bulgaria.173.da
+		trigger = {
+			NOT = {
+				check_variable = {
+					var = BUL_sandasnki_coup_chance_value
+					value > 6
+				}
+				has_country_flag = BUL_sandanski_jailed
+			}
+		}
+	}
+	immediate = {
+		clr_country_flag = BUL_yadanski_coup_chance
+		hidden_effect = {
+			retire_character = BUL_yane_sandasnki
+		}
+	}
+	option = {
+		name = ww1_bulgaria.173.a
+		effect_tooltip = {
+			retire_character = BUL_yane_sandasnki
+		}
+	}
+}
+
+#Malinov Resigns
+country_event = {
+	id = ww1_bulgaria.174
+	desc = ww1_bulgaria.174.d
+	title = ww1_bulgaria.174.t
+	fire_only_once = yes
+	is_triggered_only = yes
+	picture = ww1_bulgaria_31
+	option = {
+		name = ww1_bulgaria.174.a
+		deactivate_advisor = BUL_aleksandar_malinov
+		activate_advisor = BUL_ivan_evstratiev_geshov
+		complete_national_focus = BUL_geshov_acsension
+		hidden_effect = {
+			country_event = {
+				id = ww1_bulgaria.84
+				days = 2
+			}
+		}
+	}
+}
+
