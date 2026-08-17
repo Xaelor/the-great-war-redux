@@ -1,0 +1,427 @@
+BUL_national_assembly = {
+	icon = GFX_decision_category_power_struggle
+	picture = GFX_decision_cat_picture_PLACEHOLDER
+	allowed = {
+		tag = BUL
+	}
+	priority = 200
+	visible_when_empty = yes
+	visible = {
+		always = yes
+	}
+}
+
+BUL_lypachev_reforms = {
+	icon = GFX_decision_category_generic_political_actions
+	allowed = {
+		tag = BUL
+	}
+	visible = {
+		has_completed_focus = BUL_lyapchev_reforms
+	}
+	visible_when_empty = no
+	priority = 93
+}
+
+BUL_state_of_the_tsardom = {
+	allowed = {
+		tag = BUL
+	}
+	icon = GFX_decision_category_generic_monarchism
+	priority = 100
+	visible_when_empty = no
+	visible = {
+		has_completed_focus = BUL_new_tsardom
+	}
+}
+
+BUL_farm_stuff_dec = {
+	allowed = {
+		tag = BUL
+	}
+	icon = GFX_decision_category_generic_economy
+	priority = 70
+	visible_when_empty = no
+	visible = {
+		has_completed_focus = BUL_reorient_farm_sector
+	}
+}
+
+BUL_peace_deals = {
+	allowed = { tag = BUL } 
+	icon = GFX_decision_category_generic_political_actions
+	priority = 102
+	visible_when_empty = no
+	visible = {
+		original_tag = BUL
+	}
+}
+
+balkan_league_dec = {
+allowed = {
+	OR = {
+		original_tag = BUL
+		is_debug = yes
+		OR = {
+			original_tag = BUL
+			original_tag = GRE
+			original_tag = SER
+			original_tag = MNT
+			original_tag = ROM
+			original_tag = CRE
+			original_tag = ALB
+		}
+	}
+	is_subject = no
+}
+	picture = GFX_decision_balkan_league_dec
+	icon = GFX_decision_category_saf_anti_colonialist_crusade
+	priority = 110
+	visible_when_empty = yes
+	visible = {
+		OR = {
+			has_country_flag = balkan_league_formed
+			has_global_flag = BUL_leading_a_crusade
+		}
+	}
+	## AUTONOMOUS MACEDONIA CLAIMS
+	on_map_area = {
+		target_array = global.states
+		target_trigger = {
+			FROM = {
+				has_state_flag = MAC_claimed
+			}
+			NOT = {
+				has_global_flag = BALKAN_LEAGUE_clear_visible_claims
+			}
+		}
+		name = autonomaus_mac_claims
+		zoom = 250
+	}
+	## Reserved for Arbitration ##
+	on_map_area = {
+		target_array = global.states
+		target_trigger = {
+			FROM = {
+				has_state_flag = reserved_for_arbitration
+			}
+			NOT = {
+				has_global_flag = BALKAN_LEAGUE_clear_visible_claims
+			}
+		}
+		name = reserved_arbitration
+		zoom = 250
+	}
+	## BULGARIAN CLAIMS ##
+	on_map_area = {
+		target_array = global.states
+		target_trigger = {
+			FROM = {
+				has_state_flag = BUL_claimed
+			}
+			NOT = {
+				has_global_flag = BALKAN_LEAGUE_clear_visible_claims
+			}
+		}
+		name = bulgarian_uncontested
+		zoom = 250
+	}
+	## SERBIA CLAIMS ##
+	on_map_area = {
+		target_array = global.states
+		target_trigger = {
+			FROM = {
+				has_state_flag = SER_claimed
+			}
+			NOT = {
+				has_global_flag = BALKAN_LEAGUE_clear_visible_claims
+			}
+		}
+		name = serbian_uncontested
+		zoom = 250
+	}
+	## UNDECIDED ##
+	on_map_area = {
+		target_array = global.states
+		target_trigger = {
+			FROM = {
+				has_state_flag = undecided
+			}
+			NOT = {
+				has_global_flag = BALKAN_LEAGUE_clear_visible_claims
+			}
+		}
+		name = undecided
+		zoom = 250
+	}
+	## CONTESTED
+	on_map_area = {
+		target_array = global.states
+		target_trigger = {
+			FROM = {
+				has_state_flag = balkan_league_contested
+			}
+			NOT = {
+				has_global_flag = BALKAN_LEAGUE_clear_visible_claims
+			}
+		}
+		name = balkan_league_contested
+		zoom = 250
+	}
+	#First Come First Serve
+	on_map_area = {
+		target_array = global.states
+		target_trigger = {
+			FROM = {
+				has_state_flag = first_come_first_serve
+			}
+			NOT = {
+				has_global_flag = BALKAN_LEAGUE_clear_visible_claims
+			}
+		}
+		name = first_come_first_serve
+		zoom = 250
+	}
+	#Ambigious
+	on_map_area = {
+		target_array = global.states
+		target_trigger = {
+			FROM = {
+				has_state_flag = BUL_ambigious
+			}
+			NOT = {
+				has_global_flag = BALKAN_LEAGUE_clear_visible_claims
+			}
+		}
+		name = BUL_ambigious
+		zoom = 250
+	}
+	#Montenegrin
+	on_map_area = {
+		target_array = global.states
+		target_trigger = {
+			FROM = {
+				has_state_flag = MNT_balkan_territory
+			}
+			NOT = {
+				has_global_flag = BALKAN_LEAGUE_clear_visible_claims
+			}
+		}
+		name = MNT_balkan_territory
+		zoom = 250
+	}
+}
+
+london_conference_decision_cat = {
+	allowed = { OR = { original_tag = GER original_tag = AUS original_tag = RUS original_tag = FRA original_tag = ITA original_tag = ENG } }
+	icon = GFX_TUR_balkanwar_decision
+	priority = 115
+	visible_when_empty = yes
+	visible = {
+		has_global_flag = london_conference_begins
+	}
+	available = {
+		has_global_flag = london_conference_begins
+	}
+	#Albanian Lands
+	on_map_area = {
+		target_array = global.states
+		target_trigger = {
+			FROM = {
+				has_state_flag = london_conference_albanian_lands
+			}
+		}
+		name = london_conference_albanian_lands
+		zoom = 250
+	}
+	#Ethnic Albanian lands
+	on_map_area = {
+		target_array = global.states
+		target_trigger = {
+			FROM = {
+				is_core_of = ALB
+			}
+		}
+		name = london_conference_ethic_albanian_lands
+		zoom = 250
+	}
+	#Maximum Albanian Claims
+	on_map_area = {
+		target_array = global.states
+		target_trigger = {
+			FROM = {
+				has_state_flag = ALB_maximum_claim
+			}
+		}
+		name = ALB_maximum_claim
+		zoom = 250
+	}
+}
+
+TUR_balkan_conflict_cat = {
+	allowed = {
+		original_tag = TUR
+	}
+	icon = GFX_TUR_balkanwar_decision
+	priority = 115
+	visible_when_empty = yes
+	visible = {
+		OR = {
+			has_global_flag = BUL_lone_liberator
+			has_global_flag = kis_firstbalkan_war
+			SER = {
+				has_country_flag = SER_serbian_balkan_league
+			}
+		}
+		OR = {
+			has_war_with = BUL
+			has_war_with = SER
+		}
+	}
+}
+
+BUL_arms_purchases = {
+allowed = { tag = BUL } 
+icon = GFX_decision_category_generic_arms_trade
+priority = 60
+visible_when_empty = no
+visible = {
+	has_completed_focus = BUL_expanding_international_relations
+}
+}
+
+BUL_industry_stuff = {
+allowed = {
+	original_tag = BUL
+}
+icon = GFX_decision_category_SOV_merge_designers
+priority = 70
+visible_when_empty = no
+visible = {
+	has_completed_focus = BUL_birth_of_our_industry
+}
+}
+
+BUL_managing_the_tsar_assembly_balance = {
+allowed = {
+	original_tag = BUL
+}
+icon = GFX_decision_category_SWI_federal_council
+priority = 90
+visible_when_empty = no
+visible = {
+	has_completed_focus = BUL_the_new_tsardom
+	}
+}
+
+BUL_TUR_negotiations = {
+allowed = {
+	OR = {
+		original_tag = BUL
+		original_tag = TUR
+	}
+}
+picture = GFX_decision_cat_picture_government_in_exile
+icon = GFX_decision_category_generic_crisis
+priority = 90
+visible_when_empty = yes
+visible = {
+	has_country_flag = BUL_TUR_negotiations_yes
+	NOT = {
+		has_country_flag = BUL_TUR_fail
+		has_country_flag = BUL_TUR_success
+	}
+}
+}
+
+BUL_peoples_liberal_parties_coalition_cat= {
+	icon = GFX_decision_category_SWI_federal_council
+	priority = 101
+	allowed = {
+		original_tag = BUL
+	}
+	visible = {
+		has_country_flag = BUL_political_coalition
+	}
+	visible_when_empty = no
+}
+
+BUL_first_national_catastrophe_cat = {
+	icon = GFX_decision_category_generic_crisis
+	priority = 101
+	allowed = {
+		original_tag = BUL
+	}
+	visible = {
+		has_country_flag = BUL_first_national_catostrophe
+	}
+}
+
+BUL_lone_liberator_cat = {
+	icon = GFX_decision_category_saf_anti_colonialist_crusade
+	priority = 115
+	allowed = {
+		original_tag = BUL
+	}
+	visible = {
+		has_country_flag = BUL_lone_lib_flag
+	}
+	visible_when_empty = yes
+}
+BUL_fight_peasants = {
+	icon = GFX_decision_category_SOV_merge_designers
+	priority = 94
+	allowed = {
+		original_tag = BUL
+	}
+	visible = {
+		OR = {
+			has_completed_focus = BUL_open_the_markets
+			has_completed_focus = BUL_economic_integration_of_new_lands
+		}
+	}
+	visible_when_empty = no
+}
+BALKAN_occupation_of_albania = {
+	icon = GFX_decision_category_border_war
+	priority = 115
+	allowed = {
+		OR = {
+			original_tag = ALB
+			original_tag = FRA
+			original_tag = SER
+			original_tag = ITA
+			original_tag = ENG
+			original_tag = AUS
+			original_tag = GRE
+			original_tag = RUS
+		}
+	}
+	visible = {
+		has_global_flag = albanian_occupation
+	}
+	visible_when_empty = no
+}
+BUL_radoslavov_approval = {
+	icon = GFX_decision_category_generic_democracy
+	priority = 114
+	allowed = {
+		original_tag = BUL
+	}
+	visible_when_empty = yes
+	visible = {
+		has_country_flag = BUL_vasil_radoslavov_yes
+		has_completed_focus = BUL_the_new_school
+	}
+}
+BUL_sandanski_coup_cat = {
+	icon = GFX_decision_category_SOV_propaganda
+	priority = 114
+	allowed = {
+		original_tag = BUL
+	}
+	visible_when_empty = yes
+	visible = {
+		has_country_flag = BUL_yadanski_coup_chance
+	}
+}
