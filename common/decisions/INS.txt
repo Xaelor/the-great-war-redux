@@ -262,73 +262,69 @@ INS_dc_faction_management = {
 			factor = 200
 		}
 	}
-	INS_attack_communist_elements_with_si = {
-		icon = GFX_decision_hol_war_on_pacifism
-		allowed = {
-			original_tag = INS
-		}
-		available = {
-			check_variable = {
-				INS_muslim_loyalty > 49 
-			}
-			check_variable = {
-				INS_muslim_popularity > 49 
-			}
-			custom_trigger_tooltip = {
-				tooltip = INS_ttt_acews
-			}
-		}
-		visible = {
-			has_country_flag = INS_flag_event_si_deal_1
-			NOT = {
-				has_country_flag = INS_flag_si_crushed
-			}
-		}
-		fire_only_once = no
-		complete_effect = {
-			
-		}
-		remove_effect = {
-			add_to_variable = {
-				INS_communist_pop = 5
-				tooltip = INS_communists_popularity_update_tt
-			}
-			INS_loyalty_popularity_change = yes
-		}
-		days_remove = 30
-		days_re_enable = 100
-		cost = INS_var_si_interaction_cost
-		ai_will_do = {
-			factor = 200
-		}
-	}
-	INS_islamic_rise = {
+	INS_weakening_central_si_leadership = {
 		allowed = {
 			original_tag = INS
 		}
     	activation = {
-			has_completed_focus = INS_grant_legal_status
+			has_country_flag = INS_historical_si_recognition
     	}
 		fire_only_once = yes
     	available = {
-			
+			check_variable = {
+				INS_wcsl_timer = 10
+			}
     	}
     	cancel_trigger = {
 			
     	}
     	icon = GFX_decision_generic_factory
-    	days_mission_timeout = 70
+    	days_mission_timeout = 30
     	selectable_mission = no
     	complete_effect = {
 			
     	}
     	timeout_effect = {
 			add_to_variable = {
-				INS_muslim_popularity = 5
+				INS_muslim_popularity = -1
 				tooltip = INS_muslim_popularity_update_tt
 			}
 			INS_loyalty_popularity_change = yes
-			activate_mission = INS_islamic_rise
+			add_to_variable = {
+				INS_wcsl_timer = 1
+			}
+			activate_mission = INS_weakening_central_si_leadership
+    	}
+	}
+	INS_empower_docile_si_leaders = {
+		allowed = {
+			original_tag = INS
+		}
+    	activation = {
+			has_country_flag = INS_historical_si_recognition
+    	}
+		fire_only_once = yes
+    	available = {
+			check_variable = {
+				INS_wcsl_timer = 10
+			}
+    	}
+    	cancel_trigger = {
+			
+    	}
+    	icon = GFX_decision_generic_factory
+    	days_mission_timeout = 30
+    	selectable_mission = no
+    	complete_effect = {
+			
+    	}
+    	timeout_effect = {
+			add_to_variable = {
+				INS_muslim_loyalty = 1
+				tooltip = INS_muslim_popularity_update_tt
+			}
+			INS_loyalty_popularity_change = yes
+			activate_mission = INS_empower_docile_si_leaders
     	}
 	}
 }
