@@ -1498,12 +1498,9 @@ country_event = {
 				}
 				add_ideas = standing_alone	
 			}
-			end_puppet = QAT
-			end_puppet = KUW
-			KUW = {
-				clr_country_flag = protectorate
+			every_subject_country = {
+				free_subject = yes
 			}
-			end_puppet = JBS
 			add_ideas = standing_alone	
 		}
 	}
@@ -1942,12 +1939,7 @@ country_event = {
 				limit = {
 					is_subject_of = ROOT
 				}
-				ROOT = {
-					set_autonomy = {
-						target = PREV
-						autonomy_state = autonomy_free
-					}
-				}
+				free_subject = yes
 			}
 			if = {
 				limit = {
@@ -1959,7 +1951,6 @@ country_event = {
 			ROOT = { give_guarantee = PREV }
 			ENG = { give_guarantee = PREV }
 			hidden_effect = {
-				clr_country_flag = protectorate
 				every_other_country = {
 					limit = {
 						has_war_with = PREV
@@ -2877,6 +2868,7 @@ country_event = {
 	picture = GFX_report_event_african_soldiers
 	trigger = {
 		tag = DAR
+		is_subject = yes
 		OVERLORD = {
 			any_enemy_country = {
 				has_country_flag = TUR_jihad_declared
@@ -2891,14 +2883,10 @@ country_event = {
 		#Based
 		name = ww1_ottoman.70.a
 		OVERLORD = {
-			end_puppet = ROOT
 			country_event = ww1_england.251
 		}
-		leave_faction = yes
-		every_other_country = {
-			limit = {
-				has_war_with = ROOT
-			}
+		free_subject_leave_faction = yes
+		every_enemy_country = {
 			white_peace = ROOT
 		}
 		add_ideas = standing_alone
@@ -4098,7 +4086,9 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_ottoman.186.a
-		end_puppet = EGY
+		EGY = {
+			free_subject = yes
+		}
 		TUR = {
 			set_autonomy = {
 				target = EGY
@@ -4106,8 +4096,7 @@ country_event = {
 				freedom_level = 0.8
 			}
 		}
-		EGY = {
-			clr_country_flag = protectorate
+		EGY = {			
 			promote_character = EGY_abbas_ii_helmy
 			drop_cosmetic_tag = yes
 			hidden_effect = {
@@ -10566,7 +10555,7 @@ country_event = { #population exchange between the ottomans disagreed
 	}
 }
 
-country_event = { #population exchange devestated ottomans
+country_event = { #population exchange devastated ottomans
 	id = ottoman.127
 	title = ottoman.127.t
 	desc = ottoman.127.d
@@ -10870,7 +10859,7 @@ country_event = { #exchange christians with bulgaria disagreed
 	}
 }
 
-country_event = { #population exchange devestated ottomans
+country_event = { #population exchange devastated ottomans
 	id = ottoman.131
 	title = ottoman.131.t
 	desc = ottoman.131.d
@@ -15161,9 +15150,7 @@ country_event = { #muslim countries break ties
 					is_islamic_nation = yes
 				}
 			}
-			PREV = {
-				end_puppet = PREV
-			}
+			free_subject_leave_faction = yes
 		}
 		ai_chance = {
 			base = 5

@@ -1030,22 +1030,7 @@ separate_peace_all_wars = {
 
 # ends puppet status, removes from faction and all current wars (used for rebellions)
 clear_all_relations = {
-	if = {
-		limit = { is_subject = yes }
-		overlord = {
-			set_autonomy = {
-				target = PREV
-				autonomy_state = autonomy_free
-			}
-		}
-	}
-	clr_country_flag = protectorate
-	clr_country_flag = colony
-	clr_country_flag = monarchist_puppet
-	if = {
-		limit = { is_in_faction = yes }
-		leave_faction = yes
-	}
+	free_subject_leave_faction = yes
 	separate_peace_all_wars = yes
 	every_other_country = {
 		limit = { is_guaranteed_by = PREV }
@@ -1158,9 +1143,10 @@ clear_all_relations_with_TARGET = {
 	if = {
 		limit = { has_subject = var:target }
 		set_autonomy = {
-			target = PREV
+			target = var:target
 			autonomy_state = autonomy_free
 		}
+		var:target = { clr_subject_flags = yes }
 	}
 	else_if = {
 		limit = { is_subject_of = var:target }
@@ -1170,10 +1156,8 @@ clear_all_relations_with_TARGET = {
 				autonomy_state = autonomy_free
 			}
 		}
+		clr_subject_flags = yes
 	}
-	clr_country_flag = protectorate
-	clr_country_flag = colony
-	clr_country_flag = monarchist_puppet
 	if = {
 		limit = { is_in_faction_with = var:target }
 		leave_faction = yes
@@ -1228,19 +1212,7 @@ clear_all_relations_with_TARGET = {
 
 # ends puppet status, removes from faction and clears all relations except wars (used for rebellions)
 clear_all_relations_except_wars = {
-	if = {
-		limit = { is_subject = yes }
-		overlord = {
-			set_autonomy = {
-				target = PREV
-				autonomy_state = autonomy_free
-			}
-		}
-	}
-	if = {
-		limit = { is_in_faction = yes }
-		leave_faction = yes
-	}
+	free_subject_leave_faction = yes
 	every_other_country = {
 		limit = { is_guaranteed_by = PREV }
 		PREV = {
@@ -1315,6 +1287,9 @@ clear_relations_with_PREV = {
 			target = PREV
 			autonomy_state = autonomy_free
 		}
+		PREV = {
+			clr_subject_flags = yes
+		}
 	}
 	else_if = {
 		limit = { is_subject_of = PREV }
@@ -1324,6 +1299,7 @@ clear_relations_with_PREV = {
 				autonomy_state = autonomy_free
 			}
 		}
+		clr_subject_flags = yes
 	}
 	if = {
 		limit = {
@@ -1698,23 +1674,6 @@ destroy_all_ships = {
 	destroy_ships = {
 		type = ship_hull_carrier_conversion_ca
 		count = all
-	}
-}
-
-# scope is the country being freed
-remove_puppet_and_leave_faction = {
-	if = {
-		limit = { is_in_faction = yes }
-		leave_faction = yes
-	}
-	if = {
-		limit = { is_subject = yes }
-		overlord = {
-			set_autonomy = {
-				target = PREV
-				autonomy_state = autonomy_free
-			}
-		}
 	}
 }
 
