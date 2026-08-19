@@ -1030,22 +1030,7 @@ separate_peace_all_wars = {
 
 # ends puppet status, removes from faction and all current wars (used for rebellions)
 clear_all_relations = {
-	if = {
-		limit = { is_subject = yes }
-		overlord = {
-			set_autonomy = {
-				target = PREV
-				autonomy_state = autonomy_free
-			}
-		}
-	}
-	clr_country_flag = protectorate
-	clr_country_flag = colony
-	clr_country_flag = monarchist_puppet
-	if = {
-		limit = { is_in_faction = yes }
-		leave_faction = yes
-	}
+	free_subject_leave_faction = yes
 	separate_peace_all_wars = yes
 	every_other_country = {
 		limit = { is_guaranteed_by = PREV }
@@ -1158,9 +1143,10 @@ clear_all_relations_with_TARGET = {
 	if = {
 		limit = { has_subject = var:target }
 		set_autonomy = {
-			target = PREV
+			target = var:target
 			autonomy_state = autonomy_free
 		}
+		var:target = { clr_subject_flags = yes }
 	}
 	else_if = {
 		limit = { is_subject_of = var:target }
@@ -1170,10 +1156,8 @@ clear_all_relations_with_TARGET = {
 				autonomy_state = autonomy_free
 			}
 		}
+		clr_subject_flags = yes
 	}
-	clr_country_flag = protectorate
-	clr_country_flag = colony
-	clr_country_flag = monarchist_puppet
 	if = {
 		limit = { is_in_faction_with = var:target }
 		leave_faction = yes
@@ -1228,19 +1212,7 @@ clear_all_relations_with_TARGET = {
 
 # ends puppet status, removes from faction and clears all relations except wars (used for rebellions)
 clear_all_relations_except_wars = {
-	if = {
-		limit = { is_subject = yes }
-		overlord = {
-			set_autonomy = {
-				target = PREV
-				autonomy_state = autonomy_free
-			}
-		}
-	}
-	if = {
-		limit = { is_in_faction = yes }
-		leave_faction = yes
-	}
+	free_subject_leave_faction = yes
 	every_other_country = {
 		limit = { is_guaranteed_by = PREV }
 		PREV = {
@@ -1315,6 +1287,9 @@ clear_relations_with_PREV = {
 			target = PREV
 			autonomy_state = autonomy_free
 		}
+		PREV = {
+			clr_subject_flags = yes
+		}
 	}
 	else_if = {
 		limit = { is_subject_of = PREV }
@@ -1324,6 +1299,7 @@ clear_relations_with_PREV = {
 				autonomy_state = autonomy_free
 			}
 		}
+		clr_subject_flags = yes
 	}
 	if = {
 		limit = {
@@ -1701,23 +1677,6 @@ destroy_all_ships = {
 	}
 }
 
-# scope is the country being freed
-remove_puppet_and_leave_faction = {
-	if = {
-		limit = { is_in_faction = yes }
-		leave_faction = yes
-	}
-	if = {
-		limit = { is_subject = yes }
-		overlord = {
-			set_autonomy = {
-				target = PREV
-				autonomy_state = autonomy_free
-			}
-		}
-	}
-}
-
 calculate_days_since_game_start = {
 	add_to_temp_variable = { days_to_event = 706640 }
 	subtract_from_temp_variable = { days_to_event = global.num_days }
@@ -1866,7 +1825,334 @@ take_all_subjects_FROM = {
 		limit = {
 			is_subject_of = FROM
 		}
+		# TGWR AUTONOMIES
 		if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_dominion
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_dominion
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_self_governing_colony
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_self_governing_colony
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_colony
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_colony
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_protectorate
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				PREV = { set_country_flag = protectorate }
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_protectorate
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_informal_protectorate
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				PREV = { set_country_flag = protectorate }
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_informal_protectorate
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_integrated_protectorate
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				PREV = { set_country_flag = protectorate }
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_integrated_protectorate
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_military_government
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_military_government
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_occupied_state
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_occupied_state
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_client_state
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_client_state
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_concession
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_concession
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_condominium
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_condominium
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_regional_government
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_regional_government
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_nominal_constituency
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_nominal_constituency
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_feudal_autonomy
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_feudal_autonomy
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_ottoman_emirate
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_ottoman_emirate
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_personal_union
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_personal_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_real_union
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_real_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_unilateral_union
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_unilateral_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_governorate_general
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_governorate_general
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_balkan_federal_subject
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_balkan_federal_subject
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_vrk
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_vrk
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_autonomous_sr
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_autonomous_sr
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_sr
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_sr
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		# OBSOLETE / LEGACY AUTONOMIES
+		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_dominion
 			}
@@ -1922,7 +2208,6 @@ take_all_subjects_FROM = {
 			}
 			restore_previous_government_type = yes
 		}
-		# DEATH OR DISHONOUR
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_satellite
@@ -1937,35 +2222,6 @@ take_all_subjects_FROM = {
 			}
 			restore_previous_government_type = yes
 		}
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichsprotectorate
-		# 	}
-		# 	FROM = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	ROOT = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_reichsprotectorate
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichskommissariat
-		# 	}
-		# 	FROM = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	ROOT = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_reichskommissariat
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# WAKING THE TIGER
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_wtt_imperial_subject
@@ -2022,7 +2278,6 @@ take_all_subjects_FROM = {
 			}
 			restore_previous_government_type = yes
 		}
-		# LA RESISTANCE
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_collaboration_government
@@ -2033,193 +2288,6 @@ take_all_subjects_FROM = {
 				set_autonomy = {
 					target = PREV
 					autonomous_state = autonomy_collaboration_government
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# NO STEP BACK
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_personal_union
-		# 	}
-		# 	FROM = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	ROOT = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_personal_union
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# TGWR AUTONOMIES
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_protectorate
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				PREV = { set_country_flag = protectorate }
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_protectorate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_informal_protectorate
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				PREV = { set_country_flag = protectorate }
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_informal_protectorate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_integrated_protectorate
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				PREV = { set_country_flag = protectorate }
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_integrated_protectorate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_concession
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_concession
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_balkan_federal_subject
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_balkan_federal_subject
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_ottoman_emirate
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_ottoman_emirate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_unilateral_union
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_unilateral_union
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_regional_government
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_regional_government
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_governorate_general
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_governorate_general
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_real_union
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_real_union
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_personal_union
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_personal_union
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_self_governing_colony
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_self_governing_colony
 				}
 			}
 			restore_previous_government_type = yes
@@ -2238,7 +2306,334 @@ take_all_subjects_ROOT = {
 		limit = {
 			is_subject_of = ROOT
 		}
+		# TGWR AUTONOMIES
 		if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_dominion
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_dominion
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_self_governing_colony
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_self_governing_colony
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_colony
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_colony
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_protectorate
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				PREV = { set_country_flag = protectorate }
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_protectorate
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_informal_protectorate
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				PREV = { set_country_flag = protectorate }
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_informal_protectorate
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_integrated_protectorate
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				PREV = { set_country_flag = protectorate }
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_integrated_protectorate
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_military_government
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_military_government
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_occupied_state
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_occupied_state
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_client_state
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_client_state
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_concession
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_concession
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_condominium
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_condominium
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_regional_government
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_regional_government
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_nominal_constituency
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_nominal_constituency
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_feudal_autonomy
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_feudal_autonomy
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_ottoman_emirate
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_ottoman_emirate
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_personal_union
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_personal_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_real_union
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_real_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_unilateral_union
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_unilateral_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_governorate_general
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_governorate_general
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_balkan_federal_subject
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_balkan_federal_subject
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_vrk
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_vrk
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_autonomous_sr
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_autonomous_sr
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_sr
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_sr
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		# OBSOLETE / LEGACY AUTONOMIES
+		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_dominion
 			}
@@ -2294,7 +2689,6 @@ take_all_subjects_ROOT = {
 			}
 			restore_previous_government_type = yes
 		}
-		# DEATH OR DISHONOUR
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_satellite
@@ -2309,35 +2703,6 @@ take_all_subjects_ROOT = {
 			}
 			restore_previous_government_type = yes
 		}
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichsprotectorate
-		# 	}
-		# 	ROOT = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	PREV = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_reichsprotectorate
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichskommissariat
-		# 	}
-		# 	ROOT = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	PREV = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_reichskommissariat
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# WAKING THE TIGER
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_wtt_imperial_subject
@@ -2394,7 +2759,6 @@ take_all_subjects_ROOT = {
 			}
 			restore_previous_government_type = yes
 		}
-		# LA RESISTANCE
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_collaboration_government
@@ -2405,193 +2769,6 @@ take_all_subjects_ROOT = {
 				set_autonomy = {
 					target = PREV
 					autonomous_state = autonomy_collaboration_government
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# NO STEP BACK
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_personal_union
-		# 	}
-		# 	ROOT = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	PREV = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_personal_union
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# TGWR AUTONOMIES
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_protectorate
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				PREV = { set_country_flag = protectorate }
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_protectorate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_informal_protectorate
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				PREV = { set_country_flag = protectorate }
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_informal_protectorate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_integrated_protectorate
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				PREV = { set_country_flag = protectorate }
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_integrated_protectorate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_concession
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_concession
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_balkan_federal_subject
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_balkan_federal_subject
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_ottoman_emirate
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_ottoman_emirate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_unilateral_union
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_unilateral_union
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_regional_government
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_regional_government
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_governorate_general
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_governorate_general
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_real_union
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_real_union
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_personal_union
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_personal_union
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_self_governing_colony
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_self_governing_colony
 				}
 			}
 			restore_previous_government_type = yes
@@ -2610,7 +2787,334 @@ take_all_subjects_PREV = {
 		limit = {
 			is_subject_of = PREV.PREV
 		}
+		# TGWR AUTONOMIES
 		if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_dominion
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_dominion
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_self_governing_colony
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_self_governing_colony
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_colony
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_colony
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_protectorate
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				PREV = { set_country_flag = protectorate }
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_protectorate
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_informal_protectorate
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				PREV = { set_country_flag = protectorate }
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_informal_protectorate
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_integrated_protectorate
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				PREV = { set_country_flag = protectorate }
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_integrated_protectorate
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_military_government
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_military_government
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_occupied_state
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_occupied_state
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_client_state
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_client_state
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_concession
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_concession
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_condominium
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_condominium
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_regional_government
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_regional_government
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_nominal_constituency
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_nominal_constituency
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_feudal_autonomy
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_feudal_autonomy
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_ottoman_emirate
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_ottoman_emirate
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_personal_union
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_personal_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_real_union
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_real_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_unilateral_union
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_unilateral_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_governorate_general
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_governorate_general
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_balkan_federal_subject
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_balkan_federal_subject
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_vrk
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_vrk
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_autonomous_sr
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_autonomous_sr
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_sr
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_sr
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		# OBSOLETE / LEGACY AUTONOMIES
+		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_dominion
 			}
@@ -2666,7 +3170,6 @@ take_all_subjects_PREV = {
 			}
 			restore_previous_government_type = yes
 		}
-		# DEATH OR DISHONOUR
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_satellite
@@ -2681,35 +3184,6 @@ take_all_subjects_PREV = {
 			}
 			restore_previous_government_type = yes
 		}
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichsprotectorate
-		# 	}
-		# 	PREV.PREV = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	PREV = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_reichsprotectorate
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichskommissariat
-		# 	}
-		# 	PREV.PREV = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	PREV = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_reichskommissariat
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# WAKING THE TIGER
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_wtt_imperial_subject
@@ -2766,7 +3240,6 @@ take_all_subjects_PREV = {
 			}
 			restore_previous_government_type = yes
 		}
-		# LA RESISTANCE
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_collaboration_government
@@ -2777,193 +3250,6 @@ take_all_subjects_PREV = {
 				set_autonomy = {
 					target = PREV
 					autonomous_state = autonomy_collaboration_government
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# NO STEP BACK
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_personal_union
-		# 	}
-		# 	PREV.PREV = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	PREV = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_personal_union
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# TGWR AUTONOMIES
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_protectorate
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				PREV = { set_country_flag = protectorate }
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_protectorate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_informal_protectorate
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				PREV = { set_country_flag = protectorate }
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_informal_protectorate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_integrated_protectorate
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				PREV = { set_country_flag = protectorate }
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_integrated_protectorate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_concession
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_concession
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_balkan_federal_subject
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_balkan_federal_subject
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_ottoman_emirate
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_ottoman_emirate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_unilateral_union
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_unilateral_union
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_regional_government
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_regional_government
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_governorate_general
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_governorate_general
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_real_union
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_real_union
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_personal_union
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_personal_union
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_self_governing_colony
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_self_governing_colony
 				}
 			}
 			restore_previous_government_type = yes
@@ -2979,15 +3265,296 @@ take_all_subjects_PREV = {
 
 copy_autonomy_from_ROOT = {
 	ROOT = {
+		# TGWR AUTONOMIES
 		if = {
 			limit = {
-				has_autonomy_state = autonomy_satellite
+				has_autonomy_state = autonomy_tgwr_dominion
 			}
 			OVERLORD = {
 				end_puppet = PREV
 				set_autonomy = {
 					target = PREV.PREV
-					autonomous_state = autonomy_satellite
+					autonomous_state = autonomy_tgwr_dominion
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_self_governing_colony
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_self_governing_colony
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_colony
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_colony
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_protectorate
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				PREV = { set_country_flag = protectorate }
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_protectorate
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_informal_protectorate
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				PREV = { set_country_flag = protectorate }
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_informal_protectorate
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_integrated_protectorate
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				PREV = { set_country_flag = protectorate }
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_integrated_protectorate
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_military_government
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_military_government
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_occupied_state
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_occupied_state
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_client_state
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_client_state
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_concession
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_concession
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_condominium
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_condominium
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_regional_government
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_regional_government
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_nominal_constituency
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_nominal_constituency
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_feudal_autonomy
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_feudal_autonomy
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_ottoman_emirate
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_ottoman_emirate
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_personal_union
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_personal_union
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_real_union
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_real_union
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_unilateral_union
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_unilateral_union
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_governorate_general
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_governorate_general
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_balkan_federal_subject
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_balkan_federal_subject
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_vrk
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_vrk
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_autonomous_sr
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_autonomous_sr
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_sr
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_sr
+				}
+			}
+		}
+		# OBSOLETE / LEGACY AUTONOMIES
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_dominion
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_dominion
 				}
 			}
 		}
@@ -3027,7 +3594,6 @@ copy_autonomy_from_ROOT = {
 				}
 			}
 		}
-		# DEATH OR DISHONOUR
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_satellite
@@ -3040,31 +3606,6 @@ copy_autonomy_from_ROOT = {
 				}
 			}
 		}
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichsprotectorate
-		# 	}
-		# 	OVERLORD = {
-		# 		end_puppet = PREV
-		# 		set_autonomy = {
-		# 			target = PREV.PREV
-		# 			autonomous_state = autonomy_reichsprotectorate
-		# 		}
-		# 	}
-		# }
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichskommissariat
-		# 	}
-		# 	OVERLORD = {
-		# 		end_puppet = PREV
-		# 		set_autonomy = {
-		# 			target = PREV.PREV
-		# 			autonomous_state = autonomy_reichskommissariat
-		# 		}
-		# 	}
-		# }
-		# WAKING THE TIGER
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_wtt_imperial_subject
@@ -3113,7 +3654,6 @@ copy_autonomy_from_ROOT = {
 				}
 			}
 		}
-		# LA RESISTANCE
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_collaboration_government
@@ -3123,167 +3663,6 @@ copy_autonomy_from_ROOT = {
 				set_autonomy = {
 					target = PREV.PREV
 					autonomous_state = autonomy_collaboration_government
-				}
-			}
-		}
-		# NO STEP BACK
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_personal_union
-		# 	}
-		# 	OVERLORD = {
-		# 		end_puppet = PREV
-		# 		set_autonomy = {
-		# 			target = PREV.PREV
-		# 			autonomous_state = autonomy_personal_union
-		# 		}
-		# 	}
-		# }
-		# TGWR AUTONOMIES
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_protectorate
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				PREV = { set_country_flag = protectorate }
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_protectorate
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_informal_protectorate
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				PREV = { set_country_flag = protectorate }
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_informal_protectorate
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_integrated_protectorate
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				PREV = { set_country_flag = protectorate }
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_integrated_protectorate
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_concession
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_concession
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_balkan_federal_subject
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_balkan_federal_subject
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_ottoman_emirate
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_ottoman_emirate
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_unilateral_union
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_unilateral_union
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_regional_government
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_regional_government
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_governorate_general
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_governorate_general
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_real_union
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_real_union
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_personal_union
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_personal_union
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_self_governing_colony
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_self_governing_colony
 				}
 			}
 		}
