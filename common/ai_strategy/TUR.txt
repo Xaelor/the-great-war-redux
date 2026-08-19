@@ -39,44 +39,6 @@ TUR_alone = {
 	}
 }
 
-balkans_contain_ottomans = {
-	allowed = {
-		OR = {
-			tag = SER
-			tag = BUL
-			tag = GRE
-			tag = MNT
-		}
-	}
-	enable = {
-		always = yes
-	}
-	abort = {
-		OR = {
-			has_global_flag = great_war
-			is_subject_of = TUR
-		}
-		if = {
-			limit = {
-				tag = BUL
-			}
-			TUR = {
-				has_completed_focus = TUR_ottoman_bulgarian_alliance
-			}
-		}
-	}
-	ai_strategy = {
-		type = alliance
-		id = TUR
-		value = -500
-	}
-	ai_strategy = {
-		type = antagonize
-		id = TUR
-		value = 50
-	}
-}
-
 TUR_prepare_for_great_war = {
 	allowed = {
 		original_tag = TUR
@@ -273,13 +235,14 @@ TRR_dont_join_factions = {
 		}
 	}
 	abort = {
-		any_country = {
-			NOT = {
-				original_tag = TUR
-				original_tag = KUR
+		TRR = {
+			any_enemy_country = {
+				is_major = yes
+				NOT = {
+					original_tag = TUR
+					original_tag = KUR
+				}
 			}
-			is_major = yes
-			has_war_with = TRR
 		}
 	}
 	abort_when_not_enabled = yes
@@ -658,31 +621,17 @@ TUR_dont_garrison_thessaloniki_BW1 = {
 		original_tag = TUR
 	}
 	enable = {
-		has_war_with = BLL
+		has_global_flag = kis_firstbalkan_war
 		NOT = {
 			has_global_flag = kis_firstbalkanwar_victory
 			has_global_flag = kis_firstbalkanwar_lose
-			has_global_flag = great_war
 		}
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = front_unit_request
 		state = 345
-		state = 184
 		value = -1000
-	}
-	ai_strategy = {
-		type = put_unit_buffers
-		ratio = 0.05
-		states = {
-			860
-			756
-			757
-			200
-		}
-		subtract_invasions_from_need = no
-		subtract_fronts_from_need = no
 	}
 	ai_strategy = {
 		type = ignore
@@ -1170,17 +1119,9 @@ TUR_sinai_campaign = {
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
-		type = front_control
-		state = 856
-		ratio = 0.7
-		ordertype = front
-		priority = 9999
-		execution_type = rush
-	}
-	ai_strategy = {
 		type = front_unit_request
-		state = 856
-		value = 120
+		strategic_region = 228
+		value = 90
 		#priority = 9999
 	}
 }
@@ -1200,32 +1141,6 @@ TUR_prepare_for_russian = {
 	}
 }
 
-TUR_underestimate_russia = {
-	allowed = {
-		original_tag = TUR
-	}
-	enable = {
-		longest_war_length < 6
-		surrender_progress < 0.12
-		has_full_control_of_state = 1025
-		has_full_control_of_state = 1026
-		has_full_control_of_state = 884
-		has_full_control_of_state = 1027
-		has_full_control_of_state = 355
-		has_full_control_of_state = 349
-		OR = {
-			has_war_with = RUS
-			has_active_mission = TUR_black_sea_raid_mission
-		}
-	}
-	abort_when_not_enabled = yes
-	ai_strategy = {
-		type = front_unit_request
-		tag = RUS
-		value = -50
-	}
-}
-
 TUR_in_fact_russia_is_too_strong = {
 	allowed = {
 		original_tag = TUR
@@ -1240,10 +1155,7 @@ TUR_in_fact_russia_is_too_strong = {
 			has_full_control_of_state = 355
 			has_full_control_of_state = 349
 		}
-		OR = {
-			has_war_with = RUS
-			has_active_mission = TUR_black_sea_raid_mission
-		}
+		has_war_with = RUS
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
@@ -1649,10 +1561,31 @@ TUR_istanbul_garrison = {
 	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = put_unit_buffers
-		ratio = 0.15
+		ratio = 0.17
 		states = {
 			347
 			1018
+		}
+	}
+}
+
+TUR_canakkale_garrison = {
+	allowed = {
+		tag = TUR
+	}
+	enable = {
+		OR = {
+			controls_state = 860
+			controls_state = 861
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = put_unit_buffers
+		ratio = 0.1
+		states = {
+			860
+			861
 		}
 	}
 }
@@ -1669,11 +1602,7 @@ TUR_fight_ai_bulgaria_in_bw2 = {
 				has_completed_focus = BUL_relative_hegemony
 			}
 		}
-		NOT = {
-			has_global_flag = kis_secondbalkanwar_victory
-			has_global_flag = kis_secondbalkanwar_lose
-			has_global_flag = great_war
-		}
+		has_BW_ended = no
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
@@ -1695,11 +1624,7 @@ TUR_fight_player_bulgaria_in_bw2 = {
 				has_completed_focus = BUL_relative_hegemony
 			}
 		}
-		NOT = {
-			has_global_flag = kis_secondbalkanwar_victory
-			has_global_flag = kis_secondbalkanwar_lose
-			has_global_flag = great_war
-		}
+		has_BW_ended = no
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
@@ -1716,5 +1641,38 @@ TUR_fight_player_bulgaria_in_bw2 = {
 		type = prepare_for_war
 		id = BUL
 		value = 1
+	}
+}
+
+ALB_revolt_hold_still = {
+	allowed = {
+		tag = ALB
+	}
+	enable = {
+		is_BW1_ongoing = yes
+		has_war_with = TUR
+		is_subject = no
+		owns_state = 871
+		871 = {
+			any_neighbor_state = {
+				is_owned_by = TUR
+			}
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = front_control
+		country_trigger = {
+			always = yes
+		}
+		execute_order = no
+		manual_attack = no
+	}
+	ai_strategy = {
+		type = put_unit_buffers
+		states = {
+			871
+		}
+		ratio = 1
 	}
 }

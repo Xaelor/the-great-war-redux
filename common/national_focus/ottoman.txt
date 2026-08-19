@@ -455,7 +455,7 @@ focus_tree = {
 	focus = {
 		id = TUR_import_foreign_advisors
 		icon = GFX_goal_generic_positive_trade_relations
-		cost = 5
+		cost = 10
 		prerequisite = {
 			focus = TUR_uniform_reforms
 		}
@@ -506,7 +506,7 @@ focus_tree = {
 	focus = {
 		id = TUR_invite_foreign_designers
 		icon = GFX_focus_generic_diplomatic_treaty
-		cost = 5
+		cost = 10
 		prerequisite = {
 			focus = TUR_import_foreign_advisors
 		}
@@ -566,7 +566,7 @@ focus_tree = {
 	focus = {
 		id = TUR_new_weapon_contracts
 		icon = GFX_goal_generic_forceful_treaty
-		cost = 5
+		cost = 10
 		prerequisite = {
 			focus = TUR_import_foreign_advisors
 		}
@@ -599,7 +599,7 @@ focus_tree = {
 	focus = {
 		id = TUR_import_dependency
 		icon = GFX_focus_mex_privatisation
-		cost = 5
+		cost = 10
 		prerequisite = {
 			focus = TUR_invite_foreign_designers
 		}
@@ -1073,7 +1073,6 @@ focus_tree = {
 			FOCUS_FILTER_HISTORICAL
 		}
 		completion_reward = {
-			unlock_decision_tooltip = TUR_navy_modernization_decision
 			add_ideas = TUR_bahriye_navy_school
 			set_country_flag = TUR_bahriye_nezareti
 		}
@@ -1494,6 +1493,7 @@ focus_tree = {
 		}
 		relative_position_id = TUR_priority_in_purchases
 		completion_reward = {
+			unlock_decision_tooltip = TUR_navy_modernization_decision
 			navy_experience = 30
 			add_doctrine_cost_reduction = {
 				name = TUR_naval_maneuvres
@@ -2037,7 +2037,7 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			add_ideas = idea_turkey_teyyare_mekteb
+			add_ideas = TUR_teyyare_mekteb
 		}
 	}
 	focus = {
@@ -3167,10 +3167,6 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_ideas = free_trade
-			add_offsite_building = {
-				type = industrial_complex
-				level = 1
-			}
 		}
 		ai_will_do = {
 			base = 35
@@ -3487,7 +3483,7 @@ focus_tree = {
 			TUR_remove_debt_1475 = yes
 			add_timed_idea = {
 				idea = TUR_privatized_infrastructure
-				days = 720
+				days = 360
 			}
 		}
 		ai_will_do = {
@@ -5999,15 +5995,17 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		available = {
-			any_state = {
-				is_core_of = IRQ
-				CONTROLLER = {
-					OR = {
-						tag = ROOT
-						is_subject_of = ROOT
+			IRQ = {
+				any_core_state = {
+					CONTROLLER = {
+						OR = {
+							tag = ROOT
+							is_subject_of = ROOT
+						}
 					}
 				}
 			}
+			
 			# Ottoman won't gonna ignore Brits gettin away with Kuwait when they are in good condition
 		}
 		completion_reward = {
@@ -6393,9 +6391,10 @@ focus_tree = {
 				has_completed_focus = TUR_our_traditional_allies
 				has_war_with = GER
 			}
-			any_state = {
-				is_core_of = IRQ
-				is_controlled_by_ROOT_or_subject = yes
+			IRQ = {
+				any_core_state = {
+					is_controlled_by_ROOT_or_subject = yes
+				}
 			}
 		}
 		bypass = {
@@ -7232,18 +7231,12 @@ focus_tree = {
 			FOCUS_FILTER_ANNEXATION
 		}
 		available = {
-			OR = {
-				any_state = {
+			any_state_of = {
+				target = { 855 816 806 }
+				owner = {
 					OR = {
-						state = 855
-						state = 816
-						state = 806
-					}
-					owner = {
-						OR = {
-							tag = RUS
-							is_subject_of = RUS
-						}
+						tag = RUS
+						is_subject_of = RUS
 					}
 				}
 			}
@@ -7277,26 +7270,12 @@ focus_tree = {
 			FOCUS_FILTER_ANNEXATION
 		}
 		available = {
-			OR = {
-				any_state = {
+			any_state_of = {
+				target = { 656 765 886 658 294 882 659 930 885 904  905 }
+				owner = {
 					OR = {
-						state = 656
-						state = 765
-						state = 886
-						state = 658
-						state = 294
-						state = 882
-						state = 659
-						state = 930
-						state = 885
-						state = 904
-						state = 905
-					}
-					owner = {
-						OR = {
-							tag = ENG
-							is_subject_of = ENG
-						}
+						tag = ENG
+						is_subject_of = ENG
 					}
 				}
 			}
@@ -11696,6 +11675,7 @@ focus_tree = {
 				controls_state = 938
 				controls_state = 939
 				controls_state = 1068
+				controls_state = 1299
 				controls_state = 1069
 			}
 		}
@@ -11756,6 +11736,7 @@ focus_tree = {
 						state = 938
 						state = 939
 						state = 1068
+						state = 1299
 						state = 1069
 					}
 					TUR_state_has_anyminority_modifier = yes

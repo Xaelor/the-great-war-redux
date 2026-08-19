@@ -3748,19 +3748,8 @@ country_event = {
 	}
 	option = {
 		name = ww1_romania.111.b
-		set_autonomy = {
-			target = HUN
-			autonomous_state = autonomy_free
-			end_wars = yes
-			end_civil_wars = yes
-		}
-		if = {
-			limit = {
-				HUN = {
-					is_in_faction_with = ROM
-				}
-			}
-			leave_faction = yes
+		HUN = {
+			free_subject_leave_faction = yes
 		}
 		hidden_effect = {
 			set_country_flag = ROM_freed_hungary
@@ -3788,19 +3777,8 @@ country_event = {
 	}
 	option = {
 		name = ww1_romania.111.b
-		set_autonomy = {
-			target = HUN
-			autonomous_state = autonomy_free
-			end_wars = yes
-			end_civil_wars = yes
-		}
-		if = {
-			limit = {
-				HUN = {
-					is_in_faction_with = ROM
-				}
-			}
-			leave_faction = yes
+		HUN = {
+			free_subject_leave_faction = yes
 		}
 		hidden_effect = {
 			set_country_flag = ROM_freed_hungary
@@ -3829,19 +3807,8 @@ country_event = {
 	}
 	option = {
 		name = ww1_romania.111.b
-		set_autonomy = {
-			target = HUN
-			autonomous_state = autonomy_free
-			end_wars = yes
-			end_civil_wars = yes
-		}
-		if = {
-			limit = {
-				HUN = {
-					is_in_faction_with = ROM
-				}
-			}
-			leave_faction = yes
+		HUN = {
+			free_subject_leave_faction = yes
 		}
 		hidden_effect = {
 			set_country_flag = ROM_freed_hungary
@@ -3865,19 +3832,8 @@ country_event = {
 				has_country_flag = ROM_do_not_release_hungary
 			}
 		}
-		set_autonomy = {
-			target = HUN
-			autonomous_state = autonomy_free
-			end_wars = yes
-			end_civil_wars = yes
-		}
-		if = {
-			limit = {
-				HUN = {
-					is_in_faction_with = ROM
-				}
-			}
-			leave_faction = yes
+		HUN = {
+			free_subject_leave_faction = yes
 		}
 		hidden_effect = {
 			set_country_flag = ROM_freed_hungary
@@ -3889,6 +3845,7 @@ country_event = {
 			has_country_flag = ROM_do_not_release_hungary
 		}
 		HUN = {
+			clr_subject_flags = yes
 			set_country_flag = protectorate
 			get_current_government_type = yes
 			PREV = {
@@ -4498,62 +4455,62 @@ country_event = {
 	}
 }
 
-country_event = {
-	id = ww1_romania.132
-	title = ww1_romania.132.t
-	desc = ww1_romania.132.d
-	picture = GFX_report_event_soldiers_marching
-	fire_only_once = yes
-	trigger = {
-		tag = ROM
-		FRA = {
-			has_war_with = GER
-		}
-		NOT = {
-			ROM = {
-				has_war_with = GER
-			}
-			ROM = {
-				is_in_faction_with = GER
-			}
-		}
-	}
-	mean_time_to_happen = {
-		days = 5
-	}
-	option = {
-		## UNHISTORICAL ##
-		name = ww1_romania.132.a
-		add_political_power = -50
-		ai_chance = {
-			factor = 0
-		}
-	}
-	option = {
-		## HISTORICAL ##
-		name = ww1_romania.132.b
-		trigger = {
-			NOT = {
-				ROM = {
-					has_country_flag = romania_invited_allied_spies
-				}
-			}
-		}
-		every_country = {
-			limit = {
-				is_in_faction_with = GER
-			}
-			diplomatic_relation = {
-				country = ROM
-				relation = military_access
-				active = yes
-			}
-		}
-		ai_chance = {
-			factor = 100
-		}
-	}
-}
+#country_event = {
+#	id = ww1_romania.132
+#	title = ww1_romania.132.t
+#	desc = ww1_romania.132.d
+#	picture = GFX_report_event_soldiers_marching
+#	fire_only_once = yes
+#	trigger = {
+#		tag = ROM
+#		FRA = {
+#			has_war_with = GER
+#		}
+#		NOT = {
+#			ROM = {
+#				has_war_with = GER
+#			}
+#			ROM = {
+#				is_in_faction_with = GER
+#			}
+#		}
+#	}
+#	mean_time_to_happen = {
+#		days = 5
+#	}
+#	option = {
+#		## UNHISTORICAL ##
+#		name = ww1_romania.132.a
+#		add_political_power = -50
+#		ai_chance = {
+#			factor = 0
+#		}
+#	}
+#	option = {
+#		## HISTORICAL ##
+#		name = ww1_romania.132.b
+#		trigger = {
+#			NOT = {
+#				ROM = {
+#					has_country_flag = romania_invited_allied_spies
+#				}
+#			}
+#		}
+#		every_country = {
+#			limit = {
+#				is_in_faction_with = GER
+#			}
+#			diplomatic_relation = {
+#				country = ROM
+#				relation = military_access
+#				active = yes
+#			}
+#		}
+#		ai_chance = {
+#			factor = 100
+#		}
+#	}
+#}
 
 country_event = {
 	id = ww1_romania.134
@@ -4588,6 +4545,14 @@ country_event = {
 		remove_ideas = {
 			idea_armistice
 			standing_alone
+		}
+		if = {
+			limit = { 
+				has_dynamic_modifier = ROM_occupation_costs
+			}
+			remove_dynamic_modifier = {
+				modifier = ROM_occupation_costs
+			}
 		}
 		join_great_war_against_GER = yes
 		ai_chance = {

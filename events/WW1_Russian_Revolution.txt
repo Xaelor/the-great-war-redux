@@ -238,20 +238,15 @@ country_event = {
 					character = GEO_nikoloz_chkheidze
 					ideology = reformist_socialism
 				}
-				every_country = {
+				every_subject_country = {
 					limit = {
-						is_subject_of = RUS
 						OR = {
 							tag = KHI
 							tag = BUK
 						}
 					}
-					RUS = {
-						end_puppet = PREV
-					}
-					leave_faction = yes
+					free_subject_leave_faction = yes
 					add_ideas = standing_alone
-					clr_country_flag = protectorate
 				}
 				every_other_country = {
 					limit = {
@@ -796,25 +791,26 @@ country_event = {
 				RUS = {
 					end_puppet = PER
 				}	
-				every_country = {
-					limit = {
-						has_war_with = PER
-						NOT = {
-							original_tag = PER
-							has_wargoal_against = PER
-							any_state = {
-								OR = {
-									is_owned_by = PER
-									is_owned_by = PRG
+				PER = {
+					every_enemy_country = {
+						limit = {
+							NOT = {
+								original_tag = PER
+								has_wargoal_against = PER
+								any_state = {
+									OR = {
+										is_owned_by = PER
+										is_owned_by = PRG
+									}
+									is_claimed_by = PREV			
 								}
-								is_claimed_by = PREV			
 							}
 						}
+						PER = {
+							white_peace = PREV
+						}
 					}
-					PER = {
-						white_peace = PREV
-					}
-				}
+				}			
 				PER = {
 					leave_faction = yes
 				}
@@ -881,17 +877,7 @@ country_event = {
 						has_country_leader_ideology = vanguardism
 					}
 				}
-				RUS = {
-					end_puppet = PREV
-				}
-				DON = {
-					add_ideas = RCW_inogorodnije_excluded
-				}
-				KUB = {
-					add_ideas = RCW_inogorodnije_excluded
-				}
-				leave_faction = yes
-				clr_country_flag = protectorate
+				free_subject_leave_faction = yes
 			}
 			RUS = {
 				add_named_threat = {
