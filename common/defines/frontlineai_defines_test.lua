@@ -225,7 +225,6 @@ NDefines.NAI.RESERVE_TO_COMMITTED_BALANCE = 1.0
 
 --- Navy Defines
 NDefines.NAI.RESEARCH_NAVAL_DOCTRINE_NEED_GAIN_FACTOR = 0.075 -- Multiplies value based on relative naval industry size / country size.
-NDefines.NAI.DANGEROUS_DISTANCE_TO_CAPITAL = 1
 
 --- Diplo Defines
 NDefines.NDiplomacy.NAP_UNBREAKABLE_MONTHS = 18                    -- NAPS cannot be broken for this many months
