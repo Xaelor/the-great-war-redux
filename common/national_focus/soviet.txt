@@ -225,6 +225,7 @@ focus_tree = {
 						OR = {
 							state = 233
 							state = 940
+							state = 1299
 						}						
 					}	
 					BSR = {
@@ -268,8 +269,29 @@ focus_tree = {
 				}
 			}			
 			unlock_decision_category_tooltip = SOV_combat_the_counter_revolution
-			activate_mission = SOV_soviet_stavrapol
-			activate_mission = SOV_soviet_abkhazia
+			if = {
+				limit = {
+					NOT = {
+						any_country_with_original_tag = {
+							original_tag_to_check = RUS
+							has_country_flag = RUS_stavropol_tag
+						}
+					}
+					owns_state = 235			
+				}
+				activate_mission = SOV_soviet_stavrapol
+			}
+			if = {
+				limit = {
+					ABK = {
+						exists = yes
+						NOT = {
+							has_government = communism
+						}
+					}
+				}
+				activate_mission = SOV_soviet_abkhazia
+			}
 			#activate_mission = SOV_soviet_black_sea
 		}
 		ai_will_do = {
@@ -2133,9 +2155,40 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = SOV_sovet_republics_tt
 			unlock_decision_category_tooltip = SOV_decision_soviet_republics
-			activate_mission = SOV_soviet_terek
-			activate_mission = SOV_soviet_amur
-			activate_mission = SOV_soviet_belarus_mssion
+			# if = {
+			# 	limit = {
+			# 		NOT = { 
+			# 			country_exists = TAT
+			# 			has_global_flag = russian_civil_war
+			# 		}
+			# 		owns_state = 249					
+			# 	}
+			# 	activate_mission = SOV_soviet_kazan
+			# }
+			if = {
+				limit = {
+					NOT = { country_exists = TER }
+					owns_state = 232
+				}
+				activate_mission = SOV_soviet_terek
+			}
+			if = {
+				limit = {
+					NOT = { country_exists = AMU }
+					owns_state = 561					
+				}
+				activate_mission = SOV_soviet_amur
+			}		
+			if = {
+				limit = {
+					OR = {
+						owns_state = 242
+						owns_state = 206
+					}
+					NOT = { country_exists = BRS }
+				}
+				activate_mission = SOV_soviet_belarus_mssion
+			}
 		}
 		ai_will_do = {
 			factor = 100
@@ -2533,7 +2586,7 @@ focus_tree = {
 			}
 			set_autonomy = {
 				target = FER
-				autonomy_state = autonomy_satellite
+				autonomy_state = autonomy_tgwr_sr
 				end_civil_wars = no
 				end_wars = no			
 			}

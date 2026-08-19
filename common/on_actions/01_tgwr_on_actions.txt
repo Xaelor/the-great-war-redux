@@ -966,8 +966,7 @@
 				}
 			}
 			FROM = {
-				clr_country_flag = protectorate
-				clr_country_flag = colony
+				clr_subject_flags = yes
 			}
 			if = {
 				limit = {
@@ -1137,6 +1136,7 @@
 	}
 	on_subject_free = {
 		effect = {
+			clr_subject_flags = yes
 			if = {
 				limit = {
 					tag = CMR
@@ -1281,14 +1281,13 @@
 					retire_ideology_leader = neutrality
 				}
 			}
-			clr_country_flag = protectorate
-			clr_country_flag = colony
 			abandon_puppet_tag = yes
 			log = "[GetDateText]: [ROOT.GetName] has been released as a free country"
 		}
 	}
 	on_release_as_free = {
 		effect = {
+			clr_subject_flags = yes
 			if = {
 				limit = {
 					OR = {
@@ -1321,16 +1320,6 @@
 			}
 			if = {
 				limit = {
-					ROOT = {
-						has_country_flag = protectorate
-					}
-				}
-				ROOT = {
-					clr_country_flag = protectorate
-				}
-			}
-			if = {
-				limit = {
 					has_cosmetic_tag = SOV_puppet
 					FROM = {
 						NOT = {
@@ -1354,6 +1343,7 @@
 	#*evil laugh*
 	on_puppet = {
 		effect = {
+			clr_subject_flags = yes
 			if = {
 				limit = {
 					OR = {
@@ -1916,16 +1906,6 @@
 			}
 			if = {
 				limit = {
-					ROOT = {
-						has_country_flag = protectorate
-					}
-				}
-				ROOT = {
-					clr_country_flag = protectorate
-				}
-			}
-			if = {
-				limit = {
 					original_tag = QBC
 					is_subject_of = FRA
 					FRA = {
@@ -2069,7 +2049,7 @@
 					original_tag = SER
 					FROM = { tag = AUS }
 					NOT = {
-						has_autonomy_state = autonomy_satellite
+						has_autonomy_state = autonomy_tgwr_client_state
 						has_autonomy_state = autonomy_tgwr_real_union
 					}
 				}
@@ -2916,14 +2896,9 @@
 					OVERLORD = {
 						is_league_of_nations_member = yes
 					}
-					# Puppets won't join
+					# Puppets and non-sovereign entities won't join
 					NOT = {
-						is_puppet = yes
-						has_autonomy_state = autonomy_tgwr_informal_protectorate
-						has_autonomy_state = autonomy_wtt_imperial_subject
-						has_autonomy_state = autonomy_tgwr_ottoman_emirate #they have no diplomatic rights
-						has_autonomy_state = autonomy_tgwr_unilateral_union #they don't want to be a independent nation
-						has_autonomy_state = autonomy_tgwr_regional_government
+						has_no_diplomacy = yes
 					}	
 				}
 				join_the_league_of_nations = yes
@@ -2949,6 +2924,7 @@
 	}
 	on_release_as_puppet = {
 		effect = {
+			clr_subject_flags = yes
 			if = {
 				limit = {
 					OR = {
@@ -3516,7 +3492,7 @@
 					original_tag = SER
 					FROM = { tag = AUS }
 					NOT = {
-						has_autonomy_state = autonomy_satellite
+						has_autonomy_state = autonomy_tgwr_client_state
 						has_autonomy_state = autonomy_tgwr_real_union
 					}
 				}
@@ -4369,26 +4345,13 @@
 					OVERLORD = {
 						is_league_of_nations_member = yes
 					}
-					# Puppets won't join
+					# Puppets and non-sovereign entities won't join
 					NOT = {
-						has_autonomy_state = autonomy_tgwr_protectorate
-						has_autonomy_state = autonomy_tgwr_informal_protectorate
-						has_autonomy_state = autonomy_tgwr_integrated_protectorate
-						has_autonomy_state = autonomy_tgwr_concession
-						has_autonomy_state = autonomy_integrated_puppet
-						has_autonomy_state = autonomy_puppet
-						has_autonomy_state = autonomy_wtt_imperial_subject
-						has_autonomy_state = autonomy_wtt_imperial_protectorate
-						has_autonomy_state = autonomy_colony
-						has_autonomy_state = autonomy_tgwr_self_governing_colony
-						has_autonomy_state = autonomy_tgwr_ottoman_emirate #they have no diplomatic rights
-						has_autonomy_state = autonomy_tgwr_unilateral_union #they don't want to be a independent nation
+						has_no_diplomacy = yes
 					}
 				}
 				join_the_league_of_nations = yes
 			}
-			clr_country_flag = protectorate
-			clr_country_flag = colony
 			log = "[GetDateText]: [ROOT.GetName] has been released as puppet by [FROM.GetName]"
 		}
 	}
@@ -5854,7 +5817,9 @@
 						NOT = { tag = SOV }
 					}
 				}
-				end_puppet = CER
+				CER = {
+					free_subject_leave_faction = yes
+				}
 				random_enemy_country = {
 					limit = {
 						original_tag = RUS
@@ -5978,7 +5943,9 @@
 							}
 						}
 					}
-					end_puppet = TIB
+					TIB = {
+						free_subject_leave_faction = yes
+					}
 				}
 			}
 			if = {
@@ -6266,7 +6233,7 @@
 							}
 						}
 					}
-					PREV = { end_puppet = PREV }
+					free_subject_leave_faction = yes
 				}
 				every_enemy_country = {
 					limit = {
@@ -7103,7 +7070,7 @@
 						SOV = {
 							set_autonomy = {
 								target = MON
-								autonomy_state = autonomy_satellite
+								autonomy_state = autonomy_tgwr_sr
 								freedom_level = 0.5
 								end_wars = yes
 							}
@@ -7139,7 +7106,7 @@
 					white_peace = ROOT
 					set_autonomy = {
 						target = ROOT
-						autonomy_state = autonomy_puppet
+						autonomy_state = autonomy_tgwr_sr
 					}
 				}
 				ROOT = {
@@ -7935,7 +7902,7 @@
 						}
 					}
 					every_subject_country = {
-						PREV = { end_puppet = PREV }
+						free_subject_leave_faction = yes
 						if = {
 							limit = {
 								OR = {
@@ -7944,6 +7911,7 @@
 								}
 							}
 							get_current_government_type = yes
+							set_country_flag = protectorate
 							608 = {
 								OWNER = {
 									set_autonomy = {
@@ -10261,6 +10229,26 @@
 						set_cosmetic_tag = AST_communism
 					}
 				}
+				else_if = {
+					limit = {
+						original_tag = TAT
+					}
+					if = {
+						limit = {
+							has_cosmetic_tag = TAT_kazan
+						}
+						set_cosmetic_tag = TAT_kazan_communism
+						else_if = {
+							limit = {
+								has_cosmetic_tag = TATBSK
+							}
+							set_cosmetic_tag = TATBSK_communism
+							else = {
+								set_cosmetic_tag = TAT_communism
+							}
+						}
+					}
+				}
 			}
 			else = {
 				# limit = {
@@ -10596,7 +10584,9 @@
 					}
 					if = {
 						limit = { has_subject = BLE }
-						end_puppet = BLE
+						BLE = {
+							free_subject_leave_faction = yes
+						}
 					}
 					if = {
 						limit = { has_cosmetic_tag = AEF_communism }
@@ -10916,6 +10906,26 @@
 						set_cosmetic_tag = KPB_luso_brazilian_empire
 					}
 				}
+				else_if = {
+					limit = {
+						original_tag = TAT
+					}
+					if = {
+						limit = {
+							has_cosmetic_tag = TAT_kazan_communism
+						}
+						set_cosmetic_tag = TAT_kazan
+						else_if = {
+							limit = {
+								has_cosmetic_tag = TATBSK_communism
+							}
+							set_cosmetic_tag = TATBSK
+							else = {
+								drop_cosmetic_tag = yes
+							}
+						}
+					}
+				}
 			}
 			if = {
 				limit = {
@@ -11078,6 +11088,13 @@
 						set_cosmetic_tag = CAU_RUS
 					}
 				}
+				else_if = {
+					limit = {
+						original_tag = MOU
+						has_country_leader_ideology = stratocracy
+					}
+					set_cosmetic_tag = MOU_democratic				
+				}
 			}
 			else = {
 				# limit = {
@@ -11091,6 +11108,7 @@
 							has_cosmetic_tag = FRA_proto_fascism
 							has_cosmetic_tag = BUL_neutrality
 							has_cosmetic_tag = JAP_fascism_color
+							has_cosmetic_tag = MOU_democratic
 						}
 					}
 					drop_cosmetic_tag = yes
@@ -11691,12 +11709,7 @@
 						has_subject = ROOT
 					}
 				}
-				overlord = {
-					set_autonomy = {
-						target = ROOT
-						autonomy_state = autonomy_free
-					}
-				}
+				free_subject = yes
 			}
 			if = {
 				limit = {
@@ -11859,12 +11872,7 @@
 						has_subject = ROOT
 					}
 				}
-				overlord = {
-					set_autonomy = {
-						target = ROOT
-						autonomy_state = autonomy_free
-					}
-				}
+				free_subject = yes
 			}
 			if = {
 				limit = {
