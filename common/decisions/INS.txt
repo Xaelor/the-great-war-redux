@@ -1,46 +1,4 @@
 INS_dc_faction_management = {
-	INS_crush_si = {
-		icon = GFX_decision_hol_war_on_pacifism
-		allowed = {
-			original_tag = INS
-		}
-		available = {
-			NOT = {
-				has_country_flag  = INS_interacting_si
-			}
-			check_variable = {
-				INS_muslim_pop = 0
-			}
-			check_variable = {
-				INS_muslim_loyalty = 0
-			}
-			custom_trigger_tooltip = {
-				tooltip = INS_ttt_cs
-			}
-		}
-		visible = {
-			has_completed_focus = INS_confiscate_si_propoganda
-		}
-		fire_only_once = yes
-		complete_effect = {
-			set_country_flag = INS_interacting_si
-		}
-		remove_effect = {
-			clr_country_flag = INS_interacting_si
-			set_country_flag = INS_flag_si_crushed
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.025
-			}
-			add_stability = -0.05
-			custom_effect_tooltip = INS_effect_cs_tt
-		}
-		days_remove = 30
-		cost = 150
-		ai_will_do = {
-			factor = 200
-		}
-	}
 	INS_grant_bu_recognition = {
 		icon = GFX_decision_hol_war_on_pacifism
 		allowed = {
@@ -262,6 +220,34 @@ INS_dc_faction_management = {
 			factor = 200
 		}
 	}
+	INS_arrest_marco = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+			original_tag = INS
+		}
+		available = {
+			
+		}
+		fire_only_once = yes
+		visible = {
+			has_country_flag = INS_flag_marco_active
+		}
+		fire_only_once = no
+		remove_effect = {
+			clr_country_flag = INS_flag_marco_active
+			hidden_effect = {
+				country_event = {
+					id = ww1_indonesia.36
+					days = 5
+				}
+			}
+		}
+		days_remove = 30
+		cost = 50
+		ai_will_do = {
+			factor = 200
+		}
+	}
 	INS_weakening_central_si_leadership = {
 		allowed = {
 			original_tag = INS
@@ -393,6 +379,39 @@ INS_dc_faction_management = {
 			add_to_variable = {
 				INS_timer_sig = 1
 			}
+    	}
+	}
+	INS_marco_writing_timer = {
+		allowed = {
+			original_tag = INS
+		}
+    	activation = {
+			has_country_flag = INS_flag_marco_active
+    	}
+		fire_only_once = yes
+    	available = {
+			NOT = {
+				has_country_flag = INS_flag_marco_active
+			}
+    	}
+    	cancel_trigger = {
+			
+    	}
+    	icon = GFX_decision_generic_factory
+    	days_mission_timeout = 30
+    	selectable_mission = no
+    	complete_effect = {
+			
+    	}
+    	timeout_effect = {
+			add_power_balance_value = {
+				id = INS_native_loyalty
+				value = -0.05
+			}
+			custom_effect_tooltip = empty_space_tt
+			add_stability = -0.01
+			add_political_power = -5
+			activate_mission = INS_marco_writing_timer
     	}
 	}
 }
