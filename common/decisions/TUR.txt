@@ -425,6 +425,9 @@ TGWR_great_power_politics = {
 				navy = yes
 			}
 			set_country_flag = TUR_black_sea_raid_happened
+			hidden_effect = {
+				unlock_national_focus = TUR_german_ottoman_alliance
+			}
 		}
 	}
 	TUR_schelendorfs_plan = {
@@ -6350,11 +6353,11 @@ TUR_minority_decision = {
 				if = {
 					limit = {
 						NOT = {
-							has_template = "Furqat al Mushat"
+							has_template = "Firqat Al-Mushāt"
 						}
 					}
 					division_template = {
-						name = "Furqat al Mushat"
+						name = "Firqat Al-Mushāt"
 						is_locked = yes
 						regiments = {
 							infantry = {
@@ -6404,11 +6407,12 @@ TUR_minority_decision = {
 						if = {
 							limit = {
 								NOT = {
-									has_template = "Quwat al Qabaeel"
+									has_template = "Quwat Al-Qabaeel"
 								}
 							}
 							division_template = {
-								name = "Quwat al Qabaeel"
+								name = "Quwat Al-Qabaeel"
+								division_names_group = ARBC_IRR_01
 								is_locked = yes
 								regiments = {
 									irregular_infantry = {
@@ -6442,19 +6446,19 @@ TUR_minority_decision = {
 				}
 				293 = {
 					create_unit = {
-						division = "name = \"Quwat al Qabaeel Yemen\" division_template = \"Quwat al Qabaeel\" start_experience_factor = 0.5"
+						division = "name = \"Quwat Al-Qabaeel Yemen\" division_template = \"Quwat Al-Qabaeel\" start_experience_factor = 0.5"
 						owner = YEM
 					}
 					create_unit = {
-						division = "name = \"Quwat al Qabaeel Yemen\" division_template = \"Quwat al Qabaeel\" start_experience_factor = 0.5"
+						division = "name = \"Quwat Al-Qabaeel Yemen\" division_template = \"Quwat Al-Qabaeel\" start_experience_factor = 0.5"
 						owner = YEM
 					}
 					create_unit = {
-						division = "name = \"Quwat al Qabaeel Yemen\" division_template = \"Quwat al Qabaeel\" start_experience_factor = 0.5"
+						division = "name = \"Quwat Al-Qabaeel Yemen\" division_template = \"Quwat Al-Qabaeel\" start_experience_factor = 0.5"
 						owner = YEM
 					}
 					create_unit = {
-						division = "name = \"Quwat al Qabaeel Yemen\" division_template = \"Quwat al Qabaeel\" start_experience_factor = 0.5"
+						division = "name = \"Quwat Al-Qabaeel Yemen\" division_template = \"Quwat Al-Qabaeel\" start_experience_factor = 0.5"
 						owner = YEM
 					}
 				}
@@ -6654,11 +6658,11 @@ TUR_minority_decision = {
 					if = {
 						limit = {
 							NOT = {
-								has_template = "Furqat al Mushat"
+								has_template = "Firqat Al-Mushāt"
 							}
 						}
 						division_template = {
-							name = "Furqat al Mushat"
+							name = "Firqat Al-Mushāt"
 							regiments = {
 								infantry = { x = 0 y = 0 }
 								infantry = { x = 0 y = 1 }
@@ -6670,11 +6674,12 @@ TUR_minority_decision = {
 					if = {
 						limit = {
 							NOT = {
-								has_template = "Quwat al Qabaeel"
+								has_template = "Quwat Al-Qabaeel"
 							}
 						}
 						division_template = {
-							name = "Quwat al Qabaeel"
+							name = "Quwat Al-Qabaeel"
+							division_names_group = ARBC_IRR_01
 							is_locked = yes
 							force_allow_recruiting = yes
 							division_cap = 5
@@ -6725,11 +6730,11 @@ TUR_minority_decision = {
 				}
 				747 = {
 					create_unit = {
-						division = "name = \"Quwat al Qabaeel Asir\" division_template = \"Quwat al Qabaeel\" start_experience_factor = 0.5"
+						division = "name = \"Quwat Al-Qabaeel Asir\" division_template = \"Quwat Al-Qabaeel\" start_experience_factor = 0.5"
 						owner = ASR
 					}
 					create_unit = {
-						division = "name = \"Quwat al Qabaeel Asir\" division_template = \"Quwat al Qabaeel\" start_experience_factor = 0.5"
+						division = "name = \"Quwat Al-Qabaeel Asir\" division_template = \"Quwat Al-Qabaeel\" start_experience_factor = 0.5"
 						owner = ASR
 					}
 					create_unit = {
@@ -6750,11 +6755,11 @@ TUR_minority_decision = {
 						}
 					}
 					create_unit = {
-						division = "name = \"Quwat al Qabaeel Asir\" division_template = \"Quwat al Qabaeel\" start_experience_factor = 0.5"
+						division = "name = \"Quwat Al-Qabaeel Asir\" division_template = \"Quwat Al-Qabaeel\" start_experience_factor = 0.5"
 						owner = ASR
 					}
 					create_unit = {
-						division = "name = \"Quwat al Qabaeel Asir\" division_template = \"Quwat al Qabaeel\" start_experience_factor = 0.5"
+						division = "name = \"Quwat Al-Qabaeel Asir\" division_template = \"Quwat Al-Qabaeel\" start_experience_factor = 0.5"
 						owner = ASR
 					}
 					create_unit = {
@@ -12277,6 +12282,259 @@ TUR_economy_decision = {
 			base = 100
 		}
 	}
+	TUR_berlin_baghdad_railway_mission = {
+		allowed = {
+			original_tag = TUR
+		}
+		icon = GFX_decision_generic_railway
+		available = {
+			#BREAK MISSION
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = TUR_OPDA_trigger_tooltip_dissolved
+					NOT = {
+						has_variable = opda_consumer_goods
+					}
+				}
+				has_war_with = GER
+				has_decision = TUR_stop_berlin_baghdad_railway_mission
+				hidden_trigger = {
+					OR = {
+						check_variable = {
+							var = TUR_berlin_baghdad_railway_variable
+							value = 9
+							compare = greater_than
+						}
+						AND = {
+							NOT = {
+								has_global_flag = berlin_baghdad_dispute_ended
+							}
+							all_controlled_state = {
+								OR = {
+									state = 341
+									state = 1018
+									state = 347
+									state = 1019
+									state = 49
+									state = 1017
+									state = 348
+									state = 344
+									state = 350
+									state = 352
+									state = 676
+									state = 879
+									state = 291
+								}
+								OR = {
+									has_state_flag = TUR_berlin_baghdad_railway_state
+									free_building_slots = {
+										building = infrastructure
+										size < 5
+									}
+								}
+							}
+						}
+						AND = {
+							has_global_flag = berlin_baghdad_dispute_ended
+							all_controlled_state = {
+								OR = {
+									state = 341
+									state = 1018
+									state = 347
+									state = 1019
+									state = 49
+									state = 1017
+									state = 348
+									state = 344
+									state = 350
+									state = 352
+								}
+								OR = {
+									has_state_flag = TUR_berlin_baghdad_railway_state
+									free_building_slots = {
+										building = infrastructure
+										size < 5
+									}
+								}
+							}
+						}
+					}
+				}
+				GER = { has_country_flag = great_war_loser }
+			}
+		}
+		activation = {
+			always = no
+		}
+		days_mission_timeout = 35
+		timeout_effect = {
+			TUR_add_debt_0295 = yes
+			if = {
+				limit = {
+					check_variable = { TUR_berlin_baghdad_railway_variable = 9 }
+				}
+				add_to_variable = { TUR_berlin_baghdad_railway_variable = 1 }
+				build_railway = {
+					level = 1
+					path = { 10106 1600 13273 3795 13390 2097 }
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { TUR_berlin_baghdad_railway_variable = 8 }
+				}
+				add_to_variable = { TUR_berlin_baghdad_railway_variable = 1 }
+				build_railway = {
+					level = 1
+					path = { 1549 10804 10106 }
+				}
+				hidden_effect = {
+					activate_mission = TUR_berlin_baghdad_railway_mission
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { TUR_berlin_baghdad_railway_variable = 7 }
+				}
+				add_to_variable = { TUR_berlin_baghdad_railway_variable = 1 }
+				build_railway = {
+					level = 1
+					path = { 12473 7671 6883 1634 1578 1549 }
+				}
+				hidden_effect = {
+					activate_mission = TUR_berlin_baghdad_railway_mission
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { TUR_berlin_baghdad_railway_variable = 6 }
+				}
+				add_to_variable = { TUR_berlin_baghdad_railway_variable = 1 }
+				build_railway = {
+					level = 1
+					path = { 11746 806 12473 }
+				}
+				hidden_effect = {
+					activate_mission = TUR_berlin_baghdad_railway_mission
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { TUR_berlin_baghdad_railway_variable = 5 }
+				}
+				add_to_variable = { TUR_berlin_baghdad_railway_variable = 1 }
+				build_railway = {
+					level = 1
+					path = { 11746 11810 9830 }
+				}
+				build_railway = {
+					level = 1
+					path = { 11746 10056 }
+				}
+				hidden_effect = {
+					activate_mission = TUR_berlin_baghdad_railway_mission
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { TUR_berlin_baghdad_railway_variable = 4 }
+				}
+				add_to_variable = { TUR_berlin_baghdad_railway_variable = 1 }
+				build_railway = {
+					level = 1
+					path = { 10106 1600 13273 3795 13390 2097 }
+				}
+				hidden_effect = {
+					activate_mission = TUR_berlin_baghdad_railway_mission
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { TUR_berlin_baghdad_railway_variable = 3 }
+				}
+				add_to_variable = { TUR_berlin_baghdad_railway_variable = 1 }
+				build_railway = {
+					level = 1
+					path = { 1549 10804 10106 }
+				}
+				676 = {
+					add_building_construction = {
+						type = supply_node
+						level = 1
+						province = 10106
+						instant_build = yes
+					}
+				}
+				hidden_effect = {
+					activate_mission = TUR_berlin_baghdad_railway_mission
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { TUR_berlin_baghdad_railway_variable = 2 }
+				}
+				add_to_variable = { TUR_berlin_baghdad_railway_variable = 1 }
+				build_railway = {
+					level = 1
+					path = { 7671 6883 1634 1578 1549 }
+				}
+				hidden_effect = {
+					activate_mission = TUR_berlin_baghdad_railway_mission
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { TUR_berlin_baghdad_railway_variable = 1 }
+				}
+				add_to_variable = { TUR_berlin_baghdad_railway_variable = 1 }
+				build_railway = {
+					level = 1
+					path = { 11746 806 3889 7671 }
+				}
+				hidden_effect = {
+					activate_mission = TUR_berlin_baghdad_railway_mission
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = TUR_berlin_baghdad_railway_variable
+					}
+				}
+				set_variable = { TUR_berlin_baghdad_railway_variable = 1 }
+				build_railway = {
+					level = 1
+					path = { 11746 11810 9830 }
+				}
+				build_railway = {
+					level = 1
+					path = { 11746 10056 }
+				}
+				hidden_effect = {
+					activate_mission = TUR_berlin_baghdad_railway_mission
+				}
+			}
+		}
+		fire_only_once = no
+		is_good = yes
+	}
+	TUR_stop_berlin_baghdad_railway_mission = {
+		icon = generic_break_treaty
+		allowed = {
+			original_tag = TUR
+		}
+		visible = {
+			has_active_mission = TUR_berlin_baghdad_railway_mission
+		}
+		fire_only_once = yes
+		cost = 60
+		complete_effect = {
+			remove_mission = TUR_berlin_baghdad_railway_mission
+		}
+		ai_will_do = {
+			base = 0
+		}
+	}	
 	TUR_buy_FROM_infantry_weapons = {
 		icon = generic_industry
 		allowed = {
