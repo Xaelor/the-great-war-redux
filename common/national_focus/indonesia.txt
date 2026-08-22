@@ -1858,9 +1858,6 @@ focus_tree = {
 			focus = INS_annex_autonomies
 		}
 		relative_position_id = INS_annex_autonomies
-		mutually_exclusive = {
-			focus = INS_settle_differences_ip
-		}
 		available_if_capitulated = yes
 		completion_reward = {
 			
@@ -1876,18 +1873,15 @@ focus_tree = {
 		y = 1
 	}
 	focus = {
-		id = INS_settle_differences_ip
+		id = INS_exile_ringleaders
 		icon = GFX_focus_PER_stage_mass_protests
 		available = {
 			
 		}
 		prerequisite = {
-			focus = INS_annex_autonomies
-		}
-		mutually_exclusive = {
 			focus = INS_sideline_ip
 		}
-		relative_position_id = INS_annex_autonomies
+		relative_position_id = INS_sideline_ip
 		available_if_capitulated = yes
 		completion_reward = {
 			
@@ -1899,8 +1893,160 @@ focus_tree = {
 			
 		}
 		cost = 5
+		x = 0
+		y = 2
+	}
+	focus = {
+		id = INS_disrupt_ip_activities
+		icon = GFX_focus_PER_stage_mass_protests
+		available = {
+			
+		}
+		prerequisite = {
+			focus = INS_sideline_ip
+		}
+		relative_position_id = INS_sideline_ip
+		available_if_capitulated = yes
+		completion_reward = {
+			
+		}
+		ai_will_do = {
+			factor = 500
+		}
+		search_filters = {
+			
+		}
+		cost = 5
+		x = 1
+		y = 1
+	}
+	focus = {
+		id = INS_deal_with_isdv
+		icon = GFX_focus_GER_end_european_communism
+		available = {
+			
+		}
+		prerequisite = {
+			focus = INS_annex_autonomies
+		}
+		relative_position_id = INS_annex_autonomies
+		available_if_capitulated = yes
+		completion_reward = {
+			set_variable = {
+				INS_var_isdv_interaction_cost = 50
+			}
+			unlock_decision_tooltip = {
+				decision = INS_raid_isdv_buildings
+				show_effect_tooltip = yes
+			}
+			unlock_decision_tooltip = {
+				decision = INS_disrupt_isdv_rallies
+				show_effect_tooltip = yes
+			}
+		}
+		ai_will_do = {
+			factor = 500
+		}
+		search_filters = {
+			
+		}
+		cost = 5
 		x = -7
 		y = 1
+	}
+	focus = {
+		id = INS_disrupt_isdv_infiltration
+		icon = GFX_focus_PER_stage_mass_protests
+		available = {
+			
+		}
+		prerequisite = {
+			focus = INS_deal_with_isdv
+		}
+		relative_position_id = INS_deal_with_isdv
+		available_if_capitulated = yes
+		completion_reward = {
+			
+		}
+		ai_will_do = {
+			factor = 500
+		}
+		search_filters = {
+			
+		}
+		cost = 5
+		x = -1
+		y = 1
+	}
+	focus = {
+		id = INS_union_busting
+		icon = GFX_focus_RAJ_union_busting
+		available = {
+			
+		}
+		prerequisite = {
+			focus = INS_deal_with_isdv focus = INS_sideline_ip
+		}
+		relative_position_id = INS_deal_with_isdv
+		available_if_capitulated = yes
+		completion_reward = {
+			add_to_variable = {
+				INS_muslim_pop = -10
+				tooltip = INS_muslim_popularity_update_tt
+			}
+			add_to_variable = {
+				INS_indische_pop = -10
+				tooltip = INS_indisch_popularity_update_tt
+			}
+			add_to_variable = {
+				INS_communist_pop = -10
+				tooltip = INS_communists_popularity_update_tt
+			}
+			INS_loyalty_popularity_change = yes
+			custom_effect_tooltip = empty_space_tt
+			unlock_decision_tooltip = {
+				decision = INS_weaken_vstp
+				show_effect_tooltip = yes
+			}
+		}
+		ai_will_do = {
+			factor = 500
+		}
+		search_filters = {
+			
+		}
+		cost = 5
+		x = 1
+		y = 1
+	}
+	focus = {
+		id = INS_discredit_isdv
+		icon = GFX_focus_PRC_land_revolution_halted
+		available = {
+			
+		}
+		prerequisite = {
+			focus = INS_deal_with_isdv
+		}
+		relative_position_id = INS_deal_with_isdv
+		available_if_capitulated = yes
+		completion_reward = {
+			add_to_variable = {
+				INS_communist_pop = -10
+				tooltip = INS_communists_popularity_update_tt
+			}
+			custom_effect_tooltip = INS_effect_di_tt
+			set_country_flag = INS_flag_isdv_no_alliance
+		}
+		ai_will_do = {
+			factor = 500
+		}
+		search_filters = {
+			
+		}
+		cost = 5
+		x = 0
+		y = 2
 	}
 	focus = {
 		id = INS_friendly_si
@@ -1918,7 +2064,7 @@ focus_tree = {
 		available_if_capitulated = yes
 		completion_reward = {
 			set_variable = {
-				INS_var_si_interaction_cost = 30
+				INS_var_si_interaction_cost = 50
 			}
 			custom_effect_tooltip = empty_space_tt
 			unlock_decision_tooltip = {
@@ -2018,7 +2164,7 @@ focus_tree = {
 		available_if_capitulated = yes
 		completion_reward = {
 			set_variable = {
-				INS_var_si_interaction_cost = 30
+				INS_var_si_interaction_cost = 50
 			}
 			unlock_decision_tooltip = {
 				decision = INS_crash_si_meetings
