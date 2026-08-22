@@ -243,6 +243,102 @@ AUS = {
 	}
 }
 
+set_variable = { FRA.debt_of_@ROOT = 72 }
+set_variable = { GER.debt_of_@ROOT = 24 }
+set_variable = { ENG.debt_of_@ROOT = 18 }
+set_variable = { AUS.debt_of_@ROOT = 6 }
+set_variable = { FRA.interest_rate = 0.06 }
+set_variable = { GER.interest_rate = 0.06 }
+set_variable = { ENG.interest_rate = 0.06 }
+set_variable = { AUS.interest_rate = 0.06 }
+every_country = {
+	limit = {
+		has_variable = debt_of_@ROOT
+		NOT = {
+			has_war_with = ROOT
+		}
+	}
+	if = {
+		limit = {
+			check_variable = {
+				debt_of_@ROOT > 0
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					is_in_array = {
+						ROOT.lenders = THIS
+					}
+				}
+			}
+			add_to_array = {
+				ROOT.lenders = THIS
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					is_in_array = {
+						THIS.debtors = ROOT
+					}
+				}
+			}
+			add_to_array = {
+				THIS.debtors = ROOT
+			}
+		}
+	}
+	else = {
+		if = {
+			limit = {
+				is_in_array = {
+					ROOT.lenders = THIS
+				}
+			}
+			remove_from_array = {
+				ROOT.lenders = THIS
+			}
+		}
+		if = {
+			limit = {
+				is_in_array = {
+					THIS.debtors = ROOT
+				}
+			}
+			remove_from_array = {
+				THIS.debtors = ROOT
+			}
+		}
+		clear_variable = debt_of_@ROOT
+	}
+}
+set_variable = {
+	interest_expense = 0
+}
+for_each_scope_loop = {
+	array = ROOT.lenders
+	set_variable = {
+		ROOT.interest_to_@THIS = THIS.debt_of_@PREV
+	}
+	multiply_variable = {
+		ROOT.interest_to_@THIS = THIS.interest_rate
+	}
+	add_to_variable = {
+		ROOT.interest_expense = ROOT.interest_to_@THIS
+	}
+	set_variable = {
+		interest_income = 0
+	}
+	for_each_scope_loop = {
+		array = THIS.debtors
+		add_to_variable = {
+			PREV.interest_income = THIS.interest_to_@PREV
+		}
+		clear_variable = THIS.interest_to_@PREV
+	}
+}
+
 set_variable = { FRA.TUR_foreign_debt_to_country_var = 72 }
 set_variable = { GER.TUR_foreign_debt_to_country_var = 24 }
 set_variable = { ENG.TUR_foreign_debt_to_country_var = 18 }
