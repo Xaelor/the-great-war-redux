@@ -7860,14 +7860,17 @@ AUH_austrian_military = {
 	AUS_address_eastern_dissent = {
 		icon = GFX_decision_generic_llery_icon
 		cost = 15
-		days_remove = 180
+		days_remove = 120
 		fire_only_once = yes
 		allowed = {
 			original_tag = AUS
 		}
-		# visible = {
-		# 	has_completed_focus = AUS_optimize_rail
-		# }
+		visible = {
+			has_completed_focus = AUS_optimize_rail
+		}
+		modifier = {
+			civilian_factory_use = 1
+		}
 		available = {
 			divisions_in_state = {
 				state = 91
@@ -7881,11 +7884,18 @@ AUH_austrian_military = {
 			}
 		}
 		remove_effect = {
-			add_war_support = 0.02
+			add_war_support = 0.015
 			custom_effect_tooltip = AUS_modify_army.tt
 			add_to_variable = {
 				AUS_mea_army_supply_consumption = -0.02
 				tooltip = supply_consumption_factor_tt
+			}
+			91 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
 			}
 		}
 		cancel_effect = {
@@ -7893,7 +7903,58 @@ AUH_austrian_military = {
 			add_war_support = -0.015
 			custom_effect_tooltip = AUS_modify_army.tt
 			add_to_variable = {
-				AUS_mea_org_regain = -0.05
+				AUS_mea_org_regain = -0.075
+				tooltip = army_org_regain_tt
+			}
+		}
+	}
+	AUS_address_southern_dissent = {
+		icon = GFX_decision_generic_llery_icon
+		cost = 15
+		days_remove = 120
+		fire_only_once = yes
+		allowed = {
+			original_tag = AUS
+		}
+		visible = {
+			has_completed_focus = AUS_optimize_rail
+		}
+		modifier = {
+			civilian_factory_use = 1
+		}
+		available = {
+			divisions_in_state = {
+				state = 104
+				size > 7
+			}
+		}
+		cancel_trigger = {
+			divisions_in_state = {
+				state = 104
+				size < 8
+			}
+		}
+		remove_effect = {
+			add_war_support = 0.015
+			custom_effect_tooltip = AUS_modify_army.tt
+			add_to_variable = {
+				AUS_mea_army_supply_consumption = -0.02
+				tooltip = supply_consumption_factor_tt
+			}
+			104 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		cancel_effect = {
+			army_experience = -20
+			add_war_support = -0.015
+			custom_effect_tooltip = AUS_modify_army.tt
+			add_to_variable = {
+				AUS_mea_org_regain = -0.075
 				tooltip = army_org_regain_tt
 			}
 		}
