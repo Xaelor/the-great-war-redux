@@ -960,14 +960,51 @@ create_RUC = {
 			78 = {
 				add_core_of = RUC
 				set_state_owner_to = RUC
+			}			
+		}
+		if = {
+			limit = {
+				1303 = {
+					OR = {
+						is_owned_and_controlled_by = ROOT
+						is_owned_and_controlled_by = UKR
+					}
+				}
+			}
+			1303 = {
+				add_core_of = RUC
+				transfer_state_to = RUC
 			}
 		}
-		every_state = {
+		else_if = {
 			limit = {
-				is_core_of = RUC
+				1303 = {
+					OR = {
+						AND = {
+							is_owned_by = ROOT
+							NOT = {
+								is_controlled_by = ROOT
+							}
+						}
+						AND = {
+							is_owned_by = UKR
+							NOT = {
+								is_controlled_by = UKR
+							}
+						}
+					}
+				}
 			}
-			remove_russian_cores = yes
-			remove_russian_claims = yes
+			1303 = {
+				add_core_of = RUC
+				set_state_owner_to = RUC
+			}			
+		}
+		RUC = {
+			every_core_state = {
+				remove_russian_cores = yes
+				remove_russian_claims = yes
+			}
 		}
 		RUS = {
 			RUS_mikhail_drozdovsky = {
@@ -1119,7 +1156,7 @@ create_UPRS = {
 	SOV = {
 		set_autonomy = {
 			target = USR
-			autonomy_state = autonomy_tgwr_sr
+			autonomy_state = autonomy_tgwr_ssr
 			end_wars = no
 			end_civil_wars = no
 		}
@@ -1258,7 +1295,7 @@ create_USR = {
 	SOV = {
 		set_autonomy = {
 			target = USR
-			autonomy_state = autonomy_tgwr_sr
+			autonomy_state = autonomy_tgwr_ssr
 			end_wars = no
 			end_civil_wars = no
 		}
@@ -2095,7 +2132,7 @@ create_BRS = {
 		}
 		set_autonomy = {
 			target = BRS
-			autonomy_state = autonomy_tgwr_sr
+			autonomy_state = autonomy_tgwr_ssr
 		}
 		BRS = {
 			set_politics = {
@@ -2190,7 +2227,7 @@ create_LAT = {
 		}
 		set_autonomy = {
 			target = LAT
-			autonomy_state = autonomy_tgwr_sr
+			autonomy_state = autonomy_tgwr_ssr
 			end_wars = no
 			end_civil_wars = no
 		}
@@ -2425,6 +2462,15 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 78
+		limit = { tag = SOV }
+		damage = 1
+		org_damage = 1
+		str_damage = 1
+		ratio = yes
+		navy = yes
+	}
+	damage_units = {
+		state = 1303
 		limit = { tag = SOV }
 		damage = 1
 		org_damage = 1
