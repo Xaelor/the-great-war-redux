@@ -1603,10 +1603,10 @@ country_event = {
 			long_name = ROM_conservative_party_long
 			name = ROM_conservative_party
 		}
-		country_event = {
-			id = ww1_romania.107
-			days = 5
-		}
+		#country_event = {
+		#	id = ww1_romania.107
+		#	days = 5
+		#}
 	}
 }
 
@@ -3542,6 +3542,9 @@ country_event = {
 		78 = {
 			add_claim_by = ROM
 		}
+		1303 = {
+			add_claim_by = ROM
+		}
 		if = {
 			limit = {
 				NOT = {
@@ -3676,7 +3679,6 @@ country_event = {
 		}
 		set_global_flag = ROM_treaty_doable
 		custom_effect_tooltip = ROM_help1
-		unlock_decision_tooltip = ROM_treaty_of_bucharest
 		activate_mission_tooltip = ROM_carp_collaborationist_governmenmt
 		hidden_effect = {
 			diplomatic_relation = {
@@ -3748,19 +3750,8 @@ country_event = {
 	}
 	option = {
 		name = ww1_romania.111.b
-		set_autonomy = {
-			target = HUN
-			autonomous_state = autonomy_free
-			end_wars = yes
-			end_civil_wars = yes
-		}
-		if = {
-			limit = {
-				HUN = {
-					is_in_faction_with = ROM
-				}
-			}
-			leave_faction = yes
+		HUN = {
+			free_subject_leave_faction = yes
 		}
 		hidden_effect = {
 			set_country_flag = ROM_freed_hungary
@@ -3788,19 +3779,8 @@ country_event = {
 	}
 	option = {
 		name = ww1_romania.111.b
-		set_autonomy = {
-			target = HUN
-			autonomous_state = autonomy_free
-			end_wars = yes
-			end_civil_wars = yes
-		}
-		if = {
-			limit = {
-				HUN = {
-					is_in_faction_with = ROM
-				}
-			}
-			leave_faction = yes
+		HUN = {
+			free_subject_leave_faction = yes
 		}
 		hidden_effect = {
 			set_country_flag = ROM_freed_hungary
@@ -3829,19 +3809,8 @@ country_event = {
 	}
 	option = {
 		name = ww1_romania.111.b
-		set_autonomy = {
-			target = HUN
-			autonomous_state = autonomy_free
-			end_wars = yes
-			end_civil_wars = yes
-		}
-		if = {
-			limit = {
-				HUN = {
-					is_in_faction_with = ROM
-				}
-			}
-			leave_faction = yes
+		HUN = {
+			free_subject_leave_faction = yes
 		}
 		hidden_effect = {
 			set_country_flag = ROM_freed_hungary
@@ -3865,19 +3834,8 @@ country_event = {
 				has_country_flag = ROM_do_not_release_hungary
 			}
 		}
-		set_autonomy = {
-			target = HUN
-			autonomous_state = autonomy_free
-			end_wars = yes
-			end_civil_wars = yes
-		}
-		if = {
-			limit = {
-				HUN = {
-					is_in_faction_with = ROM
-				}
-			}
-			leave_faction = yes
+		HUN = {
+			free_subject_leave_faction = yes
 		}
 		hidden_effect = {
 			set_country_flag = ROM_freed_hungary
@@ -3889,6 +3847,7 @@ country_event = {
 			has_country_flag = ROM_do_not_release_hungary
 		}
 		HUN = {
+			clr_subject_flags = yes
 			set_country_flag = protectorate
 			get_current_government_type = yes
 			PREV = {
@@ -4008,8 +3967,15 @@ country_event = {
 		78 = {
 			transfer_state_to = ROM
 		}
+		1303 = {
+			transfer_state_to = ROM
+		}
 		hidden_effect = {
 			78 = {
+				remove_core_of = RUS
+				add_claim_by = RUS
+			}
+			1303 = {
 				remove_core_of = RUS
 				add_claim_by = RUS
 			}
@@ -4055,6 +4021,9 @@ country_event = {
 		add_stability = 0.05
 		effect_tooltip = {
 			78 = {
+				transfer_state_to = ROM
+			}
+			1303 = {
 				transfer_state_to = ROM
 			}
 		}
@@ -4597,7 +4566,6 @@ country_event = {
 				modifier = ROM_occupation_costs
 			}
 		}
-		join_great_war_against_GER = yes
 		ai_chance = {
 			factor = 0
 		}
@@ -5153,9 +5121,28 @@ country_event = {
 	desc = ww1_romania.153.d
 	fire_only_once = yes
 	is_triggered_only = yes
-	picture = GFX_report_event_spanish_flu
+	picture = GFX_report_event_romanian_soldiers
 	option = {
 		name = ww1_romania.153.a
+		trigger = {
+			NOT = {
+				original_tag = MOL
+			}			
+		}
+		effect_tooltip = {
+			FROM = {
+				declare_war_on = {
+					target = ROOT
+					type = annex_everything
+				}
+			}
+		}	
+	}
+	option = {
+		name = ww1_romania.153.b
+		trigger = {
+			original_tag = MOL
+		}
 		effect_tooltip = {
 			FROM = {
 				declare_war_on = {

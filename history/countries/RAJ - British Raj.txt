@@ -54,69 +54,85 @@ country_lock_all_division_template = yes
 	add_dynamic_modifier = { modifier = RAJ_princely_state_agency}
 }
 
-MYS = { set_country_flag = protectorate }
 set_autonomy = {
 	target = MYS
 	autonomous_state = autonomy_tgwr_princely_state
 	freedom_level = 0.5
 }
-HYD = { set_country_flag = protectorate }
 set_autonomy = {
 	target = HYD
 	autonomous_state = autonomy_tgwr_princely_state
 	freedom_level = 0.5
 }
-BAR = { set_country_flag = protectorate }
 set_autonomy = {
 	target = BAR
 	autonomous_state = autonomy_tgwr_princely_state
 	freedom_level = 0.5
 }
-AFG = { set_country_flag = protectorate }
 set_autonomy = {
 	target = AFG
-	autonomous_state = autonomy_tgwr_informal_protectorate
+	autonomous_state = autonomy_tgwr_protected_state
 	freedom_level = 0.9
 }
-BHU = { set_country_flag = protectorate }
 set_autonomy = {
 	target = BHU
-	autonomous_state = autonomy_tgwr_informal_protectorate
+	autonomous_state = autonomy_tgwr_protected_state
 	freedom_level = 0.7
 }
-NEP = { set_country_flag = protectorate }
 set_autonomy = {
 	target = NEP
-	autonomous_state = autonomy_tgwr_informal_protectorate
+	autonomous_state = autonomy_tgwr_protected_state
 	freedom_level = 0.8
 }
-SKK  = { set_country_flag = protectorate }
 set_autonomy = {
 	target = SKK
-	autonomous_state = autonomy_tgwr_protectorate
+	autonomous_state = autonomy_tgwr_protected_state
 	freedom_level = 0.7
 }
 #Persian Gulf Residency
-MSC = { set_country_flag = protectorate }
 set_autonomy = {
 	target = MSC
-	autonomous_state = autonomy_tgwr_informal_protectorate
+	autonomous_state = autonomy_tgwr_protected_state
 	freedom_level = 0.8
 }
-KUW  = { set_country_flag = protectorate }
 set_autonomy = {
 	target = KUW
-	autonomous_state = autonomy_tgwr_informal_protectorate
+	autonomous_state = autonomy_tgwr_protected_state
 	freedom_level = 0.6
 }
-BHR  = { set_country_flag = protectorate }
 set_autonomy = {
 	target = BHR
-	autonomous_state = autonomy_tgwr_protectorate
+	autonomous_state = autonomy_tgwr_protected_state
 	freedom_level = 0.9
 }
-# British Economic Exploitation
+#Trucial States
+set_autonomy = {
+	target = ABU
+	autonomous_state = autonomy_tgwr_protected_state
+	freedom_level = 0.5
+}
+set_autonomy = {
+	target = AJM
+	autonomous_state = autonomy_tgwr_protected_state
+	freedom_level = 0.5
+}
+set_autonomy = {
+	target = DUB
+	autonomous_state = autonomy_tgwr_protected_state
+	freedom_level = 0.5
+}
+set_autonomy = {
+	target = SHJ
+	autonomous_state = autonomy_tgwr_protected_state
+	freedom_level = 0.5
+}
+set_autonomy = {
+	target = UAQ
+	autonomous_state = autonomy_tgwr_protected_state
+	freedom_level = 0.5
+}
 
+# British Economic Exploitation
 give_resource_rights = {
 	receiver = ENG
 	state = 428
@@ -341,15 +357,37 @@ activate_advisor = RAJ_garret_o_moore_creagh
    	 	construction0 = 1
     	powder_type_b = 1    
 	}
-	
-	if = {
-		limit = {
-			has_dlc = "Man the Guns"
+
+	ENG = {
+		create_equipment_variant = {
+			name = "RIMS Hardinge"
+			type = ship_hull_cruiser_1
+			parent_version = 0
+			modules = {
+				fixed_ship_battery_slot = ship_light_medium_battery_0
+				fixed_ship_secondaries_slot = ship_secondaries_1
+				fixed_ship_engine_slot = cruiser_ship_engine_0
+			}
+			obsolete = yes
 		}
-		set_technology = {
-			mtg_transport = 1
-		}
+		create_equipment_variant = {
+			name = "RIMS Dalhousie"
+			parent_version = 0
+			type = ship_hull_gunboat
+			modules = {
+				fixed_ship_battery_slot = ship_light_battery_1
+				fixed_ship_engine_slot = light_ship_engine_0
+			}
+			obsolete = yes
+		}		
 	}
+	
+	set_technology = {
+		mtg_transport = 1
+		victorian_ship_hull_cruiser = 1
+		torpedo_boat_ship_hull_light = 1
+	}
+	set_naval_oob = RAJ_1910_naval
 
 	if = {
 		limit = {
@@ -720,7 +758,7 @@ activate_advisor = RAJ_garret_o_moore_creagh
 	add_political_power = 1198
 	add_command_power = 100
 
-	#generic focuses
+	#focuses
 	# complete_national_focus = 
 
 	retire_character = RAJ_gilbert_elliot
