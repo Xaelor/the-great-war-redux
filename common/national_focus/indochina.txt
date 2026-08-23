@@ -59,13 +59,13 @@
 		}
 		cost = 10
 		x = 2
-		y = -3
+		y = 0
 		offset = {
 			trigger = {
 				has_focus_tree = french_focus
 			}
 			x = 101
-			y = 3
+			y = 0
 		}
 	}
 
@@ -82,21 +82,23 @@
 				is_subject_of = FRA
 				has_subject = IND
 			}
-			any_state = {
-				is_core_of = CAM
-				is_controlled_by_ROOT_or_subject = yes
+			CAM = {
+				any_core_state = {
+					is_controlled_by_ROOT_or_subject = yes
+				}
 			}
 		}
 		completion_reward_joint_originator = {
 			IND = {
 				add_stability = 0.05
-				every_state = {
-					limit = {
-						is_controlled_by_ROOT_or_ally = yes
-						is_core_of = CAM
-					}
-					add_dynamic_modifier = {
-						modifier = IND_integration_efforts days = 1440
+				CAM = {
+					every_core_state = {
+						limit = {
+							is_controlled_by_ROOT_or_ally = yes
+						}
+						add_dynamic_modifier = {
+							modifier = IND_integration_efforts days = 1440
+						}
 					}
 				}
 			}
@@ -201,24 +203,26 @@
 				is_subject_of = FRA
 				has_subject = IND
 			}
-			any_state = {
-				is_core_of = LAO
-				is_controlled_by_ROOT_or_subject = yes
+			LAO = {
+				any_core_state = {
+					is_controlled_by_ROOT_or_subject = yes
+				}
 			}
 		}
 		completion_reward_joint_originator = {
-			every_state = {
-				limit = {
-					is_controlled_by_ROOT_or_ally = yes
-					is_core_of = LAO
+			LAO = {
+				every_core_state = {
+					limit = {
+						is_controlled_by_ROOT_or_ally = yes
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+					add_compliance = 30
 				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-				add_compliance = 30
 			}
 		}
 		joint_trigger = {
@@ -311,19 +315,21 @@
 				is_subject_of = FRA
 				has_subject = IND
 			}
-			any_state = {
-				is_controlled_by_ROOT_or_ally = yes
-				is_core_of = LAO
+			LAO = {
+				any_core_state = {
+					is_controlled_by_ROOT_or_subject = yes
+				}
 			}
 		}
 		completion_reward_joint_originator = {
-			every_state = {
-				limit = {
-					is_controlled_by_ROOT_or_ally = yes
-					is_core_of = LAO
-				}
-				add_dynamic_modifier = {
-					modifier = FRA_french_integration
+			LAO = {
+				every_core_state = {
+					limit = {
+						is_controlled_by_ROOT_or_ally = yes
+					}
+					add_dynamic_modifier = {
+						modifier = FRA_french_integration
+					}
 				}
 			}
 		}
@@ -366,19 +372,21 @@
 				is_subject_of = FRA
 				has_subject = IND
 			}
-			any_state = {
-				is_controlled_by_ROOT_or_ally = yes
-				is_core_of = CAM
+			CAM = {
+				any_core_state = {
+					is_controlled_by_ROOT_or_ally = yes
+				}
 			}
 		}
 		completion_reward_joint_originator = {
-			every_state = {
-				limit = {
-					is_controlled_by_ROOT_or_ally = yes
-					is_core_of = CAM
-				}
-				add_dynamic_modifier = {
-					modifier = FRA_french_integration
+			CAM = {
+				every_core_state = {
+					limit = {
+						is_controlled_by_ROOT_or_ally = yes
+					}
+					add_dynamic_modifier = {
+						modifier = FRA_french_integration
+					}
 				}
 			}
 		}
@@ -858,7 +866,7 @@
 				VIN_nguyen_phuc_buu_dao = {
 					set_nationality = IND
 					promote_character = absolute_monarchy
-				}	
+				}
 			}
 		}
 		joint_trigger = {
@@ -1300,7 +1308,7 @@
 						OVERLORD = {
 							set_autonomy = {
 								target = IND
-								autonomous_state = autonomy_satellite
+								autonomous_state = autonomy_tgwr_client_state
 							}
 						}
 					}
@@ -1630,7 +1638,7 @@
 						name = "Sureté Générale Indochinoise"
 						icon = GFX_intelligence_agency_logo_fra
 					}
-				}		
+				}
 			}
 		}
 		joint_trigger = {
@@ -2408,29 +2416,12 @@ focus_tree = {
 		x = 3800
 		y = 1600
 	}
-	shared_focus = naval_experience
-	shared_focus = state_of_the_country_army
 	shared_focus = VIN_paris_investments
 	initial_show_position = {
 		x = 4
 	}
 
 	#Focus Path shortcuts
-	shortcut = {
-		name = army_tree_shortcut
-		target = state_of_the_country_army
-		scroll_wheel_factor = 1
-	}
-	shortcut = {
-		name = air_tree_shortcut
-		target = planes_experiments
-		scroll_wheel_factor = 1
-	}
-	shortcut = {
-		name = navy_tree_shortcut
-		target = naval_experience
-		scroll_wheel_factor = 1
-	}
 	shortcut = {
 		name = inner_politics_tree_shortcut
 		target = VIN_luang_prabang_palace
@@ -2479,7 +2470,7 @@ focus_tree = {
 		}
 		cost = 10
 		x = 6
-		y = -3
+		y = 0
 	}
 
 	focus = {

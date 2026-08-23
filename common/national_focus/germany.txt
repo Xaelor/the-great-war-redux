@@ -3021,19 +3021,9 @@ focus_tree = {
   				threat = 25
   				name = GER_strike_entente
   			}
-  			create_wargoal = {
-  				type = take_state_focus
-  				target = FRA
-  				generator = {
-  					863
-  					864
-  					17
-  				}
-  			}
-			add_ai_strategy = {
-				type = declare_war
-				id = FRA
-				value = 200
+			declare_war_on = {
+				target = FRA
+				type = take_claimed_state
 			}
 			if = {
 				limit = { 
@@ -3041,21 +3031,9 @@ focus_tree = {
 						is_in_faction_with = FRA
 					}
 				}
-				create_wargoal = {
-					type = take_state_focus
+				declare_war_on = {
 					target = RUS
-					generator = {
-						87
-						98
-						1204
-						1203
-						1267
-					}
-				}
-				add_ai_strategy = {
-					type = declare_war
-					id = RUS
-					value = 200
+					type = take_claimed_state
 				}
 			}
   		}
@@ -3982,47 +3960,6 @@ focus_tree = {
 			FOCUS_FILTER_NAVY_XP
 		}
 	}
-	#focus = {
-	#	id = GER_u_nineteen
-	#	icon = GFX_goal_generic_navy_submarine
-	#	cost = 6
-	#	relative_position_id = GER_the_influence_of_sea_power
-	#	x = -1
-	#	y = 1
-	#	available_if_capitulated = no
-	#	available = {
-	#		is_GER_a_monarchy = yes
-	#	}
-	#	prerequisite = {
-	#		focus = GER_the_influence_of_sea_power
-	#	}
-	#	completion_reward = {
-	#		if = {
-	#			limit = {
-	#			}
-	#			add_tech_bonus = {
-	#				bonus = 1.00
-	#				technology = basic_submarine_snorkel
-	#			}
-	#		}
-	#		else_if = {
-	#			limit = {
-	#				NOT = {
-	#				}
-	#			}
-	#			add_tech_bonus = {
-	#				bonus = 1.00
-	#				category = ss_tech
-	#			}
-	#		}
-	#	}
-	#	ai_will_do = {
-	#		factor = 1
-	#	}
-	#	search_filters = {
-	#		FOCUS_FILTER_HISTORICAL
-	#	}
-	#}
 	focus = {
 		id = GER_the_fleet_in_being
 		icon = GFX_focus_generic_navy_battleship2
@@ -7385,10 +7322,12 @@ focus_tree = {
 					has_war_with = ROOT
 				}
 				hidden_trigger = {
-					any_state = {
-						is_core_of = IRQ
-						is_controlled_by_PREV_or_subject = yes
+					IRQ = {
+						any_core_state = {
+							is_controlled_by_PREV_or_subject = yes
+						}
 					}
+					
 				}			
 			}	
 		}
@@ -7461,64 +7400,64 @@ focus_tree = {
 		}
 	}
 	
-	focus = {
-		id = GER_pursue_british_neutrality
-		icon = GFX_ENG_westerminster_dec
-		cost = 5
-		relative_position_id = GER_demand_angola
-		x = 1
-		y = 1
-		available = {
-			is_GER_a_monarchy = yes
-			is_hollweg_chancellor = yes	
-			has_crisis = no
-			NOT = {
-				is_in_faction_with = ENG
-				has_global_flag = great_war
-			}
-			is_subject = no
-			ENG = {
-				is_britain_a_monarchy = yes
-				is_subject = no
-				has_war = no
-				NOT = {
-					has_country_flag = entente_leader
-					has_completed_focus = ENG_balfours_folly
-					has_completed_focus = ENG_Romanov_Alliance
-					has_country_leader = { character = ENG_fallen_government }
-				}
-			}	
-			has_global_flag = ww1_haldane_mission_successful
-		}
-		prerequisite = {
-			focus = GER_demand_angola
-		}
-		allow_branch = {
-			has_focus_tree = german_focus
-		}
-		prerequisite = {
-			focus = ENG_GER_vickers_krupp_cooperation
-		}
-		completion_reward = {
-			ENG = {
-				country_event = {
-					id = ww1_germanrework.145
-				}
-				custom_effect_tooltip = needs_approval
-			}
-			custom_effect_tooltip = if_they_accept_tt
-			effect_tooltip = {
-				GER_british_neutrality_effect = yes
-			}
-		}
-		ai_will_do = {
-			factor = 150
-			modifier = {
-				is_historical_focus_on = yes 
-				factor = 0
-			}
-		}
-	}
+	#focus = {
+	#	id = GER_pursue_british_neutrality
+	#	icon = GFX_ENG_westerminster_dec
+	#	cost = 5
+	#	relative_position_id = GER_demand_angola
+	#	x = 1
+	#	y = 1
+	#	available = {
+	#		is_GER_a_monarchy = yes
+	#		is_hollweg_chancellor = yes	
+	#		has_crisis = no
+	#		NOT = {
+	#			is_in_faction_with = ENG
+	#			has_global_flag = great_war
+	#		}
+	#		is_subject = no
+	#		ENG = {
+	#			is_britain_a_monarchy = yes
+	#			is_subject = no
+	#			has_war = no
+	#			NOT = {
+	#				has_country_flag = entente_leader
+	#				has_completed_focus = ENG_balfours_folly
+	#				has_completed_focus = ENG_Romanov_Alliance
+	#				has_country_leader = { character = ENG_fallen_government }
+	#			}
+	#		}	
+	#		has_global_flag = ww1_haldane_mission_successful
+	#	}
+	#	prerequisite = {
+	#		focus = GER_demand_angola
+	#	}
+	#	allow_branch = {
+	#		has_focus_tree = german_focus
+	#	}
+	#	prerequisite = {
+	#		focus = ENG_GER_vickers_krupp_cooperation
+	#	}
+	#	completion_reward = {
+	#		ENG = {
+	#			country_event = {
+	#				id = ww1_germanrework.145
+	#			}
+	#			custom_effect_tooltip = needs_approval
+	#		}
+	#		custom_effect_tooltip = if_they_accept_tt
+	#		effect_tooltip = {
+	#			GER_british_neutrality_effect = yes
+	#		}
+	#	}
+	#	ai_will_do = {
+	#		factor = 150
+	#		modifier = {
+	#			is_historical_focus_on = yes 
+	#			factor = 0
+	#		}
+	#	}
+	#}
 	
 	focus = {
 		id = GER_influencing_balkan_powers
@@ -7951,8 +7890,10 @@ focus_tree = {
 				}			
 				if = {
 					limit = { has_country_flag = GER_free_belgium }
-					BEL = { BEL_remove_GER_occupation = yes }
-					end_puppet = BEL
+					BEL = { 
+						BEL_remove_GER_occupation = yes 
+						free_subject_leave_faction = yes
+					}
 					else = {
 						country_event = {
 							id = ww1_belgium.32
