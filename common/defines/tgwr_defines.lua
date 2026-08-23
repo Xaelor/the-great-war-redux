@@ -167,3 +167,4 @@ NDefines.NProject.RECRUIT_SCIENTIST_COST = {                                -- A
 
 NDefines.NSupply.NODE_INITIAL_SUPPLY_FLOW = 2.33										-- Base range of supply hubs
 NDefines.NSupply.NAVAL_BASE_INITIAL_SUPPLY_FLOW = 2.75
+NDefines.NDiplomacy.TRUCE_BREAK_COST_PP = 0
