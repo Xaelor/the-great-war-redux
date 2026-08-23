@@ -22,6 +22,7 @@ characters={
 		country_leader={
 			ideology=semi_constitutional_monarchy	
 			traits = { SWE_ardent_conservative likes_germany }
+			desc = SWE_gustaf_v_desc
 		}
 	}
 	SWE_gustaf_vi={ #appears in possible great-war-loss event chain
@@ -824,6 +825,31 @@ characters={
 				small="gfx/interface/ideas/PER/idea_PER_Harald_Hjalmarson.png"
 			}
 		}
+		advisor={
+			slot = theorist
+			idea_token = PER_harald_hjalmarson
+			ledger  = army 
+			allowed  = {
+				original_tag  = PER
+			}
+			available = {
+				NOT = {
+					has_war_with = SWE
+				}
+			}
+			visible = {
+				NOT = {
+					has_government = communism
+				}
+			}
+			traits  = {
+				military_theorist 
+			}
+			cost = 100
+			ai_will_do  = {
+				factor  = 1
+			}
+		}
 		corps_commander = {
 			traits = { politically_connected old_guard career_officer }
 			skill = 3
@@ -836,6 +862,12 @@ characters={
 					original_tag = SWE #He had never been a general in his country
 					has_government = communism
 					has_war_with = SWE
+				}
+				if = {
+					limit = { original_tag = PER }
+					check_variable = {
+						PER_recruited_gendarmerie > 0
+					}
 				}
 			}
 		}

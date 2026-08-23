@@ -12,11 +12,10 @@ peace_deals = {
 		targets = {
 			AUS
 		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
-		visible = {
+		target_root_trigger = {
 			tag = BLL
+		}
+		visible = {		
 			has_war_with = AUS
 			AUS = {
 				is_subject = no
@@ -196,9 +195,6 @@ peace_deals = {
 		targets = {
 			BLL
 		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
 		visible = {
 			is_subject = no
 			has_war_with = BLL
@@ -225,6 +221,7 @@ peace_deals = {
 					controls_state = 45
 					controls_state = 575
 					controls_state = 104
+					controls_state = 1261
 					controls_state = 82
 				}
 			}
@@ -247,6 +244,7 @@ peace_deals = {
 					controls_state = 45
 					controls_state = 575
 					controls_state = 104
+					controls_state = 1261
 					controls_state = 82
 				}
 				add = 1000
@@ -262,189 +260,6 @@ peace_deals = {
 					surrender_progress > 0.15
 				}
 				add = 1000
-			}
-		}
-	}
-}
-
-AUH_franzferdinand = {
-
-	AUH_ultimatum_to_SER = {
-		icon = GFX_decision_eng_trade_unions_demand
-		
-		allowed = {
-			original_tag = SER
-		}	
-
-		targets = {
-			AUS
-		}
-		
-		available = {
-			OR = {
-				SER = {
-					is_subject_of = AUS
-				}
-				AUS = {
-					has_war_with = SER
-				}
-				has_global_flag = kis_serbia_accept
-				has_global_flag = july_crisis_ends
-			}
-		}
-		
-		activation = {
-			has_global_flag = july_crisis_alert
-			NOT = {
-				has_global_flag = july_crisis_ends
-			}
-		}
-
-		fire_only_once = yes		
-
-		is_good = no
-		days_mission_timeout = 28
-
-		war_with_on_timeout = AUS
-
-		timeout_effect = {
-			effect_tooltip = {
-				AUS = { country_event = ww1_franzferdinand.4 }
-			}		
-		}
-	}
-	
-	european_crisis_mission = {
-		icon = GFX_decision_generic_ignite_civil_war
-		
-		allowed = {
-			NOT = { original_tag = SER }
-		}
-
-		targets = {
-			SER
-		}
-		
-		available = {
-			OR = {
-				SER = {
-					is_subject_of = AUS
-				}
-				AUS = {
-					has_war_with = SER
-				}
-				has_global_flag = kis_serbia_accept
-				has_global_flag = july_crisis_ends
-			}
-		}
-
-		visible = {
-			OR = {
-				is_in_faction_with = GER
-				is_in_faction_with = FRA
-				is_actual_major = yes
-			}
-		}
-		
-		activation = {
-			has_global_flag = july_crisis_alert
-			NOT = { has_global_flag = july_crisis_ends }
-		}
-
-		fire_only_once = yes		
-
-		is_good = no
-		days_mission_timeout = 28
-
-		complete_effect = {		
-			if = {
-				limit = {
-					tag = AUS
-				}
-				delete_crisis = yes
-				set_global_flag = july_crisis_ends		
-			}
-		}	
-
-		timeout_effect = {
-			if = {
-				limit = {
-					tag = AUS
-				}
-				set_global_flag = july_crisis_ends
-				country_event = ww1_franzferdinand.4
-			}
-			custom_effect_tooltip = european_crisis_mission_tt
-		}
-	}
-	
-	RUS_start_mobilization = {
-		icon = GFX_decision_generic_industry
-		allowed = {
-			tag = RUS
-		}
-		available = {
-			NOT = { has_war_with = AUS }
-		}
-		visible = {
-			is_subject = no
-			has_capitulated = no
-			has_global_flag = july_crisis_alert
-			NOT = {
-				has_global_flag = july_crisis_ends
-				has_war_with = SER
-				is_in_faction_with = AUS
-			}
-		}
-		fire_only_once = yes
-		war_with_on_timeout = AUS
-		ai_will_do = {
-			base = 400
-			modifier = {
-				add = -200
-				NOT = {
-					is_in_faction_with = SER
-					is_in_faction_with = FRA
-				}
-			}
-			modifier = {
-				add = -200
-				is_in_faction_with = GER
-			}
-			modifier = {
-				add = -1000
-				has_government = communism
-				NOT = {
-					has_country_leader = {
-						character = RUS_nikolai_ii
-						ruling_only = yes
-					}
-				}
-				SER = {
-					OR = {
-						has_government = neutrality
-						has_idea = SER_idea_alexander_i
-						# has_idea = SER_idea_alexander_i_1
-					}
-				}
-			}
-			modifier = {
-				add = -1000
-				is_russia_a_monarchy = yes
-				SER = {
-					has_government = communism
-				}
-			}
-		}
-		complete_effect = {
-			set_country_flag = RUS_mobilization_flag
-			add_war_support = 0.05
-			give_guarantee = SER
-			if = {
-				limit = {
-					is_in_faction_with = FRA
-				}
-				FRA = { country_event = { id = ww1_franzferdinand.9 days = 2 } }	
 			}
 		}
 	}
@@ -1401,6 +1216,7 @@ AUH_suppression_of_russophiles_and_serbs = {
 		fire_only_once = yes
 		on_map_mode = map_only
 		state_target = yes
+		target_array = controlled_states
 		target_trigger = {
 			FROM = {
 				OR = {
@@ -1477,7 +1293,9 @@ AUH_suppression_of_russophiles_and_serbs = {
 		}
 		targets = {
 			73
+			1271
 			237
+			1270
 			89
 			1043			
 		}
@@ -1805,7 +1623,7 @@ AUH_greater_austria_category = {
 						has_autonomy_state = autonomy_tgwr_real_union
 						compare_autonomy_progress_ratio < 0.5
 					}
-					has_autonomy_state = autonomy_tgwr_governorate_general
+					has_autonomy_state = autonomy_tgwr_federal_subject
 				}	
 			}
 		}
@@ -1876,7 +1694,7 @@ AUH_greater_austria_category = {
 						has_autonomy_state = autonomy_tgwr_real_union
 						compare_autonomy_progress_ratio < 0.5
 					}
-					has_autonomy_state = autonomy_tgwr_governorate_general
+					has_autonomy_state = autonomy_tgwr_federal_subject
 				}
 			}
 			WUK = {
@@ -1927,7 +1745,9 @@ AUH_greater_austria_category = {
 					NOT = {
 						state = 73
 						state = 237
+						state = 1270
 						state = 1043
+						state = 1271
 					}
 				}
 				transfer_state_to = WUK
@@ -2041,7 +1861,7 @@ AUH_greater_austria_category = {
 						has_autonomy_state = autonomy_tgwr_real_union
 						compare_autonomy_progress_ratio < 0.5
 					}
-					has_autonomy_state = autonomy_tgwr_governorate_general
+					has_autonomy_state = autonomy_tgwr_federal_subject
 				}
 			}
 		}
@@ -2288,7 +2108,7 @@ AUH_greater_austria_category = {
 						has_autonomy_state = autonomy_tgwr_real_union
 						compare_autonomy_progress_ratio < 0.5
 					}
-					has_autonomy_state = autonomy_tgwr_governorate_general
+					has_autonomy_state = autonomy_tgwr_federal_subject
 				}
 			}
 		}
@@ -2362,7 +2182,7 @@ AUH_greater_austria_category = {
 						has_autonomy_state = autonomy_tgwr_real_union
 						compare_autonomy_progress_ratio < 0.5
 					}
-					has_autonomy_state = autonomy_tgwr_governorate_general
+					has_autonomy_state = autonomy_tgwr_federal_subject
 				}
 				compare_autonomy_progress_ratio < 0.5
 				NOT = { has_country_flag = great_war_loser }
@@ -2529,6 +2349,7 @@ AUH_greater_austria_category = {
 				owns_state = 244
 				owns_state = 159
 				owns_state = 160
+				owns_state = 1259
 			}
 			VNC = {
 				OR = {
@@ -2549,11 +2370,13 @@ AUH_greater_austria_category = {
 					OR = {
 						state = 159
 						state = 160
+						state = 1259
 						state = 244
 						state = 513
 						state = 736
 						state = 1010
 						state = 1197
+						state = 1260
 						state = 1198
 					}
 				}
@@ -2620,6 +2443,7 @@ AUH_greater_austria_category = {
 				NOT = {
 					owns_state = 159
 					owns_state = 160
+					owns_state = 1259
 					owns_state = 244
 					has_subject = VNC
 				}
@@ -2821,9 +2645,6 @@ peace_deals = {
 		targets = {
 			GER
 		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
 		available = {
 			surrender_progress > 0.3
 		}
@@ -2870,9 +2691,6 @@ peace_deals = {
 		targets = {
 			HUN
 		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
 		available = {
 			OR = {
 				surrender_progress > 0.1
@@ -2930,6 +2748,7 @@ peace_deals = {
 					limit = {
 						OR = {
 							state = 104
+							state = 1261
 							state = 575
 						}
 					}
@@ -2955,13 +2774,11 @@ AUH_conrad_decision_category = {
 			tag = AUS
 		}
 		available = {
-			tag = AUS
 			has_equipment = {
 				infantry_equipment < 10001
 			}
 		}
 		visible = {
-			tag = AUS
 			has_country_flag = AUH_start_militarprozess
 		}
 		fire_only_once = no
@@ -3006,12 +2823,10 @@ AUH_conrad_decision_category = {
 			tag = AUS
 		}
 		available = {
-			tag = AUS
 			has_war_support < 0.75
 			has_country_flag = AUH_start_militarprozess
 		}
 		visible = {
-			tag = AUS
 			has_country_flag = AUH_start_militarprozess
 		}
 		fire_only_once = no
@@ -3046,7 +2861,6 @@ AUH_conrad_decision_category = {
 			tag = AUS
 		}
 		available = {
-			tag = AUS
 			has_war_support > 0.50
 			has_manpower > 100000
 			has_equipment = {
@@ -3058,7 +2872,6 @@ AUH_conrad_decision_category = {
 			has_country_flag = AUH_start_militarprozess
 		}
 		visible = {
-			tag = AUS
 			has_country_flag = AUH_start_militarprozess
 		}
 		fire_only_once = no
@@ -3129,8 +2942,10 @@ AUH_collaboration_governement = {
 			factor = 100
 		}
 		cost = 50
-		visible = {
+		allowed = {
 			tag = AUS
+		}
+		visible = {
 			ROM = {
 				OR = {
 					exists = no
@@ -3211,7 +3026,10 @@ AUH_collaboration_governement = {
 						}
 						
 						AUS = {
-							puppet = PREV
+							set_autonomy = {
+								target = PREV
+								autonomy_state = autonomy_tgwr_client_state
+							}
 						}
 						AUS = {
 							if = {
@@ -3261,7 +3079,10 @@ AUH_collaboration_governement = {
 					transfer_state_to = ROM
 				}
 				AUS = {
-					puppet = ROM
+					set_autonomy = {
+						target = ROM
+						autonomy_state = autonomy_tgwr_client_state
+					}
 				}
 				ROM = {
 					set_politics = {
@@ -3301,8 +3122,10 @@ AUH_collaboration_governement = {
 			factor = 100
 		}
 		cost = 50
-		visible = {
+		allowed = {
 			tag = AUS
+		}
+		visible = {
 			UKR = {
 				OR = {
 					exists = no
@@ -3358,7 +3181,10 @@ AUH_collaboration_governement = {
 				transfer_state_to = UKR
 			}
 			AUS = {
-				puppet = UKR
+				set_autonomy = {
+					target = UKR
+					autonomy_state = autonomy_tgwr_client_state
+				}
 			}
 			UKR = {
 				UKR_vasyl_i = {
@@ -4419,8 +4245,8 @@ AUH_famine_decisions = {
 	}
 }
 
-GER_great_war = { 
-
+TGWR_great_power_politics = { 
+	#great_power_politics_great_war
 	AUH_negotiate_with_france = {
 		icon = GFX_decision_eng_trade_unions_support
 		allowed = {
@@ -4429,9 +4255,6 @@ GER_great_war = {
 		targets = {
 			FRA
 		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
 		available = {
 			OR = {
 				has_idea = AUH_famine_effect_early
@@ -4442,6 +4265,7 @@ GER_great_war = {
 			}
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			has_country_flag = AUH_can_negotiate_with_france
 			has_war_with = FROM
 			is_in_faction_with = GER
@@ -4461,6 +4285,197 @@ GER_great_war = {
 					id = ww1_auh.180
 				}
 			}
+		}
+	}
+	AUS_the_knock_out_blow = {
+		icon = GFX_decision_hol_draw_up_staff_plans
+		cost = 10
+		allowed = {
+			original_tag = AUS
+		}
+		available = {
+			has_war_with = ITA
+			is_in_faction_with = GER
+			NOT = {
+				has_global_flag = great_war_ends
+				has_global_flag = GER_capitulation
+				has_global_flag = ENT_capitulation
+			}
+		}
+		visible = {
+			great_power_politics_great_war_visible = yes
+			has_war_with = ITA
+			is_in_faction_with = GER
+			NOT = {
+				has_global_flag = great_war_ends
+				has_global_flag = GER_capitulation
+				has_global_flag = ENT_capitulation
+			}
+		}
+		fire_only_once = yes
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				war_length_with = {
+					tag = ITA
+					months > 3
+				}
+			}
+			modifier = {
+				add = 5
+				war_length_with = {
+					tag = ITA
+					months > 5
+				}
+			}
+			modifier = {
+				add = 10
+				war_length_with = {
+					tag = ITA
+					months > 8
+				}
+			}
+			modifier = {
+				add = 200
+				war_length_with = {
+					tag = ITA
+					months > 12
+				}
+			}
+		}
+		complete_effect = {
+			add_timed_idea = {
+				idea = ITA_final_blow_idea_AUS
+				days = 90
+			}
+			hidden_effect = {
+				ITA = {
+					country_event = ww1_italy.295
+				}
+			}
+		}
+	}
+	AUS_blockade_italy = {
+		days_remove = 180
+		icon = GFX_decision_generic_ignite_civil_war
+		fire_only_once = no
+		allowed = {
+			tag = AUS
+		}
+		available = {
+			FROM = {
+				NOT = {
+					has_completed_focus = ITA_impliment_cunibertis_theory
+				}
+			}
+			has_completed_focus = AUH_naval_excercices 
+		}
+		targets = {
+			ITA
+		}
+		visible = {
+			great_power_politics_great_war_visible = yes
+			has_war_with = FROM
+		}
+		complete_effect = {
+			custom_effect_tooltip = ITA_british_pov_thing
+			effect_tooltip = {
+				add_to_variable = {
+					ITA_bread_shortages = 1
+					tooltip = ITA_modify_bread_shortages_tt
+				}
+				add_to_variable = {
+					ITA_percieved_usefulness = -2
+					tooltip = ITA_modify_war_score_tt
+				}
+			}
+			FROM = {
+				country_event = ww1_italy.292
+			}
+		}
+		ai_will_do = {
+			base = 1
+		}
+	}
+	AUS_shell_venice = {
+		days_remove = 180
+		icon = GFX_decision_generic_ignite_civil_war
+		fire_only_once = no
+		allowed = {
+			tag = AUS
+		}
+		available = {
+			FROM = {
+				NOT = {
+					has_completed_focus = ITA_utilize_the_radio
+				}
+			}
+			controls_state = 736
+		}
+		visible = {
+			great_power_politics_great_war_visible = yes
+		}
+		target_trigger = {
+			FROM = {
+				OR = {
+					controls_state = 160
+					controls_state = 1259
+				}
+			}
+		}
+		target_root_trigger = {
+			has_completed_focus = AUH_naval_excercices 
+		}
+		targets = {
+			ITA
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 160
+				state = 1259
+			}
+		}
+		visible = {
+			has_war_with = FROM
+		}
+		complete_effect = {
+			if = {
+				limit = { 
+					FROM = {
+						controls_state = 160
+					}
+				}
+				160 = {
+					add_dynamic_modifier = {
+						modifier = ITA_aus_shell
+						scope = FROM
+						days = 30
+					}
+				}
+			}
+			if = {
+				limit = { 
+					FROM = {
+						controls_state = 1259
+					}
+				}
+				1259 = {
+					add_dynamic_modifier = {
+						modifier = ITA_aus_shell
+						scope = FROM
+						days = 30
+					}
+				}
+			}
+			custom_effect_tooltip = ITA_british_pov_thing
+			add_to_variable = {
+				ITA.ITA_percieved_usefulness = -2
+				tooltip = ITA_modify_war_score_tt
+			}
+		}
+		ai_will_do = {
+			base = 1
 		}
 	}
 }

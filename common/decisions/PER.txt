@@ -1,49 +1,2289 @@
-operations = {
-	PER_annex_BLC = {
-		name = annex_FROM
+# Revolts
+PER_guarded_domains = {
+	#Reactionary revolts
+	PER_looming_absolutist_revolt_in_kermanshah = {
+		icon = eng_support_imperialist_coup
+		
+		allowed = {
+			always = no
+		}
+
+		#targets = { PRS }
+		
+		war_with_on_remove = PRS
+		
+		activation = {
+			always = no
+		}
+
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+
+		highlight_states = {
+			highlight_state_targets = { state = 421 }
+   			highlight_provinces = { 5098 }
+			highlight_only_provinces = yes
+		}
+
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_PER_absolutism_qajar = yes
+					has_capitulated = yes
+					has_war_with = PRS
+					NOT = {					
+						owns_state = 421
+						has_contested_owner = 421
+					}
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		is_good = no
+		days_mission_timeout = 396
+
+		timeout_effect = {
+			hidden_effect = {
+				421 = {
+					transfer_state_to = PRS
+				}
+				set_province_controller = 4943
+				set_province_controller = 9816
+				every_core_state = {
+					add_core_of = PRS
+				}
+				every_state = {
+					limit = {
+						is_claimed_by = ROOT
+					}
+					add_claim_by = PRS
+				}
+			}
+			country_event = ww1_absolutist_revolts.1
+			PRS = {
+				declare_war_on = { target = ROOT type = civil_war }
+				activate_mission = PRS_enter_tehran
+				hidden_effect = {
+					add_civil_war_target = ROOT
+					inherit_technology = ROOT
+					PER_create_templates = yes
+					remove_all_AI_templates = yes
+					remove_all_tech_templates = yes
+					copy_PER_base_ideas = yes
+				}			
+			}
+		}
+	}
+	PER_looming_absolutist_revolt_in_astrabad = {
+		icon = eng_support_imperialist_coup
+		
+		allowed = {
+			always = no
+		}
+
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+
+		#targets = { PEX }
+
+		war_with_on_remove = PEX
+		
+		activation = {
+			always = no
+		}
+
+		highlight_states = {
+			highlight_state_targets = { state = 1013 }
+		}
+
+		cancel_trigger = {
+			hidden_trigger = {
+				has_PER_absolutism_qajar = yes
+				OR = {
+					has_capitulated = yes
+					has_war_with = PEX
+					NOT = {						
+						owns_state = 1013
+						has_contested_owner = 1013
+					}
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		is_good = no
+		days_mission_timeout = 426
+
+		timeout_effect = {
+			hidden_effect = {
+				1013 = {
+					transfer_state_to = PEX
+				}
+				every_core_state = {
+					add_core_of = PEX
+				}
+				every_state = {
+					limit = {
+						is_claimed_by = ROOT
+					}
+					add_claim_by = PEX
+				}
+			}
+			country_event = ww1_absolutist_revolts.2
+			PEX = {
+				declare_war_on = { target = ROOT type = civil_war }
+				activate_mission = PEX_enter_tehran
+				hidden_effect = {
+					add_civil_war_target = ROOT
+					inherit_technology = ROOT
+					PER_create_templates = yes
+					remove_all_AI_templates = yes
+					remove_all_tech_templates = yes
+					copy_PER_base_ideas = yes
+				}			
+			}
+		}
+	}
+	PRS_enter_tehran = {
+		name = PER_enter_tehran
+		icon = generic_confiscation
+		
+		allowed = {
+			always = no
+		}
+
+		available = {
+			controls_province = 10837
+		}
+		
+		activation = {
+			always = no
+		}
+
+		highlight_states = {
+			highlight_state_targets = { state = 266 }
+   			highlight_provinces = { 10837 }
+			highlight_only_provinces = yes
+		}
+
+		cancel_trigger = {
+			NOT = {
+				has_war_with = PER
+			}
+		}
+
+		fire_only_once = yes
+
+		is_good = no
+		days_mission_timeout = 600
+
+		complete_effect = {
+			PER = {
+				force_capitulate = yes
+			}
+		}
+
+		timeout_effect = {
+			PER = {
+				country_event =  ww1_absolutist_revolts.3
+			}
+			custom_effect_tooltip = GAME_OVER_TT
+			force_capitulate = yes			
+		}
+	}
+	PEX_enter_tehran = {
+		name = PER_enter_tehran
+		icon = generic_confiscation
+		
+		allowed = {
+			always = no
+		}
+
+		available = {
+			controls_province = 10837
+		}
+		
+		activation = {
+			always = no
+		}
+
+		highlight_states = {
+			highlight_state_targets = { state = 266 }
+   			highlight_provinces = { 10837 }
+			highlight_only_provinces = yes
+		}
+
+		cancel_trigger = {
+			NOT = {
+				has_war_with = PER
+			}
+		}
+
+		fire_only_once = yes
+
+		is_good = no
+		days_mission_timeout = 60
+
+		complete_effect = {
+			PER = {
+				force_capitulate = yes
+			}
+		}
+
+		timeout_effect = {
+			PER = {
+				country_event =  ww1_absolutist_revolts.4
+			}
+			custom_effect_tooltip = GAME_OVER_TT
+			force_capitulate = yes			
+		}
+	}
+}	
+#Cossack Brigade
+PER_guarded_domains	= {
+	PER_raise_cossack_regiment_in_FROM = {
+		icon = generic_prepare_civil_war
 		allowed = {
 			original_tag = PER
 		}
+		
+		state_target = yes
 		targets = {
-			BLC
+			266 #Tehran 10837
+			1117 #Hamadan 10523, Qazvin 4553
+			877 #Tabriz 1896, Ardabil 4901
+			411 #Isfahan 2026
+			416 #Mashhad 5029
+			1247 #Mazandaran Sari 10385
+			419 #Urmia 7604
+			420 #Gilan Rasht 4609
 		}
+
+		target_trigger = {
+			FROM = {
+				OR = {
+					is_owned_and_controlled_by = ROOT
+					AND = {
+						is_owned_and_controlled_by = RUS
+						has_contested_owner = PER
+					}
+				
+				}
+				has_state_flag = PER_cossack_regiment_station
+			}
+		}
+
+		target_root_trigger = {
+			has_template = "Ataryād-e Qazāqkhāneh"
+			check_variable = {
+				global.PER_cossack_cap > 0
+			}
+		}
+
 		visible = {
-			is_subject = no
-			is_neighbor_of = FROM
+			has_template = "Ataryād-e Qazāqkhāneh"
+			check_variable = {
+				global.PER_cossack_cap > 0
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_cossacks_tt
+				check_variable = {
+					PER_recruited_cossacks < global.PER_cossack_cap
+				}
+			}
+			check_variable = {
+				var = PER.PER_total_independence
+				value = 0.01
+				compare = greater_than_or_equals
+				tooltip = has_domestic_independence_tt
+			}
+			NOT = {
+				has_war_with = RUS
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
+					check_variable = {
+						PER_recruited_cossacks > 0
+						tooltip = PER_has_raised_cossacks_NOT
+					}
+				}
+			}
+		}
+
+		custom_cost_text = PER_1_influence
+
+		custom_cost_trigger = {
+			check_variable = {
+				var = PER.PER_total_independence
+				value = 0.01
+				compare = greater_than_or_equals
+			}
+		}
+
+		fire_only_once = no
+		on_map_mode = map_only
+		complete_effect = {
+			add_to_variable = {
+				RUS.PER_foreign_influence = 0.01
+				tooltip = PER_modify_RUS_influence_tt
+			}
+			PER_calculate_foreign_influnce = yes
+			RUS = {
+				PER_calculate_influnce_in_persia_modifiers = yes
+			}
+			add_to_variable = {
+				PER_recruited_cossacks = 1
+				tooltip = PER_raise_cossack_regiment_tt
+			}
+			set_variable = {
+				PER_recruited_cossacks_decimal_var = {
+					value = PER_recruited_cossacks
+					divide = 100
+				}
+			}
+			FROM = {
+				create_unit = {
+					division = "division_template = \"Ataryād-e Qazāqkhāneh\" start_experience_factor = 0.8 start_equipment_factor = 0.75 force_equipment_variants = { infantry_equipment_1 = { owner = \"RUS\" }} force_equipment_variants = { field_gun_equipment_1 = { owner = \"RUS\" }}"
+					owner = ROOT
+					allow_spawning_on_enemy_provs = yes
+					count = 1
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { PER_recruited_cossacks = 0 }
+				}
+				if = {
+					limit = { has_character = PER_iskandar_khan_setkhanian }
+					show_unit_leaders_tooltip = PER_iskandar_khan_setkhanian
+				}
+				if = {
+					limit = { has_character = PER_reza_khan }
+					show_unit_leaders_tooltip = PER_reza_khan
+				}
+				if = {
+					limit = { has_character = PER_abdollah_amir_tahmasebi }
+					show_unit_leaders_tooltip = PER_abdollah_amir_tahmasebi
+				}
+				if = {
+					limit = { has_character = PER_karim_buzarjomehri }
+					show_unit_leaders_tooltip = PER_karim_buzarjomehri
+				}
+			}
+		}
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				any_other_country = {
+					NOT = {
+						AND = {
+							original_tag = RUS
+							has_government = communism
+						}
+					}
+					OR = {
+						has_war_with = ROOT
+						is_justifying_wargoal_against = ROOT
+						has_annex_war_goal = ROOT
+					}				
+				}
+				FROM = {
+					OR = {
+						is_capital = yes
+						is_in_home_area = yes
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				check_variable = {
+					PER_recruited_cossacks > 2			
+				}
+				surrender_progress < 0.5
+				NOT = {
+					has_war_together_with = RUS
+					any_enemy_country = {
+						original_tag = PER
+						has_PER_constitutionalism = yes
+					}
+				}
+			}
+		}
+	}
+	PER_extend_the_cossack_contract = {
+		icon = generic_prepare_civil_war
+		allowed = {
+			original_tag = PER
+		}
+		
+		visible = {
+			has_active_mission = PER_cossacks_leaving_mission
+			NOT = {
+				has_war_with = RUS
+			}
+		}
+
+		available = {
+			check_variable = {
+				var = PER.PER_total_independence
+				value = PER_recruited_cossacks_decimal_var
+				compare = greater_than_or_equals
+				tooltip = has_domestic_independence_tt
+			}
+		}
+
+		fire_only_once = no
+		on_map_mode = map_and_decisions_view
+		days_re_enable = 60
+		complete_effect = {
+			add_to_variable = {
+				RUS.PER_foreign_influence = PER_recruited_cossacks_decimal_var
+				tooltip = PER_modify_RUS_influence_tt
+			}
+			PER_calculate_foreign_influnce = yes
+			RUS = {
+				PER_calculate_influnce_in_persia_modifiers = yes
+			}
+			add_days_mission_timeout = {
+				mission = PER_cossacks_leaving_mission
+				days = 60
+			}
+			custom_effect_tooltip = back_in_60_days
+		}
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				any_other_country = {
+					NOT = {
+						AND = {
+							original_tag = RUS
+							has_government = communism
+						}
+					}
+					OR = {
+						has_war_with = ROOT
+						is_justifying_wargoal_against = ROOT
+						has_annex_war_goal = ROOT
+					}				
+				}
+			}
+		}
+	}
+	PER_cossacks_leaving_mission = {
+		icon = eng_blackshirt_march
+		
+		allowed = {
+			original_tag = PER
+		}
+		
+		activation = {
+			check_variable = {
+				PER_recruited_cossacks > 0
+			}
+			has_template = "Ataryād-e Qazāqkhāneh"
+			OR = {
+				has_war_with = RUS
+				has_capitulated = yes
+				NOT = {
+					has_war_together_with = RUS
+					any_enemy_country = {
+						original_tag = PER
+						has_PER_constitutionalism = yes
+					}
+				}
+			}			
+		}
+
+		available = {
+			OR = {
+				has_war_together_with = RUS
+				any_enemy_country = {
+					original_tag = PER
+					has_PER_constitutionalism = yes
+				}
+			}
+		}
+
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_war_with = RUS
+					has_capitulated = yes
+					check_variable = {
+						global.PER_cossack_cap = 0
+					}
+					check_variable = {
+						PER_recruited_cossacks = 0
+					}
+				}
+			}
+		}
+
+		fire_only_once = no		
+
+		is_good = no
+		days_mission_timeout = 60
+
+		timeout_effect = {
+			custom_effect_tooltip = PER_cossacks_stand_down_tt
+			hidden_effect = {
+				delete_unit = {
+					division_template = "Ataryād-e Qazāqkhāneh"
+				}
+				set_variable = {
+					PER_recruited_cossacks = 0
+				}
+			}
+		}
+
+		cancel_effect = {
+			hidden_effect = {
+				delete_unit = {
+					division_template = "Ataryād-e Qazāqkhāneh"
+				}
+				set_variable = {
+					PER_recruited_cossacks = 0
+				}
+			}
+		}
+	}
+}
+#Tribal Recruitment
+PER_guarded_domains = {
+	PER_disband_tribal_troops = {
+		icon = FIN_stop_motti_tactics
+		
+		allowed = {
+			original_tag = PER
+		}
+
+		visible = {
+			check_variable = {
+				PER_recruited_irregulars > 0
+			}	
+		}
+
+		fire_only_once = no
+
+		complete_effect = {
+			custom_effect_tooltip = PER_tribes_stand_down_tt
+			hidden_effect = {
+				delete_unit = {
+					division_template = "Nīrū-ye Eshāyer"
+				}
+				set_variable = { PER_recruited_irregulars = 0 }
+				set_variable = { PER_recruited_kurds = 0 }
+				set_variable = { PER_recruited_turkmens = 0 }
+				set_variable = { PER_recruited_azerbaijanis = 0 }
+				set_variable = { PER_recruited_gilaks = 0 }
+				set_variable = { PER_recruited_mazanderanis = 0 }
+				set_variable = { PER_recruited_bakhtiari = 0 }
+				set_variable = { PER_recruited_lurs = 0 }
+			}
+		}
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				NOT = {
+					any_other_country = {
+						OR = {
+							has_war_with = ROOT
+							is_justifying_wargoal_against = ROOT
+							has_annex_war_goal = ROOT
+						}
+					}
+				}
+			}
+		}
+	}
+	PER_centralization_worsens_mission = {
+		icon = generic_scorched_earth
+		
+		allowed = {
+			original_tag = PER
+		}
+
+		activation = {
+			check_variable = {
+				PER_recruited_irregulars > 0
+			}
+			check_variable = {
+				PER_centralization_level > 0
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				check_variable = {
+					PER_recruited_irregulars = 0
+				}
+				tooltip = PER_no_tribals_tt
+			}		
+		}
+
+		cancel_trigger = {
+			check_variable = {
+				PER_centralization_level = 0
+			}
+		}
+
+		fire_only_once = no		
+
+		is_good = no
+		days_mission_timeout = 30
+
+		timeout_effect = {
+			add_to_variable = {
+				var = PER_centralization_level
+				value = PER_recruited_irregulars_negative_var
+				tooltip = PER_add_centralization_tt
+			}
+			clamp_variable = {
+				var = PER_centralization_level
+				min = 0
+				max = 100
+			}
+		}	
+	}
+	#Kurds
+	PER_raise_kurds_FROM = {
+		icon = generic_reorganize_irregulars
+		allowed = {
+			original_tag = PER
+		}
+		state_target = yes
+		targets = {
+			1212 #Western Azerbaijan
+			421 #Kurdistan
+			419 #Urmia
+		}
+		target_trigger = {
+			FROM = {
+				OR = {
+					is_controlled_by = ROOT
+					is_controlled_by = OWNER
+				}
+				OR = {
+					has_contested_owner = PER #Root doesn't work
+					is_owned_by = ROOT				
+				}	
+			}
+		}
+		target_root_trigger = {
+			has_template = "Nīrū-ye Eshāyer"
+		}
+
+		days_re_enable = 10
+
+		available = {
+			has_PER_absolutism_qajar = yes
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_kurds_tt
+				check_variable = {
+					PER_recruited_kurds < global.PER_kurds_cap
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_irregulars_tt
+				check_variable = {
+					PER_recruited_irregulars < PER_irregulars_cap
+				}
+			}
+			NOT = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
+					check_variable = {
+						PER_recruited_kurds > 0
+						tooltip = PER_has_raised_kurds_NOT
+					}
+				}
+			}
+			FROM = {
+				if = {
+					limit = {
+						has_contested_owner = PER
+					}
+					is_owned_by = controller
+					controller = {
+						has_war_with = ROOT
+					}
+				}
+				else_if = {
+					limit = { is_capital = no }
+					is_in_home_area = yes
+				}
+			}
+		}
+
+		visible = {
+			check_variable = {
+				PER_recruited_kurds < global.PER_kurds_cap
+			}
+		}
+
+		fire_only_once = no
+		on_map_mode = map_only
+
+		complete_effect = {
+			add_to_variable = {
+				PER_recruited_kurds = 1
+				tooltip = PER_raise_kurds_tt
+			}
+			add_to_variable = {
+				PER_recruited_irregulars = 1
+			}
+			set_variable = {
+				PER_recruited_irregulars_negative_var = {
+					value = PER_recruited_irregulars
+					multiply = -1
+				}	
+			}
+			FROM = {
+				create_unit = {
+					division = "name = \"Eshāyer-e Kord\" division_template = \"Nīrū-ye Eshāyer\" start_experience_factor = 0.2 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_n1 = { owner = \"KUR\" }}" 
+					owner = ROOT				
+					count = 1
+					allow_spawning_on_enemy_provs = yes
+					id = 100
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_active_mission = PER_centralization_worsens_mission }
+					check_variable = {
+						PER_centralization_level > 0
+					}
+				}
+				effect_tooltip = {
+					activate_mission = PER_centralization_worsens_mission
+				}
+			}
+			custom_effect_tooltip = back_in_10_days
+		}
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				NOT = {
+					any_other_country = {
+						OR = {
+							has_war_with = ROOT
+							is_justifying_wargoal_against = ROOT
+							has_annex_war_goal = ROOT
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				check_variable = {
+					PER_recruited_irregulars > 4
+				}
+				surrender_progress < 0.5
+			}
+		}
+	}
+	PER_kurds_leaving_mission = {
+		icon = eng_blackshirt_march
+		
+		allowed = {
+			original_tag = PER
+		}
+
+		available = {
+			has_PER_absolutism_qajar = yes
+		}
+		
+		activation = {
+			check_variable = {
+				PER_recruited_kurds > 0
+			}
+			has_PER_absolutism_qajar = no			
+		}
+
+		fire_only_once = no		
+
+		is_good = no
+		days_mission_timeout = 15
+
+		timeout_effect = {
+			delete_unit = {
+				id = 100
+			}
+			subtract_from_variable = {
+				var = PER_recruited_irregulars
+				value = PER_recruited_kurds
+			}
+			set_variable = {
+				PER_recruited_kurds = 0
+			}
+		}
+	}
+	#Turkmens
+	PER_raise_turkmens_FROM = {
+		icon = generic_reorganize_irregulars
+		allowed = {
+			original_tag = PER
+		}
+		state_target = yes
+		targets = {
+			1013 #Astrabad
+			584
+		}
+		target_trigger = {
+			FROM = {
+				OR = {
+					is_controlled_by = ROOT
+					is_controlled_by = OWNER
+				}
+				OR = {
+					has_contested_owner = PER #Root doesn't work
+					is_owned_by = ROOT				
+				}	
+			}
+		}
+		target_root_trigger = {
+			has_template = "Nīrū-ye Eshāyer"
+		}
+
+		days_re_enable = 10
+
+		available = {
+			has_PER_absolutism_qajar = yes
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_turkmens_tt
+				check_variable = {
+					PER_recruited_turkmens < global.PER_turkmens_cap
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_irregulars_tt
+				check_variable = {
+					PER_recruited_irregulars < PER_irregulars_cap
+				}
+			}
+			NOT = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
+					check_variable = {
+						PER_recruited_turkmens > 0
+						tooltip = PER_has_raised_turkmens_NOT
+					}
+				}
+			}
+			FROM = {
+				if = {
+					limit = {
+						has_contested_owner = PER
+					}
+					is_owned_by = controller
+					controller = {
+						has_war_with = ROOT
+					}
+				}
+				else_if = {
+					limit = { is_capital = no }
+					is_in_home_area = yes
+				}
+			}		
+		}
+
+		visible = {
+			check_variable = {
+				PER_recruited_turkmens < global.PER_turkmens_cap
+			}
+		}
+
+		fire_only_once = no
+		on_map_mode = map_only
+
+		complete_effect = {
+			add_to_variable = {
+				PER_recruited_turkmens = 1
+				tooltip = PER_raise_turkmens_tt
+			}
+			add_to_variable = {
+				PER_recruited_irregulars = 1
+			}
+			set_variable = {
+				PER_recruited_irregulars_negative_var = {
+					value = PER_recruited_irregulars
+					multiply = -1
+				}	
+			}
+			FROM = {
+				create_unit = {
+					division = "name = \"Eshāyer-e Torkmān\" division_template = \"Nīrū-ye Eshāyer\" start_experience_factor = 0.2 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_n1 = { owner = \"PER\" }}" 
+					owner = ROOT				
+					count = 1
+					allow_spawning_on_enemy_provs = yes
+					id = 101
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_active_mission = PER_centralization_worsens_mission }
+					check_variable = {
+						PER_centralization_level > 0
+					}
+				}
+				effect_tooltip = {
+					activate_mission = PER_centralization_worsens_mission
+				}
+			}
+			custom_effect_tooltip = back_in_10_days
+		}
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				NOT = {
+					any_other_country = {
+						OR = {
+							has_war_with = ROOT
+							is_justifying_wargoal_against = ROOT
+							has_annex_war_goal = ROOT
+						}
+					}
+				}				
+			}
+			modifier = {
+				factor = 0
+				check_variable = {
+					PER_recruited_irregulars > 4
+				}
+				surrender_progress < 0.5
+			}
+		}
+	}
+	PER_turkmens_leaving_mission = {
+		icon = eng_blackshirt_march
+		
+		allowed = {
+			original_tag = PER
+		}
+
+		available = {
+			has_PER_absolutism_qajar = yes
+		}
+		
+		activation = {
+			check_variable = {
+				PER_recruited_turkmens > 0
+			}
+			has_PER_absolutism_qajar = no			
+		}
+
+		fire_only_once = no		
+
+		is_good = no
+		days_mission_timeout = 15
+
+		timeout_effect = {
+			delete_unit = {
+				id = 101
+			}
+			subtract_from_variable = {
+				var = PER_recruited_irregulars
+				value = PER_recruited_turkmens
+			}
+			set_variable = {
+				PER_recruited_turkmens = 0
+			}
+		}
+	}
+	#Azerbaijanis
+	PER_raise_azerbaijanis_FROM = {
+		icon = generic_reorganize_irregulars
+		allowed = {
+			original_tag = PER
+		}
+		state_target = yes
+		targets = {
+			877
+			1212
+			1245
+			1251
+		}
+		target_trigger = {
+			FROM = {
+				OR = {
+					is_controlled_by = ROOT
+					is_controlled_by = OWNER
+				}
+				OR = {
+					has_contested_owner = PER #Root doesn't work
+					is_owned_by = ROOT
+				}	
+			}
+		}
+		target_root_trigger = {
+			has_template = "Nīrū-ye Eshāyer"
+		}
+
+		days_re_enable = 10
+
+		available = {
+			has_PER_constitutionalism = yes
+			NOT = {
+				has_government = neutrality
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_azerbaijanis_tt
+				check_variable = {
+					PER_recruited_azerbaijanis < global.PER_azerbaijanis_cap
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_irregulars_tt
+				check_variable = {
+					PER_recruited_irregulars < PER_irregulars_cap
+				}
+			}
+			NOT = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
+					check_variable = {
+						PER_recruited_azerbaijanis > 0
+						tooltip = PER_has_raised_azerbaijanis_NOT
+					}
+				}
+			}
+			FROM = {
+				if = {
+					limit = {
+						has_contested_owner = PER
+					}
+					is_owned_by = controller
+					controller = {
+						has_war_with = ROOT
+					}
+				}
+				else_if = {
+					limit = { is_capital = no }
+					is_in_home_area = yes
+				}
+			}		
+		}
+
+		visible = {
+			check_variable = {
+				PER_recruited_azerbaijanis < global.PER_azerbaijanis_cap
+			}
+		}
+
+		fire_only_once = no
+		on_map_mode = map_only
+
+		complete_effect = {
+			add_to_variable = {
+				PER_recruited_azerbaijanis = 1
+				tooltip = PER_raise_azerbaijanis_tt
+			}
+			add_to_variable = {
+				PER_recruited_irregulars = 1
+			}
+			set_variable = {
+				PER_recruited_irregulars_negative_var = {
+					value = PER_recruited_irregulars
+					multiply = -1
+				}	
+			}
+			FROM = {
+				create_unit = {
+					division = "name = \"Eshāyer-e Azarbayejan\" division_template = \"Nīrū-ye Eshāyer\" start_experience_factor = 0.2 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_n1 = { owner = \"PER\" }}" 
+					owner = ROOT				
+					count = 1
+					allow_spawning_on_enemy_provs = yes
+					id = 102
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_active_mission = PER_centralization_worsens_mission }
+					check_variable = {
+						PER_centralization_level > 0
+					}
+				}
+				effect_tooltip = {
+					activate_mission = PER_centralization_worsens_mission
+				}
+			}
+			custom_effect_tooltip = back_in_10_days
+		}
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				NOT = {
+					any_other_country = {
+						OR = {
+							has_war_with = ROOT
+							is_justifying_wargoal_against = ROOT
+							has_annex_war_goal = ROOT
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				check_variable = {
+					PER_recruited_irregulars > 4
+				}
+				surrender_progress < 0.5
+			}
+		}
+	}
+	PER_azerbaijanis_leaving_mission = {
+		icon = eng_blackshirt_march
+		
+		allowed = {
+			original_tag = PER
+		}
+
+		available = {
+			has_PER_constitutionalism = yes
+			NOT = {
+				has_government = neutrality
+			}
+		}
+		
+		activation = {
+			check_variable = {
+				PER_recruited_azerbaijanis > 0
+			}
+			OR = {
+				has_PER_constitutionalism = no	
+				has_government = neutrality
+			}				
+		}
+
+		fire_only_once = no		
+
+		is_good = no
+		days_mission_timeout = 15
+
+		timeout_effect = {
+			delete_unit = {
+				id = 101
+			}
+			subtract_from_variable = {
+				var = PER_recruited_irregulars
+				value = PER_recruited_azerbaijanis
+			}
+			set_variable = {
+				PER_recruited_azerbaijanis = 0
+			}
+		}
+	}
+	#Gilaks
+	PER_raise_gilaks_FROM = {
+		icon = generic_reorganize_irregulars
+		allowed = {
+			original_tag = PER
+		}
+		state_target = yes
+		targets = {
+			420
+		}
+		target_trigger = {
+			FROM = {
+				OR = {
+					is_controlled_by = ROOT
+					is_controlled_by = OWNER
+				}
+				OR = {
+					has_contested_owner = PER #Root doesn't work
+					is_owned_by = ROOT				
+				}	
+			}
+		}
+		target_root_trigger = {
+			has_template = "Nīrū-ye Eshāyer"
+		}
+
+		days_re_enable = 10
+
+		available = {
+			has_PER_constitutionalism = yes
+			NOT = {
+				has_government = neutrality
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_gilaks_tt
+				check_variable = {
+					PER_recruited_gilaks < global.PER_gilaks_cap
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_irregulars_tt
+				check_variable = {
+					PER_recruited_irregulars < PER_irregulars_cap
+				}
+			}
+			NOT = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
+					check_variable = {
+						PER_recruited_gilaks > 0
+						tooltip = PER_has_raised_gilaks_NOT
+					}
+				}
+			}
+			FROM = {
+				if = {
+					limit = {
+						has_contested_owner = PER
+					}
+					is_owned_by = controller
+					controller = {
+						has_war_with = ROOT
+					}
+				}
+				else_if = {
+					limit = { is_capital = no }
+					is_in_home_area = yes
+				}
+			}		
+		}
+
+		visible = {
+			check_variable = {
+				PER_recruited_gilaks < global.PER_gilaks_cap
+			}
+		}
+
+		fire_only_once = no
+		on_map_mode = map_only
+
+		complete_effect = {
+			add_to_variable = {
+				PER_recruited_gilaks = 1
+				tooltip = PER_raise_gilaks_tt
+			}
+			add_to_variable = {
+				PER_recruited_irregulars = 1
+			}
+			set_variable = {
+				PER_recruited_irregulars_negative_var = {
+					value = PER_recruited_irregulars
+					multiply = -1
+				}	
+			}
+			FROM = {
+				create_unit = {
+					division = "name = \"Eshāyer-e Gilak\" division_template = \"Nīrū-ye Eshāyer\" start_experience_factor = 0.2 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_n1 = { owner = \"PER\" }}" 
+					owner = ROOT				
+					count = 1
+					allow_spawning_on_enemy_provs = yes
+					id = 103
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_active_mission = PER_centralization_worsens_mission }
+					check_variable = {
+						PER_centralization_level > 0
+					}
+				}
+				effect_tooltip = {
+					activate_mission = PER_centralization_worsens_mission
+				}
+			}
+			custom_effect_tooltip = back_in_10_days
+		}
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				NOT = {
+					any_other_country = {
+						OR = {
+							has_war_with = ROOT
+							is_justifying_wargoal_against = ROOT
+							has_annex_war_goal = ROOT
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				check_variable = {
+					PER_recruited_irregulars > 4
+				}
+				surrender_progress < 0.5
+			}
+		}
+	}
+	PER_gilaks_leaving_mission = {
+		icon = eng_blackshirt_march
+		
+		allowed = {
+			original_tag = PER
+		}
+
+		available = {
+			has_PER_constitutionalism = yes
+			NOT = {
+				has_government = neutrality
+			}
+		}
+		
+		activation = {
+			check_variable = {
+				PER_recruited_gilaks > 0
+			}
+			OR = {
+				has_PER_constitutionalism = no	
+				has_government = neutrality
+			}				
+		}
+
+		fire_only_once = no		
+
+		is_good = no
+		days_mission_timeout = 15
+
+		timeout_effect = {
+			delete_unit = {
+				id = 103
+			}
+			subtract_from_variable = {
+				var = PER_recruited_irregulars
+				value = PER_recruited_gilaks
+			}
+			set_variable = {
+				PER_recruited_gilaks = 0
+			}
+		}
+	}
+	#Mazanderanis
+	PER_raise_mazanderanis_FROM = {
+		icon = generic_reorganize_irregulars
+		allowed = {
+			original_tag = PER
+		}
+		state_target = yes
+		targets = {
+			1247
+		}
+		target_trigger = {
+			FROM = {
+				OR = {
+					is_controlled_by = ROOT
+					is_controlled_by = OWNER
+				}
+				OR = {
+					has_contested_owner = PER #Root doesn't work
+					is_owned_by = ROOT				
+				}	
+			}
+		}
+		target_root_trigger = {
+			has_template = "Nīrū-ye Eshāyer"
+		}
+
+		days_re_enable = 10
+
+		available = {
+			has_PER_constitutionalism = yes
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_mazanderanis_tt
+				check_variable = {
+					PER_recruited_mazanderanis < global.PER_mazanderanis_cap
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_irregulars_tt
+				check_variable = {
+					PER_recruited_irregulars < PER_irregulars_cap
+				}
+			}
+			NOT = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
+					check_variable = {
+						PER_recruited_mazanderanis > 0
+						tooltip = PER_has_raised_mazanderanis_NOT
+					}
+				}
+			}
+			FROM = {
+				if = {
+					limit = {
+						has_contested_owner = PER
+					}
+					is_owned_by = controller
+					controller = {
+						has_war_with = ROOT
+					}
+				}
+				else_if = {
+					limit = { is_capital = no }
+					is_in_home_area = yes
+				}
+			}
+		}
+
+		visible = {
+			check_variable = {
+				PER_recruited_mazanderanis < global.PER_mazanderanis_cap
+			}
+		}
+
+		fire_only_once = no
+		on_map_mode = map_only
+
+		complete_effect = {
+			add_to_variable = {
+				PER_recruited_mazanderanis = 1
+				tooltip = PER_raise_mazanderanis_tt
+			}
+			add_to_variable = {
+				PER_recruited_irregulars = 1
+			}
+			set_variable = {
+				PER_recruited_irregulars_negative_var = {
+					value = PER_recruited_irregulars
+					multiply = -1
+				}
+			}
+			FROM = {
+				create_unit = {
+					division = "name = \"Eshāyer-e Mazanderani\" division_template = \"Nīrū-ye Eshāyer\" start_experience_factor = 0.2 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_n1 = { owner = \"PER\" }}" 
+					owner = ROOT				
+					count = 1
+					allow_spawning_on_enemy_provs = yes
+					id = 104
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_active_mission = PER_centralization_worsens_mission }
+					check_variable = {
+						PER_centralization_level > 0
+					}
+				}
+				effect_tooltip = {
+					activate_mission = PER_centralization_worsens_mission
+				}
+			}
+			custom_effect_tooltip = back_in_10_days
+		}
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				NOT = {
+					any_other_country = {
+						OR = {
+							has_war_with = ROOT
+							is_justifying_wargoal_against = ROOT
+							has_annex_war_goal = ROOT
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				check_variable = {
+					PER_recruited_irregulars > 4
+				}
+				surrender_progress < 0.5
+			}
+		}
+	}
+	PER_mazanderanis_leaving_mission = {
+		icon = eng_blackshirt_march
+		
+		allowed = {
+			original_tag = PER
+		}
+
+		available = {
+			has_PER_constitutionalism = yes
+		}
+		
+		activation = {
+			check_variable = {
+				PER_recruited_mazanderanis > 0
+			}
+			has_PER_constitutionalism = no			
+		}
+
+		fire_only_once = no		
+
+		is_good = no
+		days_mission_timeout = 15
+
+		timeout_effect = {
+			delete_unit = {
+				id = 104
+			}
+			subtract_from_variable = {
+				var = PER_recruited_irregulars
+				value = PER_recruited_mazanderanis
+			}
+			set_variable = {
+				PER_recruited_mazanderanis = 0
+			}
+		}
+	}
+	#Bakhtiaris
+	PER_raise_bakhtiaris_FROM = {
+		icon = generic_reorganize_irregulars
+		allowed = {
+			original_tag = PER
+		}
+		state_target = yes
+		targets = {
+			1211
+		}
+		target_trigger = {
+			FROM = {
+				OR = {
+					is_controlled_by = ROOT
+					is_controlled_by = OWNER
+				}
+				OR = {
+					has_contested_owner = PER #Root doesn't work
+					is_owned_by = ROOT				
+				}	
+			}
+		}
+		target_root_trigger = {
+			has_template = "Nīrū-ye Eshāyer"
+		}
+
+		days_re_enable = 10
+
+		available = {
+			has_PER_constitutionalism = yes
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_bakhtiari_tt
+				check_variable = {
+					PER_recruited_bakhtiari < global.PER_bakhtiari_cap
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_irregulars_tt
+				check_variable = {
+					PER_recruited_irregulars < PER_irregulars_cap
+				}
+			}
+			NOT = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
+					check_variable = {
+						PER_recruited_bakhtiari > 0
+						tooltip = PER_has_raised_bakhtiaris_NOT
+					}
+				}
+			}
+			FROM = {
+				if = {
+					limit = {
+						has_contested_owner = PER
+					}
+					is_owned_by = controller
+					controller = {
+						has_war_with = ROOT
+					}
+				}
+				else_if = {
+					limit = { is_capital = no }
+					is_in_home_area = yes
+				}
+			}
+		}
+
+		visible = {
+			check_variable = {
+				PER_recruited_bakhtiari < global.PER_bakhtiari_cap
+			}
+		}
+
+		fire_only_once = no
+		on_map_mode = map_only
+
+		complete_effect = {
+			add_to_variable = {
+				PER_recruited_bakhtiari = 1
+				tooltip = PER_raise_bakhtiaris_tt
+			}
+			add_to_variable = {
+				PER_recruited_irregulars = 1
+			}
+			set_variable = {
+				PER_recruited_irregulars_negative_var = {
+					value = PER_recruited_irregulars
+					multiply = -1
+				}
+			}
+			FROM = {
+				create_unit = {
+					division = "name = \"Eshāyer-e Bakhtiari\" division_template = \"Nīrū-ye Eshāyer\" start_experience_factor = 0.2 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_n1 = { owner = \"PER\" }}" 
+					owner = ROOT				
+					count = 1
+					allow_spawning_on_enemy_provs = yes
+					id = 105
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_active_mission = PER_centralization_worsens_mission }
+					check_variable = {
+						PER_centralization_level > 0
+					}
+				}
+				effect_tooltip = {
+					activate_mission = PER_centralization_worsens_mission
+				}
+			}
+			custom_effect_tooltip = back_in_10_days
+		}
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				NOT = {
+					any_other_country = {
+						OR = {
+							has_war_with = ROOT
+							is_justifying_wargoal_against = ROOT
+							has_annex_war_goal = ROOT
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				check_variable = {
+					PER_recruited_irregulars > 4
+				}
+				surrender_progress < 0.5
+			}
+		}
+	}
+	PER_bakhtiaris_leaving_mission = {
+		icon = eng_blackshirt_march
+		
+		allowed = {
+			original_tag = PER
+		}
+
+		available = {
+			has_PER_constitutionalism = yes
+		}
+		
+		activation = {
+			check_variable = {
+				PER_recruited_bakhtiari > 0
+			}
+			has_PER_constitutionalism = no			
+		}
+
+		fire_only_once = no		
+
+		is_good = no
+		days_mission_timeout = 15
+
+		timeout_effect = {
+			delete_unit = {
+				id = 105
+			}
+			subtract_from_variable = {
+				var = PER_recruited_irregulars
+				value = PER_recruited_bakhtiari
+			}
+			set_variable = {
+				PER_recruited_bakhtiari = 0
+			}
+		}
+	}
+	#Lurs
+	PER_raise_lurs_FROM = {
+		icon = generic_reorganize_irregulars
+		allowed = {
+			original_tag = PER
+		}
+		state_target = yes
+		targets = {
+			1211
+		}
+		target_trigger = {
+			FROM = {
+				OR = {
+					is_controlled_by = ROOT
+					is_controlled_by = OWNER
+				}
+				OR = {
+					has_contested_owner = PER #Root doesn't work
+					is_owned_by = ROOT				
+				}	
+			}
+		}
+		target_root_trigger = {
+			has_template = "Nīrū-ye Eshāyer"
+		}
+
+		days_re_enable = 10
+
+		available = {
+			has_PER_absolutism_qajar = yes
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_lurs_tt
+				check_variable = {
+					PER_recruited_lurs < global.PER_lurs_cap
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_irregulars_tt
+				check_variable = {
+					PER_recruited_irregulars < PER_irregulars_cap
+				}
+			}
+			NOT = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
+					check_variable = {
+						PER_recruited_lurs > 0
+						tooltip = PER_has_raised_lurs_NOT
+					}
+				}
+			}
+			FROM = {
+				if = {
+					limit = {
+						has_contested_owner = PER
+					}
+					is_owned_by = controller
+					controller = {
+						has_war_with = ROOT
+					}
+				}
+				else_if = {
+					limit = { is_capital = no }
+					is_in_home_area = yes
+				}
+			}		
+		}
+
+		visible = {
+			check_variable = {
+				PER_recruited_lurs < global.PER_lurs_cap
+			}
+		}
+
+		fire_only_once = no
+		on_map_mode = map_only
+
+		complete_effect = {
+			add_to_variable = {
+				PER_recruited_lurs = 1
+				tooltip = PER_raise_lurs_tt
+			}
+			add_to_variable = {
+				PER_recruited_irregulars = 1
+			}
+			set_variable = {
+				PER_recruited_irregulars_negative_var = {
+					value = PER_recruited_irregulars
+					multiply = -1
+				}	
+			}
+			FROM = {
+				create_unit = {
+					division = "name = \"Eshāyer-e Lori\" division_template = \"Nīrū-ye Eshāyer\" start_experience_factor = 0.2 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_n1 = { owner = \"PER\" }}" 
+					owner = ROOT				
+					count = 1
+					allow_spawning_on_enemy_provs = yes
+					id = 106
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_active_mission = PER_centralization_worsens_mission }
+					check_variable = {
+						PER_centralization_level > 0
+					}
+				}
+				effect_tooltip = {
+					activate_mission = PER_centralization_worsens_mission
+				}
+			}
+			custom_effect_tooltip = back_in_10_days
+		}
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				NOT = {
+					any_other_country = {
+						OR = {
+							has_war_with = ROOT
+							is_justifying_wargoal_against = ROOT
+							has_annex_war_goal = ROOT
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				check_variable = {
+					PER_recruited_irregulars > 4
+				}
+				surrender_progress < 0.5
+			}
+		}
+	}
+	PER_lurs_leaving_mission = {
+		icon = eng_blackshirt_march
+		
+		allowed = {
+			original_tag = PER
+		}
+
+		available = {
+			has_PER_absolutism_qajar = yes
+		}
+		
+		activation = {
+			check_variable = {
+				PER_recruited_lurs > 0
+			}
+			has_PER_absolutism_qajar = no			
+		}
+
+		fire_only_once = no		
+
+		is_good = no
+		days_mission_timeout = 15
+
+		timeout_effect = {
+			delete_unit = {
+				id = 106
+			}
+			subtract_from_variable = {
+				var = PER_recruited_irregulars
+				value = PER_recruited_lurs
+			}
+			set_variable = {
+				PER_recruited_lurs = 0
+			}
+		}
+	}
+}	
+#Gendarmerie
+PER_guarded_domains = {	
+	#Expansion of Gendarmerie
+	PER_raise_government_gendarmerie = {
+		icon = generic_military
+		allowed = {
+			original_tag = PER
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = PER_can_recruit_gendarmerie_tt
+				check_variable = {
+					PER_recruited_gendarmerie < global.PER_gendarmerie_cap
+				}
+			}
+		}
+
+		visible = {
+			check_variable = {
+				PER_recruited_gendarmerie < global.PER_gendarmerie_cap
+			}
+			#has_PER_constitutionalism = yes
+			has_completed_focus = PER_create_the_government_gendarmerie
+			has_template = "Žāndārmirī-ye Daulatī"
+			check_variable = {
+				global.PER_gendarmerie_cap > 0
+			}
+			any_owned_state = {
+				is_controlled_by = ROOT
+				is_core_of = ROOT
+				impassable = no
+			}
+			NOT = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
+					check_variable = {
+						PER_recruited_gendarmerie > 0
+						tooltip = PER_has_raised_gendarmerie_NOT
+					}
+				}
+			}
+		}
+
+		cost = 10
+
+		fire_only_once = no
+
+		complete_effect = {
+			add_to_variable = {
+				PER_recruited_gendarmerie = 1
+			}
+			random_owned_controlled_state = {
+				limit = { 
+					is_core_of = ROOT 
+					impassable = no
+				}
+				create_unit = {
+					division = "name = \"Žāndārmirī-ye Daulatī\" division_template = \"Žāndārmirī-ye Daulatī\" start_experience_factor = 0.2 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_1 = { owner = \"ENG\" }}" 
+					owner = ROOT
+					count = 1
+				}
+			}
+			if = {
+				limit = {
+					check_variable = { PER_recruited_gendarmerie = 0 }
+				}
+				if = {
+					limit = { 
+						has_character = PER_mohammad_taqi_pessian 
+						NOT = {
+							has_country_flag = PER_defense_committee_flag
+							has_country_flag = PER_khorasan_flag
+						}
+					}
+					show_unit_leaders_tooltip = PER_mohammad_taqi_pessian
+				}
+				if = {
+					limit = { has_character = SWE_harald_hjalmarson }
+					show_unit_leaders_tooltip = SWE_harald_hjalmarson
+				}
+			}
+		}
+		ai_will_do = {
+			base = 10
+		}
+	}
+	PER_expand_government_gendarmerie = {
+		icon = generic_military
+		allowed = {
+			original_tag = PER
+		}
+
+		available = {
+			check_variable = {
+				var = PER_available_funds
+				value = 1
+				compare = greater_than_or_equals
+				tooltip = PER_has_funds_tt
+			}
+		}
+
+		visible = {
+			#has_PER_constitutionalism = yes
+			has_completed_focus = PER_create_the_government_gendarmerie
+			has_template = "Žāndārmirī-ye Daulatī"
+			any_owned_state = {
+				is_controlled_by = ROOT
+				OR = {
+					is_capital = yes
+					is_in_home_area = yes
+				}				
+				is_core_of = ROOT
+				impassable = no			
+			}
+			NOT = {
+				any_country_with_original_tag = {
+					original_tag_to_check = PER
+					hidden_trigger = { NOT = { tag = ROOT } }
+					check_variable = {
+						PER_recruited_gendarmerie > 0
+						tooltip = PER_has_raised_gendarmerie_NOT
+					}
+				}
+			}
+		}
+
+		custom_cost_text = PER_1_fund
+
+		custom_cost_trigger = {
+			check_variable = { PER_available_funds > 0}
+		}
+
+		fire_only_once = no
+
+		days_remove = 30
+
+		complete_effect = {
+			add_to_variable = {
+				PER_available_funds = -1
+			}
+		}
+		remove_effect = {
+			add_to_variable = {
+				global.PER_gendarmerie_cap = 1
+			}
+			add_to_variable = {
+				PER_recruited_gendarmerie = 1
+			}
+			hidden_effect = {
+				set_division_template_cap = { 
+					division_template = "Žāndārmirī-ye Daulatī" 
+					division_cap = global.PER_gendarmerie_cap
+				}
+			}
+			random_owned_controlled_state = {
+				limit = { 
+					is_core_of = ROOT
+					OR = {
+						is_capital = yes
+						is_in_home_area = yes
+					}
+					impassable = no
+				}
+				create_unit = {
+					division = "name = \"Žāndārmirī-ye Daulatī\" division_template = \"Žāndārmirī-ye Daulatī\" start_experience_factor = 0.2 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_1 = { owner = \"ENG\" }}" 
+					owner = ROOT
+					count = 1
+				}
+			}
+		}
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				check_variable = {
+					PER_recruited_gendarmerie < global.PER_gendarmerie_cap
+				}
+			}
+		}
+	}
+	#Extortion
+	PER_extort_FROM = {
+		icon = GFX_decision_CHL_carabineros
+		allowed = {
+			original_tag = PER
+		}
+		state_target = yes
+		target_array = ROOT.core_states
+		target_trigger = {
+			FROM = {
+				is_owned_and_controlled_by = ROOT
+				OR = {
+					is_capital = yes
+					is_in_home_area = yes
+				}
+				impassable = no
+				NOT = { has_state_flag = PER_extorted_state }
+			}
+		}
+
+		target_root_trigger = {
+			has_PER_constitutionalism = yes
+			has_completed_focus = PER_treasury_gendarmerie
+			has_character = PER_william_morgan_shuster
+			PER_william_morgan_shuster = {
+				is_hired_as_advisor = yes
+			}
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = PER_has_treasury_gendarmerie_in_state_tt
+				FROM = {
+					any_state_division = {
+						division_has_majority_template = militia
+					}
+				}
+			}
+		}
+
+		visible = {
+			has_PER_constitutionalism = yes
+			has_character = PER_william_morgan_shuster
+			PER_william_morgan_shuster = {
+				is_hired_as_advisor = yes
+			}
+		}
+
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					FROM = {
+						NOT = {
+							any_state_division = {
+								division_has_majority_template = militia
+							}
+						}
+					}
+					NOT = {
+						has_character = PER_william_morgan_shuster
+					}
+					PER_william_morgan_shuster = {
+						is_hired_as_advisor = no
+					}
+					has_PER_constitutionalism = no
+				}
+			}
+		}
+
+		fire_only_once = no
+		on_map_mode = map_only
+		days_remove = 30
+		remove_effect = {
+			add_to_variable = {
+				var = PER_available_funds
+				value = 1
+				tooltip = PER_add_funds_tt
+			}
+			add_to_variable = {
+				var = PER_centralization_level
+				value = 2.5
+				tooltip = PER_add_centralization_tt
+			}
+			FROM = {
+				set_state_flag = {
+					flag = PER_extorted_state
+					days = 360
+					value = 1
+				}
+			}
+			custom_effect_tooltip = back_in_360_days
+		}
+		ai_will_do = {
+			base = 10
+		}
+	}
+}
+#Loans
+TGWR_great_power_politics = {
+	#Taking Loans
+	PER_ask_for_loan_FROM = {
+		icon = gre_investment_decisions
+		allowed = {
+			original_tag = PER
+		}
+
+		targets = {
+			ENG
+			RUS
+			GER
+			TUR
+		}
+
+		#targets_dynamic = yes
+
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = PER_influence_in_persia_modifier
+				has_capitulated = no
+			}
+		}
+
+		target_root_trigger = {
+			has_completed_focus = PER_ask_for_loans
+			has_dynamic_modifier = PER_foreign_influence_modifier
+		}
+
+		available = {
+			check_variable = {
+				var = PER.PER_total_independence
+				value = 0.02
+				compare = greater_than_or_equals
+				tooltip = has_domestic_independence_tt
+			}
 			NOT = {
 				has_war_with = FROM
 			}
-		}
-		available = {
-			has_capitulated = no
-			FROM = {
-				OR = {
-					is_in_faction = no
-					is_in_faction_with = ROOT
-				}
-				OR = {
-					is_subject_of = ROOT
-					is_subject = no
-				}
-			}
-		}
-		fire_only_once = yes
-		complete_effect = {
 			if = {
 				limit = {
-					has_subject = FROM
+					NOT = {
+						capital_scope = { state = 266 }
+					}
 				}
-				annex_country = {
-					target = FROM
-					transfer_troops = yes
-				}
+				has_war_together_with = FROM
 			}
-			else = {
-				add_state_core = 410
-				country_event = {
-					id = ww1_persia.14
-					days = 10
+		}
+		
+		visible = {
+			great_power_politics_strangling_of_persia_visible = yes
+			has_dynamic_modifier = PER_foreign_influence_modifier
+		}
+
+		fire_only_once = no
+
+		custom_cost_text = PER_2_influence
+
+		custom_cost_trigger = {
+			check_variable = {
+				var = PER.PER_total_independence
+				value = 0.02
+				compare = greater_than_or_equals
+			}
+		}
+
+		days_re_enable = 30
+
+		complete_effect = {
+			set_country_flag = PER_asking_for_loan
+			FROM = {
+				country_event = ww1_per_generic.1
+			}
+			custom_effect_tooltip = if_FROM_agrees
+			effect_tooltip = {
+				FROM = {
+					add_political_power = -10
 				}
+				add_to_variable = {
+					PER_available_funds = 1
+					tooltip = PER_add_funds_tt
+				}
+				add_to_variable = {
+					FROM.PER_foreign_influence = 0.02
+					tooltip = PER_modify_FROM_influence_tt
+				}
+			}			
+			custom_effect_tooltip = back_in_30_days
+		}
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				OR = {
+					has_country_flag = PER_asking_for_loan
+					has_country_flag = PER_recivied_loan
+					FROM = {
+						has_country_flag = PER_refused_to_provide_loan
+					}
+				}				
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { tag = GER }			
+			}
+			modifier = {
+				factor = 0.1
+				FROM = { tag = TUR }			
 			}
 		}
 	}

@@ -2240,7 +2240,7 @@ focus_tree = {
 			has_stability > 0.15
 		}
 		bypass = {
-			159 = {
+			161 = {
 				NOT = {
 					is_owned_by = ROOT
 				}
@@ -2696,37 +2696,43 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			custom_effect_tooltip = ITA_pairs_well_with_tariff_loan.tt
-			custom_effect_tooltip = ITA_modify_industry_tt
-			effect_tooltip = {
-				add_to_variable = {
-					ITA_ind_infra_speed = 0.05
-					tooltip = production_speed_infrastructure_factor_tt
-				}
-				add_to_variable = {
-					ITA_ind_stab = 0.05
-					tooltip = stability_factor_tt
-				}
-			}
-			custom_effect_tooltip = empty_space_tt
-			custom_effect_tooltip = ITA_modify_industry_tt
-			add_to_variable = {
-				ITA_ind_civs = 0.04
-				tooltip = production_speed_industrial_complex_factor_tt
-			}
-			IF = {
-				limit = {
-					has_completed_focus = ITA_moderate_protectionism
-				}
+			if = {
+				limit = { has_completed_focus = ITA_moderate_protectionism }
 				custom_effect_tooltip = ITA_modify_industry_tt
 				add_to_variable = {
+					ITA_ind_stab = 0.05
+					tooltip = stability_factor_tt
+				}
+				add_to_variable = {
 					ITA_ind_infra_speed = 0.05
 					tooltip = production_speed_infrastructure_factor_tt
 				}
 				add_to_variable = {
-					ITA_ind_stab = 0.05
-					tooltip = stability_factor_tt
+					ITA_ind_civs = 0.04
+					tooltip = production_speed_industrial_complex_factor_tt
 				}
+				custom_effect_tooltip = empty_space_tt
+			}
+			else = {
+				custom_effect_tooltip = ITA_modify_industry_tt
+				add_to_variable = {
+					ITA_ind_civs = 0.04
+					tooltip = production_speed_industrial_complex_factor_tt
+				}
+				custom_effect_tooltip = empty_space_tt
+				custom_effect_tooltip = ITA_pairs_well_with_tariff_loan.tt
+				custom_effect_tooltip = ITA_modify_industry_tt
+				effect_tooltip = {
+					add_to_variable = {
+						ITA_ind_infra_speed = 0.05
+						tooltip = production_speed_infrastructure_factor_tt
+					}
+					add_to_variable = {
+						ITA_ind_stab = 0.05
+						tooltip = stability_factor_tt
+					}
+				}
+				custom_effect_tooltip = empty_space_tt
 			}
 		}
 		search_filters = {
@@ -3774,7 +3780,7 @@ focus_tree = {
 			effect_tooltip = {
 				set_autonomy = {
 					target = MJT
-					autonomous_state = autonomy_tgwr_informal_protectorate
+					autonomous_state = autonomy_tgwr_protected_state
 				}
 				MJT = {
 					add_ideas = ITA_treaty_with_italians
@@ -8700,32 +8706,6 @@ focus_tree = {
 			base = 1
 		}
 	}
-	#focus = {
-	#	id = ITA_the_end_of_history
-	#	icon = GFX_focus_ARG_defense_and_democracy
-	#	cost = 4.4
-	#	x = 1
-	#	y = 1
-	#	prerequisite = {
-	#		focus = ITA_reject_all_collectivization
-	#	}
-	#	relative_position_id = ITA_reject_all_collectivization
-	#	available = {
-	#	}
-	#	completion_reward = {
-	#		custom_effect_tooltip = ITA_synd_co.tt
-	#		add_to_variable = {
-	#			ITA_socialist_drift_var = 0.03
-	#		}
-	#	}
-	#	search_filters = {
-	#		FOCUS_FILTER_INTERNAL_AFFAIRS
-	#		FOCUS_FILTER_INDUSTRY
-	#	}
-	#	ai_will_do = {
-	#		factor = 0
-	#	}
-	#}
 	focus = {
 		id = ITA_reduce_reliance_on_trade
 		icon = GFX_focus_GER_autarky_ambitions
@@ -9385,7 +9365,7 @@ focus_tree = {
 				limit = {
 					controls_province = 628
 				}
-				160 = {
+				1259 = {
 					create_unit = {
 						division = "name = \"Guardie Rosse\" division_template = \"Guardie Rosse\" start_equipment_factor = 0.75 start_experience_factor = 0.2"
 						prioritize_location = 628
@@ -12163,7 +12143,7 @@ focus_tree = {
 	#		}
 	#		set_autonomy = {
 	#			target = ETH
-	#			autonomy_state = autonomy_colony
+	#			autonomy_state = autonomy_tgwr_colony
 	#		}
 	#		custom_effect_tooltip = empty_space_tt
 	#		every_state = {
@@ -14821,7 +14801,7 @@ focus_tree = {
 				}
 			}
 			OR = {
-				casualties_k > 300
+				casualties_k > 250
 				longest_war_length > 30
 				check_variable = {
 					ITA_percieved_usefulness < -29

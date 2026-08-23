@@ -60,6 +60,7 @@ operations = {
 				420 = { set_border_war = no }
 				877 = { set_border_war = no }
 				1212 = { set_border_war = no }
+				1245 = { set_border_war = no }
 			}
 			start_border_war = {
 				change_state_after_war = no
@@ -280,7 +281,8 @@ operations = {
 	# 	}
 	# }
 }
-foreign_politics = {
+TGWR_great_power_politics = {
+	#great_power_politics_balkan_powder_keg
 	RUS_help_balkans = {
 		icon = GFX_decision_generic_prepare_civil_war
 		allowed = {
@@ -289,7 +291,7 @@ foreign_politics = {
 		target_trigger = {
 			FROM = {
 				has_idea = SER_russian_protection
-				any_other_country = {
+				any_enemy_country = {
 					is_actual_major = yes
 					has_offensive_war_with = PREV
 					NOT = {
@@ -307,6 +309,7 @@ foreign_politics = {
 			}
 		}
 		visible = {
+			great_power_politics_balkan_powder_keg_visible = yes
 			is_subject = no
 			NOT = {
 				has_global_flag = great_war_ends
@@ -318,6 +321,14 @@ foreign_politics = {
 					is_subject = no
 				}
 				has_guaranteed = FROM
+			}
+		}
+		target_root_trigger = {
+			is_subject = no
+			NOT = {
+				has_global_flag = great_war_ends
+				has_global_flag = russian_revolution
+				has_government = communism
 			}
 		}
 		available = {
@@ -356,6 +367,8 @@ foreign_politics = {
 			}
 		}
 	}
+}	
+foreign_politics = {	
 	RUS_claim_762 = {
 		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
@@ -1492,7 +1505,6 @@ RUS_fight_for_trade_unions = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_fight_for_trade_unions
 		}
 		available = {
@@ -1530,7 +1542,6 @@ RUS_fight_for_trade_unions = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_fight_for_trade_unions
 		}
 		available = {
@@ -1562,7 +1573,6 @@ RUS_fight_for_trade_unions = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_fight_for_trade_unions
 		}
 		available = {
@@ -1593,7 +1603,6 @@ RUS_fight_for_trade_unions = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_fight_for_trade_unions
 		}
 		available = {
@@ -1623,7 +1632,6 @@ RUS_fight_for_trade_unions = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_fight_for_trade_unions
 		}
 		available = {
@@ -1654,7 +1662,6 @@ RUS_fight_for_trade_unions = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_fight_for_trade_unions
 		}
 		available = {
@@ -1711,7 +1718,10 @@ RUS_civil_war = {
 			}
 			if = {
 				limit = {
-					tag = SIB 
+					OR = {
+						tag = SIB
+						tag = KOM
+					}				
 				}
 				OR = {
 					has_completed_focus = SIB_national_constituent_assembly
@@ -1811,10 +1821,16 @@ RUS_civil_war = {
 		allowed = {
 			NOT = {
 				tag = SRA
+				tag = SOV
 			}
 		}
 		available = {
 			has_war_with = SOV
+		}
+		visible = {
+			NOT = {
+				has_government = communism
+			}
 		}
 		cost = 10
 		
@@ -1996,7 +2012,7 @@ RUS_release_country = {
 			add_stability = 0.05
 			set_autonomy = {
 				target = EST
-				autonomous_state = autonomy_puppet
+				autonomous_state = autonomy_tgwr_autonomous_governorate
 				freedom_level = 0.25
 			}
 		}
@@ -2059,7 +2075,7 @@ RUS_release_country = {
 			add_stability = 0.05
 			set_autonomy = {
 				target = LAT
-				autonomous_state = autonomy_puppet
+				autonomous_state = autonomy_tgwr_autonomous_governorate
 				freedom_level = 0.25
 			}
 		}
@@ -2111,7 +2127,7 @@ RUS_release_country = {
 			add_stability = 0.05
 			set_autonomy = {
 				target = LIT
-				autonomous_state = autonomy_puppet
+				autonomous_state = autonomy_tgwr_autonomous_governorate
 				freedom_level = 0.25
 			}
 		}
@@ -2140,6 +2156,7 @@ RUS_release_country = {
 				}
 				OR = {
 					state = 766
+					state = 1263
 					state = 1017
 					NOT = {
 						is_core_of = BLR
@@ -2238,11 +2255,24 @@ RUS_release_country = {
 				}	
 			}		
 			add_stability = 0.05
-			set_autonomy = {
-				target = POL
-				autonomous_state = autonomy_satellite
-				freedom_level = 0.4
+			if = {
+				limit = {
+					has_monarchy = yes
+				}
+				set_autonomy = {
+					target = POL
+					autonomous_state = autonomy_tgwr_real_union
+					freedom_level = 0.4
+				}
 			}
+			else = {
+				set_autonomy = {
+					target = POL
+					autonomous_state = autonomy_tgwr_client_state
+					freedom_level = 0.4
+				}
+			}
+			
 			country_event = ww1_poland.12
 		}
 	}
@@ -2284,6 +2314,7 @@ RUS_release_country = {
 						region = 192
 						OR = {
 							state = 78 #Bessarabia
+							state = 1303 #Akkerman
 							is_core_of = UKR
 						}
 					}
@@ -2352,6 +2383,7 @@ RUS_release_country = {
 							region = 192
 							OR = {
 								state = 78 #Bessarabia
+								state = 1303 #Akkerman
 								is_core_of = UKR
 							}
 						}
@@ -2363,7 +2395,7 @@ RUS_release_country = {
 			add_stability = 0.05
 			set_autonomy = {
 				target = UKR
-				autonomous_state = autonomy_puppet
+				autonomous_state = autonomy_tgwr_autonomous_governorate
 				freedom_level = 0.1
 			}
 			if = {
@@ -2374,7 +2406,10 @@ RUS_release_country = {
 					limit = { is_core_of = MOL }
 					transfer_state_to = MOL
 				}
-				puppet = MOL
+				set_autonomy = {
+					target = PREV
+					autonomy_state = autonomy_tgwr_autonomous_governorate
+				}
 			}
 			if = {
 				limit = {
@@ -2427,7 +2462,10 @@ RUS_release_country = {
 				set_cosmetic_tag = GEO_RUS		
 			}
 			add_stability = 0.03
-			puppet = GEO
+			set_autonomy = {
+				target = GEO
+				autonomy_state = autonomy_tgwr_autonomous_governorate
+			}
 		}
 	}
 	RUS_release_ARM = {
@@ -2487,7 +2525,10 @@ RUS_release_country = {
 				}			
 			}
 			add_stability = 0.03
-			puppet = ARM
+			set_autonomy = {
+				target = ARM
+				autonomy_state = autonomy_tgwr_autonomous_governorate
+			}
 		}
 	}
 	RUS_release_AZR = {
@@ -2539,11 +2580,15 @@ RUS_release_country = {
 				}
 			}
 			add_stability = 0.03
-			puppet = AZR
+			set_autonomy = {
+				target = AZR
+				autonomy_state = autonomy_tgwr_autonomous_governorate
+			}
 		}
 	}
 }
-GER_great_war = {
+TGWR_great_power_politics = {
+	#great_power_politics_great_war
 	RUS_send_AuH_battleplan_to_serbia = {
 		icon = GFX_decision_hol_draw_up_staff_plans
 		fire_only_once = yes
@@ -2562,6 +2607,7 @@ GER_great_war = {
 			}
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			NOT = {
 				tag = SOV
 				tag = STV
@@ -2599,39 +2645,33 @@ GER_great_war = {
 		allowed = {
 			NOT = { original_tag = RUS }
 		}
-		available = {
-			OR = {
-				AND = {
-					is_major = yes
-					is_in_faction_with = RUS
-					has_war_with = GER
-				}
-				original_tag = USA
-			}
-			RUS = {
-				NOT = {
-					has_government = communism
-				}
-				has_war_with = GER
+		targets = {
+			RUS
+		}
+		target_trigger = {
+			NOT = {
+				has_government = communism
 			}
 		}
-		visible = {
+		target_root_trigger = {
 			OR = {
 				AND = {
 					is_major = yes
 					is_in_faction_with = RUS
-					has_war_with = GER
 				}
 				original_tag = USA
 			}
 			NOT = {
 				has_war_with = RUS
 			}
-			RUS = {
-				NOT = {
-					has_government = communism
-				}
+		}
+		available = {
+			FROM = {
+				has_war_with = GER
 			}
+		}
+		visible = {		
+			great_power_politics_great_war_visible = yes
 		}
 		fire_only_once = no
 		custom_cost_trigger = {
@@ -2795,7 +2835,7 @@ RUS_provisional_government = {
 
 		available = {
 			91 = { is_controlled_by_ROOT_or_ally = yes } #Lemberg
-			206 = { is_controlled_by_ROOT_or_ally = yes } #Minsk
+			89 = { is_controlled_by_ROOT_or_ally = yes } #Tarnopol
 			12 = { is_controlled_by_ROOT_or_ally = yes } #Vidzeme
 		}
 		cancel_trigger = {
