@@ -407,7 +407,7 @@ country_event = {
 		has_country_flag = great_war_loser
 		is_subject = no
 		NOT = {
-			has_global_flag = FRA_surrender_alone
+			has_global_flag = FRA_surrender
 		}
 	}
 	mean_time_to_happen = {
@@ -9010,7 +9010,6 @@ country_event = {
 							state = 455
 							state = 832
 							state = 856
-							state = 858
 						}
 					}
 					transfer_state_to = ENG
@@ -9625,13 +9624,12 @@ country_event = {
 		has_global_flag = great_war_ends
 		OR = {
 			has_country_flag = great_war_winner
-			has_global_flag = FRA_surrender_alone
+			has_global_flag = FRA_surrender
 		}
 		NOT = {
 			has_global_flag = FRA_three_side_civil_war
 			has_country_flag = great_war_loser
-			has_country_flag = FRA_surrender_alone
-			has_global_flag = FRA_surrender_alone
+			has_global_flag = FRA_surrender
 		}
 		has_war = no
 	}
@@ -10632,7 +10630,7 @@ country_event = {
 		is_great_war_ongoing = yes
 		NOT = {
 			has_country_flag = caillaux_anti_war_propaganda
-			has_country_flag = FRA_surrender_alone
+			has_country_flag = great_war_loser
 		}
 		has_character = FRA_joseph_caillaux
 		date > 1917.2.2
@@ -10683,18 +10681,8 @@ country_event = {
 	option = {
 		name =  ww1_france.306.a	# set up the truce ! 
 		ai_chance = {
-			factor = 500
+			base = 500
 		}
-		FRA_french_surrender_effect = yes
-	}
-	option = {
-		name = ww1_entente_capitulation.1.b
-		custom_effect_tooltip = no_scripted_peace_warning_tt
-		clr_global_flag = FRA_surrender_alone
-		trigger = {
-			is_ai = no
-		}
-		news_event = { id = ww1_entente_capitulation.3 }
 	}
 }
 
@@ -10707,7 +10695,6 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name =  ww1_france.307.a
-		clr_country_flag = ask_for_peace
 		add_ideas = FRA_interim_government
 		drop_cosmetic_tag = yes
 		if = {
@@ -12269,16 +12256,6 @@ country_event = {
 		trigger = {
 			always = no #quite broken
 		}
-		# ai_chance = {
-		# 	base = 0
-		# 	modifier = {
-		# 		OR = {
-		# 			has_country_flag = FRA_surrender_alone
-		# 			has_country_flag = great_war_loser
-		# 		}
-		# 		add = 1000
-		# 	}
-		# }
 		custom_effect_tooltip = dangerous_tt
 		1162 = {
 			add_dynamic_modifier = {
@@ -21809,9 +21786,8 @@ country_event = {
 	option = {
 		name = ww1_france.587.a
 		#yeah we join
-		add_to_war = {
-			targeted_alliance = SPR
-			enemy = AUS
+		SPR = {
+			join_ENT_declare_war_on_CENPO = yes
 		}
 		ai_chance = {
 			base = 10

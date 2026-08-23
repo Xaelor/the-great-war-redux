@@ -616,7 +616,7 @@ TGWR_great_power_politics = {
 			}
 		}
 		cancel_effect = {
-			add_war_support = 0.05
+			add_war_support = 0.01
 			clr_country_flag = GER_on_offensive
 		}
 		complete_effect = {
@@ -1025,7 +1025,7 @@ TGWR_great_power_politics = {
 			}
 		}
 		cancel_effect = {
-			add_war_support = 0.05
+			add_war_support = 0.02
 			clr_country_flag = GER_on_offensive
 		}
 		complete_effect = {
@@ -2067,6 +2067,250 @@ TGWR_great_power_politics = {
 			set_global_flag = before_the_leaves_fall_flag
 		}
 	}
+}
+
+# Faustschlag
+TGWR_great_power_politics = {
+	GER_faustschlag_decision = {
+		allowed = {
+			tag = GER
+		}
+		visible = {
+			has_active_mission = RUS_treaty_of_brest_litovsk_mission_fake
+			NOT = {
+				has_country_flag = great_war_loser
+			}
+			has_country_flag = GER_can_start_faustschlag
+		}
+		fire_only_once = yes
+		complete_effect = {
+			declare_war_on = {
+				target = RUS
+				type = take_claimed_state
+			}
+			hidden_effect = {
+				news_event = {
+					id = ww1_brest_litovsk.100
+					days = 2
+				}
+				RUS = {
+					country_event = ww1_brest_litovsk.7
+					every_allied_country = {						
+						add_to_war = {
+							targeted_alliance = RUS
+							enemy = GER
+						}
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			base = 100
+		}
+	}
+
+	GER_form_lithuania = {
+		icon = GFX_decision_eng_ally_imperialist_coup
+		allowed = {
+			original_tag = GER
+		}
+		available = {
+			is_GER_a_monarchy = yes
+			any_owned_state = {
+				OR = {
+					state = 11
+					state = 189
+					state = 784
+					state = 97
+					state = 1015
+					state = 773
+					state = 1017
+				}
+			}
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 11
+				state = 189
+				state = 784
+				state = 97
+				state = 1015
+				state = 773
+				state = 1017
+			}
+		}
+		visible = {
+			has_global_flag = RUS_surrender
+			NOT = { has_country_flag = great_war_loser }
+			LIT = { exists = no }
+		}
+		fire_only_once = yes
+		complete_effect = {
+			GER_release_LIT = yes
+		}
+		ai_will_do = { 
+			base = 0
+			modifier = {
+				add = 100
+				has_global_flag = {
+					flag = RUS_surrender
+					days > 60
+				}
+			}
+		}
+	}
+	GER_form_courland = {
+		icon = GFX_decision_eng_ally_imperialist_coup
+		allowed = {
+			original_tag = GER
+		}
+		available = {
+			is_GER_a_monarchy = yes
+			owns_state = 190
+			owns_state = 946
+			owns_state = 951
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 190
+				state = 946
+				state = 951
+			}
+		}
+		visible = {
+			has_global_flag = RUS_surrender
+			NOT = {
+				has_country_flag = great_war_loser
+				has_global_flag = COU_released
+			}
+			COU = { exists = no }
+			NOT = {
+				has_subject = LAT
+				UBD = {
+					owns_state = 190
+					owns_state = 946
+					owns_state = 951
+				}
+			}
+		}
+		fire_only_once = yes
+		complete_effect = {
+			GER_release_COU = yes
+		}
+		ai_will_do = { 
+			base = 0
+			modifier = {
+				add = 100
+				has_global_flag = {
+					flag = RUS_surrender
+					days > 60
+				}
+			}
+		}
+	}
+	GER_form_baltic_duchy = {
+		icon = GFX_decision_eng_ally_imperialist_coup
+		allowed = {
+			original_tag = GER
+		}
+		available = {
+			is_GER_a_monarchy = yes
+			owns_state = 12
+			owns_state = 13
+			owns_state = 191
+			owns_state = 944
+			owns_state = 948
+			owns_state = 949
+			owns_state = 950
+			owns_state = 952
+			owns_state = 953
+			owns_state = 954
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 12
+				state = 13
+				state = 191
+				state = 944
+				state = 948
+				state = 949
+				state = 950
+				state = 952
+				state = 953
+				state = 954
+			}
+		}
+		visible = {
+			has_global_flag = RUS_surrender
+			NOT = { has_country_flag = great_war_loser }
+			UBD = { exists = no }
+		}
+		fire_only_once = yes
+		complete_effect = {
+			GER_release_UBD = yes
+		}
+		ai_will_do = { 
+			base = 0
+			modifier = {
+				add = 100
+				has_global_flag = {
+					flag = RUS_surrender
+					days > 60
+				}
+			}
+		}
+	}
+	GER_unite_baltics = {
+		icon = GFX_decision_eng_ally_imperialist_coup
+		allowed = {
+			original_tag = GER
+		}
+		target_trigger = {
+			FROM = {
+				tag = UBD
+			}
+		}
+		visible = {											
+			UBD = { is_subject_of = ROOT }
+			COU = { is_subject_of = ROOT }
+			NOT = { has_country_flag = great_war_loser }
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 12
+				state = 13
+				state = 190
+				state = 191
+				state = 944
+				state = 948
+				state = 949
+				state = 950
+				state = 951
+				state = 952
+				state = 953
+				state = 954
+			}
+		}
+		fire_only_once = yes
+		complete_effect = {
+			UBD = {
+				annex_country = {
+					target = COU
+					transfer_troops = yes
+				}
+			}
+		}
+		ai_will_do = { 
+			base = 0
+			modifier = {
+				add = 100
+				has_global_flag = {
+					flag = RUS_surrender
+					days > 180
+				}
+			}
+		}
+	}	
 }
 
 GER_decision_military_advisers = {
