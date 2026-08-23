@@ -445,6 +445,7 @@ focus_tree = {
 		completion_reward = {
 			effect_tooltip = {
 				add_ideas = KOR_banned_freedom
+				KOR_reduce_national_resistance = yes
 			}
 			hidden_effect = {
 				country_event = ww1_korea.13
@@ -475,7 +476,11 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			add_political_power = 50
+			add_political_power = 100
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.05
+			}
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -596,8 +601,12 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_popularity = {
-				ideology = fascism
-				popularity = 0.02
+				ideology = neutrality
+				popularity = 0.03
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = -0.03
 			}
 			add_command_power = 50
 		}
@@ -612,7 +621,7 @@ focus_tree = {
 	focus = {
 		id = KOR_company_ordinance
 		icon = GFX_focus_GER_integrated_economies
-		x = -1
+		x = -2
 		y = 1
 		relative_position_id = KOR_reward_collaborators
 		cost = 10
@@ -634,6 +643,8 @@ focus_tree = {
 					type = industrial_complex
 					level = 1
 				}
+				add_ideas = KOR_company_ordinance_idea
+				KOR_upgrade_exploited_colony = yes
 			}
 			hidden_effect = {
 				country_event = ww1_korea.7
@@ -666,6 +677,12 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = available_industrial_concern
 			show_ideas_tooltip = KOR_bank_of_chosen
+			add_tech_bonus = {
+				name = KOR_bank_of_chosen_bonus
+				bonus = 1.0
+				uses = 1
+				category = industry
+			}
 			hidden_effect = {
 				country_event = ww1_korea.8
 			}
@@ -704,6 +721,39 @@ focus_tree = {
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_HISTORICAL
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	focus = {
+		id = KOR_chosen_industrial_bank
+		icon = GFX_focus_PER_national_bank
+		x = 0
+		y = 1
+		relative_position_id = KOR_establish_monopoly_bureau
+		cost = 10
+		prerequisite = {
+			focus = KOR_establish_monopoly_bureau
+		}
+		bypass = {
+			
+		}
+		available = {
+
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = KOR_chosen_industrial_bank
+				bonus = 1.0
+				uses = 2
+				category = industry
+			}
+			KOR_upgrade_exploited_colony = yes
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
 			FOCUS_FILTER_HISTORICAL
 		}
 		ai_will_do = {
@@ -762,6 +812,38 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = KOR_cemetery_ordinance
+		icon = GFX_goal_generic_graveyard
+		x = 2
+		y = 0
+		relative_position_id = KOR_mining_ordinance
+		cost = 10
+		prerequisite = {
+			focus = KOR_company_ordinance
+		}
+		bypass = {
+			
+		}
+		available = {
+
+		}
+		completion_reward = {
+			effect_tooltip = {
+				add_political_power = 25
+			}
+			hidden_effect = {
+				country_event = ww1_korea.15
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_HISTORICAL
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	focus = {
 		id = KOR_forestry_ordinance
 		icon = GFX_focus_SWE_beneath_sticks_and_stone
 		x = 0
@@ -793,6 +875,73 @@ focus_tree = {
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_HISTORICAL
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	focus = {
+		id = KOR_fisheries_ordinance
+		icon = GFX_focus_INS_just_a_fisherman
+		x = 0
+		y = 1
+		relative_position_id = KOR_forestry_ordinance
+		cost = 10
+		prerequisite = {
+			focus = KOR_forestry_ordinance
+		}
+		bypass = {
+			
+		}
+		available = {
+
+		}
+		completion_reward = {
+			525 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+				}
+			}
+			KOR_upgrade_exploited_colony = yes
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_HISTORICAL
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	focus = {
+		id = KOR_irrigation_association_ordinance
+		icon = GFX_focus_RAJ_water_privatization
+		x = 0
+		y = 1
+		relative_position_id = KOR_fisheries_ordinance
+		cost = 10
+		prerequisite = {
+			focus = KOR_fisheries_ordinance
+		}
+		bypass = {
+			
+		}
+		available = {
+
+		}
+		completion_reward = {
+			525 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
 			FOCUS_FILTER_HISTORICAL
 		}
 		ai_will_do = {
@@ -851,6 +1000,7 @@ focus_tree = {
 
 		}
 		completion_reward = {
+			add_ideas = KOR_shinto_worship
 			add_popularity = {
 				ideology = neutrality
 				popularity = 0.05
@@ -911,7 +1061,8 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			add_political_power = 50
+			add_political_power = 75
+			add_stability = 0.03
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -1011,6 +1162,7 @@ focus_tree = {
 				ideology = neutrality
 				popularity = 0.05
 			}
+			KOR_reduce_national_resistance = yes
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -1038,6 +1190,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			unlock_decision_category_tooltip = KOR_crack_down_on_dissidents
+			KOR_reduce_national_resistance = yes
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -1095,6 +1248,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_stability = 0.05
+			KOR_reduce_national_resistance = yes
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -1151,6 +1305,7 @@ focus_tree = {
 
 		}
 		completion_reward = {
+			add_ideas = KOR_land_investigation_tax
 			random_owned_controlled_state = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
@@ -1163,46 +1318,6 @@ focus_tree = {
 				add_building_construction = {
 					type = infrastructure
 					level = 1
-				}
-			}
-		}
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-			FOCUS_FILTER_HISTORICAL
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	focus = {
-		id = KOR_extract_natural_resources
-		icon = GFX_focus_generic_land_reclamation
-		x = 1
-		y = 1
-		relative_position_id = KOR_provisional_land_survey_bureau
-		cost = 10
-		prerequisite = {
-			focus = KOR_provisional_land_survey_bureau
-		}
-		bypass = {
-			
-		}
-		available = {
-
-		}
-		completion_reward = {
-			797 = {
-				add_resource = {
-					type = coal
-					amount = 1
-				}
-			}
-			525 = {
-				add_building_construction = {
-					type = naval_base
-					level = 1
-					province = 4126
-					instant_build = yes
 				}
 			}
 		}
@@ -1244,9 +1359,128 @@ focus_tree = {
 				build_only_on_allied = yes
 				fallback = no
 			}
+			525 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_HISTORICAL
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	focus = {
+		id = KOR_extract_natural_resources
+		icon = GFX_focus_generic_land_reclamation
+		x = 1
+		y = 1
+		relative_position_id = KOR_provisional_land_survey_bureau
+		cost = 10
+		prerequisite = {
+			focus = KOR_provisional_land_survey_bureau
+		}
+		bypass = {
+			
+		}
+		available = {
+
+		}
+		completion_reward = {
+			797 = {
+				add_resource = {
+					type = coal
+					amount = 1
+				}
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+			FOCUS_FILTER_HISTORICAL
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	focus = {
+		id = KOR_modernize_ports
+		icon = GFX_focus_generic_expand_the_naval_industry
+		x = -1
+		y = 1
+		relative_position_id = KOR_extract_natural_resources
+		cost = 10
+		prerequisite = {
+			focus = KOR_extract_natural_resources
+		}
+		bypass = {
+			
+		}
+		available = {
+
+		}
+		completion_reward = {
+			525 = {
+				add_building_construction = {
+					type = naval_base
+					level = 1
+					province = 4126
+					instant_build = yes
+				}
+			}
+			800 = {
+				add_building_construction = {
+					type = naval_base
+					level = 1
+					province = 7221
+					instant_build = yes
+				}
+			}
+			KOR_upgrade_exploited_colony = yes
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_HISTORICAL
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	focus = {
+		id = KOR_chosen_road_ordinance
+		icon = GFX_focus_generic_road_investment
+		x = 1
+		y = 1
+		relative_position_id = KOR_extract_natural_resources
+		cost = 10
+		prerequisite = {
+			focus = KOR_extract_natural_resources
+		}
+		bypass = {
+			
+		}
+		available = {
+
+		}
+		completion_reward = {
+			525 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+			802 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
 			FOCUS_FILTER_HISTORICAL
 		}
 		ai_will_do = {
@@ -1282,6 +1516,12 @@ focus_tree = {
 				level = 2
 				build_only_on_allied = yes
 				fallback = no
+			}
+			797 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
 			}
 		}
 		search_filters = {

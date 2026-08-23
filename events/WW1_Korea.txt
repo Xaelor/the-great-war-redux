@@ -317,6 +317,8 @@ country_event = {
 			type = industrial_complex
 			level = 1
 		}
+		add_ideas = KOR_company_ordinance_idea
+		KOR_upgrade_exploited_colony = yes
 	}
 }
 
@@ -427,6 +429,7 @@ country_event = {
 	option = {
 		name = ww1_korea.13.a
 		add_ideas = KOR_banned_freedom
+		KOR_reduce_national_resistance = yes
 	}
 }
 
@@ -449,127 +452,39 @@ country_event = {
 	}
 }
 
-# TAIWAN
-###########
-# country_event = {
-# 	id = ww1_korea.15
-# 	title = ww1_korea.15.t
-# 	desc = ww1_korea.15.d
-# 	picture = GFX_report_event_generic_conference
-# 	fire_only_once = yes
-# 	trigger = {
-# 		original_tag = KOR
-# 		524 = { is_owned_or_subject_trigger = yes }
-# 		NOT = {
-# 			country_exists = FOR
-# 		}
-# 	}
-# 	mean_time_to_happen = { days = 0 }
-# 	option = {
-# 		name = ww1_korea.15.a
-# 		effect_tooltip = {
-# 			release_puppet = FOR
-# 		}
-# 		hidden_effect = {
-# 			FOR = {
-# 				add_state_core = 524
-# 				transfer_state = 524
-# 			}
-# 			set_autonomy = {
-# 				target = FOR
-# 				autonomous_state = autonomy_dominion
-# 			}
-# 		}
-# 	}
-# 	option = {
-# 		name = ww1_korea.15.b
-# 		ai_chance = { base = 0 }
-# 	}
-# }
+# Backlash against Cemetery Ordinance
+country_event = {
+	id = ww1_korea.15
+	title = ww1_korea.15.t
+	desc = ww1_korea.15.d
+	picture = GFX_report_event_gathering_protest
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_korea.15.a
+		add_political_power = 25
+		KOR_increase_national_resistance = yes
+	}
+}
 
-# PROVISIONAL GOVERNMENT OF THE REPUBLIC OF KOREA
-####################################################
-# news_event = {
-# 	id = ww1_korea.16
-# 	title = ww1_korea.16.t
-# 	desc = ww1_korea.16.d
-# 	picture = ww1_korea_16
-# 	trigger = {
-# 		OR = {
-# 			tag = JAP
-# 			is_china_or_warlord = yes
-# 			is_subject_of = JAP
-# 		}
-# 		has_global_flag = march_1st_movement
-# 		OR = {
-# 			AND = {
-# 				JAP = { any_owned_state = { is_core_of = KOR } }
-# 				NOT = { country_exists = KOR }
-# 			}
-# 			KOR = { is_subject_of = JAP }
-# 		}
-# 		#Shanghai
-# 		613 = {
-# 			owner = {
-# 				is_china_or_warlord = yes
-# 				NOT = { is_subject_of = JAP }
-# 			}
-# 		}
-# 		NOT = {
-# 			has_global_flag = korean_prov_gov_established
-# 		}
-# 	}
-# 	mean_time_to_happen = {
-# 		days = 70
-# 	}
-# 	immediate = {
-# 		hidden_effect = {
-# 			set_global_flag = korean_prov_gov_established
-# 			KOR = {
-# 				if = {
-# 					limit = {
-# 						OR = {
-# 							exists = no
-# 							NOT = { has_government = democratic }
-# 						}
-# 					}
-# 					set_party_name = {
-# 						ideology = democratic
-# 						long_name = KOR_provisional_government_long
-# 						name = KOR_provisional_government
-# 					}
-# 					promote_character = KOR_syngman_rhee
-# 				}
-# 			}
-# 		}
-# 	}
-# 	option = {
-# 		name = ww1_korea.16.a
-# 		trigger = {
-# 			original_tag = KOR
-# 		}
-# 	}
-# 	option = {
-# 		name = ww1_korea.16.b
-# 		trigger = {
-# 			NOT = { original_tag = KOR }
-# 			OR = {
-# 				original_tag = JAP
-# 				is_subject_of = JAP
-# 			}
-# 		}
-# 	}
-# 	option = {
-# 		name = ww1_korea.16.c
-# 		trigger = {
-# 			NOT = {
-# 				original_tag = KOR
-# 				original_tag = JAP
-# 				is_subject_of = JAP
-# 			}
-# 		}
-# 	}
-# }
+# Execution of Yi Jae-myeong
+country_event = {
+	id = ww1_korea.16
+	title = ww1_korea.16.t
+	desc = ww1_korea.16.d
+	picture = GFX_report_event_gathering_protest
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = ww1_korea.16.a
+		add_stability = -0.03
+		add_popularity = {
+			ideology = democratic
+			popularity = 0.03
+		}
+	}
+}
 
 # PRESIDENTAL ELECTION
 ###############################
@@ -740,627 +655,163 @@ country_event = {
 	}
 }
 
-# KOREAN INDEPENDENCE FIGHTERS ON MANCHURIA
+# Completion of Seokjojeon
 ##############################################
-# news_event = {
-# 	id = ww1_korea.18
-# 	title = ww1_korea.18.t
-# 	desc = ww1_korea.18.d
-# 	picture = ww1_korea_18
-# 	trigger = {
-# 		date > 1920.10.1
-# 		JAP = {
-# 			527 = {
-# 				is_owned_or_subject_PREV_trigger = yes
-# 			}
-# 			799 = {
-# 				is_owned_or_subject_PREV_trigger = yes
-# 			}
-# 			328 = {
-# 				is_owned_or_subject_PREV_trigger = no
-# 			}
-# 			716 = {
-# 				is_owned_or_subject_PREV_trigger = no
-# 			}
-# 			1045 = {
-# 				is_owned_or_subject_PREV_trigger = no
-# 			}
-# 		}
-# 		OR = {
-# 			tag = JAP
-# 			owns_state = 328
-# 			owns_state = 716
-# 			is_subject_of = JAP
-# 		}
-# 		OR = {
-# 			AND = {
-# 				JAP = { any_owned_state = { is_core_of = KOR } }
-# 				NOT = { country_exists = KOR }
-# 			}
-# 			KOR = { is_subject_of = JAP }
-# 		}
-# 		NOT = {
-# 			has_global_flag = korean_fighters_in_manchuria
-# 		}
-# 	}
-# 	mean_time_to_happen = {
-# 		days = 20
-# 	}
-# 	immediate = {
-# 		hidden_effect = {
-# 			set_global_flag = korean_fighters_in_manchuria
-# 		}
-# 	}
-# 	option = {
-# 		name = ww1_korea.18.a
-# 		trigger = {
-# 			original_tag = KOR
-# 		}
-# 	}
-# 	option = {
-# 		name = ww1_korea.18.b
-# 		trigger = {
-# 			NOT = { original_tag = KOR }
-# 			OR = {
-# 				original_tag = JAP
-# 				is_subject_of = JAP
-# 			}
-# 		}
-# 	}
-# 	option = {
-# 		name = ww1_korea.18.c
-# 		trigger = {
-# 			NOT = {
-# 				original_tag = KOR
-# 				original_tag = JAP
-# 				is_subject_of = JAP
-# 			}
-# 		}
-# 	}
-# }
+country_event = {
+	id = ww1_korea.18
+	title = ww1_korea.18.t
+	desc = ww1_korea.18.d
+	picture = GFX_report_event_korean_gate
+	trigger = {
+		tag = KOR
+		date > 1910.11.1
+		has_start_date < 1914.1.1
+	}
+	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 15
+	}
+	option = {
+		name = ww1_korea.18.a
+		add_political_power = 25
+	}
+}
 
-# Chance to have peace treaty with Japan for RUS, SOV, CHI, and QIN, if Korea has signed peace with Japan.
-# country_event = {
-# 	id = ww1_korea.19
-# 	title = ww1_korea.19.t
-# 	desc = ww1_korea.19.d
-# 	picture = GFX_report_event_generic_conference
-# 	is_triggered_only = yes
-# 	option = {
-# 		name = ww1_korea.19.a
-# 		white_peace = FROM
-# 		every_state = {
-# 			limit = {
-# 				is_owned_or_subject_FROM_trigger = yes
-# 				is_core_of = ROOT
-# 			}
-# 			transfer_state_to = ROOT
-# 		}
-# 		if = {
-# 			limit = {
-# 				owns_state = 655
-# 			}
-# 			537 = { remove_core_of = FROM }
-# 			transfer_state = 537
-# 		}
-# 		if = {
-# 			limit = {
-# 				owns_state = 637
-# 			}
-# 			555 = { remove_core_of = FROM }
-# 			transfer_state = 555
-# 		}
-# 	}
-# 	option = {
-# 		name = ww1_korea.19.b
-# 		ai_chance = { base = 0 }
-# 		add_political_power = -50
-# 	}
-# }
+# Completion of the Yalu River Bridge
+##############################################
+country_event = {
+	id = ww1_korea.19
+	title = ww1_korea.19.t
+	desc = ww1_korea.19.d
+	picture = GFX_report_event_generic_train
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_korea.19.a
+		add_political_power = 20
+	}
+}
 
-# Korean Indepdence War (Start Eagle Project)
-# country_event = {
-# 	id = ww1_korea.20
-# 	hidden = yes
-# 	title = ww1_korea.20.t
-# 	desc = ww1_korea.20.d
-# 	picture = GFX_report_event_generic_military_parade
-# 	is_triggered_only = yes
-# 	option = {
-# 		name = ww1_korea.20.a
-# 		add_named_threat = {
-# 			threat = 5
-# 			name = ww1_korea.20.t
-# 		}
-# 		OVERLORD = {
-# 			end_puppet = ROOT
-# 		}
-# 		effect_tooltip = {
-# 			start_civil_war = {
-# 				ideology = fascism
-# 			}
-# 		}
-# 		hidden_effect = {
-# 			start_civil_war = {
-# 				ideology = fascism
-# 				size = 0.8
-# 				states = {
-# 					525
-# 					796
-# 					801
-# 					802
-# 				}
-# 				keep_unit_leaders_trigger = {
-# 					NOT = {
-# 						has_trait = JAP_samurai_lineage
-# 					}
-# 				}
-# 				keep_political_party_members = yes
-# 				set_country_flag = civil_war_japanese_korea
-# 			}
-# 			random_other_country = {
-# 				limit = {
-# 					original_tag = KOR
-# 					has_country_flag = civil_war_japanese_korea
-# 				}
-# 				KOR = {
-# 					KOR_japanese_administraton = {
-# 						set_nationality = PREV.PREV
-# 						if = {
-# 							limit = {
-# 								has_ideology = stratocracy
-# 							}
-# 							promote_character = stratocracy
-# 						}
-# 						else = {
-# 							add_country_leader_role = {
-# 								promote_leader = yes
-# 								country_leader = {
-# 									ideology = stratocracy
-# 									traits = { foreign_leader }
-# 								}
-# 							}
-# 						}
-# 						set_character_name = "KOR_JAP_governor_general_name"
-# 						set_portraits = {
-# 							civilian = {
-# 								large = "gfx/leaders/KOR/KOR_JAP_governor_general.png"
-# 							}
-# 						}
-# 					}	
-# 				}
-# 				JAP = {
-# 					puppet = PREV
-# 					set_autonomy = {
-# 						target = PREV
-# 						autonomy_state = autonomy_colony
-# 					}
-# 					set_country_flag = korean_independence_war_fired
-# 				}
-# 				set_politics = {
-# 					ruling_party = fascism
-# 					elections_allowed = no
-# 				}
-# 				set_popularities = {
-# 					fascism = 100
-# 				}
-# 				set_cosmetic_tag = KOR_JAP_governor_general
-# 				set_party_name = {
-# 					ideology = fascism
-# 					long_name = KOR_governorship_party
-# 					name = KOR_governorship_party
-# 				}
-# 				set_party_name = {
-# 					ideology = neutrality
-# 					long_name = KOR_governorship_party
-# 					name = KOR_governorship_party
-# 				}
-# 				set_party_name = {
-# 					ideology = democratic
-# 					long_name = KOR_governorship_party
-# 					name = KOR_governorship_party
-# 				}
-# 				every_state = {
-# 					limit = {
-# 						is_core_of = PREV
-# 					}
-# 					remove_core_of = PREV
-# 				}
-# 				set_war_support = 0.8
-# 				set_stability = 0.9
-# 				division_template = {
-# 					name = "Infantry Division"
-# 					regiments = {
-# 						infantry = { x = 0 y = 0 }
-# 						infantry = { x = 0 y = 1 }
-# 						infantry = { x = 0 y = 2 }
-# 						infantry = { x = 1 y = 0 }
-# 						infantry = { x = 1 y = 1 }
-# 						infantry = { x = 1 y = 2 }
-# 					}
-# 					support = {
-# 						engineer = { x = 0 y = 0 }
-# 					}
-# 				}
-# 				802 = {
-# 					create_unit = {
-# 						division = "name = \"19. Shidan\" division_template = \"Infantry Division\" start_experience_factor = 0.7"
-# 						owner = PREV
-# 						allow_spawning_on_enemy_provs = yes
-# 					}
-# 					create_unit = {
-# 						division = "name = \"20. Shidan\" division_template = \"Infantry Division\" start_experience_factor = 0.7"
-# 						owner = PREV
-# 						allow_spawning_on_enemy_provs = yes
-# 					}
-# 				}
-# 				declare_war_on = {
-# 					target = PREV
-# 					type = civil_war
-# 				}
-# 				add_civil_war_target = PREV
-# 				set_state_controller = 527
-# 				set_state_controller = 797
-# 				set_state_controller = 799
-# 			}
-# 			set_province_controller = 11835
-# 			set_province_controller = 6963
-# 			set_province_controller = 906
-# 			set_province_controller = 6944
-# 			set_province_controller = 898
-# 			set_province_controller = 3860
-# 			set_province_controller = 7125
-# 			set_party_name = {
-# 				ideology = democratic
-# 				long_name = KOR_provisional_government_long
-# 				name = KOR_provisional_government
-# 			}
-# 			set_party_name = {
-# 				ideology = neutrality
-# 				long_name = KOR_fascism_party_long
-# 				name = KOR_fascism_party
-# 			}
-# 			set_party_name = {
-# 				ideology = fascism
-# 				long_name = KOR_fascism_party_long
-# 				name = KOR_fascism_party
-# 			}
-# 			KOR_hong_beomdo = {
-# 				if = {
-# 					limit = {
-# 						has_ideology = stratocracy
-# 					}
-# 					promote_character = stratocracy
-# 					else = {
-# 						add_country_leader_role = {
-# 							promote_leader = yes
-# 							country_leader = { ideology = stratocracy }
-# 						}
-# 					}
-# 				}
-# 				if = {
-# 					limit = {
-# 						has_ideology = authoritarian_democracy
-# 					}
-# 					promote_character = authoritarian_democracy
-# 					else = {
-# 						add_country_leader_role = {
-# 							promote_leader = yes
-# 							country_leader = { ideology = authoritarian_democracy }
-# 						}
-# 					}
-# 				}
-# 			}
-# 			set_politics = {
-# 				ruling_party = neutrality
-# 				elections_allowed = no
-# 			}
-# 			add_popularity = {
-# 				ideology = neutrality
-# 				popularity = 0.7
-# 			}
-# 			set_war_support = 0.8
-# 			set_stability = 0.9
-# 			division_template = {
-# 				name = "Dongnipgun"
-# 				regiments = {
-# 					irregular_infantry = {
-# 						x = 0
-# 						y = 0
-# 					}
-# 					irregular_infantry = {
-# 						x = 1
-# 						y = 0
-# 					}
-# 					irregular_infantry = {
-# 						x = 0
-# 						y = 1
-# 					}
-# 					irregular_infantry = {
-# 						x = 1
-# 						y = 1
-# 					}
-# 				}
-# 				is_locked = no
-# 			}
-# 			division_template = {
-# 				name = "Uibyeong"
-# 				regiments = {
-# 					militia = {
-# 						x = 0
-# 						y = 0
-# 					}
-# 					militia = {
-# 						x = 0
-# 						y = 1
-# 					}
-# 				}
-# 				is_locked = yes
-# 			}
-# 			799 = {
-# 				create_unit = {
-# 					division = "name = \"1. Dongnipgun\" division_template = \"Dongnipgun\" start_experience_factor = 1.0"
-# 					owner = ROOT
-# 					allow_spawning_on_enemy_provs = yes
-# 					prioritize_location = 11835
-# 				}
-# 				create_unit = {
-# 					division = "name = \"2. Dongnipgun\" division_template = \"Dongnipgun\" start_experience_factor = 1.0"
-# 					owner = ROOT
-# 					allow_spawning_on_enemy_provs = yes
-# 					prioritize_location = 6963
-# 				}
-# 				create_unit = {
-# 					division = "name = \"3. Dongnipgun\" division_template = \"Dongnipgun\" start_experience_factor = 1.0"
-# 					owner = ROOT
-# 					allow_spawning_on_enemy_provs = yes
-# 					prioritize_location = 906
-# 				}
-# 			}
-# 			527 = {
-# 				create_unit = {
-# 					division = "name = \"4. Dongnipgun\" division_template = \"Dongnipgun\" start_experience_factor = 1.0"
-# 					owner = ROOT
-# 					allow_spawning_on_enemy_provs = yes
-# 					prioritize_location = 898
-# 				}
-# 				create_unit = {
-# 					division = "name = \"5. Dongnipgun\" division_template = \"Dongnipgun\" start_experience_factor = 1.0"
-# 					owner = ROOT
-# 					allow_spawning_on_enemy_provs = yes
-# 					prioritize_location = 3860
-# 				}
-# 				create_unit = {
-# 					division = "name = \"6. Dongnipgun\" division_template = \"Dongnipgun\" start_experience_factor = 1.0"
-# 					owner = ROOT
-# 					allow_spawning_on_enemy_provs = yes
-# 					prioritize_location = 7125
-# 				}
-# 			}
-# 			800 = {
-# 				create_unit = {
-# 					division = "name = \"1. Militia\" division_template = \"Uibyeong\" start_experience_factor = 0.1 start_equipment_factor = 0.3"
-# 					owner = ROOT
-# 					allow_spawning_on_enemy_provs = yes
-# 					prioritize_location = 7125
-# 				}
-# 				create_unit = {
-# 					division = "name = \"2. Militia\" division_template = \"Uibyeong\" start_experience_factor = 0.0 start_equipment_factor = 0.2"
-# 					owner = ROOT
-# 					allow_spawning_on_enemy_provs = yes
-# 					prioritize_location = 7125
-# 				}
-# 				create_unit = {
-# 					division = "name = \"3. Militia\" division_template = \"Uibyeong\" start_experience_factor = 0.0 start_equipment_factor = 0.1"
-# 					owner = ROOT
-# 					allow_spawning_on_enemy_provs = yes
-# 					prioritize_location = 7125
-# 				}
-# 			}
-# 			set_cosmetic_tag = KOR_independence_army
-# 			set_country_flag = korean_independence
-# 			news_event = ww1_korea.22
-# 		}
-# 	}
-# }
+# Joseon Industrial Exhibition
+##############################################
+country_event = {
+	id = ww1_korea.20
+	title = ww1_korea.20.t
+	desc = ww1_korea.20.d
+	picture = GFX_report_event_japanese_korea
+	trigger = {
+		tag = KOR
+		is_subject_of = JAP
+		date > 1915.9.11
+	}
+	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 10
+	}
+	option = {
+		name = ww1_korea.20.a
+		add_political_power = 25
+		add_stability = 0.02
+	}
+}
 
-# CREATE JAPANESE PUPPET FOR EAGLE PROJECT
-#############################################
-# country_event = {
-# 	id = ww1_korea.21
-# 	hidden = yes
-# 	is_triggered_only = yes
-# 	picture = GFX_report_event_japan_army_mountainside
-# 	immediate = {
-# 		hidden_effect = {
-# 			random_other_country = {
-# 				limit = {
-# 					original_tag = KOR
-# 					has_country_flag = civil_war_japanese_korea
-# 				}
-# 				KOR = {
-# 					KOR_japanese_administraton = {
-# 						set_nationality = PREV
-# 						if = {
-# 							limit = {
-# 								has_ideology = stratocracy
-# 							}
-# 							promote_character = stratocracy
-# 						}
-# 						else = {
-# 							add_country_leader_role = {
-# 								promote_leader = yes
-# 								country_leader = {
-# 									ideology = stratocracy
-# 									traits = { foreign_leader }
-# 								}
-# 							}
-# 						}
-# 						set_character_name = "KOR_JAP_governor_general_name"
-# 						set_portraits = {
-# 							civilian = {
-# 								large = "gfx/leaders/KOR/KOR_JAP_governor_general.png"
-# 							}
-# 						}
-# 					}	
-# 				}
-# 				ROOT = {
-# 					puppet = PREV
-# 					set_autonomy = {
-# 						target = PREV
-# 						autonomy_state = autonomy_colony
-# 					}
-# 				}
-# 				set_politics = {
-# 					ruling_party = fascism
-# 					elections_allowed = no
-# 				}
-# 				set_popularities = {
-# 					fascism = 100
-# 				}
-# 				set_cosmetic_tag = KOR_JAP_governor_general
-# 				set_party_name = {
-# 					ideology = fascism
-# 					long_name = KOR_governorship_party
-# 					name = KOR_governorship_party
-# 				}
-# 				set_party_name = {
-# 					ideology = neutrality
-# 					long_name = KOR_governorship_party
-# 					name = KOR_governorship_party
-# 				}
-# 				set_party_name = {
-# 					ideology = democratic
-# 					long_name = KOR_governorship_party
-# 					name = KOR_governorship_party
-# 				}
-# 				every_state = {
-# 					limit = {
-# 						is_core_of = PREV
-# 					}
-# 					remove_core_of = PREV
-# 				}
-# 				set_war_support = 0.8
-# 				set_stability = 0.9
-# 				division_template = {
-# 					name = "Infantry Division"
-# 					regiments = {
-# 						infantry = { x = 0 y = 0 }
-# 						infantry = { x = 0 y = 1 }
-# 						infantry = { x = 0 y = 2 }
-# 						infantry = { x = 1 y = 0 }
-# 						infantry = { x = 1 y = 1 }
-# 						infantry = { x = 1 y = 2 }
-# 					}
-# 					support = {
-# 						engineer = { x = 0 y = 0 }
-# 					}
-# 				}
-# 				802 = {
-# 					create_unit = {
-# 						division = "name = \"19. Shidan\" division_template = \"Infantry Division\" start_experience_factor = 0.7"
-# 						owner = PREV
-# 						allow_spawning_on_enemy_provs = yes
-# 					}
-# 					create_unit = {
-# 						division = "name = \"20. Shidan\" division_template = \"Infantry Division\" start_experience_factor = 0.7"
-# 						owner = PREV
-# 						allow_spawning_on_enemy_provs = yes
-# 					}
-# 				}
-# 				random_other_country = {
-# 					limit = {
-# 						original_tag = KOR
-# 					}
-# 					PREV = {
-# 						declare_war_on = {
-# 							target = PREV
-# 							type = civil_war
-# 						}
-# 						add_civil_war_target = PREV
-# 					}
-# 				}
-# 			}
-# 			set_country_flag = korean_independence_war_fired
-# 			news_event = ww1_korea.22
-# 		}
-# 	}
-# }
+# Groundbreaking Ceremony for Government-General Building
+##############################################
+country_event = {
+	id = ww1_korea.21
+	title = ww1_korea.21.t
+	desc = ww1_korea.21.d
+	picture = GFX_report_event_generic_construction_site
+	trigger = {
+		tag = KOR
+		is_subject_of = JAP
+		date > 1916.6.25
+	}
+	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 10
+	}
+	option = {
+		name = ww1_korea.21.a
+		add_political_power = 25
+	}
+}
 
-# EAGLE PROJECT NEWS
-#######################
-# news_event = {
-# 	id = ww1_korea.22
-# 	title = ww1_korea.20.t
-# 	desc = ww1_korea.20.d
-# 	major = yes
-# 	is_triggered_only = yes
-# 	picture = ww1_korea_18
-# 	option = {
-# 		name = ww1_korea.20.a
-# 		trigger = {
-# 			tag = KOR
-# 		}
-# 	}
-# 	option = {
-# 		name = ww1_korea.20.b
-# 		trigger = {
-# 			OR = {
-# 				tag = JAP
-# 				is_subject_of = JAP
-# 			}
-# 		}
-# 	}
-# 	option = {
-# 		name = ww1_korea.20.c
-# 		trigger = {
-# 			NOT = {
-# 				tag = KOR
-# 				tag = JAP
-# 				is_subject_of = JAP
-# 			}
-# 		}
-# 	}
-# }
+# Kang U-gyu's Assassination Attempt on Governor-General Saito
+##############################################
+country_event = {
+	id = ww1_korea.22
+	title = ww1_korea.22.t
+	desc = ww1_korea.22.d
+	picture = GFX_report_event_koreans_arrested
+	trigger = {
+		tag = KOR
+		is_subject_of = JAP
+		date > 1919.9.2
+	}
+	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 5
+	}
+	option = {
+		name = ww1_korea.22.a
+		add_political_power = -25
+		add_stability = -0.02
+	}
+}
 
-# # QUESTION OF SOCIALIST STATE
-# ################################
-# country_event = {
-# 	id = ww1_korea.23
-# 	title = ww1_korea.23.t
-# 	desc = ww1_korea.23.d
-# 	picture = GFX_report_event_generic_communist_congress
-# 	is_triggered_only = yes
-# 	immediate = {
-# 		hidden_effect = {
-# 			meta_effect = {
-# 				text = {
-# 					set_politics = {
-# 						ruling_party = communism
-# 						last_election = "[CURRENT_DATE]"
-# 						election_frequency = 60
-# 						elections_allowed = no #socialist elections wip
-# 					}
-# 				}
-# 				CURRENT_DATE = "[?global.date.GetDateStringNoHour]"
-# 			}
-# 			set_popularities = {
-# 				democratic = 17
-# 				communism = 70
-# 				fascism = 6
-# 				neutrality = 7
-# 			}
-# 			promote_character = KOR_yi_donghwi
-# 			set_cosmetic_tag = KOR_social
-# 		}
-# 	}
-# 	option = {
-# 		name = ww1_korea.23.a
-# 		effect_tooltip = {
-# 			promote_character = KOR_yi_donghwi
-# 		}
-# 	}
-# }
+# Arrest of An Myeong-geun (Anak Incident)
+##############################################
+country_event = {
+	id = ww1_korea.26
+	title = ww1_korea.26.t
+	desc = ww1_korea.26.d
+	picture = GFX_report_event_koreans_arrested
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_korea.26.a
+		add_political_power = 20
+		add_stability = 0.02
+		set_country_flag = new_peoples_association_uncovered
+	}
+}
+
+# Doknip Uigunbu Incident
+##############################################
+country_event = {
+	id = ww1_korea.27
+	title = ww1_korea.27.t
+	desc = ww1_korea.27.d
+	picture = GFX_report_event_koreans_arrested
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_korea.27.a
+		add_political_power = 20
+		add_stability = 0.02
+	}
+}
+
+# Daehan Gwangbokhoe Incident
+##############################################
+country_event = {
+	id = ww1_korea.28
+	title = ww1_korea.28.t
+	desc = ww1_korea.28.d
+	picture = GFX_report_event_koreans_arrested
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_korea.28.a
+		add_political_power = 25
+		add_stability = 0.03
+		add_popularity = {
+			ideology = democratic
+			popularity = -0.03
+		}
+	}
+}
 
 # # KOREAN WAR
 # ###############
