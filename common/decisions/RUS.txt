@@ -1,130 +1,130 @@
 operations = {
 	#INTERVENTION 1911
-	RUS_border_conflict_warning_PER_1911 = {
-		icon = border_war
-		allowed = { always = no } #Activated from effect
-		available = {
-			hidden_trigger = { always = no }
-		}
-		war_with_target_on_timeout = yes
-		days_mission_timeout = 5
-		fire_only_once = yes
-		is_good = no
-		highlight_states = {
-			highlight_state_targets = {
-				state = 420	
-			}
-		}
-		timeout_effect = {
-			#custom_effect_tooltip = escalation_possible_tooltip_for_defender
-			custom_effect_tooltip = effects_if_border_conflict_is_lost
-			effect_tooltip = {
-				PER = {
-					add_war_support = -0.05
-				}
-				RUS = {
-					add_war_support = 0.05
-					add_doctrine_cost_reduction = {
-						name = RUS_border_conflict_won
-						category = land_doctrine
-						cost_reduction = 0.25
-					}
-				}
-			}
-			hidden_effect = {
-				remove_targeted_decision = { target = RUS decision = RUS_border_conflict_warning_PER_1911 }
-			}
-		}
-	}
-	#МИССИЯ АГРЕССОРА - НАЧАЛО КОНФЛИКТА
-	RUS_escalate_incident_to_border_conflict_PER_1911 = {
-		icon = border_war
-		allowed = { always = no } #Activated from effect
-		available = {
-			hidden_trigger = { always = no }
-		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 420	
-			}
-		}
-		war_with_target_on_timeout = yes
-		days_mission_timeout = 5
-		fire_only_once = yes
-		is_good = no
-		
-		timeout_effect = {
-			hidden_effect = {
-				remove_targeted_decision = { target = PER decision = RUS_escalate_incident_to_border_conflict_PER_1911 }
-				419 = { set_border_war = no }
-				420 = { set_border_war = no }
-				877 = { set_border_war = no }
-				1212 = { set_border_war = no }
-				1245 = { set_border_war = no }
-			}
-			start_border_war = {
-				change_state_after_war = no
-				attacker = {
-					state = 877
-					num_provinces = 3
-					on_win = ww1_russia.64
-					on_lose = ww1_russia.65
-					on_cancel = ww1_russia.65
-				}				
-				defender = {
-					state = 420
-					num_provinces = 2
-					on_win = ww1_russia.65
-					on_lose = ww1_russia.64
-					on_cancel = ww1_russia.65
-				}
-			}
-			hidden_effect = {
-				set_border_war_data = {
-					attacker = 877
-					defender = 420
-					attacker_modifier = 0.60
-					combat_width = 100
-				}
-				RUS = {
-					set_country_flag = { flag = persian_campaign_cooldown days = 90 value = 1 }
-				}
-			}
-		}
-	}
-	RUS_battalion_of_death = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = RUS
-		}
-		available = {
-			has_war = yes
-			OR = {
-				has_country_leader = {
-					character = RUS_alexander_kerensky
-				}
-				surrender_progress > 0.15
-			}
-			NOT = {
-				has_government = communism
-			}
-		}
-		cost = 25
-		ai_will_do = {
-			factor = 50
-		}
-		visible = {
-			has_war = yes
-			NOT = {
-				tag = SOV
-				tag = STV
-			}		
-		}
-		fire_only_once = yes
-		complete_effect = {
-			country_event = { id = ww1_russia.55 }
-		}
-	}
+	#RUS_border_conflict_warning_PER_1911 = {
+	#	icon = border_war
+	#	allowed = { always = no } #Activated from effect
+	#	available = {
+	#		hidden_trigger = { always = no }
+	#	}
+	#	war_with_target_on_timeout = yes
+	#	days_mission_timeout = 5
+	#	fire_only_once = yes
+	#	is_good = no
+	#	highlight_states = {
+	#		highlight_state_targets = {
+	#			state = 420	
+	#		}
+	#	}
+	#	timeout_effect = {
+	#		#custom_effect_tooltip = escalation_possible_tooltip_for_defender
+	#		custom_effect_tooltip = effects_if_border_conflict_is_lost
+	#		effect_tooltip = {
+	#			PER = {
+	#				add_war_support = -0.05
+	#			}
+	#			RUS = {
+	#				add_war_support = 0.05
+	#				add_doctrine_cost_reduction = {
+	#					name = RUS_border_conflict_won
+	#					category = land_doctrine
+	#					cost_reduction = 0.25
+	#				}
+	#			}
+	#		}
+	#		hidden_effect = {
+	#			remove_targeted_decision = { target = RUS decision = RUS_border_conflict_warning_PER_1911 }
+	#		}
+	#	}
+	#}
+	##МИССИЯ АГРЕССОРА - НАЧАЛО КОНФЛИКТА
+	#RUS_escalate_incident_to_border_conflict_PER_1911 = {
+	#	icon = border_war
+	#	allowed = { always = no } #Activated from effect
+	#	available = {
+	#		hidden_trigger = { always = no }
+	#	}
+	#	highlight_states = {
+	#		highlight_state_targets = {
+	#			state = 420	
+	#		}
+	#	}
+	#	war_with_target_on_timeout = yes
+	#	days_mission_timeout = 5
+	#	fire_only_once = yes
+	#	is_good = no
+	#	
+	#	timeout_effect = {
+	#		hidden_effect = {
+	#			remove_targeted_decision = { target = PER decision = RUS_escalate_incident_to_border_conflict_PER_1911 }
+	#			419 = { set_border_war = no }
+	#			420 = { set_border_war = no }
+	#			877 = { set_border_war = no }
+	#			1212 = { set_border_war = no }
+	#			1245 = { set_border_war = no }
+	#		}
+	#		start_border_war = {
+	#			change_state_after_war = no
+	#			attacker = {
+	#				state = 877
+	#				num_provinces = 3
+	#				on_win = ww1_russia.64
+	#				on_lose = ww1_russia.65
+	#				on_cancel = ww1_russia.65
+	#			}				
+	#			defender = {
+	#				state = 420
+	#				num_provinces = 2
+	#				on_win = ww1_russia.65
+	#				on_lose = ww1_russia.64
+	#				on_cancel = ww1_russia.65
+	#			}
+	#		}
+	#		hidden_effect = {
+	#			set_border_war_data = {
+	#				attacker = 877
+	#				defender = 420
+	#				attacker_modifier = 0.60
+	#				combat_width = 100
+	#			}
+	#			RUS = {
+	#				set_country_flag = { flag = persian_campaign_cooldown days = 90 value = 1 }
+	#			}
+	#		}
+	#	}
+	#}
+	#RUS_battalion_of_death = {
+	#	icon = generic_prepare_civil_war
+	#	allowed = {
+	#		tag = RUS
+	#	}
+	#	available = {
+	#		has_war = yes
+	#		OR = {
+	#			has_country_leader = {
+	#				character = RUS_alexander_kerensky
+	#			}
+	#			surrender_progress > 0.15
+	#		}
+	#		NOT = {
+	#			has_government = communism
+	#		}
+	#	}
+	#	cost = 25
+	#	ai_will_do = {
+	#		factor = 50
+	#	}
+	#	visible = {
+	#		has_war = yes
+	#		NOT = {
+	#			tag = SOV
+	#			tag = STV
+	#		}		
+	#	}
+	#	fire_only_once = yes
+	#	complete_effect = {
+	#		country_event = { id = ww1_russia.55 }
+	#	}
+	#}
 	# RUS_great_retreat = {
 	# 	icon = generic_prepare_civil_war
 	# 	allowed = {
@@ -367,8 +367,9 @@ TGWR_great_power_politics = {
 			}
 		}
 	}
-}	
-foreign_politics = {	
+}
+#FOREIGN POLITICS
+TGWR_great_power_politics = {
 	RUS_claim_762 = {
 		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
@@ -384,6 +385,7 @@ foreign_politics = {
 		}
 		cost = 25
 		visible = {
+			great_power_politics_great_war_visible = yes
 			NOT = {
 				tag = SOV
 			}
@@ -411,6 +413,7 @@ foreign_politics = {
 		}
 		cost = 25
 		visible = {
+			great_power_politics_great_war_visible = yes
 			NOT = {
 				tag = SOV
 			}
@@ -438,6 +441,7 @@ foreign_politics = {
 		}
 		cost = 25
 		visible = {
+			great_power_politics_great_war_visible = yes
 			NOT = {
 				tag = SOV
 			}
@@ -465,6 +469,7 @@ foreign_politics = {
 		}
 		cost = 25
 		visible = {
+			great_power_politics_great_war_visible = yes
 			NOT = {
 				tag = SOV
 			}
@@ -491,6 +496,7 @@ foreign_politics = {
 		}
 		cost = 25
 		visible = {
+			great_power_politics_great_war_visible = yes
 			NOT = {
 				tag = SOV
 			}
@@ -531,6 +537,7 @@ foreign_politics = {
 		}
 		cost = 25
 		visible = {
+			great_power_politics_great_war_visible = yes
 			NOT = {
 				tag = SOV
 			}
@@ -548,8 +555,124 @@ foreign_politics = {
 			add_state_claim = 717
 		}
 	}
+	RUS_denounce_portsmouth = {	
+		allowed = {
+			tag = RUS
+		}
+		visible = {
+			great_power_politics_century_of_humiliation_visible = yes
+			NOT = {
+				tag = SOV
+			}
+			has_completed_focus = RUS_denounce_portsmouth
+		}		
+		icon = generic_naval
+		available = {
+			NOT = {
+				is_subject_of = JAP
+				has_idea = idea_armistice
+				has_idea = idea_army_restrictions
+			}
+		}
+		modifier = {
+			industrial_capacity_dockyard = 0.25
+			production_speed_dockyard_factor = 0.25
+			production_speed_naval_base_factor = 0.25
+		}
+		#activation = {
+		#	tag = RUS
+		#	has_completed_focus = RUS_denounce_portsmouth
+		#}
+		fire_only_once = yes
+		days_remove = 500
+		#days_mission_timeout = 500  
+		#is_good = yes
+	}
+	RUS_remove_aland_dmz = {
+		icon = GFX_decision_generic_operation
+		fire_only_once = yes
+		allowed = {
+			OR = {
+				tag = RUS
+				tag = SWE
+				tag = FIN
+			}
+		}
+		available = {
+			145 = {
+				is_controlled_by_ROOT_or_subject = yes
+			}	
+			OR = {
+				tag = FIN
+				tag = SWE
+				has_war_with = GER
+				145 = {
+					is_demilitarized_zone = yes
+				}
+			}
+		}
+		visible = {
+			great_power_politics_great_war_visible = yes
+			is_subject = no
+			145 = {
+				is_controlled_by_ROOT_or_subject = yes
+			}
+			145 = {
+				has_dynamic_modifier = {
+					modifier = aland_dmz_modifier
+				}
+			}
+		}
+		complete_effect = {
+			145 = {
+				remove_dynamic_modifier = { modifier = aland_dmz_modifier }
+			}	
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 145
+			}
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1000
+				date > 1916.1.1
+			}
+			modifier = {
+				add = 1000
+				tag = SWE
+			}
+			modifier = {
+				add = 1000
+				tag = FIN
+			}
+		}
+	}
 }
-political_actions = {
+#POLITICAL
+TGWR_great_power_politics = {
+	RUS_rename_petersburg = {
+		icon = GFX_decision_eng_install_government
+		allowed = {
+			original_tag = RUS
+		}
+		available = {
+			owns_state = 195
+		}
+		ai_will_do = {
+			factor = 200
+		}
+		visible = {
+			great_power_politics_great_war_visible = yes
+			has_war_with = GER
+		}
+		fire_only_once = yes
+		complete_effect = {
+			country_event = { id = ww1_russia.1 }
+			add_war_support = 0.02
+		}
+	}
 	RUS_move_capital_to_moscow = {
 		icon = GFX_decision_generic_operation
 		allowed = {
@@ -565,6 +688,7 @@ political_actions = {
 		}
 		cost = 25
 		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
 			NOT = {
 				tag = SOV
 			}
@@ -591,6 +715,7 @@ political_actions = {
 		}
 		cost = 25
 		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
 			NOT = {
 				tag = SOV
 			}
@@ -604,6 +729,7 @@ political_actions = {
 	RUS_draft_the_constitution = {
 		icon = GFX_decision_eng_trade_unions_support
 		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
 			has_completed_focus = RUS_centrist_duma
 			has_government = neutrality
 		}
@@ -637,6 +763,7 @@ political_actions = {
 	}
 	RUS_raid_on_marxist_printing_house = {
 		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
 			has_completed_focus = RUS_centrist_duma
 			NOT = {
 				has_government = communism
@@ -682,6 +809,7 @@ political_actions = {
 	}
 	RUS_eradicate_bureaucratic_bribery = { #tsar visit
 		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
 			has_completed_focus = RUS_centrist_duma
 			has_government = neutrality
 		}
@@ -736,93 +864,12 @@ political_actions = {
 			}
 		}
 	}
-}
-propaganda_efforts = {
-	RUS_rename_petersburg = {
-		icon = GFX_decision_eng_install_government
-		allowed = {
-			original_tag = RUS
-		}
-		available = {
-			owns_state = 195
-		}
-		ai_will_do = {
-			factor = 200
-		}
-		visible = {
-			has_war_with = GER
-		}
-		fire_only_once = yes
-		complete_effect = {
-			country_event = { id = ww1_russia.1 }
-			add_war_support = 0.02
-		}
-	}
-}
-economy_decisions = {
-	#RUS_sold_cer = {
-	#	icon = GFX_decision_generic_railway
-	#
-	#	allowed = {
-	#		original_tag = RUS
-	#	}
-	#
-	#	target_trigger = {
-	#		FROM = {
-	#			tag = MAN
-	#		}
-	#	}
-	#	visible = {
-	#		is_subject = no
-	#		has_capitulated = no
-	#		any_country = {
-	#			OR = {
-	#				tag = ROOT
-	#				is_subject_of = ROOT
-	#			}
-	#			owns_state = 563
-	#			controls_state = 563
-	#		}
-	#		any_country = {
-	#			OR = {
-	#				tag = ROOT
-	#				is_subject_of = ROOT
-	#			}
-	#			owns_state = 408
-	#			controls_state = 408
-	#		}
-	#		NOT = {
-	#			has_global_flag = chinese_eastern_railway_sold
-	#			is_in_faction_with = FROM
-	#			has_subject = FROM
-	#			has_war_with = FROM
-	#		}
-	#	}
-	#
-	#	fire_only_once = yes
-	#
-	#	ai_will_do = {
-	#		factor = 100
-	#	}
-	#
-	#	complete_effect = {
-	#		set_global_flag = chinese_eastern_railway_sold
-	#		FROM = {
-	#			diplomatic_relation = {
-	#				country = ROOT
-	#				relation = military_access
-	#				active = no
-	#			}
-	#			add_political_power = -100
-	#		}
-	#		add_political_power = 100
-	#	}
-	#}
 	RUS_urgent_strengthening_of_airfleet = {
 		allowed = {
 			tag = RUS
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			NOT = {
 				tag = SOV
 			}
@@ -852,44 +899,13 @@ economy_decisions = {
 		days_mission_timeout = 500  
 		is_good = yes
 	}
-	RUS_denounce_portsmouth = {	
-		allowed = {
-			tag = RUS
-		}
-		visible = {
-			NOT = {
-				tag = SOV
-			}
-			has_completed_focus = RUS_denounce_portsmouth
-		}		
-		icon = generic_naval
-		available = {
-			NOT = {
-				is_subject_of = JAP
-				has_idea = idea_armistice
-				has_idea = idea_army_restrictions
-			}
-		}
-		modifier = {
-			industrial_capacity_dockyard = 0.25
-			production_speed_dockyard_factor = 0.25
-			production_speed_naval_base_factor = 0.25
-		}
-		#activation = {
-		#	tag = RUS
-		#	has_completed_focus = RUS_denounce_portsmouth
-		#}
-		fire_only_once = yes
-		days_remove = 500
-		#days_mission_timeout = 500  
-		#is_good = yes
-	}
 	RUS_build_amur_railway = {
 		icon = GFX_decision_generic_railway
 		allowed = {
 			original_tag = RUS
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			OR = {
 				owns_state = 409
 				owns_state = 561
@@ -944,6 +960,7 @@ economy_decisions = {
 		}
 	}
 }
+#TSAR DECISIONS
 RUS_tsar_decision = {
 	### 1917 ###
 	RUS_mission_tsar_abdication = {
@@ -1495,8 +1512,6 @@ RUS_tsar_decision = {
 			neutrality_drift = 0.1
 		}
 	}
-}
-crisis = {
 }
 RUS_fight_for_trade_unions = {
 	RUS_prime_minister_socialist = {
@@ -3265,69 +3280,6 @@ RUS_provisional_government = {
 			}
 		}
 
-	}
-}
-
-war_measures = {
-	RUS_remove_aland_dmz = {
-		icon = GFX_decision_generic_operation
-		fire_only_once = yes
-		allowed = {
-			OR = {
-				tag = RUS
-				tag = SWE
-				tag = FIN
-			}
-		}
-		available = {
-			145 = {
-				is_controlled_by_ROOT_or_subject = yes
-			}	
-			OR = {
-				tag = FIN
-				tag = SWE
-				has_war_with = GER
-				145 = {
-					is_demilitarized_zone = yes
-				}
-			}
-		}
-		visible = {
-			is_subject = no
-			145 = {
-				is_controlled_by_ROOT_or_subject = yes
-			}
-			145 = {
-				has_dynamic_modifier = {
-					modifier = aland_dmz_modifier
-				}
-			}
-		}
-		complete_effect = {
-			145 = {
-				remove_dynamic_modifier = { modifier = aland_dmz_modifier }
-			}	
-		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 145
-			}
-		}
-		ai_will_do = {
-			factor = 0
-			modifier = {
-				add = 1000
-				date > 1916.1.1
-			}
-			modifier = {
-				add = 1000
-				tag = SWE
-			}
-			modifier = {
-				add = 1000
-				tag = FIN
-			}
-		}
 	}
 }
 
