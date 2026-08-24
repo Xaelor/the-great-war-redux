@@ -1,0 +1,78 @@
+on_actions = {
+	on_startup = {
+		effect = {
+			every_country = {
+				every_country = {
+					limit = {
+						has_variable = debt_of_@PREV
+						NOT = {
+							has_war_with = PREV
+						}
+					}
+					if = {
+						limit = {
+							check_variable = {
+								debt_of_@PREV > 0
+							}
+						}
+						if = {
+							limit = {
+								NOT = {
+									is_in_array = {
+										PREV.lenders = THIS
+									}
+								}
+							}
+							add_to_array = {
+								PREV.lenders = THIS
+							}
+						}
+						if = {
+							limit = {
+								NOT = {
+									is_in_array = {
+										THIS.debtors = PREV
+									}
+								}
+							}
+							add_to_array = {
+								THIS.debtors = PREV
+							}
+						}
+					}
+					else = {
+						if = {
+							limit = {
+								is_in_array = {
+									PREV.lenders = THIS
+								}
+							}
+							remove_from_array = {
+								PREV.lenders = THIS
+							}
+						}
+						if = {
+							limit = {
+								is_in_array = {
+									THIS.debtors = PREV
+								}
+							}
+							remove_from_array = {
+								THIS.debtors = PREV
+							}
+						}
+						clear_variable = debt_of_@PREV
+					}
+				}
+				recalculate_interest_expense_and_income = yes
+			}
+		}
+	}
+	on_monthly = {
+		effect = {
+			ROOT = {
+				recalculate_interest_expense_and_income = yes
+			}
+		}
+	}
+}
