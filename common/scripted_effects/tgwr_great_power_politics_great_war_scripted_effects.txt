@@ -136,6 +136,22 @@ CP_surrender_effect = {
 	GER = {
 		activate_mission = GER_treaty_of_versailles_mission
 	}
+	if = {
+		limit = { 
+			RUS = { is_in_faction_with = ENT } 
+		}
+		RUS = {
+			activate_mission = GER_treaty_of_versailles_mission
+		}
+	}
+	if = {
+		limit = { 
+			FRA = { is_in_faction_with = ENT } 
+		}
+		FRA = {
+			activate_mission = GER_treaty_of_versailles_mission
+		}
+	}
 	AUS = {
 		activate_mission = AUS_treaty_of_saint_germain_en_laye_mission
 	}
@@ -2412,16 +2428,6 @@ AUS_surrender_effect_CP = {
 						transfer_state_to = CRO
 					}
 				}
-				else_if = {
-					limit = { 
-						ITA = {
-							is_part_of_great_war = yes
-						}						
-					}
-					208 = {
-						transfer_state_to = ITA
-					}
-				}
 				if = {
 					limit = {
 						USA = {
@@ -3690,7 +3696,6 @@ ITA_surrender_effect_ENT = {
 				limit = {
 					OR = {
 						state = 513
-						state = 208
 					}
 				}
 				transfer_state_to = HUN
@@ -4163,43 +4168,48 @@ treaty_of_versailles_effect = {
 				add_contested_owner = GER
 			}		
 		}
-		every_state = {
-			limit = {
-				OR = {
-					is_owned_by = GER
-					AND = {
-						is_owned_by = RUS
-						POL = { is_subject_of = RUS }
-					}
-				}	
-				OR = {
-					state = 67
-					state = 86
-					state = 85
-					state = 404
-					state = 762
-					state = 995 #just in case
-				}
+		if = {
+			limit = { 
+				country_exists = POL
 			}
-			if = {
+			every_state = {
 				limit = {
-					POL = { has_country_flag = great_war_winner }
-				}
-				transfer_state_to = POL
-				else = {
-					if = {
-						limit = {
-							state = 86
+					OR = {
+						is_owned_by = GER
+						AND = {
+							is_owned_by = RUS
+							POL = { is_subject_of = RUS }
 						}
-						remove_core_of = GER
-						transfer_state_to = POL
-					}
-					else = {
-						set_demilitarized_zone = yes
+					}	
+					OR = {
+						state = 67
+						state = 86
+						state = 85
+						state = 404
+						state = 762
+						state = 995 #just in case
 					}
 				}
-			}
-		}		
+				if = {
+					limit = {
+						POL = { has_country_flag = great_war_winner }
+					}
+					transfer_state_to = POL
+					else = {
+						if = {
+							limit = {
+								state = 86
+							}
+							remove_core_of = GER
+							transfer_state_to = POL
+						}
+						else = {
+							set_demilitarized_zone = yes
+						}
+					}
+				}
+			}		
+		}
 	}
 }
 
