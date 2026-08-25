@@ -3198,6 +3198,12 @@ GER_british_neutrality_effect = {
 		else = {
 			dismantle_faction = yes
 		}
+		if = {
+			limit = { 
+				has_idea = ENG_anglogerman_antagonism
+			}
+			remove_ideas = ENG_anglogerman_antagonism
+		}
 	}
 }
 GER_spd_split = {
@@ -3432,9 +3438,8 @@ GER_1918_revolution_effect = {
 					safe_transfer_state_to = yes
 				}
 			}
-			end_puppet = ALS
 			ALS = {
-				leave_faction = yes
+				free_subject_leave_faction = yes
 				add_ideas = standing_alone
 				remove_ideas = GER_customs_union
 				if = {
@@ -4964,7 +4969,7 @@ GER_release_MAF = {
 		MAF = { set_country_flag = colony }
 		set_autonomy = {
 			target = MAF
-			autonomy_state = autonomy_colony
+			autonomy_state = autonomy_tgwr_colony
 		}
 		MAF = {
 			add_named_threat = {
@@ -5177,7 +5182,7 @@ GER_release_OST = {
 		OST = { set_country_flag = colony }
 		set_autonomy = {
 			target = OST
-			autonomy_state = autonomy_colony
+			autonomy_state = autonomy_tgwr_colony
 		}
 		OST = {
 			inherit_technology = ROOT
@@ -5913,4 +5918,824 @@ setup_BLR_WHR = {
 			}
 		}
 	}	
+}
+
+##BREST-LITOVSK
+
+# Warning: this will make Poland a German Puppet in any case
+GER_release_POL = {
+	custom_effect_tooltip = GER_establish_poland_tt
+	hidden_effect = {
+		# Step 1: Transfer eligible RUS/SOV states to POL
+		# Excludes states where Germany has a core or claim.
+		every_state = {
+			limit = {
+				OWNER = {
+					OR = {
+						is_in_central_powers = yes
+						is_russian_tag = yes
+						AND = {
+							original_tag = UKR
+							OR = {
+								is_subject_of = PREV.PREV
+								is_subject_of = RUS
+							}
+						}
+					}
+				}
+				is_polish_criteria_state = yes
+				NOT = {
+					is_core_of = PREV
+					is_claimed_by = PREV
+				}
+			}
+			if = {
+				limit = { 
+					NOT = { 
+						is_owned_by = POL 
+					} 
+				} 
+				transfer_state_to = POL # This will create Poland if it doesn't exist already
+			}
+		}
+
+		# Step 2: Transfer Polish criteria states with GER cores/claims to GER
+		every_state = {
+			limit = {
+				OWNER = {
+					OR = {
+						is_russian_tag = yes
+						is_in_central_powers = yes
+					}
+				}
+				is_polish_criteria_state = yes
+				OR = {
+					is_core_of = PREV
+					is_claimed_by = PREV
+				}
+			}
+			transfer_state_to = PREV 
+		}
+
+		# Step 3: Puppet Poland
+		if = {
+			limit = { 
+				country_exists = POL 
+			}
+
+			puppet = POL
+
+			hidden_effect = {
+				POL = {			
+					drop_cosmetic_tag = yes
+					inherit_technology = ROOT
+					delete_obsolete_russian_templates = yes
+					# load_oob = "POL_divisions"	
+
+					# If either Kaiser or OHL in charge, setup Polands Politics
+					if = {
+						limit = { 
+							ROOT = { 
+								is_GER_a_monarchy = yes
+							}
+						}
+						set_country_flag = released_by_germany
+						set_politics = { 
+							ruling_party = neutrality
+							elections_allowed = no
+						}
+						set_popularities = { 
+							democratic = 45
+							fascism = 0
+							communism = 35
+							neutrality = 20
+						}
+						promote_character = POL_regency_council
+						# Original effect promoted POL_gabriel_narutowicz if Poland was a Russian puppet before, but I don't really understand why
+						# (Would also unnecessarily complicate logic)
+					}
+				}
+			}
+
+			# Transfer armistice idea if GER has it
+			if = {
+				limit = {
+					ROOT = { 
+						has_idea = RUS_idea_armistice_cp 
+					} 
+				}
+				POL = { 
+					add_ideas = RUS_idea_armistice_cp 
+				}
+			}
+			set_global_flag = poland_released
+
+			# Remove Russian cores from final POL cores
+			every_state = {
+				limit = {
+					is_polish_criteria_state = yes
+					OR = {
+						is_owned_by = ROOT
+						is_owned_by = POL
+					}
+				}
+				remove_russian_cores = yes	
+			}
+
+			# Poland Established Follow Up event
+			country_event = ww1_poland.12
+		}
+	}
+}
+
+GER_release_LIT = {
+	if = {
+		limit = {
+			NOT = {
+				country_exists = LIT
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					is_owned_by = RUS
+					is_owned_by = SOV
+					AND = {
+						is_owned_by = GER
+						NOT = {
+							is_core_of = GER
+							is_claimed_by = GER
+						}
+					}
+				}
+				OR = {
+					state = 11
+					state = 189
+					state = 784
+					state = 97
+					state = 1015
+					state = 773
+					state = 1017
+					# state = 946
+				}
+			}
+			remove_russian_cores = yes
+			transfer_state_to = LIT
+		}
+		puppet = LIT
+		hidden_effect = {
+			LIT = {
+				set_country_flag = released_by_germany
+				set_cosmetic_tag = LIT_GER
+				inherit_technology = GER
+				delete_obsolete_russian_templates = yes
+				if = {
+					limit = {
+						GER = {
+							is_GER_a_monarchy = yes
+						}
+					}
+					if = {
+						limit = {
+							date < 1928.3.24
+						}
+						GER = {
+							GER_wilhelm_karl_von_urach = {
+								set_character_name = LIT_mindaugas_ii
+								promote_leader = yes
+								set_nationality = LIT
+								if = {
+									limit = { has_ideology = semi_constitutional_monarchy }
+									promote_character = semi_constitutional_monarchy
+								}
+								else = {
+									add_country_leader_role = {
+										country_leader = {
+											ideology = semi_constitutional_monarchy
+											traits = { german_agent  }
+										}
+										promote_leader = yes
+									}
+								}
+							}
+						}
+						else = {
+							LIT_vytautas_ii = {
+								set_character_name = LIT_vytautas_ii
+								if = {
+									limit = { has_ideology = semi_constitutional_monarchy }
+									promote_character = semi_constitutional_monarchy
+								}
+								else = {
+									add_country_leader_role = {
+										country_leader = {
+											ideology = semi_constitutional_monarchy
+											traits = { german_agent }
+										}
+										promote_leader = yes
+									}
+								}
+							}
+						}
+					}
+					set_party_name = {
+						ideology = neutrality 
+						long_name = LIT_kingdom_party 
+						name = LIT_kingdom_party
+					}
+					set_politics = {
+						ruling_party = neutrality
+						elections_allowed = no
+					}
+					set_popularities = {
+						democratic = 4
+						 fascism = 0
+						communism = 16
+						neutrality = 80
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			LIT = {
+				is_subject_of = RUS
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					is_owned_by = RUS
+					is_owned_by = SOV
+				}
+				OR = {
+					state = 11
+					state = 189
+					state = 784
+					state = 97
+					state = 773
+					state = 1015
+					state = 1017
+				}
+			}
+			transfer_state_to = LIT
+		}
+		every_state = {
+			limit = {
+				is_owned_by = LIT
+				OR = {
+					is_core_of = GER
+					is_claimed_by = GER
+				}
+			}
+			transfer_state_to = GER
+		}
+		puppet = LIT
+		hidden_effect = {
+			LIT = {
+				set_country_flag = released_by_germany
+				set_cosmetic_tag = LIT_GER
+				inherit_technology = GER
+				delete_obsolete_russian_templates = yes
+				if = {
+					limit = {
+						GER = {
+							is_GER_a_monarchy = yes
+						}
+					}
+					if = {
+						limit = {
+							date < 1928.3.24
+						}
+						GER = {
+							GER_wilhelm_karl_von_urach = {
+								set_character_name = LIT_mindaugas_ii
+								promote_leader = yes
+								set_nationality = LIT
+								if = {
+									limit = { has_ideology = semi_constitutional_monarchy }
+									promote_character = semi_constitutional_monarchy
+								}
+								else = {
+									add_country_leader_role = {
+										country_leader = {
+											ideology = semi_constitutional_monarchy
+											traits = { german_agent  }
+										}
+										promote_leader = yes
+									}
+								}
+							}
+						}
+						else = {
+							LIT_vytautas_ii = {
+								set_character_name = LIT_vytautas_ii
+								if = {
+									limit = { has_ideology = semi_constitutional_monarchy }
+									promote_character = semi_constitutional_monarchy
+								}
+								else = {
+									add_country_leader_role = {
+										country_leader = {
+											ideology = semi_constitutional_monarchy
+											traits = { german_agent }
+										}
+										promote_leader = yes
+									}
+								}
+							}
+						}
+					}
+					set_party_name = {
+						ideology = neutrality 
+						long_name = LIT_kingdom_party 
+						name = LIT_kingdom_party
+					}
+					set_politics = {
+						ruling_party = neutrality
+						elections_allowed = no
+					}
+					set_popularities = {
+						democratic = 4
+						fascism = 0
+						communism = 16
+						neutrality = 80
+					}
+				}
+			}
+		}
+	}
+	else = {
+		every_state = {
+			limit = {
+				OR = {
+					is_owned_by = RUS
+					is_owned_by = SOV
+				}
+				NOT = {
+					is_core_of = GER
+					is_claimed_by = GER
+				}
+				OR = {
+					state = 11
+					state = 189
+					state = 784
+					state = 97
+					state = 773
+					state = 1015
+					state = 1017
+				}
+			}
+			transfer_state_to = LIT
+		}
+	}
+	hidden_effect = {
+		if = {
+			limit = {
+				GER = { has_idea = RUS_idea_armistice_cp }
+			}
+			LIT = { add_ideas = RUS_idea_armistice_cp }
+		}
+		set_global_flag = litva_released
+		every_state = {
+			limit = {
+				is_core_of = LIT
+			}
+			remove_russian_cores = yes
+		}
+	}
+}
+GER_release_UBD = {
+	every_state = {
+		limit = {
+			OR = {
+				is_owned_by = RUS
+				is_owned_by = GER
+			}
+			OR = {
+				is_core_of = EST
+				is_core_of = LAT
+			}
+			NOT = {
+				is_core_of = COU
+				state = 96
+				state = 945
+				state = 947
+				state = 944
+			}
+		}
+		transfer_state_to = UBD
+	}
+	if = {
+		limit = {
+			EST = {
+				OR = {
+					is_subject_of = RUS
+					is_subject_of = SOV
+					is_subject_of = GER
+				}
+			}
+		}
+		UBD = {
+			annex_country = {
+				target = EST
+			}
+		}
+	}
+	if = {
+		limit = {
+			LAT = {
+				OR = {
+					is_subject_of = RUS
+					is_subject_of = SOV
+					is_subject_of = GER
+				}
+			}
+		}
+		UBD = {
+			annex_country = {
+				target = LAT
+			}
+		}
+	}
+	puppet = UBD
+	hidden_effect = {
+		UBD = {
+			if = {
+				limit = {
+					GER = {
+						is_GER_a_monarchy = yes
+					}
+				}
+				set_politics = {
+					ruling_party = neutrality
+  					elections_allowed = no
+				}
+				set_popularities = {
+   					democratic = 25
+   					fascism = 12
+   					communism = 10
+   					neutrality = 53
+				}
+			}
+			set_country_flag = released_by_germany
+			inherit_technology = GER
+			delete_obsolete_russian_templates = yes
+		}
+		every_state = {
+			limit = {
+				OR = {
+					is_core_of = LAT
+					is_core_of = EST
+					is_core_of = COU
+				}
+			}
+			add_core_of = UBD
+			if = {
+				limit = { region = 37 }
+				remove_russian_cores = yes
+			}
+		}
+	}
+}
+GER_release_COU = {
+	if = {
+		limit = {
+			any_state = {
+				is_core_of = COU
+				OR = {
+					is_owned_by = RUS
+					is_owned_by = GER
+				}
+			}
+		}
+		clr_country_flag = COU_should_be_released
+		every_state = {
+			limit = {
+				OR = {
+					is_owned_by = RUS
+					is_owned_by = GER
+				}
+				is_core_of = COU
+			}
+			transfer_state_to = COU
+			remove_russian_claims = yes
+			remove_russian_cores = yes
+		}
+		puppet = COU
+		hidden_effect = {
+			set_global_flag = COU_released
+			COU = {
+				if = {
+					limit = {
+						GER = {
+							is_GER_a_monarchy = yes
+						}
+					}
+					set_politics = {
+						ruling_party = neutrality
+						elections_allowed = no
+					}
+					set_popularities = {
+						democratic = 25
+						communism = 22
+						neutrality = 53
+					}
+				}
+				set_country_flag = released_by_germany
+				inherit_technology = GER
+				delete_obsolete_russian_templates = yes
+			}
+		}
+	}
+	else = {
+		set_country_flag = COU_should_be_released
+	}
+}
+GER_release_BLR = {
+	every_state = {
+		limit = {
+			is_owned_by = RUS
+			OR = {
+				state = 94
+				state = 95
+				state = 194
+				state = 204
+				state = 206
+				state = 241
+				state = 1233
+			}
+		}
+		add_core_of = BPR
+		transfer_state_to = BPR
+		remove_russian_cores = yes
+		remove_russian_claims = yes
+	}
+	puppet = BLR
+	BLR = {
+		delete_obsolete_russian_templates = yes
+		if = {
+			limit = {
+				GER = {
+					is_GER_a_monarchy = yes
+					has_character = GER_albert_wilhelm_heinrich
+				}
+			}
+			setup_BLR_WHR = yes
+		}
+	}
+}
+GER_release_UKR = {
+	every_state = {
+		limit = {
+			is_owned_by = RUS
+			OR = {
+				state = 198
+				state = 202
+				state = 201
+				state = 199
+				state = 93
+				state = 192
+				state = 197
+				state = 226
+				state = 200
+				state = 196
+				state = 241
+				state = 193
+				state = 225
+				state = 259
+				state = 221
+				state = 228
+				state = 227
+				state = 808
+				state = 766
+				state = 1263
+				state = 78
+				state = 137
+				state = 955
+				is_core_of = UKR
+				is_core_of = WUK
+			}
+		}
+		add_core_of = UKR
+		transfer_state_to = UKR		
+		if = {
+			limit = {
+				OR = {
+					is_core_of = UKR
+					is_core_of = WUK
+				}					
+			}
+			remove_russian_cores = yes
+			remove_russian_claims = yes
+		}
+		UKR = {
+			load_oob = "UKR_army"
+			set_politics = {
+				ruling_party = neutrality
+				elections_allowed = no
+			}
+			inherit_technology = OVERLORD
+			delete_obsolete_russian_templates = yes
+		}
+	}
+	GER = {
+		set_autonomy = {
+			target = UKR
+			autonomy_state = autonomy_satellite
+		}
+	}
+}
+AUH_habsburg_ukraine = {
+	UKR = {
+		if = {
+			limit = {
+				is_subject_of = AUS
+				AUS = { has_monarchy = yes }
+			}
+			AUS = {
+				set_autonomy = {
+					target = UKR
+					autonomy_state = autonomy_satellite
+				}
+			}
+			set_cosmetic_tag = UKR_KNG
+			set_party_name = {
+				ideology = neutrality
+				long_name = UKR_monarchy_party
+				name = UKR_monarchy_party
+			}
+			UKR_vasyl_i = {
+				set_character_name = UKR_vasyl_i
+				if = {
+					limit = { has_ideology = semi_constitutional_monarchy }
+					promote_character = semi_constitutional_monarchy
+				}
+				else = {
+					add_country_leader_role = {
+						country_leader = {
+							ideology = semi_constitutional_monarchy
+							traits = { knyaz_vasyl }
+						}
+						promote_leader = yes
+					}
+				}
+			}
+		}
+	}
+}
+GER_release_DON = {
+	RUS = {
+		RUS_pyotr_krasnov = {
+			set_nationality = DON
+			promote_leader = yes
+			add_country_leader_role ={
+				promote_leader = yes
+				country_leader = {
+					ideology=stratocracy
+				}
+			}
+			add_country_leader_role ={
+				promote_leader = yes
+				country_leader = {
+					ideology=personalistic_dictatorship
+				}
+			}
+		}
+		RUS_alexei_kaledin = {
+			set_nationality = DON
+		}
+	}
+	every_state = {
+		limit = {
+			OR = {
+				state = 218
+				state = 238
+				state = 245
+				state = 265
+			}
+			is_owned_by = RUS
+		}
+		DON = {
+			add_state_core = PREV
+			transfer_state = PREV
+		}
+	}
+	DON = {
+		inherit_technology = RUS
+		delete_obsolete_russian_templates = yes
+		load_oob = "DON_1918"
+	}
+	GER = {
+		DON = { set_country_flag = protectorate }
+		set_autonomy = {
+			target = DON
+			autonomous_state = autonomy_tgwr_protected_state
+		}
+		DON = {
+			set_politics = {
+				ruling_party = neutrality
+				elections_allowed = no 
+			}
+			set_popularities = {
+				fascism = 32
+				communism = 2
+				democratic = 2
+				neutrality = 64
+			}
+		}
+	}
+}
+GER_release_KUB = {
+	every_state = {
+		limit = {
+			OR = {
+				state = 233
+				state = 234
+				state = 579
+				state = 940
+				state = 941
+			}
+			is_owned_by = RUS
+		}
+		KUB = {
+			transfer_state = PREV
+			add_state_core = PREV
+		}
+	}
+	KUB = {			
+		inherit_technology = RUS
+		delete_obsolete_russian_templates = yes
+		load_oob = "KUB_1918"
+	}
+	GER = {
+		KUB = { set_country_flag = protectorate }
+		set_autonomy = {
+			target = KUB
+			autonomous_state = autonomy_tgwr_protected_state
+		}
+		KUB = {
+			set_politics = {
+				ruling_party = neutrality
+				elections_allowed = no 
+			}
+			set_popularities = {
+				fascism = 9
+				communism = 17
+				democratic = 37
+				neutrality = 37
+			}
+		}
+	}
+}
+GER_release_AZR = {
+	every_state = {
+		limit = {
+			is_owned_by = RUS
+			is_core_of = AZR
+			NOT = {
+				region = 116
+				state = 939
+			}
+		}
+		transfer_state_to = AZR
+		remove_russian_cores = yes
+		remove_russian_claims = yes
+	}
+	AZR = {
+		delete_obsolete_russian_templates = yes
+	}
+}
+GER_release_GEO = {
+	every_state = {
+		limit = {
+			is_owned_by = RUS
+			is_core_of = GEO
+		}
+		transfer_state_to = GEO
+		remove_russian_cores = yes
+		remove_russian_claims = yes
+	}
+	GER = {
+		GEO = { set_country_flag = protectorate }
+		set_autonomy = {
+			target = GEO
+			autonomous_state = autonomy_tgwr_protected_state
+			freedom_level = 0.6
+		}
+		GEO = {
+			set_politics = {
+				ruling_party = democratic
+				elections_allowed = yes
+			}
+			set_popularities = {
+				democratic = 46
+				neutrality = 20
+				fascism = 0
+				communism = 34
+			}
+			delete_obsolete_russian_templates = yes
+		}
+	}
 }

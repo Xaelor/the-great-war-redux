@@ -64,16 +64,14 @@ set_autonomy = {
 	autonomous_state = autonomy_tgwr_ottoman_emirate
 	freedom_level = 0.4
 }
-SMS = { set_country_flag = protectorate }
 set_autonomy = {
 	target = SMS
-	autonomous_state = autonomy_tgwr_integrated_protectorate
+	autonomous_state = autonomy_tgwr_protectorate
 	freedom_level = 0.7
 }
-ATH = { set_country_flag = protectorate }
 set_autonomy = {
 	target = ATH
-	autonomous_state = autonomy_tgwr_protectorate
+	autonomous_state = autonomy_tgwr_feudal_autonomy
 	freedom_level = 0.5
 }
 
@@ -1677,6 +1675,8 @@ add_dynamic_modifier = { modifier = colonial_war }
 		popularity = 0.25
 	}
 	
+	activate_mission = TUR_berlin_baghdad_railway_mission
+	
 	diplomatic_relation = {
 		country = LBA
 		relation = military_access
@@ -1688,12 +1688,7 @@ add_dynamic_modifier = { modifier = colonial_war }
 			limit = {
 				is_subject_of = PREV
 			}
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomy_state = autonomy_free
-				}
-			}
+			free_subject = yes
 		}
 		if = {
 			limit = {
@@ -1701,11 +1696,7 @@ add_dynamic_modifier = { modifier = colonial_war }
 			}
 			leave_faction = yes
 		}
-		clr_country_flag = protectorate
-		every_other_country = {
-			limit = {
-				has_war_with = PREV
-			}
+		every_enemy_country = {
 			white_peace = PREV
 		}
 		give_military_access = ROOT

@@ -9,6 +9,13 @@ TGWR_great_power_politics = {
 		}
 		available = {
 			surrender_progress > 0.5
+			any_owned_state = {
+				OR = {
+					is_controlled_by = SER
+					is_controlled_by = GRE
+					is_controlled_by = ROM
+				}
+			}
 		}
 		visible = {
 			great_power_politics_balkan_powder_keg_visible = yes
@@ -54,6 +61,9 @@ TGWR_great_power_politics = {
 		}
 		available = {
 			surrender_progress > 0.6
+			any_owned_state = {
+				is_controlled_by = TUR
+			}			
 		}
 		ai_will_do = {
 			base = 0
@@ -70,77 +80,6 @@ TGWR_great_power_politics = {
 			}
 		}
 	}	
-}
-
-peace_deals = {
-	BUL_salonika_armistice_timer = {
-		icon = GFX_decision_eng_blackshirt_march
-		allowed = {
-			tag = BUL
-		}
-		activation = {
-			NOT = {
-				has_global_flag = salonika_armistice
-			}
-			is_subject = no
-			is_great_war_ongoing = yes
-			OR = {
-				has_war_with = GER
-				has_war_with = ENT
-			}
-			is_in_faction = yes
-			is_faction_leader = no
-			has_capitulated = no
-			has_civil_war = no
-			longest_war_length > 24
-			surrender_progress > 0.05
-			OR = {
-				AND = {
-					has_cosmetic_tag = BUL_radomir
-					has_idea = mutiny_3
-				}
-				AND = {
-					has_global_flag = radomir_rebellion_failed
-					OR = {
-						has_stability < 0.1
-						has_war_support < 0.15
-						surrender_progress > 0.10
-						casualties > 150000
-					}
-				}
-				surrender_progress > 0.7
-			}
-		}
-		available = {
-			OR = {
-				has_global_flag = salonika_armistice
-				is_great_war_ongoing = no
-				has_war = no
-				has_civil_war = yes
-				NOT = {
-					has_war_with = GER
-					has_war_with = ENT
-				}
-				is_in_faction = no
-				is_faction_leader = yes
-				has_capitulated = yes
-				AND = {
-					surrender_progress < 0.05
-					has_war_support > 0.5
-					has_stability > 0.3
-					NOT = {
-						has_idea = mutiny_3
-						has_cosmetic_tag = BUL_radomir
-					}
-				}
-			}
-		}
-		days_mission_timeout = 30
-		fire_only_once = no
-		timeout_effect = {
-			salonika_armistice_effect = yes
-		}
-	}
 }
 
 AUH_investment_in_BUL = {
@@ -282,32 +221,7 @@ AUH_investment_in_BUL = {
 	}
 }
 
-# political_actions = {
-# 	BUL_attack_tur = {
-# 		allowed = {
-# 			original_tag = BUL
-# 		}
-# 		available = {
-# 			SER = {
-# 				has_war_with = TUR
-# 				NOT = {
-# 					is_in_faction_with = BUL
-# 				}
-# 			}
-# 		}
-# 		visible = {
-# 			has_completed_focus = BUL_lone_liberator
-# 		}
-# 		complete_effect = {
-# 			declare_war_on = {
-# 				target = TUR
-# 				type = take_state_focus
-# 			}
-# 		}
-# 	}
-# }
-
-crisis = {
+TGWR_great_power_politics = {
 	BUL_march_on_sofia = {
 		name = ww1_bulgaria.25.t
 		allowed = {
