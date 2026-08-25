@@ -1,0 +1,40 @@
+on_actions = {
+	
+	on_startup = {
+		effect = {
+			every_country = {
+				limit = {
+					is_ai = no
+					NOT = {
+						any_other_country = {
+							is_ai = no
+						}
+					}
+				}
+				set_global_flag = old_sp_detection_cflg
+				country_event = old_devnote.1 #SP Settings - TODO MP Later // Xaelor
+			}
+		}
+	}
+
+	on_daily = {
+		effect = {
+			ROOT = {
+				if = {
+					limit = {
+						has_country_flag = old_settings_focus_tree_enabled_cflg
+						has_focus_tree = generic_focus
+					}
+					load_focus_tree = generic_focus_real
+					else_if = {
+						limit = {
+							has_focus_tree = generic_focus_real
+						}
+						load_focus_tree = generic_focus
+					}
+				}
+			}
+		}
+	}
+
+}
