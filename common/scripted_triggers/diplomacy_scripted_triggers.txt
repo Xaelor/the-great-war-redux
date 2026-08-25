@@ -39,9 +39,9 @@ DIPLOMACY_JOIN_ALLY_ENABLE_TRIGGER = {
 			}
 		}
 		custom_trigger_tooltip = {
-            tooltip = JOIN_ALLY_BLOCKED_TT
-            always = no
-        }
+			tooltip = JOIN_ALLY_BLOCKED_TT
+			always = no
+		}
 	}
 	if = {
 		limit = {
@@ -58,9 +58,25 @@ DIPLOMACY_JOIN_ALLY_ENABLE_TRIGGER = {
 	if = {
 		limit = {
 			FROM = {
-				tag = ENG
+				tag = SOV
+			}
+			OR = {
+				NOT = {
+					is_subject_of = SOV
+				}
+				has_autonomy_state = autonomy_tgwr_nominal_constituency
+			}
+		}
+		always = no # later add tt
+	}	
+	if = {
+		limit = {
+			FROM = {
 				any_enemy_country = {
-					original_tag = SOM
+					OR = {
+						original_tag = SOM
+						original_tag = LBA
+					}
 					is_in_faction = no
 				}
 			}
@@ -73,13 +89,16 @@ DIPLOMACY_JOIN_ALLY_ENABLE_TRIGGER = {
 		always = no # later add tt
 	}	
 	if = {
+		limit = { 
+			FROM = {
+				has_war_with = DAR
+			}
+		}
+		always = no # later add tt
+	}
+	if = {
 		limit = {
-			OR = {
-				has_autonomy_state = autonomy_tgwr_protectorate
-				has_autonomy_state = autonomy_tgwr_informal_protectorate
-				has_autonomy_state = autonomy_tgwr_concession
-				has_autonomy_state = autonomy_tgwr_ottoman_emirate
-			}	
+			protectorate_type_subject = yes
 			NOT = {
 				is_in_faction_with = FROM #experimental
 			}
@@ -92,12 +111,7 @@ DIPLOMACY_JOIN_ALLY_ENABLE_TRIGGER = {
 	else_if = {
 		limit = {
 			FROM = {
-				OR = {
-					has_autonomy_state = autonomy_tgwr_protectorate
-					has_autonomy_state = autonomy_tgwr_informal_protectorate
-					has_autonomy_state = autonomy_tgwr_concession
-					has_autonomy_state = autonomy_tgwr_ottoman_emirate
-				}
+				protectorate_type_subject = yes
 			}	
 		}
 		FROM = { 
@@ -216,9 +230,9 @@ DIPLOMACY_CALL_ALLY_ENABLE_TRIGGER = {
 			is_in_colonial_war = yes
 		}
 		custom_trigger_tooltip = {
-            tooltip = CALL_ALLY_BLOCKED_TT
-            always = no
-        }
+			tooltip = CALL_ALLY_BLOCKED_TT
+			always = no
+		}
 	}
 	if = {
 		limit = {
@@ -232,9 +246,11 @@ DIPLOMACY_CALL_ALLY_ENABLE_TRIGGER = {
 	}
 	if = {
 		limit = {
-			tag = ENG
 			any_enemy_country = {
-				original_tag = SOM
+				OR = {
+					original_tag = SOM
+					original_tag = LBA
+				}
 				is_in_faction = no
 			}
 			FROM = {
@@ -248,13 +264,42 @@ DIPLOMACY_CALL_ALLY_ENABLE_TRIGGER = {
 		always = no # later add tt
 	}	
 	if = {
+		limit = { 
+			has_war_with = DAR
+		}
+		always = no # later add tt
+	}
+	if = {
 		limit = {
+			tag = SOV
+			FROM = {
+				OR = {
+					NOT = {
+						is_subject_of = SOV
+					}
+					has_autonomy_state = autonomy_tgwr_nominal_constituency
+				}
+			}
+		}
+		always = no # later add tt
+	}		
+	if = {
+		limit = {
+			FROM = {
+				tag = SOV
+			}
 			OR = {
-				has_autonomy_state = autonomy_tgwr_protectorate
-				has_autonomy_state = autonomy_tgwr_informal_protectorate
-				has_autonomy_state = autonomy_tgwr_concession
-				has_autonomy_state = autonomy_tgwr_ottoman_emirate
-			}	
+				NOT = {
+					is_subject_of = SOV
+				}
+				has_autonomy_state = autonomy_tgwr_nominal_constituency
+			}
+		}
+		always = no # later add tt
+	}		
+	if = {
+		limit = {
+			protectorate_type_subject = yes
 		}
 		OR = {
 			has_defensive_war = yes
@@ -264,12 +309,7 @@ DIPLOMACY_CALL_ALLY_ENABLE_TRIGGER = {
 	else_if = {
 		limit = {
 			FROM = {
-				OR = {
-					has_autonomy_state = autonomy_tgwr_protectorate
-					has_autonomy_state = autonomy_tgwr_informal_protectorate
-					has_autonomy_state = autonomy_tgwr_concession
-					has_autonomy_state = autonomy_tgwr_ottoman_emirate
-				}
+				protectorate_type_subject = yes
 				NOT = {
 					is_in_faction_with = ROOT #experimental
 				}
@@ -301,20 +341,20 @@ DIPLOMACY_CALL_ALLY_ENABLE_TRIGGER = {
 }
 
 DIPLOMACY_WAR_ENABLE_TRIGGER = {
-    if = {
-        limit = {
-            FROM = {
+	if = {
+		limit = {
+			FROM = {
 				is_subject = yes
 				OVERLORD = {
 					has_war_with = ROOT
 				}
-            }
-        }
+			}
+		}
 		OR = {
 			any_allied_country = { has_war_with = FROM }
 			has_wargoal_against = FROM
 		}
-    }
+	}
 }
 
 DIPLOMACY_JOIN_FACTION_ENABLE_TRIGGER = {
@@ -386,26 +426,27 @@ DIPLOMACY_SEND_EXP_FORCE_ENABLE_TRIGGER = {
 }
 
 DIPLOMACY_REQUEST_EXP_FORCE_ENABLE_TRIGGER = {
-    if = {
-        limit = {
-            FROM = {
-                OR = {
-					has_autonomy_state = autonomy_tgwr_protectorate
-					has_autonomy_state = autonomy_tgwr_informal_protectorate
-                    has_autonomy_state = autonomy_dominion
-                    has_autonomy_state = autonomy_satellite
-                    has_autonomy_state = autonomy_supervised_state
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_autonomy_state = autonomy_tgwr_dominion
 					has_autonomy_state = autonomy_tgwr_personal_union
+					has_autonomy_state = autonomy_tgwr_protected_state
+					has_autonomy_state = autonomy_tgwr_protectorate
 					has_autonomy_state = autonomy_tgwr_feudal_autonomy
 					has_autonomy_state = autonomy_tgwr_ottoman_emirate
-                }
-            }
-        }
-        custom_trigger_tooltip = {
-            tooltip = REQUEST_EXP_FORCE_BLOCKED_TT
-            always = no
-        }
-    }
+					has_autonomy_state = autonomy_tgwr_regional_government
+					has_autonomy_state = autonomy_tgwr_unilateral_union
+					has_autonomy_state = autonomy_tgwr_nominal_constituency
+				}
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = REQUEST_EXP_FORCE_BLOCKED_TT
+			always = no
+		}
+	}
 }
 
 DIPLOMACY_RETURN_EXP_FORCE_ENABLE_TRIGGER = {
