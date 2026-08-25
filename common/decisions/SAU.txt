@@ -5,16 +5,15 @@ SAU_arabian_conquest = {
 		allowed = {
 			original_tag = SAU			
 		}
-		visible = {
+		targets = {
+			804.owner
+		}
+		target_root_trigger = {
 			date > 1912.12.13
-			NOT = {
-				owns_state = 804
-			}
 			292 = {
 				is_owned_and_controlled_by = ROOT
 			}
 		}
-		target_array = 804.owner
 		available = {
 			has_war = no
 			804 = {
@@ -80,10 +79,10 @@ SAU_arabian_conquest = {
 			effect_tooltip = {
 				transfer_state = 804
 				country_event = ww1_nejd.46
-				FROM = {
+				QAT = {
 					if = {
-						limit = { has_subject = QAT }
-						end_puppet = QAT
+						limit = { is_subject_of = FROM }
+						free_subject_leave_faction = yes
 					}
 				}
 				if = {
@@ -112,9 +111,11 @@ SAU_arabian_conquest = {
 		}
 		visible = {
 			is_subject = no
-			NOT = {
-				owns_state = 905
-			}
+		}
+		targets = {
+			905.owner
+		}
+		target_root_trigger = {
 			292 = {
 				is_owned_and_controlled_by = ROOT
 			}
@@ -122,7 +123,6 @@ SAU_arabian_conquest = {
 				has_country_flag = great_war_loser
 			}
 		}
-		target_array = 905.owner
 		available = {
 			has_war = no
 			owns_state = 804
@@ -234,7 +234,7 @@ SAU_arabian_conquest = {
 				limit = {
 					is_subject_of = ENG
 				}
-				ENG = { end_puppet = ROOT }
+				free_subject_leave_faction = yes
 			}
 			every_state = {
 				limit = {
@@ -391,6 +391,9 @@ SAU_arabian_conquest = {
 			country_exists = FROM
 			NOT = {
 				has_subject = FROM
+				FROM = {
+					has_idea = MOR_guerrilla_warfare
+				}
 			}
 			# has_country_flag = hjz_preparation
 		}
@@ -793,14 +796,20 @@ SAU_arabian_conquest = {
 		allowed = {
 			original_tag = SAU
 		}
-		target_array = 929.owner
-		war_with_target_on_complete = yes
-		visible = {
-			owns_state = 292
-			NOT = {
-				has_war_with = FROM
+		targets = {
+			929.owner
+		}
+		target_trigger = {
+			FROM = {
+				NOT = {
+					has_war_with = ROOT
+				}
 			}
 		}
+		target_root_trigger = {
+			owns_state = 292
+		}
+		war_with_target_on_complete = yes
 		available = {
 			is_subject = no
 			has_war = no
@@ -1116,14 +1125,13 @@ SAU_arabian_conquest = {
 		}
 	}
 }
-crisis = {
+TGWR_great_power_politics  = {
 	SAU_Ikhwan_revolt_mission = {
 		icon = revolt
 		allowed = {
 			original_tag = SAU
 		}
 		visible = {
-			original_tag = SAU
 			always = no #has_completed_focus = SAU_get_rid_of_ikhwan
 		}
 		
@@ -1154,7 +1162,6 @@ crisis = {
 			original_tag = SAU
 		}
 		visible = {
-			original_tag = SAU
 			has_country_flag = SAU_BOP_START
 			NOT={
 				date > 1914.1.1
@@ -1296,6 +1303,7 @@ crisis = {
 			original_tag = SAU
 		}
 		visible = {
+			great_power_politics_sick_man_of_europe_visible = yes
 			has_active_mission = SAU_ottoman_saudi_treaty_timer
 			is_subject = no
 			NOT = {

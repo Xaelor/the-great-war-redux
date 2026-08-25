@@ -1,11 +1,21 @@
-foreign_politics = {
+TGWR_great_power_politics = {
+	#great_power_politics_misc
 	PAR_prepare_chaco_border_conflict = {
 		icon = border_war
 		allowed = {
 			original_tag = PAR
 		}
-		target_array = 901.owner
+		targets = {
+			901.owner
+		}
+		target_root_trigger = {
+			has_global_flag = chaco_border_conflict
+			NOT = {
+				has_global_flag = chaco_border_war
+			}
+		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			has_global_flag = chaco_border_conflict
 			is_subject = no
 			owns_state = 688
@@ -80,7 +90,20 @@ foreign_politics = {
 		allowed = {
 			original_tag = PAR
 		}
-		target_array = 901.owner
+		targets = {
+			901.owner
+		}
+		target_trigger = {
+			FROM = {
+				is_subject = no
+			}
+		}
+		target_root_trigger = {
+			has_global_flag = chaco_border_war
+			NOT = {
+				has_global_flag = chaco_war_ready
+			}
+		}
 		visible = {
 			has_global_flag = chaco_border_war
 			has_border_war = no
@@ -89,9 +112,6 @@ foreign_politics = {
 			NOT = {
 				owns_state = 901
 				has_global_flag = chaco_war_ready
-			}
-			FROM = {
-				is_subject = no
 			}
 		}
 		available = {
@@ -137,51 +157,6 @@ foreign_politics = {
 				target = FROM
 				type = take_state
 				generator = { 901 1091 }
-			}
-		}
-	}
-	PAR_sue_for_peace_BOL = {
-		icon = GFX_decision_eng_trade_unions_support
-		name = sue_for_peace_FROM
-		allowed = {
-			original_tag = PAR
-		}
-		target_trigger = {
-			FROM = {
-				original_tag = BOL
-			}
-		}
-		target_root_trigger = {
-			has_global_flag = chaco_war_ready
-		}
-		visible = {
-			has_war_with = FROM
-			is_subject = no
-			NOT = { has_global_flag = chaco_war_end }
-		}
-		fire_only_once = yes
-		complete_effect = {
-			set_global_flag = chaco_war_end
-			white_peace = FROM
-			every_owned_state = {
-				limit = {
-					OR = {
-						state = 688
-						state = 901
-					}
-				}
-				transfer_state_to = FROM
-			}
-		}
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				factor = 0
-				surrender_progress < 0.3
-			}
-			modifier = {
-				factor = 0
-				controls_state = 688
 			}
 		}
 	}
@@ -246,6 +221,56 @@ foreign_politics = {
 					}
 				}
 				white_peace = ROOT
+			}
+		}
+	}
+}
+TGWR_great_power_politics = {
+	PAR_sue_for_peace_BOL = {
+		icon = GFX_decision_eng_trade_unions_support
+		name = sue_for_peace_FROM
+		allowed = {
+			original_tag = PAR
+		}
+		targets = {
+			BOL
+		}
+		target_trigger = {
+			FROM = {
+				has_war_with = ROOT
+			}
+		}
+		target_root_trigger = {
+			has_global_flag = chaco_war_ready
+		}
+		visible = {
+			great_power_politics_misc_visible = yes		
+			is_subject = no
+			NOT = { has_global_flag = chaco_war_end }
+		}
+		fire_only_once = yes
+		complete_effect = {
+			set_global_flag = chaco_war_end
+			white_peace = FROM
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 688
+						state = 901
+					}
+				}
+				transfer_state_to = FROM
+			}
+		}
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 0
+				surrender_progress < 0.3
+			}
+			modifier = {
+				factor = 0
+				controls_state = 688
 			}
 		}
 	}

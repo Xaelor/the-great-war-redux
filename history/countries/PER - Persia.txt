@@ -3,28 +3,74 @@ oob = "PER_1910"
 
 give_military_access = ENG
 give_military_access = RAJ
+give_military_access = RUS
 
 set_convoys = 10
 
 set_autonomy = {
 	target = ARB
-	autonomous_state = autonomy_integrated_puppet
-	freedom_level = 0.9
+	autonomous_state = autonomy_tgwr_feudal_autonomy
+	freedom_level = 0.5
+}
+set_autonomy = {
+	target = MAK
+	autonomous_state = autonomy_tgwr_nominal_constituency
+	freedom_level = 0.5
+}
+set_autonomy = {
+	target = MRG
+	autonomous_state = autonomy_tgwr_nominal_constituency
+	freedom_level = 0.5
 }
 
 recruit_character = PER_ahmad_shah_qajar
-recruit_character = PER_soleyman_eskandari
 
-recruit_character = PER_nezam_us_saltaneh
+recruit_character = PER_mohammad_vali_khan_tonekaboni
+recruit_character = PER_mirza_hasan_ashtiani
+recruit_character = PER_mirza_hassan_khan
+recruit_character = PER_abolqasem_khan_qaragozlu
+recruit_character = PER_najaf_qoli_khan_bakhtiari
+recruit_character = PER_mirza_mohammad_ali_khan
+
+recruit_character = PER_soleyman_eskandari
+recruit_character = PER_ali_qoli_khan_bakhtiari
+recruit_character = PER_haydar_khan_amo_oghli
+recruit_character = PER_abdol_majid_mirza
+
+recruit_character = PER_william_morgan_shuster
+
+recruit_character = PER_abdol_hossein_mizra
+recruit_character = PER_yeprem_khan_davitian
+PER_yeprem_khan_davitian = {
+	set_character_flag = unit_leader_can_be_KIA
+}
+recruit_character = PER_reza_qoli_nezam_mafi
+recruit_character = PER_iskandar_khan_setkhanian
 recruit_character = PER_reza_khan
 recruit_character = PER_abdollah_amir_tahmasebi
 recruit_character = PER_karim_buzarjomehri
 recruit_character = PER_mohammad_taqi_pessian
+
+recruit_character = PER_ahmad_khan_daryabeigi
+
 recruit_character = PER_mirza_kuchik_khan
+
+#Persian Exiles
+recruit_character = PER_mohammad_ali_shah
+recruit_character = PER_abulfath_mirza
+
+add_dynamic_modifier = {
+	modifier = PER_foreign_influence_modifier
+}
+
+set_country_flag = great_power_politics_strangling_of_persia_visible
+set_variable = { great_power_politics_strangling_of_persia_button = 2 }
+
+country_lock_all_division_template = yes
 
 1910.1.1 = {
 	set_politics = {
-		ruling_party = neutrality
+		ruling_party = democratic
 		last_election = "1909.12.6"
 		election_frequency = 60
 		elections_allowed = yes
@@ -38,10 +84,62 @@ recruit_character = PER_mirza_kuchik_khan
 	set_stability = 0.14
 	set_war_support = 0.3
 	add_ideas = {
-		PER_idea_rural_society
-		PER_idea_foreign_reliance
+		free_trade
+		PER_ali_reza_khan_regent
+		PER_foreign_advisors_2
+		PER_centralization_level_0
 	}
-	add_timed_idea = { idea = PER_idea_constitutional_revolution days = 360 }
+
+	#Army
+	266 = {
+		set_state_flag = PER_cossack_regiment_station
+	}
+	set_variable = { PER_recruited_cossacks = 0 }
+	set_variable = { global.PER_cossack_cap = 1 }
+	set_variable = { PER_recruited_gendarmerie = 0 }
+	set_variable = { global.PER_gendarmerie_cap = 0 }
+
+	set_variable = { PER_recruited_kurds = 0 }
+	set_variable = { global.PER_kurds_cap = 3 }
+	set_variable = { PER_recruited_turkmens = 0 }
+	set_variable = { global.PER_turkmens_cap = 2 }
+	set_variable = { PER_recruited_azerbaijanis = 0 }
+	set_variable = { global.PER_azerbaijanis_cap = 3 }
+	set_variable = { PER_recruited_gilaks = 0 }
+	set_variable = { global.PER_gilaks_cap = 2 }
+	set_variable = { PER_recruited_mazanderanis = 0 }
+	set_variable = { global.PER_mazanderanis_cap = 1 }
+	set_variable = { PER_recruited_bakhtiari = 0 }
+	set_variable = { global.PER_bakhtiari_cap = 3 }
+	set_variable = { PER_recruited_lurs = 0 }
+	set_variable = { global.PER_lurs_cap = 2 }
+	set_variable = { PER_recruited_irregulars = 0 }
+	set_variable = { PER_irregulars_cap = 6 }
+
+	#Centralization
+	set_variable = { PER_centralization_level = 0 }
+	set_variable = { PER_available_funds = 0 }
+
+	#Foreign influence
+	set_variable = { var = ENG.PER_foreign_influence value = 0.2 }
+	set_variable = { var = RUS.PER_foreign_influence value = 0.2 }
+	set_variable = { var = GER.PER_foreign_influence value = 0.05 }	
+	set_variable = { var = TUR.PER_foreign_influence value = 0.05 }	
+	every_other_country = {
+		limit = {
+			OR = {
+				tag = ENG
+				tag = RUS
+				tag = GER
+				tag = TUR
+			}
+		}
+		PER_calculate_influnce_in_persia_modifiers = yes
+		add_dynamic_modifier = {
+			modifier = PER_influence_in_persia_modifier
+		}
+	}
+	PER_calculate_foreign_influnce = yes
 
 	set_technology = {
 		#infantry
@@ -51,10 +149,11 @@ recruit_character = PER_mirza_kuchik_khan
 		#support
 		tech_support = 1
 		tech_engineers = 1
+		tech_recon = 1
 
 		#artillery
 		early_artillery = 1
-		basic_field_gun = 1
+		#basic_field_gun = 1
 
 		#navy
 		
@@ -64,26 +163,46 @@ recruit_character = PER_mirza_kuchik_khan
 		mechanical_engineering = 1
 		construction0 = 1
 	}
+	if = {
+		limit = {
+			has_start_date < 1914.1.1
+		}
+		country_event = { id = ww1_persia_rework.3 days = 45 } #Assassination of Seyyed Abdollah Behbahani (1910.6.15 )
+		country_event = { id = ww1_persia_rework.1 days = 144 } #Regent Ali Reza Khan Dies (1910.9.22 )
+		activate_mission = PER_looming_absolutist_revolt_in_kermanshah #1911.6
+		activate_mission = PER_looming_absolutist_revolt_in_astrabad #1911.7
+		PER_iskandar_khan_setkhanian = { unit_leader_event = { id = ww1_generic.39 days = 2071 random_days = 150 }} #retired in 1916
+	}
 }
 1914.1.1 = {
 
 	add_political_power = 1198
 	add_command_power = 100
 
+	set_politics = {
+		ruling_party = neutrality
+		elections_allowed = yes
+	}
+
+	PER_iskandar_khan_setkhanian = { unit_leader_event = { id = ww1_generic.39 days = 566 random_days = 150 }} #retired in 1916
+
 	#generic focuses
-	complete_national_focus = state_of_the_country_army
-	complete_national_focus = modernize_equipment
-	complete_national_focus = capital_manoeuvers
-	complete_national_focus = naval_experience
-	complete_national_focus = naval_expansion
-	complete_national_focus = early_industrialization
-	complete_national_focus = new_roads
-	complete_national_focus = develop_capital
-	complete_national_focus = capital_country_arsenal
-	complete_national_focus = open_the_political_sphere
+	unlock_national_focus = PER_young_peoples_cabinet #1910.6.26 (irl 1910.6.25)
+	unlock_national_focus = PER_disarm_revolutionaries #1910.8.7 (irl 1910.8.7)
+	complete_national_focus = PER_ask_for_loans #1910.10.16
+	complete_national_focus = PER_create_the_government_gendarmerie #1910.12.25 (irl 1910.12)
+	unlock_national_focus = PER_elect_new_regent #1911.3.5 (irl 1911.3.12)
+	complete_national_focus = PER_subdue_the_press #1911.4.9
+	unlock_national_focus = PER_invite_american_advisors #1911.5.21 (irl 1910.5)
+	complete_national_focus = PER_stronger_cabinet #1911.6.25 (irl 1911.6.26)
+	complete_national_focus = PER_invite_swedish_officers #1911.8.20 (irl 1910.8)
+	unlock_national_focus = PER_empower_the_treasurer_general
+	unlock_national_focus = PER_treasury_gendarmerie
+	unlock_national_focus = PER_regency_dictatorship
+	complete_national_focus = PER_restore_maku_maliat_payments #(irl 1912)complete_national_focus = modernize_equipment
 
 	set_country_flag = PER_ahmad_shah_qajar_mature
-	set_country_flag = persian_gendarmerie_formed
+	#set_country_flag = persian_gendarmerie_formed
 
 	PER_ahmad_shah_qajar = {
 		remove_country_leader_trait = underage_monarch
@@ -94,25 +213,39 @@ recruit_character = PER_mirza_kuchik_khan
 		}
 	}
 
+	PER_mirza_hasan_ashtiani = {
+		promote_character = social_democracy
+	}
+	set_party_name = {
+		ideology = democratic
+		long_name = PER_communism_party
+		name = PER_communism_party
+	}
+
 	add_opinion_modifier = {
 		target = RUS
 		modifier = small_decrease
 	}	
 	
 	remove_ideas = {
-		PER_idea_constitutional_revolution
+		PER_ali_reza_khan_regent
 	}
 
-	add_ideas = {
-		PER_idea_government_gendarmerie
-		PER_idea_nationalised_oil
-	}
+	# add_ideas = {
+	# 	PER_idea_government_gendarmerie
+	# }
 	
+	give_resource_rights = {
+		receiver = ENG
+		state = 413
+	}
 	give_resource_rights = {
 		receiver = ENG
 		state = 412
 	}
 }
+
+country_event = { id = ww1_developer_note.7 days = 1 }
 
 if = {
 	limit = {
@@ -192,10 +325,98 @@ if = {
 	}
 }
 
+if = {
+	limit = {
+		has_start_date < 1914.1.1
+	}
+	#Persian Exiles - Mohammed Ali Shah's Rebellion
+	create_dynamic_country = {
+	    original_tag = PER
+	    set_country_flag = PER_persian_exiles
+		set_cosmetic_tag = PER_mohammad_ali_shah_revolt
+		set_capital = { state = 1013 }
+		inherit_technology = PER
+		set_politics = {
+			ruling_party = neutrality
+			elections_allowed = no
+		}
+	    reserve_dynamic_country = yes
 
-410 = {
-	add_dynamic_modifier = { modifier = per_british_sphere }
-}
-414 = {
-	add_dynamic_modifier = { modifier = per_british_sphere }
+		set_popularities = {
+			fascism = 20
+			neutrality = 80
+		}
+		set_party_name = {
+			ideology = fascism
+			long_name = PER_neutrality_party
+			name = PER_neutrality_party
+		}
+		PREV = {
+			PER_mohammad_ali_shah = {
+				set_nationality = PREV.PREV
+				promote_character = absolute_monarchy
+				promote_character = reactionism
+			}
+		}
+		
+		add_ideas = {
+			standing_alone
+		}
+
+		RUS = {
+			give_military_access = PREV
+			give_guarantee = PREV
+		}
+		ENG = {
+			give_guarantee = PREV
+		}
+
+		every_core_state = {
+			remove_core_of = PREV
+		}
+		set_variable = { PER_irregulars_cap = 1 }
+	}
+	#Revolt of Salar-al-Daulah
+	create_dynamic_country = {
+	    original_tag = PER
+	    set_country_flag = PER_salar_al_daula_revolt_flag
+		set_cosmetic_tag = PER_salar_al_daula_revolt
+		set_capital = { state = 421 }
+		inherit_technology = PER
+		set_politics = {
+			ruling_party = fascism
+			elections_allowed = no
+		}
+	    reserve_dynamic_country = yes
+
+		set_popularities = {
+			fascism = 40
+			neutrality = 60
+		}
+		set_party_name = {
+			ideology = fascism
+			long_name = PER_neutrality_party
+			name = PER_neutrality_party
+		}
+		PREV = {
+			PER_abulfath_mirza = {
+				set_nationality = PREV.PREV
+				promote_character = absolute_monarchy
+				promote_character = reactionism
+			}
+		}
+		
+		add_ideas = {
+			standing_alone
+		}
+
+		TUR = {
+			give_military_access = PREV
+		}
+
+		every_core_state = {
+			remove_core_of = PREV
+		}
+		set_variable = { PER_irregulars_cap = 1 }
+	}
 }

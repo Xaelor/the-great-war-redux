@@ -1,11 +1,11 @@
-operations = {
+TGWR_great_power_politics = {
 	FIN_decision_ostsee_division = {
 		icon = GFX_decision_eng_support_imperialist_coup
 		allowed = {
 			tag = FIN
 		}
 		visible = {
-			tag = FIN
+			great_power_politics_misc_visible = yes
 			NOT = { has_government = communism }
 			any_enemy_country = {
 				original_tag = FIN
@@ -76,15 +76,29 @@ operations = {
 		}
 	}
 }
-foreign_politics = {
+TGWR_great_power_politics = {
+	#great_power_politics_empire_of_the_periphery
 	FIN_take_petsamo = {
 		icon = GFX_decision_border_war
 		allowed = {
 			original_tag = FIN
 		}
 		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes		
+		}
+		state_target = yes
+		targets = {
+			722
+		}
+		target_trigger = {
+			FROM = {
+				NOT = {
+					is_owned_by = ROOT
+				}
+			}
+		}
+		target_root_trigger = {
 			owns_state = 148
-			NOT = { owns_state = 722 }
 		}
 		highlight_states = {
 			highlight_state_targets = {
@@ -93,8 +107,7 @@ foreign_politics = {
 		}
 		available = {
 			OR = {
-				any_other_country = {
-					owns_state = 722
+				FROM.OWNER = {
 					NOT = { has_war_with = ROOT }
 				}
 				controls_state = 722
@@ -103,29 +116,28 @@ foreign_politics = {
 		cost = 25
 		fire_only_once = yes
 		complete_effect = {
-			random_other_country = {
+			if = {
 				limit = {
-					owns_state = 722
-				}
-				if = {
-					limit = {
+					FROM.OWNER = {
 						is_subject_of = ROOT
-					}
-					ROOT = { add_state_core = 722 transfer_state = 722 }
+					}	
 				}
-				else_if = {
-					limit = {
+				add_state_core = FROM transfer_state = FROM
+			}
+			else_if = {
+				limit = {
+					FROM.OWNER = {
 						has_war_with = ROOT
 					}
-					ROOT = { add_state_core = 722 set_state_owner = 722 }
 				}
-				else = {
-					custom_effect_tooltip = agree_effect_tooltip
-					effect_tooltip = {
-						ROOT = { add_state_core = 722 transfer_state = 722 }
-					}
-					country_event = ww1_finland.9
+				add_state_core = FROM set_state_owner = FROM
+			}
+			else = {
+				custom_effect_tooltip = agree_effect_tooltip
+				effect_tooltip = {
+					add_state_core = FROM transfer_state = FROM
 				}
+				country_event = ww1_finland.9
 			}
 		}
 		ai_will_do = {
@@ -136,16 +148,23 @@ foreign_politics = {
 			}
 		}
 	}
-}
-political_actions = {
 	FIN_core_petsamo = {
 		icon = GFX_decision_generic_operation
 		allowed = {
 			original_tag = FIN
 		}
 		visible = {
-			owns_state = 722
-			722 = { NOT = { is_core_of = ROOT } }
+			great_power_politics_empire_of_the_periphery_visible = yes		
+		}
+		state_target = yes
+		targets = {
+			722
+		}
+		target_trigger = {
+			FROM = {
+				is_owned_by = ROOT
+				NOT = { is_core_of = ROOT }
+			}
 		}
 		highlight_states = {
 			highlight_state_targets = {
@@ -159,11 +178,6 @@ political_actions = {
 		fire_only_once = yes
 		complete_effect = {
 			add_state_core = 722
-		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 722
-			}
 		}
 		ai_will_do = {
 			factor = 100

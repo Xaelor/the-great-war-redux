@@ -1,0 +1,1017 @@
+
+#RUSSIA
+TGWR_great_power_politics = {
+	RUS_occupation_of_northern_persia_timeout = {
+		icon = generic_planted_spear
+		allowed = {
+			always = no
+		}
+
+		activation = {
+			always = no
+		}
+
+		#targets = { PER }
+
+		highlight_states = {
+			highlight_states_trigger = {
+				has_contested_owner = PER
+				is_owned_by = ROOT			
+			}
+		}
+
+		available = {
+			OR = {
+				has_war_with = PER
+				has_war_with = TUR
+			}			
+		}
+
+		cancel_trigger = {
+			hidden_trigger = {
+				NOT = {
+					any_owned_state = {
+						has_contested_owner = PER
+					}
+				}
+			}		
+		}
+
+		fire_only_once = yes
+
+		is_good = no
+		days_mission_timeout = 600
+
+		timeout_effect = {
+			every_owned_state = {
+				limit = {
+					has_contested_owner = PER
+				}
+				transfer_state_to = PER
+			}
+		}
+	}
+	RUS_invasion_of_persia = {
+		icon = generic_planted_spear
+		allowed = {
+			always = no
+		}
+
+		activation = {
+			always = no
+		}
+
+		targets = { PER }
+
+		highlight_states = {
+			highlight_state_targets = { state = 266 }
+			highlight_provinces = { 10837 }
+			highlight_only_provinces = yes
+		}
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = controls_tehran_tt
+				OR = {
+					controls_province = 7969
+					controls_province = 8125
+					controls_province = 10768
+					controls_province = 10837
+					controls_province = 10922
+					controls_province = 12756
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		is_good = no
+		days_mission_timeout = 45
+
+		complete_effect = {
+			PER = {
+				country_event = ww1_per_rus_strangling.10
+			}
+		}
+
+		timeout_effect = {
+			add_war_support = -0.05
+			add_political_power = -50
+			white_peace = PER
+			every_owned_state = {
+				limit = {
+					has_contested_owner = PER
+				}
+				transfer_state_to = PER
+			}
+			country_event = ww1_per_rus_strangling.14
+		}
+	}
+	RUS_secure_tehran = {
+		icon = generic_planted_spear
+		allowed = {
+			always = no
+		}
+
+		activation = {
+			always = no
+		}
+
+		targets = { PER }
+
+		highlight_states = {
+			highlight_state_targets = { state = 266 }
+			highlight_provinces = { 10837 }
+			highlight_only_provinces = yes
+		}
+
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+
+		fire_only_once = yes
+
+		is_good = yes
+		days_mission_timeout = 15
+
+		timeout_effect = {
+			custom_effect_tooltip = if_controls_tehran_tt
+			effect_tooltip = {
+				PER = {
+					white_peace = ROOT
+					every_owned_state = {
+						limit = {
+							OR = {
+								state = 419
+								state = 877
+								state = 1212
+								state = 1245
+								state = 1250
+								state = 1251
+							}
+						}
+						transfer_state_to = ROOT
+					}
+					set_politics = {
+						ruling_party = neutrality
+						elections_allowed = no
+					}
+					PER_mohammad_ali_shah = {
+						set_nationality = PREV
+						promote_character = absolute_monarchy	
+					}
+					retire_character = PER_william_morgan_shuster
+					add_to_variable = {
+						RUS.PER_foreign_influence = 0.1
+						tooltip = PER_modify_RUS_influence_tt
+					}
+					PER_calculate_foreign_influnce = yes
+					ROOT = {
+						PER_calculate_influnce_in_persia_modifiers = yes
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = { 
+						controls_province = 10837
+					}
+					PER = {
+						white_peace = ROOT
+						every_owned_state = {
+							limit = {
+								OR = {
+									state = 419
+									state = 877
+									state = 1212
+									state = 1245
+									state = 1250
+									state = 1251
+								}
+							}
+							transfer_state_to = ROOT
+						}
+						set_politics = {
+							ruling_party = neutrality
+							elections_allowed = no
+						}
+						PER_mohammad_ali_shah = {
+							set_nationality = PREV
+							promote_character = absolute_monarchy
+							promote_character = reactionism
+						}
+						retire_character = PER_william_morgan_shuster
+						PER_double_worsen_foreign_advisors = yes
+						add_to_variable = {
+							RUS.PER_foreign_influence = 0.1
+							tooltip = PER_modify_RUS_influence_tt
+						}
+						PER_calculate_foreign_influnce = yes
+						ROOT = {
+							PER_calculate_influnce_in_persia_modifiers = yes
+						}
+						country_event = ww1_per_rus_strangling.12
+					}
+					country_event = ww1_per_rus_strangling.13
+				}
+				else = {
+					add_war_support = -0.05
+					add_political_power = -50
+					white_peace = PER
+					every_owned_state = {
+						limit = {
+							has_contested_owner = PER
+						}
+						transfer_state_to = PER
+					}
+					country_event = ww1_per_rus_strangling.14
+				}
+			}
+		}
+	}
+	RUS_expand_PER_cossack_brigade = {
+		icon = generic_prepare_civil_war
+		allowed = {
+			tag = RUS
+		}
+		
+		targets = {
+			PER
+		}
+
+		target_root_trigger = {
+			has_dynamic_modifier = PER_influence_in_persia_modifier
+			has_capitulated = no
+		}
+
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = PER_foreign_influence_modifier
+			}
+		}
+
+		visible = {
+			great_power_politics_strangling_of_persia_visible = yes
+			check_variable = {
+				global.PER_cossack_cap < 8
+			}
+			any_state_of = {
+				NOT = {
+					has_state_flag = PER_cossack_regiment_station
+				}
+				target = {
+					266 #Tehran 10837
+					1117 #Hamadan 10523, Qazvin 4553
+					877 #Tabriz 1896, Ardabil 4901
+					411 #Isfahan 2026
+					416 #Mashhad 5029
+					1247 #Mazandaran Sari 10385
+					419 #Urmia 7604
+					420 #Gilan Rasht 4609
+				}
+				OR = {
+					is_owned_and_controlled_by = FROM
+					AND = {
+						is_owned_and_controlled_by = ROOT
+						has_contested_owner = PER
+					}
+				}
+			}
+		}
+
+		available = {
+			NOT = {
+				has_war_with = PER
+			}
+			PER = {	
+				check_variable = {
+					var = PER.PER_total_independence
+					value = 0.01
+					compare = greater_than_or_equals
+					tooltip = has_domestic_independence_tt
+				}
+			}
+		}
+
+		fire_only_once = no
+
+		cost = 30
+		days_remove = 60
+
+		modifier = {
+			consumer_goods_factor = 0.05
+			political_power_cost = 0.1
+		}
+
+		remove_effect = {
+			random_state = {
+				limit = {
+					NOT = {
+						has_state_flag = PER_cossack_regiment_station
+					}
+					OR = {
+						state = 266 #Tehran 10837
+						state = 1117 #Hamadan 10523, Qazvin 4553
+						state = 877 #Tabriz 1896, Ardabil 4901
+						state = 411 #Isfahan 2026
+						state = 416 #Mashhad 5029
+						state = 1247 #Mazandaran Sari 10385
+						state = 419 #Urmia 7604
+						state = 420 #Gilan Rasht 4609
+					}
+					OR = {
+						is_owned_and_controlled_by = FROM
+						AND = {
+							is_owned_and_controlled_by = ROOT
+							has_contested_owner = PER
+						}
+					}	
+				}
+				save_global_event_target_as = PER_cossack_regiment_station
+				custom_effect_tooltip = PER_cossack_regiment_station_tt
+			}
+			FROM = {
+				effect_tooltip = {
+					add_to_variable = {
+						RUS.PER_foreign_influence = 0.01
+						tooltip = PER_modify_RUS_influence_tt
+					}
+					add_to_variable = { 
+						global.PER_cossack_cap = 1
+						tooltip = PER_increase_cossack_cap_tt
+					}
+				}
+				hidden_effect = {
+					country_event = ww1_per_generic.4
+				}			
+			}
+		}
+		ai_will_do = {
+			base = 20
+			modifier = {
+				factor = 0
+				has_political_power < 20
+			}
+		}
+	}
+	RUS_exile_khan_of_maku = {
+		icon = SWI_dismiss_council
+		allowed = {
+			tag = RUS
+		}
+		
+		targets = {
+			MAK
+		}
+
+		target_root_trigger = {
+			has_dynamic_modifier = PER_influence_in_persia_modifier
+			any_owned_state = {
+				has_contested_owner = PER
+			}
+		}
+
+		target_trigger = {
+			FROM = {
+				OR = {
+					is_subject_of = PER
+					is_subject = no
+				}
+			}
+		}
+
+		visible = {
+			great_power_politics_strangling_of_persia_visible = yes
+		}
+
+		available = {
+			is_great_war_ongoing = yes
+			is_neighbor_of = FROM
+		}
+
+		fire_only_once = yes
+
+		days_remove = 15
+
+		custom_cost_text = 5_influence_in_PER
+
+		custom_cost_trigger = {
+			check_variable = {
+				var = RUS.PER_foreign_influence
+				value = 0.05
+				compare = greater_than_or_equals
+			}
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				RUS.PER_foreign_influence = -0.05
+				#tooltip = PER_modify_RUS_influence_tt
+			}
+			PER_calculate_foreign_influnce = yes
+			PER_calculate_influnce_in_persia_modifiers = yes
+		}
+
+		cancel_effect = {
+			hidden_effect = {
+				add_to_variable = {
+					RUS.PER_foreign_influence = 0.05
+					tooltip = PER_modify_RUS_influence_tt
+				}
+				PER_calculate_foreign_influnce = yes
+				PER_calculate_influnce_in_persia_modifiers = yes
+			}			
+		}
+
+		remove_effect = {
+			MAK = { 
+				get_current_government_type = yes 
+			}
+			set_autonomy = {
+				target = MAK
+				autonomy_state = autonomy_tgwr_occupied_state
+			}
+			MAK = { 
+				restore_previous_government_type = yes
+				add_trait = {
+					character = MAK_murtuzaqulu_khan_bayat
+					ideology = absolute_monarchy
+					trait = tgwr_exiled
+				}
+			}
+		}
+		ai_will_do = {
+			base = 10
+		}
+	}
+}
+#PERSIA
+TGWR_great_power_politics = {
+	PER_russian_invasion = {
+		icon = generic_planted_spear
+		allowed = {
+			always = no
+		}
+
+		activation = {
+			always = no
+		}
+
+		targets = { RUS }
+
+		highlight_states = {
+			highlight_state_targets = { state = 266 }
+			highlight_provinces = { 10837 }
+			highlight_only_provinces = yes
+		}
+
+		available = {
+			hidden_trigger = {
+				NOT = {
+					RUS = {
+						OR = {
+							controls_province = 7969
+							controls_province = 8125
+							controls_province = 10768
+							controls_province = 10837
+							controls_province = 10922
+							controls_province = 12756
+						}
+					}
+				}
+			}			
+		}
+
+		fire_only_once = yes
+
+		is_good = no
+		days_mission_timeout = 30
+	}
+	PER_hold_tehran = {
+		icon = generic_planted_spear
+		allowed = {
+			always = no
+		}
+
+		activation = {
+			always = no
+		}
+
+		targets = { RUS }
+
+		highlight_states = {
+			highlight_state_targets = { state = 266 }
+			highlight_provinces = { 10837 }
+			highlight_only_provinces = yes
+		}
+
+		available = {		
+			hidden_trigger = {
+				always = no
+			}		
+		}
+
+		fire_only_once = yes
+
+		is_good = no
+		days_mission_timeout = 14
+	}
+}
+#OTTOMANS
+TGWR_great_power_politics = {
+	TUR_debug_transfer_western_persia = {
+		icon = generic_prepare_civil_war
+		allowed = {
+			tag = TUR
+		}
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			every_owned_state = {
+				limit = {
+					has_contested_owner = PER
+					OR = {
+						state = 419
+						state = 1212
+						state = 1250
+						state = 1252
+					}
+				}
+				if = {
+					limit = {
+						NOT = { state = 1252 }					
+						877 =  { is_owned_by = RUS }					
+						419 =  { is_owned_by = RUS }
+					}
+					transfer_state_to = RUS
+				}
+				else = {
+					transfer_state_to = PER
+					hidden_effect = {
+						remove_contested_owner = PER
+					}				
+				}
+			}
+		}
+		ai_will_do = {
+			base = 0
+		}
+	}
+	TUR_occupation_of_western_persia_timeout = {
+		icon = generic_planted_spear
+		allowed = {
+			always = no
+		}
+
+		activation = {
+			always = no
+		}
+
+		highlight_states = {
+			highlight_state_targets = {
+				state = 419
+				state = 1212
+				state = 1250
+				state = 1252
+			}
+			highlight_states_trigger = {
+				has_contested_owner = PER
+			}
+		}
+
+		available = {
+			OR = {
+				has_war_with = PER
+				has_war_with = RUS
+				custom_trigger_tooltip = {
+					tooltip = TUR_controls_western_persia_tt
+					all_state = {
+						if = {
+							limit = {
+								OR = {
+									state = 419
+									state = 1212
+									state = 1250
+									state = 1252
+								}
+							}
+							is_owned_and_controlled_by = ROOT
+						}
+					}
+				}
+			}			
+		}
+
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_war_with = PER
+					has_war_with = RUS	
+					NOT = {
+						any_owned_state = {
+							OR = {
+								state = 419
+								state = 1212
+								state = 1250
+								state = 1252
+							}
+						}
+					}
+				}
+			}		
+		}
+
+		fire_only_once = yes
+
+		is_good = no
+		days_mission_timeout = 720
+
+		timeout_effect = {
+			hidden_effect = {
+				country_event = ww1_per_tur_strangling.2
+			}
+			every_owned_state = {
+				limit = {
+					has_contested_owner = PER
+					OR = {
+						state = 419
+						state = 1212
+						state = 1250
+						state = 1252
+					}
+				}
+				if = {
+					limit = {
+						NOT = { state = 1252 }					
+						877 =  { is_owned_by = RUS }					
+						419 =  { is_owned_by = RUS }
+					}
+					transfer_state_to = RUS
+				}
+				else = {
+					transfer_state_to = PER
+					hidden_effect = {
+						remove_contested_owner = PER
+					}				
+				}
+			}
+		}
+		complete_effect = {
+			add_political_power = 50
+			add_to_variable = {
+				TUR.PER_foreign_influence = 0.1
+				tooltip = PER_modify_TUR_influence_tt
+			}
+			PER = {
+				PER_calculate_foreign_influnce = yes
+			}
+			PER_calculate_influnce_in_persia_modifiers = yes
+		}
+	}
+	TUR_expand_power_base_in_FROM = {
+		icon = generic_prepare_civil_war
+		allowed = {
+			original_tag = TUR
+		}
+		state_target = yes
+		targets = {
+			419
+			1212
+			1250
+			1252
+		}
+		target_trigger = {
+			FROM = {
+				is_owned_and_controlled_by = PER
+				NOT = {
+					has_state_flag = TUR_expanded_power_base
+				}
+			}
+		}
+
+		custom_cost_text = 5_influence_in_PER
+
+		custom_cost_trigger = {
+			check_variable = {
+				var = TUR.PER_foreign_influence
+				value = 0.05
+				compare = greater_than_or_equals
+			}
+		}
+
+		available = {
+			check_variable = {
+				var = TUR.PER_foreign_influence
+				value = 0.05
+				compare = greater_than_or_equals
+				tooltip = TUR_has_influence_tt
+			}	
+		}
+		visible = {
+			has_active_mission = TUR_occupation_of_western_persia_timeout
+			great_power_politics_strangling_of_persia_visible = yes
+		}
+
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					NOT = {
+						has_active_mission = TUR_occupation_of_western_persia_timeout
+					}
+					FROM = {
+						NOT = {
+							is_owned_and_controlled_by = PER
+						}
+					}
+				}
+			}
+		}
+
+		fire_only_once = yes
+		on_map_mode = map_and_decisions_view
+		days_remove = 60
+		complete_effect = {
+			add_to_variable = {
+				TUR.PER_foreign_influence = -0.05
+				tooltip = PER_modify_TUR_influence_tt
+			}
+			PER = {
+				PER_calculate_foreign_influnce = yes
+			}
+			PER_calculate_influnce_in_persia_modifiers = yes
+		}
+		remove_effect = {
+			FROM = {
+				set_state_flag = TUR_expanded_power_base
+			}
+			custom_effect_tooltip = TUR_expanded_power_base
+		}
+		ai_will_do = {
+			base = 10
+		}
+	}
+	TUR_occupy_FROM = {
+		icon = generic_prepare_civil_war
+		allowed = {
+			original_tag = TUR
+		}
+		state_target = yes
+		targets = {
+			419
+			1212
+			1250
+			1252
+		}
+		target_trigger = {
+			FROM = {
+				is_owned_and_controlled_by = PER
+				has_state_flag = TUR_expanded_power_base
+			}
+		}
+
+		custom_cost_text = 5_influence_in_PER
+
+		custom_cost_trigger = {
+			check_variable = {
+				var = TUR.PER_foreign_influence
+				value = 0.05
+				compare = greater_than_or_equals
+			}
+		}
+
+		available = {
+			check_variable = {
+				var = TUR.PER_foreign_influence
+				value = 0.05
+				compare = greater_than_or_equals
+				tooltip = TUR_has_influence_tt
+			}
+		}
+
+		visible = {
+			has_active_mission = TUR_occupation_of_western_persia_timeout
+			great_power_politics_strangling_of_persia_visible = yes
+		}
+
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					NOT = {
+						has_active_mission = TUR_occupation_of_western_persia_timeout
+					}
+					FROM = {
+						NOT = {
+							is_owned_and_controlled_by = PER
+						}
+					}
+				}
+			}
+		}
+
+		fire_only_once = yes
+		on_map_mode = map_and_decisions_view
+		days_remove = 60
+		complete_effect = {
+			add_to_variable = {
+				TUR.PER_foreign_influence = -0.05
+				tooltip = PER_modify_TUR_influence_tt
+			}
+			PER = {
+				PER_calculate_foreign_influnce = yes
+			}
+			PER_calculate_influnce_in_persia_modifiers = yes
+		}
+		remove_effect = {
+			FROM = { save_global_event_target_as = TUR_occupied_PER_state } #To keep the Persian state name in locs
+			hidden_effect = {
+				PER = { country_event = ww1_per_tur_strangling.1 }
+			}
+			FROM = {
+				transfer_state_to = ROOT
+				add_contested_owner = PER
+			}
+		}
+		ai_will_do = {
+			base = 10
+		}
+	}
+	TUR_gather_favours_in_tehran = {
+		icon = GFX_decision_generic_political_discourse
+		allowed = {
+			original_tag = TUR
+		}
+		
+		targets = {
+			PER
+		}
+
+		highlight_states = {
+			highlight_state_targets = { state = 266 }
+   			highlight_provinces = { 10837 }
+			highlight_only_provinces = yes
+		}
+
+		available = {
+			check_variable = {
+				var = TUR.PER_foreign_influence
+				value = 0.1
+				compare = less_than
+				tooltip = TUR_has_influence_tt_NOT
+			}
+			PER = {	
+				check_variable = {
+					var = PER.PER_total_independence
+					value = 0.02
+					compare = greater_than_or_equals
+					tooltip = has_domestic_independence_tt
+				}
+			}
+		}
+
+		visible = {
+			has_active_mission = TUR_occupation_of_western_persia_timeout
+			great_power_politics_strangling_of_persia_visible = yes
+		}
+
+		cancel_trigger = {
+			hidden_trigger = {
+				NOT = {
+					has_active_mission = TUR_occupation_of_western_persia_timeout
+				}
+			}
+		}
+
+		fire_only_once = no
+		on_map_mode = map_and_decisions_view
+		days_remove = 60
+		cost = 30
+		remove_effect = {
+			add_to_variable = {
+				TUR.PER_foreign_influence = 0.02
+				tooltip = PER_modify_TUR_influence_tt
+			}
+			PER = {
+				PER_calculate_foreign_influnce = yes
+			}
+			PER_calculate_influnce_in_persia_modifiers = yes
+		}
+		ai_will_do = {
+			base = 15
+		}
+	}
+}
+#BRITAIN
+TGWR_great_power_politics = {
+	ENG_secure_persian_gulf = {
+		icon = generic_confiscation
+		allowed = {
+			tag = ENG
+		}
+		
+		targets = {
+			PER
+		}
+
+		target_root_trigger = {
+			has_dynamic_modifier = PER_influence_in_persia_modifier
+			NOT = { has_global_flag = great_war_ends }
+			is_subject = no
+			has_capitulated = no
+		}
+
+		target_trigger = {
+			FROM = {
+				has_dynamic_modifier = PER_foreign_influence_modifier
+				OR = {
+					owns_state = 410
+					owns_state = 1248
+					owns_state = 1249
+				}
+			}
+		}
+
+		highlight_states = {
+			highlight_state_targets = { 
+				state = 410
+				state = 1248 
+				state = 1249 
+			}
+		}
+
+		visible = {
+			great_power_politics_strangling_of_persia_visible = yes
+		}
+
+		available = {
+			is_great_war_ongoing = yes
+			has_war_with = TUR
+			has_subject = RAJ		
+			NOT = { has_war_with = FROM }
+		}
+
+		fire_only_once = yes
+
+		days_remove = 15
+
+		custom_cost_text = 5_influence_in_PER
+
+		custom_cost_trigger = {
+			check_variable = {
+				var = ENG.PER_foreign_influence
+				value = 0.05
+				compare = greater_than_or_equals
+			}
+		}
+
+		complete_effect = {
+			add_to_variable = {
+				ENG.PER_foreign_influence = -0.05
+				#tooltip = PER_modify_ENG_influence_tt
+			}
+			PER_calculate_foreign_influnce = yes
+			PER_calculate_influnce_in_persia_modifiers = yes
+		}
+
+		cancel_effect = {
+			hidden_effect = {
+				add_to_variable = {
+					ENG.PER_foreign_influence = 0.05
+					#tooltip = PER_modify_ENG_influence_tt
+				}
+				PER_calculate_foreign_influnce = yes
+				PER_calculate_influnce_in_persia_modifiers = yes
+			}			
+		}
+
+		remove_effect = {
+			PER = {
+				every_owned_state = {
+					limit = {
+						OR = {
+							state = 410
+							state = 1248
+							state = 1249
+						}
+					}
+					transfer_state_to = ROOT
+					add_contested_owner = PER
+				}
+			}		
+		}
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 0
+				NOT = {
+					war_length_with = {
+						tag = TUR
+						months = 11
+					}
+				}		
+			}
+		}
+	}
+}

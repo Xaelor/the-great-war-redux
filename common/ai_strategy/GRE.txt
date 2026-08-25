@@ -398,20 +398,30 @@ GRE_second_balkan_war = {
 		original_tag = GRE
 	}
 	enable = {
-		has_global_flag = kis_secondbalkan_war
-		NOT = {
-			has_global_flag = kis_secondbalkanwar_victory
-			has_global_flag = kis_secondbalkanwar_lose
+		has_global_flag = kis_firstbalkanwar_victory
+		BUL = {
+			NOT = {
+				has_completed_focus = BUL_relative_hegemony
+			}
 		}
+		has_BW_ended = no
 	}
 	abort_when_not_enabled = yes
-
+	ai_strategy = {
+		type = front_unit_request
+		tag = BUL
+		value = 300
+	}
 	ai_strategy = {
 		type = dont_defend_ally_borders
 		id = SER
 		value = 1
 	}
-
+	ai_strategy = {
+		type = prepare_for_war
+		id = BUL
+		value = 1
+	}
 	ai_strategy = {
 		type = garrison
 		value = -1000
@@ -431,5 +441,26 @@ GRE_aegaen_sea_dominance = {
 		type = naval_dominance
 		id = 202
 		value = 100
+	}
+}
+
+GRE_build_army = {
+	allowed = {
+		original_tag = GRE
+	}
+	enable = {
+		NOT = {
+			has_global_flag = kis_firstbalkan_war
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = build_army
+		id = infantry
+		value = 100
+	}
+	ai_strategy = {
+		type = force_build_armies
+		value = 1000
 	}
 }

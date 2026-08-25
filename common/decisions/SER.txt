@@ -92,7 +92,10 @@ SER_black_hand_category = {
 				limit = { has_country_flag = greater_serbia_chosen }
 				set_cosmetic_tag = SER_empire
 			}
-			else = { set_cosmetic_tag = YUG }
+			else = { 
+				set_cosmetic_tag = YUG 
+				SER_YUG_regnal_number_change = yes
+			}
 		}
 	}
 	SER_integrate_balkan_nations = {
@@ -250,89 +253,6 @@ SER_black_hand_category = {
 	}
 }
 
-balkan_league_category = {
-	# SER_seize_Ohrid = {
-	# 	allowed = {
-	# 		original_tag = SER
-	# 	}
-	# 	available = {
-	# 		has_war = no
-	# 	}
-	# 	visible = {
-	# 		has_global_flag = macedonia_for_albania
-	# 		has_idea = SER_idea_retreat_from_shore
-	# 	}
-	# 	complete_effect = {
-	# 		transfer_state = 203
-	# 		BUL = {
-	# 			country_event = {
-	# 				id = ww1_firstbalkan.108
-	# 				days = 2
-	# 			}
-	# 		}
-	# 	}
-	# 	ai_will_do = {
-	# 		factor = 500
-	# 	}
-	# }
-	SER_GRE_invitation = {
-		icon = GFX_decision_hol_exchange_intelligence_data
-		allowed = {
-			OR = {
-				original_tag = SER
-				original_tag = GRE
-			}
-		}
-		visible = {
-			NOT = {
-				has_war_with = TUR
-			}
-			NOT = {
-				has_war_with = BUL
-			}
-			has_global_flag = kis_firstbalkanwar_victory
-			NOT = {
-				has_war_with = GRE
-				has_war_with = SER
-			}
-			NOT = {
-				has_global_flag = already_invited_SER_GRE
-			}
-			NOT = {
-				has_global_flag = kis_secondbalkanwar_victory
-			}
-		}
-		complete_effect = {
-			set_global_flag = already_invited_SER_GRE
-			if = {
-				limit = {
-					original_tag = SER
-				}
-				GRE = {
-					country_event = {
-						id = ww1_secondbalkan.1
-						days = 2
-					}
-				}
-			}
-			if = {
-				limit = {
-					original_tag = GRE
-				}
-				SER = {
-					country_event = {
-						id = ww1_secondbalkan.1
-						days = 2
-					}
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 200
-		}
-	}
-}
-
 AUH_franzjoseph = {
 	european_crisis_mission2 = {
 		icon = GFX_decision_generic_ignite_civil_war
@@ -380,7 +300,7 @@ AUH_franzjoseph = {
 	}
 }
 
-crisis = {
+TGWR_great_power_politics = {
 	SER_impending_political_crisis = {
 		allowed = {
 			original_tag = SER
@@ -755,9 +675,9 @@ SER_royal_tour = {
 			original_tag = SER
 		}
 		state_target = yes
+		target_array = core_states
 		target_trigger = {
 			FROM = {
-				is_core_of = SER
 				NOT = {
 					has_state_flag = SER_royal_tour_done
 				}
@@ -792,6 +712,7 @@ SER_royal_tour = {
 		allowed = {
 			original_tag = SER
 		}
+		target_array = global.european_countries
 		target_trigger = {
 			FROM = {
 				NOT = {
@@ -802,9 +723,6 @@ SER_royal_tour = {
 						target = SER
 						value > 9
 					}
-				}
-				capital_scope = {
-					is_on_continent = europe
 				}
 				NOT = {
 					has_idea = neutrality_idea
@@ -859,6 +777,7 @@ SER_fighting_black_hand = {
 			original_tag = SER
 		}
 		state_target = yes
+		target_array = controlled_states
 		target_trigger = {
 			FROM = {
 				is_owned_and_controlled_by = SER
@@ -918,10 +837,10 @@ SER_fighting_black_hand = {
 			}
 		}
 		state_target = yes
+		target_array = core_states
 		target_trigger = {
 			FROM = {
 				is_owned_and_controlled_by = SER
-				is_core_of = SER
 				has_dynamic_modifier = {
 					modifier = SER_under_military_rule
 				}
@@ -930,12 +849,13 @@ SER_fighting_black_hand = {
 		on_map_mode = map_only
 		visible = {
 			FROM = {
-				is_owned_and_controlled_by = SER
-				is_core_of = SER
 				has_dynamic_modifier = {
 					modifier = SER_under_military_rule
 				}
 			}
+			has_completed_focus = SER_replace_military_governors
+		}
+		target_root_trigger = {
 			has_completed_focus = SER_replace_military_governors
 		}
 		cost = 50
@@ -1083,13 +1003,14 @@ SER_fighting_radicals = {
 	}
 }
 
-political_actions = {
+TGWR_great_power_politics = {
 	SER_fire_stojanovic = {
 		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
 			original_tag = SER
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			has_active_mission = SER_impending_monarchist_counterattack
 			has_country_leader = {
 				character = SER_ljubomir_stojanovic
@@ -1682,7 +1603,7 @@ SER_spark_the_uprisings = {
 		complete_effect = {
 			set_autonomy = {
 				target = FROM
-				autonomy_state = autonomy_integrated_puppet
+				autonomy_state = autonomy_tgwr_client_state
 				freedom_level = 0.8
 				end_wars = no
 			}
@@ -1930,112 +1851,23 @@ SER_army_promotions = {
 		}
 	}
 }
-peace_deals = {
-	SER_surrender_to_BUL = {
-		allowed = {
-			original_tag = SER
-		}
-		available = {
-			OR = {
-				any_owned_state = {
-					is_controlled_by = BUL
-				}
-				ROM = {
-					has_war_with = BUL
-					has_capitulated = yes
-				}
-				GRE = {
-					has_war_with = BUL
-					any_owned_state = {
-						is_controlled_by = BUL
-					}
-				}
-			}
-		}
-		targets = {
-			BUL
-		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
-		visible = {
-			has_war_with = FROM
-			has_global_flag = kis_secondbalkan_war
-			FROM = {
-				NOT = {
-					is_in_faction_with = AUS
-					is_in_faction_with = RUS
-				}
-			}
-			NOT = {
-				is_in_faction_with = RUS
-				is_in_faction_with = AUS
-				has_global_flag = great_war
-				has_global_flag = AUH_franz_ferdinand_killed_in_sarajevo
-				has_global_flag = AUH_franz_joseph_killed
-			}
-		}
-		complete_effect = {
-			FROM = {
-				country_event = ww1_secondbalkan.8
-			}
-		}
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 500
-				OR = {
-					surrender_progress > 0.4
-					BUL = {
-						controls_state = 203
-						controls_state = 106
-						controls_state = 821
-						controls_state = 1213
-					}
-				}
-				if = {
-					limit = {
-						ROM = {
-							has_war_with = BUL
-						}
-					}
-					ROM = {
-						surrender_progress > 0.25
-					}	
-				}
-				GRE = {
-					OR = {
-						surrender_progress > 0.2
-						345 = {
-							is_fully_controlled_by = BUL
-						}
-						731 = {
-							is_controlled_by = BUL
-						}
-					}
-				}
-			}
-		}
-	}
-}
 
-GER_great_war = {
+TGWR_great_power_politics = {
 	#invasion of Banat
 	SER_invade_BNT = { 
 		icon = generic_ignite_civil_war
 		allowed = {
 			original_tag = SER
 		}
-		target_trigger = {
-			FROM = {
-				original_tag = BNT
-				country_exists = FROM
-			}
+		targets = {
+			BNT
+		}
+		target_root_trigger = {
+			has_country_flag = great_war_winner
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			is_subject = no
-			has_country_flag = great_war_winner
-			country_exists = BNT
 		}
 		available = {
 			has_war = no
@@ -2085,7 +1917,6 @@ GER_great_war = {
 	}
 	SER_occupy_pecs = {
 		icon = GFX_decision_eng_blackshirt_march
-		name = SER_occupy_pecs
 		days_mission_timeout = 730
 		is_good = no
 		allowed = {
@@ -2134,16 +1965,17 @@ GER_great_war = {
 			}
 		}
 		targets = {
-			FRA
+			ENT
 			GER
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			is_faction_leader = yes
 			is_subject = no
 			has_global_flag = great_war
 			OR = {
 				has_war_together_with = GER
-				has_war_together_with = FRA
+				has_war_together_with = ENT
 			}
 		}
 		available = {
@@ -2152,9 +1984,8 @@ GER_great_war = {
 			}
 		}
 		complete_effect = {
-			every_other_country = {
+			every_allied_country = {
 				limit = {
-					is_in_faction_with = ROOT
 					is_subject = no
 				}
 				leave_faction = yes

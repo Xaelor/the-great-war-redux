@@ -2,14 +2,7 @@ focus_tree = {
 	id = morocco_focus
 	country = {
 		factor = 0
-		modifier = {
-			add = 10
-			tag = MOR
-		}
 	}
-	shared_focus = naval_experience
-	shared_focus = state_of_the_country_army
-	shared_focus = FRA_ww1_first_moroccan_campaign
 	continuous_focus_position = {
 		x = 100
 		y = 1200
@@ -17,25 +10,9 @@ focus_tree = {
 	
 	default = no
 	reset_on_civilwar = no
-
-	shortcut = {
-		name = army_tree_shortcut
-		target = state_of_the_country_army
-		scroll_wheel_factor = 1
-	}
-	shortcut = {
-		name = air_tree_shortcut
-		target = planes_experiments
-		scroll_wheel_factor = 1
-	}
-	shortcut = {
-		name = navy_tree_shortcut
-		target = naval_experience
-		scroll_wheel_factor = 1
-	}
 	shortcut = {
 		name = foreign_policy_tree_shortcut
-		target = MOR_independant_politics
+		target = MOR_cooperate_with_french
 		scroll_wheel_factor = 0.9
 	}
 	shortcut = {
@@ -52,9 +29,6 @@ focus_tree = {
 	focus = {
 		id = MOR_cooperate_with_french
 		icon = GFX_focus_FRA_protector_of_the_weakests
-		mutually_exclusive = {
-			focus = MOR_independant_politics
-		}
 		completion_reward = {
 			custom_effect_tooltip = tt_will_be_auto_completed
 			MOR = { 
@@ -63,7 +37,7 @@ focus_tree = {
 				FRA = {
 					set_autonomy = {
 						target = PREV
-						autonomy_state = autonomy_tgwr_informal_protectorate #will be a real protectorate after treaty of Fès in 1912
+						autonomy_state = autonomy_tgwr_protected_state #will be a real protectorate after treaty of Fès in 1912
 						freedom_level = 0.6
 						end_civil_wars = no
 						end_wars = no
@@ -91,858 +65,11 @@ focus_tree = {
 	}
 
 	focus = {
-		id = MOR_independant_politics
-		icon = GFX_goal_generic_intelligence_exchange
-		completion_reward = {
-			add_political_power = 75
-			if = {
-				limit = {
-					has_country_leader = {
-						character = MOR_mulay_abdelhafid
-					}
-					MOR_mulay_abdelhafid = {
-						has_ideology = semi_constitutional_monarchy
-						has_trait = unpopular_sultan
-					}
-				}
-				remove_trait = {
-					character = MOR_mulay_abdelhafid
-					ideology = semi_constitutional_monarchy
-					trait = unpopular_sultan
-				}
-			}
-		}
-		mutually_exclusive = {
-			focus = MOR_cooperate_with_french
-		}
-		available = {
-			NOT = {
-				is_subject_of = FRA
-			}
-			has_completed_focus = MOR_new_army_reform
-			OR = {
-				has_completed_focus = MOR_makhzen_third_reformation
-				has_country_flag = MOR_start_war_with_hostile_caids
-			}
-		}
-		ai_will_do = {
-			factor = 500
-		}
-		cost = 8
-		x = 23
-		y = 0
-		search_filters = {
-
-			FOCUS_FILTER_POLITICAL
-		}
-	}
-
-	focus = {
-		id = MOR_casablanca_occupation_question
-		icon = GFX_focus_generic_court
-		relative_position_id = MOR_independant_politics
-		prerequisite = {
-			focus = MOR_independant_politics
-		}
-		available = {
-			NOT = {
-				is_subject_of = FRA
-			}
-			has_war = no
-			has_crisis = no
-		}
-		bypass = {
-			owns_state = 462
-		}
-		ai_will_do = {
-			factor = 50
-			modifier = {
-				factor = 2
-				is_in_faction_with = GER
-			}
-			modifier = {
-				factor = 2
-				is_in_faction_with = GER
-			}
-			modifier = {
-				factor = 0
-				has_army_size = {
-					size < 3
-				}
-			}
-		}
-		completion_reward = {
-			custom_effect_tooltip = MOR_this_could_lead_to_a_political_crisis
-			FRA = {
-				country_event = {
-					id =  ww1_morocco.63
-					days = 1
-				}
-			}
-			custom_effect_tooltip = if_they_accept_tt
-			effect_tooltip = {
-				FRA = {
-					every_state = {
-						limit = {
-							is_core_of = MOR
-							is_controlled_by = FRA
-						}
-						transfer_state_to = MOR
-					}
-				}
-			}
-		}
-		cost = 5
-		x = 0
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-			FOCUS_FILTER_ANNEXATION
-		}
-	}
-
-	focus = {
-		id = MOR_spanish_colonies_restitution
-		icon = GFX_focus_intervention_spain_nationalists
-		relative_position_id = MOR_casablanca_occupation_question
-		prerequisite = {
-			focus = MOR_casablanca_occupation_question
-		}
-		available = {
-			NOT = {
-				is_subject_of = SPR
-			}
-			has_war = no
-		}
-		bypass = {
-			owns_state = 783
-			owns_state = 699
-			owns_state = 743
-		}
-		ai_will_do = {
-			factor = 150
-		}
-		completion_reward = {
-			SPR = {
-				country_event = {
-					id =  ww1_morocco.76
-					days = 3
-				}
-			}
-			custom_effect_tooltip = if_they_accept_tt
-			effect_tooltip = {
-				SPR = {
-					every_state = {
-						limit = {
-							OR = {
-								is_claimed_by = MOR
-								is_core_of = MOR
-							}
-							is_controlled_by = SPR
-						}
-						transfer_state_to = MOR
-					}
-				}
-			}
-		}
-		cost = 5
-		x = 0
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-			FOCUS_FILTER_ANNEXATION
-		}
-	}
-
-	focus = {
-		id = MOR_steady_as_he_goes
-		icon = GFX_focus_PER_islamic_solidarity
-		relative_position_id = MOR_independant_politics
-		prerequisite = {
-			focus = MOR_independant_politics
-		}
-		available = {
-			NOT = {
-				is_subject_of = FRA
-			}
-			NOT = {
-				has_war_with = GER
-			}
-		}
-		ai_will_do = {
-			factor = 500
-		}
-		completion_reward = {
-			add_political_power = 150
-			every_country = {
-				limit = {
-					OR = {
-						is_islamic_nation = yes
-					}
-					OR = {
-						capital_scope = { is_on_continent = africa }
-						capital_scope = { is_on_continent = middle_east }
-					}
-				}
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = HOI4TGW_Opinion_improved_diplomatic_relations
-				}
-			}
-		}
-		cost = 6
-		x = 7
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-		}
-	}
-
-	focus = {
-		id = MOR_expansion_of_dar_al_bayda_military_school
-		icon = GFX_focus_ETH_ecole_militaire_haile_selassie_1er
-		relative_position_id = MOR_steady_as_he_goes
-		prerequisite = {
-			focus = MOR_steady_as_he_goes
-		}
-		available = {
-			
-		}
-		ai_will_do = {
-			factor = 500
-		}
-		completion_reward = {
-			army_experience = 15
-			add_doctrine_cost_reduction = {
-				name = MOR_expansion_of_dar_al_bayda_military_school
-				category = land_doctrine
-				cost_reduction = 0.5
-			}
-			random_character = {
-				limit = {
-					is_corps_commander = yes 
-				}
-				add_attack = 1	
-			}
-			random_character = {
-				limit = {
-					is_corps_commander = yes 
-				}
-				add_attack = 1	
-			}
-			random_character = {
-				limit = {
-					is_corps_commander = yes 
-				}
-				add_attack = 1	
-			}
-		}
-		cost = 5
-		x = 1
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_ARMY_XP
-		}
-	}
-
-	focus = {
-		id = MOR_guerrila_warfare_tradition
-		icon = GFX_focus_ETH_sway_the_warlords
-		relative_position_id = MOR_expansion_of_dar_al_bayda_military_school
-		prerequisite = {
-			focus = MOR_expansion_of_dar_al_bayda_military_school
-		}
-		mutually_exclusive = {
-			focus = MOR_second_army_reform
-		}
-		available = {
-			
-		}
-		ai_will_do = {
-			factor = 500
-		}
-		completion_reward = {
-			add_ideas = MOR_guerilla_warfare
-		}
-		cost = 5
-		x = -1
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_ARMY_XP
-		}
-	}
-
-	focus = {
-		id = MOR_second_army_reform
-		icon = GFX_focus_ETH_peacekeeping_forces
-		mutually_exclusive = {
-			focus = MOR_guerrila_warfare_tradition
-		}
-		relative_position_id = MOR_expansion_of_dar_al_bayda_military_school
-		prerequisite = {
-			focus = MOR_expansion_of_dar_al_bayda_military_school
-		}
-		available = {
-			
-		}
-		ai_will_do = {
-			factor = 500
-		}
-		completion_reward = {
-			add_ideas = MOR_european_style_army
-		}
-		cost = 5
-		x = 1
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_ARMY_XP
-		}
-	}
-
-	focus = {
-		id = MOR_modernize_al_makina_arsenal
-		icon = GFX_focus_generic_military_industry
-		relative_position_id = MOR_second_army_reform
-		prerequisite = {
-			focus = MOR_second_army_reform
-			focus = MOR_guerrila_warfare_tradition
-		}
-		available = {
-			461 = {
-				is_owned_and_controlled_by = ROOT
-			}
-		}
-		ai_will_do = {
-			factor = 50
-		}
-		completion_reward = {
-			add_tech_bonus = {
-				name = MOR_modernize_al_makina_arsenal
-				bonus = 0.5
-				uses = 1
-				category = infantry_weapons
-			}
-			461 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-		}
-		cost = 10
-		x = -1
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_ARMY_XP
-		}
-	}
-
-	focus = {
-		id = MOR_buy_warships
-		icon = GFX_focus_generic_naval_ship_transfer
-		relative_position_id = MOR_steady_as_he_goes
-		prerequisite = {
-			focus = MOR_steady_as_he_goes
-		}
-		available = {
-			
-		}
-		ai_will_do = {
-			factor = 500
-		}
-		completion_reward = {
-			custom_effect_tooltip = tt_buy_ships
-			set_country_flag = MOR_buy_warships
-			unlock_decision_tooltip = MOR_purchase_Admiral_class
-			unlock_decision_tooltip = MOR_purchase_blake_class
-			unlock_decision_tooltip = MOR_purchase_gazelle_class
-			unlock_decision_tooltip = MOR_purchase_gueydon_class
-			unlock_decision_tooltip = MOR_purchase_arquebuse_class
-		}
-		cost = 5
-		x = -1
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_NAVY_XP
-		}
-	}
-
-	focus = {
-		id = MOR_ksar_sghir_naval_base
-		icon = GFX_focus_BEL_antwerp_maritime_academy
-		relative_position_id = MOR_buy_warships
-		prerequisite = {
-			focus = MOR_buy_warships
-		}
-		available = {
-			controls_state = 887
-		}
-		ai_will_do = {
-			factor = 500
-		}
-		completion_reward = {
-			navy_experience = 25
-			add_doctrine_cost_reduction = {
-				name = MOR_ksar_sghir_naval_base
-				category = naval_doctrine
-				cost_reduction = 0.5
-			}
-			887 = {
-				add_building_construction = {
-					type = naval_base
-					level = 2
-					province = 10113
-					instant_build = yes
-				}
-			}
-			if = {
-				limit = {
-					has_idea = MOR_incompetent_navy2
-				}
-				remove_ideas = MOR_incompetent_navy2
-			}
-			if = {
-				limit = {
-					has_idea = MOR_incompetent_navy
-				}
-				swap_ideas = {
-					add_idea = MOR_incompetent_navy2
-					remove_idea = MOR_incompetent_navy
-				}
-			}
-		}
-		cost = 8
-		x = -1
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_NAVY_XP
-		}
-	}
-
-	focus = {
-		id = MOR_anglo_moroccan_naval_agreement
-		icon = GFX_ENG_westerminster_dec
-		relative_position_id = MOR_buy_warships
-		prerequisite = {
-			focus = MOR_buy_warships
-		}
-		available = {
-			NOT = {
-				has_war_with = ENG
-			}
-			has_navy_size = {
-				size > 1
-			}
-		}
-		ai_will_do = {
-			factor = 500
-		}
-		completion_reward = {
-			ENG = {
-				country_event = {
-					id = ww1_morocco.84
-					days = 3
-				}
-			}
-			custom_effect_tooltip = if_they_accept_tt 
-			effect_tooltip = {
-				navy_experience = 75
-				add_political_power = 25
-				add_doctrine_cost_reduction = {
-					name = MOR_anglo_moroccan_naval_agreement
-					category = naval_doctrine
-					uses = 2
-					cost_reduction = 0.5
-				}
-				if = {
-					limit = {
-						has_idea = MOR_incompetent_navy2
-					}
-					remove_ideas = MOR_incompetent_navy2
-				}
-				if = {
-					limit = {
-						has_idea = MOR_incompetent_navy
-					}
-					swap_ideas = {
-						add_idea = MOR_incompetent_navy2
-						remove_idea = MOR_incompetent_navy
-					}
-				}
-			}
-		}
-		cost = 8
-		x = 0
-		y = 2
-		search_filters = {
-			FOCUS_FILTER_NAVY_XP
-			FOCUS_FILTER_POLITICAL
-		}
-	}
-
-	focus = {
-		id = MOR_align_to_germany
-		icon = GFX_focus_GER_reichstag
-		relative_position_id = MOR_independant_politics
-		prerequisite = {
-			focus = MOR_independant_politics
-		}
-		available = {
-			NOT = {
-				is_subject_of = FRA
-			}
-			NOT = {
-				has_war_with = GER
-			}
-		}
-		ai_will_do = {
-			factor = 500
-		}
-		completion_reward = {
-			hidden_effect = {
-				add_opinion_modifier = {
-					target = GER
-					modifier = large_increase
-				}
-			}
-			GER = {
-				country_event = {
-					id = ww1_morocco.60
-					days = 2
-				}
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = large_increase
-				}
-			}
-		}
-		cost = 4
-		x = 2
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-		}
-	}
-
-	focus = {
-		id = MOR_MAN_factory
-		icon = GFX_goal_generic_construct_mil_factory
-		relative_position_id = MOR_align_to_germany
-		prerequisite = {
-			focus = MOR_align_to_germany
-		}
-		available = {
-			NOT = {
-				is_subject_of = FRA
-			}
-			NOT = {
-				has_war_with = GER
-			}
-			has_completed_focus = MOR_support_mannesmann_implementation
-		}
-		ai_will_do = {
-			factor = 100
-		}
-		completion_reward = {
-			random_owned_state = {
-				limit = {
-					is_core_of = ROOT
-					is_controlled_by = ROOT
-					NOT = {
-						state = 461
-					}
-				}
-				prioritize = { 462 }
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-		}
-		cost = 10
-		x = 0
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
-		}
-	}
-
-	focus = {
-		id = MOR_german_loan
-		icon = GFX_focus_generic_treaty
-		relative_position_id = MOR_MAN_factory
-		prerequisite = {
-			focus = MOR_MAN_factory
-			focus = MOR_spanish_colonies_restitution
-		}
-		available = {
-			NOT = {
-				is_subject_of = FRA
-			}
-			NOT = {
-				has_war_with = GER
-			}
-		}
-		ai_will_do = {
-			factor = 100
-		}
-		completion_reward = {
-			GER = {
-				country_event = {
-					id = ww1_morocco.79
-					days = 2
-				}
-				custom_effect_tooltip = if_they_accept_tt
-			}
-			effect_tooltip = {
-				add_stability = 0.05
-				MOR_improve_economical_situation = yes
-			}
-			
-		}
-		cost = 8
-		x = -1
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
-		}
-	}
-
-	focus = {
-		id = MOR_expansion_of_southern_mines
-		icon = GFX_focus_generic_mining_industry
-		relative_position_id = MOR_align_to_germany
-		prerequisite = {
-			focus = MOR_align_to_germany
-		}
-		available = {
-			NOT = {
-				is_subject_of = FRA
-			}
-			NOT = {
-				has_war_with = GER
-			}
-			has_completed_focus = MOR_support_mannesmann_implementation
-		}
-		ai_will_do = {
-			factor = 100
-		}
-		completion_reward = {
-			add_tech_bonus = {
-				name = MOR_expansion_of_southern_mines
-				category = industry
-				uses = 1
-				bonus = 0.5
-			}
-			462 = {
-				add_manpower = -6000
-			}
-			1095 = {
-				add_manpower = 8000
-				add_extra_state_shared_building_slots = 2
-				add_resource = {
-					type = steel
-					amount = 6
-				}
-			}
-		}
-		cost = 10
-		x = 2
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_INDUSTRY
-		}
-	}
-
-	focus = {
-		id = MOR_join_cp
-		icon = GFX_focus_align_germany
-		relative_position_id = MOR_align_to_germany
-		prerequisite = {
-			focus = MOR_align_to_germany
-		}
-		available = {
-			NOT = {
-				is_subject_of = FRA
-			}
-			NOT = {
-				has_war_with = GER
-			}
-			NOT = {
-				has_idea = neutrality_idea
-			}
-		}
-		ai_will_do = {
-			factor = 100
-		}
-		completion_reward = {
-			every_state = {
-				limit = {
-					is_owned_by = FRA
-					OR = {
-						is_core_of = MOR
-					}
-				}
-				add_claim_by = MOR
-			}
-			add_war_support = 0.05
-			hidden_effect = {
-				add_opinion_modifier = {
-					target = GER
-					modifier = large_increase
-				}
-			}
-			GER = {
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = large_increase
-				}
-			}
-			GER = {
-				set_country_flag = {
-					flag = GER_say_yes_to_MOR
-					days = 30
-					value = 1
-				}
-				country_event = {
-					id = generic.2
-					days = 2
-				}
-			}
-		}
-		cost = 5
-		x = 1
-		y = 2
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-		}
-	}
-	#Amir al-Mu’minin
-	focus = {
-		id = MOR_amir_al_muminin
-		icon = GFX_focus_AFG_shadows_of_the_king
-		relative_position_id = MOR_spanish_colonies_restitution
-		prerequisite = {
-			focus = MOR_spanish_colonies_restitution
-		}
-		available = {
-			has_war = yes
-		}
-		ai_will_do = {
-			factor = 100
-		}
-		completion_reward = {
-			remove_trait = {
-				character = MOR_mulay_abdelhafid
-				ideology = semi_constitutional_monarchy
-				trait = shadow_of_abdelaziz
-			}
-		}
-		cost = 5
-		x = 0
-		y = 2
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-		}
-	}
-
-	focus = {
-		id = MOR_restore_sharifian_order_in_mauritania
-		icon = GFX_focus_AFG_royal_guard
-		relative_position_id = MOR_join_cp
-		prerequisite = {
-			focus = MOR_join_cp
-		}
-		available = {
-			has_war = yes
-		}
-		ai_will_do = {
-			factor = 100
-		}
-		completion_reward = {
-			every_state = {
-				limit = {
-					is_core_of = MRT
-				}
-				add_claim_by = MOR
-			}
-			add_war_support = 0.05
-		}
-		cost = 5
-		x = 0
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_POLITICAL
-			FOCUS_FILTER_ANNEXATION
-		}
-	}
-
-	focus = {
-		allow_branch = {
-			original_tag = MOR
-		}
-		id = MOR_press_for_saoura
-		icon = GFX_focus_generic_camel_corps
-		cost = 5
-		relative_position_id = MOR_amir_al_muminin
-		x = 1
-		y = 1
-		search_filters = {
-			FOCUS_FILTER_ANNEXATION
-			FOCUS_FILTER_POLITICAL
-		}
-		available = {
-			108 = {
-				is_owned_and_controlled_by = ROOT
-			}
-			NOT = {
-				1151 = {
-					OWNER = {
-						has_war_with = ROOT
-					}
-				}
-			}
-			is_subject = no
-		}
-		prerequisite = {
-			focus = MOR_amir_al_muminin
-			focus = MOR_restore_sharifian_order_in_mauritania
-		}
-		completion_reward = { 
-			add_state_claim = 1151
-			if = {
-				limit = { 
-					OR = {
-						is_in_faction_with = FRA
-						NOT = {
-							has_war_with = FRA
-						}
-					}
-				}
-				1151 = {
-					OWNER = {
-						country_event = ww1_morocco.87
-					}
-				}
-				custom_effect_tooltip = if_they_accept.tt
-				effect_tooltip = {
-					MOR = {
-						transfer_state = 1151
-						add_political_power = 100
-						add_war_support = 0.05
-					}
-				}
-			}
-		}
-	}
-
-	focus = {
 		id = MOR_centralization_reform
 		icon = GFX_focus_generic_central_planning
+		available = {
+			always = no
+		}
 		completion_reward = {
 			add_political_power = 75
 			swap_ideas = {
@@ -1011,6 +138,7 @@ focus_tree = {
 					OR = {
 						state = 1094
 						state = 461
+						state = 1237
 					}
 				}
 				add_dynamic_modifier = {
@@ -1158,7 +286,6 @@ focus_tree = {
 			custom_effect_tooltip = MOR_neutral_stance_tt
 			set_country_flag = MOR_concilliation_with_hostiles_caids
 			custom_effect_tooltip = available_military_high_command
-			show_unit_leaders_tooltip = MOR_ahmed_al_hiba
 			show_unit_leaders_tooltip = MOR_mohammed_ameziane
 			show_unit_leaders_tooltip = MOR_mouha_ou_hammou_zayani
 			show_unit_leaders_tooltip = MOR_mhand_n_ifrutant
@@ -1167,13 +294,6 @@ focus_tree = {
 		}
 		ai_will_do = {
 			factor = 80
-			modifier = {
-				has_game_rule = {
-					rule = MOR_ai_behavior 
-					option = MOR_SUCCESSFUL_ARMY_REFORM_PASSIVE
-				}
-				factor = 50
-			}
 		}
 		cost = 10
 		x = 2
@@ -1318,13 +438,7 @@ focus_tree = {
 		}
 		ai_will_do = {
 			factor = 80
-			modifier = {
-				has_game_rule = {
-					rule = MOR_ai_behavior 
-					option = MOR_SUCCESSFUL_ARMY_REFORM
-				}
-				factor = 50
-			}
+
 		}
 		cost = 10
 		x = -2
@@ -1352,13 +466,6 @@ focus_tree = {
 		}
 		ai_will_do = {
 			factor = 80
-			modifier = {
-				has_game_rule = {
-					rule = MOR_ai_behavior 
-					option = MOR_SUCCESSFUL_ARMY_REFORM
-				}
-				factor = 50
-			}
 		}
 		cost = 10
 		x = -2
@@ -1456,13 +563,6 @@ focus_tree = {
 		}
 		ai_will_do = {
 			factor = 80
-			modifier = {
-				has_game_rule = {
-					rule = MOR_ai_behavior 
-					option = MOR_SUCCESSFUL_ARMY_REFORM
-				}
-				factor = 50
-			}
 		}
 		cost = 10
 		x = 0
@@ -1488,13 +588,6 @@ focus_tree = {
 		}
 		ai_will_do = {
 			factor = 80
-			modifier = {
-				has_game_rule = {
-					rule = MOR_ai_behavior 
-					option = MOR_SUCCESSFUL_ARMY_REFORM
-				}
-				factor = 50
-			}
 		}
 		cost = 5
 		x = 2
@@ -1510,9 +603,10 @@ focus_tree = {
 		id = MOR_french_loan
 		icon = GFX_goal_CAN_france_demands
 		available = {
-			NOT = {
-				has_war_with = FRA
-			}
+			#NOT = {
+			#	has_war_with = FRA
+			#}
+			always = no
 		}
 		bypass = {
 			NOT = {
@@ -1552,11 +646,12 @@ focus_tree = {
 		id = MOR_second_tertib_reform
 		relative_position_id = MOR_french_loan
 		available = {
-			NOT = {
-				has_idea = MOR_low_makhzen_authority
-				has_idea = MOR_mid_makhzen_authority
-			}
-			has_war = no
+			#NOT = {
+			#	has_idea = MOR_low_makhzen_authority
+			#	has_idea = MOR_mid_makhzen_authority
+			#}
+			#has_war = no
+			always = no
 		}
 		mutually_exclusive = {
 			focus = MOR_french_loan
@@ -1856,7 +951,7 @@ focus_tree = {
 			focus = MOR_support_mannesmann_implementation
 		}
 		available = {
-			controls_state = 461
+			controls_state = 1237
 		}
 		icon = GFX_focus_generic_steel
 		completion_reward = {
@@ -1866,7 +961,7 @@ focus_tree = {
 				uses = 1
 				category = excavation_tech
 			}
-			1094 = {
+			1237 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex

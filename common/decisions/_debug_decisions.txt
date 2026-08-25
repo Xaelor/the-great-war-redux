@@ -1,4 +1,132 @@
 debug_decisions = {
+	debug_join_CENPO = {
+		available = {
+			is_ai = no
+		}
+		complete_effect = {
+			join_CENPO_declare_war_on_ENT = yes
+		}
+	}
+	debug_join_ENT = {
+		available = {
+			is_ai = no
+		}
+		complete_effect = {
+			join_ENT_declare_war_on_CENPO = yes
+		}
+	}
+	debug_capitulate_FRA = {
+		available = {
+			is_ai = no
+		}
+		complete_effect = {
+			FRA_surrender_effect_ENT = yes
+		}
+	}
+	debug_capitulate_RUS = {
+		available = {
+			is_ai = no
+		}
+		complete_effect = {
+			RUS_armistice_with_CENPO = yes
+		}
+	}
+	debug_capitulate_ENG = {
+		available = {
+			is_ai = no
+		}
+		complete_effect = {
+			ENG_surrender_effect_ENT = yes
+		}
+	}
+	debug_capitulate_GER = {
+		available = {
+			is_ai = no
+		}
+		complete_effect = {
+			GER_surrender_effect_CP = yes
+		}
+	}
+	debug_capitulate_AUS = {
+		available = {
+			is_ai = no
+		}
+		complete_effect = {
+			AUS_surrender_effect_CP = yes
+		}
+	}
+	debug_capitulate_BUL = {
+		available = {
+			is_ai = no
+		}
+		complete_effect = {
+			if = {
+				limit = { 
+					BUL = {
+						is_in_faction_with = ENT
+					}
+				}
+				BUL_surrender_effect_ENT = yes
+			}
+			else = {
+				BUL_surrender_effect_CP = yes
+			}
+		}
+	}
+	debug_capitulate_TUR = {
+		available = {
+			is_ai = no
+		}
+		complete_effect = {
+			if = {
+				limit = { 
+					TUR = {
+						is_in_faction_with = ENT
+					}
+				}
+				TUR_surrender_effect_ENT = yes
+			}
+			else = {
+				TUR_surrender_effect_CP = yes
+			}
+		}
+	}
+	debug_capitulate_ROM = {
+		available = {
+			is_ai = no
+		}
+		complete_effect = {
+			if = {
+				limit = { 
+					ROM = {
+						is_in_faction_with = ENT
+					}
+				}
+				ROM_surrender_effect_ENT = yes
+			}
+			else = {
+				ROM_surrender_effect_CP = yes
+			}
+		}
+	}
+	debug_capitulate_ITA = {
+		available = {
+			is_ai = no
+		}
+		complete_effect = {
+			if = {
+				limit = { 
+					ITA = {
+						is_in_faction_with = ENT
+					}
+				}
+				ITA_surrender_effect_ENT = yes
+			}
+			else = {
+				ITA_surrender_effect_CP = yes
+			}
+		}
+	}
 	post_ww1_demobilization_debug = {
 		complete_effect = {
 			post_ww1_demobilization_effect = yes
@@ -209,11 +337,14 @@ debug_decisions = {
 						state = 847
 						state = 106
 						state = 203
+						state = 1258
 						state = 759
 						state = 44
 						state = 1140
 						state = 1141
 						state = 1214
+						state = 1240
+						state = 1284
 						state = 1215
 					}
 				}
@@ -224,10 +355,13 @@ debug_decisions = {
 					OR = {
 						state = 758
 						state = 826
-						state = 731
+						state = 1257
+						state = 731 
+						state = 1256
 						state = 803
 						state = 1225
 						state = 345
+						state = 1255
 						state = 184
 						state = 790
 						state = 974
@@ -346,21 +480,13 @@ debug_decisions = {
 		complete_effect = {
 			set_global_flag = ENT_capitulation
 			hidden_effect = {
-				every_country = {
-					limit = {
-						OR = {
-							tag = ENT
-							is_ally_with = ENT
-							has_country_flag = FRA_surrender_alone
-							has_country_flag = RUS_surrender_alone
+				ENT = {
+					every_faction_member = {
+						limit = {
+							is_part_of_great_war = yes
 						}
-						OR = {
-							has_war_with = GER
-							has_country_flag = FRA_surrender_alone
-							has_country_flag = RUS_surrender_alone
-						}
+						set_country_flag = member_of_entente
 					}
-					set_country_flag = member_of_entente
 				}
 				every_other_country = {
 					limit = {
@@ -459,10 +585,18 @@ debug_decisions = {
 				has_global_flag = GER_capitulation
 			}
 		}
+		target_root_trigger = {
+			has_global_flag = great_war
+			has_global_flag = FRA_capitulation_alone
+			NOT = {
+				has_global_flag = GER_capitulation
+			}
+		}
+		targets = {
+			ENT
+		}
 		target_trigger = {
 			FROM = {
-				has_country_flag = entente_leader
-				is_faction_leader = yes
 				NOT = {
 					tag = RUS
 					tag = FRA
@@ -602,19 +736,15 @@ debug_decisions = {
 		}
 	}
 	subject_copy_overlord_government = {
-		target_trigger = {
-			FROM = {
-				has_subject = ROOT
-			}
+		targets = {
+			OVERLORD
 		}
 		available = {
 			is_ai = no
 		}
-		visible = {
-			is_subject = yes
-		}
 		target_root_trigger = {
 			is_debug = yes
+			is_subject = yes
 		}
 		fire_only_once = no
 		cost = 0
@@ -627,19 +757,15 @@ debug_decisions = {
 		}
 	}
 	subject_copy_overlord_popularities = {
-		target_trigger = {
-			FROM = {
-				has_subject = ROOT
-			}
+		targets = {
+			OVERLORD
 		}
 		available = {
 			is_ai = no
 		}
-		visible = {
-			is_subject = yes
-		}
 		target_root_trigger = {
 			is_debug = yes
+			is_subject = yes
 		}
 		fire_only_once = no
 		cost = 0
@@ -652,19 +778,15 @@ debug_decisions = {
 		}
 	}
 	subject_copy_overlord_laws = {
-		target_trigger = {
-			FROM = {
-				has_subject = ROOT
-			}
+		targets = {
+			OVERLORD
 		}
 		available = {
 			is_ai = no
 		}
-		visible = {
-			is_subject = yes
-		}
 		target_root_trigger = {
 			is_debug = yes
+			is_subject = yes
 		}
 		fire_only_once = no
 		cost = 0
@@ -673,6 +795,39 @@ debug_decisions = {
 				ROOT = {
 					copy_laws_of_PREV = yes
 				}
+			}
+		}
+	}
+	subject_end_vassalage = {
+		targets = {
+			OVERLORD
+		}
+		available = {
+			is_ai = no
+		}
+		target_root_trigger = {
+			is_debug = yes
+			is_subject = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			free_subject = yes
+		}
+	}
+	overlord_free_subject = {
+		target_array = subjects
+		available = {
+			is_ai = no
+		}
+		target_root_trigger = {
+			is_debug = yes
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			FROM = {
+				free_subject = yes
 			}
 		}
 	}
@@ -765,7 +920,7 @@ debug_decisions = {
 		fire_only_once = no
 		cost = 0
 		complete_effect = {
-			remove_puppet_and_leave_faction = yes
+			free_subject_leave_faction = yes
 		}
 	}
 	add_efficiency_growth_debug = {
@@ -1128,12 +1283,9 @@ debug_decisions = {
 		available = {
 			is_ai = no
 		}
+		target_array = enemies
 		target_trigger = {
 			FROM = {
-				OR = {
-					tag = ROOT
-					has_war_with = ROOT
-				}
 				has_capitulated = no
 			}
 		}
