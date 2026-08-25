@@ -1,342 +1,342 @@
-################################
-# Berlin-Baghdad Railway, Events
-################################
-add_namespace = ww1_berlin_baghdad
-
-#Germans want to extend the Berlin-Railway
-country_event = {
-	id = ww1_berlin_baghdad.1
-	title = ww1_berlin_baghdad.1.t
-	desc = ww1_berlin_baghdad.1.d
-	picture = GFX_report_event_GER_TUR_military_mission
-	is_triggered_only = yes
-	option = { #Accept
-		name = ww1_berlin_baghdad.1.a
-		GER = {
-			country_event = ww1_berlin_baghdad.2
-		}
-		ai_chance = {
-			base = 100
-		}
-	}
-	option = { #Decline
-		name = ww1_berlin_baghdad.1.b
-		GER = {
-			country_event = ww1_berlin_baghdad.3
-		}
-	}
-}
-#Ottomans greenlight the project
-country_event = {
-	id = ww1_berlin_baghdad.2
-	title = ww1_berlin_baghdad.2.t
-	desc = ww1_berlin_baghdad.2.d
-	picture = GFX_report_event_GER_TUR_military_mission
-	is_triggered_only = yes
-	immediate = {
-		hidden_effect = {
-			activate_mission = GER_berlin_baghdad_construction_mission
-			FROM = {
-				activate_mission = TUR_berlin_baghdad_construction_mission
-			}
-			add_ideas = GER_berlin_baghdad_railway_construction
-			clr_country_flag = cant_build_berlin_baghdad
-			every_country = {
-				limit = {
-					has_country_flag = berlin_baghdad_opposes
-					NOT = {
-						has_war_with = GER
-					}
-				}
-				country_event = {
-					id = ww1_berlin_baghdad.4
-					days = 1
-				}
-			}
-		}
-	}
-	option = { #Proceed immediately
-		name = ww1_berlin_baghdad.2.a
-		effect_tooltip = {
-			activate_mission = GER_berlin_baghdad_construction_mission
-			add_ideas = GER_berlin_baghdad_railway_construction
-		}
-	}
-}
-
-#Ottomans refuse
-country_event = {
-	id = ww1_berlin_baghdad.3
-	title = ww1_berlin_baghdad.3.t
-	desc = ww1_berlin_baghdad.3.d
-	picture = GFX_report_event_GER_TUR_military_mission
-	is_triggered_only = yes
-	immediate = {
-		hidden_effect = {		
-			add_political_power = -25
-			berlin_baghdad_clear_all_flags = yes
-			set_country_flag = {
-				flag = cant_build_berlin_baghdad
-				days = 180
-				value = 1
-			}
-		}
-	}
-	option = { #Ungrateful Turks
-		name = ww1_berlin_baghdad.3.a
-		effect_tooltip = {
-			add_political_power = -25
-		}
-	}
-}
-
-#Germans are expanding the Berlin-Baghdad Railway 
-country_event = {
-	id = ww1_berlin_baghdad.4
-	title = ww1_berlin_baghdad.4.t
-	desc = ww1_berlin_baghdad.4.d
-	picture = GFX_report_event_GER_TUR_military_mission
-	is_triggered_only = yes
-	trigger = {
-		FROM = {
-			has_active_mission = GER_berlin_baghdad_construction_mission
-		}
-	}
-	option = { #We protest!
-		name = ww1_berlin_baghdad.4.a
-		FROM = {
-			country_event = ww1_berlin_baghdad.5
-		}
-		effect_tooltip = {
-			activate_mission = ENG_berlin_baghdad_crisis_mission
-		}
-		unlock_decision_tooltip = ENG_berlin_baghdad_back_down
-		ai_chance = {
-			base = 100
-		}
-	}
-	option = { #We back down...
-		name = ww1_berlin_baghdad.4.b
-		add_political_power = -25
-		clr_country_flag = berlin_baghdad_opposes
-		set_country_flag = berlin_baghdad_backed_down
-	}
-}
-#British protest
-country_event = {
-	id = ww1_berlin_baghdad.5
-	title = ww1_berlin_baghdad.5.t
-	desc = ww1_berlin_baghdad.5.d
-	picture = GFX_report_event_GER_TUR_military_mission
-	is_triggered_only = yes
-	trigger = {
-		has_active_mission = GER_berlin_baghdad_construction_mission
-	}
-	immediate = {
-		hidden_effect = {
-			activate_mission = GER_berlin_baghdad_crisis_mission
-			FROM = {
-				activate_mission = ENG_berlin_baghdad_crisis_mission
-				country_event = ww1_berlin_baghdad.6
-			}
-		}
-	}
-	option = { #Noted
-		name = ww1_berlin_baghdad.5.a
-		effect_tooltip = {
-			activate_mission = GER_berlin_baghdad_crisis_mission
-		}
-		unlock_decision_tooltip = GER_berlin_baghdad_stop_the_construction
-	}
-}
-#Germany backs down 
-country_event = {
-	id = ww1_berlin_baghdad.6
-	title = ww1_berlin_baghdad.6.t
-	desc = ww1_berlin_baghdad.6.d
-	picture = GFX_report_event_GER_TUR_military_mission
-	is_triggered_only = yes
-	immediate = {
-		hidden_effect = {
-			add_political_power = 50
-			every_country = {
-				limit = {
-					OR = {
-						tag = GER
-						tag = TUR
-					}
-					is_embargoed_by = ROOT
-				}
-				ROOT = {
-					break_embargo = PREV
-				}
-			}
-		}
-	}
-	option = { #good
-		name = ww1_berlin_baghdad.6.a
-		effect_tooltip = {
-			add_political_power = 50
-		}
-	}
-}
-#Germany refuses to back down 
-country_event = {
-	id = ww1_berlin_baghdad.7
-	title = ww1_berlin_baghdad.7.t
-	desc = ww1_berlin_baghdad.7.d
-	picture = GFX_report_event_GER_TUR_military_mission
-	is_triggered_only = yes
-	trigger = {
-		FROM = {
-			has_active_mission = GER_berlin_baghdad_construction_mission
-		}
-	}
-	option = { #Embargo it is
-		name = ww1_berlin_baghdad.7.a
-		send_embargo = GER
-		send_embargo = TUR
-		every_country = {
-			limit = {
-				OR = {
-					tag = GER
-					tag = TUR
-				}
-			}
-			country_event = ww1_berlin_baghdad.8
-		}
-	}
-	option = { #we back down
-		name = ww1_berlin_baghdad.7.b
-		add_political_power = -50
-		clr_country_flag = berlin_baghdad_opposes
-		set_country_flag = berlin_baghdad_backed_down
-	}
-}
-#British issue a trade embargo 
-country_event = {
-	id = ww1_berlin_baghdad.8
-	title = ww1_berlin_baghdad.8.t
-	desc = ww1_berlin_baghdad.8.d
-	picture = GFX_report_event_GER_TUR_military_mission
-	is_triggered_only = yes
-	trigger = {
-		has_active_mission = GER_berlin_baghdad_construction_mission
-	}
-	option = { #Damn it!
-		name = ww1_berlin_baghdad.8.a
-		if = {
-			limit = {
-				tag = TUR
-			}
-			unlock_decision_tooltip = TUR_berlin_baghdad_revoke_the_permit
-		}
-		else = {
-			unlock_decision_tooltip = GER_berlin_baghdad_stop_the_construction
-		}
-	}
-}
-#Germany and Ottomans stand defiant
-country_event = {
-	id = ww1_berlin_baghdad.9
-	title = ww1_berlin_baghdad.9.t
-	desc = ww1_berlin_baghdad.9.d
-	picture = GFX_report_event_GER_TUR_military_mission
-	is_triggered_only = yes
-	trigger = {
-		has_active_mission = GER_berlin_baghdad_construction_mission
-	}
-	option = { #war it is
-		name = ww1_berlin_baghdad.9.a
-		every_country = {
-			limit = {
-				OR = {
-					tag = GER
-					tag = TUR
-				}
-			}
-			ROOT = {
-				declare_war_on = {
-					target = ROOT
-					type = annex_everything
-				}
-			}
-		}
-	}
-	option = { #Damn it!
-		name = ww1_berlin_baghdad.9.b
-		add_political_power = -50
-	}
-}
-#Construction ended prematurely 
-country_event = {
-	id = ww1_berlin_baghdad.10
-	title = ww1_berlin_baghdad.10.t
-	desc = ww1_berlin_baghdad.10.d
-	picture = GFX_report_event_GER_TUR_military_mission
-	is_triggered_only = yes
-	immediate = {
-		hidden_effect = {
-			berlin_baghdad_clear_all_flags = yes
-			set_country_flag = {
-				flag = cant_build_berlin_baghdad
-				days = 180
-				value = 1
-			}
-		}
-	}
-	option = {
-		name = ww1_berlin_baghdad.10.a
-	}
-}
-#Ottomans revoke our permit! 
-country_event = {
-	id = ww1_berlin_baghdad.11
-	title = ww1_berlin_baghdad.11.t
-	desc = ww1_berlin_baghdad.11.d
-	picture = GFX_report_event_GER_TUR_military_mission
-	is_triggered_only = yes
-	immediate = {
-		hidden_effect = {
-			add_political_power = -50
-		}
-	}
-	option = { #Shit
-		name = ww1_berlin_baghdad.11.a
-		effect_tooltip = {
-			add_political_power = -50
-		}
-		custom_effect_tooltip = cant_build_berlin_baghdad
-	}
-}
-#Ottomans kill the railway 
-country_event = {
-	id = ww1_berlin_baghdad.12
-	title = ww1_berlin_baghdad.12.t
-	desc = ww1_berlin_baghdad.12.d
-	picture = GFX_report_event_GER_TUR_military_mission
-	is_triggered_only = yes
-	immediate = {
-		hidden_effect = {	
-			every_country = {
-				limit = {
-					OR = {
-						tag = GER
-						tag = TUR
-					}
-					is_embargoed_by = ROOT
-				}
-				ROOT = {
-					break_embargo = PREV
-				}
-				add_political_power = 50
-			}
-		}
-	}
-	option = { #Good news!
-		name = ww1_berlin_baghdad.12.a
-		effect_tooltip = {
-			add_political_power = 50
-		}
-	}
-}
+#################################
+## Berlin-Baghdad Railway, Events
+#################################
+#add_namespace = ww1_berlin_baghdad
+#
+##Germans want to extend the Berlin-Railway
+#country_event = {
+#	id = ww1_berlin_baghdad.1
+#	title = ww1_berlin_baghdad.1.t
+#	desc = ww1_berlin_baghdad.1.d
+#	picture = GFX_report_event_GER_TUR_military_mission
+#	is_triggered_only = yes
+#	option = { #Accept
+#		name = ww1_berlin_baghdad.1.a
+#		GER = {
+#			country_event = ww1_berlin_baghdad.2
+#		}
+#		ai_chance = {
+#			base = 100
+#		}
+#	}
+#	option = { #Decline
+#		name = ww1_berlin_baghdad.1.b
+#		GER = {
+#			country_event = ww1_berlin_baghdad.3
+#		}
+#	}
+#}
+##Ottomans greenlight the project
+#country_event = {
+#	id = ww1_berlin_baghdad.2
+#	title = ww1_berlin_baghdad.2.t
+#	desc = ww1_berlin_baghdad.2.d
+#	picture = GFX_report_event_GER_TUR_military_mission
+#	is_triggered_only = yes
+#	immediate = {
+#		hidden_effect = {
+#			activate_mission = GER_berlin_baghdad_construction_mission
+#			FROM = {
+#				activate_mission = TUR_berlin_baghdad_construction_mission
+#			}
+#			add_ideas = GER_berlin_baghdad_railway_construction
+#			clr_country_flag = cant_build_berlin_baghdad
+#			every_country = {
+#				limit = {
+#					has_country_flag = berlin_baghdad_opposes
+#					NOT = {
+#						has_war_with = GER
+#					}
+#				}
+#				country_event = {
+#					id = ww1_berlin_baghdad.4
+#					days = 1
+#				}
+#			}
+#		}
+#	}
+#	option = { #Proceed immediately
+#		name = ww1_berlin_baghdad.2.a
+#		effect_tooltip = {
+#			activate_mission = GER_berlin_baghdad_construction_mission
+#			add_ideas = GER_berlin_baghdad_railway_construction
+#		}
+#	}
+#}
+#
+##Ottomans refuse
+#country_event = {
+#	id = ww1_berlin_baghdad.3
+#	title = ww1_berlin_baghdad.3.t
+#	desc = ww1_berlin_baghdad.3.d
+#	picture = GFX_report_event_GER_TUR_military_mission
+#	is_triggered_only = yes
+#	immediate = {
+#		hidden_effect = {		
+#			add_political_power = -25
+#			berlin_baghdad_clear_all_flags = yes
+#			set_country_flag = {
+#				flag = cant_build_berlin_baghdad
+#				days = 180
+#				value = 1
+#			}
+#		}
+#	}
+#	option = { #Ungrateful Turks
+#		name = ww1_berlin_baghdad.3.a
+#		effect_tooltip = {
+#			add_political_power = -25
+#		}
+#	}
+#}
+#
+##Germans are expanding the Berlin-Baghdad Railway 
+#country_event = {
+#	id = ww1_berlin_baghdad.4
+#	title = ww1_berlin_baghdad.4.t
+#	desc = ww1_berlin_baghdad.4.d
+#	picture = GFX_report_event_GER_TUR_military_mission
+#	is_triggered_only = yes
+#	trigger = {
+#		FROM = {
+#			has_active_mission = GER_berlin_baghdad_construction_mission
+#		}
+#	}
+#	option = { #We protest!
+#		name = ww1_berlin_baghdad.4.a
+#		FROM = {
+#			country_event = ww1_berlin_baghdad.5
+#		}
+#		effect_tooltip = {
+#			activate_mission = ENG_berlin_baghdad_crisis_mission
+#		}
+#		unlock_decision_tooltip = ENG_berlin_baghdad_back_down
+#		ai_chance = {
+#			base = 100
+#		}
+#	}
+#	option = { #We back down...
+#		name = ww1_berlin_baghdad.4.b
+#		add_political_power = -25
+#		clr_country_flag = berlin_baghdad_opposes
+#		set_country_flag = berlin_baghdad_backed_down
+#	}
+#}
+##British protest
+#country_event = {
+#	id = ww1_berlin_baghdad.5
+#	title = ww1_berlin_baghdad.5.t
+#	desc = ww1_berlin_baghdad.5.d
+#	picture = GFX_report_event_GER_TUR_military_mission
+#	is_triggered_only = yes
+#	trigger = {
+#		has_active_mission = GER_berlin_baghdad_construction_mission
+#	}
+#	immediate = {
+#		hidden_effect = {
+#			activate_mission = GER_berlin_baghdad_crisis_mission
+#			FROM = {
+#				activate_mission = ENG_berlin_baghdad_crisis_mission
+#				country_event = ww1_berlin_baghdad.6
+#			}
+#		}
+#	}
+#	option = { #Noted
+#		name = ww1_berlin_baghdad.5.a
+#		effect_tooltip = {
+#			activate_mission = GER_berlin_baghdad_crisis_mission
+#		}
+#		unlock_decision_tooltip = GER_berlin_baghdad_stop_the_construction
+#	}
+#}
+##Germany backs down 
+#country_event = {
+#	id = ww1_berlin_baghdad.6
+#	title = ww1_berlin_baghdad.6.t
+#	desc = ww1_berlin_baghdad.6.d
+#	picture = GFX_report_event_GER_TUR_military_mission
+#	is_triggered_only = yes
+#	immediate = {
+#		hidden_effect = {
+#			add_political_power = 50
+#			every_country = {
+#				limit = {
+#					OR = {
+#						tag = GER
+#						tag = TUR
+#					}
+#					is_embargoed_by = ROOT
+#				}
+#				ROOT = {
+#					break_embargo = PREV
+#				}
+#			}
+#		}
+#	}
+#	option = { #good
+#		name = ww1_berlin_baghdad.6.a
+#		effect_tooltip = {
+#			add_political_power = 50
+#		}
+#	}
+#}
+##Germany refuses to back down 
+#country_event = {
+#	id = ww1_berlin_baghdad.7
+#	title = ww1_berlin_baghdad.7.t
+#	desc = ww1_berlin_baghdad.7.d
+#	picture = GFX_report_event_GER_TUR_military_mission
+#	is_triggered_only = yes
+#	trigger = {
+#		FROM = {
+#			has_active_mission = GER_berlin_baghdad_construction_mission
+#		}
+#	}
+#	option = { #Embargo it is
+#		name = ww1_berlin_baghdad.7.a
+#		send_embargo = GER
+#		send_embargo = TUR
+#		every_country = {
+#			limit = {
+#				OR = {
+#					tag = GER
+#					tag = TUR
+#				}
+#			}
+#			country_event = ww1_berlin_baghdad.8
+#		}
+#	}
+#	option = { #we back down
+#		name = ww1_berlin_baghdad.7.b
+#		add_political_power = -50
+#		clr_country_flag = berlin_baghdad_opposes
+#		set_country_flag = berlin_baghdad_backed_down
+#	}
+#}
+##British issue a trade embargo 
+#country_event = {
+#	id = ww1_berlin_baghdad.8
+#	title = ww1_berlin_baghdad.8.t
+#	desc = ww1_berlin_baghdad.8.d
+#	picture = GFX_report_event_GER_TUR_military_mission
+#	is_triggered_only = yes
+#	trigger = {
+#		has_active_mission = GER_berlin_baghdad_construction_mission
+#	}
+#	option = { #Damn it!
+#		name = ww1_berlin_baghdad.8.a
+#		if = {
+#			limit = {
+#				tag = TUR
+#			}
+#			unlock_decision_tooltip = TUR_berlin_baghdad_revoke_the_permit
+#		}
+#		else = {
+#			unlock_decision_tooltip = GER_berlin_baghdad_stop_the_construction
+#		}
+#	}
+#}
+##Germany and Ottomans stand defiant
+#country_event = {
+#	id = ww1_berlin_baghdad.9
+#	title = ww1_berlin_baghdad.9.t
+#	desc = ww1_berlin_baghdad.9.d
+#	picture = GFX_report_event_GER_TUR_military_mission
+#	is_triggered_only = yes
+#	trigger = {
+#		has_active_mission = GER_berlin_baghdad_construction_mission
+#	}
+#	option = { #war it is
+#		name = ww1_berlin_baghdad.9.a
+#		every_country = {
+#			limit = {
+#				OR = {
+#					tag = GER
+#					tag = TUR
+#				}
+#			}
+#			ROOT = {
+#				declare_war_on = {
+#					target = ROOT
+#					type = annex_everything
+#				}
+#			}
+#		}
+#	}
+#	option = { #Damn it!
+#		name = ww1_berlin_baghdad.9.b
+#		add_political_power = -50
+#	}
+#}
+##Construction ended prematurely 
+#country_event = {
+#	id = ww1_berlin_baghdad.10
+#	title = ww1_berlin_baghdad.10.t
+#	desc = ww1_berlin_baghdad.10.d
+#	picture = GFX_report_event_GER_TUR_military_mission
+#	is_triggered_only = yes
+#	immediate = {
+#		hidden_effect = {
+#			berlin_baghdad_clear_all_flags = yes
+#			set_country_flag = {
+#				flag = cant_build_berlin_baghdad
+#				days = 180
+#				value = 1
+#			}
+#		}
+#	}
+#	option = {
+#		name = ww1_berlin_baghdad.10.a
+#	}
+#}
+##Ottomans revoke our permit! 
+#country_event = {
+#	id = ww1_berlin_baghdad.11
+#	title = ww1_berlin_baghdad.11.t
+#	desc = ww1_berlin_baghdad.11.d
+#	picture = GFX_report_event_GER_TUR_military_mission
+#	is_triggered_only = yes
+#	immediate = {
+#		hidden_effect = {
+#			add_political_power = -50
+#		}
+#	}
+#	option = { #Shit
+#		name = ww1_berlin_baghdad.11.a
+#		effect_tooltip = {
+#			add_political_power = -50
+#		}
+#		custom_effect_tooltip = cant_build_berlin_baghdad
+#	}
+#}
+##Ottomans kill the railway 
+#country_event = {
+#	id = ww1_berlin_baghdad.12
+#	title = ww1_berlin_baghdad.12.t
+#	desc = ww1_berlin_baghdad.12.d
+#	picture = GFX_report_event_GER_TUR_military_mission
+#	is_triggered_only = yes
+#	immediate = {
+#		hidden_effect = {	
+#			every_country = {
+#				limit = {
+#					OR = {
+#						tag = GER
+#						tag = TUR
+#					}
+#					is_embargoed_by = ROOT
+#				}
+#				ROOT = {
+#					break_embargo = PREV
+#				}
+#				add_political_power = 50
+#			}
+#		}
+#	}
+#	option = { #Good news!
+#		name = ww1_berlin_baghdad.12.a
+#		effect_tooltip = {
+#			add_political_power = 50
+#		}
+#	}
+#}
