@@ -580,9 +580,20 @@ country_event = {
 				white_peace = ROOT
 				get_current_government_type = yes
 				ROOT = {
-					set_autonomy = {
-						target = PREV
-						autonomy_state = autonomy_integrated_puppet
+					if = {
+						limit = {
+							PREV = { tag = KUM }
+						}
+						set_autonomy = {
+							target = PREV
+							autonomy_state = autonomy_tgwr_feudal_autonomy
+						}
+					}
+					else = {
+						set_autonomy = {
+							target = PREV
+							autonomy_state = autonomy_tgwr_regional_government
+						}
 					}
 				}
 				restore_previous_government_type = yes
@@ -735,9 +746,7 @@ country_event = {
 						limit = {
 							is_subject = yes
 						}
-						OVERLORD = {
-							end_puppet = PREV
-						}
+						free_subject_leave_faction = yes
 					}
 				}
 				white_peace = PREV
@@ -749,7 +758,7 @@ country_event = {
 		}
 		set_autonomy = {
 			target = FROM
-			autonomy_state = autonomy_tgwr_informal_protectorate
+			autonomy_state = autonomy_tgwr_protected_state
 			end_wars = yes
 		}
 		hidden_effect = {
@@ -770,7 +779,7 @@ country_event = {
 					leave_faction = yes
 				}
 				every_subject_country = {
-					PREV = { end_puppet = PREV }
+					free_subject_leave_faction = yes
 				}
 			}
 		}

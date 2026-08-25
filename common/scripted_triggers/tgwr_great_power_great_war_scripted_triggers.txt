@@ -1,0 +1,319 @@
+great_war_trigger = {
+	custom_trigger_tooltip = {
+		tooltip = great_war_trigger_tt
+		ENT = {
+			has_war = yes
+			has_faction_template = faction_template_entente
+			any_enemy_country = {	
+				has_faction_template = faction_template_central_powers
+			}
+		}
+	}
+}
+
+is_part_of_great_war = {
+	custom_trigger_tooltip = {
+		tooltip = is_part_of_great_war_tt
+		has_war = yes
+		OR = {
+			has_faction_template = faction_template_entente
+			has_faction_template = faction_template_central_powers
+		}
+		any_enemy_country = {	
+			OR = {
+				has_faction_template = faction_template_entente
+				has_faction_template = faction_template_central_powers
+			}
+		}
+	}
+}
+
+ENT_member = {
+	custom_trigger_tooltip = {
+		tooltip = ENT_member_tt
+		has_faction_template = faction_template_entente
+	}
+}
+
+CP_member = {
+	custom_trigger_tooltip = {
+		tooltip = CP_member_tt
+		has_faction_template = faction_template_central_powers
+	}
+}
+
+last_core_member_ENT = {
+	custom_trigger_tooltip = {
+		tooltip = last_core_member_ENT_tt
+		has_country_flag = core_member_ENT
+		NOT = {
+			any_allied_country = {
+				has_country_flag = core_member_ENT
+			}
+		}
+		has_faction_template = faction_template_entente
+		any_enemy_country = {
+			has_faction_template = faction_template_central_powers
+		}
+	}
+}
+
+last_core_member_CP = {
+	custom_trigger_tooltip = {
+		tooltip = last_core_member_CP_tt
+		has_country_flag = core_member_CP
+		NOT = {
+			any_allied_country = {
+				has_country_flag = core_member_CP
+			}
+		}
+		has_faction_template = faction_template_central_powers
+		any_enemy_country = {
+			has_faction_template = faction_template_entente
+		}
+	}
+}
+
+FRA_surrender_conditions = {
+	custom_trigger_tooltip = {
+		tooltip = will_surrender_if_tt
+		has_war_with_major = yes
+		OR = {
+			surrender_progress > 0.7
+			AND = {
+				NOT = { controls_state = 16 }
+				16 = {
+					any_neighbor_state = { # avoid meme naval landings
+						is_owned_by = PREV.PREV
+						NOT = {
+							is_controlled_by = PREV.PREV
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+RUS_surrender_conditions = {
+	custom_trigger_tooltip = {
+		tooltip = will_surrender_if_tt
+		NOT = {
+			has_global_flag = brest_litovsk_negotiations_started
+		}
+		OR = {
+			has_country_flag = SOV_decree_on_peace
+			surrender_progress > 0.5
+			AND = {
+				NOT = {
+					controls_state = 195
+				}
+				195 = {
+					any_neighbor_state = { # avoid meme naval landings
+						is_owned_by = PREV.PREV
+						NOT = {
+							is_controlled_by = PREV.PREV
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+ROM_surrender_conditions_ENT = {
+	custom_trigger_tooltip = {
+		tooltip = will_surrender_if_tt
+		surrender_progress > 0.75
+		OR = {
+			has_global_flag = brest_litovsk_negotiations_started
+			RUS = {
+				tag = SOV
+			}
+		}
+	}
+}
+
+ROM_surrender_conditions_CP = {
+	custom_trigger_tooltip = {
+		tooltip = will_surrender_if_tt
+		OR = {
+			surrender_progress > 0.8
+			AND = {
+				NOT = { controls_state = 46 }
+				46 = {
+					any_neighbor_state = { # avoid meme naval landings
+						is_owned_by = PREV.PREV
+						NOT = {
+							is_controlled_by = PREV.PREV
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+GER_surrender_conditions = {
+	custom_trigger_tooltip = {
+		tooltip = will_surrender_if_tt
+		OR = {
+			NOT = {
+				is_in_faction_with = AUS
+				is_in_faction_with = TUR
+				is_in_faction_with = BUL
+				is_in_faction_with = ROM
+				is_in_faction_with = ITA
+			}
+			has_global_flag = GER_workers_councils # german revolution flag technically
+			surrender_progress > 0.6
+			AND = {
+				NOT = { controls_state = 64 }
+				64 = {
+					any_neighbor_state = { # avoid meme naval landings
+						is_owned_by = PREV.PREV
+						NOT = {
+							is_controlled_by = PREV.PREV
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+AUS_surrender_conditions = {
+	custom_trigger_tooltip = {
+		tooltip = will_surrender_if_tt
+		OR = {
+			AND = {
+				has_country_flag = collapse_of_austria_hungary_HUN
+				has_country_flag = collapse_of_austria_hungary_CZE
+				has_country_flag = collapse_of_austria_hungary_YUG
+				has_country_flag = collapse_of_austria_hungary_POL				
+			}
+			surrender_progress > 0.5
+			AND = {
+				NOT = { controls_state = 4 }
+				4 = {
+					any_neighbor_state = { # avoid meme naval landings
+						is_owned_by = PREV.PREV
+						NOT = {
+							is_controlled_by = PREV.PREV
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+HUN_surrender_conditions = {
+	custom_trigger_tooltip = {
+		tooltip = will_surrender_if_tt
+		is_subject = no
+		AUS = {
+			is_part_of_great_war = no
+		}
+	}
+}
+
+BUL_surrender_conditions = {
+	custom_trigger_tooltip = {
+		tooltip = will_surrender_if_tt
+		OR = {
+			surrender_progress > 0.4
+			NOT = {
+				controls_state = 48
+			}
+		}
+	}
+}
+
+TUR_surrender_conditions = {
+	custom_trigger_tooltip = {
+		tooltip = will_surrender_if_tt
+		OR = {
+			surrender_progress > 0.5
+			NOT = {
+				controls_state = 347
+			}
+		}
+	}
+}
+
+ITA_surrender_conditions_ENT = {
+	custom_trigger_tooltip = {
+		tooltip = will_surrender_if_tt
+		OR = {
+			surrender_progress > 0.5
+			communism > 0.45
+			AND = {
+				NOT = { controls_state = 2 }
+				2 = {
+					any_neighbor_state = { # avoid meme naval landings
+						is_owned_by = PREV.PREV
+						NOT = {
+							is_controlled_by = PREV.PREV
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+ITA_surrender_conditions_CP = {
+	custom_trigger_tooltip = {
+		tooltip = will_surrender_if_tt
+		OR = {
+			surrender_progress > 0.5
+			communism > 0.45
+			AND = {
+				NOT = { controls_state = 2 }
+				2 = {
+					any_neighbor_state = { # avoid meme naval landings
+						is_owned_by = PREV.PREV
+						NOT = {
+							is_controlled_by = PREV.PREV
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+is_german_occupation_zone_in_russia_state = {
+	OR = {
+		region = 38
+		region = 37
+		state = 944
+		region = 37
+		state = 189
+		state = 946
+		state = 11
+		state = 951
+		state = 190
+		state = 1302
+		state = 1301
+		state = 1300
+		state = 1017
+		state = 773
+		state = 93
+		state = 94
+		state = 95
+		state = 96
+		state = 97
+		state = 194
+		state = 204
+		state = 206
+		state = 209
+		state = 241
+		state = 913
+		state = 945
+		state = 947
+		state = 808
+		state = 1233
+	}
+}
