@@ -16002,6 +16002,9 @@ country_event = {
 				}
 				white_peace = GER
 				every_enemy_country = {
+					limit = {
+						is_in_central_powers = yes
+					}
 					PREV = {
 						white_peace = PREV
 					}
@@ -18719,6 +18722,43 @@ country_event = {
 			modifier = {
 				factor = 0
 				is_historical_focus_on = yes
+			}
+		}
+	}
+}
+
+# break armistice with CAU
+country_event = {
+	id = ww1_ottoman.171
+	title = ww1_ottoman.171.t
+	desc = ww1_ottoman.171.d
+	is_triggered_only = yes
+	trigger = {
+		country_exists = CAU
+		NOT = {
+			has_country_flag = great_war_loser
+		}
+	}
+	immediate = {
+		hidden_effect = {
+			declare_war_on = {
+				target = CAU
+				type = take_claimed_state
+			}		
+			CAU = {
+				country_event = {
+					id = ww1_georgia.2
+					days = 60
+				}					
+			}	
+		}
+	}
+	option = {
+		name = ww1_ottoman.171.a
+		effect_tooltip = {			
+			declare_war_on = {
+				target = CAU
+				type = take_claimed_state
 			}
 		}
 	}

@@ -490,7 +490,6 @@ create_SOV = {
 		promote_character = SOV_leon_trotsky
 		promote_character = SOV_yakov_sverdlov
 		promote_character = SOV_vladimir_lenin
-		leave_faction = yes
 		set_political_power = 0
 		set_stability = 0.3
 		activate_mission = RUS_kerensky_krasnov_uprising
@@ -637,37 +636,6 @@ create_FIN = {
 				remove_russian_claims = yes
 			}					
 		}
-		if = {
-			limit = {
-				NOT = {
-					country_exists = FIN
-				}				
-			}
-			every_owned_state = {
-				limit = {
-					is_core_of = FIN
-				}
-				every_country = {
-					limit = {
-						has_war_with = ROOT
-						controls_state = PREV
-					}
-					FIN = { give_military_access = PREV }
-				}
-				transfer_state_to = FIN
-				# Sweden
-				every_country = {
-					limit = {
-						has_war_with = ROOT
-						PREV = { is_claimed_by = PREV }
-					}
-					declare_war_on = {
-						target = FIN
-						type = take_claimed_state
-					}
-				}
-			}		
-		}
 		FIN = {
 			load_oob = "FIN_1918"
 			FIN_set_finnish_state_names = yes
@@ -682,6 +650,18 @@ create_FIN = {
 			}
 			reserve_dynamic_country = no
 			delete_obsolete_russian_templates = yes
+
+			if = {
+				limit = {
+					has_war_with = SWE
+				}
+				SWE = {
+					set_autonomy = {
+						target = FIN
+						autonomy_state = autonomy_satellite
+					}
+				}
+			}
 		}
 	}
 	if = {
@@ -806,17 +786,7 @@ create_UPR = {
 			}
 		}
 		set_global_flag = ukraine_released
-		every_state = {
-			limit = {
-				OR = {
-					state = 808
-					state = 766
-					state = 1263
-				}
-			}
-			add_claim_by = UPR
-		}
-		RUS = {
+		RUS = {		
 			transfer_units_fraction= {
 				target = UPR
 				size = 0
@@ -879,8 +849,18 @@ create_UPR = {
 			remove_russian_claims = yes
 		}
 		UPR = {
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomy_state = autonomy_tgwr_nominal_constituency
+				}
+			}
+			restore_previous_government_type = yes
+			add_state_claim = 808
+			add_state_claim = 766
+			add_state_claim = 1263
 			add_ideas = {
-				standing_alone
 				disarmed_nation
 				UKR_soviet_sympathies
 			}			
@@ -921,17 +901,51 @@ create_UPR = {
 		}
 	}	
 }
+create_MOL = {
+	if = {
+		limit = {
+			OR = {
+				has_subject = MOL
+				AND = {
+					MOL = { exists = no }
+					owns_state = 78
+				}
+			}
+		}
+		every_owned_state = {
+			limit = {
+				is_core_of = MOL
+			}
+			MOL = {
+				RCW_ROOT_release_PREV = yes
+			}
+		}
+		set_autonomy = {
+			target = MOL
+			autonomy_state = autonomy_tgwr_nominal_constituency
+		}
+		MOL = {
+			set_cosmetic_tag = MOL_bessarabia
+			set_politics = {
+				ruling_party = neutrality
+				elections_allowed = no 
+			}	
+			set_popularities = {
+				communism = 16
+				democratic = 57
+				neutrality = 27
+			}
+			give_military_access = ROOT
+			inherit_technology = RUS
+			delete_obsolete_russian_templates = yes
+		}	
+	}	
+}
 create_RUC = {
 	if = {
 		limit = {
 			RUC = {
 				exists = no
-			}
-			192 = {
-				OR = {
-					is_owned_and_controlled_by = ROOT
-					is_owned_and_controlled_by = UKR
-				}
 			}
 		}
 		192 = {
@@ -941,46 +955,9 @@ create_RUC = {
 		}
 		if = {
 			limit = {
-				78 = {
-					OR = {
-						is_owned_and_controlled_by = ROOT
-						is_owned_and_controlled_by = UKR
-					}
-				}
-			}
-			78 = {
-				add_core_of = RUC
-				transfer_state_to = RUC
-			}
-		}
-		else_if = {
-			limit = {
-				78 = {
-					OR = {
-						AND = {
-							is_owned_by = ROOT
-							NOT = {
-								is_controlled_by = ROOT
-							}
-						}
-						AND = {
-							is_owned_by = UKR
-							NOT = {
-								is_controlled_by = UKR
-							}
-						}
-					}
-				}
-			}
-			78 = {
-				add_core_of = RUC
-				set_state_owner_to = RUC
-			}			
-		}
-		if = {
-			limit = {
 				1303 = {
 					OR = {
+						is_owned_and_controlled_by = MOL
 						is_owned_and_controlled_by = ROOT
 						is_owned_and_controlled_by = UKR
 					}
@@ -996,6 +973,12 @@ create_RUC = {
 				1303 = {
 					OR = {
 						AND = {
+							is_owned_by = MOL
+							NOT = {
+								is_controlled_by = MOL
+							}
+						}
+						AND = {
 							is_owned_by = ROOT
 							NOT = {
 								is_controlled_by = ROOT
@@ -1004,9 +987,9 @@ create_RUC = {
 						AND = {
 							is_owned_by = UKR
 							NOT = {
-								is_controlled_by = UKR
+								is_controlled_by = MOL
 							}
-						}
+						}					
 					}
 				}
 			}
@@ -1014,12 +997,6 @@ create_RUC = {
 				add_core_of = RUC
 				set_state_owner_to = RUC
 			}			
-		}
-		RUC = {
-			every_core_state = {
-				remove_russian_cores = yes
-				remove_russian_claims = yes
-			}
 		}
 		RUS = {
 			RUS_mikhail_drozdovsky = {
@@ -1049,10 +1026,22 @@ create_RUC = {
 			}
 		}
 		RUC = {
+			every_core_state = {
+				remove_russian_cores = yes
+				remove_russian_claims = yes
+			}
 			inherit_technology = RUS
 			give_market_access = RUS
 			give_market_access = UKR
 			delete_obsolete_russian_templates = yes
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomy_state = autonomy_tgwr_nominal_constituency
+				}
+			}
+			restore_previous_government_type = yes
 		}
 		transfer_units_fraction= {
 			target = RUC
@@ -1067,33 +1056,21 @@ create_RUC = {
 				always = yes
 			}
 		}
-		every_other_country = {
-			limit = {
-				has_war_with = RUS
-				is_russian_tag = no
-				# without this, it makes germany join war with persia lol
-				NOT = {
-					has_idea = standing_alone
-				}
-			}
-			RUC = {
-				add_to_war = {
-					targeted_alliance = RUS
-					enemy = PREV
-				}
-			}
-		}
-		if = {
-			limit = {
-				RUC = {
-					has_war_together_with = ENT
+		RUS = {
+			every_enemy_country = {
+				limit = {
+					is_russian_tag = no
+					# without this, it makes germany join war with persia lol
 					NOT = {
-						has_war_with = ENT
+						has_idea = standing_alone
 					}
 				}
-			}
-			ENT = {
-				add_to_faction = RUC
+				RUC = {
+					add_to_war = {
+						targeted_alliance = RUS
+						enemy = PREV
+					}
+				}
 			}
 		}
 	}
@@ -1962,7 +1939,7 @@ create_TSCN = {
 			}
 			add_core_of = CAU
 		}
-		every_other_country = {
+		every_subject_country = {
 			limit = {
 				OR = {
 					original_tag = ARM
@@ -1970,7 +1947,6 @@ create_TSCN = {
 					original_tag = GEO
 					original_tag = MOU
 				}
-				is_subject_of = ROOT
 			}
 			drop_cosmetic_tag = yes
 			CAU = {
@@ -1981,10 +1957,13 @@ create_TSCN = {
 				change_tag_from = PREV
 			}
 		}
-		every_state = {
+		set_autonomy = {
+			target = CAU
+			autonomy_state = autonomy_tgwr_nominal_constituency
+		}
+		every_controlled_state = {
 			limit = {
 				NOT = { is_owned_by = ROOT }
-				is_fully_controlled_by = ROOT
 				owner = {
 					has_war_with = ROOT
 				}
@@ -1992,21 +1971,20 @@ create_TSCN = {
 			}
 			set_state_controller_to = CAU
 		}
-		random_state = {
-			limit = {
-				is_owned_by = CAU
-				OR = {
-					state = 231
-					state = 229
-					state = 230
-				}
-			}
-			prioritize = {
-				231
-			}
-			CAU = { set_capital = { state = PREV } }
-		}
 		CAU = {
+			random_owned_state = {
+				limit = {
+					OR = {
+						state = 231
+						state = 229
+						state = 230
+					}
+				}
+				prioritize = {
+					231
+				}
+				CAU = { set_capital = { state = PREV } }
+			}
 			load_oob = "GEO_1918"
 			add_ideas = {
 				standing_alone
@@ -2086,9 +2064,8 @@ create_TSCN = {
 			}
 		}
 		give_military_access = CAU
-		every_other_country = {
+		every_enemy_country = {
 			limit = {
-				has_war_with = ROOT
 				is_russian_tag = no
 				is_russian_breakaway_tag = no
 			}
@@ -2469,7 +2446,7 @@ FIN_set_finnish_state_names = {
 SOV_destroy_black_fleet = {
 	damage_units = {
 		region = 30
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2478,7 +2455,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 212
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2487,7 +2464,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 211
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2496,7 +2473,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 77
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2505,7 +2482,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 212
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2514,7 +2491,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 805
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2523,7 +2500,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 846
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2532,7 +2509,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 78
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2550,7 +2527,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 192
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2559,7 +2536,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 197
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2568,7 +2545,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 196
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2577,7 +2554,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 137
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV tag = CRI is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2586,7 +2563,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 955
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV tag = CRI is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2595,7 +2572,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 227
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2604,7 +2581,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 218
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2613,7 +2590,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 941
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2622,7 +2599,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 234
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2631,7 +2608,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 940
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2640,7 +2617,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 233
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2649,7 +2626,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 231
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2658,7 +2635,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 855
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2667,7 +2644,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 816
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2676,7 +2653,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 1034
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2685,7 +2662,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 354
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2694,7 +2671,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 355
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2703,7 +2680,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 1031
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2712,7 +2689,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 356
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2721,7 +2698,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 1035
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2730,7 +2707,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 1019
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2739,7 +2716,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 1069
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2748,7 +2725,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 1068
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV tag = ABK is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
@@ -2757,7 +2734,7 @@ SOV_destroy_black_fleet = {
 	}
 	damage_units = {
 		state = 1299
-		limit = { tag = SOV }
+		limit = { OR = { tag = SOV is_ally_with = SOV } }
 		damage = 1
 		org_damage = 1
 		str_damage = 1
