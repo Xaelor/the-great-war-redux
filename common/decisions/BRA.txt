@@ -1,4 +1,5 @@
 TGWR_great_power_politics = {
+	#great_power_politics_great_war
     BRA_military_medical_mission = {
 		icon = GFX_decision_generic_operation
 		available = {
@@ -36,6 +37,53 @@ TGWR_great_power_politics = {
 		}
 		ai_will_do = {
 			factor = 500
+		}
+	}
+	#great_power_politics_misc
+	BRA_reincorporate_riograndense_republic = {
+		icon = GFX_decision_generic_ignite_civil_war
+
+		targets = {
+			RGS
+		}
+		target_root_trigger = {
+			has_country_flag = BRA_rio_grande_seceds
+		}
+		fire_only_once = yes
+
+		visible = {
+			great_power_politics_misc_visible = yes
+			RGS = {
+				exists = yes
+				NOT = {is_subject_of = BRA}
+			}
+			has_country_flag = BRA_rio_grande_seceds
+			NOT = { has_war_with = RGS }
+		}
+
+		days_remove = 20
+
+		allowed = {
+			original_tag = BRA
+		}
+
+		available = {
+			has_civil_war = no
+			is_subject = no
+			NOT = { is_in_faction_with = RGS}
+		}
+
+		war_with_on_remove = RGS
+
+		remove_effect = {
+			declare_war_on = {
+				target = RGS
+				type = annex_everything
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 }
@@ -914,7 +962,7 @@ BRA_military_interventions_category = {
 		}
     }
 }	
-crisis = {
+TGWR_great_power_politics = {
     BRA_second_federalist_revolution = {
 
 		icon = generic_civil_support
@@ -967,53 +1015,7 @@ crisis = {
 		}
 	}
 }
-operations = {
-    BRA_reincorporate_riograndense_republic = {
-		icon = GFX_decision_generic_ignite_civil_war
-	    
-		targets = {
-			RGS
-		}
-		target_root_trigger = {
-			has_country_flag = BRA_rio_grande_seceds
-		}
-		fire_only_once = yes
-	
-		visible = {
-			RGS = {
-				exists = yes
-				NOT = {is_subject_of = BRA}
-			}
-			has_country_flag = BRA_rio_grande_seceds
-			NOT = { has_war_with = RGS }
-		}
-	
-		days_remove = 20
-	
-		allowed = {
-			original_tag = BRA
-		}
-		
-   		available = {
-			has_civil_war = no
-			is_subject = no
-			NOT = { is_in_faction_with = RGS}
-		}
-	
-		war_with_on_remove = RGS
-	
-		remove_effect = {
-       	    declare_war_on = {
-		    	target = RGS
-		    	type = annex_everything
-			}
-		}
-	
-		ai_will_do = {
-			factor = 100
-		}
-	}
-}	
+
 BRA_spreading_revolution_category = {
 	
 	BRA_socialist_influence = {
@@ -1143,7 +1145,10 @@ BRA_spreading_revolution_category = {
 			    		has_government = communism
 			    	}
 		    		BRA = {
-			    		puppet = PREV
+			    		set_autonomy = {
+							target = PREV
+							autonomy_state = autonomy_tgwr_client_state
+						}
 						declare_war_on = {
 							target = FROM
 							type = civil_war

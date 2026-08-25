@@ -4955,7 +4955,7 @@ focus_tree = {
 					limit = { 
 						has_start_date < 1914.1.1
 					}
-					# oil adding in 1914 transfered to on_startup
+					# oil adding in 1914 transferred to on_startup
 					add_resource = {
 						type = oil
 						amount = 5
@@ -5707,15 +5707,15 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			unlock_decision_tooltip = {
-				decision = ROM_armistice_of_focsani_decision
-				show_effect_tooltip = yes
-			}
-			custom_effect_tooltip = empty_space_tt
-			unlock_decision_tooltip = {
-				decision = ROM_treaty_of_bucharest
-				show_effect_tooltip = yes
-			}
+		#	unlock_decision_tooltip = {
+		#		decision = ROM_armistice_of_focsani_decision
+		#		show_effect_tooltip = yes
+		#	}
+		#	custom_effect_tooltip = empty_space_tt
+		#	unlock_decision_tooltip = {
+		#		decision = ROM_treaty_of_bucharest
+		#		show_effect_tooltip = yes
+		#	}
 		}
 		bypass = {
 			has_global_flag = great_war
@@ -7475,16 +7475,7 @@ focus_tree = {
 			has_war_with = RUS
 		}
 		completion_reward = {
-			GER = {
-				country_event = {
-					id = generic.2
-				}
-			}
-			add_to_war = {
-				targeted_alliance = GER
-				enemy = RUS
-				hostility_reason = asked_to_join
-			}
+			join_CENPO_declare_war_on_ENT = yes
 			# hidden_effect = {
 			# 	GER = {
 			# 		add_to_faction = ROOT
@@ -7773,16 +7764,7 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			ENT = {
-				country_event = {
-					id = generic.2
-				}
-			}
-			add_to_war = {
-				targeted_alliance = ENT
-				enemy = AUS
-				hostility_reason = asked_to_join
-			}
+			join_ENT_declare_war_on_CENPO = yes
 			unlock_decision_tooltip = {
 				decision = ROM_request_french_military_mission
 				show_effect_tooltip = yes
@@ -8320,6 +8302,7 @@ focus_tree = {
 					state = 1044
 					state = 83
 					state = 78
+					state = 1303
 				}
 				is_owned_and_controlled_by = ROOT
 			}
@@ -8419,6 +8402,14 @@ focus_tree = {
 			78 = {
 				add_compliance = 10
 			}
+			if = {
+				limit = { 
+					owns_state = 1303
+				}
+				1303 = {
+					add_compliance = 10
+				}
+			}			
 			custom_effect_tooltip = ROM_modify_economy_tt
 			add_to_variable = {
 				ROM_consumer_goods = -0.05
@@ -8455,6 +8446,14 @@ focus_tree = {
 			78 = {
 				add_compliance = 15
 			}
+			if = {
+				limit = { 
+					owns_state = 1303
+				}
+				1303 = {
+					add_compliance = 15
+				}
+			}
 		}
 		ai_will_do = {
 			factor = 0
@@ -8488,6 +8487,14 @@ focus_tree = {
 			78 = {
 				add_core_of = ROM
 			}
+			if = {
+				limit = { 
+					owns_state = 1303
+				}
+				1303 = {
+					add_core_of = ROM
+				}
+			}			
 		}
 		ai_will_do = {
 			factor = 0
@@ -11709,13 +11716,12 @@ focus_tree = {
 					idea = ROM_bessarabia_compensation
 					days = 1080
 				}
-				every_country = {
-					limit = {
-						owns_state = 78
-					}
-					add_timed_idea = {
-						idea = ROM_bessarabia_compensation2
-						days = 1080
+				78 = { 
+					owner = {
+						add_timed_idea = {
+							idea = ROM_bessarabia_compensation2
+							days = 1080
+						}
 					}
 				}
 			}
