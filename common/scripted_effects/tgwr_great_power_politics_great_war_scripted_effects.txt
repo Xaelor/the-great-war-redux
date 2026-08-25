@@ -669,10 +669,6 @@ RUS_armistice_with_CENPO = {
 			GER = {
 				country_event = ww1_brest_litovsk.1
 				activate_mission = RUS_treaty_of_brest_litovsk_mission_fake
-				country_event = {
-					id = ww1_brest_litovsk.6
-					days = 60
-				}
 			}
 			every_subject_country = {
 				limit = {
@@ -2324,6 +2320,31 @@ GER_surrender_effect_CP = {
 						}
 					}					
 				}	
+
+				# Russian claims
+				if = {
+					limit = {
+						RUS = {
+							has_country_flag = great_war_winner
+							NOT = {
+								has_global_flag = october_revolution
+							}
+						}
+					}
+					every_owned_state = {
+						limit = {
+							OR = {
+								state = 86
+								state = 86
+								state = 404
+								state = 5
+								state = 763
+								state = 188
+							}
+						}
+						transfer_state_to = RUS
+					}
+				}					
 			}
 		}
 	}
@@ -3945,6 +3966,59 @@ treaty_of_saint_germain_en_laye_effect = {
 					transfer_state_to = PREV.PREV
 				}
 			}
+			if = {
+				limit = {
+					NOT = {
+						country_exists = UKR
+					}	
+					RUS = {
+						has_country_flag = great_war_winner
+						has_completed_focus = RUS_unite_ruthenia # REMOVE WHEN MERGE RUSSIAN REWORK
+						NOT = {
+							has_global_flag = october_revolution
+							has_global_flag = RUS_surrender
+						}
+					}
+				}
+				RUS = {
+					if = {
+						limit = { 
+							country_exists = WUK
+						}
+						annex_country = {
+							target = WUK
+						}
+					}
+					if = {
+						limit = { 
+							country_exists = GAL
+						}
+						annex_country = {
+							target = GAL
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						owner = {
+							has_country_flag = great_war_loser
+						}
+						OR = {
+							state = 88
+							state = 1268
+							state = 1269
+							state = 237
+							state = 1270
+							state = 562
+							state = 91
+							state = 89
+							state = 1007
+							state = 80
+						}						
+					}
+					transfer_state_to = RUS
+				}
+			}			
 		}
 	}
 }
