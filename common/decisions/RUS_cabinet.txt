@@ -1124,6 +1124,80 @@ RUS_cabinet_category = {
 }
 #Reformist mechanic
 RUS_cabinet_category = {
+	RUS_reformist_pm_resign_timer = {
+		icon = generic_political_discourse
+		allowed = { always = no }
+		activation = {
+		#	always = no
+		}
+		available = {
+			always = no
+		}
+		fire_only_once = yes
+		is_good = no
+		days_mission_timeout = 365
+		selectable_mission = no
+		timeout_effect = {
+			custom_effect_tooltip = RUS_the_final_accord_tt
+			hidden_effect = {
+				if = {
+					limit = {
+						check_variable = {
+							var = cabinet_alignment_var
+							value = 30
+							compare = less_than
+						}
+					}
+					country_event = {
+						id = ww1_krivoshein.11
+						days = 2
+					}
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = cabinet_alignment_var
+							value = 70
+							compare = greater_than_or_equals
+						}
+					}
+					country_event = {
+						id = ww1_krivoshein.13
+						days = 2
+					}
+				}
+			}
+		}
+	}
+	
+	RUS_cabinet_alignment_info = {
+		icon = GFX_decision_generic_political_discourse
+		allowed = { tag = RUS }
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+		visible = {
+			OR = {
+				AND = {
+					NOT = {
+						has_completed_focus = RUS_the_final_accord
+					}
+					has_completed_focus = RUS_no_us_and_them
+				}
+				is_debug = yes
+			}
+		}
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
+		complete_effect = {
+			custom_effect_tooltip = RUS_cabinet_alignment_info_tt
+		}
+	}
+	##
 	RUS_reaction_strikes_back_mission = {
 		icon = generic_political_discourse
 		allowed = { always = no }
