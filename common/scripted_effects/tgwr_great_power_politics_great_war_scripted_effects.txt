@@ -437,8 +437,23 @@ FRA_surrender_effect_ENT = {
 					limit = { 
 						owns_state = 1225
 					}
-					ALB = {
-						set_state_owner = 1225
+					if = {
+						limit = { 
+							ALB = {
+								has_country_flag = AUH_occupation_of_ALB
+							}
+							AUS = {
+								is_part_of_great_war = yes
+							}
+						}
+						AUS = {
+							transfer_state = 1225
+						}
+					}
+					else = {						
+						ALB = {
+							set_state_owner = 1225
+						}
 					}
 				}
 
@@ -2520,10 +2535,6 @@ AUS_surrender_effect_CP = {
 						white_peace = {
 							tag = PREV
 						}
-						set_truce = {
-							target = PREV
-							days = 365
-						}
 					}
 				}
 
@@ -2638,13 +2649,13 @@ BUL_surrender_effect_CP = {
 				limit = {
 					any_country_with_original_tag = {
 						original_tag_to_check = GRE
-						is_ally_with = ENT
+						has_completed_focus = GRE_negotiations_with_entente
 					}
 				}
 				random_country_with_original_tag = {
 					original_tag_to_check = GRE
 					limit = {
-						is_ally_with = ENT
+						has_completed_focus = GRE_negotiations_with_entente
 					}
 					PREV = {
 						every_owned_state = {
@@ -3566,11 +3577,7 @@ ITA_surrender_effect_CP = {
 			white_peace = ENT
 			every_enemy_country = {
 				PREV = {
-					white_peace = PREV
-					set_truce = {
-						target = PREV
-						days = 365
-					}					
+					white_peace = PREV					
 				}
 			}
 			clear_all_relations_except_wars = yes
@@ -3584,46 +3591,7 @@ ITA_surrender_effect_CP = {
 				days = 2
 			}
 			
-			# return of albania
-			ALB = {
-				every_core_state = {
-					limit = {
-						is_owned_by = ITA
-						NOT = {
-							is_core_of = ROOT
-						}
-					}
-					transfer_state_to = ALB
-				}
-			}
-			if = {
-				limit = {
-					ITA = { owns_state = 803 }
-				}
-				if = {
-					limit = {
-						any_country = {
-							owns_state = 758
-							NOT = { has_country_flag = great_war_loser }
-						}
-					}
-					random_country = {
-						limit = {
-							owns_state = 758
-							NOT = { has_country_flag = great_war_loser }
-						}
-						transfer_state = 803
-					}
-				}
-				else = {
-					random_country = {
-						limit = {
-							owns_state = 871
-						}
-						transfer_state = 803
-					}
-				}
-			}			
+			ITA_surrender_return_albania = yes
 		}
 	}
 }
@@ -3643,11 +3611,7 @@ ITA_surrender_effect_ENT = {
 			white_peace = GER
 			every_enemy_country = {
 				PREV = {
-					white_peace = PREV
-					set_truce = {
-						target = PREV
-						days = 365
-					}					
+					white_peace = PREV					
 				}
 			}
 			clear_all_relations_except_wars = yes
@@ -3701,46 +3665,33 @@ ITA_surrender_effect_ENT = {
 				transfer_state_to = HUN
 			}
 
-			# return of albania
-			ALB = {
-				every_core_state = {
-					limit = {
-						is_owned_by = ITA
-						NOT = {
-							is_core_of = ROOT
-						}
-					}
-					transfer_state_to = ALB
+			ITA_surrender_return_albania = yes
+		}
+	}
+}
+ITA_surrender_return_albania = {
+	ALB = {
+		if = {
+			limit = { 
+				has_country_flag = AUH_occupation_of_ALB
+				AUS = {
+					is_part_of_great_war = yes
 				}
 			}
-			if = {
+			every_core_state = {
 				limit = {
-					ITA = { owns_state = 803 }
+					is_owned_by = ITA
 				}
-				if = {
-					limit = {
-						any_country = {
-							owns_state = 758
-							NOT = { has_country_flag = great_war_loser }
-						}
-					}
-					random_country = {
-						limit = {
-							owns_state = 758
-							NOT = { has_country_flag = great_war_loser }
-						}
-						transfer_state = 803
-					}
+				transfer_state_to = AUS
+			}					
+		}
+		else = {					
+			every_core_state = {
+				limit = {
+					is_owned_by = ITA
 				}
-				else = {
-					random_country = {
-						limit = {
-							owns_state = 871
-						}
-						transfer_state = 803
-					}
-				}
-			}			
+				transfer_state_to = ALB
+			}
 		}
 	}
 }
@@ -4000,6 +3951,7 @@ treaty_of_saint_germain_en_laye_effect = {
 
 treaty_of_neuilly_sur_seine_effect = {
 	hidden_effect = {
+		set_global_flag = treaty_of_neuilly_sur_seine
 		BUL = {
 			if = {
 				limit = { 
@@ -4116,7 +4068,14 @@ treaty_of_sevres_effect = {
 					limit = {
 						OR = {
 							state = 200
-							state = 756
+							AND = {
+								state = 756
+								756 = {
+									any_neighbor_state = {
+										is_controlled_by = GRE
+									}
+								}
+							}
 							state = 339
 						}
 					}
@@ -4382,14 +4341,51 @@ treaty_of_bucharest_effect = {
 }
 
 # works only during great war
+
+PREV_war_on_THIS_subjects = {
+	PREV = {
+		declare_war_on = {
+			target = PREV
+			type = topple_government
+		}
+		every_subject_country = {
+			limit = {
+				is_puppet = yes # its not mistake
+			}
+			add_to_war = {
+				targeted_alliance = PREV
+				enemy = PREV.PREV
+			}
+		}		
+	}
+	every_subject_country = {
+		limit = {
+			is_puppet = yes # its not mistake
+		}
+		add_to_war = {
+			targeted_alliance = PREV
+			enemy = PREV.PREV
+		}
+	}
+}
+
 join_ENT_declare_war_on_CENPO = {
 	ENT = {
 		add_to_faction = PREV
 	}
-	declare_war_on = {
-		target = GER
-		type = take_claimed_state
+	add_to_war = {
+		targeted_alliance = ENT
+		enemy = GER
 	}
+	every_subject_country = {
+		limit = {
+			is_puppet = yes # its not mistake
+		}
+		add_to_war = {
+			targeted_alliance = ENT
+			enemy = GER
+		}
+	}	
 	hidden_effect = {		
 		GER = {
 			every_allied_country = {
@@ -4410,9 +4406,18 @@ join_CENPO_declare_war_on_ENT = {
 	GER = {
 		add_to_faction = PREV
 	}
-	declare_war_on = {
-		target = ENT
-		type = take_claimed_state
+	add_to_war = {
+		targeted_alliance = GER
+		enemy = ENT
+	}
+	every_subject_country = {
+		limit = {
+			is_puppet = yes # its not mistake
+		}
+		add_to_war = {
+			targeted_alliance = GER
+			enemy = ENT
+		}
 	}
 	hidden_effect = {		
 		ENT = {
