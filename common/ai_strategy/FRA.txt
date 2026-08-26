@@ -406,36 +406,37 @@ FRA_defense_of_belgium_border = {
 		states = {
 			785
 		}
-		ratio = 1
-		subtract_invasions_from_need = yes
-		subtract_fronts_from_need = yes
+		ratio = 0.5
 	}
 	ai_strategy = {
 		type = put_unit_buffers
 		states = {
 			29
 		}
-		ratio = 1
-		subtract_invasions_from_need = yes
-		subtract_fronts_from_need = yes
+		ratio = 0.6
 	}
 	ai_strategy = {
 		type = put_unit_buffers
 		states = {
 			865
 		}
-		ratio = 1
-		subtract_invasions_from_need = yes
-		subtract_fronts_from_need = yes
+		ratio = 0.6
 	}
 	ai_strategy = {
 		type = put_unit_buffers
 		states = {
 			18
 		}
-		ratio = 1
-		subtract_invasions_from_need = no
-		subtract_fronts_from_need = no
+		ratio = 0.5
+	}
+	ai_strategy = {
+		type = force_concentration_factor
+		value = -1000
+	}
+	ai_strategy = {
+		type = force_concentration_front_factor
+		tag = GER
+		value = -1000
 	}
 	ai_strategy = {
 		type = front_unit_request
@@ -451,18 +452,16 @@ FRA_dont_go_belgium = {
 	enable = {
 		is_in_faction_with = BEL
 		has_war_with = GER
-		OR = {
-			BEL = {
-				OR = {
-					has_capitulated = no
-					surrender_progress < 0.8
-				}
+		BEL = {
+			OR = {
+				has_capitulated = no
+				surrender_progress < 0.9
 			}
-			NOT = {
-				war_length_with = {
-					tag = GER
-					months > 6
-				}
+		}
+		NOT = {
+			war_length_with = {
+				tag = GER
+				months > 6
 			}
 		}
 	}
@@ -531,8 +530,6 @@ FRA_backline_picardy = {
 			785
 		}
 		ratio = 1
-		subtract_invasions_from_need = yes
-		subtract_fronts_from_need = yes
 	}
 	ai_strategy = {
 		type = put_unit_buffers
@@ -540,8 +537,6 @@ FRA_backline_picardy = {
 			18
 		}
 		ratio = 0.6
-		subtract_invasions_from_need = yes
-		subtract_fronts_from_need = yes
 	}
 }
 
@@ -562,7 +557,7 @@ FRA_backline_belfort = {
 			war_length_with = {
 				# stabilzed front
 				tag = GER
-				months > 12
+				months > 3
 			}
 		}
 	}
@@ -572,9 +567,7 @@ FRA_backline_belfort = {
 		states = {
 			20
 		}
-		ratio = 0.5
-		subtract_invasions_from_need = yes
-		subtract_fronts_from_need = yes
+		ratio = 0.35
 	}
 	ai_strategy = {
 		type = put_unit_buffers
@@ -582,8 +575,6 @@ FRA_backline_belfort = {
 			864
 		}
 		ratio = 1
-		subtract_invasions_from_need = yes
-		subtract_fronts_from_need = yes
 	}
 }
 
@@ -614,9 +605,7 @@ FRA_paris_garrison = {
 		states = {
 			16
 		}
-		ratio = 0.8
-		subtract_invasions_from_need = yes
-		subtract_fronts_from_need = yes
+		ratio = 0.5
 	}
 }
 
@@ -652,8 +641,6 @@ FRA_lion_garrison = {
 			32
 		}
 		ratio = 0.7
-		subtract_invasions_from_need = yes
-		subtract_fronts_from_need = yes
 	}
 }
 
@@ -681,7 +668,7 @@ FRA_on_ne_passe_pas = {
 		states = {
 			17
 		}
-		ratio = 0.3
+		ratio = 0.35
 	}
 }
 
@@ -968,18 +955,16 @@ FRA_backline_normandie = {
 		}
 		war_length_with = {
 			tag = GER
-			months < 10
+			months < 5
 		}
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = put_unit_buffers
-		ratio = 0.6
+		ratio = 0.3
 		states = {
 			15
 		}
-		subtract_invasions_from_need = yes
-		subtract_fronts_from_need = yes
 	}
 }
 
@@ -1039,13 +1024,6 @@ FRA_front_against_ITA = {
 		type = prepare_for_war
 		id = ITA
 		value = 1
-	}
-	ai_strategy = {
-		type = front_control
-		tag = ITA
-		ratio = 0.4
-		ordertype = front
-		execution_type = balanced
 	}
 }
 
@@ -1951,10 +1929,6 @@ ENTENTE_prepare_SPR = {
 			}
 			SPR = {
 				OR = {
-					focus_progress = {
-						focus = join_central_powers
-						progress > 0
-					}
 					is_justifying_wargoal_against = ROOT
 					has_wargoal_against = ROOT
 				}

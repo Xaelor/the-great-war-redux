@@ -3455,13 +3455,14 @@ CHI_chinese_warlords = {
 	}
 }
 
-political_actions = {
+TGWR_great_power_politics = {
 	CHI_decision_restore_xuantong = {
 		icon = GFX_decision_generic_monarchy
 		allowed = {
 			is_china_or_warlord_no_tt = yes
 		}
 		visible = {
+			great_power_politics_century_of_humiliation_visible = yes
 			has_global_flag = puyi_age
 			is_qing_monarchy = yes
 			NOT = {
@@ -3500,6 +3501,7 @@ political_actions = {
 			is_china_or_warlord_no_tt = yes
 		}
 		visible = {
+			great_power_politics_century_of_humiliation_visible = yes
 			has_global_flag = abdicated_qing_imperial_family_allowed
 			is_qing_monarchy = no
 			has_idea = QIN_abdicated_qing_imperial_family
@@ -3559,6 +3561,7 @@ political_actions = {
 			is_china_or_warlord_no_tt = yes
 		}
 		visible = {
+			great_power_politics_century_of_humiliation_visible = yes
 			is_kuomintang_state = no
 			608 = {
 				is_owned_by = ROOT
@@ -4618,7 +4621,7 @@ TGWR_great_power_politics = {
 		}
 	}
 }
-operations = {
+TGWR_great_power_politics = {
 	CHI_form_yiyongjun = {
 		icon = GFX_decision_generic_reorganize_irregulars
 		allowed = {
@@ -4651,6 +4654,7 @@ operations = {
 			}
 		}
 		visible	= {
+			great_power_politics_century_of_humiliation_visible = yes
 			any_enemy_country = {
 				is_major = yes
 				is_china_or_warlord = no
@@ -4738,6 +4742,7 @@ operations = {
 			has_country_flag = CHI_zhigongdang_flag
 		}
 		visible = {
+			great_power_politics_century_of_humiliation_visible = yes
 			has_country_flag = CHI_zhigongdang_flag
 			FROM = {
 				exists = yes
@@ -4828,6 +4833,7 @@ operations = {
 			}
 		}
 		visible = {
+			great_power_politics_century_of_humiliation_visible = yes
 			OR = {
 				owns_state = 1065
 				owns_state = 322
@@ -4941,6 +4947,60 @@ operations = {
 			}
 		}
 	}
+	CHI_annex_bhutan_exclaves = {
+		icon = generic_prepare_civil_war
+		allowed = {
+			is_china_or_warlord_no_tt = yes
+		}
+		target_trigger = {
+			FROM = {
+				owns_state = 1289
+			}
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 1289
+			}
+		}
+		visible = {
+			great_power_politics_century_of_humiliation_visible = yes
+			owns_state = 322
+		}
+		available = {
+			is_subject = no
+			has_capitulated = no
+			controls_state = 322
+		}
+		fire_only_once = yes
+		complete_effect = {
+			transfer_state = 1289
+			hidden_effect = {
+				FROM = {
+					country_event = ww1_bhutan.2
+				}
+			}
+		}
+		cost = 25
+		ai_will_do = {
+			base = 100
+			modifier = {
+				factor = 0
+				strength_ratio = {
+					tag = FROM
+					ratio < 2
+				}
+			}
+			modifier = {
+				factor = 0
+				has_war = yes
+			}
+			modifier = {
+				factor = 0
+				tag = QIN
+				NOT = { has_global_flag = xinhai_revolution_ends }
+			}
+		}
+	}	
 }
 
 CHI_occupation_actions = { 
@@ -5737,7 +5797,7 @@ economy_decisions = {
 		}
 	}
 }
-peace_deals = {
+TGWR_great_power_politics = {
 	FNG_sue_for_peace_SOV = {
 		name = sue_for_peace_FROM
 		icon = GFX_decision_SWI_consolidate_council_power
@@ -5745,6 +5805,7 @@ peace_deals = {
 			is_china_or_warlord_no_tt = yes
 		}
 		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
 			has_global_flag = chinese_eastern_railway_incident
 			NOT = {
 				has_global_flag = khabarovsk_protocol
@@ -5805,6 +5866,7 @@ peace_deals = {
 			is_china_or_warlord_no_tt = yes
 		}
 		visible = {
+			great_power_politics_century_of_humiliation_visible = yes
 			has_country_flag = concessions_war
 		}
 		available = {
@@ -6040,7 +6102,7 @@ peace_deals = {
 	}
 }
 
-crisis = {
+TGWR_great_power_politics = {
 	# CHI_provisional_government_mission = {
 	# 	icon = GFX_decision_generic_political_discourse
 	# 	days_mission_timeout = 300
@@ -6221,62 +6283,6 @@ crisis = {
 			set_country_flag = republican_plot_fired
 			custom_effect_tooltip = historical_tt
 			country_event = ww1_china.3
-		}
-	}
-}
-
-operations = {
-	CHI_annex_bhutan_exclaves = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			is_china_or_warlord_no_tt = yes
-		}
-		target_trigger = {
-			FROM = {
-				owns_state = 1289
-			}
-		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 1289
-			}
-		}
-		visible = {
-			owns_state = 322
-		}
-		available = {
-			is_subject = no
-			has_capitulated = no
-			controls_state = 322
-		}
-		fire_only_once = yes
-		complete_effect = {
-			transfer_state = 1289
-			hidden_effect = {
-				FROM = {
-					country_event = ww1_bhutan.2
-				}
-			}
-		}
-		cost = 25
-		ai_will_do = {
-			base = 100
-			modifier = {
-				factor = 0
-				strength_ratio = {
-					tag = FROM
-					ratio < 2
-				}
-			}
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
-			modifier = {
-				factor = 0
-				tag = QIN
-				NOT = { has_global_flag = xinhai_revolution_ends }
-			}
 		}
 	}
 }
