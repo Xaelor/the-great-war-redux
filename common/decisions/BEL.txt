@@ -78,6 +78,60 @@ TGWR_great_power_politics = {
 			}
 		}
 	}
+	BEL_flood_the_yser = {
+
+		icon = hol_inundate_water_lines
+
+		allowed = {
+			original_tag = BEL
+		}
+
+		available = {
+			has_war = yes
+			surrender_progress > 0.5
+			controls_province = 6446
+			controls_province = 6548
+		}
+		cancel_if_not_visible = yes
+
+		cost = 25
+
+		fire_only_once = yes
+
+		days_remove = 5
+
+		highlight_states = {
+			highlight_state_targets = { state = 6 }
+			highlight_provinces = {
+				6446
+				6548
+			}
+			highlight_only_provinces = yes
+		}
+
+		visible = {
+			great_power_politics_great_war_visible = yes
+			controls_province = 6446
+			controls_province = 6548
+		}
+
+		remove_effect = {
+			6 = {
+				add_province_modifier = {
+					static_modifiers = { flooded }
+					province = {
+						id = 6548
+						id = 6446
+					}
+					days = 100
+				}
+			}
+		}
+		
+		ai_will_do = {
+			factor = 100
+		}
+	}
 }
 debug_decisions = {
 	BEL_decrease_rubber_timer = {
@@ -1147,7 +1201,7 @@ BEL_army_reform = {
 	}
 }
 
-peace_deals = {
+TGWR_great_power_politics = {
 	BEL_batavian_white_peace = {
 		icon = GFX_decision_eng_trade_unions_support
 		allowed = {
@@ -1156,9 +1210,6 @@ peace_deals = {
 		targets = {
 			HOL
 		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
 		available = {
 			OR = {
 				AND = {
@@ -1176,6 +1227,7 @@ peace_deals = {
 			factor = 400
 		}
 		visible = { 
+			great_power_politics_misc_visible = yes
 			has_war_with = HOL
 			any_country_with_original_tag = {
 				original_tag_to_check = HOL
@@ -1217,145 +1269,6 @@ peace_deals = {
 			HOL = {
 				country_event = ww1_belgium.29
 			}
-		}
-	}
-}
-operations = {	
-	BEL_reform_army_decision = {
-		icon = GFX_decision_generic_military
-		allowed = {
-			original_tag = BEL
-		}
-		available = {
-			has_war_support > 0.15
-			OR = {
-				has_capitulated = yes
-				has_army_experience > 20
-			}
-		}
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				date < 1913.6.1
-				has_government = democratic
-				factor = 0
-			}
-		}
-		cost = 25
-		visible = {
-			OR = {
-				has_idea = BEL_idea_pacifism6
-				has_idea = BEL_idea_pacifism5
-				has_idea = BEL_idea_pacifism4
-				has_idea = BEL_idea_pacifism3
-				has_idea = BEL_idea_pacifism2
-				has_idea = BEL_idea_pacifism
-			}
-		}
-		fire_only_once = no
-		days_re_enable = 60
-		days_remove = 30
-		remove_effect = {
-			if = {
-				limit = { has_capitulated = no }
-				army_experience = -20
-			}
-			if = {
-				limit = { has_idea = BEL_idea_pacifism6 }
-				remove_ideas = BEL_idea_pacifism6
-				add_war_support = 0.1
-			}
-			if = {
-				limit = { has_idea = BEL_idea_pacifism5 }
-				swap_ideas = {
-					remove_idea = BEL_idea_pacifism5
-					add_idea = BEL_idea_pacifism6
-				}
-			}
-			if = {
-				limit = { has_idea = BEL_idea_pacifism4 }
-				swap_ideas = {
-					remove_idea = BEL_idea_pacifism4
-					add_idea = BEL_idea_pacifism5
-				}
-			}
-			if = {
-				limit = { has_idea = BEL_idea_pacifism3 }
-				swap_ideas = {
-					remove_idea = BEL_idea_pacifism3
-					add_idea = BEL_idea_pacifism4
-				}
-			}
-			if = {
-				limit = { has_idea = BEL_idea_pacifism2 }
-				swap_ideas = {
-					remove_idea = BEL_idea_pacifism2
-					add_idea = BEL_idea_pacifism3
-				}
-			}
-			if = {
-				limit = { has_idea = BEL_idea_pacifism }
-				swap_ideas = {
-					remove_idea = BEL_idea_pacifism
-					add_idea = BEL_idea_pacifism2
-				}
-			}
-		}
-	}
-	BEL_flood_the_yser = {
-
-		icon = hol_inundate_water_lines
-
-		allowed = {
-			tag = BEL
-		}
-
-		available = {
-			has_war = yes
-			surrender_progress > 0.5
-			controls_province = 6446
-			controls_province = 6548
-		}
-		cancel_if_not_visible = yes
-
-		cost = 25
-
-		fire_only_once = yes
-
-		days_remove = 5
-
-		highlight_states = {
-			highlight_state_targets = { state = 6 }
-			highlight_provinces = {
-				6446
-				6548
-			}
-			highlight_only_provinces = yes
-		}
-
-		modifier = {
-		}
-
-		visible = {
-			controls_province = 6446
-			controls_province = 6548
-		}
-
-		remove_effect = {
-			6 = {
-				add_province_modifier = {
-					static_modifiers = { flooded }
-					province = {
-						id = 6548
-						id = 6446
-					}
-					days = 100
-				}
-			}
-		}
-		
-		ai_will_do = {
-			factor = 100
 		}
 	}
 }
