@@ -1,0 +1,50 @@
+on_actions = {
+	# important thing
+	on_war_relation_added = {
+		effect = {
+			ROOT = {
+				every_subject_country = {
+					limit = {
+						is_puppet = yes
+					}
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = FROM
+					}
+				}
+			}
+			FROM = {
+				every_subject_country = {
+					limit = {
+						is_puppet = yes
+					}
+					add_to_war = {
+						targeted_alliance = FROM
+						enemy = ROOT
+					}					
+				}
+			}
+		}
+	}
+	# hejaz and asir capitulation during arab revolt after entente lost
+	on_peaceconference_started = {
+		effect = {
+			if = {
+				limit = { 
+					FROM = {
+						OR = {
+							tag = HJZ
+							tag = ASR
+						}
+					}
+					is_in_faction = no
+				}
+				TUR = {
+					annex_country = {
+						target = FROM
+					}
+				}
+			}
+		}
+	}
+}
