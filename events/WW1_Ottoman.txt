@@ -2434,6 +2434,7 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_ottoman.53.a
+		activate_mission = TUR_berlin_baghdad_railway_mission
 		hidden_effect = {
 			if = {
 				limit = {
@@ -7798,7 +7799,7 @@ country_event = {
 				TUR = {
 					set_autonomy = {
 						target = MSC
-						autonomous_state = autonomy_tgwr_informal_protectorate
+						autonomous_state = autonomy_tgwr_protected_state
 						freedom_level = 0.9
 					}
 				}
@@ -7812,7 +7813,7 @@ country_event = {
 				TUR = {
 					set_autonomy = {
 						target = OMA
-						autonomous_state = autonomy_tgwr_informal_protectorate
+						autonomous_state = autonomy_tgwr_protected_state
 						freedom_level = 0.9
 					}
 				}
@@ -7826,7 +7827,7 @@ country_event = {
 				TUR = {
 					set_autonomy = {
 						target = KUW
-						autonomous_state = autonomy_tgwr_informal_protectorate
+						autonomous_state = autonomy_tgwr_protected_state
 						freedom_level = 0.9
 					}
 				}
@@ -7840,7 +7841,7 @@ country_event = {
 				TUR = {
 					set_autonomy = {
 						target = QAT
-						autonomous_state = autonomy_tgwr_informal_protectorate
+						autonomous_state = autonomy_tgwr_protected_state
 						freedom_level = 0.9
 					}
 				}
@@ -7854,7 +7855,7 @@ country_event = {
 				TUR = {
 					set_autonomy = {
 						target = BHR
-						autonomous_state = autonomy_tgwr_informal_protectorate
+						autonomous_state = autonomy_tgwr_protected_state
 						freedom_level = 0.9
 					}
 				}
@@ -8050,7 +8051,7 @@ country_event = {
 			}
 			set_autonomy = {
 				target = MSC
-				autonomous_state = autonomy_tgwr_informal_protectorate
+				autonomous_state = autonomy_tgwr_protected_state
 				freedom_level = 0.9
 			}
 		}
@@ -8062,7 +8063,7 @@ country_event = {
 			}
 			set_autonomy = {
 				target = OMA
-				autonomous_state = autonomy_tgwr_informal_protectorate
+				autonomous_state = autonomy_tgwr_protected_state
 				freedom_level = 0.9
 			}
 		}
@@ -8074,7 +8075,7 @@ country_event = {
 			}
 			set_autonomy = {
 				target = KUW
-				autonomous_state = autonomy_tgwr_informal_protectorate
+				autonomous_state = autonomy_tgwr_protected_state
 				freedom_level = 0.9
 			}
 		}
@@ -8086,7 +8087,7 @@ country_event = {
 			}
 			set_autonomy = {
 				target = QAT
-				autonomous_state = autonomy_tgwr_informal_protectorate
+				autonomous_state = autonomy_tgwr_protected_state
 				freedom_level = 0.9
 			}
 		}
@@ -9890,7 +9891,7 @@ country_event = { #islamist victory in elections
 			limit = {
 				has_country_flag = TUR_increase_medrese_education_done
 			}
-			add_ideas = TUR_increase_medrese_education
+			add_ideas = TUR_increase_medrese_education_idea
 		}
 		if = {
 			limit = {
@@ -10063,7 +10064,7 @@ country_event = { #liberal victory in elections
 			limit = {
 				has_country_flag = TUR_increase_medrese_education_done
 			}
-			remove_ideas = TUR_increase_medrese_education
+			remove_ideas = TUR_increase_medrese_education_idea
 		}
 		if = {
 			limit = {
@@ -13580,7 +13581,7 @@ country_event = { #al-qahtaniya influences elections
 			limit = {
 				has_country_flag = TUR_increase_medrese_education_done
 			}
-			remove_ideas = TUR_increase_medrese_education
+			remove_ideas = TUR_increase_medrese_education_idea
 		}
 		if = {
 			limit = {
@@ -15994,19 +15995,19 @@ country_event = {
 				}
 				give_military_access = ROOT
 			}
+
 			every_country = {
 				limit = {
-					OR = {
-						tag = ROOT
-						is_in_faction_with = ROOT
-						is_subject_of = ROOT
-					}
+					has_country_flag = post_transcaucasia
 				}
-				every_country = {
+				white_peace = GER
+				every_enemy_country = {
 					limit = {
-						has_country_flag = post_transcaucasia
+						is_in_central_powers = yes
 					}
-					white_peace = PREV
+					PREV = {
+						white_peace = PREV
+					}
 				}
 			}
 			every_state = {
@@ -16084,7 +16085,7 @@ country_event = {
 			}
 			set_autonomy = {
 				target = FROM
-				autonomy_state = autonomy_tgwr_informal_protectorate
+				autonomy_state = autonomy_tgwr_protected_state
 				end_wars = no
 				end_civil_wars = no
 			}
@@ -16902,7 +16903,10 @@ country_event = {
 		ISR = {
 			add_state_core = 454
 		}
-		release_puppet = ISR
+		release_autonomy = {
+			target = ISR
+			autonomy_state = autonomy_tgwr_autonomous_governorate
+		}
 		TUR_remove_debt_5900 = yes
 	}
 	option = {
@@ -17871,7 +17875,7 @@ country_event = {
 						ENG = {
 							set_autonomy = {
 								target = AZR
-								autonomy_state = autonomy_tgwr_informal_protectorate
+								autonomy_state = autonomy_tgwr_protected_state
 							}
 						}
 						AZR = {
@@ -18718,6 +18722,43 @@ country_event = {
 			modifier = {
 				factor = 0
 				is_historical_focus_on = yes
+			}
+		}
+	}
+}
+
+# break armistice with CAU
+country_event = {
+	id = ww1_ottoman.171
+	title = ww1_ottoman.171.t
+	desc = ww1_ottoman.171.d
+	is_triggered_only = yes
+	trigger = {
+		country_exists = CAU
+		NOT = {
+			has_country_flag = great_war_loser
+		}
+	}
+	immediate = {
+		hidden_effect = {
+			declare_war_on = {
+				target = CAU
+				type = take_claimed_state
+			}		
+			CAU = {
+				country_event = {
+					id = ww1_georgia.2
+					days = 60
+				}					
+			}	
+		}
+	}
+	option = {
+		name = ww1_ottoman.171.a
+		effect_tooltip = {			
+			declare_war_on = {
+				target = CAU
+				type = take_claimed_state
 			}
 		}
 	}

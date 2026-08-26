@@ -3,112 +3,6 @@
 		effect = {
 			if = {
 				limit = {
-					tag = FRA
-					FROM = {
-						tag = GER
-					}					#loser
-					is_great_war_ongoing = yes
-					NOT = {
-						has_global_flag = FRA_surrender_alone
-						has_country_flag = jaures_neutrality
-						has_country_leader = {
-							character = FRA_jean_jaures
-						}
-					}
-				}
-				set_global_flag = great_war_ends
-				set_global_flag = versailles_treaty
-				set_global_flag = GER_capitulation
-				FROM = {
-					GER_change_wilhelm_ii_portrait = yes
-				}
-				every_country = {
-					limit = {
-						OR = {
-							tag = FROM
-							is_subject_of = FROM
-							AND = {
-								is_in_faction_with = FROM
-								NOT = {
-									is_in_faction_with = ROOT
-								}
-							}
-						}
-						NOT = {
-							has_country_flag = great_war_winner
-						}
-					}
-					set_country_flag = great_war_loser
-					add_ideas = idea_armistice
-				}
-				every_country = {
-					limit = {
-						OR = {
-							tag = ROOT
-							is_ally_with = ROOT
-						}
-						NOT = {
-							has_country_flag = great_war_loser
-						}
-					}
-					set_country_flag = great_war_winner
-					add_ideas = idea_armistice
-				}
-			}
-			if = {
-				limit = {
-					tag = GER					#winner
-					FROM = {
-						tag = FRA
-					}					#loser
-					is_great_war_ongoing = yes
-					NOT = {
-						has_global_flag = FRA_surrender_alone
-						has_country_flag = jaures_neutrality
-						has_country_leader = {
-							character = FRA_jean_jaures
-						}
-					}
-				}
-				set_global_flag = great_war_ends
-				set_global_flag = frankfurt_treaty
-				set_global_flag = ENT_capitulation
-				GER_change_wilhelm_ii_portrait = yes
-				every_country = {
-					limit = {
-						OR = {
-							tag = FROM
-							is_subject_of = FROM
-							AND = {
-								is_in_faction_with = FROM
-								NOT = {
-									is_in_faction_with = ROOT
-								}
-							}
-						}
-						NOT = {
-							has_country_flag = great_war_winner
-						}
-					}
-					set_country_flag = great_war_loser
-					add_ideas = idea_armistice
-				}
-				every_country = {
-					limit = {
-						OR = {
-							tag = ROOT
-							is_ally_with = ROOT
-						}
-						NOT = {
-							has_country_flag = great_war_loser
-						}
-					}
-					set_country_flag = great_war_winner
-					add_ideas = idea_armistice
-				}
-			}
-			if = {
-				limit = {
 					original_tag = QIN					#winner
 					FROM = {
 						original_tag = CHI
@@ -2163,7 +2057,10 @@
 						}
 					}
 					GER = {
-						puppet = UBD
+						set_autonomy = {
+							target = UBD
+							autonomy_state = autonomy_tgwr_client_state
+						}
 					}
 				}
 			}
@@ -2197,7 +2094,10 @@
 						}
 					}
 					GER = {
-						puppet = UBD
+						set_autonomy = {
+							target = UBD
+							autonomy_state = autonomy_tgwr_client_state
+						}
 					}
 				}
 			}
@@ -3606,7 +3506,10 @@
 						}
 					}
 					GER = {
-						puppet = UBD
+						set_autonomy = {
+							target = UBD
+							autonomy_state = autonomy_tgwr_client_state
+						}
 					}
 				}
 			}
@@ -3640,7 +3543,10 @@
 						}
 					}
 					GER = {
-						puppet = UBD
+						set_autonomy = {
+							target = UBD
+							autonomy_state = autonomy_tgwr_client_state
+						}
 					}
 				}
 			}
@@ -5151,21 +5057,6 @@
 					}
 				}
 			}
-			MOR = {
-				if = {
-					limit = {
-						has_game_rule = {
-							rule = MOR_ai_behavior
-							option = RANDOM
-						}
-					}
-					random_list = {
-						50 = { MOR = { set_country_flag = MOR_AI_RANDOM_SUCCESSFUL_ARMY_REFORM } }
-						50 = { MOR = { set_country_flag = MOR_AI_SUCCESSFUL_ARMY_REFORM_PASSIVE } }
-						50 = { MOR = { set_country_flag = MOR_AI_RANDOM_HISTORICAL } }
-					}
-				}
-			}
 			CAN = {
 				if = {
 					limit = {
@@ -5429,6 +5320,92 @@
 	}
 	on_capitulation = {
 		effect = {
+			# Prevent generic capitulation before mission
+			if = {
+				limit = {
+					tag = FRA
+				}
+				if = {
+					limit = {
+						has_active_mission = FRA_surrender_ENT_mission
+					}
+					FRA_surrender_effect_ENT = yes
+				}
+			}
+			if = {
+				limit = {
+					tag = RUS
+				}
+				if = {
+					limit = {
+						has_active_mission = RUS_armistice_ENT_mission
+					}
+					RUS_armistice_with_CENPO = yes
+				}
+				else_if = {
+					limit = { 
+						has_active_mission = RUS_treaty_of_brest_litovsk_mission
+					}
+					RUS_surrender_effect_ENT = yes
+				}
+			}
+			if = {
+				limit = {
+					tag = ROM
+				}
+				if = {
+					limit = {
+						has_active_mission = ROM_surrender_ENT_mission
+					}
+					ROM_surrender_effect_ENT = yes
+				}
+			}
+			if = {
+				limit = {
+					tag = GER
+				}
+				if = {
+					limit = {
+						has_active_mission = GER_surrender_CP_mission
+					}
+					GER_surrender_effect_CP = yes
+				}
+			}
+			if = {
+				limit = {
+					tag = AUS
+				}
+				if = {
+					limit = {
+						has_active_mission = AUS_surrender_CP_mission
+					}
+					AUS_surrender_effect_CP = yes
+				}
+			}
+			if = {
+				limit = {
+					tag = BUL
+				}
+				if = {
+					limit = {
+						has_active_mission = BUL_surrender_CP_mission
+					}
+					BUL_surrender_effect_CP = yes
+				}
+			}
+			if = {
+				limit = {
+					tag = TUR
+				}
+				if = {
+					limit = {
+						has_active_mission = TUR_surrender_CP_mission
+					}
+					TUR_surrender_effect_CP = yes
+				}
+			}
+
+			###
 			if = {
 				limit = {
 					GRE = {
@@ -5535,6 +5512,27 @@
 			}
 			if = {
 				limit = {
+					tag = RUC
+					FROM = {
+						tag = ROM
+						is_in_faction = no
+						has_active_mission = ROM_bessarabian_gamble
+					}
+				}
+				white_peace = ROM
+				if = {
+					limit = { 
+						RUC = {
+							owns_state = 1303
+						}
+					}
+					ROM = {
+						transfer_state = 1303
+					}
+				}
+			}
+			if = {
+				limit = {
 					tag = LAT
 					has_war_with = UBD
 				}
@@ -5576,7 +5574,10 @@
 					}
 				}
 				SOV = {
-					puppet = KUB
+					set_autonomy = {
+						target = KUB
+						autonomy_state = autonomy_tgwr_assr
+					}
 				}
 				KUB = {
 					set_politics = {
@@ -5651,7 +5652,10 @@
 						}
 					}
 					SOV = {
-						puppet = DON
+						set_autonomy = {
+							target = DON
+							autonomy_state = autonomy_tgwr_assr
+						}
 					}
 					DON = {
 						add_popularity = {
@@ -6055,46 +6059,9 @@
 				limit = {
 					tag = PRG
 				}
-				if = {
-					limit = {
-						ENG = {
-							has_war_with = PRG
-							is_subject = no
-							NOT = {
-								has_country_flag = great_war_loser
-							}
-						}
-					}
-					every_state = {
-						limit = {
-							is_owned_by = PRG
-							is_claimed_by = ENG
-						}
-						ENG = {
-							transfer_state = PREV
-						}
-					}
-				}
-				if = {
-					limit = {
-						RUS = {
-							has_war_with = PRG
-							is_subject = no
-							NOT = {
-								has_country_flag = great_war_loser
-								tag = SOV
-								has_war_with = SOV
-							}
-						}
-					}
-					every_state = {
-						limit = {
-							is_owned_by = PRG
-							is_claimed_by = RUS
-						}
-						RUS = {
-							transfer_state = PREV
-						}
+				PER = {
+					annex_country = {
+						target = ROOT
 					}
 				}
 			}
@@ -6187,27 +6154,27 @@
 					}
 				}
 			}
-			if = {
-				limit = {
-					tag = RUS
-					is_in_faction = yes
-					is_faction_leader = no
-					has_global_flag = great_war
-					GER = {
-						has_war_with = PREV
-						is_subject = no
-						has_capitulated = no
-					}
-					NOT = {
-						#has_global_flag = great_war_ends
-						has_global_flag = RUS_surrender_alone
-						tag = SOV
-					}
-				}
-				GER = {
-					country_event = ww1_russia.98
-				}
-			}
+			# if = {
+			# 	limit = {
+			# 		tag = RUS
+			# 		is_in_faction = yes
+			# 		is_faction_leader = no
+			# 		has_global_flag = great_war
+			# 		GER = {
+			# 			has_war_with = PREV
+			# 			is_subject = no
+			# 			has_capitulated = no
+			# 		}
+			# 		NOT = {
+			# 			#has_global_flag = great_war_ends
+			# 			has_global_flag = RUS_surrender
+			# 			tag = SOV
+			# 		}
+			# 	}
+			# 	GER = {
+			# 		country_event = ww1_russia.98
+			# 	}
+			# }
 			if = {
 				limit = {
 					tag = ENG
@@ -6388,94 +6355,131 @@
 			}
 			if = {
 				limit = {
-					tag = RMO
+					original_tag = MOR
 				}
-				RMO = {
+				if = {
+					limit = {
+						tag = RMO
+						is_subject = no
+						has_war_with = MOR
+					}
+					set_cosmetic_tag = RMO
 					every_core_state = {
 						remove_core_of = PREV
 					}
-				}
-				MOR = {
-					annex_country = {
-						target = RMO
-						transfer_troops = no
-					}
-					MOR_zain_al_abidin_ibn_al_hasan = {
-						set_nationality = PREV
-					}
-				}
-			}
-			if = {
-				limit = {
-					tag = GUD
-					is_subject = no
-					has_war_with = MOR
-				}
-				MOR = {
-					annex_country = {
-						target = GUD
-						transfer_troops = no
-					}
-					if = {
-						limit = {
-							is_subject = yes
+					MOR = {
+						annex_country = {
+							target = RMO
+							transfer_troops = no
 						}
-						SPR = {
-							if = {
-								limit = {
-									OR = {
-										has_subject = PREV
-										has_idea = SPR_pact_of_cartagena_1907
-									}
-								}
-								transfer_state = 807
-								transfer_state = 1235
-								transfer_state = 1234
-								transfer_state = 1253
+						MOR_zain_al_abidin_ibn_al_hasan = {
+							set_nationality = PREV
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						tag = GUD
+						is_subject = no
+						has_war_with = MOR
+					}
+					MOR = {
+						annex_country = {
+							target = GUD
+							transfer_troops = no
+						}
+						if = {
+							limit = {
+								is_subject = yes
 							}
-						}
-						FRA = {
-							if = {
-								limit = {
-									OR = {
-										has_subject = PREV
-										SPR = {
+							SPR = {
+								if = {
+									limit = {
+										OR = {
+											has_subject = PREV
 											has_idea = SPR_pact_of_cartagena_1907
 										}
 									}
+									transfer_state = 807
+									transfer_state = 1235
+									transfer_state = 1234
+									transfer_state = 1253
 								}
-								transfer_state = 1236
-								transfer_state = 1254
+							}
+							FRA = {
+								if = {
+									limit = {
+										OR = {
+											has_subject = PREV
+											SPR = {
+												has_idea = SPR_pact_of_cartagena_1907
+											}
+										}
+									}
+									transfer_state = 1236
+									transfer_state = 1254
+								}
 							}
 						}
 					}
 				}
-			}
-			if = {
-				limit = { 
-					tag = MOR
+				else_if = {
+					limit = {
+						tag = MOR
+						FROM = {
+							tag = RMO
+						}
+					}
 					FROM = {
-						tag = GUD
+						set_cosmetic_tag = MOR
+						annex_country = {
+							target = MOR
+							transfer_troops = no
+						}
+						ROOT = {
+							every_character = {
+								limit = {
+									is_generic_character = no
+									NOT = {
+										is_character = MOR_harry_aubrey_de_vere_maclean
+									}
+								}
+								set_nationality = FROM
+							}
+							every_core_state = {
+								remove_core_of = ROOT
+								add_core_of = FROM
+							}
+						}
 					}
 				}
-				FROM = {
-					annex_country = {
-						target = MOR
-						transfer_troops = no
-					}
-					ROOT = {
-						every_character = {
-							limit = {
-								is_generic_character = no
-								NOT = {
-									is_character = MOR_harry_aubrey_de_vere_maclean
-								}
-							}
-							set_nationality = FROM
+				else_if = {
+					limit = {
+						tag = MOR
+						FROM = {
+							tag = GUD
 						}
-						every_core_state = {
-							remove_core_of = ROOT
-							add_core_of = FROM
+					}
+					FROM = {
+						set_cosmetic_tag = MOR_hibist
+						annex_country = {
+							target = MOR
+							transfer_troops = no
+						}
+						ROOT = {
+							every_character = {
+								limit = {
+									is_generic_character = no
+									NOT = {
+										is_character = MOR_harry_aubrey_de_vere_maclean
+									}
+								}
+								set_nationality = FROM
+							}
+							every_core_state = {
+								remove_core_of = ROOT
+								add_core_of = FROM
+							}
 						}
 					}
 				}
@@ -6779,87 +6783,87 @@
 					}
 				}
 			}
-			if = {
-				limit = {
-					original_tag = LAT
-					OR = {
-						has_country_flag = LAT_iskolata
-						has_cosmetic_tag = LAT_iskolata
-					}
-					OR = {
-						is_in_faction = no
-						is_in_faction_with = SOV
-					}				
-					has_war_with = GER
-				}
-				GER = {
-					annex_country = {
-						target = ROOT
-					}
-					if = {
-						limit = {
-							owns_state = 12
-							NOT = { owns_state = 191 }
-						}
-						191 = {
-							owner = {
-								transfer_state = 12
-							}
-						}
-					}
-					if = {
-						limit = {
-							owns_state = 96
-							NOT = { owns_state = 913 }
-						}
-						913 = {
-							owner = {
-								transfer_state = 96
-							}
-						}
-					}
-					if = {
-						limit = { 
-							has_country_flag = COU_should_be_released
-						}
-						GER_release_COU = yes
-					}
-					else_if = {
-						limit = { 
-							country_exists = COU
-						}
-						every_owned_state = {
-							limit = {
-								is_core_of = COU
-							}
-							transfer_state_to = COU
-						}
-					}
-					if = {
-						limit = {
-							country_exists = UBD
-						}
-						every_owned_state = {
-							limit = {
-								is_core_of = UBD
-								region = 37
-							}
-							transfer_state_to = UBD
-						}
-					}
-					else = {
-						12 = {
-							owner = {
-								every_state = {
-									limit = { is_owned_by = ROOT }
-									set_state_owner_to = PREV
-								}
-							}
-						}
-					}
-				}
-				clear_iskolata = yes
-			}
+			#if = {
+			#	limit = {
+			#		original_tag = LAT
+			#		OR = {
+			#			has_country_flag = LAT_iskolata
+			#			has_cosmetic_tag = LAT_iskolata
+			#		}
+			#		OR = {
+			#			is_in_faction = no
+			#			is_in_faction_with = SOV
+			#		}				
+			#		has_war_with = GER
+			#	}
+			#	GER = {
+			#		annex_country = {
+			#			target = ROOT
+			#		}
+			#		if = {
+			#			limit = {
+			#				owns_state = 12
+			#				NOT = { owns_state = 191 }
+			#			}
+			#			191 = {
+			#				owner = {
+			#					transfer_state = 12
+			#				}
+			#			}
+			#		}
+			#		if = {
+			#			limit = {
+			#				owns_state = 96
+			#				NOT = { owns_state = 913 }
+			#			}
+			#			913 = {
+			#				owner = {
+			#					transfer_state = 96
+			#				}
+			#			}
+			#		}
+			#		if = {
+			#			limit = { 
+			#				has_country_flag = COU_should_be_released
+			#			}
+			#			GER_release_COU = yes
+			#		}
+			#		else_if = {
+			#			limit = { 
+			#				country_exists = COU
+			#			}
+			#			every_owned_state = {
+			#				limit = {
+			#					is_core_of = COU
+			#				}
+			#				transfer_state_to = COU
+			#			}
+			#		}
+			#		if = {
+			#			limit = {
+			#				country_exists = UBD
+			#			}
+			#			every_owned_state = {
+			#				limit = {
+			#					is_core_of = UBD
+			#					region = 37
+			#				}
+			#				transfer_state_to = UBD
+			#			}
+			#		}
+			#		else = {
+			#			12 = {
+			#				owner = {
+			#					every_state = {
+			#						limit = { is_owned_by = ROOT }
+			#						set_state_owner_to = PREV
+			#					}
+			#				}
+			#			}
+			#		}
+			#	}
+			#	clear_iskolata = yes
+			#}
 			if = {
 				limit = {
 					original_tag = CAU
@@ -7001,7 +7005,10 @@
 						TAN = {
 							transfer_state = 329
 						}
-						puppet = TAN
+						set_autonomy = {
+							target = TAN
+							autonomy_state = autonomy_tgwr_ssr
+						}
 					}
 					if = {
 						limit = {
@@ -7071,7 +7078,7 @@
 						SOV = {
 							set_autonomy = {
 								target = MON
-								autonomy_state = autonomy_tgwr_sr
+								autonomy_state = autonomy_tgwr_ssr
 								freedom_level = 0.5
 								end_wars = yes
 							}
@@ -7107,7 +7114,7 @@
 					white_peace = ROOT
 					set_autonomy = {
 						target = ROOT
-						autonomy_state = autonomy_tgwr_sr
+						autonomy_state = autonomy_tgwr_ssr
 					}
 				}
 				ROOT = {
@@ -8152,13 +8159,6 @@
 			}
 			if = {
 				limit = {
-					original_tag = MOR
-					has_country_flag = MOR_anti_french
-				}
-				set_cosmetic_tag = RMO
-			}
-			if = {
-				limit = {
 					original_tag = SOM
 				}
 				if = {
@@ -8890,8 +8890,6 @@
 				}		
 				set_cosmetic_tag = CHA
 				set_capital = { state = 774 }
-				clr_country_flag = empty_focus
-				load_focus_tree = generic_focus
 			}
 			else_if = {
 				limit = {
@@ -9898,7 +9896,7 @@
 				}
 				else_if = {
 					limit = {
-						original_tag = COU
+						original_tag = CAU
 						OR = {
 							has_cosmetic_tag = TSCN
 							has_cosmetic_tag = TSCN_RUS
@@ -10645,7 +10643,7 @@
 				}
 				else_if = {
 					limit = {
-						original_tag = COU
+						original_tag = CAU
 						has_cosmetic_tag = TSCN_vanguardist
 					}
 					set_cosmetic_tag = TSCN

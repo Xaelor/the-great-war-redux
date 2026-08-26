@@ -763,10 +763,13 @@ country_event = {
 	is_triggered_only = yes
 	immediate = {
 		hidden_effect = {
+			country_event = {
+				id = rusrevolt.34 # first decrees
+				days = 1
+			}
+			load_oob = SOV_focus
 			set_global_flag = russian_revolution
 			set_global_flag = october_revolution
-			relinguish_entente_leadership = yes
-			clr_country_flag = RUS_surrender_alone
 			every_state = {
 				limit = {
 					is_claimed_by = RUS
@@ -854,13 +857,13 @@ country_event = {
 					set_nationality = SER
 				}
 			}
-			clear_all_relations_except_wars = yes
 			create_SOV = yes
 			create_FIN = yes
 			create_DON = yes
 			create_KUB = yes
 			create_CRI = yes
 			create_UPR = yes
+			create_MOL = yes
 			create_RUC = yes
 			create_ORE = yes
 			create_UCH = yes
@@ -875,10 +878,11 @@ country_event = {
 					NOT = {
 						tag = CER
 						has_country_leader_ideology = vanguardism
+						has_autonomy_state = autonomy_tgwr_nominal_constituency
 					}
 				}
 				free_subject_leave_faction = yes
-			}
+			}			
 			RUS = {
 				add_named_threat = {
 					threat = 10
@@ -1892,7 +1896,7 @@ country_event = {
 			}
 		}
 		is_great_war_ongoing = yes
-		has_global_flag = brest_litovsk
+		has_global_flag = RUS_surrender
 		SOV = {
 			is_subject = no
 			has_government = communism
@@ -2477,5 +2481,46 @@ country_event = {
 	option = {
 		name = rusrevolt.33.a
 		custom_effect_tooltip = rusrevolt.33.tt
+	}
+}
+
+country_event = {
+	id = rusrevolt.34
+	title = rusrevolt.34.t
+	desc = rusrevolt.34.d
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			set_country_flag = SOV_decree_on_peace
+		}
+	}
+	option = {
+		name = rusrevolt.34.a
+		add_political_power = 150
+		custom_effect_tooltip = SOV_decree_on_peace_tt
+		hidden_effect = {			
+			country_event = {
+				id = rusrevolt.35
+				days = 1
+			}	
+		}
+	}
+}
+
+country_event = {
+	id = rusrevolt.35
+	title = rusrevolt.35.t
+	desc = rusrevolt.35.d
+	is_triggered_only = yes
+	option = {
+		name = rusrevolt.35.a
+		if = {
+			limit = {
+				has_idea = RUS_nikolai_dukhonin_opposition
+				has_character = SOV_nikolai_krylenko
+			}
+			retire_character = RUS_nikolai_dukhonin
+			activate_advisor = SOV_nikolai_krylenko			
+		}		
 	}
 }
