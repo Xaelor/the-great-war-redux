@@ -636,7 +636,7 @@ RUS_cabinet_category  = {
 		}
 	}
 	RUS_use_the_priesthood = {
-		icon = oppression
+		icon = eng_propaganda_campaigns
 		allowed = {
 			original_tag = RUS
 		}
@@ -686,7 +686,7 @@ RUS_cabinet_category  = {
 	}
 	#Censor liberal press
 	RUS_censor_liberal_press_decision = {
-		icon = oppression
+		icon = eng_trade_unions_demand
 		allowed = {
 			original_tag = RUS
 		}
@@ -870,6 +870,7 @@ RUS_cabinet_category = {
 					RUS_remove_from_the_cabinet = yes
 				}
 			}
+			RUS_update_cabinet_gui = yes
 			country_event = ww1_rus_conservative.3
 		}
 	}
@@ -931,7 +932,7 @@ RUS_cabinet_category = {
 	}
 	#Reconvene the Duma
 	RUS_reconvene_the_state_duma = {
-		icon = oppression
+		icon = eng_trade_unions_support
 		allowed = {
 			original_tag = RUS
 		}
@@ -1036,6 +1037,7 @@ RUS_cabinet_category = {
 				show_ideas_tooltip = RUS_nikolai_golitsyn
 				country_event = ww1_rus_conservative.3
 			}
+			RUS_update_cabinet_gui = yes
 			mark_focus_tree_layout_dirty = yes
 		}
 	}
@@ -1230,7 +1232,7 @@ RUS_cabinet_category = {
 	}
 	#Negotiate with strikers
 	RUS_negotiate_with_strikers_decision = {
-		icon = oppression
+		icon = generic_political_discourse
 		allowed = {
 			original_tag = RUS
 		}
@@ -1284,6 +1286,12 @@ RUS_cabinet_category = {
 			hidden_trigger = {
 				always = no
 			}
+			check_variable = {
+				var = coup_readiness_var
+				value = 100
+				compare = greater_than_or_equals
+				tooltip = coup_readiness_trigger_tt
+			}
 			focus_progress = {
 				focus = RUS_drastic_measures
 				progress > 0
@@ -1317,6 +1325,109 @@ RUS_cabinet_category = {
 			add_days_mission_timeout = {
 				mission = RUS_kokovtsov_resignation_mission
 				days = -90
+			}
+		}
+	}
+	RUS_coup_silence_duma_members = {
+		icon = SWI_dismiss_council
+		allowed = {
+			tag = RUS
+		}
+		visible = {
+			has_active_mission = RUS_window_of_opportunity_mission
+		}
+		days_remove = 10
+		remove_effect = {
+			add_to_variable = {
+				coup_readiness = 25
+				tooltip = modify_coup_readiness_var
+			}
+			hidden_effect = {
+				country_event = ww1_rus_maklakov.2
+			}
+		}
+		cost = 10
+		cancel_trigger = {
+			NOT = {
+				has_active_mission = RUS_window_of_opportunity_mission
+			}
+		}
+	}
+	RUS_coup_prepare_police = {
+		icon = generic_police_action
+		allowed = {
+			tag = RUS
+		}
+		available = {
+			has_completed_focus = RUS_purge_the_gendarmerie
+		}
+		visible = {
+			has_active_mission = RUS_window_of_opportunity_mission
+		}
+		days_remove = 10
+		remove_effect = {
+			add_to_variable = {
+				coup_readiness = 25
+				tooltip = modify_coup_readiness_var
+			}
+			hidden_effect = {
+				country_event = ww1_rus_maklakov.3
+			}
+		}
+		cost = 10
+		cancel_trigger = {
+			NOT = {
+				has_active_mission = RUS_window_of_opportunity_mission
+			}
+		}
+	}
+	RUS_coup_notify_governors = {
+		icon = generic_military
+		allowed = {
+			tag = RUS
+		}
+		visible = {
+			has_active_mission = RUS_window_of_opportunity_mission
+		}
+		days_remove = 10
+		remove_effect = {
+			add_to_variable = {
+				coup_readiness = 25
+				tooltip = modify_coup_readiness_var
+			}
+			hidden_effect = {
+				country_event = ww1_rus_maklakov.4
+			}
+		}
+		cost = 10
+		cancel_trigger = {
+			NOT = {
+				has_active_mission = RUS_window_of_opportunity_mission
+			}
+		}
+	}
+	RUS_coup_allies_in_state_council = {
+		icon = generic_political_discourse
+		allowed = {
+			tag = RUS
+		}
+		visible = {
+			has_active_mission = RUS_window_of_opportunity_mission
+		}
+		days_remove = 10
+		remove_effect = {
+			add_to_variable = {
+				coup_readiness = 25
+				tooltip = modify_coup_readiness_var
+			}
+			hidden_effect = {
+				country_event = ww1_rus_maklakov.5
+			}
+		}
+		cost = 10
+		cancel_trigger = {
+			NOT = {
+				has_active_mission = RUS_window_of_opportunity_mission
 			}
 		}
 	}
