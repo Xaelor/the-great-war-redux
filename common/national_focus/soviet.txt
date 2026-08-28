@@ -10,84 +10,17 @@ focus_tree = {
 	}
 
 	focus = {
-		id = SOV_first_decrees
-		icon = GFX_focus_SOV_first_decrees
-		cost = 1
-		x = 0
-		y = 0
-		available_if_capitulated = yes
-		completion_reward = {
-			add_political_power = 150
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = SOV_alexey_ryikov
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = SOV_vladimir_ovseenko
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = SOV_viktor_nogin
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = SOV_georgiy_chicherin
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = SOV_felix_dzerzhinsky
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = SOV_leon_kamenev
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = SOV_grigoriy_zinoviev
-        }
-		ai_will_do = { factor = 1 }
-	}
-	focus = {
-		id = SOV_peace_talks
-		icon = GFX_goal_generic_dangerous_deal
-		cost = 2
-		prerequisite = {
-			focus = SOV_first_decrees
-		}
-		x = -1
-		y = 1
-		relative_position_id = SOV_first_decrees
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		
-		available = {
-			has_war_with = GER
-		}
-		bypass = {
-			NOT = { has_war_with = GER }
-		}
-		cancelable = no
-		completion_reward = {
-			GER = { country_event = { id = ww1_brest_litovsk.1 days = 5 } }
-			if = {
-				limit = {
-					has_idea = RUS_nikolai_dukhonin_opposition
-					has_character = SOV_nikolai_krylenko
-				}
-				retire_character = RUS_nikolai_dukhonin
-				activate_advisor = SOV_nikolai_krylenko			
-			}	
-        }
-		ai_will_do = {
-			factor = 4000
-		}
-	}
-	focus = {
 		id = SOV_combat_the_counter_revolution
 		icon = GFX_focus_SOV_combat_the_counter_revolution
-		cost = 2
-		prerequisite = {
-			focus = SOV_first_decrees
-		}
-		x = 1
-		y = 1
-		relative_position_id = SOV_first_decrees
+		cost = 6
+
+		x = 0
+		y = 0
+		cancelable = no
 		available_if_capitulated = yes
 		available = {
 			is_subject = no
 			has_government = communism
-			OR = {
-				has_war = no
-				has_completed_focus = SOV_peace_talks
-			}
 		}
 		will_lead_to_war_with = ORE
 		will_lead_to_war_with = DON
@@ -96,18 +29,6 @@ focus_tree = {
 		will_lead_to_war_with = CRI
 		completion_reward = {
 			add_political_power = 250
-			if = {
-				limit = {
-					is_in_faction = no
-				}
-				create_faction_from_template = faction_template_red_movement
-				else_if = {
-					limit = {
-						is_faction_leader = yes
-					}
-					set_faction_name = red_movement
-				}
-			}
 			add_ideas = SOV_idea_cheka
 			if = {
 				limit = {
@@ -265,7 +186,10 @@ focus_tree = {
 					}
 				}		
 				ROOT = {
-					puppet = BSR
+					set_autonomy = {
+						target = BSR
+						autonomy_state = autonomy_tgwr_milrevcom
+					}
 				}
 			}			
 			unlock_decision_category_tooltip = SOV_combat_the_counter_revolution
@@ -302,9 +226,9 @@ focus_tree = {
 		id = SOV_decree_on_land
 		icon = GFX_goal_generic_soviet_construction
 		cost = 2
-		x = -6
+		x = -8
 		y = 1
-		relative_position_id = SOV_peace_talks
+		relative_position_id = SOV_combat_the_counter_revolution
 		
 		available_if_capitulated = yes
 		bypass = {
@@ -312,9 +236,6 @@ focus_tree = {
 			NOT = {
 				has_idea = RUS_idea_agrarian_empire
 			}
-		}
-		prerequisite = {
-			focus = SOV_peace_talks
 		}
 		prerequisite = {
 			focus = SOV_combat_the_counter_revolution
@@ -1018,9 +939,6 @@ focus_tree = {
 		prerequisite = {
 			focus = SOV_combat_the_counter_revolution
 		}
-		prerequisite = {
-			focus = SOV_peace_talks
-		}
 		completion_reward = {
 			add_war_support = 0.1
 			
@@ -1038,9 +956,7 @@ focus_tree = {
 			focus = SOV_decree_on_army_revolutionary_committee
 		}
 		available = {
-			NOT = {
-				has_war_with = GER
-			}
+			has_global_flag = RUS_surrender
 			NOT = {
 				has_idea = RUS_demobilizing_army
 			}
@@ -1682,9 +1598,7 @@ focus_tree = {
 			focus = SOV_decree_on_army_revolutionary_committee
 		}
 		available = {
-			NOT = {
-				has_war_with = GER
-			}
+			has_global_flag = RUS_surrender
 			NOT = {
 				has_idea = RUS_demobilizing_army
 			}
@@ -1840,9 +1754,7 @@ focus_tree = {
 			focus = SOV_decree_on_army_revolutionary_committee
 		}
 		available = {
-			NOT = {
-				has_war_with = GER
-			}
+			has_global_flag = RUS_surrender
 			NOT = {
 				has_idea = RUS_demobilizing_army
 			}
@@ -2144,14 +2056,11 @@ focus_tree = {
 			has_government = communism
 		}
 		prerequisite = {
-			focus = SOV_peace_talks
-		}
-		prerequisite = {
 			focus = SOV_combat_the_counter_revolution
 		}
-		x = -1
+		x = -3
 		y = 1
-		relative_position_id = SOV_peace_talks
+		relative_position_id = SOV_combat_the_counter_revolution
 		completion_reward = {
 			custom_effect_tooltip = SOV_sovet_republics_tt
 			unlock_decision_category_tooltip = SOV_decision_soviet_republics
@@ -2202,11 +2111,11 @@ focus_tree = {
 		icon = GFX_SOV_a_global_class_struggle_ccp_2d_sov_compatibility
 		cost = 5
 		prerequisite = {
-			focus = SOV_peace_talks
+			focus = SOV_combat_the_counter_revolution
 		}
-		x = 1
+		x = -1
 		y = 1
-		relative_position_id = SOV_peace_talks
+		relative_position_id = SOV_combat_the_counter_revolution
 		available = {	
 			is_subject = no
 			has_government = communism
@@ -2586,7 +2495,7 @@ focus_tree = {
 			}
 			set_autonomy = {
 				target = FER
-				autonomy_state = autonomy_satellite
+				autonomy_state = autonomy_tgwr_ssr
 				end_civil_wars = no
 				end_wars = no			
 			}

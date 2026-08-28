@@ -171,15 +171,7 @@ country_event = {
 	fire_only_once = yes
 	immediate = {
 		hidden_effect = {
-			if = {
-				limit = {
-					is_subject = yes
-				}
-				OVERLORD = {
-					end_puppet = ROOT
-				}
-				clr_country_flag = protectorate
-			}
+			free_subject = yes
 		}
 	}
 	option = {
@@ -628,46 +620,48 @@ country_event = {
 					leave_faction = yes
 				}
 			}
-			every_other_country = {
-				limit = {
-					has_war_with = ENT
-				}
-				if = {
+			ENT = {
+				every_enemy_country = {
 					limit = {
+						is_in_central_powers = yes
+					}
+					if = {
+						limit = {
+							ARM = {
+								has_country_flag = post_transcaucasia
+							}
+						}
 						ARM = {
-							has_country_flag = post_transcaucasia
+							add_to_war = {
+								targeted_alliance = ENT
+								enemy = PREV
+							}
 						}
 					}
-					ARM = {
-						add_to_war = {
-							targeted_alliance = ENT
-							enemy = PREV
+					if = {
+						limit = {
+							GEO = {
+								has_country_flag = post_transcaucasia
+							}
 						}
-					}
-				}
-				if = {
-					limit = {
 						GEO = {
-							has_country_flag = post_transcaucasia
+							add_to_war = {
+								targeted_alliance = ENT
+								enemy = PREV
+							}
 						}
 					}
-					GEO = {
-						add_to_war = {
-							targeted_alliance = ENT
-							enemy = PREV
+					if = {
+						limit = {
+							AZR = {
+								has_country_flag = post_transcaucasia
+							}
 						}
-					}
-				}
-				if = {
-					limit = {
 						AZR = {
-							has_country_flag = post_transcaucasia
-						}
-					}
-					AZR = {
-						add_to_war = {
-							targeted_alliance = ENT
-							enemy = PREV
+							add_to_war = {
+								targeted_alliance = ENT
+								enemy = PREV
+							}
 						}
 					}
 				}
@@ -704,7 +698,7 @@ country_event = {
 					}
 					country_event = {
 						id = ww1_ottoman.112
-						days = 1
+						hours = 1
 					}
 				}
 			}
@@ -788,7 +782,7 @@ country_event = {
 		effect_tooltip = {
 			set_autonomy = {
 				target = GEO
-				autonomous_state = autonomy_tgwr_informal_protectorate
+				autonomous_state = autonomy_tgwr_protected_state
 			}
 		}
 		hidden_effect = {
@@ -799,7 +793,7 @@ country_event = {
 			}
 			set_autonomy = {
 				target = GEO
-				autonomous_state = autonomy_tgwr_informal_protectorate
+				autonomous_state = autonomy_tgwr_protected_state
 				end_wars = no
 				freedom_level = 0.6
 			}
@@ -954,7 +948,6 @@ country_event = {
 		NOT = {
 			has_global_flag = mudros_armistice
 			has_global_flag = treaty_of_batum
-			has_idea = RUS_idea_armistice_rus
 		}
 		TUR = {
 			has_war_with = ROOT
@@ -1008,17 +1001,16 @@ country_event = {
 	title = ww1_georgia.20.t
 	desc = ww1_georgia.20.d
 	picture = GFX_report_event_generic_conference
-	trigger = {
-		tag = CAU
-		has_idea = GEO_erzincan_armistice
-		is_subject = no
-		has_global_flag = brest_litovsk_finished
-		has_war_with = TUR
-	}
+	#trigger = {
+	#	tag = CAU
+	#	has_idea = GEO_erzincan_armistice
+	#	is_subject = no
+	#	has_global_flag = RUS_surrender
+	#	has_war_with = TUR
+	#}
+	# disabled
+	is_triggered_only = yes
 	fire_only_once = yes
-	mean_time_to_happen = {
-		days = 0
-	}
 	option = {
 		name = ww1_georgia.20.a
 		TUR = {

@@ -488,7 +488,7 @@ news_event = {
 # 			FROM = {
 # 				set_autonomy = {
 # 					target = INS
-# 					autonomy_state = autonomy_colony
+# 					autonomy_state = autonomy_tgwr_colony
 # 				}
 # 			}
 # 			INS = { restore_previous_government_type = yes }
@@ -1793,7 +1793,7 @@ news_event = {
 # 			ROOT = { set_country_flag = protectorate }
 # 			set_autonomy = {
 # 				target = ROOT
-# 				autonomy_state = autonomy_tgwr_informal_protectorate
+# 				autonomy_state = autonomy_tgwr_protected_state
 # 			}
 # 		}
 # 		ai_chance = {
@@ -3059,10 +3059,6 @@ news_event = {
 # 		NOT = {
 # 			has_global_flag = GER_capitulation
 # 			has_global_flag = ENT_capitulation
-# 			has_game_rule = {
-# 				rule = allow_scripted_peace_treaty
-# 				option = "BLOCKED"
-# 			}
 # 			controls_province = 11506
 # 		}
 # 		OR = {
@@ -4225,7 +4221,7 @@ country_event = {
 	picture = GFX_report_event_german_troops_paris
 	trigger = {
 		original_tag = FRA
-		has_country_flag = FRA_nationalist_france
+		has_country_flag = FRA_nationalist_france_flag
 		is_subject = no
 		has_war = no
 		any_country_with_original_tag = {
@@ -4876,6 +4872,8 @@ country_event = {
 		}
 		has_country_flag = great_war_winner
 	}
+	is_triggered_only = yes
+	# DISABLED UNTIL POST WAR CONTENT DEVELOPING
 	immediate = {
 		hidden_effect = {
 			if = {
@@ -4892,9 +4890,6 @@ country_event = {
 		}
 	}
 	fire_only_once = yes
-	mean_time_to_happen = {
-		days = 7
-	}
 	option = {
 		# Take Briey and Gerardmer
 		name = ww1_germany.125.b
@@ -6140,7 +6135,7 @@ country_event = {
 # 			}
 # 			set_autonomy = {
 # 				target = WUR
-# 				autonomy_state = autonomy_tgwr_informal_protectorate
+# 				autonomy_state = autonomy_tgwr_protected_state
 # 			}
 # 		}
 # 	}
@@ -7345,6 +7340,7 @@ country_event = {
 		has_country_flag = great_war_winner
 		OR = {
 			95 = { is_owned_and_controlled_by = ROOT }
+			1301 = { is_owned_and_controlled_by = ROOT }
 			204 = { is_owned_and_controlled_by = ROOT }
 			206 = { is_owned_and_controlled_by = ROOT }
 		}
@@ -7627,6 +7623,7 @@ country_event = {
 			has_war_with = RUS
 			has_war_with = SOV
 			95 = { is_owned_and_controlled_by = ROOT }
+			1301 = { is_owned_and_controlled_by = ROOT }
 			204 = { is_owned_and_controlled_by = ROOT }
 			206 = { is_owned_and_controlled_by = ROOT }
 		}
@@ -13044,7 +13041,7 @@ country_event = {
 	option = {
 		name = ww1_germanrework.168.a
 		add_war_support = 0.15
-		join_great_war_against_GER = yes
+		join_ENT_declare_war_on_CENPO = yes
 		news_event = {
 			id = ww1_germanrework.169
 			hours = 1
