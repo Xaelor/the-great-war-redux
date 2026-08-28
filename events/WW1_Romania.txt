@@ -1603,10 +1603,10 @@ country_event = {
 			long_name = ROM_conservative_party_long
 			name = ROM_conservative_party
 		}
-		country_event = {
-			id = ww1_romania.107
-			days = 5
-		}
+		#country_event = {
+		#	id = ww1_romania.107
+		#	days = 5
+		#}
 	}
 }
 
@@ -3507,138 +3507,9 @@ country_event = {
 	title = ww1_romania.107.t
 	desc = ww1_romania.107.d
 	picture = GFX_report_event_romanian_soldiers
-	fire_only_once = yes
 	is_triggered_only = yes
 	option = {
 		name = ww1_romania.107.a
-		if = {
-			limit = {
-				NOT = {
-					has_idea = standing_alone
-				}
-			}
-			add_ideas = standing_alone
-		}
-		every_country = {
-			limit = {
-				OR = {
-					tag = GER
-					AND = {
-						is_in_faction_with = GER
-						OR = {
-							tag = AUS
-							tag = HUN
-							tag = BUL
-						}
-					}
-				}
-			}
-			diplomatic_relation = {
-				country = ROM
-				relation = military_access
-				active = yes
-			}
-		}
-		78 = {
-			add_claim_by = ROM
-		}
-		if = {
-			limit = {
-				NOT = {
-					has_global_flag = ROM_treaty_of_bucharest
-				}
-			}
-			set_global_flag = ROM_treaty_of_bucharest
-		}
-		mark_focus_tree_layout_dirty = yes
-		complete_national_focus = ROM_recover_from_defeat
-
-		every_state = {
-			limit = {
-				OR = {
-					is_owned_by = ROM
-					is_owned_by = GER
-				}
-				OR = {
-					state = 46
-					state = 77
-					state = 81
-					state = 805
-					state = 846
-					state = 866
-					state = 867
-					state = 868
-				}
-			}
-			set_state_flag = bucharest_treaty
-			transfer_state_to = GER
-			add_contested_owner = ROM
-		}
-
-		if = {
-			limit = {
-				BUL = {
-					is_in_faction_with = GER
-				}
-			}
-			every_state = {
-				limit = {
-					OR = {
-						is_owned_by = ROM
-						is_owned_by = GER
-					}
-					OR = {
-						state = 77
-						state = 846
-					}
-				}
-				remove_contested_owner = ROM
-				transfer_state_to = BUL
-			}
-		}
-		84 = {
-			owner = {
-				if = {
-					limit = {
-						is_in_faction_with = GER
-					}
-					866 = { remove_contested_owner = ROM }
-					transfer_state = 866
-				}
-			}
-		}
-		778 = {
-			owner = {
-				868 = { remove_contested_owner = ROM }
-				if = {
-					limit = {
-						is_in_faction_with = GER
-					}
-					transfer_state = 868
-				}
-				else = {
-					ROM = {
-						transfer_state = 868
-					}
-				}
-			}
-		}
-		80 = {
-			owner = {
-				867 = { remove_contested_owner = ROM }
-				if = {
-					limit = {
-						is_in_faction_with = GER
-					}
-					transfer_state = 867
-				}
-				else = {
-					ROM = {
-						transfer_state = 867
-					}
-				}
-			}
-		}
 	}
 }
 
@@ -3676,7 +3547,6 @@ country_event = {
 		}
 		set_global_flag = ROM_treaty_doable
 		custom_effect_tooltip = ROM_help1
-		unlock_decision_tooltip = ROM_treaty_of_bucharest
 		activate_mission_tooltip = ROM_carp_collaborationist_governmenmt
 		hidden_effect = {
 			diplomatic_relation = {
@@ -3965,8 +3835,15 @@ country_event = {
 		78 = {
 			transfer_state_to = ROM
 		}
+		1303 = {
+			transfer_state_to = ROM
+		}
 		hidden_effect = {
 			78 = {
+				remove_core_of = RUS
+				add_claim_by = RUS
+			}
+			1303 = {
 				remove_core_of = RUS
 				add_claim_by = RUS
 			}
@@ -4012,6 +3889,9 @@ country_event = {
 		add_stability = 0.05
 		effect_tooltip = {
 			78 = {
+				transfer_state_to = ROM
+			}
+			1303 = {
 				transfer_state_to = ROM
 			}
 		}
@@ -4554,7 +4434,6 @@ country_event = {
 				modifier = ROM_occupation_costs
 			}
 		}
-		join_great_war_against_GER = yes
 		ai_chance = {
 			factor = 0
 		}
@@ -5110,9 +4989,28 @@ country_event = {
 	desc = ww1_romania.153.d
 	fire_only_once = yes
 	is_triggered_only = yes
-	picture = GFX_report_event_spanish_flu
+	picture = GFX_report_event_romanian_soldiers
 	option = {
 		name = ww1_romania.153.a
+		trigger = {
+			NOT = {
+				original_tag = MOL
+			}			
+		}
+		effect_tooltip = {
+			FROM = {
+				declare_war_on = {
+					target = ROOT
+					type = annex_everything
+				}
+			}
+		}	
+	}
+	option = {
+		name = ww1_romania.153.b
+		trigger = {
+			original_tag = MOL
+		}
 		effect_tooltip = {
 			FROM = {
 				declare_war_on = {
