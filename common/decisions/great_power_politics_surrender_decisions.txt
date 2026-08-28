@@ -106,6 +106,75 @@ TGWR_great_power_politics = {
 	}
 }
 
+#### ENG - United Kingdom ####
+TGWR_great_power_politics = {
+	ENG_surrender_ENT_mission = {
+		name = surrender_ENT_mission
+		icon = GFX_decision_generic_form_nation
+		allowed = {
+			original_tag = ENG
+		}
+		activation = {
+			is_part_of_great_war = yes
+			ENG_surrender_conditions = yes
+		}
+		available = {
+			ENG_surrender_conditions = no
+		}
+		cancel_trigger = {
+			is_part_of_great_war = no
+		}
+		days_mission_timeout = 15
+		is_good = no
+		fire_only_once = no
+		timeout_effect = {
+			ENG_surrender_effect_ENT = yes
+		}
+	}
+	ENG_surrender_ENT_mission_fake = {
+		icon = GFX_decision_generic_form_nation
+		allowed = {
+			OR = {
+				# Entete main members
+				original_tag = RUS
+				original_tag = FRA
+				original_tag = USA
+				original_tag = JAP
+				original_tag = SER
+				original_tag = BEL
+				original_tag = GRE
+				original_tag = ITA
+
+				# Central Powers main members
+				original_tag = GER
+				original_tag = AUS
+				original_tag = HUN
+				original_tag = BUL
+				original_tag = TUR
+			}
+		}
+		activation = {
+			is_part_of_great_war = yes
+			ENG = {
+				ENG_surrender_conditions = yes
+			}
+		}
+		available = {
+			ENG = {
+				ENG_surrender_conditions = no
+			}
+		}
+		cancel_trigger = {
+			is_part_of_great_war = no
+		}
+		days_mission_timeout = 15
+		is_good = no
+		fire_only_once = no
+		timeout_effect = {
+		}
+	}
+}
+
 #### RUS - Russia ####
 TGWR_great_power_politics = {
 	RUS_armistice_ENT_mission = {
@@ -334,6 +403,7 @@ TGWR_great_power_politics = {
 			NOT = {
 				has_global_flag = treaty_of_batum
 			}
+			country_exists = CAU
 			OR = {
 				tag = CAU
 				tag = TUR
@@ -438,7 +508,9 @@ TGWR_great_power_politics = {
 		cancel_trigger = {
 			OR = {
 				is_part_of_great_war = yes
-				is_great_war_ongoing = no
+				GER = {
+					has_country_flag = great_war_loser
+				}
 			}
 		}
 		days_mission_timeout = 60
@@ -591,7 +663,12 @@ TGWR_great_power_politics = {
 		days_mission_timeout = 334
 		is_good = no
 		timeout_effect = {
-			treaty_of_saint_germain_en_laye_effect = yes
+			if = {
+				limit = { 
+					original_tag = AUS
+				}
+				treaty_of_saint_germain_en_laye_effect = yes
+			}
 		}
 	}
 }
