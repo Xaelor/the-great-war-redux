@@ -514,52 +514,6 @@
 			# 		target = FRC
 			# 	}
 			# }
-			if = {
-				limit = {
-					tag = TUR					#winner
-					FROM = {
-						tag = BUL
-					}					#loser
-					has_global_flag = kis_firstbalkan_war
-					NOT = {
-						has_global_flag = kis_firstbalkanwar_victory
-						has_global_flag = kis_firstbalkanwar_lose
-						has_global_flag = kis_secondbalkan_war
-					}
-				}
-				set_global_flag = BUL_surrender_in_balkan_war
-				BUL = {
-					add_ideas = BUL_idea_first_national_catastrophe
-					add_timed_idea = {
-						idea = BUL_idea_refugee_crisis
-						days = 200
-					}
-					set_country_flag = BW1_loser
-				}
-			}
-			if = {
-				limit = {
-					tag = TUR					#winner
-					FROM = {
-						tag = SER
-					}					#loser
-					has_global_flag = kis_firstbalkan_war
-					NOT = {
-						has_global_flag = kis_firstbalkanwar_victory
-						has_global_flag = kis_firstbalkanwar_lose
-					}
-				}
-				set_global_flag = SER_surrender_in_balkan_war
-				set_global_flag = kis_firstbalkanwar_lose
-				SER = {
-					remove_state_core = 106
-					remove_state_core = 203
-					remove_state_core = 1258
-					remove_state_core = 1140
-					remove_state_core = 1213
-					set_country_flag = BW1_loser
-				}
-			}
 			### To Prevent TRA/MOL/ROM from beinf released in the Carpathians ###
 			if = {
 				limit = {
@@ -5323,91 +5277,6 @@
 	}
 	on_capitulation = {
 		effect = {
-			# Prevent generic capitulation before mission
-			if = {
-				limit = {
-					tag = FRA
-				}
-				if = {
-					limit = {
-						has_active_mission = FRA_surrender_ENT_mission
-					}
-					FRA_surrender_effect_ENT = yes
-				}
-			}
-			if = {
-				limit = {
-					tag = RUS
-				}
-				if = {
-					limit = {
-						has_active_mission = RUS_armistice_ENT_mission
-					}
-					RUS_armistice_with_CENPO = yes
-				}
-				else_if = {
-					limit = { 
-						has_active_mission = RUS_treaty_of_brest_litovsk_mission
-					}
-					RUS_surrender_effect_ENT = yes
-				}
-			}
-			if = {
-				limit = {
-					tag = ROM
-				}
-				if = {
-					limit = {
-						has_active_mission = ROM_surrender_ENT_mission
-					}
-					ROM_surrender_effect_ENT = yes
-				}
-			}
-			if = {
-				limit = {
-					tag = GER
-				}
-				if = {
-					limit = {
-						has_active_mission = GER_surrender_CP_mission
-					}
-					GER_surrender_effect_CP = yes
-				}
-			}
-			if = {
-				limit = {
-					tag = AUS
-				}
-				if = {
-					limit = {
-						has_active_mission = AUS_surrender_CP_mission
-					}
-					AUS_surrender_effect_CP = yes
-				}
-			}
-			if = {
-				limit = {
-					tag = BUL
-				}
-				if = {
-					limit = {
-						has_active_mission = BUL_surrender_CP_mission
-					}
-					BUL_surrender_effect_CP = yes
-				}
-			}
-			if = {
-				limit = {
-					tag = TUR
-				}
-				if = {
-					limit = {
-						has_active_mission = TUR_surrender_CP_mission
-					}
-					TUR_surrender_effect_CP = yes
-				}
-			}
-
 			###
 			if = {
 				limit = {
@@ -8298,6 +8167,19 @@
 			if = {
 				limit = { 
 					is_BW1_ongoing = yes
+					tag = BUL
+					FROM = {
+						OR = {
+							tag = TUR
+							is_ally_with = TUR
+						}
+					}
+				}
+				BW1_turkish_victory_effect = yes
+			}
+			if = {
+				limit = { 
+					is_BW1_ongoing = yes
 					tag = TUR
 					FROM = {
 						OR = {
@@ -8326,6 +8208,16 @@
 					}
 				}
 				BW2_balkans_victory_effect = yes
+			}
+			if = {
+				limit = { 
+					is_BW2_ongoing = yes
+					tag = SER
+					FROM = {
+						tag = BUL
+					}
+				}
+				BW2_bulgaria_victory_effect = yes
 			}
 			if = {
 				limit = { 
