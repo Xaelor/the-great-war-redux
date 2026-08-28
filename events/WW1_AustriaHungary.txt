@@ -547,37 +547,6 @@ country_event = {
 		hidden_effect = {
 			set_country_flag = collapse_of_austria_hungary_POL
 			AUH_release_POL = yes
-			if = {
-				limit = {
-					NOT = {
-						country_exists = UKR
-					}	
-					RUS = {
-						OR = {
-							has_war_with = ROOT
-							has_war_with = GER
-							has_war_with = FRA
-							has_country_flag = great_war_winner
-						}
-						has_completed_focus = RUS_unite_ruthenia
-						is_subject = no
-						has_capitulated = no
-						NOT = {
-							has_country_flag = great_war_loser
-							has_global_flag = october_revolution
-							has_global_flag = RUS_surrender_alone
-						}
-					}
-				}
-				RUS = {
-					annex_country = {
-						target = WUK
-					}
-					annex_country = {
-						target = GAL
-					}
-				}
-			}
 		}
 	}
 	option = {
@@ -729,15 +698,25 @@ country_event = {
 			HUN = {
 				safe_transfer_state_to = yes
 			}
-		}	
-		every_owned_state = {
-			limit = {
-				is_core_of = ITA
+		}
+		if = {
+			limit = { 
+				ITA = {
+					NOT = {
+						has_country_flag = great_war_loser
+					}
+				}
+				has_italian_civil_war = no
 			}
-			ITA = {
-				safe_transfer_state_to = yes
-			}
-		}			
+			every_owned_state = {
+				limit = {
+					is_core_of = ITA
+				}
+				ITA = {
+					safe_transfer_state_to = yes
+				}
+			}			
+		}
 		every_state = {
 			limit = {
 				is_claimed_by = ROOT
@@ -942,7 +921,7 @@ country_event = {
 			VNC = { set_country_flag = monarchist_puppet }
 			set_autonomy = {
 				target = VNC
-				autonomous_state = autonomy_tgwr_governorate_general
+				autonomous_state = autonomy_tgwr_autonomous_governorate
 			}
 		}
 		hidden_effect = {
@@ -1018,136 +997,136 @@ country_event = {
 
 # OCCUPATION OF LOMBARDY AND VENETO
 #######################################
-country_event = {
-	id = ww1_auh.25
-	title = ww1_auh.25.t
-	desc = ww1_auh.25.d
-	fire_only_once = yes
-	mean_time_to_happen = {
-		days = 7
-	}
-	trigger = {
-		tag = AUS
-		has_global_flag = italian_civil_war
-		has_country_flag = great_war_winner
-		has_war = no
-		any_country_with_original_tag = {
-			original_tag_to_check = ITA
-			has_country_flag = ITA_socialist_italy_flag
-			has_war = yes
-			is_neighbor_of = PREV
-			NOT = {
-				has_war_with = PREV
-				is_in_faction_with = PREV
-			}
-			OR = {
-				owns_state = 160
-				owns_state = 1259
-				owns_state = 159
-			}
-		}
-	}
-	option = {
-		name = ww1_auh.25.a
-		ai_chance = {
-			base = 100
-		}
-		add_war_support = 0.02
-		add_political_power = -150
-		add_named_threat = {
-			threat = 2
-			name = ww1_auh.25.t
-		}
-		VNC = {
-			if = {
-				limit = {
-					is_subject_of = PREV
-				}
-				every_other_country = {
-					limit = {
-						original_tag = ITA
-						has_country_flag = ITA_socialist_italy_flag
-						has_war = yes
-						is_neighbor_of = PREV
-						NOT = {
-							has_war_with = PREV
-							is_in_faction_with = PREV
-						}
-						OR = {
-							owns_state = 160
-							owns_state = 1259
-							owns_state = 159
-						}
-					}
-					every_owned_state = {
-						limit = {
-							OR = {
-								state = 159
-								state = 160
-								state = 1259
-							}
-						}
-						transfer_state_to = PREV.PREV
-					}
-				}
-			}
-			else = {
-				PREV = {
-					every_other_country = {
-						limit = {
-							original_tag = ITA
-							has_country_flag = ITA_socialist_italy_flag
-							has_war = yes
-							is_neighbor_of = PREV
-							NOT = {
-								has_war_with = PREV
-								is_in_faction_with = PREV
-							}
-							OR = {
-								owns_state = 160
-								owns_state = 1259
-								owns_state = 159
-							}
-						}
-						every_owned_state = {
-							limit = {
-								OR = {
-									state = 159
-									state = 160
-									state = 1259
-								}
-							}
-							transfer_state_to = PREV.PREV
-						}
-					}
-				}
-			}
-		}
-		every_other_country = {
-			limit = {
-				OR = {
-					original_tag = ITA
-					original_tag = TTS
-					original_tag = SRD
-					original_tag = TUS
-					original_tag = EMI
-					original_tag = VNC
-					original_tag = PAP
-				}
-				NOT = {
-					is_ally_with = PREV
-				}
-			}
-			news_event = ww1_auh.26
-		}
-	}
-	option = {
-		name = ww1_auh.25.b
-		AUS = {
-			add_war_support = -0.02
-		}
-	}
-}
+#country_event = {
+#	id = ww1_auh.25
+#	title = ww1_auh.25.t
+#	desc = ww1_auh.25.d
+#	fire_only_once = yes
+#	mean_time_to_happen = {
+#		days = 7
+#	}
+#	trigger = {
+#		tag = AUS
+#		has_global_flag = italian_civil_war
+#		has_country_flag = great_war_winner
+#		has_war = no
+#		any_country_with_original_tag = {
+#			original_tag_to_check = ITA
+#			has_country_flag = ITA_socialist_italy_flag
+#			has_war = yes
+#			is_neighbor_of = PREV
+#			NOT = {
+#				has_war_with = PREV
+#				is_in_faction_with = PREV
+#			}
+#			OR = {
+#				owns_state = 160
+#				owns_state = 1259
+#				owns_state = 159
+#			}
+#		}
+#	}
+#	option = {
+#		name = ww1_auh.25.a
+#		ai_chance = {
+#			base = 100
+#		}
+#		add_war_support = 0.02
+#		add_political_power = -150
+#		add_named_threat = {
+#			threat = 2
+#			name = ww1_auh.25.t
+#		}
+#		VNC = {
+#			if = {
+#				limit = {
+#					is_subject_of = PREV
+#				}
+#				every_other_country = {
+#					limit = {
+#						original_tag = ITA
+#						has_country_flag = ITA_socialist_italy_flag
+#						has_war = yes
+#						is_neighbor_of = PREV
+#						NOT = {
+#							has_war_with = PREV
+#							is_in_faction_with = PREV
+#						}
+#						OR = {
+#							owns_state = 160
+#							owns_state = 1259
+#							owns_state = 159
+#						}
+#					}
+#					every_owned_state = {
+#						limit = {
+#							OR = {
+#								state = 159
+#								state = 160
+#								state = 1259
+#							}
+#						}
+#						transfer_state_to = PREV.PREV
+#					}
+#				}
+#			}
+#			else = {
+#				PREV = {
+#					every_other_country = {
+#						limit = {
+#							original_tag = ITA
+#							has_country_flag = ITA_socialist_italy_flag
+#							has_war = yes
+#							is_neighbor_of = PREV
+#							NOT = {
+#								has_war_with = PREV
+#								is_in_faction_with = PREV
+#							}
+#							OR = {
+#								owns_state = 160
+#								owns_state = 1259
+#								owns_state = 159
+#							}
+#						}
+#						every_owned_state = {
+#							limit = {
+#								OR = {
+#									state = 159
+#									state = 160
+#									state = 1259
+#								}
+#							}
+#							transfer_state_to = PREV.PREV
+#						}
+#					}
+#				}
+#			}
+#		}
+#		every_other_country = {
+#			limit = {
+#				OR = {
+#					original_tag = ITA
+#					original_tag = TTS
+#					original_tag = SRD
+#					original_tag = TUS
+#					original_tag = EMI
+#					original_tag = VNC
+#					original_tag = PAP
+#				}
+#				NOT = {
+#					is_ally_with = PREV
+#				}
+#			}
+#			news_event = ww1_auh.26
+#		}
+#	}
+#	option = {
+#		name = ww1_auh.25.b
+#		AUS = {
+#			add_war_support = -0.02
+#		}
+#	}
+#}
 
 # OCCUPATION OF LOMBARDY AND VENETO - ITALIAN REACTION
 #########################################################
@@ -2067,7 +2046,6 @@ country_event = {
 		original_tag = AUS
 		has_war = no
 		OR = {
-			has_cosmetic_tag = GER_confederation
 			has_cosmetic_tag = AUH_HRE
 		}
 		capital_scope = { state = 4 }
@@ -6078,6 +6056,7 @@ country_event = {
 				is_core_of = MOL
 				NOT = {
 					state = 78
+					state = 1303
 					state = 79
 					state = 868
 				}
@@ -6299,7 +6278,7 @@ country_event = {
 		every_subject_country = {
 			limit = {
 				OR = {
-					has_autonomy_state = autonomy_tgwr_governorate_general
+					has_autonomy_state = autonomy_tgwr_autonomous_governorate
 					has_autonomy_state = autonomy_tgwr_real_union
 					has_autonomy_state = autonomy_tgwr_condominium
 				}
@@ -11188,8 +11167,8 @@ country_event = {
 					}
 				}
 			AUS = {
-				leave_faction = yes
-				add_ideas = neutrality_idea
+				clear_all_relations_except_wars = yes
+				add_ideas = standing_alone
 				add_ideas = interwar_recovery
 				add_ideas = volunteer_only
 			}
@@ -11200,13 +11179,9 @@ country_event = {
 				}
 			}
 			every_enemy_country = {
-				limit = {
-					OR = {
-						has_war_together_with = FRA
-						tag = FRA
-					}
+				AUS = {
+					white_peace = PREV
 				}
-				white_peace = AUS
 			}
 			news_event = {
 				id = ww1_auh.209
