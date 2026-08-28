@@ -95,6 +95,27 @@ FRA_surrender_conditions = {
 	}
 }
 
+ENG_surrender_conditions = {
+	custom_trigger_tooltip = {
+		tooltip = will_surrender_if_tt
+		has_war_with_major = yes
+		OR = {
+			surrender_progress > 0.7
+			AND = {
+				NOT = { controls_state = 126 }
+				126 = {
+					any_neighbor_state = { # avoid meme naval landings
+						is_owned_by = PREV.PREV
+						NOT = {
+							is_controlled_by = PREV.PREV
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 RUS_surrender_conditions = {
 	custom_trigger_tooltip = {
 		tooltip = will_surrender_if_tt
