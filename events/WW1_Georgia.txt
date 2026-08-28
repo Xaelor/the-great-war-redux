@@ -171,15 +171,7 @@ country_event = {
 	fire_only_once = yes
 	immediate = {
 		hidden_effect = {
-			if = {
-				limit = {
-					is_subject = yes
-				}
-				OVERLORD = {
-					end_puppet = ROOT
-				}
-				clr_country_flag = protectorate
-			}
+			free_subject = yes
 		}
 	}
 	option = {
@@ -628,46 +620,48 @@ country_event = {
 					leave_faction = yes
 				}
 			}
-			every_other_country = {
-				limit = {
-					has_war_with = ENT
-				}
-				if = {
+			ENT = {
+				every_enemy_country = {
 					limit = {
+						is_in_central_powers = yes
+					}
+					if = {
+						limit = {
+							ARM = {
+								has_country_flag = post_transcaucasia
+							}
+						}
 						ARM = {
-							has_country_flag = post_transcaucasia
+							add_to_war = {
+								targeted_alliance = ENT
+								enemy = PREV
+							}
 						}
 					}
-					ARM = {
-						add_to_war = {
-							targeted_alliance = ENT
-							enemy = PREV
+					if = {
+						limit = {
+							GEO = {
+								has_country_flag = post_transcaucasia
+							}
 						}
-					}
-				}
-				if = {
-					limit = {
 						GEO = {
-							has_country_flag = post_transcaucasia
+							add_to_war = {
+								targeted_alliance = ENT
+								enemy = PREV
+							}
 						}
 					}
-					GEO = {
-						add_to_war = {
-							targeted_alliance = ENT
-							enemy = PREV
+					if = {
+						limit = {
+							AZR = {
+								has_country_flag = post_transcaucasia
+							}
 						}
-					}
-				}
-				if = {
-					limit = {
 						AZR = {
-							has_country_flag = post_transcaucasia
-						}
-					}
-					AZR = {
-						add_to_war = {
-							targeted_alliance = ENT
-							enemy = PREV
+							add_to_war = {
+								targeted_alliance = ENT
+								enemy = PREV
+							}
 						}
 					}
 				}
@@ -704,7 +698,7 @@ country_event = {
 					}
 					country_event = {
 						id = ww1_ottoman.112
-						days = 1
+						hours = 1
 					}
 				}
 			}
@@ -788,7 +782,7 @@ country_event = {
 		effect_tooltip = {
 			set_autonomy = {
 				target = GEO
-				autonomous_state = autonomy_tgwr_informal_protectorate
+				autonomous_state = autonomy_tgwr_protected_state
 			}
 		}
 		hidden_effect = {
@@ -799,7 +793,7 @@ country_event = {
 			}
 			set_autonomy = {
 				target = GEO
-				autonomous_state = autonomy_tgwr_informal_protectorate
+				autonomous_state = autonomy_tgwr_protected_state
 				end_wars = no
 				freedom_level = 0.6
 			}
@@ -829,78 +823,78 @@ country_event = {
 }
 
 # Georgia Annexes Sochi
-country_event = {
-	id = ww1_georgia.13
-	title = ww1_georgia.13.t
-	desc = ww1_georgia.13.d
-	picture = GFX_report_event_generic_battle
-	is_triggered_only = yes
-	option = {
-		name = ww1_georgia.13.a
-		add_stability = 0.02
-		add_war_support = 0.05
-		effect_tooltip = {
-			transfer_state = 233
-		}
-	}
-}
+# country_event = {
+# 	id = ww1_georgia.13
+# 	title = ww1_georgia.13.t
+# 	desc = ww1_georgia.13.d
+# 	picture = GFX_report_event_generic_battle
+# 	is_triggered_only = yes
+# 	option = {
+# 		name = ww1_georgia.13.a
+# 		add_stability = 0.02
+# 		add_war_support = 0.05
+# 		effect_tooltip = {
+# 			transfer_state = 233
+# 		}
+# 	}
+# }
 
-# Georgia Fails to Annex Sochi
-country_event = {
-	id = ww1_georgia.14
-	title = ww1_georgia.14.t
-	desc = ww1_georgia.14.d
-	picture = GFX_report_event_generic_battle
-	is_triggered_only = yes
-	option = {
-		name = ww1_georgia.14.a
-		add_stability = -0.02
-		add_war_support = -0.05
-	}
-}
+# # Georgia Fails to Annex Sochi
+# country_event = {
+# 	id = ww1_georgia.14
+# 	title = ww1_georgia.14.t
+# 	desc = ww1_georgia.14.d
+# 	picture = GFX_report_event_generic_battle
+# 	is_triggered_only = yes
+# 	option = {
+# 		name = ww1_georgia.14.a
+# 		add_stability = -0.02
+# 		add_war_support = -0.05
+# 	}
+# }
 
-# Russia Repels Georgian Attack
-country_event = {
-	id = ww1_georgia.15
-	title = ww1_georgia.15.t
-	desc = ww1_georgia.15.d
-	picture = GFX_report_event_generic_battle
-	is_triggered_only = yes
-	option = {
-		name = ww1_georgia.15.a
-		add_stability = 0.02
-		add_war_support = 0.1
-	}
-}
+# # Russia Repels Georgian Attack
+# country_event = {
+# 	id = ww1_georgia.15
+# 	title = ww1_georgia.15.t
+# 	desc = ww1_georgia.15.d
+# 	picture = GFX_report_event_generic_battle
+# 	is_triggered_only = yes
+# 	option = {
+# 		name = ww1_georgia.15.a
+# 		add_stability = 0.02
+# 		add_war_support = 0.1
+# 	}
+# }
 
-# Russia Faills to Repel Georgian Attack
-country_event = {
-	id = ww1_georgia.16
-	title = ww1_georgia.16.t
-	desc = ww1_georgia.16.d
-	picture = GFX_report_event_generic_battle
-	is_triggered_only = yes
-	option = {
-		name = ww1_georgia.16.a
-		if = {
-			limit = {
-				any_owned_state = {
-					NOT = { state = 233 }
-				}
-			}
-			add_stability = -0.02
-			add_war_support = -0.1
-		}
-		else = {
-			custom_effect_tooltip = GAME_OVER_TT
-		}
-		1068 = {
-			owner = {
-				transfer_state = 233
-			}
-		}
-	}
-}
+# # Russia Faills to Repel Georgian Attack
+# country_event = {
+# 	id = ww1_georgia.16
+# 	title = ww1_georgia.16.t
+# 	desc = ww1_georgia.16.d
+# 	picture = GFX_report_event_generic_battle
+# 	is_triggered_only = yes
+# 	option = {
+# 		name = ww1_georgia.16.a
+# 		if = {
+# 			limit = {
+# 				any_owned_state = {
+# 					NOT = { state = 233 }
+# 				}
+# 			}
+# 			add_stability = -0.02
+# 			add_war_support = -0.1
+# 		}
+# 		else = {
+# 			custom_effect_tooltip = GAME_OVER_TT
+# 		}
+# 		1299 = {
+# 			owner = {
+# 				transfer_state = 233
+# 			}
+# 		}
+# 	}
+# }
 
 # Georgia is now under British occupation
 country_event = {
@@ -954,7 +948,6 @@ country_event = {
 		NOT = {
 			has_global_flag = mudros_armistice
 			has_global_flag = treaty_of_batum
-			has_idea = RUS_idea_armistice_rus
 		}
 		TUR = {
 			has_war_with = ROOT
@@ -1008,17 +1001,16 @@ country_event = {
 	title = ww1_georgia.20.t
 	desc = ww1_georgia.20.d
 	picture = GFX_report_event_generic_conference
-	trigger = {
-		tag = CAU
-		has_idea = GEO_erzincan_armistice
-		is_subject = no
-		has_global_flag = brest_litovsk_finished
-		has_war_with = TUR
-	}
+	#trigger = {
+	#	tag = CAU
+	#	has_idea = GEO_erzincan_armistice
+	#	is_subject = no
+	#	has_global_flag = RUS_surrender
+	#	has_war_with = TUR
+	#}
+	# disabled
+	is_triggered_only = yes
 	fire_only_once = yes
-	mean_time_to_happen = {
-		days = 0
-	}
 	option = {
 		name = ww1_georgia.20.a
 		TUR = {

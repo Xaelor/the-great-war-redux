@@ -113,7 +113,10 @@ BW1_balkans_victory_effect = {
 				has_global_flag = balkan_league_success
 			}
 			TUR = {
-				white_peace = BLL
+				white_peace = {
+					tag = BLL
+					message = BW1_balkan_league_won_message
+				}
 			}
 			TUR = {
 				every_state = {
@@ -182,10 +185,22 @@ BW1_balkans_victory_effect = {
 		}
 		else = {				
 			TUR = {
-				white_peace = BUL
-				white_peace = SER
-				white_peace = MNT
-				white_peace = GRE
+				white_peace = {
+					tag = BUL
+					message = BW1_balkan_league_won_message
+				}
+				white_peace = {
+					tag = SER
+					message = BW1_balkan_league_won_message
+				}
+				white_peace = {
+					tag = MNT
+					message = BW1_balkan_league_won_message
+				}
+				white_peace = {
+					tag = GRE
+					message = BW1_balkan_league_won_message
+				}
 
 				every_state = {
 					limit = {
@@ -283,7 +298,10 @@ BW1_balkans_victory_effect = {
 		TUR = {
 			if = {
 				limit = { has_war_with = ALB }
-				white_peace = ALB
+				white_peace = {
+					tag = ALB
+					message = albania_independence_message
+				}
 				ALB = { remove_ideas = standing_alone }
 			}
 		}
@@ -345,35 +363,35 @@ BW1_balkans_victory_effect = {
 					transfer_state_to = PREV
 				}
 			}
-			every_state = {
-				limit = {
-					OR = {
-						region = 26
-						region = 24
-						region = 14
-						region = 25
-						region = 202
-						state = 182
-					}
-					OR = {
-						is_claimed_by = TUR
-						is_core_of = TUR
-					}
-					NOT = {
-						is_owned_by = TUR
-						state = 756
-						state = 200
-						state = 757
-						state = 451
-						# state = 731
-						state = 345
-						state = 1255
-						state = 184
-					}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					region = 26
+					region = 24
+					region = 14
+					region = 25
+					region = 202
+					state = 182
 				}
-				remove_core_of = TUR
-				remove_claim_by = TUR
+				OR = {
+					is_claimed_by = TUR
+					is_core_of = TUR
+				}
+				NOT = {
+					is_owned_by = TUR
+					state = 756
+					state = 200
+					state = 757
+					state = 451
+					# state = 731
+					state = 345
+					state = 1255
+					state = 184
+				}
 			}
+			remove_core_of = TUR
+			remove_claim_by = TUR
 		}
 
 		# BW2 part
@@ -434,16 +452,31 @@ BW1_status_quo_effect = {
 				has_global_flag = balkan_league_success
 			}
 			BLL = {
-				white_peace = TUR
+				white_peace = {
+					tag = TUR
+					message = BW1_balkan_turkey_won_message
+				}
 				dismantle_faction = yes
 			}
 		}
 		else = {				
 			TUR = {
-				white_peace = BUL
-				white_peace = SER
-				white_peace = GRE
-				white_peace = MNT
+				white_peace = {
+					tag = BUL
+					message = BW1_balkan_turkey_won_message
+				}
+				white_peace = {
+					tag = SER
+					message = BW1_balkan_turkey_won_message
+				}
+				white_peace = {
+					tag = GRE
+					message = BW1_balkan_turkey_won_message
+				}
+				white_peace = {
+					tag = MNT
+					message = BW1_balkan_turkey_won_message
+				}
 			}
 		}
 		TUR = {
@@ -514,6 +547,30 @@ BW1_peace_effect = {
 	}
 	else = {
 		BW1_turkish_victory_effect = yes
+	}
+	hidden_effect = {
+		every_country = {
+			limit = {
+				OR = {
+					tag = SER
+					tag = MNT
+					tag = GRE
+					tag = TUR
+				}
+			}
+			every_state = {
+				limit = {
+					NOT = {
+						is_owned_by = PREV
+					}
+				}
+				teleport_armies = {
+					limit = {
+						tag = PREV.PREV
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -841,7 +898,10 @@ BW2_balkans_victory_effect = {
 			country_event = ww1_secondbalkan.5
 			set_country_flag = kis_secondbalkan_war_winner
 			BUL = {
-				white_peace = PREV
+				white_peace = {
+					tag = PREV
+					message = BW2_balkans_victory_message
+				}
 			}
 		}
 		BW2_dissolve_balkan_alliance = yes
@@ -861,22 +921,12 @@ BW2_bulgaria_victory_effect = {
 			id = ww1_secondbalkan.19
 			hours = 3
 		}
-		every_other_country = {
-			limit = {
-				OR = {
-					tag = SER
-					AND = {
-						tag = GRE
-						has_war_together_with = SER
-					}
-					AND = {
-						tag = ROM
-						has_war_together_with = SER
-					}				
-				}
+		SER = {
+			white_peace = {
+				tag = BUL
+				message = BW2_bulgaria_victory_message
 			}
-			white_peace = BUL
-			hidden_effect = {	
+			every_faction_member = {
 				set_country_flag = defeated_in_bw2
 				country_event =  ww1_secondbalkan.9
 				if = {
@@ -887,7 +937,7 @@ BW2_bulgaria_victory_effect = {
 						id = ww1_serbia.36
 						days = 15
 					}
-				}
+				}				
 			}
 		}
 		every_country = {
@@ -971,7 +1021,10 @@ BW2_stalemate_effect = {
 			}
 			complete_national_focus = BUL_relative_hegemony
 			country_event = ww1_secondbalkan.22
-			white_peace = SER
+			white_peace = {
+				tag = SER
+				message = BW2_stalemate_message
+			}
 			SER = {
 				country_event = ww1_secondbalkan.22
 			}
@@ -981,7 +1034,10 @@ BW2_stalemate_effect = {
 						has_war_with = PREV
 					}
 				}
-				white_peace = ROM
+				white_peace = {
+					tag = ROM
+					message = BW2_stalemate_message
+				}
 				ROM = {
 					country_event = ww1_secondbalkan.22
 				}
@@ -992,7 +1048,10 @@ BW2_stalemate_effect = {
 						has_war_with = PREV
 					}
 				}
-				white_peace = GRE
+				white_peace = {
+					tag = GRE
+					message = BW2_stalemate_message
+				}
 				GRE = {
 					country_event = ww1_secondbalkan.22
 				}
@@ -1083,6 +1142,29 @@ BW2_peace_effect = {
 	else = {
 		BW2_stalemate_effect = yes
 	}
+	hidden_effect = {
+		every_country = {
+			limit = {
+				OR = {
+					tag = SER
+					tag = MNT
+					tag = GRE
+				}
+			}
+			every_state = {
+				limit = {
+					NOT = {
+						is_owned_by = PREV
+					}
+				}
+				teleport_armies = {
+					limit = {
+						tag = PREV.PREV
+					}
+				}
+			}
+		}
+	}	
 }
 
 # Turkish Intervention
@@ -1131,7 +1213,10 @@ BW2_turkish_victory_effect = {
 					transfer_state_to = PREV.PREV
 				}
 			}
-			white_peace = BUL
+			white_peace = {
+				tag = BUL
+				message = BW2_ottoman_victory_message
+			}
 		}
 	}
 }
@@ -1152,7 +1237,10 @@ BW2_turkish_lose_effect = {
 					end_wars = no
 				}
 			}
-			white_peace = BUL
+			white_peace = {
+				tag = BUL
+				message = BW2_ottoman_withdrawal_defeat_message
+			}
 		}
 		BUL = {
 			add_war_support = 0.1

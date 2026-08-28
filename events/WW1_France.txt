@@ -400,14 +400,14 @@ country_event = {
 	picture = GFX_report_event_spr_anarchist_uprising2
 	fire_only_once = yes
 	trigger = {
-		always = no #obselete
+		always = no #obsolete
 		tag = FRA
 		#has_completed_focus = FRA_ww1_emergency_council
 		has_global_flag = frankfurt_treaty
 		has_country_flag = great_war_loser
 		is_subject = no
 		NOT = {
-			has_global_flag = FRA_surrender_alone
+			has_global_flag = FRA_surrender
 		}
 	}
 	mean_time_to_happen = {
@@ -959,6 +959,7 @@ unit_leader_event = {
 
 	immediate = {
 		THIS = {
+			release_from_captivity = yes
 			set_character_flag = character_died
 		}	
 	}
@@ -6169,10 +6170,24 @@ country_event = {
 				if = {
 					limit = {
 						is_claimed_by = GER
+						OR = {
+							is_coastal = yes
+							any_neighbor_state = {
+								is_owned_by = GER
+							}
+						}
 					}
 					transfer_state_to = GER
 				}
-				else = {
+				else_if = {
+					limit = {
+						OR = {
+							is_coastal = yes
+							any_neighbor_state = {
+								is_owned_by = MOR
+							}
+						}						
+					}
 					transfer_state_to = MOR
 				}
 			}
@@ -6621,10 +6636,24 @@ country_event = {
 				if = {
 					limit = {
 						is_claimed_by = GER
+						OR = {
+							is_coastal = yes
+							any_neighbor_state = {
+								is_owned_by = GER
+							}
+						}
 					}
 					transfer_state_to = GER
 				}
-				else = {
+				else_if = {
+					limit = {
+						OR = {
+							is_coastal = yes
+							any_neighbor_state = {
+								is_owned_by = MOR
+							}
+						}						
+					}
 					transfer_state_to = MOR
 				}
 			}
@@ -6660,7 +6689,7 @@ country_event = {
 					NFA = {
 						set_autonomy = {
 							target = PREV
-							autonomous_state = autonomy_tgwr_integrated_protectorate
+							autonomous_state = autonomy_tgwr_protectorate
 							freedom_level = 0.7
 						}
 					}
@@ -6886,9 +6915,8 @@ country_event = {
 				# 		}
 				# 	}
 				# }
-				every_state = {
+				every_owned_state = {
 					limit = {
-						is_owned_by = PREV
 						NOT = { has_state_flag = communard_presence }
 					}
 					transfer_state_to = NFA
@@ -6975,15 +7003,8 @@ country_event = {
 					}
 				}
 			}
-			every_other_country = {
-				limit = {
-					is_subject_of = ROOT
-				}
-				if = {
-					limit = { has_country_flag = protectorate }
-					clr_country_flag = protectorate
-				}
-				ROOT = { end_puppet = PREV }
+			every_subject_country = {
+				free_subject = yes
 			}
 		}
 	}
@@ -9018,7 +9039,6 @@ country_event = {
 							state = 455
 							state = 832
 							state = 856
-							state = 858
 						}
 					}
 					transfer_state_to = ENG
@@ -9633,13 +9653,12 @@ country_event = {
 		has_global_flag = great_war_ends
 		OR = {
 			has_country_flag = great_war_winner
-			has_global_flag = FRA_surrender_alone
+			has_global_flag = FRA_surrender
 		}
 		NOT = {
 			has_global_flag = FRA_three_side_civil_war
 			has_country_flag = great_war_loser
-			has_country_flag = FRA_surrender_alone
-			has_global_flag = FRA_surrender_alone
+			has_global_flag = FRA_surrender
 		}
 		has_war = no
 	}
@@ -10640,7 +10659,7 @@ country_event = {
 		is_great_war_ongoing = yes
 		NOT = {
 			has_country_flag = caillaux_anti_war_propaganda
-			has_country_flag = FRA_surrender_alone
+			has_country_flag = great_war_loser
 		}
 		has_character = FRA_joseph_caillaux
 		date > 1917.2.2
@@ -10691,18 +10710,8 @@ country_event = {
 	option = {
 		name =  ww1_france.306.a	# set up the truce ! 
 		ai_chance = {
-			factor = 500
+			base = 500
 		}
-		FRA_french_surrender_effect = yes
-	}
-	option = {
-		name = ww1_entente_capitulation.1.b
-		custom_effect_tooltip = no_scripted_peace_warning_tt
-		clr_global_flag = FRA_surrender_alone
-		trigger = {
-			is_ai = no
-		}
-		news_event = { id = ww1_entente_capitulation.3 }
 	}
 }
 
@@ -10715,7 +10724,6 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name =  ww1_france.307.a
-		clr_country_flag = ask_for_peace
 		add_ideas = FRA_interim_government
 		drop_cosmetic_tag = yes
 		if = {
@@ -11777,7 +11785,7 @@ country_event = {
 		effect_tooltip = {
 			set_autonomy = {
 				target = FROM
-				autonomous_state = autonomy_satellite
+				autonomous_state = autonomy_tgwr_client_state
 			}
 			FROM = {
 				set_cosmetic_tag = FRP
@@ -11833,7 +11841,7 @@ country_event = {
 			FROM = {
 				set_autonomy = {
 					target = ROOT
-					autonomous_state = autonomy_dominion
+					autonomous_state = autonomy_tgwr_dominion
 				}
 			}
 		}
@@ -11873,7 +11881,7 @@ country_event = {
 		name = ww1_france.327.a
 		set_autonomy = {
 			target = FROM
-			autonomous_state = autonomy_satellite
+			autonomous_state = autonomy_tgwr_client_state
 		}
 		FROM = {
 			set_cosmetic_tag = FRP
@@ -12157,12 +12165,12 @@ country_event = {
 		tag = FRA
 		has_country_flag = NFA_coup_can_happen
 		NOT = {
-			has_country_flag = NFA_coup_occured
+			has_country_flag = NFA_coup_occurred
 		}
 	}
 	immediate = {
 		hidden_effect = {
-			set_country_flag = NFA_coup_occured
+			set_country_flag = NFA_coup_occurred
 		}
 	}
 	fire_only_once = yes
@@ -12277,16 +12285,6 @@ country_event = {
 		trigger = {
 			always = no #quite broken
 		}
-		# ai_chance = {
-		# 	base = 0
-		# 	modifier = {
-		# 		OR = {
-		# 			has_country_flag = FRA_surrender_alone
-		# 			has_country_flag = great_war_loser
-		# 		}
-		# 		add = 1000
-		# 	}
-		# }
 		custom_effect_tooltip = dangerous_tt
 		1162 = {
 			add_dynamic_modifier = {
@@ -12934,7 +12932,7 @@ country_event = {
 		create_AOF = yes
 		set_autonomy = {
 			target = AOF
-			autonomy_state = autonomy_satellite
+			autonomy_state = autonomy_tgwr_self_governing_colony
 			end_wars = no
 		}	
 		hidden_effect = {
@@ -12957,7 +12955,7 @@ country_event = {
 		create_AEF = yes
 		set_autonomy = {
 			target = AEF
-			autonomy_state = autonomy_satellite
+			autonomy_state = autonomy_tgwr_self_governing_colony
 			end_wars = no
 		}
 		hidden_effect = {
@@ -14343,7 +14341,7 @@ country_event = {
 			FROM.OVERLORD = {
 				set_autonomy = {
 					target = FROM
-					autonomous_state = autonomy_satellite
+					autonomous_state = autonomy_tgwr_dominion
 				}
 			}
 		}
@@ -14382,11 +14380,11 @@ country_event = {
 		name = ww1_france.382.a
 		add_stability = 0.15
 		get_current_government_type = yes
-		clr_country_flag = protectorate
+		clr_subject_flags = yes
 		OVERLORD = {
 			set_autonomy = {
 				target = ROOT
-				autonomous_state = autonomy_satellite
+				autonomous_state = autonomy_tgwr_dominion
 			}
 		}
 		restore_previous_government_type = yes
@@ -21494,14 +21492,14 @@ country_event = {
 		effect_tooltip = {
 			release_autonomy = {
 				target = SEN
-				autonomy_state = autonomy_colony
+				autonomy_state = autonomy_tgwr_colony
 			}
 			SEN = {
 				set_cosmetic_tag = AOF
 			}
 			release_autonomy = {
 				target = RCG
-				autonomy_state = autonomy_colony
+				autonomy_state = autonomy_tgwr_colony
 			}
 			RCG = {
 				set_cosmetic_tag = AEF
@@ -21606,15 +21604,6 @@ country_event = {
 		}
 		trigger ={
 			has_idea = SPR_pact_of_cartagena_1907
-		}
-		if = {
-			limit = { 
-				has_completed_focus = secure_entente_support
-			}
-			uncomplete_national_focus = {
-				focus = secure_entente_support
-				uncomplete_children = yes
-			}
 		}
 	}
 	option = {
@@ -21753,15 +21742,6 @@ country_event = {
 	option = {
 		name = ww1_france.587.b
 		remove_ideas = SPR_pact_of_cartagena_1907
-		if = {
-			limit = { 
-				has_completed_focus = secure_entente_support
-			}
-			uncomplete_national_focus = {
-				focus = secure_entente_support
-				uncomplete_children = yes
-			}
-		}
 		every_other_country = {
 			limit = {
 				OR = {
@@ -21835,9 +21815,8 @@ country_event = {
 	option = {
 		name = ww1_france.587.a
 		#yeah we join
-		add_to_war = {
-			targeted_alliance = SPR
-			enemy = AUS
+		SPR = {
+			join_ENT_declare_war_on_CENPO = yes
 		}
 		ai_chance = {
 			base = 10
