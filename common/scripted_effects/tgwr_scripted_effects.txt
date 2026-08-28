@@ -3619,12 +3619,40 @@ protectorate_logic = {
 		if = {
 			limit = {
 				is_in_faction = yes
-				NOT = { has_military_access_to = PREV }
 			}
-			diplomatic_relation = {
-				country = PREV
-				relation = military_access
-				active = yes
+			if = {
+				limit = {
+					NOT = { has_military_access_to = PREV }
+				}
+				diplomatic_relation = {
+					country = PREV
+					relation = military_access
+					active = yes
+				}
+			}
+			if = {
+				limit = {
+					PREV = {
+						naval_base > 0
+					}		
+				}
+				diplomatic_relation = {
+					country = PREV
+					relation = docking_rights
+					active = yes
+				}
+			}
+			if = {
+				limit = {
+					PREV = {
+						air_base > 0
+					}	
+				}
+				diplomatic_relation = {
+					country = PREV
+					relation = air_base_access
+					active = yes
+				}
 			}
 		}
 	}
@@ -3642,22 +3670,64 @@ vassal_of_vassal_logic = {
 			if = {
 				limit = { 
 					OVERLORD = {
-						NOT = { 
-							has_military_access_to = PREV.PREV 
+						NOT = {
 							is_in_faction_with = PREV.PREV 
 						}
 					}
-				}
-				PREV = {
-					PREV.OVERLORD = {
-						#give_guarantee = PREV
-						diplomatic_relation = {
-							country = PREV
-							relation = military_access
-							active = yes
+				}				
+				if = {
+					limit = {
+						OVERLORD = {
+							NOT = { 
+								has_military_access_to = PREV.PREV 
+							}
 						}
 					}
-				}	
+					PREV = {
+						PREV.OVERLORD = {
+							#give_guarantee = PREV
+							diplomatic_relation = {
+								country = PREV
+								relation = military_access
+								active = yes
+							}
+						}
+					}	
+				}
+				if = {
+					limit = {
+						PREV = {
+							naval_base > 0
+						}
+					}
+					PREV = {
+						PREV.OVERLORD = {
+							#give_guarantee = PREV
+							diplomatic_relation = {
+								country = PREV
+								relation = docking_rights
+								active = yes
+							}
+						}
+					}	
+				}
+				if = {
+					limit = {
+						PREV = {
+							air_base > 0
+						}
+					}
+					PREV = {
+						PREV.OVERLORD = {
+							#give_guarantee = PREV
+							diplomatic_relation = {
+								country = PREV
+								relation = air_base_access
+								active = yes
+							}
+						}
+					}	
+				}
 			}
 		}
 	}
