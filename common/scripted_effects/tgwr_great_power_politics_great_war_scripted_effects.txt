@@ -7,6 +7,14 @@ CP_surrender_effect = {
 	set_global_flag = compiegne_armistice
 	set_global_flag = great_war_ends
 	set_global_flag = GER_capitulation
+
+	every_faction_member = {
+		limit = {
+			has_idea = MOR_guerrilla_warfare # for guerilla countries like hejaz and asir
+		}
+		clear_all_relations_except_wars = yes
+	}
+
 	ENT = {
 		every_faction_member = {
 			set_country_flag = great_war_winner
@@ -136,24 +144,30 @@ CP_surrender_effect = {
 	GER = {
 		activate_mission = GER_treaty_of_versailles_mission
 	}
-	if = {
-		limit = { 
-			RUS = { is_in_faction_with = ENT } 
+	# informal mission for player
+	every_country = {
+		limit = {
+			is_in_faction_with = ENT
+			is_ai = no
 		}
-		RUS = {
-			activate_mission = GER_treaty_of_versailles_mission
-		}
+		activate_mission = GER_treaty_of_versailles_mission
 	}
 	if = {
 		limit = { 
-			FRA = { is_in_faction_with = ENT } 
+			AUS = {
+				has_country_flag = great_war_loser
+			}
 		}
-		FRA = {
-			activate_mission = GER_treaty_of_versailles_mission
+		AUS = {
+			activate_mission = AUS_treaty_of_saint_germain_en_laye_mission
 		}
-	}
-	AUS = {
-		activate_mission = AUS_treaty_of_saint_germain_en_laye_mission
+		every_country = {
+			limit = {
+				is_in_faction_with = ENT
+				is_ai = no
+			}
+			activate_mission = AUS_treaty_of_saint_germain_en_laye_mission
+		}		
 	}
 	if = {
 		limit = { 
@@ -186,6 +200,14 @@ ENT_surrender_effect = {
 	set_global_flag = frankfurt_armistice
 	set_global_flag = great_war_ends
 	set_global_flag = ENT_capitulation
+
+	every_faction_member = {
+		limit = {
+			has_idea = MOR_guerrilla_warfare # for guerilla countries like hejaz and asir
+		}
+		clear_all_relations_except_wars = yes
+	}
+
 	GER = {
 		every_faction_member = {
 			limit = {
@@ -389,21 +411,6 @@ FRA_surrender_effect_ENT = {
 				add_ideas = interwar_recovery
 				add_ideas = idea_armistice
 
-				every_owned_state = {
-					limit = {
-						OR = {
-							region = 19 # Northern France
-							state = 15 # Normandy
-						}
-						NOT = {
-							state = 16 # Ile de France
-							state = 24 # Centre - Val de Loire
-							state = 27 # Burgundy
-						}
-					}
-					set_demilitarized_zone = yes
-				}
-
 				# deoccupation of adriatic
 				every_owned_state = {
 					limit = {
@@ -476,6 +483,13 @@ FRA_surrender_effect_ENT = {
 						}
 					}
 				}
+
+				every_owned_state = {
+					limit = {
+						has_state_flag = french_salonika
+					}
+					transfer_state_to = GRE
+				}
 				
 				if = {
 					limit = {
@@ -498,17 +512,29 @@ FRA_surrender_effect_ENT = {
 			}
 
 			GER = {
-				add_state_claim = 17
 				add_state_claim = 863
 				add_state_claim = 864
-				transfer_state = 17
 				transfer_state = 863
 				transfer_state = 864
 				ALS = {
-					add_state_claim = 17
 					add_state_claim = 863
 					add_state_claim = 864
 				}
+			}
+			
+			every_owned_state = {
+				limit = {
+					OR = {
+						region = 19 # Northern France
+						state = 15 # Normandy
+					}
+					NOT = {
+						state = 16 # Ile de France
+						state = 24 # Centre - Val de Loire
+						state = 27 # Burgundy
+					}
+				}
+				set_demilitarized_zone = yes
 			}
 
 			# start of french civil war
@@ -657,9 +683,9 @@ RUS_armistice_with_CENPO = {
 			}	
 		}
 		white_peace = GER
-		clear_all_relations_except_wars = yes
 		activate_mission = RUS_treaty_of_brest_litovsk_mission
 		hidden_effect = {
+			clear_all_relations_except_wars = yes
 			if = {
 				limit = { 
 					has_war_with = PRG
@@ -774,90 +800,107 @@ RUS_surrender_effect_ENT = {
 					}
 				}
 
-				# Armenia
-				ARM = {
-					every_core_state = {
+				# Eastern Realms
+				GER = {
+					country_event = ww1_brest_litovsk.9
+					GER_release_POL = yes						
+
+					every_state = {
 						limit = {
-							OWNER = {
+							controller = {
+								is_in_central_powers = yes
+							}
+							is_german_occupation_zone_in_russia_state = yes
+							owner = {
 								OR = {
 									tag = RUS
 									is_subject_of = RUS
 								}
 							}
 						}
-						transfer_state_to = ARM
-						remove_russian_cores = yes
+						transfer_state_to = PREV
 						remove_russian_claims = yes
+						add_contested_owner = RUS
+						if = {
+							limit = {
+								OR = {
+									is_core_of = POL
+									is_core_of = UKR
+								}
+							}
+							remove_russian_cores = yes
+						}
 					}
-					inherit_technology = RUS
-					delete_obsolete_russian_templates = yes
-				}
 
-				# Eastern Realms
-				if = {
-					limit = { 
-						has_global_flag = october_revolution
+					# fix goofy enclaves
+					if = {
+						limit = { 
+							owns_state = 206
+						}
+						194 = {
+							transfer_state_to = PREV
+							remove_russian_claims = yes
+							add_contested_owner = RUS
+						}
 					}
-					GER = {
-						country_event = ww1_brest_litovsk.9
-						GER_release_POL = yes						
-
+					if = {
+						limit = { 
+							owns_state = 204
+						}
+						241 = {
+							transfer_state_to = PREV
+							remove_russian_claims = yes
+							add_contested_owner = RUS	
+						}
+						1233 = {
+							transfer_state_to = PREV
+							remove_russian_claims = yes
+							add_contested_owner = RUS	
+						}
+					}
+					if = {
+						limit = { 
+							owns_state = 953
+						}
+						945 = {
+							transfer_state_to = PREV
+							remove_russian_claims = yes
+							add_contested_owner = RUS	
+						}
+						947 = {
+							transfer_state_to = PREV
+							remove_russian_claims = yes
+							add_contested_owner = RUS	
+						}
+					}
+					if = {
+						limit = { 
+							OR = {
+								owns_state = 191
+								owns_state = 952
+							}
+						}
 						every_state = {
 							limit = {
-								controller = {
-									is_in_central_powers = yes
-								}
-								is_german_occupation_zone_in_russia_state = yes
-								owner = {
-									OR = {
-										tag = RUS
-										is_subject_of = RUS
-									}
+								OR = {
+									region = 37
+									state = 944
+									state = 96
 								}
 							}
 							transfer_state_to = PREV
 							remove_russian_claims = yes
-							add_contested_owner = RUS
-							if = {
-								limit = {
-									OR = {
-										is_core_of = POL
-										is_core_of = UKR
-									}
-								}
-								remove_russian_cores = yes
-							}
-						}
-
-						# fix goofy enclaves
-						if = {
-							limit = { 
-								owns_state = 206
-							}
-							194 = {
-								transfer_state_to = PREV
-								remove_russian_claims = yes
-								add_contested_owner = RUS
-							}
+							add_contested_owner = RUS									
 						}
 						if = {
 							limit = { 
-								owns_state = 204
+								owns_state = 96
+								owns_state = 913
 							}
-							241 = {
+							209 = {
 								transfer_state_to = PREV
 								remove_russian_claims = yes
 								add_contested_owner = RUS	
-							}
-							1233 = {
-								transfer_state_to = PREV
-								remove_russian_claims = yes
-								add_contested_owner = RUS	
-							}
-						}
-						if = {
-							limit = { 
-								owns_state = 953
 							}
 							945 = {
 								transfer_state_to = PREV
@@ -868,105 +911,52 @@ RUS_surrender_effect_ENT = {
 								transfer_state_to = PREV
 								remove_russian_claims = yes
 								add_contested_owner = RUS	
-							}
-						}
-						if = {
-							limit = { 
-								OR = {
-									owns_state = 191
-									owns_state = 952
-								}
-							}
-							every_state = {
-								limit = {
-									OR = {
-										region = 37
-										state = 944
-										state = 96
-									}
-								}
-								transfer_state_to = PREV
-								remove_russian_claims = yes
-								add_contested_owner = RUS									
-							}
-							if = {
-								limit = { 
-									owns_state = 96
-									owns_state = 913
-								}
-								209 = {
-									transfer_state_to = PREV
-									remove_russian_claims = yes
-									add_contested_owner = RUS	
-								}
-								945 = {
-									transfer_state_to = PREV
-									remove_russian_claims = yes
-									add_contested_owner = RUS	
-								}
-								947 = {
-									transfer_state_to = PREV
-									remove_russian_claims = yes
-									add_contested_owner = RUS	
-								}							
 							}							
-						}
-						clear_iskolata = yes
+						}							
+					}
+					clear_iskolata = yes
 
-						every_state = {
-							limit = {
-								OR = {
-									is_owned_by = POL
-									is_owned_by = COU
-									is_owned_by = UBD
-									is_owned_by = LIT
-								}
-							}
-							teleport_armies = {
-								limit = {
-									OR = {
-										tag = RUS
-										is_ally_with = RUS
-									}
-								}
-								to_state = 209
+				}
+				
+				every_state = {
+					limit = {
+						OR = {
+							is_owned_by = POL
+							is_owned_by = COU
+							is_owned_by = UBD
+							is_owned_by = LIT
+						}
+					}
+					teleport_armies = {
+						limit = {
+							OR = {
+								tag = RUS
+								is_ally_with = RUS
 							}
 						}
-		
-						every_state = {
-							limit = {
-								OR = {
-									is_core_of = LIT
-									is_core_of = LAT
-									is_core_of = EST
-									state = 97
-									state = 773
-									state = 1015
-									state = 1017
-								}
-								NOT = {
-									state = 96
-								}
-							}
-							remove_russian_cores = yes
-							remove_russian_claims = yes
-						}								
+						to_state = 209
 					}
 				}
-				else = {		
-					GER = {
-						GER_release_POL = yes
-						GER_release_LIT = yes
-						GER_release_COU = yes
-						GER_release_UBD = yes
-						GER_release_BLR = yes
-						GER_release_UKR = yes
-						GER_release_DON = yes
-						GER_release_KUB = yes
-						GER_release_AZR = yes
-						GER_release_GEO = yes
-					}			
-				}
+
+				every_state = {
+					limit = {
+						OR = {
+							is_core_of = LIT
+							is_core_of = LAT
+							is_core_of = EST
+							state = 97
+							state = 773
+							state = 1015
+							state = 1017
+						}
+						NOT = {
+							state = 96
+						}
+					}
+					remove_russian_cores = yes
+					remove_russian_claims = yes
+				}								
+
 				if = {
 					limit = {
 						OR = {
@@ -1315,64 +1305,46 @@ GER_surrender_effect_CP = {
 
 				if = {
 					limit = {
-						has_war_with = SOV
-					}
-					SOV = {
-						every_state = {
-							limit = {
-								OR = {
-									region = 37
-									region = 38
-									region = 39
-									region = 130
-									region = 131
-									region = 192
-								}
-								owner = {
-									is_in_central_powers = yes
-								}
-								controller = {
-									OR = {
-										tag = SOV
-										is_ally_with = SOV
-									}
-								}
-							}
-							set_state_flag = soviet_occupation
-							owner = {
-								if = {
-									limit = { has_capitulated = yes }
-									set_country_flag = soviet_occupation
+						OR = {
+							has_war_with = RUS
+							AND = {
+								has_global_flag = brest_litovsk_negotiations_started
+								NOT = {
+									has_global_flag = RUS_surrender
 								}
 							}
 						}
-						every_state = {
-							limit = {
-								OR = {
-									region = 37
-									region = 38
-									region = 39
-									region = 130
-									region = 131
-									region = 192
-								}
-								owner = {
-									OR = {
-										tag = SOV
-										is_ally_with = SOV
+					}
+					every_state = {
+						limit = {
+							OR = {
+								region = 37
+								region = 38
+								region = 39
+								region = 130
+								region = 131
+								region = 192
+							}
+							OR = {
+								AND = {
+									owner = {
+										OR = {
+											tag = RUS
+											is_ally_with = RUS
+										}
+									}
+									controller = {
+										is_in_central_powers = yes
 									}
 								}
-								controller = {
-									is_in_central_powers = yes
-								}
+								has_contested_owner = RUS
 							}
-							set_state_flag = german_occupation
-							owner = {
-								if = {
-									limit = { has_capitulated = yes }
-									set_country_flag = german_occupation
-								}
-							}
+						}
+						set_state_flag = german_occupation
+					}
+					if = {
+						limit = { 
+							has_global_flag = october_revolution
 						}
 						# release ukraine
 						if = {
@@ -1445,6 +1417,8 @@ GER_surrender_effect_CP = {
 										has_state_flag = german_occupation
 									}
 									transfer_state_to = POL
+									remove_russian_cores = yes
+									remove_russian_claims = yes
 								}
 							}
 						}
@@ -1476,6 +1450,8 @@ GER_surrender_effect_CP = {
 										has_state_flag = german_occupation
 									}
 									transfer_state_to = LIT
+									remove_russian_cores = yes
+									remove_russian_claims = yes									
 								}
 							}
 						}
@@ -1488,7 +1464,6 @@ GER_surrender_effect_CP = {
 										NOT = {
 											has_country_flag = great_war_loser
 											has_country_flag = great_war_winner
-											is_subject_of = SOV
 											is_subject_of = GER
 											has_war_with = SOV
 											has_war_with = GER
@@ -1501,9 +1476,11 @@ GER_surrender_effect_CP = {
 									limit = {
 										region = 37
 										has_state_flag = german_occupation
-										NOT = { state = 96 }
+										NOT = { state = 96 state = 946 }
 									}
 									transfer_state_to = LAT
+									remove_russian_cores = yes
+									remove_russian_claims = yes									
 								}
 							}
 						}
@@ -1531,7 +1508,24 @@ GER_surrender_effect_CP = {
 										has_state_flag = german_occupation
 									}
 									transfer_state_to = EST
+									remove_russian_cores = yes
+									remove_russian_claims = yes									
 								}
+							}
+						}
+						if = {
+							limit = {
+								954 = {
+									is_owned_by = EST
+								}
+								13 = {
+									NOT = {
+										is_owned_by = EST
+									}
+								}
+							}
+							954 = {
+								transfer_state_to = 13.owner
 							}
 						}
 						# release moldavia
@@ -1561,195 +1555,29 @@ GER_surrender_effect_CP = {
 								}
 							}
 						}
-						# cores and claims
-						every_state = {
-							limit = {
-								has_state_flag = soviet_occupation
-								OR = {
-									is_core_of = SOV
-									is_claimed_by = SOV
-								}
+						if = {
+							limit = { 
+								country_exists = UKR
 							}
-							transfer_state_to = SOV
-						}
-						every_country = {
-							limit = {
-								has_country_flag = soviet_occupation
-							}
-							# in case there is soviet puppet, they annexes
-							if = {
-								limit = {
-									any_country_with_original_tag = {
-										original_tag_to_check = PREV
-										is_ally_with = SOV
-										exists = yes
-									}
-								}
-								random_country_with_original_tag = {
-									original_tag_to_check = PREV
+							UKR = {
+								every_core_state = {
 									limit = {
-										is_ally_with = SOV
+										is_owned_by = GER
+										has_state_flag = german_occupation
 									}
-									annex_country = {
-										target = PREV
-									}
-								}
-							}
-							# soviet ukraine
-							if = {
-								limit = { original_tag = UKR }
-								if = {
-									limit = { NOT = { has_character = UKR_yuriy_pyatakov } }
-									UKR = {
-										UKR_yuriy_pyatakov = { set_nationality = PREV.PREV }
-									}
-								}
-								SOV = {
-									puppet = PREV
-									PREV = { copy_government_of_PREV = yes }
-								}
-								promote_character = UKR_yuriy_pyatakov
-								set_cosmetic_tag = UKR_SOV_provisional
-								set_party_name = { 
-									ideology = communism 
-									long_name = UKR_communist_party_long
-									name = UKR_communist_party 
-								}
-							}
-							# soviet poland
-							else_if = {
-								limit = { original_tag = POL }
-								SOV = {
-									puppet = PREV
-									PREV = { copy_government_of_PREV = yes }
-								}
-								every_possible_country = {
-									limit = {
-										has_character = SOV_felix_dzerzhinsky
-									}	
-									SOV_felix_dzerzhinsky = {
-										set_nationality = POL
-										set_character_name = POL_felix_dzerzhinsky
-										promote_character = vanguardism
-									}			
-								}
-								set_cosmetic_tag = POL_SOVIET
-								set_party_name = { 
-									ideology = communism 
-									long_name = POL_polrewkom_party_long
-									name = POL_polrewkom_party 
-								}
-								unlock_national_focus = POL_declare_a_republic
-								unlock_national_focus = POL_red_tram_goes_on
-								unlock_national_focus = POL_alliance_with_bolsheviks
-							}
-							# soviet baltics
-							else_if = {
-								limit = { original_tag = UBD }
-								every_owned_state = {
-									limit = { is_core_of = EST }
-									if = {
-										limit = { EST = { exists = no } }
-										EST = { set_country_flag = soviet_occupation }
-									}
-									transfer_state_to = EST
-								}
-								every_owned_state = {
-									limit = { is_core_of = LAT }
-									if = {
-										limit = { LAT = { exists = no } }
-										LAT = { set_country_flag = soviet_occupation }
-									}
-									transfer_state_to = LAT
-								}
-								every_state = {
-									limit = {
-										OR = {
-											is_core_of = UBD
-											is_claimed_by = UBD
-										}
-									}
-									remove_core_of = UBD
-									remove_claim_by = UBD
-								}
-								if = {
-									limit = {
-										EST = { has_country_flag = soviet_occupation }
-									}
-									SOV = {
-										puppet = EST
-										EST = {
-											set_cosmetic_tag = SOV_puppet
-											copy_government_of_PREV = yes
-										}
-									}
-								}
-								if = {
-									limit = {
-										LAT = { has_country_flag = soviet_occupation }
-									}
-									SOV = {
-										puppet = LAT
-										LAT = {
-											set_cosmetic_tag = SOV_puppet
-											copy_government_of_PREV = yes
-										}
-									}
-								}
-								if = {
-									limit = {
-										country_exists = COU
-									}
-									12 = {
-										owner = {
-											annex_country = {
-												target = COU
-											}
-										}
-									}
-								}
-							}
-							else = {
-								SOV = {
-									puppet = PREV
-									PREV = { copy_government_of_PREV = yes }
-								}
-								set_cosmetic_tag = SOV_puppet
-							}
-							# cores and claims of puppets
-							every_state = {
-								limit = {
-									has_state_flag = soviet_occupation
-									OR = {
-										is_core_of = PREV
-										is_claimed_by = PREV
-									}
-									owner = {
-										is_in_central_powers = yes
-									}
-									PREV = {
-										OR = {
-											is_subject_of = SOV
-											is_in_faction_with = SOV
-										}
-									}
-								}
-								transfer_state_to = PREV
-							}
-							if = {
-								limit = {
-									LIT = {
-										is_subject_of = SOV
-										owns_state = 97
-									}
-								}
-								LIT = {
-									transfer_state = 773
-									transfer_state = 1017
+									transfer_state_to = PREV
 								}
 							}
 						}
-					}				
+					}
+					# cores and claims
+					every_state = {
+						limit = {
+							is_owned_by = GER # dont change to every_owned_state
+							has_state_flag = german_occupation
+						}
+						transfer_state_to = RUS
+					}
 				}
 
 				white_peace = ENT
@@ -1794,22 +1622,6 @@ GER_surrender_effect_CP = {
 						country_event = {
 							id = ww1_nwa.1 # needa to take it from here
 						}
-					}
-					if = {
-						limit = { 
-							country_exists = POL
-						}
-						every_owned_state = {
-							limit = {
-								OR = {
-									state = 97
-									state = 1017
-									state = 773
-									state = 1015
-								}
-							}
-							transfer_state_to = POL
-						}					
 					}
 					# Belarus
 					if = {
@@ -1929,23 +1741,35 @@ GER_surrender_effect_CP = {
 							transfer_state_to = 245.OWNER
 						}
 					}
-					every_owned_state = {
-						limit = {
-							is_core_of = EST
+					if = {
+						limit = { 
+							has_global_flag = october_revolution
 						}
-						transfer_state_to = EST
+						every_owned_state = {
+							limit = {
+								is_core_of = EST
+							}
+							transfer_state_to = EST
+						}
+						every_owned_state = {
+							limit = {
+								is_core_of = LAT
+							}
+							transfer_state_to = LAT
+						}
+						every_owned_state = {
+							limit = {
+								is_core_of = LIT
+							}
+							transfer_state_to = LIT
+						}
 					}
-					every_owned_state = {
+					every_state = {
 						limit = {
-							is_core_of = LAT
+							is_owned_by = GER
+							has_contested_owner = RUS
 						}
-						transfer_state_to = LAT
-					}
-					every_owned_state = {
-						limit = {
-							is_core_of = LIT
-						}
-						transfer_state_to = LIT
+						transfer_state_to = RUS
 					}
 				}
 				# German Occupation of Aland ends
@@ -2147,7 +1971,7 @@ GER_surrender_effect_CP = {
 									state = 737
 								}
 							}
-							transfer_state_to = SAF
+							transfer_state_to = AST
 						}						
 					}
 					else = {
@@ -2335,7 +2159,8 @@ GER_surrender_effect_CP = {
 						limit = {
 							OR = {
 								state = 86
-								state = 86
+								state = 85
+								state = 762
 								state = 404
 								state = 5
 								state = 763
@@ -2714,6 +2539,9 @@ BUL_surrender_effect_CP = {
 							state = 1258
 							state = 1141
 							state = 731
+							state = 876
+							state = 809
+							state = 821
 						}
 					}
 					transfer_state_to = SER
@@ -3613,6 +3441,24 @@ ITA_surrender_effect_CP = {
 			}
 			
 			ITA_surrender_return_albania = yes
+			ITA_surrender_giveup_libya = yes
+
+			if = {
+				limit = {
+					TUR = {
+						has_country_flag = great_war_winner
+					}					
+				}
+				every_owned_state = {
+					limit = {
+						OR = {
+							state = 164
+							state = 899
+						}
+					}
+					transfer_state_to = TUR
+				}
+			}			
 		}
 	}
 }
@@ -3687,6 +3533,24 @@ ITA_surrender_effect_ENT = {
 			}
 
 			ITA_surrender_return_albania = yes
+			ITA_surrender_giveup_libya = yes
+
+			if = {
+				limit = {
+					TUR = {
+						has_country_flag = great_war_winner
+					}					
+				}
+				every_owned_state = {
+					limit = {
+						OR = {
+							state = 164
+							state = 899
+						}
+					}
+					transfer_state_to = TUR
+				}
+			}				
 		}
 	}
 }
@@ -3706,13 +3570,61 @@ ITA_surrender_return_albania = {
 				transfer_state_to = AUS
 			}					
 		}
-		else = {					
+		else = {
 			every_core_state = {
 				limit = {
 					is_owned_by = ITA
 				}
 				transfer_state_to = ALB
 			}
+		}
+	}
+}
+ITA_surrender_giveup_libya = {
+	every_owned_state = {
+		limit = {
+			OR = {
+				state = 1121
+				state = 754
+				state = 1156
+				state = 663
+				state = 810
+				state = 817
+				state = 1061
+				state = 450
+			}
+		}
+		transfer_state_to = LBA
+	}
+	every_owned_state = {
+		limit = {
+			OR = {
+				state = 1128
+				state = 812
+				state = 1124
+				state = 273
+				state = 1122
+				state = 661
+				state = 1154
+				state = 1155
+				state = 1060
+				state = 1157
+				state = 448
+			}
+		}
+		if = {
+			limit = {
+				TUR = {
+					is_part_of_great_war = yes
+					NOT = {
+						is_in_faction_with = ITA
+					}
+				}
+			}
+			transfer_state_to = TUR
+		}
+		else = {
+			transfer_state_to = TRP
 		}
 	}
 }
@@ -3743,11 +3655,23 @@ SER_surrender_effect_ENT = {
 							state = 1141
 							state = 731
 							state = 759
+							state = 876
+							state = 809
+							state = 821							
 						}
 					}
 					transfer_state_to = BUL
 				}
-			}		
+			}
+
+			if = {
+				limit = { 
+					owns_state = 187
+				}
+				187 = {
+					transfer_state_to = GRE
+				}
+			}
 		}
 	}
 }
@@ -3761,27 +3685,7 @@ GRE_surrender_effect_ENT = {
 			set_country_flag = army_should_be_restricted
 			add_ideas = idea_armistice
 
-			if = {
-				limit = {
-					BUL = {
-						has_country_flag = great_war_winner
-					}					
-				}
-				every_owned_state = {
-					limit = {
-						OR = {
-							state = 200
-							state = 757
-							state = 184
-							state = 345
-							state = 1255
-							state = 731
-							state = 1256
-						}
-					}
-					transfer_state_to = BUL
-				}
-			}			
+			GRE_surrender_giveup_states_general = yes
 		}
 	}
 }
@@ -3793,29 +3697,53 @@ GRE_surrender_effect_CP = {
 			set_country_flag = member_of_central_powers
 	
 			set_country_flag = army_should_be_restricted
-			add_ideas = idea_armistice
-
-			if = {
-				limit = {
-					BUL = {
-						has_country_flag = great_war_winner
-					}					
+			add_ideas = idea_armistice		
+			
+			GRE_surrender_giveup_states_general = yes
+		}
+	}
+}
+GRE_surrender_giveup_states_general = {
+	if = {
+		limit = {
+			BUL = {
+				has_country_flag = great_war_winner
+			}					
+		}
+		every_owned_state = {
+			limit = {
+				OR = {
+					state = 200
+					state = 757
+					state = 184
+					state = 345
+					state = 1255
+					state = 731
+					state = 1256
 				}
-				every_owned_state = {
-					limit = {
-						OR = {
-							state = 200
-							state = 757
-							state = 184
-							state = 345
-							state = 1255
-							state = 731
-							state = 1256
-						}
-					}
-					transfer_state_to = BUL
+			}
+			transfer_state_to = BUL
+		}
+	}
+	
+	if = {
+		limit = {
+			TUR = {
+				has_country_flag = great_war_winner
+			}					
+		}
+		every_owned_state = {
+			limit = {
+				OR = {
+					state = 790
+					state = 975
+					state = 974
+					state = 164
+					state = 899
+					state = 183
 				}
-			}				
+			}
+			transfer_state_to = TUR
 		}
 	}
 }
@@ -3966,6 +3894,43 @@ treaty_of_saint_germain_en_laye_effect = {
 					transfer_state_to = PREV.PREV
 				}
 			}
+			# alt hist deoccupation of adriatic coast if italy is not a winner
+			if = {
+				limit = { 
+					ITA = {
+						NOT = {
+							has_country_flag = great_war_winner
+						}
+					}
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 736
+							state = 513
+						}
+					}
+					transfer_state_to = 1198.owner
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 103
+							state = 1206
+						}
+					}
+					transfer_state_to = 163.owner
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 1230
+							state = 1205
+						}
+					}
+					transfer_state_to = 105.owner
+				}
+			}
 			if = {
 				limit = {
 					NOT = {
@@ -4018,7 +3983,15 @@ treaty_of_saint_germain_en_laye_effect = {
 					}
 					transfer_state_to = RUS
 				}
-			}			
+			}
+			if = {
+				limit = {
+					has_character = AUH_eduard_von_bohmermolli
+				}
+				AUH_eduard_von_bohmermolli = {
+					set_nationality = CZE
+				}
+			}
 		}
 	}
 }
@@ -4415,34 +4388,6 @@ treaty_of_bucharest_effect = {
 }
 
 # works only during great war
-
-PREV_war_on_THIS_subjects = {
-	PREV = {
-		declare_war_on = {
-			target = PREV
-			type = topple_government
-		}
-		every_subject_country = {
-			limit = {
-				is_puppet = yes # its not mistake
-			}
-			add_to_war = {
-				targeted_alliance = PREV
-				enemy = PREV.PREV
-			}
-		}		
-	}
-	every_subject_country = {
-		limit = {
-			is_puppet = yes # its not mistake
-		}
-		add_to_war = {
-			targeted_alliance = PREV
-			enemy = PREV.PREV
-		}
-	}
-}
-
 join_ENT_declare_war_on_CENPO = {
 	ENT = {
 		add_to_faction = PREV
