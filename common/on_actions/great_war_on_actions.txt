@@ -1,0 +1,175 @@
+on_actions = {
+	# important thing
+	on_war_relation_added = {
+		effect = {
+			ROOT = {
+				every_subject_country = {
+					limit = {
+						is_puppet = yes
+					}
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = FROM
+					}
+				}
+			}
+			FROM = {
+				every_subject_country = {
+					limit = {
+						is_puppet = yes
+					}
+					add_to_war = {
+						targeted_alliance = FROM
+						enemy = ROOT
+					}					
+				}
+			}
+		}
+	}
+	# hejaz and asir capitulation during arab revolt after entente lost
+	on_peaceconference_started = {
+		effect = {
+			if = {
+				limit = { 
+					FROM = {
+						OR = {
+							tag = HJZ
+							tag = ASR
+						}
+					}
+					is_in_faction = no
+				}
+				TUR = {
+					annex_country = {
+						target = FROM
+					}
+				}
+			}
+		}
+	}
+	# Prevent generic capitulation before mission
+	on_capitulation = {
+		effect = {
+			if = {
+				limit = {
+					tag = FRA
+					is_part_of_great_war = yes
+					FRA_surrender_conditions = yes
+				}
+				FRA_surrender_effect_ENT = yes
+			}
+			if = {
+				limit = {
+					tag = ENG
+					is_part_of_great_war = yes
+					ENG_surrender_conditions = yes
+				}
+				ENG_surrender_effect_ENT = yes
+			}
+			if = {
+				limit = {
+					tag = RUS
+				}
+				if = {
+					limit = {
+						is_part_of_great_war = yes
+						RUS_surrender_conditions = yes
+					}
+					RUS_armistice_with_CENPO = yes
+				}
+				else_if = {
+					limit = { 
+						has_active_mission = RUS_treaty_of_brest_litovsk_mission
+					}
+					RUS_surrender_effect_ENT = yes
+				}
+			}
+			if = {
+				limit = {
+					tag = ROM
+					is_part_of_great_war = yes
+				}
+				if = {
+					limit = {
+						is_in_faction_with = ENT
+						ROM_surrender_conditions_ENT = yes
+					}
+					ROM_surrender_effect_ENT = yes
+				}
+				else_if = {
+					limit = { 
+						ROM_surrender_conditions_CP = yes
+					}
+					ROM_surrender_effect_CP = yes
+				}
+			}
+			if = {
+				limit = {
+					tag = ITA
+					is_part_of_great_war = yes
+				}
+				if = {
+					limit = {
+						is_in_faction_with = ENT
+						ITA_surrender_conditions_ENT = yes
+					}
+					ITA_surrender_effect_ENT = yes
+				}
+				else_if = {
+					limit = { 
+						ITA_surrender_conditions_CP = yes
+					}
+					ITA_surrender_effect_CP = yes
+				}
+			}
+			if = {
+				limit = {
+					tag = GER
+					is_part_of_great_war = yes
+					GER_surrender_conditions = yes
+				}
+				GER_surrender_effect_CP = yes
+			}
+			if = {
+				limit = {
+					tag = AUS
+					is_part_of_great_war = yes
+					AUS_surrender_conditions = yes					
+				}
+				AUS_surrender_effect_CP = yes
+			}
+			if = {
+				limit = {
+					tag = BUL
+					is_part_of_great_war = yes
+					BUL_surrender_conditions = yes
+				}
+				if = {
+					limit = {
+						is_in_faction_with = GER
+					}
+					BUL_surrender_effect_CP = yes
+				}
+				else = {
+					BUL_surrender_effect_ENT = yes
+				}
+			}
+			if = {
+				limit = {
+					tag = TUR
+					is_part_of_great_war = yes
+					TUR_surrender_conditions = yes
+				}
+				if = {
+					limit = { 
+						is_in_faction_with = GER
+					}
+					TUR_surrender_effect_CP = yes
+				}
+				else = {
+					TUR_surrender_effect_ENT = yes
+				}
+			}			
+		}
+	}
+}
