@@ -109,107 +109,140 @@ RUS_state_council_election_effect = {
 }
 # Duma election scripted effect
 RUS_election_scripted_effect = {
-	custom_effect_tooltip = RUS_election_tt
 	hidden_effect = {
-		set_temp_variable = { communism_temp = party_popularity@communism }
-		multiply_temp_variable = { communism_temp = RUS_total_duma_seats }
-
-		set_temp_variable = { democratic_temp = party_popularity@democratic }
-		multiply_temp_variable = { democratic_temp = RUS_total_duma_seats }
-
-
-		set_temp_variable = { neutrality_temp = party_popularity@neutrality }
-		multiply_temp_variable = { neutrality_temp = RUS_total_duma_seats }
-
-
-		set_temp_variable = { fascism_temp = party_popularity@fascism }
-		multiply_temp_variable = { fascism_temp = RUS_total_duma_seats }
-
-		round_temp_variable = communism_temp
-		round_temp_variable = democratic_temp
-		round_temp_variable = neutrality_temp
-		round_temp_variable = fascism_temp
+		set_temp_variable = { communism_temp = {
+			value = party_popularity@communism
+			multiply = RUS_total_duma_seats
+			round = yes
+		} }
+		set_temp_variable = { democratic_temp = {
+			value = party_popularity@democratic
+			multiply = RUS_total_duma_seats
+			round = yes
+		} }
+		set_temp_variable = { neutrality_temp = {
+			value = party_popularity@neutrality
+			multiply = RUS_total_duma_seats
+			round = yes
+		} }
+		set_temp_variable = { fascism_temp = {
+			value = party_popularity@fascism
+			multiply = RUS_total_duma_seats
+			round = yes
+		} }
 
 		set_temp_variable = {
-			RUS_total_temp_seats  = communism_temp
-		}
-		add_to_temp_variable = {
-			RUS_total_temp_seats = democratic_temp
-		}
-		add_to_temp_variable = {
-			RUS_total_temp_seats = neutrality_temp
-		}
-		add_to_temp_variable = {
-			RUS_total_temp_seats = fascism_temp
-		}
-		IF = {
-			limit = {
-				check_variable = {
-					var = RUS_total_temp_seats 
-					value = RUS_total_duma_seats
-					compare = not_equals
-				}
-			}
-			set_temp_variable = {
-				RUS_excess_seats = RUS_total_temp_seats
-			}
-			subtract_from_temp_variable = {
-				RUS_excess_seats = RUS_total_duma_seats
-			}
-			IF = {
-				limit = { 
-					communism_plurality = yes
-				}
-				subtract_from_temp_variable = {
-					var = communism_temp
-					value = RUS_excess_seats
-				}
-			}
-			else_IF = {
-				limit = { 
-					democratic_plurality = yes
-				}
-				subtract_from_temp_variable = {
-					var = democratic_temp
-					value = RUS_excess_seats
-				}
-			}
-			else_IF = {
-				limit = { 
-					neutrality_plurality = yes
-				}
-				subtract_from_temp_variable = {
-					var = neutrality_temp
-					value = RUS_excess_seats
-				}
-			}
-			else_IF = {
-				limit = { 
-					fascism_plurality = yes
-				}
-				subtract_from_temp_variable = {
-					var = fascism_temp
-					value = RUS_excess_seats
-				}
+			RUS_total_temp_seats  = {
+				value = communism_temp
+				add = democratic_temp
+				add = neutrality_temp
+				add = fascism_temp
 			}
 		}
-		set_variable = { var = far_right value = fascism_temp }
-		set_variable = { var = center_right value = neutrality_temp }
-		set_variable = { var = center_left value = democratic_temp }
-		set_variable = { var = socialists value = communism_temp }
 
-		RUS_reload_loyalties = yes
+		set_temp_variable = {
+			RUS_excess_seats = {
+				value = RUS_total_temp_seats
+				subtract = RUS_total_duma_seats
+			}
+		}
+		set_temp_variable = {
+			communism_temp = {
+				value = communism_temp
+				if = {
+					limit = {
+						value = communism_temp
+						greater_than_or_equals = neutrality_temp
+						greater_than_or_equals = fascism_temp
+						greater_than_or_equals = democratic_temp
+					}
+					subtract = RUS_excess_seats
+				}
+			}
+		}
+		set_temp_variable = {
+			democratic_temp = {
+				value = democratic_temp
+				if = {
+					limit = {
+						value = democratic_temp
+						greater_than_or_equals = communism_temp
+						greater_than_or_equals = fascism_temp
+						greater_than_or_equals = neutrality_temp
+					}
+					subtract = RUS_excess_seats
+				}
+			}
+		}
+		set_temp_variable = {
+			neutrality_temp = {
+				value = neutrality_temp
+				if = {
+					limit = {
+						value = neutrality_temp
+						greater_than_or_equals = communism_temp
+						greater_than_or_equals = fascism_temp
+						greater_than_or_equals = democratic_temp
+					}
+					subtract = RUS_excess_seats
+				}
+			}
+		}
+		set_temp_variable = {
+			communism_temp = {
+				value = communism_temp
+				if = {
+					limit = {
+						value = communism_temp
+						greater_than_or_equals = neutrality_temp
+						greater_than_or_equals = fascism_temp
+						greater_than_or_equals = democratic_temp
+					}
+					subtract = RUS_excess_seats
+				}
+			}
+		}
 
-		set_variable = { RUS_parliament_seat_array^RUS_parliament_seat_socialists = socialists }
-		set_variable = { RUS_parliament_seat_array^RUS_parliament_seat_center_left = center_left }
-		set_variable = { RUS_parliament_seat_array^RUS_parliament_seat_center_right = center_right }
-		set_variable = { RUS_parliament_seat_array^RUS_parliament_seat_far_right = far_right }
-		RUS_reload_parliament_gui = yes
-
-		set_variable = { left_octobrists_var = center_right }
-		multiply_variable = { left_octobrists_var = 0.22 }
-		round_variable = left_octobrists_var
 	}
+
+	set_temp_variable = { old_socialists = RUS_parliament_seat_array^RUS_parliament_seat_socialists }
+	set_temp_variable = { old_center_left = RUS_parliament_seat_array^RUS_parliament_seat_center_left }
+	set_temp_variable = { old_center_right = RUS_parliament_seat_array^RUS_parliament_seat_center_right }
+	set_temp_variable = { old_far_right = RUS_parliament_seat_array^RUS_parliament_seat_far_right }
+
+	set_temp_variable = { diff_socialists = {
+		value = communism_temp
+		subtract = old_socialists
+	} }
+	set_temp_variable = { diff_center_left = {
+		value = democratic_temp
+		subtract = old_center_left
+	} }
+	set_temp_variable = { diff_center_right = {
+		value = neutrality_temp
+		subtract = old_center_right
+	} }
+	set_temp_variable = { diff_far_right = {
+		value = fascism_temp
+		subtract = old_far_right
+	} }	
+
+	custom_effect_tooltip = RUS_election_tt
+	set_variable = { far_right = { value = fascism_temp } tooltip = RUS_election_far_right_change }
+	set_variable = { center_right = { value = neutrality_temp } tooltip = RUS_election_center_right_change }
+	set_variable = { center_left = { value = democratic_temp } tooltip = RUS_election_center_left_change }
+	set_variable = { socialists = { value = communism_temp } tooltip = RUS_election_socialists_change }
+	RUS_reload_loyalties = yes
+
+	set_variable = { RUS_parliament_seat_array^RUS_parliament_seat_socialists = socialists }
+	set_variable = { RUS_parliament_seat_array^RUS_parliament_seat_center_left = center_left }
+	set_variable = { RUS_parliament_seat_array^RUS_parliament_seat_center_right = center_right }
+	set_variable = { RUS_parliament_seat_array^RUS_parliament_seat_far_right = far_right }
+	RUS_reload_parliament_gui = yes
+
+	set_variable = { left_octobrists_var = center_right }
+	multiply_variable = { left_octobrists_var = 0.22 }
+	round_variable = left_octobrists_var
 }
 #Example how to use RUS_modify_loyalty_***
 #  set_temp_variable = { RUS_modify_loyalty_socialists_var = -2 }
