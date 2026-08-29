@@ -2773,6 +2773,12 @@
 				}
 				vassal_of_vassal_logic = yes
 			}
+			if = {
+				limit = {
+					has_autonomy_state = autonomy_tgwr_condominium
+				}
+				condominium_logic = yes
+			}
 			log = "[GetDateText]: [ROOT.GetName] has been puppeted by [FROM.GetName]"
 		}
 	}
@@ -5256,109 +5262,34 @@
 			}
 			every_country = {
 				limit = {
-					protectorate_type_subject = yes
-					NOT = { has_war_together_with = OVERLORD }
-				}		
-				protectorate_logic = yes
-			}
-			every_country = {
-				limit = {
 					is_subject = yes
-					OVERLORD = {
-						is_subject = yes
-					}
 				}		
-				vassal_of_vassal_logic = yes
+				if = {
+					limit = {
+						protectorate_type_subject = yes
+						NOT = { has_war_together_with = OVERLORD }
+					}
+					protectorate_logic = yes
+				}
+				else_if = {
+					limit = {
+						has_autonomy_state = autonomy_tgwr_condominium
+					}
+					condominium_logic = yes
+				}
+				if = {
+					limit = {
+						OVERLORD = {
+							is_subject = yes
+						}
+					}
+					vassal_of_vassal_logic = yes
+				}
 			}
 		}
 	}
 	on_capitulation = {
 		effect = {
-			# Prevent generic capitulation before mission
-			if = {
-				limit = {
-					tag = FRA
-				}
-				if = {
-					limit = {
-						has_active_mission = FRA_surrender_ENT_mission
-					}
-					FRA_surrender_effect_ENT = yes
-				}
-			}
-			if = {
-				limit = {
-					tag = RUS
-				}
-				if = {
-					limit = {
-						has_active_mission = RUS_armistice_ENT_mission
-					}
-					RUS_armistice_with_CENPO = yes
-				}
-				else_if = {
-					limit = { 
-						has_active_mission = RUS_treaty_of_brest_litovsk_mission
-					}
-					RUS_surrender_effect_ENT = yes
-				}
-			}
-			if = {
-				limit = {
-					tag = ROM
-				}
-				if = {
-					limit = {
-						has_active_mission = ROM_surrender_ENT_mission
-					}
-					ROM_surrender_effect_ENT = yes
-				}
-			}
-			if = {
-				limit = {
-					tag = GER
-				}
-				if = {
-					limit = {
-						has_active_mission = GER_surrender_CP_mission
-					}
-					GER_surrender_effect_CP = yes
-				}
-			}
-			if = {
-				limit = {
-					tag = AUS
-				}
-				if = {
-					limit = {
-						has_active_mission = AUS_surrender_CP_mission
-					}
-					AUS_surrender_effect_CP = yes
-				}
-			}
-			if = {
-				limit = {
-					tag = BUL
-				}
-				if = {
-					limit = {
-						has_active_mission = BUL_surrender_CP_mission
-					}
-					BUL_surrender_effect_CP = yes
-				}
-			}
-			if = {
-				limit = {
-					tag = TUR
-				}
-				if = {
-					limit = {
-						has_active_mission = TUR_surrender_CP_mission
-					}
-					TUR_surrender_effect_CP = yes
-				}
-			}
-
 			###
 			if = {
 				limit = {
@@ -11691,6 +11622,12 @@
 					set_country_flag = entente_leader
 				}
 			}
+			if = {
+				limit = {
+					has_autonomy_state = autonomy_tgwr_condominium
+				}
+				condominium_logic = yes
+			}			
 			log = "[GetDateText]: [ROOT.GetName] has left [FROM.GetFactionName] which leader is [FROM.GetName]"
 		}
 	}
@@ -12682,6 +12619,12 @@
 					}
 				}
 				vassal_of_vassal_logic = yes
+			}
+			if = {
+				limit = {
+					has_autonomy_state = autonomy_tgwr_condominium
+				}
+				condominium_logic = yes
 			}
 		}
 	}
