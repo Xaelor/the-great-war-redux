@@ -1849,6 +1849,142 @@ country_event = {
 	}
 }
 
+# Portugal Demands Our Annexation
+country_event = {
+	id = ww1_portugal.36
+	title = ww1_portugal.36.t
+	desc = ww1_portugal.36.d
+	picture = GFX_report_event_african_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = ww1_portugal.36.a
+		ai_chance = {
+			base = 10
+			modifier = {
+				factor = 0
+				original_tag = MBU
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					original_tag = KOG
+					original_tag = KAS
+				}
+			}
+			custom_effect_tooltip = historical_tt
+			custom_effect_tooltip = generic_skip_one_line_tt
+		}
+		FROM = {
+			country_event = {
+				id = ww1_portugal.37
+				hours = 6
+			}
+			custom_effect_tooltip = will_gain_from_event_tt
+			effect_tooltip = {
+				annex_country = {
+					target = FROM
+					transfer_troops = no
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ww1_portugal.36.a
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 10
+				original_tag = MBU
+			}
+		}
+		if = {
+			limit = {
+				original_tag = MBU
+			}
+			custom_effect_tooltip = historical_tt
+			custom_effect_tooltip = generic_skip_one_line_tt
+		}
+		FROM = {
+			country_event = {
+				id = ww1_portugal.38
+				hours = 6
+			}
+			custom_effect_tooltip = will_gain_from_event_tt
+			effect_tooltip = {
+				set_autonomy = {
+					target = FROM
+					autonomy_state = autonomy_free
+				}
+				create_wargoal = {
+					target = FROM
+					type = annex_everything
+				}
+			}
+			custom_effect_tooltip = will_gain_from_event_alternatively_tt
+			effect_tooltip = {
+				add_political_power = -50
+				set_autonomy = {
+					target = FROM
+					autonomy_state = autonomy_free
+				}
+			}
+		}
+	}
+}
+
+# FROM Accepts Our Demands
+country_event = {
+	id = ww1_portugal.37
+	title = ww1_portugal.37.t
+	desc = ww1_portugal.37.d
+	picture = GFX_report_event_african_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = ww1_portugal.37.a
+		annex_country = {
+			target = FROM
+			transfer_troops = no
+		}
+	}
+}
+
+# FROM Accepts Our Demands
+country_event = {
+	id = ww1_portugal.38
+	title = ww1_portugal.38.t
+	desc = ww1_portugal.38.d
+	picture = GFX_report_event_african_soldiers
+
+	is_triggered_only = yes
+
+	option = {
+		name = ww1_portugal.38.a
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_free
+		}
+		create_wargoal = {
+			target = FROM
+			type = annex_everything
+		}
+	}
+
+	option = {
+		name = ww1_portugal.38.b
+		add_political_power = -50
+		set_autonomy = {
+			target = FROM
+			autonomy_state = autonomy_free
+		}
+	}
+}
+
 # Portugal - 5 October 1910 revolution
 news_event = {
 	id = ww1_portugal_news.1
