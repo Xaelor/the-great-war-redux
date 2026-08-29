@@ -52,15 +52,10 @@ CP_surrender_effect = {
 					}									
 					civilwar_target = PREV
 				}
-			}	
-		}
-		if = {
-			limit = { is_subject = yes }
-			OVERLORD = {
-				end_puppet = PREV
 			}
-			clr_country_flag = protectorate
+			is_subject = yes
 		}
+		free_subject = yes
 	}
 
 	every_faction_member = {
@@ -247,15 +242,10 @@ ENT_surrender_effect = {
 					}									
 					civilwar_target = PREV
 				}
-			}	
-		}
-		if = {
-			limit = { is_subject = yes }
-			OVERLORD = {
-				end_puppet = PREV
 			}
-			clr_country_flag = protectorate
+			is_subject = yes
 		}
+		free_subject = yes
 	}	
 
 	every_faction_member = {
@@ -914,6 +904,16 @@ RUS_surrender_effect_ENT = {
 					clear_iskolata = yes
 
 				}
+
+				# free crimea
+				if = {
+					limit = {
+						has_subject = CRI
+					}
+					CRI = {
+						free_subject_leave_faction = yes
+					}
+				}
 				
 				every_state = {
 					limit = {
@@ -1005,8 +1005,8 @@ RUS_surrender_effect_ENT = {
 								limit = {
 									is_subject = yes
 								}	
+								free_subject = yes
 								OVERLORD = {
-									end_puppet = PREV 
 									PREV = {
 										give_military_access = PREV
 									}
@@ -1144,14 +1144,7 @@ RUS_surrender_effect_ENT = {
 								original_tag = TAN
 							}
 						}
-						RUS = { end_puppet = PREV }
-						clr_country_flag = protectorate 
-						if = {
-							limit = {
-								is_in_faction = yes
-							}
-							leave_faction = yes
-						}
+						free_subject_leave_faction = yes
 					}
 				}
 
@@ -1886,9 +1879,8 @@ GER_surrender_effect_CP = {
 					limit = {
 						has_subject = GEO
 					}
-					end_puppet = GEO
 					GEO = {
-						clr_country_flag = protectorate
+						free_subject_leave_faction = yes
 					}
 				}
 				# Release Crimea
@@ -1896,8 +1888,8 @@ GER_surrender_effect_CP = {
 					limit = {
 						has_subject = CRI
 					}
-					end_puppet = CRI
 					CRI = {
+						free_subject_leave_faction = yes
 						add_timed_idea = {
 							idea = communist_influence
 							days = 180
@@ -2559,6 +2551,26 @@ BUL_surrender_effect_CP = {
 						}
 					}
 					transfer_state_to = TUR
+				}
+			}
+
+			# romania deoccupation or transfer states to german occupation
+			every_owned_state = {
+				limit = {
+					is_core_of = ROM
+				}
+				transfer_state_to = 46.owner
+				if = {
+					limit = { 
+						46 = {
+							owner = {
+								NOT = {
+									tag = ROM
+								}
+							}
+						}
+					}
+					add_contested_owner = ROM
 				}
 			}
 	
@@ -3400,7 +3412,6 @@ ROM_surrender_effect_ENT = {
 						state = 866
 					}
 				}
-				set_state_flag = focsani_armistice
 				transfer_state_to = GER
 				add_contested_owner = ROM
 			}
@@ -4029,6 +4040,19 @@ treaty_of_neuilly_sur_seine_effect = {
 					transfer_state_to = GRE
 				}
 			}
+			if = {
+				limit = { 
+					ROM = {
+						has_country_flag = great_war_winner
+					}
+				}
+				every_owned_state = {
+					limit = {
+						is_core_of = ROM
+					}
+					transfer_state_to = ROM
+				}
+			}
 			clear_all_relations_except_wars = yes
 		}
 	}
@@ -4170,7 +4194,7 @@ treaty_of_versailles_effect = {
 				transfer_state_to = FRA
 				add_contested_owner = GER
 			}		
-		}
+		}	
 		if = {
 			limit = { 
 				country_exists = POL
@@ -4213,6 +4237,36 @@ treaty_of_versailles_effect = {
 				}
 			}		
 		}
+
+		# Memelland
+		if = {
+			limit = {
+				188 = {
+					owner = {
+						has_country_flag = great_war_loser
+					}
+				}
+			}
+			188 = {
+				add_dynamic_modifier = { modifier = international_city }
+				if = {
+					limit = { 
+						FRA = { has_country_flag = great_war_winner }
+					}
+					transfer_state_to = FRA
+					add_contested_owner = GER
+					if = {
+						limit = {  country_exists = LIT }
+						add_contested_owner = LIT
+					}
+				}
+				else_if = {
+					limit = { country_exists = LIT }
+					transfer_state_to = LIT
+					add_contested_owner = GER
+				}		
+			}
+		}		
 	}
 }
 
