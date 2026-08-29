@@ -2773,6 +2773,12 @@
 				}
 				vassal_of_vassal_logic = yes
 			}
+			if = {
+				limit = {
+					has_autonomy_state = autonomy_tgwr_condominium
+				}
+				condominium_logic = yes
+			}
 			log = "[GetDateText]: [ROOT.GetName] has been puppeted by [FROM.GetName]"
 		}
 	}
@@ -4403,6 +4409,15 @@
 				set_compliance = 5
 				set_resistance = 45
 			}
+			#Angola
+			540 = {
+				set_compliance = 40
+				set_resistance = 10
+			}
+			922 = {
+				set_compliance = 0
+				set_resistance = 50
+			}
 			#Occupation Laws
 			## Fix occupation laws on startup
 			random_country = {
@@ -5256,19 +5271,29 @@
 			}
 			every_country = {
 				limit = {
-					protectorate_type_subject = yes
-					NOT = { has_war_together_with = OVERLORD }
-				}		
-				protectorate_logic = yes
-			}
-			every_country = {
-				limit = {
 					is_subject = yes
-					OVERLORD = {
-						is_subject = yes
-					}
 				}		
-				vassal_of_vassal_logic = yes
+				if = {
+					limit = {
+						protectorate_type_subject = yes
+						NOT = { has_war_together_with = OVERLORD }
+					}
+					protectorate_logic = yes
+				}
+				else_if = {
+					limit = {
+						has_autonomy_state = autonomy_tgwr_condominium
+					}
+					condominium_logic = yes
+				}
+				if = {
+					limit = {
+						OVERLORD = {
+							is_subject = yes
+						}
+					}
+					vassal_of_vassal_logic = yes
+				}
 			}
 		}
 	}
@@ -11606,6 +11631,12 @@
 					set_country_flag = entente_leader
 				}
 			}
+			if = {
+				limit = {
+					has_autonomy_state = autonomy_tgwr_condominium
+				}
+				condominium_logic = yes
+			}			
 			log = "[GetDateText]: [ROOT.GetName] has left [FROM.GetFactionName] which leader is [FROM.GetName]"
 		}
 	}
@@ -12575,6 +12606,12 @@
 					}
 				}
 				vassal_of_vassal_logic = yes
+			}
+			if = {
+				limit = {
+					has_autonomy_state = autonomy_tgwr_condominium
+				}
+				condominium_logic = yes
 			}
 		}
 	}
