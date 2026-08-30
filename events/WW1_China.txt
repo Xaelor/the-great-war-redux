@@ -3091,12 +3091,27 @@ country_event = {
 					get_current_government_type = yes
 				}
 				CHI = {
-					CHI_hu_jingyi = {
-						set_nationality = SIC
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = warlordism
+					if = {
+						limit = {
+							is_kuomintang_state = yes
+						}
+						SIC = {
+							SIC_xiong_kewu = {
+								set_nationality = SIC
+								promote_character = warlordism
+								promote_character = stratocracy
+								promote_character = conservatism
+							}
+						}
+					}
+					else = {
+						CHI_hu_jingyi = {
+							set_nationality = SIC
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = warlordism
+								}
 							}
 						}
 					}
@@ -3742,6 +3757,7 @@ country_event = {
 		name = ww1_china.4.a
 		hidden_effect = {
 			news_event = { id = ww1_china.36 hours = 6 }
+			set_country_flag = chinese_second_revolution
 		}
 		# triggering national protection war
 		# if = {
@@ -3763,13 +3779,43 @@ country_event = {
 			states = all
 			states_filter = {
 				is_capital = no
-				NOT = { region = 165 }
+				OR = {
+					NOT = {
+						region = 165
+						region = 164
+						region = 144
+					}
+					state = 607
+					state = 890
+					state = 891
+					state = 1016
+				}
 			}
 			keep_unit_leaders_trigger = {
 				OR = {
 					has_character_flag = chinese_second_revolution
 					has_character_flag = kmt_allegiance
 					has_character_flag = national_protection_allegiance
+				}
+			}
+			PREV = {
+				every_subject_country = {
+					limit = {
+						OR = {
+							tag = GXC
+							tag = GZC
+							tag = YUN
+							tag = SIC
+							tag = HNC
+							tag = ZHE
+							tag = FJN
+							tag = GDC
+						}
+					}
+					add_to_war = {
+						enemy = PREV.PREV
+						targeted_alliance = PREV
+					}
 				}
 			}
 		}
@@ -3814,73 +3860,125 @@ country_event = {
 						set_nationality = PREV.PREV
 					}
 				}
+				if = {
+					limit = {
+						NOT = {
+							PREV = { has_completed_focus = CHI_suppress_monarchists }
+							has_global_flag = yuan_shikai_dead
+						}
+					}
+					CHI = {
+						CHI_yuan_shikai = {
+							set_nationality = PREV.PREV
+							promote_character = stratocracy
+							promote_character = authoritarian_democracy
+						}
+					}
+				}
+				else = {
+					CHI = {
+						CHI_duan_qirui = {
+							set_nationality = PREV.PREV
+							if = {
+								limit = {
+									has_ideology = authoritarian_democracy
+								}
+								promote_character = authoritarian_democracy
+							}
+							else = {
+								add_country_leader_role = {
+									promote_leader = yes
+									country_leader = {
+										ideology = authoritarian_democracy
+										desc = CHI_duan_qirui_desc
+									}
+								}
+							}
+							if = {
+								limit = {
+									has_ideology = stratocracy
+								}
+								promote_character = stratocracy
+							}
+							else = {
+								add_country_leader_role = {
+									promote_leader = yes
+									country_leader = {
+										ideology = stratocracy
+										desc = CHI_duan_qirui_desc
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
-	option = {
-		name = ww1_china.4.b
-		# yuan shikai couped the government
-		hidden_effect = {
-			uncomplete_national_focus = {
-				focus = CHI_kuomintang
-				uncomplete_children = yes
-			}
-			unlock_national_focus = CHI_ruling_of_yuan_shikai
-			mark_focus_tree_layout_dirty = yes
-		}
-		effect_tooltip = {
-			set_politics = {
-				ruling_party = neutrality
-			}
-		}
-		remove_ideas = CHI_idea_support_for_revolution
-		set_politics = {
-			ruling_party = neutrality
-			long_name = CHI_neutrality_party
-			name = CHI_neutrality_party
-			elections_allowed = yes
-		}
-		effect_tooltip = {
-			promote_character = CHI_yuan_shikai
-		}
-		set_capital = { state = 608 }
-		hidden_effect = {
-			drop_cosmetic_tag = yes
-			CHI_yuan_shikai = {
-				promote_character = {
-					ideology = authoritarian_democracy
-				}
-				promote_character = {
-					ideology = stratocracy
-				}
-			}
-			set_capital = {
-				state = 608
-			}
-			set_popularities = {
-				fascism = 25
-				communism = 0
-				democratic = 28
-				neutrality = 47
-			}
-			if = {
-				limit = {
-					has_character = CHI_song_jiaoren
-				}
-				country_event = {
-					id = ww1_china.177
-					days = 20
-				}
-			}
-		}
-		ai_chance = {
-			base = 0
-			modifier = {
-				add = 1000
-				democratic < 0.20
-			}
-		}
-	}
+	# option = {
+	# 	name = ww1_china.4.b
+	# 	# yuan shikai couped the government
+	# 	hidden_effect = {
+	# 		uncomplete_national_focus = {
+	# 			focus = CHI_kuomintang
+	# 			uncomplete_children = yes
+	# 		}
+	# 		unlock_national_focus = CHI_ruling_of_yuan_shikai
+	# 		mark_focus_tree_layout_dirty = yes
+	# 	}
+	# 	effect_tooltip = {
+	# 		set_politics = {
+	# 			ruling_party = neutrality
+	# 		}
+	# 	}
+	# 	remove_ideas = CHI_idea_support_for_revolution
+	# 	set_politics = {
+	# 		ruling_party = neutrality
+	# 		long_name = CHI_neutrality_party
+	# 		name = CHI_neutrality_party
+	# 		elections_allowed = yes
+	# 	}
+	# 	effect_tooltip = {
+	# 		promote_character = CHI_yuan_shikai
+	# 	}
+	# 	set_capital = { state = 608 }
+	# 	hidden_effect = {
+	# 		drop_cosmetic_tag = yes
+	# 		CHI_yuan_shikai = {
+	# 			promote_character = {
+	# 				ideology = authoritarian_democracy
+	# 			}
+	# 			promote_character = {
+	# 				ideology = stratocracy
+	# 			}
+	# 		}
+	# 		set_capital = {
+	# 			state = 608
+	# 		}
+	# 		set_popularities = {
+	# 			fascism = 25
+	# 			communism = 0
+	# 			democratic = 28
+	# 			neutrality = 47
+	# 		}
+	# 		if = {
+	# 			limit = {
+	# 				has_character = CHI_song_jiaoren
+	# 			}
+	# 			country_event = {
+	# 				id = ww1_china.177
+	# 				days = 20
+	# 			}
+	# 		}
+	# 	}
+	# 	ai_chance = {
+	# 		base = 0
+	# 		modifier = {
+	# 			add = 1000
+	# 			democratic < 0.20
+	# 		}
+	# 	}
+	# }
 }
 
 # SUN YUT-SEN AUTHORITARISM
@@ -3921,6 +4019,50 @@ country_event = {
 				}
 				remove_country_leader_role = {
 					ideology = semi_constitutional_monarchy
+				}
+			}
+		}
+		hidden_effect = {
+			CHI_duan_qirui = {
+				if = {
+					limit = {
+						has_ideology = authoritarian_democracy
+					}
+					promote_character = authoritarian_democracy
+				}
+				else = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = authoritarian_democracy
+							desc = CHI_duan_qirui_desc
+						}
+					}
+				}
+				if = {
+					limit = {
+						has_ideology = stratocracy
+					}
+					promote_character = stratocracy
+				}
+				else = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = stratocracy
+							desc = CHI_duan_qirui_desc
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = chinese_second_revolution }
+				}
+				country_event = {
+					id = ww1_china.4
+					days = 20
+					random_days = 5
 				}
 			}
 		}
@@ -23611,6 +23753,42 @@ country_event = {
 		name = ww1_china.217.a
 		add_political_power = 25
 		unlock_decision_tooltip = CHI_KMT_local_investment
+		
+		every_subject_country = {
+			limit = {
+				OR = {
+					tag = ZHE
+					tag = JXC
+					tag = HNC
+					tag = FJN
+					tag = GDC
+				}
+			}
+			ROOT = {
+				annex_country = {
+					target = PREV
+					transfer_troops = yes
+				}
+			}
+			every_core_state = {
+				remove_core_of = PREV
+			}
+			every_state = {
+				limit = { is_claimed_by = PREV }
+				remove_claim_by = PREV
+			}
+		}
+		CHI = {
+			CHI_hu_hanmin = {
+				set_nationality = CHI
+			}
+			CHI_chen_jiongming = {
+				set_nationality = CHI
+			}
+			CHI_li_liejun = {
+				set_nationality = CHI
+			}
+		}
 	}
 }
 
