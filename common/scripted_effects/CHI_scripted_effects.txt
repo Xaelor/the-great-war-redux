@@ -1194,15 +1194,9 @@ chinese_soviet_modifier_downgrade = {
 
 clear_xinhai_tags = {
 	hidden_effect = {
-		every_possible_country = {
+		every_country = {
 			limit = {
 				has_country_flag = xinhai_tag
-			}
-			clr_country_flag = xinhai_tag
-			set_major = no
-			load_focus_tree = {
-				tree = china_warlord_focus
-				keep_completed = no
 			}
 			delete_unit_template_and_units = {
 				division_template = "Wuchang Qiyijun"
@@ -1228,164 +1222,82 @@ clear_xinhai_tags = {
 				division_template = "Loyalist Qiyijun"
 				disband = no
 			}
-			every_core_state = {
-				remove_core_of = PREV
-			}
-			every_state = {
-				limit = {
-					is_claimed_by = PREV
-				}
-				remove_claim_by = PREV
-			}
-			if = {
-				limit = {
-					original_tag = HNC
-				}
-				set_party_name = {
-					ideology = democratic
-					long_name = HNC_neutrality_party
-					name = HNC_neutrality_party
-				}
-			}
-			else = {
-				set_politics = {
-					ruling_party = neutrality
-					elections_allowed = no
-				}
-
-				if = {
-					limit = {
-						original_tag = XIC
-					}
-					set_party_name = {
-						ideology = democratic
-						long_name = XIC_neutrality_party
-						name = XIC_neutrality_party
-					}
-					XIC_zhang_fenghui = {
-						remove_country_leader_role = {
-							ideology = conservatism
-						}
-					}
-				}
-				else_if = {
-					limit = {
-						original_tag = GZC
-					}
-					set_party_name = {
-						ideology = democratic
-						long_name = GZC_neutrality_party
-						name = GZC_neutrality_party
-					}
-					GZC_yang_jincheng = {
-						remove_country_leader_role = {
-							ideology = tridemism
-						}
-					}
-				}
-				else_if = {
-					limit = {
-						original_tag = SIC
-					}
-					set_party_name = {
-						ideology = democratic
-						long_name = SIC_neutrality_party
-						name = SIC_neutrality_party
-					}
-					SIC_pu_dianjun = {
-						remove_country_leader_role = {
-							ideology = conservatism
-						}
-					}
-				}
-				else_if = {
-					limit = {
-						original_tag = SND
-					}
-					set_party_name = {
-						ideology = democratic
-						long_name = SND_neutrality_party
-						name = SND_neutrality_party
-					}
-					SND_hu_ying = {
-						remove_country_leader_role = {
-							ideology = tridemism
-						}
-					}
-				}
-				else_if = {
-					limit = {
-						original_tag = JXC
-					}
-					set_party_name = {
-						ideology = democratic
-						long_name = JXC_neutrality_party
-						name = JXC_neutrality_party
-					}
-				}
-				else_if = {
-					limit = {
-						original_tag = ZHE
-					}
-					ZHE_tang_shouqian = {
-						remove_country_leader_role = {
-							ideology = conservatism
-						}
-					}
-				}
-				else_if = {
-					limit = {
-						original_tag = YUN
-					}
-					set_party_name = {
-						ideology = democratic
-						long_name = YUN_neutrality_party
-						name = YUN_neutrality_party
-					}
-				}
-				else_if = {
-					limit = {
-						original_tag = GDC
-					}
-					set_party_name = {
-						ideology = democratic
-						long_name = GDC_neutrality_party
-						name = GDC_neutrality_party
-					}
-				}
-			}
-			drop_cosmetic_tag = yes
-			PREV = {
-				annex_country = {
-					target = PREV
-				}
+			set_major = no
+			clr_country_flag = xinhai_tag
+			load_focus_tree = {
+				tree = china_warlord_focus
+				keep_completed = no
 			}
 		}
 		CHI = {
+			every_other_country = {
+				limit = {
+					is_china_or_warlord_no_tt = yes
+				}
+				if = {
+					limit = {
+						OR = {
+							tag = SND
+							tag = SHX
+							tag = HBC
+							tag = XIC
+						}
+					}
+					drop_cosmetic_tag = yes
+					every_core_state = {
+						remove_core_of = PREV
+					}
+					every_state = {
+						limit = {
+							is_claimed_by = PREV
+						}
+						remove_claim_by = PREV
+					}
+					PREV = {
+						annex_country = {
+							target = PREV
+						}
+					}
+				}
+				else = {
+					get_current_government_type = yes
+					CHI = {
+						set_autonomy = {
+							target = PREV
+							autonomy_state = autonomy_tgwr_regional_government
+						}
+					}
+					restore_previous_government_type = yes
+					if = {
+						limit = { tag = YUN }
+						drop_cosmetic_tag = yes
+					}
+				}
+			}
 			CHI_li_yuanhong = {
 				set_nationality = CHI
 			}
-			CHI_cai_e = {
-				set_nationality = CHI
-			}
-			CHI_tang_jiyao = {
-				set_nationality = CHI
-			}
-			CHI_hu_hanmin = {
-				set_nationality = CHI
-			}
-			CHI_li_jishen = {
-				set_nationality = CHI
-			}
+			# CHI_cai_e = {
+			# 	set_nationality = CHI
+			# }
+			# CHI_tang_jiyao = {
+			# 	set_nationality = CHI
+			# }
+			# CHI_hu_hanmin = {
+			# 	set_nationality = CHI
+			# }
+			# CHI_li_liejun = {
+			# 	set_nationality = CHI
+			# }
 			CHI_yan_xishan = {
 				set_nationality = CHI
 			}
 			CHI_huang_xing = {
 				set_nationality = CHI
 			}
-			CHI_chen_jiongming = {
-				set_nationality = CHI
-			}
+			# CHI_chen_jiongming = {
+			# 	set_nationality = CHI
+			# }
 		}
 	}
 }
@@ -1463,9 +1375,12 @@ xinhai_end_effect = {
 			every_enemy_country = {
 				PREV = {
 					every_allied_country = {
-						white_peace = PREV.PREV
+						white_peace = {
+							tag = PREV.PREV
+							message = xinhai_revolution_end_message
+						}
 					}
-				}			
+				}
 			}
 
 			set_politics = {
@@ -1478,6 +1393,10 @@ xinhai_end_effect = {
 		}
 		
 		CHI = {
+			white_peace = {
+				tag = QIN
+				message = xinhai_revolution_end_message
+			}
 			annex_country = {
 				target = QIN
 				transfer_troops = no
@@ -1587,6 +1506,18 @@ xinhai_end_effect = {
 				division_template = "Minbing"
 				disband = no
 			}
+			delete_unit_template_and_units = {
+				division_template = "Minbing 2"
+				disband = no
+			}
+			delete_unit_template_and_units = {
+				division_template = "Geming Qiyijun"
+				disband = no
+			}
+			delete_unit_template_and_units = {
+				division_template = "Geming Qiyijun 2"
+				disband = no
+			}
 
 			every_owned_state = {
 				limit = {
@@ -1656,6 +1587,44 @@ xinhai_end_effect = {
 		CHI = {
 			delete_unit = {}
 			load_oob = CHI_1912
+
+			country_event = { #Xinjiang
+				id = ww1_xinhai.37
+				days = 30
+			}
+			country_event = { #Ma Cliques
+				id = ww1_xinhai.38
+				days = 35
+			}
+			country_event = { #Chuanbian
+				id = ww1_xinhai.39
+				days = 90
+			}
+		}
+
+		GXC = {
+			load_oob = CHI_1912_guangxi
+		}
+		GDC = {
+			load_oob = CHI_1912_guangdong
+		}
+		YUN = {
+			load_oob = CHI_1912_yunnan
+		}
+		HNC = {
+			load_oob = CHI_1912_hunan
+		}
+		FJN = {
+			load_oob = CHI_1912_fujian
+		}
+		ZHE = {
+			load_oob = CHI_1912_zhejiang
+		}
+		JXC = {
+			load_oob = CHI_1912_jiangxi
+		}
+		SIC = {
+			load_oob = CHI_1912_sichuan
 		}
 
 		598 = {
@@ -1665,6 +1634,118 @@ xinhai_end_effect = {
 				instant_build = yes
 				province = 11913
 			}
+		}
+
+		every_state = {
+			limit = {
+				OWNER = { is_china_or_warlord_no_tt = yes }
+				OR = {
+					#Kham
+					state = 1065
+					state = 1220
+					#Xibei
+					state = 283
+					state = 604
+					state = 616
+					state = 755
+					#Xinjiang
+					state = 287
+					state = 618
+					state = 619
+					state = 749
+					state = 894
+					state = 1067
+				}
+			}
+			set_demilitarized_zone = yes
+			set_border_war = yes
+		}
+	}
+}
+
+chinese_second_revolution_end_effect = {
+	hidden_effect = {
+		annex_country = {
+			target = FROM
+		}
+		CHI = {
+			CHI_li_liejun = {
+				set_nationality = YUN
+			}
+			CHI_long_jiguang = {
+				set_nationality = GDC
+				if = {
+					limit = {
+						has_ideology = warlordism
+					}
+					promote_character = warlordism
+				}
+				else = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = warlordism
+							traits = { southern_king }
+						}
+					}
+				}
+				if = {
+					limit = {
+						has_ideology = stratocracy
+					}
+					promote_character = stratocracy
+				}
+				else = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = stratocracy
+							traits = { southern_king }
+						}
+					}
+				}
+			}
+			CHI_cai_e = {
+				set_nationality = CHI
+			}
+			CHI_yuan_shikai = {
+				if = {
+					limit = {
+						has_ideology = authoritarian_democracy
+					}
+					promote_character = authoritarian_democracy
+				}
+				if = {
+					limit = {
+						has_ideology = civilian_dictatorship
+					}
+					promote_character = civilian_dictatorship
+				}
+				promote_character = stratocracy
+			}
+			CHI_sun_yatsen = {
+				promote_character = tridemism
+			}
+			promote_character = CHI_jiang_kanghu
+		}
+		GDC = {
+			drop_cosmetic_tag = yes
+			meta_effect = {
+				text = {
+					set_politics = {
+						ruling_party = neutrality
+						last_election = "[CURRENT_DATE]"
+						election_frequency = 60
+						elections_allowed = no
+					}
+				}
+				CURRENT_DATE = "[?global.date.GetDateStringNoHour]"
+			}
+		}
+		# Chinese Revolutionary Party
+		country_event = {
+			id = ww1_china.132
+			days = 280
 		}
 	}
 }
