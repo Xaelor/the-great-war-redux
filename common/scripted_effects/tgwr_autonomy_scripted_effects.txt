@@ -1,0 +1,231 @@
+#EXAMPLE:
+#
+#OVERLORD = {
+#	SUBJECT = {
+#		set_autonomy_puppet_type = yes
+#	}
+#}
+
+clr_subject_flags = {
+	clr_country_flag = protectorate
+	clr_country_flag = colony
+	clr_country_flag = monarchist_puppet
+}
+# scope is the country being freed
+free_subject = {
+	if = {
+		limit = { is_subject = yes }
+		overlord = {
+			set_autonomy = {
+				target = PREV
+				autonomy_state = autonomy_free
+			}
+		}		
+	}
+	clr_subject_flags = yes
+}
+free_subject_leave_faction = {
+	if = {
+		limit = { is_subject = yes }
+		overlord = {
+			set_autonomy = {
+				target = PREV
+				autonomy_state = autonomy_free
+			}
+		}		
+	}
+	if = {
+		limit = { is_in_faction = yes }
+		leave_faction = yes
+	}
+	clr_subject_flags = yes
+}
+
+set_autonomy_protectorate = {
+	free_subject_leave_faction = yes
+	set_country_flag = protectorate
+	get_current_government_type = yes
+	PREV = {
+		set_autonomy = {
+			target = PREV
+			autonomous_state = autonomy_tgwr_protectorate
+			end_wars = no
+			end_civil_wars = no
+		}
+	}
+	restore_previous_government_type = yes
+}
+
+
+protectorate_logic = {
+	leave_faction = yes
+	OVERLORD = {
+		if = {
+			limit = {
+				is_in_faction = yes
+			}
+			if = {
+				limit = {
+					NOT = { has_military_access_to = PREV }
+				}
+				diplomatic_relation = {
+					country = PREV
+					relation = military_access
+					active = yes
+				}
+			}
+			if = {
+				limit = {
+					PREV = {
+						naval_base > 0
+					}		
+				}
+				diplomatic_relation = {
+					country = PREV
+					relation = docking_rights
+					active = yes
+				}
+			}
+			if = {
+				limit = {
+					PREV = {
+						air_base > 0
+					}	
+				}
+				diplomatic_relation = {
+					country = PREV
+					relation = air_base_access
+					active = yes
+				}
+			}
+		}
+	}
+	country_event = { id = ww1_political.7 hours = 1 } #needed if the faction leader is at war, don't ask
+}
+vassal_of_vassal_logic = {
+	OVERLORD = {
+		if = {
+			limit = { 
+				is_subject = yes
+			}
+			# PREV = {
+			# 	give_market_access = PREV.OVERLORD
+			# }	
+			if = {
+				limit = { 
+					OVERLORD = {
+						NOT = {
+							is_in_faction_with = PREV.PREV 
+						}
+					}
+				}				
+				if = {
+					limit = {
+						OVERLORD = {
+							NOT = { 
+								has_military_access_to = PREV.PREV 
+							}
+						}
+					}
+					PREV = {
+						PREV.OVERLORD = {
+							#give_guarantee = PREV
+							diplomatic_relation = {
+								country = PREV
+								relation = military_access
+								active = yes
+							}
+						}
+					}	
+				}
+				if = {
+					limit = {
+						PREV = {
+							naval_base > 0
+						}
+					}
+					PREV = {
+						PREV.OVERLORD = {
+							#give_guarantee = PREV
+							diplomatic_relation = {
+								country = PREV
+								relation = docking_rights
+								active = yes
+							}
+						}
+					}	
+				}
+				if = {
+					limit = {
+						PREV = {
+							air_base > 0
+						}
+					}
+					PREV = {
+						PREV.OVERLORD = {
+							#give_guarantee = PREV
+							diplomatic_relation = {
+								country = PREV
+								relation = air_base_access
+								active = yes
+							}
+						}
+					}	
+				}
+			}
+		}
+	}
+}
+condominium_logic = {
+	var:THIS.second_overlord = {
+		if = {
+			limit = {
+				NOT = { is_in_faction_with = PREV }
+			}
+			if = {
+				limit = {
+					NOT = { has_military_access_to = PREV }
+				}
+				diplomatic_relation = {
+					country = PREV
+					relation = military_access
+					active = yes
+				}
+			}
+			if = {
+				limit = {
+					PREV = {
+						naval_base > 0
+					}		
+				}
+				diplomatic_relation = {
+					country = PREV
+					relation = docking_rights
+					active = yes
+				}
+			}
+			if = {
+				limit = {
+					PREV = {
+						air_base > 0
+					}	
+				}
+				diplomatic_relation = {
+					country = PREV
+					relation = air_base_access
+					active = yes
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_guaranteed = PREV }				
+				}
+				diplomatic_relation = {
+					country = PREV
+					relation = guarantee
+					active = yes
+				}
+			}
+		}
+	}
+}

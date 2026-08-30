@@ -819,7 +819,7 @@ country_event = {
 		}
 		hidden_effect = {
 			set_cosmetic_tag = PRI_communism
-			load_focus_tree = empty_focus
+			load_focus_tree = generic_focus
 			give_military_access = SOV
 			set_popularities = {
 				neutrality = 10
@@ -1004,10 +1004,11 @@ country_event = {
 		tag = SOV
 		has_global_flag = russian_civil_war
 		has_government = communism
-		owns_state = 399
+		
 		OR = {
 			owns_state = 249
 			has_contested_owner = 249
+			has_subject = TAT
 		}
 		# any_enemy_country = {
 		# 	controls_state = 249
@@ -1017,51 +1018,86 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_rcw.10.a
-		custom_effect_tooltip = lead_to_IZH_uprising
-		hidden_effect = {
-			399 = {
-				IZH = {
-					RCW_core_state_PREV = yes
-				}
+		TAT = {
+			retire_character = TAT_yakov_sheynkman
+		}
+		# if = {
+		# 	limit = {
+		# 		has_active_mission = SOV_soviet_kazan
+		# 	}
+		# 	remove_mission = SOV_soviet_kazan
+		# }
+		# if = {
+		# 	limit = { 
+		# 		has_subject = TAT
+		# 	}
+		# 	annex_country = {
+		# 		target = TAT
+		# 		transfer_troops = yes
+		# 	}			
+		# 	hidden_effect = {
+		# 		TAT = {
+		# 			drop_cosmetic_tag = yes
+		# 			set_politics = {
+		# 				ruling_party = democratic
+		# 			}
+		# 			set_popularities = {
+		# 				communism = 31
+		# 				democratic = 69
+		# 			}
+		# 		}
+		# 	}
+		# }
+		if = {
+			limit = { 
+				owns_state = 399
 			}
-			IZH = {
-				set_state_owner = 399
-				set_province_controller = 6278
-				set_province_controller = 12244			
-				declare_war_on = {
-					target = SOV
-					type = civil_war
-				}
-				load_oob = IZH_1918
-				add_ideas = {
-					RUS_russian_civil_war
-					partial_economic_mobilisation
-				}
-				inherit_technology = RUS
-				delete_obsolete_russian_templates = yes
-				add_equipment_production = { # they already have production
-					equipment = {
-						type = infantry_equipment
+			custom_effect_tooltip = lead_to_IZH_uprising
+			hidden_effect = {
+				399 = {
+					IZH = {
+						RCW_core_state_PREV = yes
 					}
-					requested_factories = 1
-					progress = 0.5
-					efficiency = 50
 				}
-				country_event = {
-					id = ww1_izhevsk.1
-					days = 9
-				}
-				country_event = {
-					id = ww1_izhevsk.4
-					days = 12
-				}
-				country_event = {
-					id = ww1_izhevsk.2
-					days = 16
-				}
-				country_event = {
-					id = ww1_izhevsk.3
-					days = 49
+				IZH = {
+					set_state_owner = 399
+					set_province_controller = 6278
+					set_province_controller = 12244			
+					declare_war_on = {
+						target = SOV
+						type = civil_war
+					}
+					load_oob = IZH_1918
+					add_ideas = {
+						RUS_russian_civil_war
+						partial_economic_mobilisation
+					}
+					inherit_technology = RUS
+					delete_obsolete_russian_templates = yes
+					add_equipment_production = { # they already have production
+						equipment = {
+							type = infantry_equipment
+						}
+						requested_factories = 1
+						progress = 0.5
+						efficiency = 50
+					}
+					country_event = {
+						id = ww1_izhevsk.1
+						days = 9
+					}
+					country_event = {
+						id = ww1_izhevsk.4
+						days = 12
+					}
+					country_event = {
+						id = ww1_izhevsk.2
+						days = 16
+					}
+					country_event = {
+						id = ww1_izhevsk.3
+						days = 49
+					}
 				}
 			}
 		}
@@ -1534,15 +1570,15 @@ country_event = {
 			limit = {
 				has_subject = FROM
 			}
-			end_puppet = FROM
+			FROM = {
+				free_subject = yes
+			}
 		}
 		else_if = {
 			limit = { 
 				is_subject_of = FROM
 			}
-			FROM = {
-				end_puppet = ROOT
-			}
+			free_subject = yes
 		}
 		if = {
 			limit = {
@@ -2665,7 +2701,7 @@ country_event = {
 				target = ROOT
 				end_wars = no
 				end_civil_wars = no
-				autonomy_state = autonomy_integrated_puppet
+				autonomy_state = autonomy_tgwr_regional_government
 			}
 		}
 		restore_previous_government_type = yes
@@ -2790,7 +2826,7 @@ country_event = {
 		effect_tooltip = {
 			set_autonomy = {
 				target = FROM
-				autonomy_state = autonomy_satellite
+				autonomy_state = autonomy_tgwr_regional_government
 			}
 		}
 	}

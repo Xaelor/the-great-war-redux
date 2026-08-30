@@ -38,8 +38,7 @@ country_event = {
 				is_subject_of = TUR
 				AND = {
 					exists = no
-					any_state = {
-						is_core_of = HJZ
+					any_core_state = {
 						is_owned_by = ROOT
 					}
 				}				
@@ -74,10 +73,7 @@ country_event = {
 				}
 			}
 			HJZ = {
-				if = {
-					limit = { has_idea = standing_alone }
-					remove_ideas = standing_alone
-				}
+				add_ideas = MOR_guerrilla_warfare
 				clear_all_relations = yes
 				load_oob = "HJZ_1910"
 			}
@@ -93,10 +89,8 @@ country_event = {
 				}		
 				add_state_claim = 747
 				ASR = {
-					if = {
-						limit = { has_idea = standing_alone }
-						remove_ideas = standing_alone
-					}
+					join_ENT_declare_war_on_CENPO = yes
+					add_ideas = MOR_guerrilla_warfare	
 					load_oob = "ASR_1910"
 					set_country_flag = arab_revolt_member
 				}
@@ -188,107 +182,63 @@ country_event = {
 					active = no
 				}
 			}
+			HJZ = {
+				join_ENT_declare_war_on_CENPO = yes
+			}
+			if = {
+				limit = {
+					ASR = {
+						has_country_flag = arab_revolt_member
+					}
+				}
+				declare_war_on = {
+					target = ASR
+					type = annex_everything
+				}
+			}
+			if = {
+				limit = {
+					YEM = {
+						has_country_flag = arab_revolt_member
+					}
+				}
+				declare_war_on = {
+					target = YEM
+					type = annex_everything
+				}
+			}
+			else_if = {
+				limit = { has_subject = YEM }
+				YEM = {
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = HJZ
+					}
+				}		
+			}
+			if = {
+				limit = {
+					has_subject = UAS
+				}
+				UAS = {
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = ASR
+					}
+				}		
+			}			
 		}
 	}
 	option = {
 		name = ww1_hejaz.7.a
-		declare_war_on = {
-			target = HJZ
-			type = annex_everything
-		}
-		if = {
-			limit = {
-				ASR = {
-					has_country_flag = arab_revolt_member
-				}
-			}
-			declare_war_on = {
-				target = ASR
-				type = annex_everything
-			}
-		}
-		if = {
-			limit = {
-				YEM = {
-					has_country_flag = arab_revolt_member
-				}
-			}
-			declare_war_on = {
-				target = YEM
-				type = annex_everything
-			}
-		}
-		else_if = {
-			limit = { has_subject = YEM }
-			YEM = {
-				add_to_war = {
-					targeted_alliance = ROOT
-					enemy = HJZ
-				}
-			}		
-		}
-		if = {
-			limit = {
-				has_subject = UAS
-			}
-			UAS = {
-				add_to_war = {
-					targeted_alliance = ROOT
-					enemy = ASR
-				}
-			}		
-		}
 		news_event = ww1_hejaz.8
 		hidden_effect = { country_event = { id = ottoman.167 days = 5 } }
 	}
 	option = {
 		name = ww1_hejaz.7.b
-		declare_war_on = {
-			target = HJZ
-			type = annex_everything
-		}
-		if = {
-			limit = {
-				ASR = {
-					has_country_flag = arab_revolt_member
-				}
-			}
-			declare_war_on = {
-				target = ASR
-				type = annex_everything
-			}
-		}
-		if = {
-			limit = {
-				YEM = {
-					has_country_flag = arab_revolt_member
-				}
-			}
-			declare_war_on = {
-				target = YEM
-				type = annex_everything
-			}
-		}
-		else_if = {
-			limit = { has_subject = YEM }
-			YEM = {
-				add_to_war = {
-					targeted_alliance = ROOT
-					enemy = HJZ
-				}
-			}		
-		}
-		if = {
-			limit = {
-				has_subject = UAS
-			}
-			UAS = {
-				add_to_war = {
-					targeted_alliance = ROOT
-					enemy = ASR
-				}
-			}		
-		}
+		trigger = {
+			is_ai = no
+		}		
 		news_event = ww1_hejaz.8
 		hidden_effect = { country_event = { id = ottoman.167 days = 5 } }
 		HJZ = { change_tag_from = ROOT }
@@ -296,52 +246,6 @@ country_event = {
 	option = {
 		name = ww1_hejaz.7.c
 		trigger = { is_ai = no }
-		declare_war_on = {
-			target = HJZ
-			type = annex_everything
-		}
-		if = {
-			limit = {
-				ASR = {
-					has_country_flag = arab_revolt_member
-				}
-			}
-			declare_war_on = {
-				target = ASR
-				type = annex_everything
-			}
-		}
-		if = {
-			limit = {
-				YEM = {
-					has_country_flag = arab_revolt_member
-				}
-			}
-			declare_war_on = {
-				target = YEM
-				type = annex_everything
-			}
-		}
-		else_if = {
-			limit = { has_subject = YEM }
-			YEM = {
-				add_to_war = {
-					targeted_alliance = ROOT
-					enemy = HJZ
-				}
-			}		
-		}
-		if = {
-			limit = {
-				has_subject = UAS
-			}
-			UAS = {
-				add_to_war = {
-					targeted_alliance = ROOT
-					enemy = ASR
-				}
-			}		
-		}
 		news_event = ww1_hejaz.8
 		ASR = {
 			change_tag_from = ROOT
@@ -358,41 +262,6 @@ country_event = {
 			YEM = {
 				has_country_flag = arab_revolt_member
 			}
-		}
-		declare_war_on = {
-			target = HJZ
-			type = annex_everything
-		}
-		if = {
-			limit = {
-				ASR = {
-					has_country_flag = arab_revolt_member
-				}
-			}
-			declare_war_on = {
-				target = ASR
-				type = annex_everything
-			}
-		}
-		else_if = {
-			limit = { has_subject = YEM }
-			YEM = {
-				add_to_war = {
-					targeted_alliance = ROOT
-					enemy = HJZ
-				}
-			}
-		}
-		if = {
-			limit = {
-				has_subject = UAS
-			}
-			UAS = {
-				add_to_war = {
-					targeted_alliance = ROOT
-					enemy = ASR
-				}
-			}		
 		}
 		news_event = ww1_hejaz.8
 		YEM = {
@@ -478,7 +347,13 @@ country_event = {
 					is_core_of = OMA
 					is_core_of = MSC
 					is_core_of = EGY
-					is_core_of = UAE
+					is_core_of = ABU
+					is_core_of = AJM
+					is_core_of = DUB
+					is_core_of = FJR
+					is_core_of = RAK
+					is_core_of = SHJ
+					is_core_of = UAQ
 					is_core_of = BUL
 					is_core_of = SER
 					NOT = {
@@ -609,9 +484,45 @@ country_event = {
 		}
 		every_owned_state = {
 			limit = {
-				is_core_of = UAE
+				is_core_of = ABU
 			}
-			transfer_state_to = UAE
+			transfer_state_to = ABU
+		}
+		every_owned_state = {
+			limit = {
+				is_core_of = AJM
+			}
+			transfer_state_to = AJM
+		}
+		every_owned_state = {
+			limit = {
+				is_core_of = DUB
+			}
+			transfer_state_to = DUB
+		}
+		every_owned_state = {
+			limit = {
+				is_core_of = FJR
+			}
+			transfer_state_to = FJR
+		}
+		every_owned_state = {
+			limit = {
+				is_core_of = RAK
+			}
+			transfer_state_to = RAK
+		}
+		every_owned_state = {
+			limit = {
+				is_core_of = SHJ
+			}
+			transfer_state_to = SHJ
+		}
+		every_owned_state = {
+			limit = {
+				is_core_of = UAQ
+			}
+			transfer_state_to = UAQ
 		}
 		every_owned_state = {
 			limit = {
