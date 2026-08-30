@@ -1547,17 +1547,31 @@ xinhai_end_effect = {
 				hours = 3
 			}
 			
-			give_military_access = GER #Qingdao-Jinan Railway
-
-			diplomatic_relation = {
-				country = CER
-				relation = military_access
-				active = yes
+			if = {
+				limit = {
+					NOT = { gives_military_access_to = GER }
+				}
+				give_military_access = GER #Qingdao-Jinan Railway
 			}
-			diplomatic_relation = {
-				country = CER
-				relation = guarantee
-				active = yes
+			if = {
+				limit = {
+					NOT = { has_military_access_to = CER }
+				}
+				diplomatic_relation = {
+					country = CER
+					relation = military_access
+					active = yes
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_guaranteed = CER }
+				}
+				diplomatic_relation = {
+					country = CER
+					relation = guarantee
+					active = yes
+				}
 			}
 			CER = {
 				set_cosmetic_tag = CER_xinhai
