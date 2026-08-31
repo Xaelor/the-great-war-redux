@@ -7,6 +7,8 @@ set_war_support = 0.55
 set_convoys = 13
 
 # give_military_access = GER #Qingdao–Jinan Railway
+set_country_flag = great_power_politics_century_of_humiliation_visible
+set_variable = { great_power_politics_entury_of_humiliation_button = 2 }
 
 diplomatic_relation = {
 	country = CER
@@ -497,39 +499,32 @@ every_character = {
 		}
 		CHI_jiang_guiti = { unit_leader_event = { id = ww1_generic.38 days = 4265 }} #died on 1922.1.16
 		CHI_liu_guanxiong = { unit_leader_event = { id = ww1_generic.38 days = 6250 }} #died on 1927.6.24
-	}	
-
-	CCG = {
-		#Foreign influence
-		set_variable = { var = JAP.CHI_foreign_influence value = 0.1 }
-		set_variable = { var = USA.CHI_foreign_influence value = 0.05 }
-		set_variable = { var = ENG.CHI_foreign_influence value = 0.15 }
-		set_variable = { var = RUS.CHI_foreign_influence value = 0.2 }
-		set_variable = { var = FRA.CHI_foreign_influence value = 0.05 }	
-		set_variable = { var = GER.CHI_foreign_influence value = 0.07 }	
-
-		add_dynamic_modifier = {
-			modifier = CHI_foreign_influence_modifier
-		}
-		
-		every_other_country = {
-			limit = {
-				OR = {
-					tag = JAP
-					tag = USA
-					tag = ENG
-					tag = RUS
-					tag = FRA
-					tag = GER
-				}
-			}
-			CHI_calculate_influnce_in_china_modifiers = yes
-			add_dynamic_modifier = {
-				modifier = CHI_influence_in_china_modifier
-			}
-		}
-		CHI_calculate_foreign_influnce = yes
 	}
+
+	#Foreign influence
+	set_variable = { var = JAP.CHI_foreign_influence value = 0.1 }
+	set_variable = { var = USA.CHI_foreign_influence value = 0.05 }
+	set_variable = { var = ENG.CHI_foreign_influence value = 0.15 }
+	set_variable = { var = RUS.CHI_foreign_influence value = 0.2 }
+	set_variable = { var = FRA.CHI_foreign_influence value = 0.05 }
+	set_variable = { var = GER.CHI_foreign_influence value = 0.07 }
+	every_other_country = {
+		limit = {
+			OR = {
+				tag = JAP
+				tag = USA
+				tag = ENG
+				tag = RUS
+				tag = FRA
+				tag = GER
+			}
+		}
+		CHI_calculate_influnce_in_china_modifiers = yes
+		add_dynamic_modifier = {
+			modifier = CHI_influence_in_china_modifier
+		}
+	}
+	CHI_calculate_foreign_influnce = yes
 }
 
 1914.1.1 = {
@@ -651,26 +646,6 @@ every_character = {
 	
 	set_global_flag = QIN_1914_situation
 
-
-
-	# add_dynamic_modifier = { modifier = unequal_treaties_dm }
-	# set_variable = { unequal_treaties_consumer_goods = 0.35 }
-	# set_variable = { unequal_treaties_research_speed = -0.49 }
-	# set_variable = { unequal_treaties_resources_to_market = 0.87 }
-	# set_variable = { unequal_treaties_infrastructure = -0.11 }
-	# set_variable = { unequal_treaties_military_factory = -0.24 }
-	# set_variable = { unequal_treaties_civilian_factory = -0.23 }
-	# set_variable = { unequal_treaties_dockyard = -0.24 }
-	# set_country_flag = qing_russian_concession
-	# set_country_flag = qing_german_concession
-	# set_country_flag = qing_french_concession
-	# set_country_flag = qing_british_concession
-	# set_country_flag = qing_japanese_concession
-	#set_country_flag = qing_american_concession
-	# set_country_flag = qing_italian_concession
-	# set_country_flag = qing_austrian_concession
-
-
 	unlock_national_focus = CHI_restore_the_nation
 	unlock_national_focus = CHI_nation_recovery
 	complete_national_focus = CHI_restore_military_production
@@ -739,6 +714,9 @@ every_character = {
 		CHI_banditry
 		CHI_idea_unstable_republic
 		CHI_idea_yuan_constitution
+	}
+	add_dynamic_modifier = {
+		modifier = CHI_foreign_influence_modifier
 	}
 
 	add_war_support = -0.2
