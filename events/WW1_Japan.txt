@@ -1213,20 +1213,7 @@ country_event = {
 	picture = GFX_report_event_usa_heavy_cruiser
 	trigger = {
 		tag = JAP
-		GER = {
-			has_war_with = ROOT
-			745 = { is_owned_and_controlled_by = PREV }
-		}
-		872 = {
-			owns_or_subject_of = no
-			owner = {
-				NOT = {
-					has_war_with = ROOT
-					has_war_with = FROM
-				}
-			}
-		}
-		NOT = { has_decision = JAP_invade_kiautschou_mission_activate }
+		has_decision = JAP_invade_kiautschou_mission_activate
 	}
 	fire_only_once = yes
 	option = {
@@ -1302,6 +1289,7 @@ country_event = {
 		add_opinion_modifier = {
 			target = FROM
 			modifier = kiautschou_malus
+			days = 365
 		}
 		FROM = {
 			country_event = {
@@ -1327,6 +1315,7 @@ country_event = {
 			add_opinion_modifier = {
 				target = FROM
 				modifier = kiautschou_malus
+				days = 365
 			}
 		}
 		ai_chance = {
@@ -1340,6 +1329,7 @@ country_event = {
 				add_opinion_modifier = {
 					target = FROM
 					modifier = kiautschou_malus
+					days = 365
 				}
 			}
 			add_state_claim = 872
@@ -1406,7 +1396,10 @@ country_event = {
 				is_china_or_warlord = yes
 				NOT = {
 					has_country_flag = great_war_loser
-					has_country_flag = rejected_twenty_one_demands
+					has_global_flag = {
+						flag = twenty_one_demands
+						value > 1
+					}
 				}
 			}
 		}
@@ -1458,12 +1451,10 @@ country_event = {
 	fire_only_once = yes
 	option = {
 		name = ww1_kiautschou.8.a
-		597 = {
-			owner = {
-				country_event = {
-					id = ww1_kiautschou.9
-					hours = 10
-				}
+		CCG = {
+			country_event = {
+				id = ww1_kiautschou.9
+				hours = 10
 			}
 		}
 	}
@@ -1476,12 +1467,22 @@ country_event = {
 	desc = ww1_kiautschou.9.d
 	picture = GFX_report_event_generic_conference
 	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			set_global_flag = twenty_one_demands
+		}
+	}
 	option = {
 		name = ww1_kiautschou.9.a
 		custom_effect_tooltip = historical_tt
 		add_political_power = 175
 		add_stability = -0.15
-		set_country_flag = accepted_twenty_one_demands
+		hidden_effect = {
+			set_global_flag = {
+				flag = twenty_one_demands
+				value = 2
+			}
+		}
 		ai_chance = {
 			base = 1000
 			modifier = {
@@ -1504,11 +1505,11 @@ country_event = {
 			NOT = { has_country_flag = great_war_loser }
 		}
 		add_stability = 0.05
-		set_country_flag = rejected_twenty_one_demands
 		FROM = {
 			add_opinion_modifier = {
 				target = ROOT
-				modifier = HOI4TGW_Opinion_diplomats_malus
+				modifier = kiautschou_malus
+				days = 365
 			}
 			country_event = {
 				id = ww1_kiautschou.10
@@ -1542,25 +1543,26 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_kiautschou.10.a
-		every_owned_state = {
-			limit = {
-				OR = {
-					state = 745
-					state = 746
-					state = 872
-				}
-			}
-			597 = {
-				owner = {
-					transfer_state = PREV.PREV
-					ROOT = {
-						add_opinion_modifier = {
-							target = PREV
-							modifier = HOI4TGW_Opinion_anti_jap_policy_malus
-						}
-					}
-				}
+		FROM = {
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = kiautschou_malus
+				days = 365
 			}
 		}
+	}
+}
+
+# Twenty One Demands - Notify Shandong Clique
+country_event = {
+	id = ww1_kiautschou.11
+	title = ww1_kiautschou.3.t
+	desc = ww1_kiautschou.3.d
+	picture = GFX_report_event_japanese_army_parade
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = ww1_kiautschou.3.c
+		add_political_power = -75
 	}
 }

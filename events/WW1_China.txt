@@ -8785,26 +8785,21 @@ news_event = {
 	option = {
 		name = ww1_china.36.a
 		trigger = {
-			original_tag = CHI
-			has_government = democratic
+			is_china_or_warlord_no_tt = yes
+			is_kuomintang_state = yes
 		}
 	}
 	option = {
 		name = ww1_china.36.b
 		trigger = {
-			original_tag = CHI
-			OR = {
-				has_government = neutrality
-				has_government = fascism
-			}
+			is_china_or_warlord_no_tt = yes
+			is_kuomintang_state = no
 		}
 	}
 	option = {
 		name = ww1_china.36.c
 		trigger = {
-			NOT = {
-				original_tag = CHI
-			}
+			is_china_or_warlord_no_tt = no
 		}
 	}
 }
@@ -12510,7 +12505,7 @@ news_event = {
 			factor = 100
 		}
 		trigger = {
-			is_china_or_warlord = yes
+			is_china_or_warlord_no_tt = yes
 		}
 	}
 	option = {
@@ -12519,7 +12514,7 @@ news_event = {
 			factor = 100
 		}
 		trigger = {
-			is_china_or_warlord = no
+			is_china_or_warlord_no_tt = no
 		}
 	}
 	after = {
@@ -14684,8 +14679,8 @@ news_event = {
 		name = ww1_china.80.a
 		trigger = {
 			OR = {
-				original_tag = CHI
-				is_subject_of = CHI
+				tag = CCG
+				is_subject_of = CCG
 			}
 		}
 	}
@@ -14693,10 +14688,10 @@ news_event = {
 		name = ww1_china.80.b
 		trigger = {
 			NOT = {
-				original_tag = CHI
-				is_subject_of = CHI
 				tag = GER
 				is_ally_with = GER
+				tag = CCG
+				is_subject_of = CCG
 			}
 		}
 	}
@@ -14706,6 +14701,10 @@ news_event = {
 			OR = {
 				tag = GER
 				is_ally_with = GER
+			}
+			NOT = {
+				tag = CCG
+				is_subject_of = CCG
 			}
 		}
 	}
@@ -14994,19 +14993,7 @@ country_event = {
 	desc = ww1_china.83.d
 	picture = GFX_report_event_qing_forbidden_city
 	trigger = {
-		OR = {
-			tag = QIN
-			tag = CHI
-			AND = {
-				OR = {
-					tag = ANC
-					tag = ZHC
-					tag = FNG
-				}
-				owns_state = 608
-			}
-			has_country_flag = reunited_china
-		}
+		tag = CCG
 		is_subject = no
 		NOT = {
 			has_global_flag = warlord_era_end
@@ -15018,34 +15005,30 @@ country_event = {
 		}
 		OR = {
 			any_enemy_country = {
-				is_china_or_warlord = no
+				is_china_or_warlord_no_tt = no
 				is_major = yes
-				NOT = { tag = SIK }
 				NOT = { tag = MON }
 				NOT = { tag = TIB }
 				has_offensive_war_with = PREV
 			}
 			any_other_country = {
-				is_china_or_warlord = yes
+				is_china_or_warlord_no_tt = yes
 				is_subject = no
 				NOT = {
 					has_war_with = PREV
 				}
-				if = {
-					limit = {
-						PREV = {
-							has_government = communism
-						}
+				OR = {
+					AND = {
+						PREV = { has_government = communism }
+						has_government = communism
 					}
-					has_government = communism
-					else = {
-						NOT = {
-							has_government = communism
-						}
+					AND = {
+						PREV = { NOT = { has_government = communism } }
+						NOT = { has_government = communism }
 					}
 				}
 				any_enemy_country = {
-					is_china_or_warlord = no
+					is_china_or_warlord_no_tt = no
 					is_major = yes
 					has_offensive_war_with = PREV
 				}
@@ -15106,17 +15089,14 @@ country_event = {
 					has_war_with = PREV
 					is_in_faction_with = PREV
 				}
-				if = {
-					limit = {
-						PREV = {
-							has_government = communism
-						}
+				OR = {
+					AND = {
+						PREV = { has_government = communism }
+						has_government = communism
 					}
-					has_government = communism
-					else = {
-						NOT = {
-							has_government = communism
-						}
+					AND = {
+						PREV = { NOT = { has_government = communism } }
+						NOT = { has_government = communism }
 					}
 				}
 			}
@@ -15202,7 +15182,7 @@ country_event = {
 			}
 			FROM = {
 				add_to_war = {
-					targeted_alliance = PREV.PREV
+					targeted_alliance = ROOT
 					enemy = PREV
 				}
 			}
@@ -16240,13 +16220,13 @@ news_event = {
 	option = {
 		name = ww1_china.105.a
 		trigger = {
-			is_china_or_warlord = yes
+			is_china_or_warlord_no_tt = yes
 		}
 	}
 	option = {
 		name = ww1_china.105.b
 		trigger = {
-			is_china_or_warlord = no
+			is_china_or_warlord_no_tt = no
 		}
 	}
 }
@@ -16261,13 +16241,13 @@ news_event = {
 	option = {
 		name = ww1_china.106.a
 		trigger = {
-			is_china_or_warlord = yes
+			is_china_or_warlord_no_tt = yes
 		}
 	}
 	option = {
 		name = ww1_china.106.b
 		trigger = {
-			NOT = { is_china_or_warlord = yes }
+			is_china_or_warlord_no_tt = no
 		}
 	}
 }
@@ -22272,70 +22252,17 @@ country_event = {
 	picture = GFX_report_event_chinese_protest
 	fire_only_once = yes
 	trigger = {
-		is_china_or_warlord_no_tt = yes
-		controls_state = 608
+		tag = CCG
 		has_global_flag = great_war_ends
+		has_global_flag = {
+			flag = twenty_one_demands
+			value > 1
+		}
 		OR = {
-			AND = {
-				date > 1910.4.1
-				date < 1911.6.1
-			}
-			AND = {
-				date > 1911.4.1
-				date < 1912.6.1
-			}
-			AND = {
-				date > 1912.4.1
-				date < 1913.6.1
-			}
-			AND = {
-				date > 1913.4.1
-				date < 1914.6.1
-			}
-			AND = {
-				date > 1914.4.1
-				date < 1915.6.1
-			}
-			AND = {
-				date > 1915.4.1
-				date < 1916.6.1
-			}
-			AND = {
-				date > 1916.4.1
-				date < 1917.6.1
-			}
-			AND = {
-				date > 1917.4.1
-				date < 1918.6.1
-			}
-			AND = {
-				date > 1918.4.1
-				date < 1919.6.1
-			}
-			AND = {
-				date > 1919.4.1
-				date < 1920.6.1
-			}
-			AND = {
-				date > 1920.4.1
-				date < 1921.6.1
-			}
-			AND = {
-				date > 1921.4.1
-				date < 1922.6.1
-			}
-			AND = {
-				date > 1922.4.1
-				date < 1923.6.1
-			}
-			AND = {
-				date > 1923.4.1
-				date < 1924.6.1
-			}
-			AND = {
-				date > 1924.4.1
-				date < 1925.6.1
-			}
+			has_active_mission = versallies_conference
+			has_active_mission = frankfurt_conference
+			has_global_flag = frankfurt_treaty
+			has_global_flag = versailles_treaty
 		}
 		JAP = {
 			owns_state = 872
@@ -22344,9 +22271,6 @@ country_event = {
 					is_china_or_warlord_no_tt = yes
 				}
 			}
-		}
-		any_country = {
-			has_country_flag = accepted_twenty_one_demands
 		}
 	}
 	mean_time_to_happen = { days = 10 }
@@ -22413,10 +22337,17 @@ news_event = {
 	is_triggered_only = yes
 	immediate = {
 		hidden_effect = {
-			random_country = {
-				limit = { has_country_flag = accepted_twenty_one_demands }
-				clr_country_flag = accepted_twenty_one_demands
-				set_country_flag = rejected_twenty_one_demands
+			if = {
+				limit = {
+					has_global_flag = {
+						flag = twenty_one_demands
+						value > 1
+					}
+				}
+				set_global_flag = {
+					flag = twenty_one_demands
+					value = 1
+				}
 			}
 		}
 	}
