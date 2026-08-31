@@ -164,3 +164,8 @@ NDefines.NProject.RECRUIT_SCIENTIST_COST = {                                -- A
     100,            -- pp cost if 2 available scientist
     100             -- pp cost if more than 2 available scientist
 }
+
+NDefines.NSupply.NODE_INITIAL_SUPPLY_FLOW = 2.33										-- Base range of supply hubs
+NDefines.NSupply.NAVAL_BASE_INITIAL_SUPPLY_FLOW = 2.75
+NDefines.NDiplomacy.TRUCE_BREAK_COST_PP = 0
+NDefines.NRailwayGun.ATTACK_TO_ENTRENCHMENT_MODIFIER_FACTOR = 0                         -- random shit ruining trench warfare

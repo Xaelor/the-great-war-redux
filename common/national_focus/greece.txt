@@ -9,7 +9,6 @@ focus_tree = {
 		}
 		modifier = {
 			factor = 0
-			has_country_flag = empty_focus
 			any_country_with_original_tag = {
 				original_tag_to_check = GRE
 				NOT = { tag = ROOT }
@@ -1326,11 +1325,21 @@ focus = {
 			hidden_effect = {
 				731 = {
 					add_core_of = BUL
-					start_resistance = yes
+					if = {
+						limit = {
+							has_resistance = no
+						}
+						start_resistance = yes
+					}
 				}
 				1256 = {
 					add_core_of = BUL
-					start_resistance = yes
+					if = {
+						limit = {
+							has_resistance = no
+						}
+						start_resistance = yes
+					}
 				}
 			}
 		}
@@ -1375,26 +1384,6 @@ focus = {
 		}
 	}
 
-	# focus = {
-	# 	id = GRE_treaty_of_mutual_protection_with_serbia
-	# 	icon = goal_unknown
-	# 	cost = 1
-	# 	x = -1
-	# 	y = 1
-	# 	relative_position_id = GRE_unite_with_crete
-	# 	prerequisite = {
-	# 		focus = GRE_unite_with_crete
-	# 	}
-	# 	completion_reward = {
-	# 	}
-	# 	ai_will_do = {
-	# 		factor = 25
-	# 		modifier = {
-	# 			has_decision = GRE_leave_northern_epirus_mission
-	# 			factor = 100
-	# 		}
-	# 	}
-	# }
 	focus = {
 		id = GRE_construct_new_forts
 		icon = GFX_goal_generic_fortify_city
@@ -1466,46 +1455,6 @@ focus = {
 			}
 		}
 	}
-	# focus = {
-	# 	id = GRE_support_northern_epirot_autonomists
-	# 	icon = goal_unknown
-	# 	cost = 1
-	# 	x = -1
-	# 	y = 1
-	# 	relative_position_id = GRE_florence_protocol
-	# 	prerequisite = {
-	# 		focus = GRE_florence_protocol
-	# 	}
-	# 	completion_reward = {
-	# 	}
-	# }
-	# focus = {
-	# 	id = GRE_send_ministers_to_epirot_government
-	# 	icon = goal_unknown
-	# 	cost = 1
-	# 	x = 1
-	# 	y = 1
-	# 	relative_position_id = GRE_florence_protocol
-	# 	prerequisite = {
-	# 		focus = GRE_florence_protocol
-	# 	}
-	# 	completion_reward = {
-	# 	}
-	# }
-
-	# focus = {
-	# 	id = GRE_annex_northern_epirus
-	# 	icon = goal_unknown
-	# 	cost = 1
-	# 	x = 0
-	# 	y = 1
-	# 	relative_position_id = GRE_protocol_of_corfu
-	# 	prerequisite = {
-	# 		focus = GRE_protocol_of_corfu
-	# 	}
-	# 	completion_reward = {
-	# 	}
-	# }
 	focus = {
 		id = GRE_commit_to_neutrality
 		icon = GFX_goal_generic_neutrality_focus
@@ -2270,7 +2219,7 @@ focus = {
 		bypass = {
 			OR = {
 				has_global_flag = great_war_ends
-				has_global_flag = FRA_surrender_alone
+				has_global_flag = FRA_surrender
 				has_country_flag = civil_war_has_been_triggered
 			}	
 		}
@@ -2629,7 +2578,7 @@ focus = {
 				limit = { 
 					NOT = { 
 						has_global_flag = great_war_ends 
-						has_global_flag = FRA_surrender_alone
+						has_global_flag = FRA_surrender
 					}
 				}
 				custom_trigger_tooltip = {
@@ -2713,18 +2662,7 @@ focus = {
 		}
 		completion_reward = {
 			GRE_create_THE = yes
-			ENT = { add_to_faction = PREV }
-			add_to_war = {
-				targeted_alliance = ENT
-				enemy = GER
-			}
-			if = {
-				limit = { ENT = { has_war_with = BUL } }
-				add_to_war = {
-					targeted_alliance = ENT
-					enemy = BUL
-				}
-			}
+			join_ENT_declare_war_on_CENPO = yes
 			if = {
 				limit = {
 					OR = {
@@ -2741,6 +2679,10 @@ focus = {
 					any_country_with_original_tag = {
 						original_tag_to_check = GRE
 						owns_state = 803
+					}
+					ITA = {
+						is_part_of_great_war = yes
+						is_in_faction_with = GRE
 					}
 				}
 				ITA = { transfer_state = 803 }
@@ -2865,7 +2807,7 @@ focus = {
 						is_subject = no
 						NOT = {
 							has_country_flag = great_war_loser
-							has_global_flag = FRA_surrender_alone
+							has_global_flag = FRA_surrender
 						}
 					}
 				}
@@ -3255,7 +3197,7 @@ focus = {
 				GRE_expansion_cost = 20
 			}
 			set_variable = {
-				GRE_number_of_states_transfered = 0
+				GRE_number_of_states_transferred = 0
 			}
 		}
 		search_filters = {
@@ -3315,7 +3257,7 @@ focus = {
 			OR = {
 				custom_trigger_tooltip = {
 					tooltip = has_tranfered_3_states
-					check_variable = { GRE_number_of_states_transfered > 2 }
+					check_variable = { GRE_number_of_states_transferred > 2 }
 				}
 				has_country_flag = great_war_winner
 			}	
@@ -8887,8 +8829,8 @@ focus = {
 						is_subject_of = TUR
 					}
 				}
-				release_puppet = ARM
 				ARM = {
+					free_subject = yes
 					declare_war_on = {
 						target = TUR
 						type = puppet_wargoal_focus
@@ -8901,8 +8843,8 @@ focus = {
 						is_subject_of = TRR
 					}
 				}
-				release_puppet = ARM
 				ARM = {
+					free_subject = yes
 					declare_war_on = {
 						target = TRR
 						type = puppet_wargoal_focus
@@ -8919,7 +8861,7 @@ focus = {
 		}
 	}
 	focus = {
-		id = GRE_prevent_turkish_guerilla_raids
+		id = GRE_prevent_turkish_guerrilla_raids
 		icon = GFX_TUR_spark_the_war_of_independence
 		prerequisite = {
 			focus = GRE_deal_with_socialist_agitators
@@ -8948,7 +8890,7 @@ focus = {
 			focus = GRE_aid_armenians
 		}
 		prerequisite = {
-			focus = GRE_prevent_turkish_guerilla_raids
+			focus = GRE_prevent_turkish_guerrilla_raids
 		}
 		x = 0
 		y = 1
@@ -10511,7 +10453,7 @@ joint_focus = {
 }
 
 joint_focus = {
-	id = GRE_negociation_to_ifc
+	id = GRE_negotiation_to_ifc
 	icon = GFX_focus_hol_the_foundations_of_defense
 	x = 2
 	y = 0
@@ -10753,9 +10695,9 @@ joint_focus = {
 	x = 0
 	y = 1
 	cost = 5
-	relative_position_id = GRE_negociation_to_ifc
+	relative_position_id = GRE_negotiation_to_ifc
 	prerequisite = {
-		focus = GRE_negociation_to_ifc
+		focus = GRE_negotiation_to_ifc
 	}
 	search_filters = {
 		FOCUS_FILTER_HISTORICAL
