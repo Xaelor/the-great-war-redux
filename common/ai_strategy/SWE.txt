@@ -1,3 +1,4 @@
+### Foreign stuff
 SWE_great_war_neutrality = {
 	allowed = {
 		original_tag = SWE
@@ -77,7 +78,7 @@ SWE_ignore_sweden = {
 	}
 }
 
-SWE_research_the_type_l = {
+SWE_research_the_type_l = {	# TBD; Check if it works
 	allowed = {
 		original_tag = SWE
 	}
@@ -91,16 +92,16 @@ SWE_research_the_type_l = {
 	ai_strategy = {
 		type = research_weight_factor
 		id = scout_plane2
-		value = 250
+		value = 500
 	}
 	ai_strategy = {
 		type = research_weight_factor
 		id = fighter1
-		value = 100
+		value = 250
 	}
 }
 
-SWE_resource_market_techs = {
+SWE_resource_market_techs = {	# TBD; Check if it works
 	allowed = {
 		original_tag = SWE
 	}
@@ -121,20 +122,21 @@ SWE_resource_market_techs = {
 	ai_strategy = {
 		type = research_weight_factor
 		id = excavation1
-		value = 100
+		value = 1000
 	}
 	ai_strategy = {
 		type = research_weight_factor
 		id = stainless_steel
-		value = 100
+		value = 1000
 	}
 	ai_strategy = {
 		type = research_weight_factor
 		id = excavation2
-		value = 100
+		value = 1000
 	}
 }
 
+### Industry + Mil
 SWE_war_not_yet = {
 	allowed = {
 		original_tag = SWE
@@ -157,7 +159,7 @@ SWE_war_not_yet = {
 	
 	ai_strategy = {
 		type = added_military_to_civilian_factory_ratio
-		value = -25
+		value = -35
 	}
 }
 
@@ -177,15 +179,15 @@ SWE_wartime_preparations_mil = {
 	
 	ai_strategy = {
 		type = added_military_to_civilian_factory_ratio
-		value = 25
+		value = 50
 	}
 	ai_strategy = {
 		type = dockyard_to_military_factory_ratio
-		value = 10
+		value = 20
 	}
 	ai_strategy = {
 		type = equipment_stockpile_surplus_ratio
-		value = 10
+		value = 5
 	}
 }
 
@@ -405,53 +407,129 @@ SWE_simulate_mild_early_paranoia = {
 }
 
 
-# Central Powers
-SWE_prepare_against_russia = {
+# WW1
+SWE_focus_on_russia_finland_front = {
 	allowed = {
-		tag = SWE	
+		original_tag = SWE
 	}
 	enable = {
-		has_completed_focus = SWE_prepare_entry_into_the_conflicts
-		RUS = {
-			exists = yes
-			NOT = { is_in_faction_with = GER }
-			NOT = { has_country_flag = great_war_loser }
+		is_in_faction_with = GER
+		has_war_with = RUS
+		has_war_with = FIN
+		has_manpower > 4999
+		stockpile_ratio = {
+			archetype = infantry_equipment
+			ratio > 0.2
 		}
-		NOT = { has_global_flag = great_war_ends }
+		FIN = {
+			surrender_progress > 0.7
+			has_capitulated = no
+			is_ally_with = RUS
+		}
 	}
 	abort_when_not_enabled = yes
 	
+	ai_strategy = {
+		type = front_control
+		tag = FIN
+		priority = 200
+		ratio = 0
+		ordertype = front
+		execution_type = rush
+		execute_order = yes
+		manual_attack = yes
+	}
+}
+SWE_focus_on_russian_front_first_and_foremost = {
+	allowed = {
+		original_tag = SWE
+	}
+	enable = {
+		is_in_faction_with = GER
+		has_war_with = RUS
+	}
+	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = front_unit_request
 		tag = RUS
-		value = 100
+		value = 10
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = FRA
+		value = -25
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = ENG
+		value = -25
 	}
 }
-SWE_prepare_against_russian_finland = {
+SWE_support_german_on_russian_front_first_and_foremost = {
 	allowed = {
-		tag = SWE	
+		original_tag = SWE
 	}
 	enable = {
-		has_completed_focus = SWE_prepare_entry_into_the_conflicts
-		RUS = {
-			exists = yes
-			NOT = { is_in_faction_with = GER }
-			NOT = { has_country_flag = great_war_loser }
-			has_subject = FIN
-		}
-		NOT = { has_global_flag = great_war_ends }
+		is_in_faction_with = GER
+		has_war_with = RUS
+		GER = { has_idea = GER_focus_on_russian_front }
 	}
 	abort_when_not_enabled = yes
 	
 	ai_strategy = {
+		type = front_control
+		tag = RUS
+		priority = 100
+		ratio = 0.05
+		ordertype = front
+		execution_type = careful
+		execute_order = yes
+		manual_attack = yes
+	}
+	ai_strategy = {
 		type = front_unit_request
-		tag = FIN
-		value = 100
+		tag = RUS
+		value = 20
 	}
 }
 
+# Focus on Nordic First
+SWE_area_priority = {
+	allowed = {
+		original_tag = SWE
+	}
+	enable = {
+		always = yes
+	}
+	abort = {
+		always = no
+	}
+	
+	ai_strategy = {
+		type = area_priority
+		id = scandinavia
+		value = 500
+	}
+	ai_strategy = {
+		type = area_priority
+		id = europe
+		value = 200
+	}
+	ai_strategy = {
+		type = area_priority
+		id = globally
+		value = -100
+	}
+	ai_strategy = {
+		type = garrison
+		value = -25
+	}
+	ai_strategy = {
+		type = garrison_reinforcement_priority
+		value = -75
+	}
+}
 
-### Foreign stuff
 SWE_were_not_part_of_western_front_for_now = {	# It's okay guys, we're with you in spirit! or until we fixed our food issue maybe
 	allowed = {
 		original_tag = SWE
@@ -464,49 +542,32 @@ SWE_were_not_part_of_western_front_for_now = {	# It's okay guys, we're with you 
 		surrender_progress < 0.2
 		OR = {
 			FRA = { surrender_progress > 0.2 }
-			date > 1917.1.1
+			AND = {
+				date > 1917.1.1
+				GER = { surrender_progress > 0.05 }
+			}
 		}
 	}
 	
 	ai_strategy = {
 		type = dont_defend_ally_borders
 		id = "BEL"
-		value = 1000
-	}
-	ai_strategy = {
-		type = ignore
-		id = "BEL"
-		value = 1000
+		value = 1
 	}
 	ai_strategy = {
 		type = dont_defend_ally_borders
 		id = "HOL"
-		value = 1000
-	}
-	ai_strategy = {
-		type = ignore
-		id = "HOL"
-		value = 1000
+		value = 1
 	}
 	ai_strategy = {
 		type = dont_defend_ally_borders
 		id = "LUX"
-		value = 1000
-	}
-	ai_strategy = {
-		type = ignore
-		id = "LUX"
-		value = 1000
+		value = 1
 	}
 	ai_strategy = {
 		type = dont_defend_ally_borders
 		id = "FRA"
-		value = 500
-	}
-	ai_strategy = {
-		type = ignore
-		id = "FRA"
-		value = 50
+		value = 1
 	}
 }
 
@@ -564,12 +625,12 @@ SWE_never_ever_help_the_russians = {	# Sweden at the time wasn't very keen on fi
 	ai_strategy = {
 		type = dont_defend_ally_borders
 		id = "RUS"
-		value = 10000
+		value = 10
 	}
 	ai_strategy = {
 		type = ignore
 		id = "RUS"
-		value = 10000
+		value = 100
 	}
 }
 

@@ -1334,7 +1334,6 @@ ideas = {
 			}
 			available = {
 				has_war = no
-				NOT = { has_global_flag = great_war }
 			}
 			
 			removal_cost = -1
@@ -1554,37 +1553,31 @@ ideas = {
 				}
 			}
 			on_add = {
-				if = {
-					limit = { has_country_flag = SWE_suffrage_flag }
-					add_to_variable = {
-						var = SWE_lib_dem_votes_f
-						value = 0.08
-					}
-					add_to_variable = {
-						var = SWE_con_dem_votes_f
-						value = -0.02
-					}
-					add_to_variable = {
-						var = SWE_soc_dem_votes_f
-						value = -0.06
-					}
+				add_to_variable = {
+					var = SWE_lib_dem_votes_f
+					value = 0.06
+				}
+				add_to_variable = {
+					var = SWE_con_dem_votes_f
+					value = -0.02
+				}
+				add_to_variable = {
+					var = SWE_soc_dem_votes_f
+					value = -0.04
 				}
 			}
 			on_remove = {
-				if = {
-					limit = { has_country_flag = SWE_suffrage_flag }
-					add_to_variable = {
-						var = SWE_lib_dem_votes_f
-						value = -0.08
-					}
-					add_to_variable = {
-						var = SWE_con_dem_votes_f
-						value = 0.02
-					}
-					add_to_variable = {
-						var = SWE_soc_dem_votes_f
-						value = 0.06
-					}
+				add_to_variable = {
+					var = SWE_lib_dem_votes_f
+					value = -0.06
+				}
+				add_to_variable = {
+					var = SWE_con_dem_votes_f
+					value = 0.02
+				}
+				add_to_variable = {
+					var = SWE_soc_dem_votes_f
+					value = 0.04
 				}
 			}
 			
@@ -1592,7 +1585,7 @@ ideas = {
 			picture = generic_democratic_drift_bonus
 			modifier = {
 				party_popularity_stability_factor = 0.05
-				custom_modifier_tooltip = increases_liberalism_in_sweden_if_parliamentalism_reformed_tt
+				custom_modifier_tooltip = increases_liberalism_in_sweden_tt
 			}
 		}
 		SWE_new_liberalism_imp = {
@@ -1664,6 +1657,32 @@ ideas = {
 			modifier = {
 				consumer_goods_factor = -0.05
 				line_change_production_efficiency_factor = -0.15
+			}
+		}
+		SWE_anti_burden_policies = {
+			allowed_civil_war = {
+				always = yes
+			}
+					
+			removal_cost = -1
+			picture = generic_democratic_drift_bonus
+			on_remove = {
+				# Make event occur later
+				add_to_variable = {
+					tooltip = consumer_goods_factor_tt
+					var = SWE_consumer_goods_factor
+					value = -0.05
+				}
+				add_to_variable = {
+					tooltip = production_speed_arms_factory_factor_tt
+					var = SWE_mil_build_speed
+					value = 0.05
+				}
+			}
+			
+			modifier = {
+				political_power_cost = 0.15
+				consumer_goods_factor = 0.10
 			}
 		}
 		# Post-Staaff

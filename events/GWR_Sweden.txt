@@ -389,7 +389,7 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			set_country_flag = fbaten_fragan_solved
-			country_event = { id = ww_sverige.6 days = 112 }
+			country_event = { id = ww_sverige.6 days = 112 } # Make mission appear as timer instead for ease for player
 		}
 	}
 	
@@ -1199,7 +1199,7 @@ country_event = {
 			}
 		}
 		OR = {
-			AND = {	# Just secondary, increase chance of triggering right date
+			AND = {	# Just secondary backup, increase chance of triggering right date
 				is_historical_focus_on = yes
 				date > 1916.2.1
 				date < 1916.4.1
@@ -1366,7 +1366,9 @@ country_event = {
 		name = ww_sverige.19.a
 		add_stability = -0.05
 		add_ideas = SWE_minority_government
-		promote_character = SWE_hjalmar_branting
+		SWE_hjalmar_branting = {
+			promote_character = social_democracy
+		}
 		set_party_name = {
 			ideology = democratic
 			long_name = SWE_democratic_sap_party_long 
@@ -1469,7 +1471,9 @@ country_event = {
 			NOT = { has_idea = communism_banned }
 		}
 		# event about freeing Anton Nilson
-		promote_character = SWE_hjalmar_branting
+		SWE_hjalmar_branting = {
+			promote_character = social_democracy
+		}
 		set_party_name = {
 			ideology = democratic
 			long_name = SWE_democratic_sap_party_long 
@@ -2296,12 +2300,16 @@ country_event = {
 	
 	option = {	# Oh no
 		name = ww_sverige.100.a
+		add_popularity = {
+			ideology = ROOT
+			popularity = -0.05
+		}
 		add_ideas = SWE_hungerskjold
 		custom_effect_tooltip = adjust_swe_political_tt
 		add_to_variable = {
 			tooltip = stability_factor_tt
 			var = SWE_pol_stability_factor
-			value = -0.10
+			value = -0.15
 		}
 		add_to_variable = {
 			tooltip = war_support_factor_tt
@@ -2361,6 +2369,52 @@ country_event = {
 				tooltip = communism_drift_tt
 				var = SWE_pol_communism_drift
 				value = -0.01
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = { has_government = communism }
+				NOT = {
+					check_variable = {
+						var = SWE_pol_communism_drift
+						value = 0.01
+					}
+				}
+			}
+			add_to_variable = {
+				tooltip = communism_drift_tt
+				var = SWE_pol_communism_drift
+				value = 0.01
+			}
+		}
+		if = {	# Conservative government
+			limit = {
+				OR = {
+					has_government = neutrality
+					has_government = fascism
+					has_country_leader_ideology = conservatism
+					has_country_leader_ideology = liberal_conservatism
+				}
+			}
+			add_to_variable = {
+				tooltip = swe_agr_prog_vote_share_tt
+				var = swe_agr_prog_vote_share
+				value = 0.06
+			}
+		}
+		else_if = {	# Liberal/Social government
+			limit = {
+				OR = {
+					has_government = communism
+					has_country_leader_ideology = social_liberalism
+					has_country_leader_ideology = social_democracy
+					has_country_leader_ideology = classical_liberalism
+				}
+			}
+			add_to_variable = {
+				tooltip = swe_agr_prog_vote_share_tt
+				var = swe_agr_prog_vote_share
+				value = -0.02
 			}
 		}
 	}
@@ -6005,6 +6059,45 @@ country_event = {
 		}
 	}
 }
+# Military Improved
+country_event = {
+	id = ww_sverige_general.63
+	title = ww_sverige_general.63.t
+	desc = ww_sverige_general.63.d
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = { activate_mission = SWE_military_lessons_of_great_war }
+	}
+	
+	option = {
+		name = ww_sverige_general.63.a
+		custom_effect_tooltip = adjust_swe_military_tt
+		add_to_variable = {
+			tooltip = army_org_factor_tt
+			var = SWE_mil_army_org_factor
+			value = 0.01
+		}
+		add_to_variable = {
+			tooltip = army_attack_factor_tt
+			var = SWE_mil_army_attack_factor
+			value = 0.02
+		}
+		add_to_variable = {
+			tooltip = experience_gain_army_factor_tt
+			var = SWE_mil_experience_gain_army_factor
+			value = 0.02
+		}
+		add_to_variable = {
+			tooltip = land_mastery_gain_factor_tt
+			var = SWE_mil_land_mastery_gain_factor
+			value = 0.01
+		}
+
+	}
+}
+
 
 
 
@@ -7121,7 +7214,7 @@ country_event = {
 		add_to_variable = {
 			tooltip = stability_factor_tt
 			var = SWE_pol_stability
-			value = -0.1
+			value = -0.15
 		}
 		add_to_variable = {
 			tooltip = war_support_factor_tt
@@ -7154,7 +7247,7 @@ country_event = {
 		add_to_variable = {
 			tooltip = stability_factor_tt
 			var = SWE_eco_stability
-			value = -0.2
+			value = -0.20
 		}
 		add_to_variable = {
 			tooltip = industrial_capacity_factory_tt

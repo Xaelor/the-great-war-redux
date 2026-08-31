@@ -374,7 +374,7 @@ SWE_recalculate_first_chamber = {
 		}
 		multiply_temp_variable = {
 			var = con_moderates_var
-			value = 0.3
+			value = 0.35
 		}
 		add_to_variable = {
 			var = AV_f
@@ -429,11 +429,11 @@ SWE_recalculate_first_chamber = {
 			}
 			multiply_temp_variable = {
 				var = fas_vote_temp
-				value = 0.75
+				value = 0.65
 			}
 			multiply_temp_variable = {
 				var = fas_vote_temp_2
-				value = 0.25
+				value = 0.35
 			}
 			add_to_variable = {
 				var = NAP_f
@@ -880,23 +880,27 @@ SWE_recalculate_second_chamber = {
 		value = lib_vote_temp_fake
 	}
 	# Apply seats based on above ratio
-	
 	multiply_temp_variable = {
 		var = con_vote_temp
 		value = 2.3
 	}
+	
 	# 'Progressive' Agrarian Votes
 		# Essentially formula:
-			# (1 - Current War Support + dem/soc support) * Percentage of Agrarian Votes * number of Agrarian Votes
+			# (1 - Half of Current War Support + dem/soc support) * Percentage of Agrarian Votes * number of Agrarian Votes, the amount is rounded a bit
 			# Then it removes those votes from Agrarian
 			# Then it is given to liberal party (and to the splinter one in particular)
 	set_temp_variable = {
 		var = agr_prog_vote_temp
-		value = 1
-	}
-	subtract_from_temp_variable = {
-		var = agr_prog_vote_temp
 		value = SWE.has_war_support
+	}
+	multiply_temp_variable = {
+		var = agr_prog_vote_temp
+		value = 0.5
+	}
+	add_to_temp_variable = {
+		var = agr_prog_vote_temp
+		value = 1
 	}
 	add_to_temp_variable = {
 		var = agr_prog_vote_temp
@@ -905,6 +909,15 @@ SWE_recalculate_second_chamber = {
 	add_to_temp_variable = {
 		var = agr_prog_vote_temp
 		value = party_popularity@communism
+	}
+	multiply_temp_variable = {
+		var = agr_prog_vote_temp
+		value = 10
+	}
+	round_variable = round_temp_variable
+	divide_temp_variable = {
+		var = agr_prog_vote_temp
+		value = 10
 	}
 	clamp_temp_variable = {
 		var = agr_prog_vote_temp
@@ -1107,17 +1120,9 @@ SWE_recalculate_second_chamber = {
 	if = {
 		limit = {
 			has_country_flag = {	# 12 years, idk who the fuck would go for this lol
-				flag = sweden_korkort_flag
+				flag = split_of_liberal_party
 				days > 4380
 			}
-		}
-		add_to_variable = {
-			var = LIB_a
-			value = FRI_a
-		}
-		multiply_variable = {
-			var = FRI_a
-			value = 0
 		}
 		add_to_variable = {
 			var = LIB_a
@@ -1134,11 +1139,11 @@ SWE_recalculate_second_chamber = {
 		}
 		multiply_variable = {
 			var = FRI_a
-			value = 0.18
+			value = 0.17
 		}
 		multiply_variable = {
 			var = LIB_a
-			value = 0.82
+			value = 0.83
 		}
 		
 		# This is to represent liberal agricultural support (aka for social reforms)
@@ -1160,23 +1165,9 @@ SWE_recalculate_second_chamber = {
 			var = FRI_a
 			value = com_vote_temp
 		}
-		if = {
-			limit = {
-				check_variable = {
-					var = LIB_a
-					value = 1
-				}
-			}
-			add_to_variable = {
-				var = LIB_a
-				value = soc_vote_temp
-			}
-		}
-		else = {
-			add_to_variable = {
-				var = FRI_a
-				value = soc_vote_temp
-			}
+		add_to_variable = {
+			var = LIB_a
+			value = soc_vote_temp
 		}
 	}
 	
@@ -1956,6 +1947,30 @@ SWE_set_kingly_approval = {
 	}
 }
 
+SWE_reset_king_approval = {
+	if = {
+		limit = { has_idea = SWE_gustaf_v_apr }
+		swap_ideas = {
+			add_idea = SWE_gustaf_v
+			remove_idea = SWE_gustaf_v_apr
+		}
+	}
+	else_if = {
+		limit = { has_idea = SWE_gustaf_v_opp }
+		swap_ideas = {
+			add_idea = SWE_gustaf_v
+			remove_idea = SWE_gustaf_v_opp
+		}
+	}
+	else_if = {
+		limit = { has_idea = SWE_gustaf_v_dis }
+		swap_ideas = {
+			add_idea = SWE_gustaf_v
+			remove_idea = SWE_gustaf_v_dis
+		}
+	}
+}
+
 SWE_inlandsbanan_effect = {	# Helps keep Inlandsbanan simple
 	if = {
 		limit = {
@@ -2290,6 +2305,13 @@ SWE_prohibition_result_effect = {
 		}
 	}
 	
+}
+
+# Concession related
+SWE_remove_concession_boost = {
+	clr_country_flag = swe_soc_liberal_concession_flag
+	clr_country_flag = swe_liberal_concession_flag
+	clr_country_flag = swe_conservative_concession_flag
 }
 
 # Rarely used right now
