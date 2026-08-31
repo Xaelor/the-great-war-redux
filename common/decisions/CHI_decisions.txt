@@ -80,6 +80,7 @@ CHI_warlord_era = {
 				has_country_flag = CHI_national_protection_flag
 				has_country_flag = chinese_second_revolution
 			}
+			is_kuomintang_state = no
 			# OR = {
 			# 	has_completed_focus = CHI_second_empire
 			# 	has_completed_focus = CHI_suppress_monarchists
@@ -1248,7 +1249,7 @@ CHI_warlord_era = {
 		allowed = { original_tag = CHI }
 		available = {
 			has_full_control_of_state = FROM
-			num_of_civilian_factories_available_for_projects > 0
+			num_of_civilian_factories_available_for_projects > 1
 		}
 		visible = { has_completed_focus = CHI_national_representatives_conference }
 		days_remove = 70
@@ -1260,19 +1261,19 @@ CHI_warlord_era = {
 				is_owned_by = ROOT
 				is_core_of = ROOT
 				OR = {
-					any_state_in = {						
+					any_state_in = {
 						strategic_region = 15
 					}
-					any_state_in = {						
+					any_state_in = {
 						strategic_region = 143
 					}
-					any_state_in = {						
+					any_state_in = {
 						strategic_region = 144
 					}
-					any_state_in = {						
+					any_state_in = {
 						strategic_region = 145
 					}
-					any_state_in = {						
+					any_state_in = {
 						strategic_region = 200
 					}
 				}
@@ -2385,6 +2386,14 @@ CHI_chinese_warlords = {
 						original_tag = SIC
 						original_tag = SND
 					}
+				}
+			}
+			modifier = {
+				add = 30
+				is_kuomintang_state = yes
+				FROM = {
+					is_kuomintang_state = yes
+					has_government = ROOT
 				}
 			}
 		}
@@ -4016,7 +4025,7 @@ TGWR_great_power_politics = {
 		}
 		visible = {
 			great_power_politics_century_of_humiliation_visible = yes
-			is_subject = no		
+			is_subject = no
 		}
 		target_root_trigger = {
 			is_subject = no
@@ -4027,6 +4036,9 @@ TGWR_great_power_politics = {
 			}
 			872 = { is_owned_and_controlled_by = ROOT }
 			has_war = no
+			NOT = {
+				has_idea = CHI_idea_unstable_republic
+			}
 		}
 		cost = 50
 		days_re_enable = 140
@@ -4094,6 +4106,9 @@ TGWR_great_power_politics = {
 			}
 			872 = { is_owned_and_controlled_by = ROOT }
 			has_war = no
+			NOT = {
+				has_idea = CHI_idea_unstable_republic
+			}
 		}
 		cost = 50
 		days_re_enable = 140
@@ -4167,7 +4182,10 @@ TGWR_great_power_politics = {
 			}
 			has_capitulated = no
 			is_neighbor_of = FROM
-			NOT = { has_country_flag = concessions_war }
+			NOT = {
+				has_country_flag = concessions_war
+				has_idea = CHI_idea_unstable_republic
+			}
 		}
 		cost = 50
 		days_re_enable = 365
