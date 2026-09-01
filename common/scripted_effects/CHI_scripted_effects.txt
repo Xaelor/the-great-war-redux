@@ -593,7 +593,7 @@ clear_warlord_cores_and_claims = {
 	hidden_effect = {
 		every_possible_country = {
 			limit = {
-				is_china_or_warlord_no_tt = yes
+				is_china_or_warlord = yes
 				exists = no
 			}
 			every_state = {
@@ -1230,11 +1230,18 @@ clear_xinhai_tags = {
 			}
 		}
 		CHI = {
-			every_other_country = {
-				limit = {
-					NOT = { tag = QIN }
-					is_china_or_warlord_no_tt = yes
-				}
+			every_collection_element = {
+				input = {
+					input = collection:countries_china 
+					operators =  {
+						limit = {
+							NOT = { 
+								tag = ROOT 
+								tag = QIN
+							} 
+						}
+					}
+				}		
 				if = {
 					limit = {
 						OR = {
@@ -1653,7 +1660,7 @@ xinhai_end_effect = {
 
 		every_state = {
 			limit = {
-				OWNER = { is_china_or_warlord_no_tt = yes }
+				OWNER = { is_china_or_warlord = yes }
 				OR = {
 					#Kham
 					state = 1065

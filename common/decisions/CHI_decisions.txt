@@ -349,9 +349,8 @@ CHI_warlord_era = {
 			}
 			hidden_effect = {
 				CHI = {
-					every_other_country = {
+					every_enemy_country = {
 						limit = {
-							has_war_with = CHI
 							is_ally_with = GXC
 						}
 						white_peace = CHI
@@ -360,10 +359,9 @@ CHI_warlord_era = {
 							days = 210
 						}
 					}
-					every_other_country = {
+					every_allied_country = {
 						limit = {
 							has_war_with = GXC
-							is_ally_with = CHI
 						}
 						white_peace = GXC
 						set_truce = {
@@ -697,9 +695,14 @@ CHI_warlord_era = {
 				id = ww1_china.29
 				hours = 10
 			}
-			every_other_country = {
-				limit = {
-					is_china_or_warlord_no_tt = yes
+			every_collection_element = {
+				input = {
+					input = collection:countries_china 
+					operators =  {
+						limit = {
+							NOT = { tag = ROOT }
+						}
+					}
 				}
 				country_event = {
 					id = ww1_china.195
@@ -844,10 +847,7 @@ CHI_warlord_era = {
 				}
 				transfer_state_to = FNG
 			}
-			every_other_country = {
-				limit = {
-					has_war_with = ROOT
-				}
+			every_enemy_country = {
 				white_peace = ROOT
 			}
 			if = {
@@ -897,7 +897,7 @@ CHI_warlord_era = {
 		target_array = enemies
 		target_trigger = {
 			FROM = {
-				is_china_or_warlord_no_tt = yes
+				is_china_or_warlord = yes
 				has_country_flag = CHI_kuomintang_flag
 			}
 		}
@@ -1670,7 +1670,7 @@ CHI_chinese_warlords = {
 	CHI_fix_inflation = {
 		icon = GFX_decision_gre_paying_ifc_debt
 		allowed = {
-			always = yes
+			is_chinese_warlord_no_tt = yes
 		}
 		visible = {
 			is_chinese_warlord = yes
@@ -1819,13 +1819,13 @@ CHI_chinese_warlords = {
 				}
 				if = {
 					limit = {
-						any_other_country = {
-							is_china_or_warlord_no_tt = no
+						any_country_with_original_tag_of = {
+							target = constant:country_groups.china_or_warlord
 							has_guaranteed = PREV
 						}
 					}
-					any_other_country = {
-						is_china_or_warlord_no_tt = no
+					any_country_with_original_tag_of = {
+						target = constant:country_groups.china_or_warlord
 						has_guaranteed = PREV
 						OR = {
 							has_civil_war = yes
@@ -2015,7 +2015,7 @@ CHI_chinese_warlords = {
 			is_china_or_warlord_no_tt = yes
 		}
 		visible = {
-			is_china_or_warlord_no_tt = yes
+			is_china_or_warlord = yes
 			NOT = {
 				tag = QIN
 				tag = CHI
@@ -2066,9 +2066,15 @@ CHI_chinese_warlords = {
 				set_global_flag = reunited_china_glov
 				set_country_flag = reunited_china
 				# The old clique that unified China will be forgotten.
-				every_other_country = {
-					limit = {
-						has_country_flag = reunited_china
+				every_collection_element = {
+					input = {
+						input = collection:countries_china 
+						operators =  {
+							limit = {
+								NOT = { tag = ROOT }
+								has_country_flag = reunited_china
+							}
+						}
 					}
 					clr_country_flag = reunited_china
 					every_state = {
@@ -2275,7 +2281,7 @@ CHI_chinese_warlords = {
 		targets_dynamic = yes
 		target_trigger = {
 			FROM = {
-				is_china_or_warlord_no_tt = yes
+				is_china_or_warlord = yes
 			}
 		}
 		target_root_trigger = {
@@ -2444,7 +2450,7 @@ CHI_chinese_warlords = {
 			is_china_or_warlord_no_tt = yes
 		}
 		visible = {
-			is_china = no
+			NOT = { tag = CHN }
 			OR = {
 				capital_scope = {
 					OR = {
@@ -2776,9 +2782,8 @@ CHI_chinese_warlords = {
 					limit = { has_country_leader_ideology = warlordism }
 					set_country_leader_ideology = authoritarian_democracy
 				}
-				every_other_country = {
+				every_subject_country = {
 					limit = {
-						is_subject_of = PREV
 						is_china_or_warlord = yes
 					}
 					if = {
@@ -2927,7 +2932,7 @@ CHI_chinese_warlords = {
 				has_war_with = FROM
 				FROM = {
 					any_enemy_country = {
-						is_china_or_warlord_no_tt = yes
+						is_china_or_warlord = yes
 						is_kuomintang_state = no
 					}
 					NOT = { is_in_faction_with = ROOT }
@@ -2959,11 +2964,16 @@ CHI_chinese_warlords = {
 			custom_effect_tooltip = historical_tt
 			country_event = ww1_china.157
 			hidden_effect = {
-				every_other_country = {
-					limit = {
-						is_china_or_warlord_no_tt = yes
+				every_collection_element = {
+					input = {
+						input = collection:countries_china 
+						operators =  {
+							limit = {
+								NOT = { tag = ROOT }
+							}
+						}
 					}
-					country_event = ww1_china.157
+					country_event = ww1_china.157				
 				}
 			}
 		}
@@ -2981,7 +2991,7 @@ CHI_chinese_warlords = {
 		targets_dynamic = yes
 		target_trigger = {
 			FROM = {
-				is_china_or_warlord_no_tt = yes
+				is_china_or_warlord = yes
 				is_kuomintang_state = no
 				NOT = {
 					tag = ROOT
@@ -3047,11 +3057,18 @@ CHI_chinese_warlords = {
 					enemy = KMT
 				}
 			}
-			every_other_country = {
-				limit = {
-					is_china_or_warlord_no_tt = yes
-					NOT = { has_war_with = KMT }
-					is_ally_with = ROOT
+			every_collection_element = {
+				input = {
+					input = collection:countries_china 
+					operators =  {
+						limit = {
+							NOT = { 
+								has_war_with = KMT 
+								tag = ROOT
+							}
+							is_ally_with = ROOT
+						}
+					}
 				}
 				add_to_war = {
 					targeted_alliance = ROOT
@@ -3176,10 +3193,9 @@ CHI_chinese_warlords = {
 			FROM = {
 				add_war_support = 0.10
 				white_peace = ROOT
-				every_other_country = {
+				every_allied_country = {
 					limit = {
 						has_war_with = ROOT
-						is_ally_with = PREV
 					}
 					white_peace = ROOT
 				}
@@ -3266,10 +3282,7 @@ CHI_chinese_warlords = {
 				OR = {
 					has_country_flag = ready_to_unite_china
 					has_country_flag = reunited_china
-					AND = {
-						is_china_or_warlord_no_tt = yes
-						NOT = { original_tag = CHI original_tag = QIN }
-					}
+					is_chinese_warlord = yes
 				}
 			}
 			controls_state = FROM
@@ -3282,7 +3295,7 @@ CHI_chinese_warlords = {
 							NOT = { is_core_of = ROOT }
 						}
 						any_country_with_core = {
-							is_china_or_warlord_no_tt = yes
+							is_china_or_warlord = yes
 							is_major = no
 							NOT = {
 								tag = ROOT
@@ -3310,10 +3323,7 @@ CHI_chinese_warlords = {
 			OR = {
 				has_country_flag = ready_to_unite_china
 				has_country_flag = reunited_china
-				AND = {
-					is_china_or_warlord_no_tt = yes
-					NOT = { original_tag = CHI original_tag = QIN }
-				}
+				is_chinese_warlord = yes
 			}
 		}
 		fire_only_once = no
@@ -3723,10 +3733,7 @@ TGWR_great_power_politics = {
 				limit = {
 					is_faction_leader = yes
 				}
-				every_other_country = {
-					limit = {
-						is_in_faction_with = ROOT
-					}
+				every_allied_country = {
 					FROM = { country_event = generic.2 }
 				}
 			}
@@ -3878,7 +3885,7 @@ TGWR_great_power_politics = {
 				limit = {
 					is_faction_leader = yes
 				}
-				every_other_country = {
+				every_allied_country = {
 					limit = {
 						is_in_faction_with = ROOT
 					}
@@ -4587,7 +4594,7 @@ TGWR_great_power_politics = {
 		visible = {
 			great_power_politics_century_of_humiliation_visible = yes
 			is_russian_tag_no_tt = no
-			is_china_or_warlord_no_tt = no
+			is_china_or_warlord = no
 			is_subject = no
 			has_capitulated = no
 			has_civil_war = no
@@ -5041,7 +5048,7 @@ CHI_occupation_actions = {
 		visible = {
 			any_enemy_country = {
 				is_major = yes
-				is_china_or_warlord_no_tt = no
+				is_china_or_warlord = no
 			}
 			controls_state = 607
 			is_china_or_warlord = yes
@@ -5242,10 +5249,14 @@ CHI_national_revolution = {
 			}
 			hidden_effect = {
 				# other beiyang cliques join the coalition
-				every_other_country = {
-					limit = {
-						is_china_or_warlord_no_tt = yes
-						is_in_faction_with = FROM
+				every_collection_element = {
+					input = {
+						input = collection:countries_china 
+						operators =  {
+							limit = {
+								is_in_faction_with = FROM
+							}
+						}
 					}
 					add_to_war = {
 						targeted_alliance = FROM
@@ -5253,16 +5264,7 @@ CHI_national_revolution = {
 					}
 				}
 				# other kuomintang alligences join the struggle
-				every_other_country = {
-					limit = {
-						OR = {
-							is_subject_of = ROOT
-							# any_character = {
-							# 	is_country_leader = yes
-							# 	has_character_flag = kmt_allegiance
-							# }
-						}
-					}
+				every_subject_country = {
 					if = {
 						limit = {
 							NOT = { is_in_faction_with = ROOT }
@@ -5523,7 +5525,7 @@ CHI_national_revolution = {
 		}
 		target_trigger = {
 			FROM = {
-				is_china_or_warlord_no_tt = yes
+				is_china_or_warlord = yes
 			}
 		}
 		target_root_trigger = {
@@ -5569,10 +5571,15 @@ CHI_national_revolution = {
 			FROM = {
 				leave_faction = yes
 			}
-			every_other_country = {
-				limit = {
-					is_china_or_warlord = yes
-					is_ally_with = ROOT
+			every_collection_element = {
+				input = {
+					input = collection:countries_china 
+					operators =  {
+						limit = {
+							NOT = { tag = ROOT }
+							is_ally_with = ROOT
+						}
+					}
 				}
 				add_to_war = {
 					targeted_alliance = GXC
@@ -5596,10 +5603,9 @@ CHI_national_revolution = {
 				}
 			}
 			hidden_effect = {
-				every_other_country = {
+				every_subject_country = {
 					limit = {
 						is_china_or_warlord = yes
-						is_subject_of = ROOT
 					}
 					add_to_war = {
 						targeted_alliance = ROOT
@@ -5761,7 +5767,7 @@ TGWR_great_power_politics = {
 				has_global_flag = khabarovsk_protocol
 				any_allied_country = {
 					is_major = yes
-					is_china_or_warlord_no_tt = no
+					is_china_or_warlord = no
 				}
 			}
 			FROM = {
@@ -5971,12 +5977,12 @@ TGWR_great_power_politics = {
 		timeout_effect = {
 			if = {
 				limit = {
-					is_china_or_warlord_no_tt = no
+					is_china_or_warlord = no
 					has_country_flag = concessions_war
 				}
 				every_enemy_country = {
 					limit = {
-						is_china_or_warlord_no_tt = yes
+						is_china_or_warlord = yes
 						has_country_flag = concessions_war
 					}
 					PREV = {
@@ -6007,7 +6013,7 @@ TGWR_great_power_politics = {
 							NOT = {
 								any_enemy_country = {
 									has_country_flag = concessions_war
-									is_china_or_warlord_no_tt = no
+									is_china_or_warlord = no
 								}
 							}
 						}
@@ -6020,7 +6026,7 @@ TGWR_great_power_politics = {
 				effect_tooltip = {
 					every_enemy_country = {
 						limit = {
-							is_china_or_warlord_no_tt = no
+							is_china_or_warlord = no
 							has_country_flag = concessions_war
 						}
 						every_owned_state = {
@@ -6121,7 +6127,7 @@ TGWR_great_power_politics = {
 						has_elections = no
 						NOT = { has_character = CHI_cao_kun }
 						any_enemy_country = {
-							is_china_or_warlord_no_tt = yes
+							is_china_or_warlord = yes
 						}
 					}
 				}
@@ -6254,10 +6260,12 @@ debug_decisions = {
 				}
 			}
 		}
+		target_array = is_china_or_warlord
+		targets_dynamic = yes
 		target_trigger = {
 			FROM = {
 				is_subject = yes
-				is_china_or_warlord_no_tt = yes
+				is_china_or_warlord = yes
 			}
 		}
 		target_root_trigger = {
