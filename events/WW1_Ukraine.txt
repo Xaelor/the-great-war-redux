@@ -16,6 +16,7 @@ country_event = {
 		UKR = {
 			has_character = UKR_pavlo_skoropadskyi
 		}
+		has_global_flag = RUS_surrender
 		has_global_flag = ukr_ger_bread_peace 
 	 	NOT = {
 			has_war_with = RUS
@@ -46,57 +47,6 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_ukraine.2.a
-		every_state = {
-			limit = {
-				OR = {
-					is_claimed_by = UKR
-					is_core_of = UKR
-				}
-				OR = {
-					is_owned_by = RUS
-					is_owned_by = SOV
-					is_owned_by = BLR
-					is_owned_by = BRS
-					# is_owned_by = POL
-					is_owned_by = GER
-				}
-				NOT = {
-					state = 237
-					state = 1270
-					# state = 766
-				}
-			}
-			if = {
-				limit = {
-					UKR = { has_war_with = DKR }
-					is_owned_by = SOV
-					region = 40
-				}
-				transfer_state_to = DKR
-			}
-			else_if = {
-				limit = {
-					UKR = { has_war_with = USR }
-					is_owned_by = SOV
-				}
-				transfer_state_to = USR
-			}
-			else = {
-				transfer_state_to = UKR
-			}		
-			if = {
-				limit = { 
-					OR = {
-						is_core_of = BLR
-						is_core_of = POL
-						is_core_of = UKR
-					}		
-				}		
-				remove_russian_cores = yes
-			}
-			remove_claim_by = GER
-			remove_russian_claims = yes
-		}
 		UKR = {
 			set_politics = {
 				ruling_party = neutrality
@@ -224,14 +174,7 @@ country_event = {
 	}
 	option = {
 		name = ww1_ukraine.4.a
-		GER = { end_puppet = UKR }
-		if = {
-			limit = {
-				is_in_faction_with = GER
-				is_subject = no
-			}
-			leave_faction = yes
-		}
+		free_subject_leave_faction = yes
 		set_politics = {
 			ruling_party = democratic
 			long_name = UKR_directory_party
@@ -244,7 +187,6 @@ country_event = {
 		}
     	drop_cosmetic_tag = yes
     	clr_country_flag = ukrainian_hetmanate
-		clr_country_flag = protectorate
 		clr_country_flag = released_by_germany
 		if = {
 			limit = { has_idea = GER_idea_german_military_advisors }
@@ -418,6 +360,7 @@ country_event = {
 						is_core_of = ROOT
 						is_claimed_by = ROOT
 						state = 94
+						state = 1300
 						state = 194
 						state = 241
 						state = 808

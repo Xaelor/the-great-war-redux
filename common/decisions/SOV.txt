@@ -626,7 +626,7 @@ VLN_anarchy_decisions = {
 	}
 }
 
-peace_deals = {
+TGWR_great_power_politics = {
 	SOV_sue_for_peace_POL = {
 		icon = GFX_decision_eng_trade_unions_support
 		allowed = {
@@ -634,6 +634,7 @@ peace_deals = {
 		}
 		visible = {
 			tag = SOV
+			great_power_politics_empire_of_the_periphery_visible = yes
 		}
 		target_trigger = {
 			FROM = {
@@ -697,6 +698,7 @@ peace_deals = {
 		}
 		visible = {
 			tag = SOV
+			great_power_politics_empire_of_the_periphery_visible = yes
 		}
 		target_trigger = {
 			FROM = {
@@ -743,6 +745,7 @@ peace_deals = {
 		}
 		visible = {
 			tag = SOV
+			great_power_politics_empire_of_the_periphery_visible = yes
 		}
 		targets = {
 			VLN
@@ -784,6 +787,7 @@ peace_deals = {
 		}
 		visible = {
 			tag = SOV
+			great_power_politics_empire_of_the_periphery_visible = yes
 		}
 		targets = {
 			EST
@@ -915,6 +919,7 @@ peace_deals = {
 		}
 		visible = {
 			tag = SOV
+			great_power_politics_empire_of_the_periphery_visible = yes
 		}
 		targets = {
 			LAT
@@ -1050,6 +1055,7 @@ peace_deals = {
 		}
 		visible = {
 			tag = SOV
+			great_power_politics_empire_of_the_periphery_visible = yes
 		}
 		targets = {
 			LIT
@@ -1178,6 +1184,7 @@ peace_deals = {
 			is_russian_tag_no_tt = yes
 		}
 		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
 			has_global_flag = chinese_eastern_railway_incident
 			NOT = {
 				has_global_flag = khabarovsk_protocol
@@ -1255,6 +1262,7 @@ peace_deals = {
 		}
 		visible = {
 			tag = SOV
+			great_power_politics_empire_of_the_periphery_visible = yes
 			is_subject = no
 		}
 		available = {
@@ -1305,7 +1313,7 @@ peace_deals = {
 				FROM = {
 					set_autonomy = {
 						target = PREV
-						autonomy_state = autonomy_tgwr_informal_protectorate
+						autonomy_state = autonomy_tgwr_protected_state
 					}
 				}
 				if = {
@@ -1363,7 +1371,7 @@ peace_deals = {
 				FROM = {
 					set_autonomy = {
 						target = PREV
-						autonomy_state = autonomy_tgwr_informal_protectorate
+						autonomy_state = autonomy_tgwr_protected_state
 					}
 				}
 				restore_previous_government_type = yes
@@ -1412,72 +1420,6 @@ peace_deals = {
 	}
 }
 
-crisis = {
-	# SOV_german_offensive_mission = {
-	# 	icon = generic_ignite_civil_war		
-	# 	allowed = {
-	# 		original_tag = RUS 
-	# 	}
-	# 	visible = {
-	# 		tag = SOV
-	# 		any_other_country = {
-	# 			original_tag = RUS
-	# 			has_war_with = RUS
-	# 		}
-	# 		GER = { has_war_with = RUS }
-	# 	}		
-	# 	available = {
-	# 		OR = {
-	# 			has_war_with = GER
-	# 			has_completed_focus = SOV_decree_on_peace
-	# 			has_global_flag = GER_capitulation
-	# 		}
-	# 	}		
-	# 	activation = {
-	# 		tag = SOV
-	# 		any_other_country = {
-	# 			original_tag = RUS
-	# 			has_war_with = RUS
-	# 		}
-	# 		GER = { has_war_with = RUS }
-	# 	}		
-	# 	timeout_effect = {
-	# 		GER = { country_event = { id = ww1_brest_litovsk.6 } }
-	# 	}		
-	# 	fire_only_once = yes
-	# 	days_mission_timeout = 210
-	# 	is_good = no
-	# }
-	# GER_german_offensive_mission = {	
-	# 	icon = generic_ignite_civil_war		
-	# 	allowed = {
-	# 		original_tag = GER
-	# 	}
-	# 	visible = {
-	# 		original_tag = GER
-	# 		has_war_with = RUS
-	# 		ROOT = { has_war_with = RUS }
-	# 	}		
-	# 	available = {
-	# 		OR = {
-	# 			has_war_with = ROOT
-	# 			NOT = { has_war_with = FRA }
-	# 			ROOT = { has_completed_focus = SOV_decree_on_peace }
-	# 			has_global_flag = russia_ask_for_brest_litovsk
-	# 		}
-	# 	}
-	# 	activation = {
-	# 		has_war_with = RUS
-	# 		ROOT = { has_war_with = RUS }
-	# 	}	
-	# 	timeout_effect = {
-	# 		custom_effect_tooltip = GER_german_offensive_mission_tt
-	# 	}		
-	# 	fire_only_once = yes
-	# 	days_mission_timeout = 210
-	# 	is_good = yes
-	# }
-}
 SOV_combat_the_counter_revolution = {
 	SOV_overthrow_CER_administration = {
 		icon = GFX_decision_SOV_secure_the_administration
@@ -1723,17 +1665,11 @@ SOV_combat_the_counter_revolution = {
 	}
 	SOV_soviet_stavrapol = {
 		icon = GFX_decision_SOV_secure_the_administration
+		allowed = {
+			always = no
+		}
 		activation = {
-			has_completed_focus = SOV_combat_the_counter_revolution
-			is_subject = no
-			has_government = communism
-			NOT = {
-				any_country_with_original_tag = {
-					original_tag_to_check = RUS
-					has_country_flag = RUS_stavropol_tag
-				}
-			}
-			owns_state = 235
+			always = no
 		}
 		available = {
 			OR = {
@@ -1765,13 +1701,16 @@ SOV_combat_the_counter_revolution = {
 							RCW_ROOT_release_PREV = yes
 						}
 					}
-					load_focus_tree = empty_focus
+					load_focus_tree = generic_focus
 					if = {
 						limit = { ROOT = { has_idea = RUS_demobilizing_army }}
 						country_lock_all_division_template = yes 
 					}
 					ROOT = {
-						puppet = PREV
+						set_autonomy = {
+							target = PREV
+							autonomy_state = autonomy_tgwr_assr
+						}
 					}
 					set_politics = {
 						ruling_party = communism
@@ -1912,16 +1851,11 @@ SOV_combat_the_counter_revolution = {
 	# }
 	SOV_soviet_abkhazia = {
 		icon = GFX_decision_SOV_secure_the_administration
+		allowed = {
+			always = no
+		}
 		activation = {
-			has_completed_focus = SOV_combat_the_counter_revolution
-			is_subject = no
-			has_government = communism
-			ABK = {
-				exists = yes
-				NOT = {
-					has_government = communism
-				}
-			}
+			always = no
 		}
 		available = {
 			OR = {
@@ -2021,10 +1955,11 @@ SOV_decision_soviet_republics = {
 							limit = {
 								has_subject = USR
 							}
-							puppet = {
+							set_autonomy = {
 								target = PREV
+								autonomy_state = autonomy_tgwr_ssr
 								end_wars = no
-								end_civil_wars  = no
+								end_civil_wars = no
 							}
 						}
 						else_if = {
@@ -2036,10 +1971,11 @@ SOV_decision_soviet_republics = {
 								}
 							}
 							USR = {
-								puppet = {
+								set_autonomy = {
 									target = PREV.PREV
+									autonomy_state = autonomy_tgwr_ssr
 									end_wars = no
-									end_civil_wars  = no
+									end_civil_wars = no
 								}
 							}
 						}
@@ -2108,14 +2044,86 @@ SOV_decision_soviet_republics = {
 			}	
 		}
 	}
+	# SOV_soviet_kazan = {
+	# 	icon = GFX_decision_SOV_secure_the_administration
+	# 	allowed = {
+	# 		always = no
+	# 	}
+	# 	activation = {
+	# 		always = no
+	# 	}
+	# 	available = {
+	# 		OR = {
+	# 			NOT = {
+	# 				has_government = communism
+	# 				owns_state = 249
+	# 			}
+	# 			is_subject = yes
+	# 			country_exists = TAT
+	# 		}			
+	# 	}
+	# 	ai_will_do = {
+	# 		base = 200
+	# 	}
+	# 	is_good = yes
+	# 	days_mission_timeout = 23
+	# 	fire_only_once = yes
+	# 	timeout_effect = {
+	# 		249 = {
+	# 			TAT = {
+	# 				RCW_ROOT_release_PREV = yes
+	# 			}			
+	# 		}
+	# 		TAT = {
+	# 			ROOT = {
+	# 				puppet = PREV
+	# 			}
+	# 			set_politics = {
+	# 				ruling_party = communism
+	# 			}
+	# 			set_cosmetic_tag = TAT_kazan_communism		
+	# 			hidden_effect = {
+	# 				set_popularities = {
+	# 					communism = 69
+	# 					democratic = 31
+	# 				}
+	# 				copy_SOV_army_idea = yes
+	# 				set_country_flag = dont_trigger_political_event
+	# 				if = {
+	# 					limit = { ROOT = { has_idea = RUS_demobilizing_army }}
+	# 					country_lock_all_division_template = yes 
+	# 				}
+	# 				division_template = {
+	# 					name = "Krasnaya Gvardiya"
+	# 					template_counter = 69
+	# 					division_names_group = RUS_MIL_01
+	# 					regiments = {
+	# 						militia = { x = 0 y = 0 }
+	# 						militia = { x = 0 y = 1 }
+	# 						militia = { x = 1 y = 0 }
+	# 					}
+	# 					division_cap = 3
+	# 				}
+	# 			}
+	# 			random_owned_state = {
+	# 				create_unit = {
+	# 					division = "division_template = \"Krasnaya Gvardiya\" start_experience_factor = 0.1 start_equipment_factor = 0.5"
+	# 					owner = PREV
+	# 					count = 3
+	# 					prioritize_location = 6338
+	# 				}
+	# 				set_state_flag = SOV_has_mobilized_militia
+	# 			}
+	# 		}
+	# 	}
+	# }
 	SOV_soviet_amur = {
 		icon = GFX_decision_SOV_secure_the_administration
+		allowed = {
+			always = no
+		}
 		activation = {
-			has_completed_focus = SOV_soviet_republics
-			is_subject = no
-			has_government = communism
-			owns_state = 561
-			NOT = { country_exists = AMU }
+			always = no
 		}
 		available = {
 			OR = {
@@ -2141,7 +2149,10 @@ SOV_decision_soviet_republics = {
 			}
 			AMU = {
 				ROOT = {
-					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_tgwr_assr
+					}
 				}
 				set_politics = {
 					ruling_party = communism
@@ -2154,7 +2165,7 @@ SOV_decision_soviet_republics = {
 					}
 					copy_SOV_army_idea = yes
 					set_country_flag = dont_trigger_political_event
-					load_focus_tree = empty_focus
+					load_focus_tree = generic_focus
 					if = {
 						limit = { ROOT = { has_idea = RUS_demobilizing_army }}
 						country_lock_all_division_template = yes 
@@ -2198,12 +2209,11 @@ SOV_decision_soviet_republics = {
 	}
 	SOV_soviet_terek = {
 		icon = GFX_decision_SOV_secure_the_administration
+		allowed = {
+			always = no
+		}
 		activation = {
-			has_completed_focus = SOV_soviet_republics
-			is_subject = no
-			has_government = communism
-			NOT = { country_exists = TER }
-			owns_state = 232
+			always = no
 		}
 		available = {
 			OR = {
@@ -2235,7 +2245,10 @@ SOV_decision_soviet_republics = {
 			}
 			TER = {
 				ROOT = {
-					puppet = PREV
+					set_autonomy = {
+						target = PREV
+						autonomy_state = autonomy_tgwr_assr
+					}
 				}
 				hidden_effect = {
 					retire_character = TER_mikhail_karaulov
@@ -2250,7 +2263,7 @@ SOV_decision_soviet_republics = {
 					}
 					copy_SOV_army_idea = yes
 					set_country_flag = dont_trigger_political_event
-					load_focus_tree = empty_focus
+					load_focus_tree = generic_focus
 					if = {
 						limit = { ROOT = { has_idea = RUS_demobilizing_army }}
 						country_lock_all_division_template = yes 
@@ -2383,6 +2396,7 @@ SOV_decision_soviet_republics = {
 						state = 235
 						state = 579
 						state = 233
+						state = 1299
 						state = 940
 						state = 234
 						state = 941
@@ -2437,7 +2451,9 @@ SOV_decision_soviet_republics = {
 							is_core_of = ROOT
 						}
 					}
-					add_core_of = ROOT
+					ROOT = {
+						RCW_core_state_PREV = yes
+					}
 				}
 				every_core_state = {
 					limit = {
@@ -2464,15 +2480,13 @@ SOV_decision_soviet_republics = {
 		icon = GFX_decision_SOV_secure_the_administration
 		available = {
 			has_completed_focus = SOV_soviet_republics
-			any_state = {
-				is_core_of = KAZ
-				NOT = {is_core_of = ROOT}
-				is_fully_controlled_by = ROOT
-    		}
-			OR = {
-				has_government = democratic
-				has_government = communism
+			KAZ = {
+				any_core_state = {
+					NOT = {is_core_of = ROOT}
+					is_fully_controlled_by = ROOT
+				}
 			}
+			has_government = communism
 		}
 		visible = {
 			has_country_flag = czechoslovak_revolt
@@ -2499,18 +2513,14 @@ SOV_decision_soviet_republics = {
 	SOV_soviet_belarus_mssion = {
 		name = SOV_soviet_belarus
 		icon = GFX_decision_SOV_secure_the_administration
+		allowed = {
+			always = no
+		}
 		activation = {
-			has_completed_focus = SOV_soviet_republics
-			is_subject = no
-			has_government = communism
-			OR = {
-				owns_state = 242
-				owns_state = 206
-			}
-			NOT = { country_exists = BRS }
+			always = no
 		}
 		available = {
-			has_global_flag = brest_litovsk_finished
+			has_global_flag = RUS_surrender
 			GER = { has_country_flag = great_war_loser }
 			owns_state = 206
 		}
@@ -2531,23 +2541,127 @@ SOV_decision_soviet_republics = {
 		days_mission_timeout = 329
 		fire_only_once = yes
 		complete_effect = {
-			hidden_effect = {
-				BLR = {
-					BLR_aliaksandr_carviakou = {
-						set_nationality = BRS
-						promote_character = vanguardism
-					}
-					BLR_zmicier_zylunovic = {
-						set_nationality = BRS
-						promote_character = vanguardism
+			create_BRS = yes
+		}
+		timeout_effect = {
+			create_BRS = yes
+		}
+	}
+
+	SOV_soviet_belarus = {
+		icon = GFX_decision_SOV_secure_the_administration
+		allowed = {
+			original_tag = RUS
+		}
+		available = {
+			is_subject = no
+			has_government = communism
+			if = {
+				limit = {
+					country_exists = BPR
+				}
+				BPR = {
+					has_capitulated = no
+					has_civil_war = no
+					OR = {
+						is_neighbor_of_subject = yes
+						is_neighbor_of = BRS
+					}					
+				}
+			}
+			if = {
+				limit = {
+					BRS = {
+						exists = yes
+						NOT = {
+							is_subject_of = ROOT
+						}
 					}
 				}
-				every_state = {
-					limit = { is_core_of = BPR }
-					add_core_of = BRS
+				BRS = {
+					has_war_with = ROOT
 				}
-				every_owned_state = {
-					limit = {
+			}
+			else_if = {
+				limit = { 
+					BRS = { exists = no }
+				}
+				any_owned_state = {
+					OR = {
+						region = 131
+						state = 1015
+					}
+					NOT = {
+						state = 189
+						state = 748
+						state = 96
+						state = 1232
+					}
+				}
+			}		
+		}
+		visible = {
+			has_completed_focus = SOV_soviet_republics
+			NOT = { has_active_mission = SOV_soviet_belarus_mssion }
+			OR = {
+				any_owned_state = {
+					is_core_of = BLR
+				}
+				any_country_with_original_tag = {
+					original_tag_to_check = BLR
+					NOT = {
+						is_subject_of = ROOT
+					}
+					exists = yes
+				}
+			}		
+			OR = {
+				has_global_flag = RUS_surrender
+				has_global_flag = great_war_ends
+			}	
+		}
+		cost = 25
+		fire_only_once = yes
+		ai_will_do = {
+			base = 200
+			modifier = {
+				factor = 0
+				BPR = {
+					exists = yes
+					OR = {
+						is_in_faction = yes
+						is_subject = yes
+					}
+				}
+			}
+			modifier = {
+				add = 1000
+				POL = {
+					has_war_with = BPR
+					NOT = { is_in_faction_with = ROOT }
+				}
+			}
+		}
+		complete_effect = {
+			if = {
+				limit = {
+					BRS = {
+						exists = yes
+						NOT = {
+							has_war_with = ROOT
+							is_subject_of = ROOT
+						}
+					}				
+				}
+				set_autonomy = {
+					target = BRS
+					autonomy_state = autonomy_tgwr_ssr
+				}
+			}
+			else_if = {
+				limit = {
+					BRS = { exists = no }
+					any_owned_state = {
 						OR = {
 							region = 131
 							state = 1015
@@ -2557,393 +2671,35 @@ SOV_decision_soviet_republics = {
 							state = 748
 							state = 96
 							state = 1232
-						}					
-					}
-					add_core_of = BRS
-					BRS = {
-						safe_transfer_state_to = yes
+						}
 					}
 				}
-				BRS = {
-					ROOT = {
-						puppet = PREV
-					}
-					set_politics = {
-						ruling_party = communism
-					}
-					copy_SOV_army_idea = yes
-					if = {
-						limit = { ROOT = { has_idea = RUS_demobilizing_army }}
-						country_lock_all_division_template = yes 
-					}
-					if = {
-						limit = { 
-							#NOT = { controls_state = 206 }
-							owns_state = 242
-						}
-						set_capital = { state = 242 }
-					}
-					inherit_technology = RUS
-					delete_obsolete_russian_templates = yes
-					division_template = {
-						name = "Krasnaya Gvardiya"
-						template_counter = 69
-						regiments = {
-							militia = { x = 0 y = 0 }
-							militia = { x = 0 y = 1 }
-							militia = { x = 1 y = 0 }
-						}
-						priority = 0
-						division_cap = 10
-					}
-					capital_scope = {				
-						create_unit = {
-							division = "division_template = \"Krasnaya Gvardiya\" start_experience_factor = 0.1 start_equipment_factor = 0.5"
-							owner = PREV
-							count = 4
-							allow_spawning_on_enemy_provs = yes
-						}
-						set_state_flag = SOV_has_mobilized_militia
-					}
-					set_cosmetic_tag = BLR_vanguardist
-					set_popularities = {
-						neutrality = 2
-						democratic = 25
-						communism = 73
-					}
-				}
-				capital_scope = {				
-					create_unit = {
-						division = "division_template = \"Krasnaya Gvardiya\" start_experience_factor = 0.1 start_equipment_factor = 0.5"
-						owner = PREV
-						count = 4
-					}
-					set_state_flag = SOV_has_mobilized_militia
-				}
+				create_BRS = yes
 			}
-		}
-		timeout_effect = {
-			hidden_effect = {
-				every_state = {
-					limit = { is_core_of = BPR }
-					add_core_of = BRS
-				}
-				BLR = {
-					BLR_aliaksandr_carviakou = {
-						set_nationality = BRS
-						promote_character = vanguardism
-					}
-					BLR_zmicier_zylunovic = {
-						set_nationality = BRS
-						promote_character = vanguardism
-					}
-				}
-			}
-			every_owned_state = {
+			if = {
 				limit = {
-					OR = {
-						region = 131
-						state = 1015
-					}
-					NOT = {
-						state = 189
-						state = 748
-						state = 96
-						state = 1232
-					}					
+					country_exists = BPR
 				}
-				add_core_of = BRS
-				BRS = {
-					safe_transfer_state_to = yes
-				}
-			}
-			BRS = {
-				ROOT = {
-					puppet = PREV
-				}
-				hidden_effect = {
-					set_politics = {
-						ruling_party = communism
-					}
-					copy_SOV_army_idea = yes
-					if = {
-						limit = { ROOT = { has_idea = RUS_demobilizing_army }}
-						country_lock_all_division_template = yes 
-					}
-					if = {
-						limit = { 
-							NOT = { controls_state = 206 }
-							owns_state = 242
-						}
-						set_capital = { state = 242 }
-					}
-					inherit_technology = RUS
-					delete_obsolete_russian_templates = yes
-					division_template = {
-						name = "Krasnaya Gvardiya"
-						template_counter = 69
-						regiments = {
-							militia = { x = 0 y = 0 }
-							militia = { x = 0 y = 1 }
-							militia = { x = 1 y = 0 }
-						}
-						priority = 0
-						division_cap = 10
-					}
-					capital_scope = {				
-						create_unit = {
-							division = "division_template = \"Krasnaya Gvardiya\" start_experience_factor = 0.1 start_equipment_factor = 0.5"
-							owner = PREV
-							count = 4
-							allow_spawning_on_enemy_provs = yes
-						}
-						set_state_flag = SOV_has_mobilized_militia
-					}
-					set_cosmetic_tag = BLR_vanguardist
-					set_popularities = {
-						neutrality = 2
-						democratic = 25
-						communism = 73
-					}
-				}
-				capital_scope = {				
-					create_unit = {
-						division = "division_template = \"Krasnaya Gvardiya\" start_experience_factor = 0.1 start_equipment_factor = 0.5"
-						owner = PREV
-						count = 4
-					}
-					set_state_flag = SOV_has_mobilized_militia
-				}
-			}
-		}
-	}
-
-	SOV_soviet_belarus = {
-		icon = GFX_decision_SOV_secure_the_administration
-		allowed = {
-			original_tag = RUS
-		}
-		target_root_trigger = {
-			has_completed_focus = SOV_soviet_republics
-		}
-		available = {
-			is_subject = no
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
-			has_global_flag = great_war_ends
-		}
-		visible = {
-			NOT = { country_exists = BLR }
-			any_owned_state = {
-				is_core_of = BLR
-			}
-			OR = {
-				NOT = {
-					has_war_with = GER
-				}
-				has_global_flag = great_war_ends
-			}	
-		}
-		target_trigger = {
-			FROM = {
-				is_subject = no
-			}
-		}
-		targets = {
-			BLR
-		}
-		cost = 25
-		ai_will_do = {
-			base = 200
-			modifier = {
-				factor = 1000
-				OR = {
-					has_war_with = LIT
-					has_war_with = LAT
-					has_war_with = EST
-					has_war_with = UKR
-				}
-			}
-		}
-		fire_only_once = yes
-		complete_effect = {
-			every_owned_state = {
-				limit = {
-					OR = {
-						region = 131
-						state = 1015
-					}
-					NOT = {
-						state = 189
-						state = 748
-						state = 96
-						state = 1232
-					}					
-				}
-				add_core_of = BLR
-				transfer_state_to = BLR
 				if = {
-					limit = { 
-						has_contested_owner = ROOT
+					limit = {
+						has_subject = BRS
 					}
-					remove_contested_owner = ROOT
-				}
-			}
-			puppet = BLR
-			hidden_effect = {
-				BLR = {
-					copy_SOV_army_idea = yes
-					division_template = {
-						name = "Krasnaya Gvardiya"
-						template_counter = 69
-						regiments = {
-							militia = { x = 0 y = 0 }
-							militia = { x = 0 y = 1 }
-							militia = { x = 1 y = 0 }
+					BRS = {
+						declare_war_on = {
+							target = BPR
+							type = civil_war
 						}
-						priority = 0
-						division_cap = 10
-					}
-					capital_scope = {				
-						create_unit = {
-							division = "division_template = \"Krasnaya Gvardiya\" start_experience_factor = 0.1 start_equipment_factor = 0.5"
-							owner = PREV
-							count = 4
-						}
-						set_state_flag = SOV_has_mobilized_militia
-					}
-					set_cosmetic_tag = SOV_puppet
-					set_popularities = {
-						neutrality = 2
-						democratic = 25
-						communism = 73
+						add_civil_war_target = BPR
 					}
 				}
-			}
+				else = {
+					declare_war_on = {
+						target = BPR
+						type = civil_war
+					}
+				}
+			}		
 		}
-		# icon = GFX_decision_SOV_secure_the_administration
-		# available = {
-		# 	has_completed_focus = SOV_soviet_republics
-		# 	is_subject = no
-		# 	FROM = {
-		# 		has_capitulated = no
-		# 		has_civil_war = no
-		# 		is_neighbor_of = ROOT
-		# 		# You can't just invade them ingnoring the Germans
-		# 		if = {
-		# 			limit = {
-		# 				has_global_flag = brest_litovsk_finished
-		# 				NOT = { has_government = communism }
-		# 			}
-		# 			GER = {
-		# 				OR = {
-		# 					exists = no
-		# 					has_government = communism
-		# 					has_country_flag = great_war_loser
-		# 				}
-		# 				NOT = { has_guaranteed = PREV }
-		# 			}
-		# 		}
-		# 	}
-		# 	OR = {
-		# 		has_government = democratic
-		# 		has_government = communism
-		# 	}
-		# }
-		# target_trigger = {
-		# 	FROM = {
-		# 		tag = BLR
-		# 		is_subject = no
-		# 	}
-		# }
-		# cost = 25
-		# ai_will_do = {
-		# 	base = 200
-		# 	modifier = {
-		# 		factor = 0
-		# 		FROM = {
-		# 			OR = {
-		# 				has_government = ROOT
-		# 				is_in_faction = no
-		# 			}
-		# 			NOT = {
-		# 				is_in_faction_with = ROOT
-		# 				has_war_with = POL
-		# 				GER = { has_country_flag = great_war_loser }
-		# 			}
-		# 			has_war = yes
-		# 		}
-		# 	}
-		# 	modifier = {
-		# 		add = 1000
-		# 		FROM = {
-		# 			POL = {
-		# 				has_war_with = PREV
-		# 				NOT = { is_in_faction_with = ROOT }
-		# 			}
-		# 		}
-		# 	}
-		# }
-		# fire_only_once = yes
-		# complete_effect = {
-		# 	if = {
-		# 		limit = {
-		# 			BLR = {
-		# 				OR = { 
-		# 					has_government = ROOT
-		# 					is_in_faction_with = ROOT
-		# 					is_in_faction = no
-		# 				} 
-		# 			}
-		# 		}
-		# 		puppet = BLR
-		# 		every_state = {
-		# 			limit = {
-		# 				is_owned_by = BLR
-		# 				is_core_of = ROOT
-		# 				NOT = {
-		# 					is_core_of = BLR
-		# 				}
-		# 			}
-		# 			transfer_state_to = ROOT
-		# 		}
-		# 		else = {
-		# 			BLR = {
-		# 				start_civil_war = { 
-		# 					ideology = ROOT 
-		# 					size = 0.45 
-		# 					states = {
-		# 						206
-		# 					}
-		# 					keep_unit_leaders_trigger = {
-		# 						always = yes
-		# 					}
-		# 				}
-		# 				random_other_country = {
-		# 					limit = {
-		# 						original_tag = BLR
-		# 						has_government = ROOT
-		# 					}
-		# 					ROOT = {
-		# 						puppet = PREV
-		# 						every_owned_state = {
-		# 							limit = {
-		# 								is_core_of = PREV
-		# 							}
-		# 							set_state_owner_to = PREV
-		# 						}
-		# 					}
-		# 					declare_war_on = {
-		# 						target = BLR
-		# 						type = civil_war
-		# 					}
-		# 				}
-		# 			}
-		# 		}
-		# 	}	
-		# }
 	}
 	SOV_rearanage_belarusian_borders = {
 		icon = GFX_decision_SOV_secure_the_administration
@@ -2957,10 +2713,7 @@ SOV_decision_soviet_republics = {
 			FROM = {
 				owns_state = 206
 			}
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 		}
 		visible = {
 			FROM = {
@@ -3054,16 +2807,11 @@ SOV_decision_soviet_republics = {
 				has_capitulated = no
 				NOT = { has_war_with = PREV }
 			}
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 		}
 		visible = {
 			OR = {
-				NOT = {
-					has_war_with = GER
-				}
+				has_global_flag = RUS_surrender
 				has_global_flag = great_war_ends
 			}
 			NOT = {
@@ -3154,8 +2902,9 @@ SOV_decision_soviet_republics = {
 					}
 					ROOT = {
 						take_all_subjects_PREV = yes
-						puppet = {
+						set_autonomy = {
 							target = PREV
+							autonomy_state = autonomy_tgwr_ssr
 							end_civil_wars = no
 							end_wars = no
 						}
@@ -3179,7 +2928,7 @@ SOV_decision_soviet_republics = {
 				}
 				set_autonomy = {
 					target = UKR
-					autonomy_state = autonomy_puppet
+					autonomy_state = autonomy_tgwr_ssr
 					end_civil_wars = no
 					end_wars = no
 				}
@@ -3284,10 +3033,10 @@ SOV_decision_soviet_republics = {
 		# }
 		cost = 25
 		ai_will_do = {
-			base = 200
+			base = 0
 			modifier = {
-				factor = 0
-				has_war_with = GER
+				add = 200
+				has_global_flag = RUS_surrender
 			}
 		}
 		fire_only_once = no
@@ -3388,10 +3137,7 @@ SOV_decision_soviet_republics = {
 				is_in_faction = no
 				has_capitulated = no
 			}
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}			
+			has_government = communism			
 			OR = {
 				is_neighbor_of = FROM
 				any_allied_country = {
@@ -3469,10 +3215,7 @@ SOV_decision_soviet_republics = {
 				has_civil_war = no
 			}
 			is_subject = no
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 			OR = {
 				is_neighbor_of = FROM
 				any_allied_country = {
@@ -3539,7 +3282,10 @@ SOV_decision_soviet_republics = {
 									}
 								}
 							}
-							puppet = FROM
+							set_autonomy = {
+								target = FROM
+								autonomy_state = autonomy_tgwr_ssr
+							}
 						}
 						else = {
 							annex_country = {
@@ -3567,10 +3313,7 @@ SOV_decision_soviet_republics = {
 				is_in_faction = no
 			}
 			is_subject = no
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 			OR = {
 				is_neighbor_of = FROM
 				any_allied_country = {
@@ -3618,11 +3361,10 @@ SOV_decision_soviet_republics = {
 					}
 					set_autonomy = {
 						target = BAK
-						autonomy_state = autonomy_puppet
+						autonomy_state = autonomy_tgwr_milrevcom
 						end_wars = yes
 						end_civil_wars = no
 					}
-					puppet = BAK
 					add_to_war = {
 						targeted_alliance = BAK
 						enemy = FROM
@@ -3644,7 +3386,7 @@ SOV_decision_soviet_republics = {
 				}
 				set_autonomy = {
 					target = FROM
-					autonomy_state = autonomy_puppet
+					autonomy_state = autonomy_tgwr_milrevcom
 					end_wars = yes
 					end_civil_wars = no
 				}
@@ -3684,10 +3426,7 @@ SOV_decision_soviet_republics = {
 				}
 			}
 			is_subject = no
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 			OR = {
 				is_neighbor_of = FROM
 				any_allied_country = {
@@ -3722,10 +3461,12 @@ SOV_decision_soviet_republics = {
 			base = 0
 			modifier = {
 				add = 100
-				any_state = {
-					is_controlled_by_ROOT_or_subject = yes
-					controller = {
-						is_neighbor_of = FROM
+				FROM = {
+					any_neighbor_country = {
+						OR = {
+							tag = ROOT
+							is_ally_with = ROOT
+						}
 					}
 				}
 			}
@@ -3773,10 +3514,7 @@ SOV_decision_soviet_republics = {
 				}
 				has_subject = KAZ
 			}	
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 			NOT = {
 				has_war_with = SIB
 			}
@@ -3809,8 +3547,9 @@ SOV_decision_soviet_republics = {
 							is_ai = yes
 						}					
 					}
-					ROOT = {
-						puppet = KHI
+					set_autonomy = {
+						target = KHI
+						autonomy_state = autonomy_tgwr_ssr
 					}
 					else = {
 						KHI = {country_event = { id = generic.20 days = 1}}
@@ -3865,10 +3604,7 @@ SOV_decision_soviet_republics = {
                 has_capitulated = no
 				has_civil_war = no
 			}
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 			NOT = {
 				has_war_with = SIB
 			}
@@ -3937,8 +3673,9 @@ SOV_decision_soviet_republics = {
 						has_government = ROOT
 					}
 					ROOT = {
-						puppet = {
-							target = PREV
+						set_autonomy = {
+							target = BUK
+							autonomy_state = autonomy_tgwr_ssr
 							end_civil_wars = no
 							end_wars = no
 						}
@@ -3956,8 +3693,11 @@ SOV_decision_soviet_republics = {
 						BUK = { is_in_faction_with = ROOT }
 					}
 				}
-				ROOT = {
-					puppet = BUK
+				set_autonomy = {
+					target = BUK
+					autonomy_state = autonomy_tgwr_ssr
+					end_civil_wars = no
+					end_wars = no
 				}
 			}
 			hidden_effect = {
@@ -3990,16 +3730,11 @@ SOV_decision_soviet_republics = {
 				has_capitulated = no
 				has_civil_war = no
 			}
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 		}
 		visible = {
 			OR = {
-				NOT = {
-					has_war_with = GER
-				}
+				has_global_flag = RUS_surrender
 				has_global_flag = great_war_ends
 			}	
 		}		
@@ -4056,7 +3791,10 @@ SOV_decision_soviet_republics = {
 				}
 			}
 			else = {
-				puppet = LAT
+				set_autonomy = {
+					target = LAT
+					autonomy_state = autonomy_tgwr_ssr
+				}
 			}
 		}
 	}
@@ -4074,16 +3812,11 @@ SOV_decision_soviet_republics = {
 				has_capitulated = no
 				has_civil_war = no
 			}
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 		}
 		visible = {
 			OR = {
-				NOT = {
-					has_war_with = GER
-				}
+				has_global_flag = RUS_surrender
 				has_global_flag = great_war_ends
 			}	
 		}
@@ -4128,7 +3861,10 @@ SOV_decision_soviet_republics = {
 					}
 				}
 				ROOT = {
-					puppet = LIT
+					set_autonomy = {
+						target = LIT
+						autonomy_state = autonomy_tgwr_ssr
+					}
 					LIT = {
 						set_party_name = { 
 							ideology = communism 
@@ -4154,16 +3890,11 @@ SOV_decision_soviet_republics = {
 				has_capitulated = no
 				has_civil_war = no
 			}
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 		}
 		visible = {
 			OR = {
-				NOT = {
-					has_war_with = GER
-				}
+				has_global_flag = RUS_surrender
 				has_global_flag = great_war_ends
 			}	
 		}
@@ -4207,8 +3938,9 @@ SOV_decision_soviet_republics = {
 						EST = { is_in_faction_with = ROOT }
 					}
 				}
-				ROOT = {
-					puppet = EST
+				set_autonomy = {
+					target = EST
+					autonomy_state = autonomy_tgwr_ssr
 				}
 			}
 		}
@@ -4262,6 +3994,15 @@ SOV_decision_soviet_republics = {
 						}
 					}
 				}
+				1301 = {
+					OR = {
+						is_owned_and_controlled_by = ROOT
+						OWNER = {
+							is_subject_of = ROOT
+							has_full_control_of_state = PREV
+						}
+					}
+				}
 				206 = {
 					OR = {
 						is_owned_and_controlled_by = ROOT
@@ -4307,10 +4048,7 @@ SOV_decision_soviet_republics = {
 			has_completed_focus = SOV_soviet_republics
 			has_completed_focus = SOV_bring_revolution_to_europe
 			is_subject = no
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 			LIT = {
 				OR = {
 					AND = {
@@ -4516,10 +4254,7 @@ SOV_decision_soviet_republics = {
 		visible = {
 			has_completed_focus = SOV_soviet_republics
 			is_subject = no
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 			CAU = {
 				OR = {
 					is_subject_of = ROOT
@@ -4586,17 +4321,15 @@ SOV_decision_soviet_republics = {
 			has_completed_focus = SOV_soviet_republics
 		}
 		visible = {
-			has_global_flag = brest_litovsk_finished
+			has_global_flag = RUS_surrender
 			GER = {
+				has_country_flag = great_war_loser
 				NOT = {
 					has_war_with = ROOT
 				}
 			}
 			is_subject = no
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 		}
 		target_trigger = {
 			FROM = {
@@ -4629,7 +4362,10 @@ SOV_decision_soviet_republics = {
 						}
 					}
 				}
-				puppet = FROM
+				set_autonomy = {
+					target = CRI
+					autonomy_state = autonomy_tgwr_assr
+				}
 			}
 			else = {
 				declare_war_on = {
@@ -4652,10 +4388,7 @@ SOV_decision_soviet_republics = {
 			FROM = {
 				has_civil_war = no
 			}
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 			OR = {
 				is_neighbor_of = FROM
 				any_allied_country = {
@@ -4773,10 +4506,7 @@ SOV_decision_soviet_republics = {
 		}
 		available = {
 			is_neighbor_of = FROM
-			OR = {
-				has_government = democratic
-				has_government = communism
-			}
+			has_government = communism
 		}
 		visible = {
 			FROM = {		
@@ -5112,7 +4842,7 @@ SOV_red_terror_category = {
 		}
 	}
 }
-foreign_politics = {
+TGWR_great_power_politics = {
 	SOV_play_makhnovshchina = {
 		icon = GFX_decision_generic_prepare_civil_war
         allowed = {
@@ -5125,6 +4855,7 @@ foreign_politics = {
 			VLN
 		}	
 		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
 			OR = {
 				original_tag = UKR
 				tag = SOV
@@ -5140,7 +4871,7 @@ foreign_politics = {
 		}
 	}
 }
-operations = {
+TGWR_great_power_politics = {
 	SOV_estonian_offensive_mission = {
 		icon = revolt
 		allowed = {
@@ -5150,6 +4881,7 @@ operations = {
 			}
 		}
 		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
 			OR = {
 				tag = SOV
 				original_tag = EST
@@ -5231,6 +4963,7 @@ operations = {
 			}
 		}
 		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
 			OR = {
 				tag = SOV 
 				original_tag = LAT
@@ -5407,6 +5140,7 @@ operations = {
 			}
 		}
 		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
 			OR = {
 				tag = SOV
 				original_tag = LIT

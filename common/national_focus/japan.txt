@@ -8,9 +8,6 @@ focus_tree = {
 			tag = JAP
 		}
 	}
-	shared_focus = early_industrialization
-	shared_focus = naval_experience
-	shared_focus = state_of_the_country_army
 	###########################################################################################################################
 	# POLITICAL
 	###########################################################################################################################
@@ -588,9 +585,11 @@ focus_tree = {
 			focus = JAP_ww1_assert_position_pacific
 		}
 		available = {
-			any_state = {
-				is_core_of = PHI
-				is_owned_by = USA
+			USA = {
+				any_owned_state = {
+					is_core_of = PHI
+					has_resistance = yes
+				}
 			}
 		}
 		bypass = {
@@ -601,16 +600,16 @@ focus_tree = {
 				country_exists = PHI
 			}		
 		}
-		completion_reward = {
-			every_state = {
-				limit = {
-					is_core_of = PHI
-					is_owned_by = USA
-				}
-				add_resistance = 30
-				add_compliance = -30
-			}
+		completion_reward = {		
 			USA = {
+				every_owned_state = {
+					limit = {
+						is_core_of = PHI
+						has_resistance = yes
+					}
+					add_resistance = 30
+					add_compliance = -30
+				}
 				add_opinion_modifier = {
 					target = PREV
 					modifier = HOI4TGW_Opinion_hostile_diplomatic_relations
@@ -839,6 +838,10 @@ focus_tree = {
 		}
 		bypass = {
 			has_railway_connection = {
+				start_province = 6110
+				target_province = 11835
+			}
+			has_railway_connection = {
 				start_province = 7125
 				target_province = 848
 			}
@@ -848,6 +851,24 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					NOT = {
+						has_railway_connection = {
+							start_province = 6110
+							target_province = 11835
+						}
+					}
+				}
+				build_railway = {
+					path = { 6110 11835 }
+					start_province = 6110
+					target_province = 11835
+					level = 3
+					build_only_on_allied = yes
+					fallback = no
+				}
+			}
 			if = {
 				limit = {
 					NOT = {
@@ -1355,13 +1376,8 @@ focus_tree = {
 		}
 		icon = GFX_focus_attack_britain
 		available = {
-			any_state = {
-				OR = {
-					state = 333
-					state = 336
-					state = 896
-					state = 897
-				}
+			any_state_of = {
+				target = { 333 336 896 897 }
 				owns_or_subject_of = no
 			}
 		}
@@ -2253,7 +2269,7 @@ focus_tree = {
 				}
 				set_autonomy = {
 					target = event_target:JAP_manchukuo
-					autonomy_state = autonomy_wtt_imperial_protectorate
+					autonomy_state = autonomy_tgwr_protected_state
 				}
 				every_subject_country = {
 					limit = {

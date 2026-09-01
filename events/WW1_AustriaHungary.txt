@@ -547,37 +547,6 @@ country_event = {
 		hidden_effect = {
 			set_country_flag = collapse_of_austria_hungary_POL
 			AUH_release_POL = yes
-			if = {
-				limit = {
-					NOT = {
-						country_exists = UKR
-					}	
-					RUS = {
-						OR = {
-							has_war_with = ROOT
-							has_war_with = GER
-							has_war_with = FRA
-							has_country_flag = great_war_winner
-						}
-						has_completed_focus = RUS_unite_ruthenia
-						is_subject = no
-						has_capitulated = no
-						NOT = {
-							has_country_flag = great_war_loser
-							has_global_flag = october_revolution
-							has_global_flag = RUS_surrender_alone
-						}
-					}
-				}
-				RUS = {
-					annex_country = {
-						target = WUK
-					}
-					annex_country = {
-						target = GAL
-					}
-				}
-			}
 		}
 	}
 	option = {
@@ -660,33 +629,14 @@ country_event = {
 					set_country_flag = you_can_save_austria
 				}
 			}
-			#annexing liquidation comission of poland (GAL)
-			if = {
-				limit = {
-					country_exists = POL
-					88 = {
-						is_core_of = POL
-					}
-					90 = {
-						is_owned_and_controlled_by = POL
-					}
-				}
-				POL = {
-					annex_country = {
-						target = GAL
-						transfer_troops = yes
-					}
-				}
-			}
 			if = {
 				limit = {
 					HUN = {
 						is_subject_of = AUS
 					}
 				}
-				set_autonomy = {
-					target = HUN
-					autonomous_state = autonomy_free
+				HUN = {
+					free_subject = yes
 				}
 			}
 			if = {
@@ -709,10 +659,7 @@ country_event = {
 					}
 				}
 			}
-		}
-		
-
-		
+		}	
 	}
 	option = {
 		name = ww1_auh.17.a
@@ -751,15 +698,25 @@ country_event = {
 			HUN = {
 				safe_transfer_state_to = yes
 			}
-		}	
-		every_owned_state = {
-			limit = {
-				is_core_of = ITA
+		}
+		if = {
+			limit = { 
+				ITA = {
+					NOT = {
+						has_country_flag = great_war_loser
+					}
+				}
+				has_italian_civil_war = no
 			}
-			ITA = {
-				safe_transfer_state_to = yes
-			}
-		}			
+			every_owned_state = {
+				limit = {
+					is_core_of = ITA
+				}
+				ITA = {
+					safe_transfer_state_to = yes
+				}
+			}			
+		}
 		every_state = {
 			limit = {
 				is_claimed_by = ROOT
@@ -964,7 +921,7 @@ country_event = {
 			VNC = { set_country_flag = monarchist_puppet }
 			set_autonomy = {
 				target = VNC
-				autonomous_state = autonomy_tgwr_governorate_general
+				autonomous_state = autonomy_tgwr_autonomous_governorate
 			}
 		}
 		hidden_effect = {
@@ -1040,136 +997,136 @@ country_event = {
 
 # OCCUPATION OF LOMBARDY AND VENETO
 #######################################
-country_event = {
-	id = ww1_auh.25
-	title = ww1_auh.25.t
-	desc = ww1_auh.25.d
-	fire_only_once = yes
-	mean_time_to_happen = {
-		days = 7
-	}
-	trigger = {
-		tag = AUS
-		has_global_flag = italian_civil_war
-		has_country_flag = great_war_winner
-		has_war = no
-		any_country_with_original_tag = {
-			original_tag_to_check = ITA
-			has_country_flag = ITA_socialist_italy_flag
-			has_war = yes
-			is_neighbor_of = PREV
-			NOT = {
-				has_war_with = PREV
-				is_in_faction_with = PREV
-			}
-			OR = {
-				owns_state = 160
-				owns_state = 1259
-				owns_state = 159
-			}
-		}
-	}
-	option = {
-		name = ww1_auh.25.a
-		ai_chance = {
-			base = 100
-		}
-		add_war_support = 0.02
-		add_political_power = -150
-		add_named_threat = {
-			threat = 2
-			name = ww1_auh.25.t
-		}
-		VNC = {
-			if = {
-				limit = {
-					is_subject_of = PREV
-				}
-				every_other_country = {
-					limit = {
-						original_tag = ITA
-						has_country_flag = ITA_socialist_italy_flag
-						has_war = yes
-						is_neighbor_of = PREV
-						NOT = {
-							has_war_with = PREV
-							is_in_faction_with = PREV
-						}
-						OR = {
-							owns_state = 160
-							owns_state = 1259
-							owns_state = 159
-						}
-					}
-					every_owned_state = {
-						limit = {
-							OR = {
-								state = 159
-								state = 160
-								state = 1259
-							}
-						}
-						transfer_state_to = PREV.PREV
-					}
-				}
-			}
-			else = {
-				PREV = {
-					every_other_country = {
-						limit = {
-							original_tag = ITA
-							has_country_flag = ITA_socialist_italy_flag
-							has_war = yes
-							is_neighbor_of = PREV
-							NOT = {
-								has_war_with = PREV
-								is_in_faction_with = PREV
-							}
-							OR = {
-								owns_state = 160
-								owns_state = 1259
-								owns_state = 159
-							}
-						}
-						every_owned_state = {
-							limit = {
-								OR = {
-									state = 159
-									state = 160
-									state = 1259
-								}
-							}
-							transfer_state_to = PREV.PREV
-						}
-					}
-				}
-			}
-		}
-		every_other_country = {
-			limit = {
-				OR = {
-					original_tag = ITA
-					original_tag = TTS
-					original_tag = SRD
-					original_tag = TUS
-					original_tag = EMI
-					original_tag = VNC
-					original_tag = PAP
-				}
-				NOT = {
-					is_ally_with = PREV
-				}
-			}
-			news_event = ww1_auh.26
-		}
-	}
-	option = {
-		name = ww1_auh.25.b
-		AUS = {
-			add_war_support = -0.02
-		}
-	}
-}
+#country_event = {
+#	id = ww1_auh.25
+#	title = ww1_auh.25.t
+#	desc = ww1_auh.25.d
+#	fire_only_once = yes
+#	mean_time_to_happen = {
+#		days = 7
+#	}
+#	trigger = {
+#		tag = AUS
+#		has_global_flag = italian_civil_war
+#		has_country_flag = great_war_winner
+#		has_war = no
+#		any_country_with_original_tag = {
+#			original_tag_to_check = ITA
+#			has_country_flag = ITA_socialist_italy_flag
+#			has_war = yes
+#			is_neighbor_of = PREV
+#			NOT = {
+#				has_war_with = PREV
+#				is_in_faction_with = PREV
+#			}
+#			OR = {
+#				owns_state = 160
+#				owns_state = 1259
+#				owns_state = 159
+#			}
+#		}
+#	}
+#	option = {
+#		name = ww1_auh.25.a
+#		ai_chance = {
+#			base = 100
+#		}
+#		add_war_support = 0.02
+#		add_political_power = -150
+#		add_named_threat = {
+#			threat = 2
+#			name = ww1_auh.25.t
+#		}
+#		VNC = {
+#			if = {
+#				limit = {
+#					is_subject_of = PREV
+#				}
+#				every_other_country = {
+#					limit = {
+#						original_tag = ITA
+#						has_country_flag = ITA_socialist_italy_flag
+#						has_war = yes
+#						is_neighbor_of = PREV
+#						NOT = {
+#							has_war_with = PREV
+#							is_in_faction_with = PREV
+#						}
+#						OR = {
+#							owns_state = 160
+#							owns_state = 1259
+#							owns_state = 159
+#						}
+#					}
+#					every_owned_state = {
+#						limit = {
+#							OR = {
+#								state = 159
+#								state = 160
+#								state = 1259
+#							}
+#						}
+#						transfer_state_to = PREV.PREV
+#					}
+#				}
+#			}
+#			else = {
+#				PREV = {
+#					every_other_country = {
+#						limit = {
+#							original_tag = ITA
+#							has_country_flag = ITA_socialist_italy_flag
+#							has_war = yes
+#							is_neighbor_of = PREV
+#							NOT = {
+#								has_war_with = PREV
+#								is_in_faction_with = PREV
+#							}
+#							OR = {
+#								owns_state = 160
+#								owns_state = 1259
+#								owns_state = 159
+#							}
+#						}
+#						every_owned_state = {
+#							limit = {
+#								OR = {
+#									state = 159
+#									state = 160
+#									state = 1259
+#								}
+#							}
+#							transfer_state_to = PREV.PREV
+#						}
+#					}
+#				}
+#			}
+#		}
+#		every_other_country = {
+#			limit = {
+#				OR = {
+#					original_tag = ITA
+#					original_tag = TTS
+#					original_tag = SRD
+#					original_tag = TUS
+#					original_tag = EMI
+#					original_tag = VNC
+#					original_tag = PAP
+#				}
+#				NOT = {
+#					is_ally_with = PREV
+#				}
+#			}
+#			news_event = ww1_auh.26
+#		}
+#	}
+#	option = {
+#		name = ww1_auh.25.b
+#		AUS = {
+#			add_war_support = -0.02
+#		}
+#	}
+#}
 
 # OCCUPATION OF LOMBARDY AND VENETO - ITALIAN REACTION
 #########################################################
@@ -1462,7 +1419,7 @@ country_event = {
 
 					set_autonomy = {
 						target = SRD
-						autonomous_state = autonomy_satellite
+						autonomous_state = autonomy_tgwr_client_state
 					}
 					SRD = {
 						set_politics = {
@@ -1480,7 +1437,7 @@ country_event = {
 					TTS = { get_current_government_type = yes }
 					set_autonomy = {
 						target = TTS
-						autonomous_state = autonomy_satellite
+						autonomous_state = autonomy_tgwr_client_state
 					}
 					TTS = { restore_previous_government_type = yes }
 
@@ -1931,7 +1888,7 @@ country_event = {
 				AUS = {
 					set_autonomy = {
 						target = GER
-						autonomous_state = autonomy_satellite
+						autonomous_state = autonomy_tgwr_client_state
 					}
 					add_ai_strategy = {
 						type = protect
@@ -2089,7 +2046,6 @@ country_event = {
 		original_tag = AUS
 		has_war = no
 		OR = {
-			has_cosmetic_tag = GER_confederation
 			has_cosmetic_tag = AUH_HRE
 		}
 		capital_scope = { state = 4 }
@@ -2512,15 +2468,8 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			release = HUN
-			AUS = {
-				set_autonomy ={
-					target = HUN
-					autonomous_state = autonomy_free
-				}
-			}
 			HUN = {
-				leave_faction = yes
-				clr_country_flag = monarchist_puppet
+				free_subject_leave_faction = yes
 				mark_focus_tree_layout_dirty = yes
 				set_cosmetic_tag = HUN_republic
 				set_country_flag = HUN_republic
@@ -2837,14 +2786,8 @@ country_event = {
 					autonomous_state = autonomy_free
 				}
 			}
-			AUS = {
-				release = CRO
-				set_autonomy = {
-					target = CRO
-					autonomous_state = autonomy_free
-				}
-			}
 			CRO = {
+				free_subject = yes
 				every_owned_state = {
 					if = {
 						limit = { 
@@ -2867,7 +2810,6 @@ country_event = {
 				transfer_state = 208
 				add_state_claim = 104
 				leave_faction = yes
-				clr_country_flag = monarchist_puppet
 				add_popularity = {
 					ideology = democratic
 					popularity = 0.20
@@ -3051,14 +2993,6 @@ country_event = {
 	}
 	option = {
 		name = ww1_auh.67.a
-		AUS = {
-			release = BOS
-			set_autonomy = {
-				target = BOS
-				autonomy_state = autonomy_free
-				end_wars = yes
-			}
-		}
 		BOS = {
 			clear_all_relations = yes
 			drop_cosmetic_tag = yes
@@ -6122,6 +6056,7 @@ country_event = {
 				is_core_of = MOL
 				NOT = {
 					state = 78
+					state = 1303
 					state = 79
 					state = 868
 				}
@@ -6343,7 +6278,7 @@ country_event = {
 		every_subject_country = {
 			limit = {
 				OR = {
-					has_autonomy_state = autonomy_tgwr_governorate_general
+					has_autonomy_state = autonomy_tgwr_autonomous_governorate
 					has_autonomy_state = autonomy_tgwr_real_union
 					has_autonomy_state = autonomy_tgwr_condominium
 				}
@@ -9202,28 +9137,19 @@ country_event = {
 	title = ww1_auh.170.t
 	desc = ww1_auh.170.d
 	picture = GFX_report_event_iww_demonstration
-	trigger = {
-		tag = AUS
-		NOT = {
-			has_country_flag = collapse_of_austria_hungary_CZE
-		}
-		has_country_flag = collapse_of_austria_hungary_HUN #must be free first
-		NOT = {
-			country_exists = CZE
-		}
-	}
-	mean_time_to_happen = {
-		days = 9
-	}
+	is_triggered_only = yes
 	immediate = {
 		set_country_flag = collapse_of_austria_hungary_CZE
 		hidden_effect = {
-			every_state = {
-				limit = {
-					state = 9
-					is_owned_by = AUS
+			if = {
+				limit = { 
+					9 = {
+						is_owned_by = AUS
+					}
 				}
-				transfer_state_to = CZE
+				9 = {
+					transfer_state_to = CZE
+				}
 			}
 		}
 		transfer_units_fraction= {
@@ -9264,18 +9190,7 @@ country_event = {
 	title = ww1_auh.15.t
 	desc = ww1_auh.15.d
 	picture = GFX_report_event_generic_peaceful_annexation
-	trigger = {
-		tag = AUS
-		has_country_flag = collapse_of_austria_hungary_HUN
-		has_country_flag = collapse_of_austria_hungary_CZE
-		has_country_flag = collapse_of_austria_hungary_YUG
-		NOT = {
-			has_country_flag = collapse_of_austria_hungary_POL
-		}
-	}
-	mean_time_to_happen = {
-		days = 10
-	}
+	is_triggered_only = yes
 	immediate = {
 		hidden_effect = {
 			set_country_flag = collapse_of_austria_hungary_POL
@@ -9332,17 +9247,7 @@ country_event = {
 	title = ww1_auh.13.t
 	desc = ww1_auh.13.d
 	picture = GFX_report_event_ger_civil_war
-	fire_only_once = yes
-	trigger = {
-		tag = AUS
-		has_country_flag = collapse_of_austria_hungary_HUN
-		NOT = {
-			has_country_flag = collapse_of_austria_hungary_YUG
-		}
-	}
-	mean_time_to_happen = {
-		days = 12
-	}
+	is_triggered_only = yes
 	immediate = {
 		hidden_effect = {
 			every_state = {
@@ -9664,7 +9569,7 @@ country_event = {
 	option = {
 		name = ww1_auh.179.a	#all options are on the table
 		set_country_flag = AUH_can_negotiate_with_france
-		custom_effect_tooltip = AUH_negociation_with_france
+		custom_effect_tooltip = AUH_negotiation_with_france
 		HUN = {
 			HUN_gyula_andrassy = {
 				set_nationality = AUS
@@ -9674,7 +9579,7 @@ country_event = {
 	}
 }
 
-# Historical, austria ask secret negociation to france
+# Historical, austria ask secret negotiation to france
 country_event = {
 	id = ww1_auh.180
 	title = ww1_auh.180.t
@@ -9685,9 +9590,9 @@ country_event = {
 		name = ww1_auh.180.a	# we agree in principe, but austria has to recognize our claims over alsace lorraine, belgium independence, serbia independence + access to sea
 		custom_effect_tooltip = historical_tt
 		custom_effect_tooltip = FRA_basic_demands_for_AUH
-		custom_effect_tooltip = FRA_AUH_negociation_free_serbia_and_sea
-		custom_effect_tooltip = FRA_AUH_negociation_alsace_lorraine
-		custom_effect_tooltip = FRA_AUH_negociation_free_belgium
+		custom_effect_tooltip = FRA_AUH_negotiation_free_serbia_and_sea
+		custom_effect_tooltip = FRA_AUH_negotiation_alsace_lorraine
+		custom_effect_tooltip = FRA_AUH_negotiation_free_belgium
 		FROM = {
 			country_event = {
 				id = ww1_auh.182
@@ -9739,7 +9644,7 @@ country_event = {
 	option = {
 		name = ww1_auh.182.a	#theses terms are acceptable + we must convince germany for alsace lorraine
 		custom_effect_tooltip = historical_tt
-		custom_effect_tooltip = AUH_negociation_with_germany_means_no_secret
+		custom_effect_tooltip = AUH_negotiation_with_germany_means_no_secret
 		GER = {
 			country_event = {
 				id = ww1_auh.184
@@ -9756,8 +9661,8 @@ country_event = {
 		}
 	}
 	option = {
-		name = ww1_auh.182.b	#theses terms are acceptable + we cant guarantee alsace lorraine -> stick to secret negociations
-		custom_effect_tooltip = AUH_no_negociation_with_germany
+		name = ww1_auh.182.b	#theses terms are acceptable + we cant guarantee alsace lorraine -> stick to secret negotiations
+		custom_effect_tooltip = AUH_no_negotiation_with_germany
 		FRA = {
 			country_event = {
 				id = ww1_auh.205
@@ -9819,7 +9724,7 @@ country_event = {
 	picture = GFX_report_event_generic_sign_treaty1
 	is_triggered_only = yes
 	option = {
-		name = ww1_auh.184.a	#we can agree to participate negociations if needeed
+		name = ww1_auh.184.a	#we can agree to participate negotiations if needeed
 		custom_effect_tooltip = historical_tt
 		#custom_effect_tooltip = AUH_GER_FRA_deal_for_peace_on_alsace_lorraine
 		#custom_effect_tooltip = AUH_GER_FRA_deal_for_peace_on_alsace_lorraine_AUH_part
@@ -10418,7 +10323,7 @@ country_event = {
 	option = {
 		name = ww1_auh.194.c
 		trigger = {
-			has_global_flag = AUH_secret_negociations
+			has_global_flag = AUH_secret_negotiations
 		}
 		custom_effect_tooltip = ITA_london_pact_very_weak
 		add_war_support = -0.1
@@ -10537,7 +10442,7 @@ country_event = {
 		name = ww1_auh.196.b	#Okay, okay.
 		custom_effect_tooltip = italian_conditions_are
 		trigger = {
-			has_global_flag = AUH_secret_negociations
+			has_global_flag = AUH_secret_negotiations
 		}
 		if = {
 			limit = {
@@ -10615,7 +10520,7 @@ country_event = {
 	}
 }
 
-#Historical, negociations are dead, time to bully french pm
+#Historical, negotiations are dead, time to bully french pm
 country_event = {
 	id = ww1_auh.198
 	title = ww1_auh.198.t
@@ -10646,7 +10551,7 @@ country_event = {
 	}
 }
 
-#Historical, French is insulted because the negociation are broke
+#Historical, French is insulted because the negotiation are broke
 country_event = {
 	id = ww1_auh.199
 	title = ww1_auh.199.t
@@ -10941,7 +10846,7 @@ country_event = {
 	}
 }
 
-##austria accept secret negociations, but cant guarantee alsace lorraine
+##austria accept secret negotiations, but cant guarantee alsace lorraine
 country_event = {
 	id = ww1_auh.205
 	title = ww1_auh.205.t
@@ -10952,10 +10857,10 @@ country_event = {
 	option = {
 		name = ww1_auh.205.a
 		#okay its fine, lets talk
-		custom_effect_tooltip = FRA_negociation_deal_so_far
-		custom_effect_tooltip = FRA_AUH_negociation_free_serbia_and_sea
-		custom_effect_tooltip = FRA_AUH_negociation_alsace_lorraine_b2
-		custom_effect_tooltip = FRA_AUH_negociation_free_belgium
+		custom_effect_tooltip = FRA_negotiation_deal_so_far
+		custom_effect_tooltip = FRA_AUH_negotiation_free_serbia_and_sea
+		custom_effect_tooltip = FRA_AUH_negotiation_alsace_lorraine_b2
+		custom_effect_tooltip = FRA_AUH_negotiation_free_belgium
 		FROM = {
 			country_event = {
 				id = ww1_auh.206
@@ -10991,7 +10896,7 @@ country_event = {
 	option = {
 		name = ww1_auh.206.a
 		#we can sacrifice galicia and balance some lands with italy 
-		custom_effect_tooltip = AUH_negociation_give_galicia_to_RUS
+		custom_effect_tooltip = AUH_negotiation_give_galicia_to_RUS
 		custom_effect_tooltip = ITA_london_pact_very_weak
 		FRA = {
 			country_event = {
@@ -11013,7 +10918,7 @@ country_event = {
 	option = {
 		name = ww1_auh.206.b
 		# we can sacrifice galicia, but its out of question to lose trentino !
-		custom_effect_tooltip = AUH_negociation_give_galicia_to_RUS
+		custom_effect_tooltip = AUH_negotiation_give_galicia_to_RUS
 		FROM = {
 			country_event = {
 				id = ww1_auh.210
@@ -11057,7 +10962,7 @@ country_event = {
 	option = {
 		name = ww1_auh.207.a
 		#Lets validate with Italians
-		set_global_flag = AUH_secret_negociations
+		set_global_flag = AUH_secret_negotiations
 		trigger = {
 			ITA = {
 				has_war_together_with = FRA
@@ -11111,23 +11016,23 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_auh.208.a
-		custom_effect_tooltip = FRA_negociation_deal_so_far
+		custom_effect_tooltip = FRA_negotiation_deal_so_far
 		SER = {
 			if = {
 				limit = {
 					has_war_with = AUS
 				}
-				custom_effect_tooltip = FRA_AUH_negociation_free_serbia_and_sea
+				custom_effect_tooltip = FRA_AUH_negotiation_free_serbia_and_sea
 			}
 		}
-		custom_effect_tooltip = FRA_AUH_negociation_alsace_lorraine_b2
-		custom_effect_tooltip = FRA_AUH_negociation_free_belgium
+		custom_effect_tooltip = FRA_AUH_negotiation_alsace_lorraine_b2
+		custom_effect_tooltip = FRA_AUH_negotiation_free_belgium
 		RUS = {
 			if = {
 				limit = {
 					has_war_with = AUS
 				}
-				custom_effect_tooltip = AUH_negociation_give_galicia_to_RUS
+				custom_effect_tooltip = AUH_negotiation_give_galicia_to_RUS
 			}
 		}
 		if = {
@@ -11262,8 +11167,8 @@ country_event = {
 					}
 				}
 			AUS = {
-				leave_faction = yes
-				add_ideas = neutrality_idea
+				clear_all_relations_except_wars = yes
+				add_ideas = standing_alone
 				add_ideas = interwar_recovery
 				add_ideas = volunteer_only
 			}
@@ -11274,13 +11179,9 @@ country_event = {
 				}
 			}
 			every_enemy_country = {
-				limit = {
-					OR = {
-						has_war_together_with = FRA
-						tag = FRA
-					}
+				AUS = {
+					white_peace = PREV
 				}
-				white_peace = AUS
 			}
 			news_event = {
 				id = ww1_auh.209
@@ -11859,7 +11760,7 @@ country_event = {
 		FROM = {
 			set_autonomy = {
 				target = PREV
-				autonomy_state = autonomy_satellite
+				autonomy_state = autonomy_tgwr_client_state
 				freedom_level = 0.8
 			}
 		}
