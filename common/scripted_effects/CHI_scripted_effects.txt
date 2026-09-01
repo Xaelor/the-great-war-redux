@@ -1764,6 +1764,28 @@ chinese_second_revolution_end_effect = {
 		}
 	}
 }
+CHI_initial_total_foreign_influnce = {
+	set_variable = {
+		CHI_total_foreign_influence = {
+			value = 0
+			add = JAP.CHI_foreign_influence
+			add = USA.CHI_foreign_influence
+			add = RUS.CHI_foreign_influence
+			add = FRA.CHI_foreign_influence
+			add = GER.CHI_foreign_influence
+			add = ITA.CHI_foreign_influence
+			max = 1
+		}
+	}
+	set_variable = {
+		CHI_total_independence = {
+			value = 1
+			subtract = CHI_total_foreign_influence
+			min = 0
+		}
+	}
+	CHI_calculate_foreign_influnce_modifiers = yes
+}
 
 CHI_calculate_total_foreign_influnce = {
 	set_variable = { var = CHI_total_foreign_influence value = 0 }
@@ -1888,6 +1910,17 @@ CHI_calculate_total_foreign_influnce = {
 		}
 		add_to_variable = { var = CHI_total_foreign_influence value = GER.CHI_foreign_influence }
 	}
+	if = {
+		limit = {
+			tag = CCG	
+			ITA = {
+				exists = yes
+				NOT = { has_war_with = PREV }
+				has_dynamic_modifier = CHI_influence_in_china_modifier
+			}
+		}
+		add_to_variable = { var = CHI_total_foreign_influence value = ITA.CHI_foreign_influence }
+	}
 	clamp_variable = {
 		var = CHI_total_foreign_influence
 		min = 0
@@ -1903,12 +1936,24 @@ CHI_calculate_total_foreign_influnce = {
 	}
 }
 CHI_calculate_foreign_influnce_modifiers = {
-	set_variable = { var = CHI_political_power_gain value = CHI_total_foreign_influence }
-	multiply_variable = { var = CHI_political_power_gain value = -0.5 }
-	set_variable = { var = CHI_consumer_goods_factor value = CHI_total_foreign_influence }
-	multiply_variable = { var = CHI_consumer_goods_factor value = 0.5 }
-	set_variable = { var = CHI_civilian_intel_to_others value = CHI_total_foreign_influence }
-	multiply_variable = { var = CHI_civilian_intel_to_others value = 50 }
+	set_variable = { 
+		CHI_political_power_gain = {
+			value = CHI_total_foreign_influence
+			multiply = -0.5
+		}
+	}
+	set_variable = { 
+		CHI_consumer_goods_factor = {
+			value = CHI_total_foreign_influence
+			multiply = 0.5
+		}
+	}
+	set_variable = { 
+		CHI_civilian_intel_to_others = {
+			value = CHI_total_foreign_influence
+			multiply = 50
+		}
+	}
 }
 CHI_calculate_foreign_influnce = {
 	CHI_calculate_total_foreign_influnce = yes

@@ -381,6 +381,32 @@ every_character = {
 	set_character_flag = national_protection_allegiance
 }
 
+#Foreign influence
+set_variable = { var = JAP.CHI_foreign_influence value = 0.1 }
+set_variable = { var = USA.CHI_foreign_influence value = 0.05 }
+set_variable = { var = ENG.CHI_foreign_influence value = 0.15 }
+set_variable = { var = RUS.CHI_foreign_influence value = 0.2 }
+set_variable = { var = FRA.CHI_foreign_influence value = 0.05 }
+set_variable = { var = GER.CHI_foreign_influence value = 0.2 }
+set_variable = { var = ITA.CHI_foreign_influence value = 0.07 }
+every_other_country = {
+	limit = {
+		OR = {
+			tag = JAP
+			tag = USA
+			tag = ENG
+			tag = RUS
+			tag = FRA
+			tag = GER
+			tag = ITA
+		}
+	}
+	CHI_calculate_influnce_in_china_modifiers = yes
+	add_dynamic_modifier = {
+		modifier = CHI_influence_in_china_modifier
+	}
+}
+
 1910.1.1 = {
 	set_technology = {
 		#infantry
@@ -500,31 +526,6 @@ every_character = {
 		CHI_jiang_guiti = { unit_leader_event = { id = ww1_generic.38 days = 4265 }} #died on 1922.1.16
 		CHI_liu_guanxiong = { unit_leader_event = { id = ww1_generic.38 days = 6250 }} #died on 1927.6.24
 	}
-
-	#Foreign influence
-	set_variable = { var = JAP.CHI_foreign_influence value = 0.1 }
-	set_variable = { var = USA.CHI_foreign_influence value = 0.05 }
-	set_variable = { var = ENG.CHI_foreign_influence value = 0.15 }
-	set_variable = { var = RUS.CHI_foreign_influence value = 0.2 }
-	set_variable = { var = FRA.CHI_foreign_influence value = 0.05 }
-	set_variable = { var = GER.CHI_foreign_influence value = 0.07 }
-	every_other_country = {
-		limit = {
-			OR = {
-				tag = JAP
-				tag = USA
-				tag = ENG
-				tag = RUS
-				tag = FRA
-				tag = GER
-			}
-		}
-		CHI_calculate_influnce_in_china_modifiers = yes
-		add_dynamic_modifier = {
-			modifier = CHI_influence_in_china_modifier
-		}
-	}
-	CHI_calculate_foreign_influnce = yes
 }
 
 1914.1.1 = {
@@ -718,6 +719,7 @@ every_character = {
 	add_dynamic_modifier = {
 		modifier = CHI_foreign_influence_modifier
 	}
+	CHI_initial_total_foreign_influnce = yes
 
 	add_war_support = -0.2
 	add_stability = -0.1
