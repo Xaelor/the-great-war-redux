@@ -1771,36 +1771,12 @@ chinese_second_revolution_end_effect = {
 		}
 	}
 }
-CHI_initial_total_foreign_influnce = {
-	set_variable = {
-		CHI_total_foreign_influence = {
-			value = 0
-			add = JAP.CHI_foreign_influence
-			add = USA.CHI_foreign_influence
-			add = RUS.CHI_foreign_influence
-			add = FRA.CHI_foreign_influence
-			add = GER.CHI_foreign_influence
-			add = ITA.CHI_foreign_influence
-			max = 1
-		}
-	}
-	set_variable = {
-		CHI_total_independence = {
-			value = 1
-			subtract = CHI_total_foreign_influence
-			min = 0
-		}
-	}
-	CHI_calculate_foreign_influnce_modifiers = yes
-}
-
 CHI_calculate_total_foreign_influnce = {
 	set_variable = { var = CHI_total_foreign_influence value = 0 }
-	set_variable = { var = CHI_total_independence value = 1 }
 	if = {
 		limit = {
 			# OR = {
-				tag = CHN
+			# 	tag = CHN
 			# 	capital_scope = {
 			# 		OR = {
 			# 			state = 328
@@ -1821,7 +1797,7 @@ CHI_calculate_total_foreign_influnce = {
 	}
 	if = {
 		limit = {
-			tag = CHN	
+			# tag = CHN	
 			USA = {
 				exists = yes
 				NOT = { has_war_with = PREV }
@@ -1833,7 +1809,7 @@ CHI_calculate_total_foreign_influnce = {
 	if = {
 		limit = { 
 			# OR = { 
-				tag = CHN
+				# tag = CHN
 				# capital_scope = {
 				# 	OR = {
 				# 		state = 592
@@ -1862,7 +1838,7 @@ CHI_calculate_total_foreign_influnce = {
 	if = {
 		limit = { 
 			# OR = { 
-				tag = CHN
+			# 	tag = CHN
 			# 	capital_scope = {
 			# 		OR = {
 			# 			state = 714
@@ -1882,7 +1858,7 @@ CHI_calculate_total_foreign_influnce = {
 	if = {
 		limit = {
 			# OR = {
-				tag = CHN
+			#	tag = CHN
 			# 	capital_scope = {
 			# 		OR = {
 			# 			state = 325
@@ -1904,7 +1880,7 @@ CHI_calculate_total_foreign_influnce = {
 	if = {
 		limit = {
 			# OR = {
-				tag = CHN
+			#	tag = CHN
 			# 	capital_scope = {
 			# 		state = 872				
 			# 	}
@@ -1919,7 +1895,7 @@ CHI_calculate_total_foreign_influnce = {
 	}
 	if = {
 		limit = {
-			tag = CHN	
+			#tag = CHN	
 			ITA = {
 				exists = yes
 				NOT = { has_war_with = PREV }
@@ -1933,32 +1909,69 @@ CHI_calculate_total_foreign_influnce = {
 		min = 0
 		max = 1
 	}
-	subtract_from_variable = {
-		CHI_total_independence = CHI_total_foreign_influence
-	}
-	clamp_variable = {
-		var = CHI_total_independence
-		min = 0
-		max = 1
+	set_variable = {
+		CHI_total_independence = {
+			value = 1
+			subtract = CHI_total_foreign_influence
+			min = 0
+		}
 	}
 }
 CHI_calculate_foreign_influnce_modifiers = {
+	set_variable = {
+		CHI_share_of_influence = 0
+	}
+	if = {
+		limit = { owns_state = 613 } #Shanghai
+		add_to_variable = { CHI_share_of_influence = 0.25 }
+	}
+	if = {
+		limit = { owns_state = 608 } #Beijing-Tianjin
+		add_to_variable = { CHI_share_of_influence = 0.20 }
+	}
+	if = {
+		limit = { owns_state = 716 } #Fengtian 
+		add_to_variable = { CHI_share_of_influence = 0.15 }
+	}
+	if = {
+		limit = { owns_state = 597 } #Shandong 
+		add_to_variable = { CHI_share_of_influence = 0.12 }
+	}
+	if = {
+		limit = { owns_state = 620 } #Hubei
+		add_to_variable = { CHI_share_of_influence = 0.10 }
+	}
+	if = {
+		limit = { owns_state = 603 } #Guangzhou
+		add_to_variable = { CHI_share_of_influence = 0.08 }
+	}
+	if = {
+		limit = { owns_state = 598 } #Nanjing 
+		add_to_variable = { CHI_share_of_influence = 0.05 }
+	}
+	if = {
+		limit = { owns_state = 325 } #Yunnans
+		add_to_variable = { CHI_share_of_influence = 0.05 }
+	}
 	set_variable = { 
 		CHI_political_power_gain = {
 			value = CHI_total_foreign_influence
 			multiply = -0.5
+			multiply = CHI_share_of_influence
 		}
 	}
 	set_variable = { 
 		CHI_consumer_goods_factor = {
 			value = CHI_total_foreign_influence
 			multiply = 0.5
+			multiply = CHI_share_of_influence
 		}
 	}
 	set_variable = { 
 		CHI_civilian_intel_to_others = {
 			value = CHI_total_foreign_influence
 			multiply = 50
+			multiply = CHI_share_of_influence
 		}
 	}
 }
