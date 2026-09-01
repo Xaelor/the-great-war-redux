@@ -12,12 +12,15 @@ add_namespace = ww1_china
 # GUANGZHOU UPRISING
 #######################
 country_event = {
+	id = ww1_xinhai.1
 	title = ww1_xinhai.1.t
 	desc = ww1_xinhai.1.d
 	picture = GFX_report_event_guangzhou_uprising
-	id = ww1_xinhai.1
 	fire_only_once = yes
 	is_triggered_only = yes
+	trigger = {
+		has_start_date < 1914.1.1
+	}
 	option = {
 		name = ww1_xinhai.1.a
 		ai_chance = {
@@ -31,12 +34,6 @@ country_event = {
 			add_days_mission_timeout = {
 				mission = CHI_xinhai_revolution_mission
 				days = -100
-			}
-		}
-		hidden_effect = {
-			country_event = {
-				id = ww1_qing.10
-				days = 17
 			}
 		}
 	}
@@ -2713,6 +2710,10 @@ country_event = {
 
 				QIN = {
 					country_event = ww1_xinhai.35
+					country_event = {
+						id = ww1_qing.378
+						days = 1
+					}
 				}
 				CHI = {
 					country_event = ww1_xinhai.35
@@ -15749,6 +15750,7 @@ country_event = {
 			is_subject = no
 			has_war = no
 		}
+		has_global_flag = xinhai_revolution_ends
 		has_start_date < 1914.1.1
 	}
 	fire_only_once = yes
@@ -22658,16 +22660,14 @@ country_event = {
 	title = ww1_china.201.t
 	desc = ww1_china.201.d
 	picture = GFX_report_event_ITA_air_crash
+	is_triggered_only = yes
+	fire_only_once = yes
 	trigger = {
 		has_character = CHI_feng_ru
-		date > 1912.8.1
-		has_start_date < 1914.1.1	
-		CHI_feng_ru = { is_hired_as_advisor = no }
 	}
 	mean_time_to_happen = {
 		days = 26
 	}
-	fire_only_once = yes
 	option = {
 		name = ww1_china.201.a
 		retire_character = CHI_feng_ru
@@ -29734,6 +29734,255 @@ country_event = {
 				is_core_of = MON
 			}
 			transfer_state_to = MON
+		}
+	}
+}
+
+# 1910 Chinese Railway Status Report
+country_event = {
+	id = ww1_china.331
+	title = {
+		text = ww1_china.331.t
+		trigger = {
+			is_china_or_warlord = yes
+		}
+	}
+	title = {
+		text = ww1_china.331.t_alt
+		trigger = {
+			is_china_or_warlord = no
+		}
+	}
+	desc = {
+		text = ww1_china.331.d
+		trigger = {
+			is_china_or_warlord = yes
+		}
+	}
+	desc = {
+		text = ww1_china.331.d_eng
+		trigger = {
+			is_china_or_warlord = no
+			OR = {
+				tag = ENG
+				tag = GER
+				tag = FRA
+			}
+		}
+	}
+	desc = {
+		text = ww1_china.331.d_usa
+		trigger = {
+			is_china_or_warlord = no
+			tag = USA
+		}
+	}
+	desc = {
+		text = ww1_china.331.d_rus
+		trigger = {
+			is_china_or_warlord = no
+			OR = {
+				tag = RUS
+				tag = JAP
+			}
+		}
+	}
+	picture = GFX_report_event_generic_train
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = {
+		has_start_date < 1914.1.1
+	}
+	mean_time_to_happen = { days = 16 }
+	option = {
+		name = ww1_china.331.a
+		add_political_power = -25
+	}
+	option = {
+		name = ww1_china.331.b
+		add_political_power = 25
+		hidden_effect = {
+			if = {
+				limit = {
+					OR = {
+						tag = RUS
+						tag = JAP
+					}
+				}
+				# Russia and Japan gets secret agreement event on Japanese rework branch
+			}
+			else = {
+				country_event = {
+					id = ww1_china.332
+					days = 13
+				}
+			}
+		}
+	}
+}
+
+# 1910 Memorandum of Agreement between the Bankers
+country_event = {
+	id = ww1_china.332
+	title = ww1_china.332.t
+	desc = ww1_china.332.d
+	picture = GFX_report_event_generic_sign_treaty2
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = {
+		has_start_date < 1914.1.1
+	}
+	option = {
+		name = ww1_china.332.a
+		add_political_power = 10
+	}
+}
+
+# 1911 Contract of the Hukuang Railway Bond
+country_event = {
+	id = ww1_china.333
+	title = ww1_china.333.t
+	desc = {
+		text = ww1_china.333.d
+		trigger = {
+			is_china_or_warlord = yes
+		}
+	}
+	desc = {
+		text = ww1_china.333.d_eng
+		trigger = {
+			is_china_or_warlord = no
+			NOT = {
+				tag = USA
+			}
+		}
+	}
+	desc = {
+		text = ww1_china.333.d_usa
+		trigger = {
+			tag = USA
+		}
+	}
+	picture = GFX_report_event_china_map
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = {
+		has_start_date < 1914.1.1
+	}
+	option = {
+		name = ww1_china.333.a
+		trigger = {
+			is_china_or_warlord = yes
+		}
+		add_political_power = -10
+		complete_national_focus = QIN_foreign_loan
+		
+		ENG = {
+			add_to_variable = {
+				var = CHI_foreign_influence
+				value = 0.01
+			}
+			clamp_variable = {
+				var = CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
+		}
+		FRA = {
+			add_to_variable = {
+				var = CHI_foreign_influence
+				value = 0.01
+			}
+			clamp_variable = {
+				var = CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
+		}
+		GER = {
+			add_to_variable = {
+				var = CHI_foreign_influence
+				value = 0.01
+			}
+			clamp_variable = {
+				var = CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
+		}
+		USA = {
+			add_to_variable = {
+				var = CHI_foreign_influence
+				value = 0.01
+			}
+			clamp_variable = {
+				var = CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
+		}
+		CHI_calculate_foreign_influnce = yes
+	}
+	option = {
+		name = ww1_china.333.b
+		trigger = {
+			is_china_or_warlord = no
+		}
+		add_political_power = 10
+		effect_tooltip = {
+			ENG = {
+				add_to_variable = {
+					var = CHI_foreign_influence
+					value = 0.01
+				}
+				clamp_variable = {
+					var = CHI_foreign_influence
+					min = 0
+					max = 1
+				}
+				CHI_calculate_influnce_in_china_modifiers = yes
+			}
+			FRA = {
+				add_to_variable = {
+					var = CHI_foreign_influence
+					value = 0.01
+				}
+				clamp_variable = {
+					var = CHI_foreign_influence
+					min = 0
+					max = 1
+				}
+				CHI_calculate_influnce_in_china_modifiers = yes
+			}
+			GER = {
+				add_to_variable = {
+					var = CHI_foreign_influence
+					value = 0.01
+				}
+				clamp_variable = {
+					var = CHI_foreign_influence
+					min = 0
+					max = 1
+				}
+				CHI_calculate_influnce_in_china_modifiers = yes
+			}
+			USA = {
+				add_to_variable = {
+					var = CHI_foreign_influence
+					value = 0.01
+				}
+				clamp_variable = {
+					var = CHI_foreign_influence
+					min = 0
+					max = 1
+				}
+				CHI_calculate_influnce_in_china_modifiers = yes
+			}
+			CHI_calculate_foreign_influnce = yes
 		}
 	}
 }

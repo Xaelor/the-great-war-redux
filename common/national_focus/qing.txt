@@ -17,10 +17,32 @@ focus_tree = {
 	#available_designer
 	#available_industrial_concern
 	continuous_focus_position = {
-		x = 100
-		y = 100
+		x = 2600
+		y = 800
 	}
-	initial_show_position = { focus = QIN_continue_qing_new_reforms }
+	initial_show_position = { focus = QIN_prince_zaifeng_regency }
+
+	shortcut = {
+		name = inner_politics_tree_shortcut
+		target = QIN_prince_zaifeng_regency 
+		scroll_wheel_factor = 1
+	}
+	shortcut = {
+		name = army_tree_shortcut
+		target = CHI_army_westernization 
+		scroll_wheel_factor = 1
+	}
+	shortcut = {
+		name = navy_tree_shortcut
+		target = CHI_recovery_of_naval_infrastructure 
+		scroll_wheel_factor = 1
+	}
+	shortcut = {
+		name = economic_tree_shortcut
+		target = CHI_nation_recovery 
+		scroll_wheel_factor = 1
+	}
+
 	shared_focus = CHI_nation_recovery
 	shared_focus = CHI_recovery_of_naval_infrastructure
 	shared_focus = CHI_restore_the_nation
@@ -822,19 +844,17 @@ focus_tree = {
 		id = QIN_royal_cabinet
 		icon = GFX_focus_summer_palace_2
 		cost = 5
-		relative_position_id = QIN_revise_national_assembly_deadline
-		x = 0
-		y = 1
-		prerequisite = {
-			focus = QIN_revise_national_assembly_deadline
-		}
+		relative_position_id = QIN_prince_zaifeng_regency
+		x = 10
+		y = 0
 		available = {
-
+			has_completed_focus = QIN_revise_national_assembly_deadline
 		}
 		bypass = {
-			NOT = {
-				has_government = neutrality
-				tag = QIN
+			has_character = CHI_yuan_shikai
+			has_country_leader = {
+				character = CHI_yuan_shikai
+				ruling_only = yes
 			}
 		}
 		completion_reward = {
@@ -842,6 +862,14 @@ focus_tree = {
 				add_popularity = {
 					ideology = neutrality
 					popularity = 0.01
+				}
+				country_event = {
+					id = ww1_qing.9
+					days = 1
+				}
+				country_event = {
+					id = ww1_qing.188
+					days = 26
 				}
 			}
 			activate_advisor = QIN_yikuang
@@ -859,53 +887,55 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = QIN_money_to_reform
-		icon = GFX_focus_hol_abandon_the_gold_standard
-		cost = 8
+		id = QIN_nationalise_railways
+		icon = GFX_focus_generic_railroad
+		cost = 5
 		relative_position_id = QIN_royal_cabinet
-		x = -4
+		x = -3
 		y = 1
 		prerequisite = {
 			focus = QIN_royal_cabinet
 		}
 		available = {
-
+			custom_trigger_tooltip = {
+				tooltip = GER_completed_by_event
+				always = no
+			}
 		}
 		bypass = {
-
+			has_global_flag = xinhai_revolution
 		}
 		completion_reward = {
 			add_political_power = 50
-		}
-		search_filters = {
-			FOCUS_FILTER_HISTORICAL FOCUS_FILTER_POLITICAL
-		}
-		ai_will_do = {
-			factor = 10
-		}
-	}
-	focus = {
-		id = QIN_nationalise_railways
-		icon = GFX_focus_generic_railroad
-		cost = 8
-		relative_position_id = QIN_money_to_reform
-		x = -2
-		y = 1
-		prerequisite = {
-			focus = QIN_money_to_reform
-		}
-		available = {
-
-		}
-		bypass = {
-
-		}
-		completion_reward = {
-			add_political_power = 100
+			add_stability = -0.05
 			hidden_effect = {
 				country_event = {
-					id = ww1_qing.9
-					days = 20
+					id = ww1_china.333
+					days = 11
+				}
+				ENG = {
+					country_event = {
+						id = ww1_china.333
+						days = 11
+					}
+				}
+				FRA = {
+					country_event = {
+						id = ww1_china.333
+						days = 11
+					}
+				}
+				GER = {
+					country_event = {
+						id = ww1_china.333
+						days = 11
+					}
+				}
+				USA = {
+					country_event = {
+						id = ww1_china.333
+						days = 11
+					}
 				}
 			}
 		}
@@ -913,43 +943,104 @@ focus_tree = {
 			FOCUS_FILTER_HISTORICAL FOCUS_FILTER_POLITICAL
 		}
 		ai_will_do = {
-			factor = 10
+			factor = 100
 		}
 	}
 	focus = {
-		id = QIN_army_leadership_problem
-		icon = GFX_focus_qing_conscription
-		cost = 10
+		id = QIN_foreign_loan
+		icon = GFX_focus_generic_banking_legislation
+		cost = 5
 		relative_position_id = QIN_royal_cabinet
-		x = 4
+		x = -1
 		y = 1
 		prerequisite = {
-			focus = QIN_royal_cabinet
+			focus = QIN_nationalise_railways
 		}
 		available = {
+			custom_trigger_tooltip = {
+				tooltip = GER_completed_by_event
+				always = no
+			}
 			NOT = {
-				has_idea = QIN_idea_no_money_for_reform
+				has_war_with = ENG
+				has_war_with = GER
+				has_war_with = FRA
+				has_war_with = USA
 			}
 		}
 		bypass = {
-
+			has_global_flag = xinhai_revolution
 		}
 		completion_reward = {
-			custom_effect_tooltip = available_military_high_command
-			show_ideas_tooltip = QIN_wuzhen
-			custom_effect_tooltip = available_military_high_command
-			show_ideas_tooltip = QIN_shouxun
-			add_command_power = 50
-			add_popularity = {
-				ideology = fascism
-				popularity = -0.05
+			# replace with budget later
+			add_offsite_building = {
+				type = industrial_complex
+				level = 2
 			}
 		}
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL FOCUS_FILTER_POLITICAL
 		}
 		ai_will_do = {
-			factor = 10
+			factor = 100
+		}
+	}
+	focus = {
+		id = QIN_suppress_railway_protection_movement
+		icon = GFX_focus_generic_protest
+		cost = 5
+		relative_position_id = QIN_royal_cabinet
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = QIN_foreign_loan
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = GER_completed_by_event
+				always = no
+			}
+		}
+		bypass = {
+			has_global_flag = xinhai_revolution
+		}
+		completion_reward = {
+			add_command_power = -25
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL FOCUS_FILTER_POLITICAL
+		}
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	focus = {
+		id = QIN_dispatch_hubei_new_army
+		icon = GFX_focus_generic_army_attack
+		cost = 4
+		relative_position_id = QIN_royal_cabinet
+		x = 3
+		y = 1
+		prerequisite = {
+			focus = QIN_suppress_railway_protection_movement
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = GER_completed_by_event
+				always = no
+			}
+		}
+		bypass = {
+			has_global_flag = xinhai_revolution
+		}
+		completion_reward = {
+			add_command_power = -25
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL FOCUS_FILTER_POLITICAL
+		}
+		ai_will_do = {
+			factor = 100
 		}
 	}
 	focus = {
@@ -957,8 +1048,7 @@ focus_tree = {
 		icon = GFX_focus_chi_qing_china
 		cost = 3
 		prerequisite = {
-			focus = QIN_royal_cabinet
-			# focus = QIN_equal_cabinet
+			focus = QIN_dispatch_hubei_new_army
 		}
 		relative_position_id = QIN_royal_cabinet
 		x = 0
