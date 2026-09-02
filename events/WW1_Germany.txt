@@ -2908,7 +2908,8 @@ news_event = {
 		tag = GER
 		is_subject = no
 		has_country_flag = great_war_winner
-		any_other_country = {
+		any_country_with_original_tag = {
+			original_tag_to_check = FRA
 			has_country_flag = FRA_nationalist_france_flag
 			has_defensive_war_with = PREV
 			any_owned_state = {
@@ -4290,8 +4291,8 @@ country_event = {
 			base = 0
 			modifier = {
 				add = 10
-				any_other_country = {
-					original_tag = FRA
+				any_country_with_original_tag = {
+					original_tag_to_check = FRA
 					is_subject_of = PREV
 					NOT = {
 						is_neighbor_of = NFA
@@ -6289,9 +6290,8 @@ country_event = {
 		GER_enemy_blockade_north_sea = yes
 		any_owned_state = {
 			is_on_continent = asia
-			any_other_country = {
+			CONTROLLER = {
 				has_war_with = PREV.PREV
-				controls_state = PREV
 			}
 		}
 	}
@@ -14468,36 +14468,30 @@ country_event = {
 			}
 			if = {
 				limit = {
-					any_other_country = {
-						# has_war_with = ROM
-						NOT = {
-							is_ally_with = ROM
-							has_war_with = ROOT
-						}
-						owns_state = 211
-					}
-				}
-				random_other_country = {
-					limit = {
-						# has_war_with = ROM
-						NOT = {
-							is_ally_with = ROM
-							has_war_with = ROOT
-						}
-						owns_state = 211
-					}
-					ROM = {
-						every_owned_state = {
-							limit = {
-								OR = {
-									state = 77
-									state = 846
-								}
+					211 = {
+						OWNER = {
+							NOT = {
+								is_ally_with = ROM
+								has_war_with = ROOT
 							}
-							transfer_state_to = PREV.PREV
 						}
 					}
 				}
+				211 = {
+					OWNER = {
+						ROM = {
+							every_owned_state = {
+								limit = {
+									OR = {
+										state = 77
+										state = 846
+									}
+								}
+								transfer_state_to = PREV.PREV
+							}
+						}
+					}
+				}	
 			}
 			else = {
 				ROM = {
