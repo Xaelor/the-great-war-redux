@@ -1602,17 +1602,16 @@ armistice_effect = {
 			}
 			if = {
 				limit = {
-					any_country = {
-						owns_state = 758
-						NOT = { has_country_flag = great_war_loser }
+					758 = {
+						OWNER = {
+							NOT = { has_country_flag = great_war_loser }
+						}
 					}
 				}
-				random_country = {
-					limit = {
-						owns_state = 758
-						NOT = { has_country_flag = great_war_loser }
-					}
-					transfer_state = 803
+				758 = {
+					OWNER = {
+						transfer_state = 803
+					}	
 				}
 			}
 			else = {
@@ -3474,9 +3473,10 @@ conference_effect = {
 		# Memelland
 		if = {
 			limit = {
-				any_country = {
-					owns_state = 188
-					has_country_flag = great_war_loser
+				188 = {
+					OWNER = {
+						has_country_flag = great_war_loser
+					}
 				}
 				NOT = {
 					RUS = { has_country_flag = great_war_winner }
@@ -5540,37 +5540,35 @@ conference_effect = {
 			if = {
 				limit = {
 					owns_state = 803
-					any_other_country = {
+					NOT = {
 						owns_state = 871
 					}
 				}
-				random_other_country = {
-					limit = {
-						owns_state = 871
+				871 = {
+					OWNER = {
+						transfer_state = 803
 					}
-					transfer_state = 803
 				}
 			}
 			if = {
 				limit = {
 					owns_state = 1225
-					any_other_country = {
+					NOT = {
 						owns_state = 871
 					}
 				}
-				random_other_country = {
-					limit = {
-						owns_state = 871
+				871 = {
+					OWNER = {
+						transfer_state = 1225
 					}
-					transfer_state = 1225
 				}
 			}
 		}
 	}
 	if = {
 		limit = {
-			any_country = {
-				original_tag = GRE
+			any_country_with_original_tag = {
+				original_tag_to_check = GRE
 				has_country_flag = great_war_winner
 			}
 		}
@@ -5591,7 +5589,9 @@ conference_effect = {
 	}
 	if = {
 		limit = {
-			GRE = {
+			any_country_with_original_tag = {
+				original_tag_to_check = GRE
+				has_country_flag = GRE_monarchist_mainland_flag
 				NOT = {
 					has_country_flag = great_war_loser
 					has_country_flag = great_war_winner
@@ -5600,23 +5600,23 @@ conference_effect = {
 		}
 		if = {
 			limit = {
-				GRE = {
-					any_other_country = {
-						has_country_flag = GRE_national_defense_flag
-						has_country_flag = great_war_loser
-						has_global_flag = great_war_ends
-						has_global_flag = GRE_thessaloniki_state_formed
-					}
+				any_country_with_original_tag = {
+					original_tag_to_check = GRE
+					NOT = { tag = GRM }
+					has_country_flag = GRE_national_defense_flag
+					has_country_flag = great_war_loser
+					has_global_flag = great_war_ends
+					has_global_flag = GRE_thessaloniki_state_formed
 				}
 			}
-			GRE = {
+			GRM = {
 				THE = {
 					every_state = {
 						limit = {
 							NOT = { is_owned_by = PREV }
 							is_controlled_by = PREV
 						}
-						set_state_controller_to = GRE
+						set_state_controller_to = GRM
 					}
 					every_owned_state = {
 						limit = {
@@ -5624,7 +5624,7 @@ conference_effect = {
 								is_controlled_by = PREV
 							}
 						}
-						set_state_owner_to = GRE
+						set_state_owner_to = GRM
 					}
 					GRE_pavlos_kountouriotis = {
 						remove_country_leader_role = {
@@ -5640,13 +5640,13 @@ conference_effect = {
 						limit = {
 							is_generic_character = no
 						}
-						set_nationality = GRE
+						set_nationality = GRM
 					}
 					transfer_navy = {
-						target = GRE
+						target = GRM
 					}
 					transfer_units_fraction = {
-						target = GRE
+						target = GRM
 						size = 1
 						target_organization = 1
 						source_organization = 1

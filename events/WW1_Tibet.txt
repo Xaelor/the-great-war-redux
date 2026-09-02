@@ -59,12 +59,12 @@ country_event = {
 	picture = GFX_report_event_generic_conference
 	trigger = {
 		owns_state = 432
-		is_china_or_warlord_no_tt = no
+		is_china_or_warlord = no
 		NOT = {
 			original_tag = TIB
 			has_war_with = TIB
 			any_enemy_country = {
-				is_china_or_warlord_no_tt = yes
+				is_china_or_warlord = yes
 			}
 		}
 		TIB = {
@@ -135,7 +135,7 @@ country_event = {
 		name = ww1_tibet.4.b
 		if = {
 			limit = {
-				is_china_or_warlord_no_tt = yes
+				is_china_or_warlord = yes
 			}
 			custom_effect_tooltip = historical_tt
 		}
@@ -150,7 +150,7 @@ country_event = {
 			base = 1
 			modifier = {
 				add = 10
-				is_china_or_warlord_no_tt = yes
+				is_china_or_warlord = yes
 			}
 			modifier = {
 				factor = 0
@@ -316,6 +316,20 @@ country_event = {
 	fire_only_once = yes
 	option = {
 		name = ww1_tibet.6.a
+		declare_war_on = {
+			target = FROM
+			type = annex_everything
+		}
+		every_other_country = {
+			limit = {
+				is_china_or_warlord = yes
+				is_ally_with = ROOT
+			}
+			add_to_war = {
+				targeted_alliance = ROOT
+				enemy = FROM
+			}
+		}
 		FROM = {
 			every_enemy_country = {
 				limit = {
@@ -325,9 +339,9 @@ country_event = {
 					}
 				}
 				ROOT = {
-					add_to_war = {
-						targeted_alliance = PREV.PREV
-						enemy = PREV
+					declare_war_on = {
+						target = PREV
+						type = annex_everything
 					}
 				}
 				every_other_country = {
@@ -341,10 +355,6 @@ country_event = {
 					}
 				}
 			}
-		}
-		declare_war_on = {
-			target = FROM
-			type = annex_everything
 		}
 		ai_chance = {
 			base = 5

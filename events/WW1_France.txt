@@ -4683,11 +4683,12 @@ country_event = {
 				add = 5
 			}
 			modifier = {
-				any_country = {
-					has_war_with = GER
-					is_major = yes
-					NOT = {
-						tag = FRA
+				GER = {
+					any_enemy_country = {
+						is_major = yes
+						NOT = {
+							tag = FRA
+						}
 					}
 				}
 				add = 5
@@ -5252,30 +5253,33 @@ country_event = {
 			factor = 100
 			modifier = {
 				factor = 0
-				any_other_country = {
-					owns_state = 11
-					has_war_with = PREV
-				}
-			}
-			modifier = {
-				factor = 0
-				any_other_country = {
-					owns_state = 11
-					is_subject = yes
-					NOT = {
-						is_subject_of = PREV
+				11 = {
+					OWNER = {
+						has_war_with = PREV.PREV
 					}
 				}
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
-					owns_state = 11
-					if = {
-						limit = {
-							PREV = { NOT = { has_government = communism } }
+				11 = {
+					OWNER = {
+						is_subject = yes
+						NOT = {
+							is_subject_of = PREV.PREV
 						}
-						has_government = communism
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				11 = {
+					OWNER = {
+						if = {
+							limit = {
+								PREV.PREV = { NOT = { has_government = communism } }
+							}
+							has_government = communism
+						}
 					}
 				}
 			}
@@ -5289,11 +5293,10 @@ country_event = {
 				remove_contested_owner = LIT
 			}
 		}
-		every_other_country = {
-			limit = {
-				owns_state = 763
-			}
-			transfer_state = 188
+		763 = {
+			OWNER = {
+				transfer_state = 188
+			}		
 		}
 		ai_chance = {
 			base = 5
@@ -5303,42 +5306,44 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
-					owns_state = 763
-					has_war_with = PREV
-				}
-			}
-			modifier = {
-				factor = 0
-				any_other_country = {
-					owns_state = 763
-					is_subject = yes
-					NOT = {
-						is_subject_of = PREV
+				763 = {
+					OWNER = {
+						has_war_with = PREV.PREV
 					}
 				}
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
-					owns_state = 763
-					if = {
-						limit = {
-							PREV = { NOT = { has_government = communism } }
+				763 = {
+					OWNER = {
+						is_subject = yes
+						NOT = {
+							is_subject_of = PREV.PREV
 						}
-						has_government = communism
 					}
 				}
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
-					owns_state = 763
-					if = {
-						limit = {
-							PREV = { NOT = { has_government = fascism } }
+				763 = {
+					OWNER = {
+						is_subject = yes
+						NOT = {
+							is_subject_of = PREV.PREV
 						}
-						has_government = fascism
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				763 = {
+					OWNER = {
+						if = {
+							limit = {
+								PREV.PREV = { NOT = { has_government = fascism } }
+							}
+							has_government = fascism
+						}
 					}
 				}
 			}
@@ -7572,12 +7577,17 @@ country_event = {
 		every_owned_state = {
 			limit = {
 				is_core_of = MOR
-			}
-			random_country = {
-				limit = {
-					owns_state = 461
+				OR = {
+					is_coastal = yes
+					any_neighbor_state = {
+						is_owned_by = MOR
+					}
 				}
-				transfer_state = PREV
+			}
+			461 = {
+				owner = {
+					transfer_state = PREV.PREV
+				}
 			}
 		}
 		# Pondicherry

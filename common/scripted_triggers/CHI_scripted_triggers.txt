@@ -33,7 +33,11 @@ is_chinese_warlord_no_tt = {
 is_chinese_warlord = {
 	custom_trigger_tooltip = {
 		tooltip = is_chinese_warlord_tt
-		is_chinese_warlord_no_tt = yes
+		any_country_with_original_tag_of = {
+			target = constant:country_groups.china_or_warlord
+			tag = PREV
+		}
+		NOT = { tag = CHN }
 	}
 }
 is_china_or_warlord_no_tt = {
@@ -46,7 +50,10 @@ is_china_or_warlord_no_tt = {
 is_china_or_warlord = {
 	custom_trigger_tooltip = {
 		tooltip = is_china_or_warlord_tt
-		is_china_or_warlord_no_tt = yes
+		any_country_with_original_tag_of = {
+			target = constant:country_groups.china_or_warlord
+			tag = PREV
+		}
 	}
 }
 is_independent_china_or_warlord = {
@@ -54,19 +61,6 @@ is_independent_china_or_warlord = {
 		tooltip = is_independent_china_or_warlord_tt
 		is_china_or_warlord = yes
 		is_subject = no
-	}
-}
-is_china = {
-	custom_trigger_tooltip = {
-		tooltip = is_china_tt
-		OR = {
-			AND = {
-				is_chinese_warlord = yes
-				has_country_flag = reunited_china
-			}
-			original_tag = CHI
-			original_tag = QIN		
-		}
 	}
 }
 is_chinese_core = {
@@ -144,10 +138,10 @@ is_chinese_claim = {
 has_chinese_civil_war = {
 	custom_trigger_tooltip = {
 		tooltip = has_chinese_civil_war_tt
-		any_country = {
-			is_china_or_warlord_no_tt = yes
+		any_country_with_original_tag_of = {
+			target = constant:country_groups.china_or_warlord
 			any_enemy_country = {
-				is_china_or_warlord_no_tt = yes
+				is_china_or_warlord = yes
 			}
 		}
 	}
@@ -155,9 +149,9 @@ has_chinese_civil_war = {
 is_in_chinese_civil_war = {
 	custom_trigger_tooltip = {
 		tooltip = has_chinese_civil_war_tt
-		is_china_or_warlord_no_tt = yes
+		is_china_or_warlord = yes
 		any_enemy_country = {
-			is_china_or_warlord_no_tt = yes
+			is_china_or_warlord = yes
 		}
 	}
 }
