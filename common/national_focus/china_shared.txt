@@ -1,26 +1,26 @@
 ####DIPLOMACY
-shared_focus = {
+joint_focus = {
 	id = CHI_nation_recovery
 	icon = GFX_focus_dead_economy
 	cost = 5
 	x = -25
 	y = 1
+	joint_trigger = {
+		is_china_or_warlord = yes
+	}
 
 	offset = {
-		x = 11
-		y = 11
+		x = 25
+		y = 9
 		trigger = {
 			has_focus_tree = qing_focus
 		}
 	}
-	prerequisite = {
-		focus = CHI_stand_with_tongmenghui
-		focus = QIN_nationalise_railways
-	}
 	available = {
-
+		has_global_flag = xinhai_revolution_ends
 	}
 	bypass = {
+
 	}
 	completion_reward = {
 		add_tech_bonus = {
@@ -37,12 +37,15 @@ shared_focus = {
 		factor = 10
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_restore_military_production
 	icon = GFX_goal_generic_production2
 	cost = 5
 	prerequisite = {
 		focus = CHI_nation_recovery
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = -5
 	y = 1
@@ -54,7 +57,6 @@ shared_focus = {
 		
 	}
 	completion_reward = {
-		remove_ideas = QIN_idea_purchase_restriction
 		if = {
 			limit = {
 				has_character = CHI_zhou_xuexi
@@ -73,12 +75,15 @@ shared_focus = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_pave_way_for_industrialization
 	icon = GFX_focus_seven_year_plan
 	cost = 8
 	prerequisite = {
 		focus = CHI_restore_military_production
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = -2
 	y = 1
@@ -92,7 +97,12 @@ shared_focus = {
 		}
 	}
 	completion_reward = {
-		add_ideas = civilian_economy
+		if = {
+			limit = {
+				has_idea = isolation
+			}
+			add_ideas = civilian_economy
+		}	
 	}
 	search_filters = {
 		FOCUS_FILTER_INDUSTRY
@@ -101,12 +111,15 @@ shared_focus = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_north_provinces
 	icon = GFX_focus_generic_industry_1
 	cost = 8
 	prerequisite = {
 		focus = CHI_pave_way_for_industrialization
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = -2
 	y = 1
@@ -139,7 +152,7 @@ shared_focus = {
 	}
 	bypass = {
 	}
-	completion_reward = {
+	completion_reward_joint_originator = {
 		build_railway = {
 			level = 1
 			build_only_on_allied = yes
@@ -248,57 +261,7 @@ shared_focus = {
 				instant_build = yes
 			}
 		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_6
-			}
-			remove_ideas = QIN_idea_payments_of_indemnities_6
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_5
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_5
-				add_idea = QIN_idea_payments_of_indemnities_6
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_4
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_4
-				add_idea = QIN_idea_payments_of_indemnities_5
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_3
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_3
-				add_idea = QIN_idea_payments_of_indemnities_4
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_2
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_2
-				add_idea = QIN_idea_payments_of_indemnities_3
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities
-				add_idea = QIN_idea_payments_of_indemnities_2
-			}
-		}
+		CHI_ease_payments_of_indemnities = yes
 	}
 	search_filters = {
 		FOCUS_FILTER_INDUSTRY
@@ -307,12 +270,15 @@ shared_focus = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_central_provinces
 	icon = GFX_focus_generic_train
 	cost = 8
 	prerequisite = {
 		focus = CHI_pave_way_for_industrialization
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 0
 	y = 1
@@ -369,7 +335,7 @@ shared_focus = {
 	}
 	bypass = {
 	}
-	completion_reward = {
+	completion_reward_joint_originator = {
 		build_railway = {
 			level = 1
 			build_only_on_allied = yes
@@ -529,57 +495,7 @@ shared_focus = {
 				instant_build = yes
 			}
 		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_6
-			}
-			remove_ideas = QIN_idea_payments_of_indemnities_6
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_5
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_5
-				add_idea = QIN_idea_payments_of_indemnities_6
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_4
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_4
-				add_idea = QIN_idea_payments_of_indemnities_5
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_3
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_3
-				add_idea = QIN_idea_payments_of_indemnities_4
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_2
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_2
-				add_idea = QIN_idea_payments_of_indemnities_3
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities
-				add_idea = QIN_idea_payments_of_indemnities_2
-			}
-		}
+		CHI_ease_payments_of_indemnities = yes
 	}
 	search_filters = {
 		FOCUS_FILTER_INDUSTRY
@@ -588,7 +504,7 @@ shared_focus = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_central_factories
 	icon = GFX_focus_industry_profit
 	cost = 10
@@ -611,7 +527,7 @@ shared_focus = {
 	}
 	bypass = {
 	}
-	completion_reward = {
+	completion_reward_joint_originator = {
 		if = {
 			limit = {
 				NOT = {
@@ -694,57 +610,7 @@ shared_focus = {
 				instant_build = yes
 			}
 		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_6
-			}
-			remove_ideas = QIN_idea_payments_of_indemnities_6
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_5
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_5
-				add_idea = QIN_idea_payments_of_indemnities_6
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_4
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_4
-				add_idea = QIN_idea_payments_of_indemnities_5
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_3
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_3
-				add_idea = QIN_idea_payments_of_indemnities_4
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_2
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_2
-				add_idea = QIN_idea_payments_of_indemnities_3
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities
-				add_idea = QIN_idea_payments_of_indemnities_2
-			}
-		}
+		CHI_ease_payments_of_indemnities = yes
 	}
 	search_filters = {
 		FOCUS_FILTER_INDUSTRY
@@ -753,12 +619,15 @@ shared_focus = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_manchu_factories
 	icon = GFX_goal_generic_construct_civ_factory
 	cost = 10
 	prerequisite = {
 		focus = CHI_north_provinces
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 0
 	y = 1
@@ -779,7 +648,7 @@ shared_focus = {
 	}
 	bypass = {
 	}
-	completion_reward = {
+	completion_reward_joint_originator = {
 		if = {
 			limit = {
 				NOT = {
@@ -830,57 +699,7 @@ shared_focus = {
 				instant_build = yes
 			}
 		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_6
-			}
-			remove_ideas = QIN_idea_payments_of_indemnities_6
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_5
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_5
-				add_idea = QIN_idea_payments_of_indemnities_6
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_4
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_4
-				add_idea = QIN_idea_payments_of_indemnities_5
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_3
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_3
-				add_idea = QIN_idea_payments_of_indemnities_4
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_2
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_2
-				add_idea = QIN_idea_payments_of_indemnities_3
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities
-				add_idea = QIN_idea_payments_of_indemnities_2
-			}
-		}
+		CHI_ease_payments_of_indemnities = yes
 	}
 	search_filters = {
 		FOCUS_FILTER_INDUSTRY
@@ -889,12 +708,15 @@ shared_focus = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_south_provinces
 	icon = GFX_focus_generic_industry_1
 	cost = 8
 	prerequisite = {
 		focus = CHI_pave_way_for_industrialization
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 2
 	y = 1
@@ -942,7 +764,7 @@ shared_focus = {
 	}
 	bypass = {
 	}
-	completion_reward = {
+	completion_reward_joint_originator = {
 		if = {
 			limit = {
 				NOT = {
@@ -1059,57 +881,7 @@ shared_focus = {
 				instant_build = yes
 			}
 		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_6
-			}
-			remove_ideas = QIN_idea_payments_of_indemnities_6
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_5
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_5
-				add_idea = QIN_idea_payments_of_indemnities_6
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_4
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_4
-				add_idea = QIN_idea_payments_of_indemnities_5
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_3
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_3
-				add_idea = QIN_idea_payments_of_indemnities_4
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_2
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_2
-				add_idea = QIN_idea_payments_of_indemnities_3
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities
-				add_idea = QIN_idea_payments_of_indemnities_2
-			}
-		}
+		CHI_ease_payments_of_indemnities = yes
 	}
 	search_filters = {
 		FOCUS_FILTER_INDUSTRY
@@ -1118,12 +890,15 @@ shared_focus = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_south_factories
 	icon = GFX_goal_generic_construct_civ_factory
 	cost = 10
 	prerequisite = {
 		focus = CHI_south_provinces
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 0
 	y = 1
@@ -1144,7 +919,7 @@ shared_focus = {
 	}
 	bypass = {
 	}
-	completion_reward = {
+	completion_reward_joint_originator = {
 		if = {
 			limit = {
 				controls_state = 620
@@ -1214,57 +989,7 @@ shared_focus = {
 				instant_build = yes
 			}
 		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_6
-			}
-			remove_ideas = QIN_idea_payments_of_indemnities_6
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_5
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_5
-				add_idea = QIN_idea_payments_of_indemnities_6
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_4
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_4
-				add_idea = QIN_idea_payments_of_indemnities_5
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_3
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_3
-				add_idea = QIN_idea_payments_of_indemnities_4
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities_2
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities_2
-				add_idea = QIN_idea_payments_of_indemnities_3
-			}
-		}
-		if = {
-			limit = {
-				has_idea = QIN_idea_payments_of_indemnities
-			}
-			swap_ideas = {
-				remove_idea = QIN_idea_payments_of_indemnities
-				add_idea = QIN_idea_payments_of_indemnities_2
-			}
-		}
+		CHI_ease_payments_of_indemnities = yes
 	}
 	search_filters = {
 		FOCUS_FILTER_INDUSTRY
@@ -1273,7 +998,7 @@ shared_focus = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_fight_against_famine
 	icon = GFX_goal_generic_consumer_goods
 	cost = 5
@@ -1285,6 +1010,9 @@ shared_focus = {
 	}
 	prerequisite = {
 		focus = CHI_manchu_factories
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 0
 	y = 1
@@ -1305,12 +1033,15 @@ shared_focus = {
 		factor = 10
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_nanjing_arsenal
 	icon = GFX_goal_generic_construct_mil_factory
 	cost = 7
 	prerequisite = {
 		focus = CHI_restore_military_production
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 2
 	y = 1
@@ -1322,7 +1053,7 @@ shared_focus = {
 	}
 	bypass = {
 	}
-	completion_reward = {
+	completion_reward_joint_originator = {
 		613 = {
 			add_extra_state_shared_building_slots = 2
 			add_building_construction = {
@@ -1339,12 +1070,15 @@ shared_focus = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_beijing_arsenal
 	icon = GFX_goal_generic_construct_mil_factory
 	cost = 7
 	prerequisite = {
 		focus = CHI_nanjing_arsenal
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 0
 	y = 2
@@ -1356,7 +1090,7 @@ shared_focus = {
 	}
 	bypass = {
 	}
-	completion_reward = {
+	completion_reward_joint_originator = {
 		608 = {
 			add_extra_state_shared_building_slots = 2
 			add_building_construction = {
@@ -1373,12 +1107,15 @@ shared_focus = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_village_mechanization
 	icon = GFX_goal_generic_construct_civilian
 	cost = 10
 	prerequisite = {
 		focus = CHI_beijing_arsenal
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 0
 	y = 1
@@ -1391,6 +1128,8 @@ shared_focus = {
 	}
 	completion_reward = {
 		CHI_idea_weak_industry_upgrade = yes
+	}
+	completion_reward_joint_originator = {
 		random_owned_state = {
 			limit = {
 				is_fully_controlled_by = ROOT
@@ -1468,12 +1207,15 @@ shared_focus = {
 		}
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_appease_the_colonialists
 	icon = GFX_focus_usa_reestablish_the_gold_standard
 	cost = 5
 	prerequisite = {
 		focus = CHI_nation_recovery
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 4
 	y = 1
@@ -1483,7 +1225,9 @@ shared_focus = {
 	bypass = {
 	}
 	completion_reward = {
-		boxer_protocol_ease = yes
+		CHI_idea_weak_industry_upgrade = yes
+	}
+	completion_reward_joint_originator = {
 		if = {
 			limit = {
 				tag = CHI
@@ -1505,7 +1249,19 @@ shared_focus = {
 				add_opinion_modifier = {
 					target = ROOT
 					modifier = CHI_appeased_us
+					days = 365
 				}
+				add_to_variable = {
+					var = CHI_foreign_influence
+					tooltip = CHI_modify_THIS_influence_tt
+					value = 0.01
+				}
+				clamp_variable = {
+					var = CHI_foreign_influence
+					min = 0
+					max = 1
+				}
+				CHI_calculate_influnce_in_china_modifiers = yes
 			}
 		}
 		if = {
@@ -1520,7 +1276,19 @@ shared_focus = {
 				add_opinion_modifier = {
 					target = ROOT
 					modifier = CHI_appeased_us
+					days = 365
 				}
+				add_to_variable = {
+					var = CHI_foreign_influence
+					tooltip = CHI_modify_THIS_influence_tt
+					value = 0.01
+				}
+				clamp_variable = {
+					var = CHI_foreign_influence
+					min = 0
+					max = 1
+				}
+				CHI_calculate_influnce_in_china_modifiers = yes
 			}
 		}
 		if = {
@@ -1535,7 +1303,19 @@ shared_focus = {
 				add_opinion_modifier = {
 					target = ROOT
 					modifier = CHI_appeased_us
+					days = 365
 				}
+				add_to_variable = {
+					var = CHI_foreign_influence
+					tooltip = CHI_modify_THIS_influence_tt
+					value = 0.01
+				}
+				clamp_variable = {
+					var = CHI_foreign_influence
+					min = 0
+					max = 1
+				}
+				CHI_calculate_influnce_in_china_modifiers = yes
 			}
 		}
 		if = {
@@ -1550,6 +1330,7 @@ shared_focus = {
 				add_opinion_modifier = {
 					target = ROOT
 					modifier = CHI_appeased_us
+					days = 365
 				}
 			}
 		}
@@ -1565,17 +1346,33 @@ shared_focus = {
 				add_opinion_modifier = {
 					target = ROOT
 					modifier = CHI_appeased_us
+					days = 365
 				}
+				add_to_variable = {
+					var = CHI_foreign_influence
+					tooltip = CHI_modify_THIS_influence_tt
+					value = 0.01
+				}
+				clamp_variable = {
+					var = CHI_foreign_influence
+					min = 0
+					max = 1
+				}
+				CHI_calculate_influnce_in_china_modifiers = yes
 			}
 		}
+		CHI_calculate_foreign_influnce_for_all = yes
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_british_manufacturer
 	icon = GFX_focus_chi_british_cooperation
 	cost = 5
 	prerequisite = {
 		focus = CHI_appease_the_colonialists
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = -4
 	y = 1
@@ -1596,16 +1393,35 @@ shared_focus = {
 		custom_effect_tooltip = available_designer
 		show_ideas_tooltip = CHI_hong_kong_electric_co_ltd
 	}
+	completion_reward_joint_originator = {	
+		ENG = {
+			add_to_variable = {
+				var = CHI_foreign_influence
+				tooltip = CHI_modify_THIS_influence_tt
+				value = 0.02
+			}
+			clamp_variable = {
+				var = CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
+		}
+		CHI_calculate_foreign_influnce_for_all = yes
+	}
 	ai_will_do = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_chinese_labour_corps
 	icon = GFX_focus_socialist_worker
 	cost = 6
 	prerequisite = {
 		focus = CHI_british_manufacturer
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = -1
 	y = 1
@@ -1620,7 +1436,7 @@ shared_focus = {
 			has_war = yes
 		}
 	}
-	completion_reward = {
+	completion_reward_joint_originator = {
 		if = {
 			limit = {
 				ENG = {
@@ -1646,18 +1462,23 @@ shared_focus = {
 				add_ideas = CHI_idea_labour_corps
 			}
 		}
-		boxer_protocol_ease = yes
+	}
+	completion_reward = {
+		CHI_idea_weak_industry_upgrade = yes
 	}
 	ai_will_do = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_purchase_of_machines
 	icon = GFX_goal_generic_construct_civ_factory
 	cost = 5
 	prerequisite = {
 		focus = CHI_british_manufacturer
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 1
 	y = 1
@@ -1674,10 +1495,26 @@ shared_focus = {
 			uses = 2
 			category = industry
 		}
-		boxer_protocol_ease = yes
+		CHI_idea_weak_industry_upgrade = yes
+	}
+	completion_reward_joint_originator = {	
+		ENG = {
+			add_to_variable = {
+				var = CHI_foreign_influence
+				tooltip = CHI_modify_THIS_influence_tt
+				value = 0.01
+			}
+			clamp_variable = {
+				var = CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
+		}
+		CHI_calculate_foreign_influnce_for_all = yes
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_aviation
 	icon = GFX_goal_generic_air_production
 	cost = 8
@@ -1686,6 +1523,9 @@ shared_focus = {
 	}
 	prerequisite = {
 		focus = CHI_purchase_of_machines
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 1
 	y = 1
@@ -1706,21 +1546,40 @@ shared_focus = {
 		else = {
 			custom_effect_tooltip = available_designer
 			show_ideas_tooltip = CHI_camco
-		}			
+		}
+	}			
+	completion_reward_joint_originator = {	
 		add_equipment_to_stockpile = {
 			type = scout_plane_equipment_1
 			amount = 30
 			producer = ENG
 		}
-		boxer_protocol_ease = yes
+		CHI_idea_weak_industry_upgrade = yes
+		ENG = {
+			add_to_variable = {
+				var = CHI_foreign_influence
+				tooltip = CHI_modify_THIS_influence_tt
+				value = 0.02
+			}
+			clamp_variable = {
+				var = CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
+		}
+		CHI_calculate_foreign_influnce_for_all = yes
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_japanese_manufacturer
 	icon = GFX_focus_chi_collaboration_with_the_japanese
 	cost = 5
 	prerequisite = {
 		focus = CHI_appease_the_colonialists
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 0
 	y = 1
@@ -1735,6 +1594,9 @@ shared_focus = {
 		}
 	}
 	completion_reward = {
+		CHI_idea_weak_industry_upgrade = yes
+	}
+	completion_reward_joint_originator = {
 		613 = {
 			add_extra_state_shared_building_slots = 2
 			add_building_construction = {
@@ -1743,18 +1605,34 @@ shared_focus = {
 				instant_build = yes
 			}
 		}
-		boxer_protocol_ease = yes
+		JAP = {
+			add_to_variable = {
+				var = CHI_foreign_influence
+				tooltip = CHI_modify_THIS_influence_tt
+				value = 0.02
+			}
+			clamp_variable = {
+				var = CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
+		}
+		CHI_calculate_foreign_influnce_for_all = yes
 	}
 	ai_will_do = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_shanghai_shipyards
 	icon = GFX_goal_generic_construct_naval_dockyard
 	cost = 7
 	prerequisite = {
 		focus = CHI_japanese_manufacturer
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = -1
 	y = 1
@@ -1778,20 +1656,39 @@ shared_focus = {
 		else = {
 			custom_effect_tooltip = available_designer
 			show_ideas_tooltip = CHI_jiangnan_shipyard_group
-		}	
+		}
+	}	
+	completion_reward_joint_originator = {	
+		JAP = {
+			add_to_variable = {
+				var = CHI_foreign_influence
+				tooltip = CHI_modify_THIS_influence_tt
+				value = 0.01
+			}
+			clamp_variable = {
+				var = CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
+		}
+		CHI_calculate_foreign_influnce_for_all = yes
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_coastal_defense
 	icon = GFX_focus_generic_coastal_fort
 	cost = 7
 	prerequisite = {
 		focus = CHI_japanese_manufacturer
 	}
+	joint_trigger = {
+		is_china_or_warlord = yes
+	}
 	x = 1
 	y = 1
 	relative_position_id = CHI_japanese_manufacturer
-	completion_reward = {
+	completion_reward_joint_originator = {
 		random_owned_state = {
 			limit = {
 				is_coastal = yes
@@ -1821,10 +1718,12 @@ shared_focus = {
 			}
 			set_state_flag = CHI_recovery_of_naval_infrastructure
 		}
-		boxer_protocol_ease = yes
+	}	
+	completion_reward = {
+		CHI_idea_weak_industry_upgrade = yes
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_rebuild_beiyang_fleet
 	icon = GFX_goal_generic_navy_battleship
 	cost = 8
@@ -1834,15 +1733,21 @@ shared_focus = {
 	prerequisite = {
 		focus = CHI_shanghai_shipyards
 	}
+	joint_trigger = {
+		is_china_or_warlord = yes
+	}
 	x = 1
 	y = 1
 	relative_position_id = CHI_shanghai_shipyards
 	available = {
-	608 = {
-			is_fully_controlled_by = ROOT
-		}
+		608 = {
+				is_fully_controlled_by = ROOT
+			}
 	}
 	completion_reward = {
+		CHI_idea_weak_industry_upgrade = yes
+	}
+	completion_reward_joint_originator = {
 		608 = {
 			add_extra_state_shared_building_slots = 3
 			add_building_construction = {
@@ -1851,15 +1756,31 @@ shared_focus = {
 				instant_build = yes
 			}
 		}
-		boxer_protocol_ease = yes
+		JAP = {
+			add_to_variable = {
+				var = CHI_foreign_influence
+				tooltip = CHI_modify_THIS_influence_tt
+				value = 0.02
+			}
+			clamp_variable = {
+				var = CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
+		}
+		CHI_calculate_foreign_influnce_for_all = yes
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_german_manufacturer
 	icon = GFX_focus_deal_with_german_empire
 	cost = 5
 	prerequisite = {
 		focus = CHI_appease_the_colonialists
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 4
 	y = 1
@@ -1874,23 +1795,42 @@ shared_focus = {
 		}
 	}
 	completion_reward = {
+		CHI_idea_weak_industry_upgrade = yes
+	}
+	completion_reward_joint_originator = {
 		add_equipment_to_stockpile = {
 			type = infantry_equipment_0
 			amount = 5000
 			producer = GER
+		}	
+		GER = {
+			add_to_variable = {
+				var = CHI_foreign_influence
+				tooltip = CHI_modify_THIS_influence_tt
+				value = 0.02
+			}
+			clamp_variable = {
+				var = CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
 		}
-		boxer_protocol_ease = yes
+		CHI_calculate_foreign_influnce_for_all = yes
 	}
 	ai_will_do = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_mauser_contract
 	icon = GFX_focus_german_equipment
 	cost = 10
 	prerequisite = {
 		focus = CHI_german_manufacturer
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = -1
 	y = 1
@@ -1909,18 +1849,37 @@ shared_focus = {
 		else = {
 			custom_effect_tooltip = available_designer
 			show_ideas_tooltip = CHI_mauser
-		}	
+		}
+	}
+	completion_reward_joint_originator = {
+		GER = {
+			add_to_variable = {
+				var = CHI_foreign_influence
+				tooltip = CHI_modify_THIS_influence_tt
+				value = 0.01
+			}
+			clamp_variable = {
+				var = CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
+		}
+		CHI_calculate_foreign_influnce_for_all = yes
 	}
 	ai_will_do = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_hanyang
 	icon = GFX_goal_generic_construct_mil_factory
 	cost = 5
 	prerequisite = {
 		focus = CHI_german_manufacturer
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 1
 	y = 1
@@ -1940,10 +1899,26 @@ shared_focus = {
 			custom_effect_tooltip = available_designer
 			show_ideas_tooltip = CHI_hanyang_arsenal
 		}	
-		boxer_protocol_ease = yes
+		CHI_idea_weak_industry_upgrade = yes
+	}
+	completion_reward_joint_originator = {
+		GER = {
+			add_to_variable = {
+				var = CHI_foreign_influence
+				tooltip = CHI_modify_THIS_influence_tt
+				value = 0.01
+			}
+			clamp_variable = {
+				var = CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
+		}
+		CHI_calculate_foreign_influnce_for_all = yes
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_modern_staff
 	icon = GFX_focus_generic_military_mission
 	cost = 5
@@ -1953,18 +1928,37 @@ shared_focus = {
 	prerequisite = {
 		focus = CHI_mauser_contract
 	}
+	joint_trigger = {
+		is_china_or_warlord = yes
+	}
 	x = 1
 	y = 1
 	relative_position_id = CHI_mauser_contract
 	completion_reward = {
+		CHI_idea_weak_industry_upgrade = yes
+	}
+	completion_reward_joint_originator = {
 		country_event = {
 			id = ww1_china.77
 			hours = 14
+		}	
+		GER = {
+			add_to_variable = {
+				var = CHI_foreign_influence
+				tooltip = CHI_modify_THIS_influence_tt
+				value = 0.02
+			}
+			clamp_variable = {
+				var = CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
 		}
-		boxer_protocol_ease = yes
+		CHI_calculate_foreign_influnce_for_all = yes
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_education_reform
 	icon = GFX_focus_generic_education
 	cost = 10
@@ -1972,6 +1966,9 @@ shared_focus = {
 		focus = CHI_modern_staff
 		focus = CHI_rebuild_beiyang_fleet
 		focus = CHI_aviation
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 0
 	y = 1
@@ -1987,12 +1984,15 @@ shared_focus = {
 		factor = 10
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_cooperation_with_dominions
 	icon = GFX_focus_eng_the_sun_never_sets
 	cost = 6
 	prerequisite = {
 		focus = CHI_chinese_labour_corps
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 0
 	y = 2
@@ -2013,7 +2013,7 @@ shared_focus = {
 			has_war_with = ENG
 		}
 	}
-	completion_reward = {
+	completion_reward_joint_originator = {
 		ENG = {
 			every_subject_country = {
 				limit = {
@@ -2027,16 +2027,12 @@ shared_focus = {
 }
 
 ### ARMY
-shared_focus = {
+joint_focus = {
 	id = CHI_army_westernization
 	icon = GFX_focus_chi_army_reform
 	cost = 5
 	x = 30
 	y = 1
-	prerequisite = {
-		focus = CHI_stand_with_tongmenghui
-		focus = QIN_army_leadership_problem
-	}
 	offset = {
 		trigger = {
 			has_completed_focus = CHI_ruling_of_yuan_shikai
@@ -2053,10 +2049,14 @@ shared_focus = {
 		trigger = {
 			has_focus_tree = qing_focus
 		}
-		x = -16
-		y = 10
+		x = -11
+		y = 9
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	available = {
+		has_global_flag = xinhai_revolution_ends
 	}
 	bypass = {
 	}
@@ -2079,13 +2079,16 @@ shared_focus = {
 		factor = 10
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_invite_military_advisers
 	icon = GFX_goal_generic_army_doctrines
 	cost = 6
 	relative_position_id = CHI_army_westernization
 	prerequisite = {
 		focus = CHI_army_westernization
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = -1
 	y = 1
@@ -2101,13 +2104,16 @@ shared_focus = {
 	}
 	search_filters = { FOCUS_FILTER_ARMY_XP }
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_the_armies_of_warlords
 	icon = GFX_focus_five_race_star_flag
 	cost = 5
 	relative_position_id = CHI_army_westernization
 	prerequisite = {
 		focus = CHI_invite_military_advisers
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = -2
 	y = 2
@@ -2126,13 +2132,16 @@ shared_focus = {
 	}
 	search_filters = { FOCUS_FILTER_ARMY_XP }
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_send_officers_to_military_schools
 	icon = GFX_focus_generic_military_academy
 	cost = 5
 	relative_position_id = CHI_army_westernization
 	prerequisite = {
 		focus = CHI_invite_military_advisers
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = -1
 	y = 3
@@ -2156,13 +2165,16 @@ shared_focus = {
 	}
 	search_filters = { FOCUS_FILTER_ARMY_XP }
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_towed_artillery
 	icon = GFX_goal_generic_army_artillery2
 	cost = 5
 	relative_position_id = CHI_army_westernization
 	prerequisite = {
 		focus = CHI_army_westernization
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 1
 	y = 1
@@ -2175,7 +2187,7 @@ shared_focus = {
 		}
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_support_corps
 	icon = GFX_goal_generic_military_sphere
 	cost = 5
@@ -2183,6 +2195,9 @@ shared_focus = {
 	prerequisite = {
 		focus = CHI_towed_artillery
 		focus = CHI_invite_military_advisers
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 0
 	y = 2
@@ -2195,13 +2210,16 @@ shared_focus = {
 		}
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_train_engineers
 	icon = GFX_goal_generic_production
 	cost = 5
 	relative_position_id = CHI_army_westernization
 	prerequisite = {
 		focus = CHI_towed_artillery
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 2
 	y = 2
@@ -2214,13 +2232,16 @@ shared_focus = {
 		}
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_train_pilots
 	icon = GFX_focus_Aviator_Mandarin_Duck
 	cost = 5
 	relative_position_id = CHI_army_westernization
 	prerequisite = {
 		focus = CHI_train_engineers
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 1
 	y = 3
@@ -2244,13 +2265,16 @@ shared_focus = {
 	}
 	search_filters = { FOCUS_FILTER_AIR_XP }
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_armored_vehicles
 	icon = GFX_focus_early_tank
 	cost = 8
 	relative_position_id = CHI_army_westernization
 	prerequisite = {
 		focus = CHI_train_engineers
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 3
 	y = 3
@@ -2284,6 +2308,8 @@ shared_focus = {
 			uses = 1
 			category = armor
 		}
+	}
+	completion_reward_joint_originator = {	
 		if = {
 			limit = {
 				has_dlc = "No Step Back"
@@ -2325,7 +2351,7 @@ shared_focus = {
 		}
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_state_university
 	icon = GFX_goal_tfv_generic_tech_sharing
 	cost = 10
@@ -2336,6 +2362,9 @@ shared_focus = {
 	}
 	prerequisite = {
 		focus = CHI_send_officers_to_military_schools
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 0
 	y = 4
@@ -2368,15 +2397,14 @@ shared_focus = {
 }
 
 #### NAVY
-shared_focus = {
+joint_focus = {
 	id = CHI_recovery_of_naval_infrastructure
 	icon = GFX_goal_generic_construct_naval_dockyard
 	cost = 10
 	x = 23
 	y = 1
-	prerequisite = {
-		focus = CHI_stand_with_tongmenghui
-		focus = QIN_army_leadership_problem
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	offset = {
 		trigger = {
@@ -2394,10 +2422,11 @@ shared_focus = {
 		trigger = {
 			has_focus_tree = qing_focus
 		}
-		x = -15
-		y = 10
+		x = -10
+		y = 9
 	}
 	available = {
+		has_global_flag = xinhai_revolution_ends
 		any_owned_state = {
 			is_coastal = yes
 		}
@@ -2427,6 +2456,8 @@ shared_focus = {
 		else = {
 			navy_experience = 25
 		}
+	}	
+	completion_reward_joint_originator = {	
 		random_owned_state = {
 			limit = {
 				is_coastal = yes
@@ -2474,13 +2505,16 @@ shared_focus = {
 		}
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_destroyers_fleet
 	icon = GFX_focus_generic_destroyer
 	cost = 5
 	relative_position_id = CHI_recovery_of_naval_infrastructure
 	prerequisite = {
 		focus = CHI_recovery_of_naval_infrastructure
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = -1
 	y = 1
@@ -2493,13 +2527,16 @@ shared_focus = {
 		}
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_admiralty
 	icon = GFX_goal_generic_navy_cruiser
 	cost = 5
 	relative_position_id = CHI_recovery_of_naval_infrastructure
 	prerequisite = {
 		focus = CHI_recovery_of_naval_infrastructure
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 1
 	y = 1
@@ -2526,7 +2563,7 @@ shared_focus = {
 		}
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_marine_engineering
 	icon = GFX_focus_otto_naval_train
 	cost = 6
@@ -2537,6 +2574,9 @@ shared_focus = {
 	prerequisite = {
 		focus = CHI_destroyers_fleet
 	}
+	joint_trigger = {
+		is_china_or_warlord = yes
+	}
 	x = 0
 	y = 2
 	completion_reward = {
@@ -2544,13 +2584,16 @@ shared_focus = {
 	}
 	search_filters = { FOCUS_FILTER_NAVY_XP }
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_submarine_fleet
 	icon = GFX_goal_generic_navy_submarine
 	cost = 5
 	relative_position_id = CHI_recovery_of_naval_infrastructure
 	prerequisite = {
 		focus = CHI_marine_engineering
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	mutually_exclusive = {
 		focus = CHI_maneuverable_fleet
@@ -2574,13 +2617,16 @@ shared_focus = {
 		}
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_maneuverable_fleet
 	icon = GFX_focus_generic_cruiser2
 	cost = 5
 	relative_position_id = CHI_recovery_of_naval_infrastructure
 	prerequisite = {
 		focus = CHI_marine_engineering
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	mutually_exclusive = {
 		focus = CHI_dreadnought_fever
@@ -2598,13 +2644,16 @@ shared_focus = {
 		}
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_dreadnought_fever
 	icon = GFX_focus_generic_navy_battleship2
 	cost = 5
 	relative_position_id = CHI_recovery_of_naval_infrastructure
 	prerequisite = {
 		focus = CHI_admiralty
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	mutually_exclusive = {
 		focus = CHI_maneuverable_fleet
@@ -2621,7 +2670,7 @@ shared_focus = {
 		}
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_domestic_fleet_doctrine
 	icon = GFX_focus_battleship_production
 	cost = 5
@@ -2630,6 +2679,9 @@ shared_focus = {
 		focus = CHI_maneuverable_fleet
 		focus = CHI_submarine_fleet
 		focus = CHI_dreadnought_fever
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	x = 0
 	y = 4
@@ -2646,7 +2698,7 @@ shared_focus = {
 
 
 ###AFTER XINHAI
-shared_focus = {
+joint_focus = {
 	id = CHI_restore_the_nation
 	icon = GFX_goal_generic_construction
 	cost = 8
@@ -2654,8 +2706,18 @@ shared_focus = {
 		focus = CHI_hold_parliamentary_elections
 		focus = QIN_protect_the_dynasty
 	}
-	x = -12
-	y = 3
+	joint_trigger = {
+		is_china_or_warlord = yes
+	}
+	x = 0
+	y = 0
+	offset = {
+		trigger = {
+			has_focus_tree = china_focus
+		}
+		x = -12
+		y = 3
+	}
 	offset = {
 		trigger = {
 			has_completed_focus = CHI_kuomintang
@@ -2666,8 +2728,8 @@ shared_focus = {
 		trigger = {
 			has_focus_tree = qing_focus
 		}
-		x = 14
-		y = 9
+		x = 12
+		y = 3
 	}
 	available = {
 		has_global_flag = xinhai_revolution_ends
@@ -2683,12 +2745,15 @@ shared_focus = {
 		factor = 1
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_militia_reorganization
 	icon = GFX_focus_generic_manpower
 	cost = 5
 	prerequisite = {
 		focus = CHI_restore_the_nation
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	relative_position_id = CHI_restore_the_nation
 	x = -1
@@ -2710,12 +2775,15 @@ shared_focus = {
 		FOCUS_FILTER_SWI_MILITARY_READINESS
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_economic_stabilization
 	icon = GFX_goal_generic_neutrality_focus
 	cost = 6
 	prerequisite = {
 		focus = CHI_restore_the_nation
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	relative_position_id = CHI_restore_the_nation
 	x = 1
@@ -2741,12 +2809,15 @@ shared_focus = {
 		FOCUS_FILTER_CHI_INFLATION
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_land_reform
 	icon = GFX_focus_generic_land_reclamation
 	cost = 6
 	prerequisite = {
 		focus = CHI_economic_stabilization
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	relative_position_id = CHI_restore_the_nation
 	x = 1
@@ -2770,12 +2841,15 @@ shared_focus = {
 		FOCUS_FILTER_CHI_INFLATION
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_pay_off_debts
 	icon = GFX_focus_looming_debts
 	cost = 7
 	prerequisite = {
 		focus = CHI_land_reform
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	relative_position_id = CHI_restore_the_nation
 	x = 1
@@ -2800,12 +2874,15 @@ shared_focus = {
 		FOCUS_FILTER_CHI_INFLATION
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_recover_transport_system
 	icon = GFX_focus_generic_train
 	cost = 8
 	prerequisite = {
 		focus = CHI_militia_reorganization
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	relative_position_id = CHI_restore_the_nation
 	x = -1
@@ -2827,12 +2904,15 @@ shared_focus = {
 		FOCUS_FILTER_SWI_MILITARY_READINESS
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_unite_provincial_command
 	icon = GFX_focus_generic_military_mission
 	cost = 10
 	prerequisite = {
 		focus = CHI_recover_transport_system
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	relative_position_id = CHI_restore_the_nation
 	x = -1
@@ -2855,7 +2935,7 @@ shared_focus = {
 		FOCUS_FILTER_SWI_MILITARY_READINESS
 	}
 }
-shared_focus = {
+joint_focus = {
 	id = CHI_united_china
 	icon = GFX_focus_zhili_unification
 	cost = 10
@@ -2864,6 +2944,9 @@ shared_focus = {
 	}
 	prerequisite = {
 		focus = CHI_unite_provincial_command
+	}
+	joint_trigger = {
+		is_china_or_warlord = yes
 	}
 	relative_position_id = CHI_restore_the_nation
 	x = 0
@@ -2909,7 +2992,7 @@ shared_focus = {
 		}
 		NOT = { has_idea = CHI_idea_government_divided }
 	}
-	completion_reward = {
+	completion_reward_joint_originator = {
 		hidden_effect = {
 			set_country_flag = ready_to_unite_china
 			set_rule = {
