@@ -110,14 +110,18 @@ TGWR_great_power_politics = {
 			MON = {
 				any_enemy_country = {
 					is_in_colonial_war = yes
-					is_china_or_warlord_no_tt = yes
+					is_china_or_warlord = yes
 				}
 				has_country_flag = MON_inner_mongolia_raid
 			}
 			RUS = {
 				is_subject = no
 				is_neighbor_of = MON
-				NOT = { has_war_with = ROOT }
+				NOT = {
+					has_war_with = ROOT
+					tag = SOV
+				}
+				has_civil_war = no
 			}
 		}
 		visible = {
@@ -178,72 +182,6 @@ TGWR_great_power_politics = {
 								}
 							}
 						}
-					}
-				}
-			}
-		}
-	}
-	MON_russian_intervention = {
-		icon = GFX_decision_eng_trade_unions_demand
-		allowed = {
-			original_tag = RUS
-		}
-		visible = {
-			great_power_politics_misc_visible = yes
-			is_subject = no
-			has_active_mission = MON_russian_intervention_mission
-		}
-		available = {
-			MON = {
-				surrender_progress > 0.2
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 1000
-		}
-		complete_effect = {
-			custom_effect_tooltip = historical_tt
-			effect_tooltip = {
-				give_guarantee = MON
-				MON = {
-					every_enemy_country = {
-						limit = {
-							is_china_or_warlord = yes
-						}
-						white_peace = {
-							tag = ROOT
-							message = treaty_of_kyakhta_message
-						}
-					}
-					every_state = {
-						limit = {
-							OR = {
-								region = 143
-								state = 715
-							}
-						}
-						if = {
-							limit = {
-								is_owned_by = ROOT
-							}
-							608 = {
-								owner = {
-									transfer_state = PREV.PREV
-								}
-							}
-						}
-					}
-				}
-			}
-			hidden_effect = {
-				every_country = {
-					limit = {
-						has_active_mission = MON_russian_intervention_mission
-					}
-					add_days_mission_timeout = {
-						mission = MON_russian_intervention_mission
-						days = 300
 					}
 				}
 			}
