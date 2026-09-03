@@ -1549,14 +1549,14 @@ country_event = {
 }
 #Internal Affairs Situation
 country_event = {
-	id = ww1_stolypin.21
-	title = ww1_stolypin.21.t
-	desc = ww1_stolypin.21.d
+	id = ww1_stolypin.23
+	title = ww1_stolypin.23.t
+	desc = ww1_stolypin.23.d
 	picture = GFX_report_event_rus_stolypin_liberalism
 	fire_only_once = yes
 	is_triggered_only = yes
 	option = {
-		name = ww1_stolypin.21.a
+		name = ww1_stolypin.23.a
 	}
 }
 #Death of Sergei Muromtsev
@@ -1638,7 +1638,7 @@ country_event = {
 	#Close the universities
 	option = {
 		name = ww1_stolypin.8.a
-		add_political_power = -50
+		#add_political_power = -50
 		remove_ideas = RUS_student_protests
 		hidden_effect = {
 			country_event = {
@@ -1646,10 +1646,21 @@ country_event = {
 				days = 6
 			}
 		}
+		ai_chance = {
+			base = 60
+		}
 	}
 	#Wait the protests out
 	option = {
 		name = ww1_stolypin.8.b
+		add_political_power = 25
+		ai_chance = {
+			base = 40
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
 	}
 }
 #Professors resign in protest
@@ -1657,7 +1668,7 @@ country_event = {
 	id = ww1_stolypin.9
 	title = ww1_stolypin.9.t
 	desc = ww1_stolypin.9.d
-	picture = ww1_russia_state_duma
+	picture = GFX_report_event_rus_resigned_professors
 	fire_only_once = yes
 	is_triggered_only = yes
 	option = {
@@ -1944,32 +1955,52 @@ country_event = {
 		RUS_modify_loyalty_center_right = yes
 	}
 }
-#Stolypin check
+### Stolypin's Assassination event chain 
+#Opening of the Alexander II monument in Kiev
 country_event = {
 	id = ww1_stolypin.17
 	title = ww1_stolypin.17.t
 	desc = ww1_stolypin.17.d
-	picture = GFX_report_event_german_reichstag_gathering
-	is_triggered_only = yes
-	fire_only_once = yes
-	hidden = yes
-	trigger = {
-		RUS_pyotr_stolypin = {
-			is_prime_minister = yes
+	desc = {
+		text =  ww1_stolypin.17.d
+		trigger = {
+			RUS_pyotr_stolypin = {
+				is_prime_minister = yes
+			}
 		}
 	}
+	desc = {
+		text =  ww1_stolypin.17.d_no_stolypin
+		trigger = {
+			RUS_pyotr_stolypin = {
+				is_prime_minister = no
+			}
+		}
+	}
+	picture = GFX_report_event_rus_alexander_II_monument
+	is_triggered_only = yes
+	fire_only_once = yes
+	timeout_days = 2
 	immediate = {
 		hidden_effect = {
 			if = {
 				limit = {
 					has_country_flag = RUS_western_zemstvo_crisis_duma_dismissed
+					RUS_pyotr_stolypin = {
+						is_prime_minister = yes
+					}
 				}
-				country_event = ww1_stolypin.18
-			}
-			else = {
-				set_country_flag = RUS_stolypin_prevailed
+				country_event = {
+					country_event = ww1_stolypin..18
+					days = 2
+				}	
 			}
 		}
+	}
+	option = {
+		name = ww1_stolypin.17.a
+		add_stability = 0.01
+		add_political_power = 10
 	}
 }
 #Stolypin shot!
@@ -1990,44 +2021,66 @@ country_event = {
 		hidden_effect = {
 			country_event = {
 				id = ww1_stolypin.19
-				days = 4
+				days = 1
 			}
 		}
 	}
-	timeout_days = 4
+	timeout_days = 1
 	#Horrible!
 	option = {
 		name = ww1_stolypin.18.a
 	}
 }
-#Stolypin dies
+#Stolypin is stable
 country_event = {
 	id = ww1_stolypin.19
 	title = ww1_stolypin.19.t
 	desc = ww1_stolypin.19.d
+	picture = GFX_report_event_rus_stolypin_hospital
+	fire_only_once = yes
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			country_event = {
+				id = ww1_stolypin.20
+				days = 3
+			}
+		}
+	}
+	timeout_days = 3
+	option = {
+		name = ww1_stolypin.19.a
+	}
+}
+#Stolypin dies
+country_event = {
+	id = ww1_stolypin.20
+	title = ww1_stolypin.20.t
+	desc = ww1_stolypin.20.d
 	picture = GFX_report_event_rus_stolypin_death
 	fire_only_once = yes
 	is_triggered_only = yes
 	immediate = {
 		hidden_effect = {
-			RUS_pyotr_stolypin = {
-				RUS_remove_from_the_cabinet = yes
+			country_event = {
+				id = ww1_stolypin.22
+				days = 4
 			}
-			retire_character = RUS_pyotr_stolypin
-			RUS_update_cabinet_gui = yes
 		}
 	}
+	timeout_days = 4
 	#Catastrophic...
 	option = {
-		name = ww1_stolypin.19.a
+		name = ww1_stolypin.20.a
+		retire_character = RUS_pyotr_stolypin
 		country_event = ww1_stolypin.16
-		news_event = ww1_stolypin.20
+		news_event = ww1_stolypin.21
 	}
 }
 news_event = {
-	id = ww1_stolypin.20
-	title = ww1_stolypin.20.t
-	desc = ww1_stolypin.20.d
+	id = ww1_stolypin.21
+	title = ww1_stolypin.21.t
+	desc = ww1_stolypin.21.d
 	picture = GFX_news_event_rus_stolypin_death
 	major = yes
 	is_triggered_only = yes
@@ -2035,10 +2088,22 @@ news_event = {
 		set_global_flag = stolypin_is_dead
 	}
 	option = {
-		name = ww1_stolypin.20.a
+		name = ww1_stolypin.21.a
 		ai_chance = {
 			factor = 100
 		}
+	}
+}
+#Stolypin's funeral
+country_event = {
+	id = ww1_stolypin.22
+	title = ww1_stolypin.22.t
+	desc = ww1_stolypin.22.d
+	picture = GFX_report_event_rus_stolypin_funeral
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = ww1_stolypin.22.a
 	}
 }
 
