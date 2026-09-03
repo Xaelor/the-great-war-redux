@@ -17,6 +17,114 @@ INS_dc_faction_management = {
 		}
 		custom_cost_text = decision_cost_INFO
 	}
+	INS_work_with_bu = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+			original_tag = INS
+		}
+		available = {
+			NOT = {
+				has_country_flag  = INS_interacting_bu
+			}
+		}
+		visible = {
+			has_completed_focus = INS_engage_with_moderate_activists
+		}
+		fire_only_once = no
+		complete_effect = {
+			set_country_flag = INS_interacting_bu
+		}
+		remove_effect = {
+			clr_country_flag = INS_interacting_bu
+			add_to_variable = {
+				INS_utomo_pop = 5
+				tooltip = INS_budi_utomo_popularity_update_tt
+			}
+			add_to_variable = {
+				INS_utomo_loyalty = 5
+				tooltip = INS_budi_otomo_loyalty_update_tt
+			}
+			INS_loyalty_popularity_change = yes
+		}
+		days_remove = 30
+		days_re_enable = 50
+		cost = INS_var_bu_interaction_cost
+		ai_will_do = {
+			factor = 200
+		}
+	}
+	INS_work_with_si = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+			original_tag = INS
+		}
+		available = {
+			NOT = {
+				has_country_flag  = INS_interacting_si
+			}
+		}
+		visible = {
+			has_completed_focus = INS_engage_with_moderate_activists
+		}
+		fire_only_once = no
+		complete_effect = {
+			set_country_flag = INS_interacting_si
+		}
+		remove_effect = {
+			clr_country_flag = INS_interacting_si
+			add_to_variable = {
+				INS_muslim_pop = 5
+				tooltip = INS_muslim_popularity_update_tt
+			}
+			add_to_variable = {
+				INS_muslim_loyalty = 5
+				tooltip = INS_muslim_loyalty_update_tt
+			}
+			INS_loyalty_popularity_change = yes
+		}
+		days_remove = 30
+		days_re_enable = 50
+		cost = INS_var_si_interaction_cost
+		ai_will_do = {
+			factor = 200
+		}
+	}
+	INS_work_with_ci = {
+		icon = GFX_decision_hol_war_on_pacifism
+		allowed = {
+			original_tag = INS
+		}
+		available = {
+			NOT = {
+				has_country_flag  = INS_interacting_ci
+			}
+		}
+		visible = {
+			has_completed_focus = INS_engage_with_moderate_activists
+		}
+		fire_only_once = no
+		complete_effect = {
+			set_country_flag = INS_interacting_ci
+		}
+		remove_effect = {
+			clr_country_flag = INS_interacting_ci
+			add_to_variable = {
+				INS_indo_chinese_pop = 5
+				tooltip = INS_chinese_popularity_update_tt
+			}
+			add_to_variable = {
+				INS_indo_chinese_loyalty = 5
+				tooltip = INS_chinese_loyalty_update_tt
+			}
+			INS_loyalty_popularity_change = yes
+		}
+		days_remove = 30
+		days_re_enable = 50
+		cost = INS_var_ci_interaction_cost
+		ai_will_do = {
+			factor = 200
+		}
+	}
 	INS_grant_bu_recognition = {
 		icon = GFX_decision_hol_war_on_pacifism
 		allowed = {
@@ -3074,7 +3182,9 @@ INS_dc_bop = {
 			has_completed_focus = INS_build_christian_churches
 		}
 		available = {
-			
+			NOT = {
+				has_country_flag = INS_creating_church
+			}
 		}
 		target_root_trigger = {
 			tag = INS
@@ -3110,6 +3220,64 @@ INS_dc_bop = {
 			add_power_balance_value = {
 				id = INS_native_loyalty
 				value = 0.01
+			}
+		}
+	}
+	INS_decentralise_state = {
+		icon = GFX_decision_generic_decision
+		allowed = {
+			original_tag = INS
+		}
+		visible = {
+			has_completed_focus = INS_decentralise_islands
+			NOT = {
+				has_completed_focus = INS_restrain_missionaries
+			}
+		}
+		available = {
+			NOT = {
+				has_completed_focus = INS_restrain_missionaries
+				has_country_flag = INS_decentralising_state
+			}
+		}
+		target_root_trigger = {
+			tag = INS
+		}
+		state_target = any_owned_state
+		target_trigger = {
+			FROM = {
+				is_fully_controlled_by = ROOT
+				NOT = {
+					OR = {
+						has_dynamic_modifier = INS_rebelling_region
+						has_dynamic_modifier = INS_undiscovered_state
+					}
+					state = 1222
+				}
+			}
+		}
+		fire_only_once = yes
+		days_remove = 30
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 10
+				has_political_power < 5
+			}
+		}
+		cost = 5
+		complete_effect = {
+			set_country_flag = INS_decentralising_state
+		}
+		remove_effect = {
+			clr_country_flag = INS_decentralising_state
+			add_power_balance_value = {
+				id = INS_native_loyalty
+				value = 0.01
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = -0.005
 			}
 		}
 	}
