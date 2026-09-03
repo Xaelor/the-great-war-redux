@@ -2478,6 +2478,7 @@ country_event = {
 		clr_country_flag = yuan_shikai_dismissed
 		remove_ideas = QIN_idea_xinhai_revolution
 		hidden_effect = {
+			load_oob = QIN_1910_beiyang
 			country_event = {
 				id = ww1_qing.7
 				days = 5
@@ -3460,7 +3461,7 @@ country_event = {
 				598
 				600
 				602
-				606
+				# 606
 				613
 				892
 				893
@@ -3553,6 +3554,8 @@ country_event = {
 						tag = GXC
 						tag = GSM
 						tag = SIC
+						tag = YUN
+						tag = GZC
 					}
 				}
 				add_to_war = {
@@ -3592,10 +3595,9 @@ country_event = {
 					set_capital = {
 						state = 605
 					}
-					check_neutrality_civil_war_popularity = yes
 					start_civil_war = {
 						ideology = democratic
-						size = civil_war_size_var
+						size = 0
 						states = { 1064 }
 						keep_all_characters = yes
 						PREV = {
@@ -3622,49 +3624,36 @@ country_event = {
 						add_dynamic_modifier = {
 							modifier = CHI_foreign_influence_modifier
 						}
+						division_template = {
+							name = "Xinjian Lujun Hùnchéngxié (South Provincial Army)"
+							division_names_group = CHI_GAR_02
+							regiments = {
+								infantry = { x = 0 y = 0 }
+								infantry = { x = 0 y = 1 }
+								infantry = { x = 0 y = 2 }
+								field_gun_brigade = { x = 0 y = 3 }
+								cavalry = { x = 1 y = 0 }
+							}
+							support = {
+								engineer = { x = 0 y = 0 }
+							}
+						}
+						capital_scope = {
+							create_unit = {
+								division = "name = \"Sìchuān Lùjūn Dì 5 Shī\" division_template = \"Xinjian Lujun Hùnchéngxié (South Provincial Army)\" start_experience_factor = 0.5 start_equipment_factor = 0.3"
+								owner = PREV
+								allow_spawning_on_enemy_provs = yes
+							}
+							create_unit = {
+								division = "name = \"Chóngqìng Tǎoyuánjūn\" division_template = \"Xinjian Lujun Hùnchéngxié (South Provincial Army)\" start_experience_factor = 0.3 start_equipment_factor = 0.2"
+								owner = PREV
+								allow_spawning_on_enemy_provs = yes
+							}
+						}
 					}
 				}
 			}
 			CHR = {
-				division_template = {
-					name = "Gongmin Taozeijun"
-					regiments = {
-						militia = { x = 0 y = 0 }
-						militia = { x = 0 y = 1 }
-						militia = { x = 1 y = 0 }
-						militia = { x = 1 y = 1 }
-					}
-				}
-				every_state = {
-					limit = {
-						OR = {
-							state = 607
-							state = 891
-						}
-					}
-					create_unit = {
-						division = "division_template = \"Gongmin Taozeijun\"	start_experience_factor = 0.1	start_equipment_factor = 0.6"
-						owner = PREV
-						allow_spawning_on_enemy_provs = yes
-						count = 2
-					}
-				}
-				every_state = {
-					limit = {
-						OR = {
-							state = 283
-							state = 602
-							state = 620
-							state = 890
-						}
-					}
-					create_unit = {
-						division = "division_template = \"Gongmin Taozeijun\"	start_experience_factor = 0.1	start_equipment_factor = 0.6"
-						owner = PREV
-						allow_spawning_on_enemy_provs = yes
-						count = 1
-					}
-				}
 				load_focus_tree = {
 					tree = china_focus
 					keep_completed = yes
@@ -3701,6 +3690,71 @@ country_event = {
 					add_timed_idea = {
 						idea = CHI_idea_unprepared_civil_war
 						days = 365
+					}
+				}
+				#Southern Anhui
+				set_province_controller = 1099
+				set_province_controller = 1171
+				set_province_controller = 11937
+				set_province_controller = 10044
+				set_province_controller = 12019
+				set_province_controller = 7104
+				set_province_controller = 1125
+				set_province_controller = 4173
+				set_province_controller = 4105
+
+				country_event = {
+					id = ww1_china.334
+					days = 20
+				}
+				division_template = {
+					name = "Xinjian Lujun Hùnchéngxié (South Provincial Army)"
+					division_names_group = CHI_GAR_02
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						field_gun_brigade = { x = 0 y = 3 }
+						cavalry = { x = 1 y = 0 }
+					}
+					support = {
+						engineer = { x = 0 y = 0 }
+					}
+				}
+				598 = { # Jiangsu (Nanjing)
+					create_unit = {
+						division = "name = \"Lùjūn Dì 8 Shī\" division_template = \"Xinjian Lujun Hùnchéngxié (South Provincial Army)\" start_experience_factor = 0.6 start_equipment_factor = 0.4"
+						owner = PREV
+						prioritize_location = 11913 # Nanjing
+						allow_spawning_on_enemy_provs = yes
+					}
+					create_unit = {
+						division = "name = \"Jiāngsū Lùjūn Dì 1 Shī\" division_template = \"Xinjian Lujun Hùnchéngxié (South Provincial Army)\" start_experience_factor = 0.5 start_equipment_factor = 0.3"
+						owner = PREV
+						prioritize_location = 11913 # Nanjing
+						allow_spawning_on_enemy_provs = yes
+					}
+				}
+				613 = { # Shanghai
+					create_unit = {
+						division = "name = \"Shànghǎi Tǎoyuánjūn\" division_template = \"Xinjian Lujun Hùnchéngxié (South Provincial Army)\" start_experience_factor = 0.4 start_equipment_factor = 0.3"
+						owner = PREV
+						prioritize_location = 7014 # Shanghai City
+						allow_spawning_on_enemy_provs = yes
+					}
+					create_unit = {
+						division = "name = \"Wúsōng Pàotái Shǒubèiduì\" division_template = \"Xinjian Lujun Hùnchéngxié (South Provincial Army)\" start_experience_factor = 0.5 start_equipment_factor = 0.3"
+						owner = PREV
+						prioritize_location = 12076 # Wusong
+						allow_spawning_on_enemy_provs = yes
+					}
+				}
+				591 = { # Anhui
+					create_unit = {
+						division = "name = \"Ānhuī Lùjūn Dì 1 Shī\" division_template = \"Xinjian Lujun Hùnchéngxié (South Provincial Army)\" start_experience_factor = 0.4 start_equipment_factor = 0.3"
+						owner = PREV
+						prioritize_location = 1083 # Anqing
+						allow_spawning_on_enemy_provs = yes
 					}
 				}
 			}
@@ -3740,6 +3794,10 @@ country_event = {
 						limit = { has_ideology = tridemism }
 						promote_character = tridemism
 					}
+				}
+				country_event = {
+					id = ww1_china.334
+					days = 20
 				}
 			}
 			set_capital = {
@@ -5301,6 +5359,10 @@ country_event = {
 	}
 	immediate = {
 		SHX = {
+			set_politics = {
+				ruling_party = neutrality
+				elections_allowed = no
+			}
 			every_other_country = {
 				limit = {
 					is_china_or_warlord = yes
@@ -9741,6 +9803,11 @@ country_event = {
 					popularity = 0.10
 				}
 				set_country_flag = CHI_constitutional_protection_flag
+
+				country_event = { #Chen Jiongming
+					id = ww1_china.228
+					days = 90
+				}
 			}
 			CHI = {
 				CHI_lin_baoyi = {
@@ -9769,6 +9836,11 @@ country_event = {
 					keep_unit_leaders_trigger = {
 						always = yes
 					}
+				}
+
+				country_event = { #Chen Jiongming
+					id = ww1_china.228
+					days = 90
 				}
 			}
 			SIC = {
@@ -9992,7 +10064,7 @@ country_event = {
 			}
 			if = {
 				limit = {
-					country_exists = XKC
+					country_exists = SIC
 					YUN = {
 						OR = {
 							owns_state = 1066
@@ -10009,8 +10081,8 @@ country_event = {
 							}
 						}
 						remove_core_of = YUN
-						add_core_of = XKC
-						transfer_state_to = XKC
+						add_core_of = SIC
+						transfer_state_to = SIC
 					}
 				}
 			}
@@ -10307,7 +10379,7 @@ country_event = {
 					MON = { get_current_government_type = yes }
 					set_autonomy = {
 						target = MON
-						autonomy_state = autonomy_tgwr_regional_government
+						autonomy_state = autonomy_tgwr_nominal_constituency
 						freedom_level = 0.8
 					}
 					MON = { restore_previous_government_type = yes }
@@ -10360,6 +10432,7 @@ country_event = {
 								# state = 1229
 							}
 						}
+						add_core_of = FNG
 						transfer_state_to = FNG
 					}
 					transfer_units_fraction = {
@@ -10422,6 +10495,8 @@ country_event = {
 							state = 1062
 						}
 					}
+					add_core_of = ZHC
+					remove_core_of = ANC
 					transfer_state_to = ZHC
 				}
 				if = {
@@ -10559,20 +10634,20 @@ country_event = {
 			}
 			every_state = {
 				limit = {
-					is_core_of = PREV
+					is_core_of = ANC
 					owner = {
 						is_china_or_warlord = no
 					}
 				}
 				add_core_of = ZHC
-				remove_core_of = PREV
+				remove_core_of = ANC
 			}
 			every_state = {
 				limit = {
-					is_claimed_by = PREV
+					is_claimed_by = ANC
 				}
 				add_claim_by = ZHC
-				remove_claim_by = PREV
+				remove_claim_by = ANC
 			}
 			every_country = {
 				limit = {
@@ -11274,33 +11349,12 @@ country_event = {
 				set_province_controller = 7141
 				set_province_controller = 7182
 				set_province_controller = 9938
-				CHI_chen_jiongming = {
-					clr_character_flag = exiled
-					clr_character_flag = kmt_allegiance
-					promote_leader = yes
-					set_nationality = ZGP
-				}
-				transfer_units_fraction = {
-					target = ZGP
-					size = 0.40
-					target_organization = 1
-					source_organization = 1
-					navy_ratio = 0.10
-					keep_unit_leaders_trigger = {
-						NOT = {
-							has_character_flag = federalist_allegiance	
-						}
-					}
-				}
-				every_character = {
-					limit = {
-						is_generic_character = no
-						has_character_flag = federalist_allegiance
-					}
-					set_nationality = ZGP
-				}
-				ZGP = {
+				CHI = {
 					CHI_chen_jiongming = {
+						clr_character_flag = exiled
+						clr_character_flag = kmt_allegiance
+						promote_leader = yes
+						set_nationality = ZGP
 						if = {
 							limit = {
 								has_ideology = social_liberalism
@@ -11366,6 +11420,27 @@ country_event = {
 							}
 						}
 					}
+				}
+				transfer_units_fraction = {
+					target = ZGP
+					size = 0.40
+					target_organization = 1
+					source_organization = 1
+					navy_ratio = 0.10
+					keep_unit_leaders_trigger = {
+						NOT = {
+							has_character_flag = federalist_allegiance	
+						}
+					}
+				}
+				every_character = {
+					limit = {
+						is_generic_character = no
+						has_character_flag = federalist_allegiance
+					}
+					set_nationality = ZGP
+				}
+				ZGP = {
 					set_party_name = {
 						ideology = democratic
 						long_name = CHI_zhigong_party_long
@@ -11411,19 +11486,14 @@ country_event = {
 		custom_effect_tooltip = ww1_china.48.a.tt
 		ZGP = {
 			declare_war_on = {
-				target = PREV
+				target = ROOT
 				type = annex_everything
 			}
-			every_other_country = {
-				limit = {
-					is_subject_of = PREV.PREV
-				}
-				PREV = {
-					declare_war_on = {
-						target = PREV
-						type = annex_everything
-					}
-				}
+		}
+		every_subject_country = {
+			add_to_war = {
+				targeted_alliance = ROOT
+				enemy = ZGP
 			}
 		}
 	}
@@ -11433,20 +11503,17 @@ country_event = {
 		trigger = { is_ai = no }
 		ZGP = {
 			declare_war_on = {
-				target = PREV
+				target = ROOT
 				type = annex_everything
 			}
-			every_other_country = {
-				limit = {
-					is_subject_of = PREV.PREV
-				}
-				PREV = {
-					declare_war_on = {
-						target = PREV
-						type = annex_everything
-					}
-				}
+		}
+		every_subject_country = {
+			add_to_war = {
+				targeted_alliance = ROOT
+				enemy = ZGP
 			}
+		}
+		ZGP = {
 			change_tag_from = PREV
 		}
 	}
@@ -17121,6 +17188,12 @@ country_event = {
 					end_puppet = PREV
 				}
 				white_peace = YUN
+				YUN = {
+					set_autonomy = {
+						target = GZC
+						autonomy_state = autonomy_tgwr_regional_government
+					}
+				}
 				division_template = {
 					name = "Guizhoujun"
 					division_names_group = CHI_INF_02
@@ -19261,8 +19334,6 @@ country_event = {
 				}
 				white_peace = SIC
 			}
-			transfer_state = 1066
-			transfer_state = 1224
 		}
 	}
 }
@@ -19290,6 +19361,17 @@ country_event = {
 	}
 	option = {
 		name = ww1_china.137.a
+		if = {
+			limit = {
+				is_subject_of = YUN
+			}
+			OVERLORD = { end_puppet = ROOT }
+		}
+		CHI = {
+			CHI_liu_xianshi = {
+				set_nationality = YUN
+			}
+		}
 		GZC_wang_wenhua = {
 			add_country_leader_role = {
 				promote_leader = yes
@@ -19304,6 +19386,12 @@ country_event = {
 				}
 			}
 		}
+		hidden_effect = {
+			country_event = {
+				id = ww1_china.140
+				days = 120
+			}
+		}
 	}
 }
 
@@ -19312,17 +19400,8 @@ country_event = {
 	id = ww1_china.140
 	title = ww1_china.138.t
 	desc = ww1_china.138.d
-	picture = GFX_report_event_generic_funeral
-	trigger = {
-		tag = GZC
-		has_country_leader = {
-			character = GZC_wang_wenhua
-			ruling_only = yes
-		}
-		date > 1921.3.1
-		NOT = { has_country_flag = wang_wenhua_killed }
-	}
-	mean_time_to_happen = { days = 16 }
+	picture = GFX_report_event_chinese_army_training
+	is_triggered_only = yes
 	fire_only_once = yes
 	option = {
 		name = ww1_china.138.a
@@ -19342,6 +19421,12 @@ country_event = {
 				}
 			}
 		}
+		hidden_effect = {
+			country_event = {
+				id = ww1_china.141
+				days = 14
+			}
+		}
 	}
 }
 
@@ -19351,12 +19436,7 @@ country_event = {
 	title = ww1_china.141.t
 	desc = ww1_china.141.d
 	picture = GFX_report_event_chinese_soldiers_01
-	trigger = {
-		tag = GZC
-		has_character = GZC_he_yingqin
-		has_country_flag = wang_wenhua_killed
-	}
-	mean_time_to_happen = { days = 10 }
+	is_triggered_only = yes
 	fire_only_once = yes
 	option = {
 		name = ww1_china.141.a
@@ -24780,95 +24860,96 @@ country_event = {
 country_event = {
 	id = ww1_china.228
 	title = ww1_china.228.t
-	desc = ww1_china.228.d
+	desc = {
+		text = ww1_china.228.d
+		trigger = {
+			has_war_with = CHI
+		}
+	}
+	desc = {
+		text = ww1_china.228.d_chi
+		trigger = {
+			NOT = { has_war_with = CHI }
+		}
+	}
 	picture = GFX_report_event_generic_peaceful_annexation
-	fire_only_once = yes
+	is_triggered_only = yes
 	trigger = {
 		has_global_flag = constitutional_protection_war
 		NOT = {
 			has_global_flag = constitutional_protection_war_end
 		}
-		has_character = CHI_chen_jiongming
-		any_enemy_country = {
+		CHI = {
 			owns_state = 1062
 		}
 		has_capitulated = no
 	}
-	mean_time_to_happen = {
-		days = 60
-		modifier = {
-			factor = 0.1
-			controls_state = 1062
-		}
-	}
-	option = {
-		name = ww1_china.228.a
+	immediate = {
 		hidden_effect = {
 			if = {
-				limit = { tag = GDC }
-				transfer_state = 1062
-				set_cosmetic_tag = FJN_CPG
-			}
-			else = {
-				CHI_chen_jiongming = {
-					set_nationality = GDC
-					if = {
-						limit = { has_ideology = anarchism }
-						promote_character = anarchism
-					}
-					else = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = anarchism
-								traits = { CHI_revolutionary_lawyer decentralist_liberal }
-								desc = CHI_chen_jiongming_desc
+				limit = { tag = CHI }
+				CHI = {
+					CHI_chen_duxiu = { set_nationality = GDC }
+					CHI_chen_jiongming = {
+						set_nationality = GDC
+						if = {
+							limit = { has_ideology = anarchism }
+							promote_character = anarchism
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = anarchism
+									traits = { CHI_revolutionary_lawyer decentralist_liberal }
+									desc = CHI_chen_jiongming_desc
+								}
 							}
 						}
-					}
-					if = {
-						limit = { has_ideology = social_democracy }
-						promote_character = social_democracy
-					}
-					else = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = social_democracy
-								traits = { CHI_revolutionary_lawyer decentralist_liberal }
-								desc = CHI_chen_jiongming_desc
+						if = {
+							limit = { has_ideology = social_democracy }
+							promote_character = social_democracy
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = social_democracy
+									traits = { CHI_revolutionary_lawyer decentralist_liberal }
+									desc = CHI_chen_jiongming_desc
+								}
 							}
 						}
-					}
-					if = {
-						limit = { has_ideology = authoritarian_democracy }
-						promote_character = authoritarian_democracy
-					}
-					else = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = authoritarian_democracy
-								traits = { CHI_revolutionary_lawyer decentralist_liberal }
+						if = {
+							limit = { has_ideology = authoritarian_democracy }
+							promote_character = authoritarian_democracy
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = authoritarian_democracy
+									traits = { CHI_revolutionary_lawyer decentralist_liberal }
+								}
 							}
 						}
-					}
-					if = {
-						limit = { has_ideology = stratocracy }
-						promote_character = stratocracy
-					}
-					else = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = stratocracy
-								traits = { CHI_revolutionary_lawyer decentralist_liberal }
+						if = {
+							limit = { has_ideology = stratocracy }
+							promote_character = stratocracy
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = stratocracy
+									traits = { CHI_revolutionary_lawyer decentralist_liberal }
+								}
 							}
 						}
 					}
 				}
 				GDC = {
-					set_country_flag = FJN_CPG
+					set_cosmetic_tag = FJN_CPG
 					set_party_name = {
 						ideology = democratic
 						long_name = FJN_CPG_party
@@ -24933,15 +25014,9 @@ country_event = {
 					}
 					inherit_technology = ROOT
 					add_ideas = CHI_idea_warlord_neutrality
-					every_neighbor_country = {
-						set_truce = {
-							target = PREV
-							days = 365
-						}
-					}
 					if = {
 						limit = {
-							ROOT = { has_idea = CHI_idea_sun_yatsen_president }
+							GXC = { has_idea = CHI_idea_sun_yatsen_president }
 						}
 						add_ideas = CHI_idea_sun_yatsen_president
 					}
@@ -24959,9 +25034,16 @@ country_event = {
 					}
 				}
 			}
-			CHI = {
-				CHI_chen_duxiu = { set_nationality = GDC }
-			}
+		}
+	}
+	option = {
+		name = ww1_china.228.a
+		trigger = { has_war_with = CHI }
+	}
+	option = {
+		name = ww1_china.228.b
+		trigger = {
+			NOT = { has_war_with = CHI }
 		}
 	}
 }
@@ -30020,6 +30102,100 @@ country_event = {
 				var = CHI_foreign_influence
 				tooltip = CHI_modify_ROOT_influence_tt
 				value = 0.01
+			}
+		}
+	}
+}
+
+# Second Revolution - Hunnan and Fujian Cancels Declaration of Independence
+country_event = {
+	id = ww1_china.334
+	title = ww1_china.334.t
+	desc = ww1_china.334.d
+	picture = GFX_report_event_chinese_street
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = { tag = CHR }
+				}
+				HNC = {
+					OVERLORD = {
+						end_puppet = PREV
+					}
+					white_peace = CHI
+				}
+				FJN = {
+					OVERLORD = {
+						end_puppet = PREV
+					}
+					white_peace = CHI
+				}
+				CHI = {
+					annex_country = {
+						target = HNC
+						transfer_troops = yes
+					}
+					annex_country = {
+						target = FJN
+						transfer_troops = yes
+					}
+				}
+				HNC = {
+					every_core_state = {
+						remove_core_of = HNC
+					}
+					every_state = {
+						limit = { is_claimed_by = HNC }
+						remove_claim_by = HNC
+					}
+				}
+				FJN = {
+					every_core_state = {
+						remove_core_of = FJN
+					}
+					every_state = {
+						limit = { is_claimed_by = FJN }
+						remove_claim_by = FJN
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = ww1_china.334.a
+		trigger = {
+			tag = CHR
+		}
+		effect_tooltip = {
+			CHI = {
+				annex_country = {
+					target = HNC
+					transfer_troops = yes
+				}
+				annex_country = {
+					target = FJN
+					transfer_troops = yes
+				}
+			}
+		}
+	}
+	option = {
+		name = ww1_china.334.b
+		trigger = {
+			NOT = { tag = CHR }
+		}
+		effect_tooltip = {
+			CHI = {
+				annex_country = {
+					target = HNC
+					transfer_troops = yes
+				}
+				annex_country = {
+					target = FJN
+					transfer_troops = yes
+				}
 			}
 		}
 	}
