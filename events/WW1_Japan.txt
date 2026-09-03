@@ -1605,38 +1605,36 @@ country_event = {
 			tag = CHN
 		}
 		custom_effect_tooltip = ww1_kiautschou.12.tt
-		hidden_effect = {
+		if = {
+			limit = {
+				check_variable = { GER.CHI_foreign_influence > 0 }
+			}
+			add_to_variable = {
+				var = JAP.CHI_foreign_influence
+				value = GER.CHI_foreign_influence
+				tooltip = CHI_modify_JAP_influence_tt
+			}
+			clamp_variable = {
+				var = JAP.CHI_foreign_influence
+				min = 0
+				max = 1
+			}
+			set_variable = {
+				var = GER.CHI_foreign_influence
+				value = 0
+				tooltip = CHI_modify_GER_influence_tt
+			}			
+		}
+		hidden_effect = {			
 			GER = {
 				country_event = ww1_kiautschou.12
-			}
-			JAP = {
-				country_event = ww1_kiautschou.12
-				set_temp_variable = { t_ger_inf = GER.CHI_foreign_influence }
-				if = {
-					limit = {
-						check_variable = { t_ger_inf <= 0 }
-					}
-					set_temp_variable = { t_ger_inf = 0.10 }
-				}
-				add_to_variable = {
-					var = CHI_foreign_influence
-					value = t_ger_inf
-				}
-				clamp_variable = {
-					var = CHI_foreign_influence
-					min = 0
-					max = 1
-				}
 				CHI_calculate_influnce_in_china_modifiers = yes
-			}
-			GER = {
-				set_variable = {
-					var = CHI_foreign_influence
-					value = 0
-				}
 				remove_dynamic_modifier = {
 					modifier = CHI_influence_in_china_modifier
 				}
+			}
+			JAP = {
+				country_event = ww1_kiautschou.12
 				CHI_calculate_influnce_in_china_modifiers = yes
 			}
 			CHI_calculate_foreign_influnce_for_all = yes
@@ -1648,5 +1646,15 @@ country_event = {
 			is_china_or_warlord = no
 		}
 		custom_effect_tooltip = ww1_kiautschou.12.tt
+		if = {
+			limit = { 
+				tag = GER
+			}
+			effect_tooltip = {
+				remove_dynamic_modifier = {
+					modifier = CHI_influence_in_china_modifier
+				}
+			}
+		}
 	}
 }
