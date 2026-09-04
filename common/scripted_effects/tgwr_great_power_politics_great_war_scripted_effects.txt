@@ -444,7 +444,7 @@ FRA_surrender_effect_ENT = {
 							}
 						}
 						AUS = {
-							transfer_state = 1225
+							set_state_owner = 1225
 						}
 					}
 					else = {						
@@ -510,21 +510,6 @@ FRA_surrender_effect_ENT = {
 					add_state_claim = 863
 					add_state_claim = 864
 				}
-			}
-			
-			every_owned_state = {
-				limit = {
-					OR = {
-						region = 19 # Northern France
-						state = 15 # Normandy
-					}
-					NOT = {
-						state = 16 # Ile de France
-						state = 24 # Centre - Val de Loire
-						state = 27 # Burgundy
-					}
-				}
-				set_demilitarized_zone = yes
 			}
 
 			# start of french civil war
@@ -911,6 +896,7 @@ RUS_surrender_effect_ENT = {
 						has_subject = CRI
 					}
 					CRI = {
+						add_ideas = standing_alone
 						free_subject_leave_faction = yes
 						every_enemy_country = {
 							limit = {
@@ -1669,7 +1655,7 @@ GER_surrender_effect_CP = {
 							}
 						}
 						country_event = {
-							id = ww1_nwa.1 # needa to take it from here
+							id = ww1_nwa.17
 						}
 					}
 					# Belarus
@@ -3513,7 +3499,10 @@ ITA_surrender_effect_CP = {
 			if = {
 				limit = {
 					TUR = {
-						has_country_flag = great_war_winner
+						is_part_of_great_war = yes
+						NOT = {
+							is_in_faction_with = ITA
+						}
 					}					
 				}
 				every_owned_state = {
@@ -3557,7 +3546,20 @@ ITA_surrender_effect_ENT = {
 			country_event = {
 				id = ww1_italy.397
 				days = 2
-			}		
+			}
+
+			# austrian claim
+			if = {
+				limit = { 
+					AUS = {
+						is_part_of_great_war = yes
+					}
+					owns_state = 1259
+				}
+				AUS = {
+					transfer_state = 1259
+				}
+			}
 			
 			every_owned_state = {
 				limit = {
@@ -3596,7 +3598,7 @@ ITA_surrender_effect_ENT = {
 						state = 513
 					}
 				}
-				transfer_state_to = HUN
+				transfer_state_to = 208.owner
 			}
 
 			ITA_surrender_return_albania = yes
@@ -3605,7 +3607,10 @@ ITA_surrender_effect_ENT = {
 			if = {
 				limit = {
 					TUR = {
-						has_country_flag = great_war_winner
+						is_part_of_great_war = yes
+						NOT = {
+							is_in_faction_with = ITA
+						}
 					}					
 				}
 				every_owned_state = {
