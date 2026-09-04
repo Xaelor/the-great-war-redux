@@ -1151,24 +1151,29 @@ focus_tree = {
 		}
 
 		available = {
-			any_country = {
-				is_russian_tag = yes
-				has_war_with = SOV
-				NOT = { has_war_with = ROOT }
+			SOV = {
+				any_enemy_country = {
+					is_russian_tag = yes
+					NOT = {
+						tag = ROOT
+						has_war_with = ROOT
+					}	
+				}
 			}
 		}
 
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_POLITICAL }
 		completion_reward = {
-			every_country = {
-				limit = {
-					is_russian_tag = yes
-					has_war_with = SOV
-				}
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = large_increase
+			SOV = {
+				every_enemy_country = {
+					limit = {
+						is_russian_tag = yes
+					}
+					add_opinion_modifier = {
+						target = ROOT
+						modifier = large_increase
+					}
 				}
 			}
 			add_political_power = 100

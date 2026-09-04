@@ -97,8 +97,9 @@ country_event = {
 			}
 			keep_all_characters = yes
 			SOV = {
-				puppet = {
+				set_autonomy = {
 					target = PREV
+					autonomy_state = autonomy_tgwr_assr
 					end_wars = no
 					end_civil_wars = no
 				}
@@ -179,21 +180,18 @@ country_event = {
 			CRI = {
 				OR = {
 					is_neighbor_of = ROOT
-					any_country = {
-						is_neighbor_of = PREV
+					any_neighbor_country = {
 						is_subject_of = ROOT
 					}
 				}
-				AND = {
+				OR = {
 					is_subject_of = SOV
 					has_government = communism
 				}
 			}
-			any_other_country = {
+			any_neighbor_country = {
 				OR = {
-					is_neighbor_of = ROOT
-					any_country = {
-						is_neighbor_of = PREV
+					any_neighbor_country = {
 						is_subject_of = ROOT
 					}
 				}
@@ -201,7 +199,7 @@ country_event = {
 					is_ally_with = ROOT
 					has_war_with = ROOT
 				}
-				AND = {
+				OR = {
 					is_subject_of = SOV
 					has_government = communism
 				}
@@ -460,19 +458,19 @@ country_event = {
 			}
 		}
 	}
-	option = {
-		name = ww1_crimea.3.d
-		UKR = {
-			add_popularity = {
-				ideology = communism
-				popularity = 0.05
-			}
-			add_stability = -0.02
-			add_state_claim = 137
-			add_state_claim = 955
-		}
-		ai_chance = { factor = 0 }
-	}
+	#option = {
+	#	name = ww1_crimea.3.d
+	#	UKR = {
+	#		add_popularity = {
+	#			ideology = communism
+	#			popularity = 0.05
+	#		}
+	#		add_stability = -0.02
+	#		add_state_claim = 137
+	#		add_state_claim = 955
+	#	}
+	#	ai_chance = { factor = 0 }
+	#}
 }
 # Solomon Krym in Crimea
 country_event = {
@@ -492,9 +490,7 @@ country_event = {
 			has_idea = communist_influence
 			communism > 0.20
 		}
-		any_other_country = {
-			is_in_russian_civil_war = yes
-		}
+		has_russian_civil_war = yes
 	}
 	fire_only_once = yes
 	mean_time_to_happen = { days = 60 }
