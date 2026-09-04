@@ -127,7 +127,9 @@ focus_tree = {
 			}
 			OR = {
 				is_kuomintang_state = yes
-				any_other_country = {
+				any_country_with_original_tag_of = {
+					target = constant:country_groups.china_or_warlord
+					tooltip = any_china_or_warlord_tt
 					exists = yes
 					is_kuomintang_state = yes
 				}
@@ -1096,8 +1098,9 @@ focus_tree = {
 			}
 			OR = {
 				communism > 0.20
-				any_other_country = {
-					is_china_or_warlord = yes
+				any_country_with_original_tag_of = {
+					target = constant:country_groups.china_or_warlord
+					tooltip = any_china_or_warlord_tt
 					has_government = communism
 				}
 				has_global_flag = chinese_communist_party
@@ -1987,8 +1990,11 @@ focus_tree = {
 			}
 			if = {
 				limit = {
-					any_other_country = {
+					any_country_with_original_tag_of = {
+						target = constant:country_groups.china_or_warlord
+						tooltip = any_china_or_warlord_tt
 						has_country_flag = CHI_zhigongdang_flag
+						NOT = { tag = ROOT }
 					}
 				}
 				add_opinion_modifier = {
@@ -6391,18 +6397,22 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
-			any_other_country = {
-				is_china_or_warlord = yes
+			any_country_with_original_tag_of = {
+				target = constant:country_groups.china_or_warlord
+				tooltip = any_china_or_warlord_tt
 				has_country_flag = CHI_kuomintang_flag
 				NOT = {
+					tag = ROOT
 					is_ally_with = ROOT
 				}
 			}
 		}
 		bypass = {
 			NOT = {
-				any_other_country = {
-					is_china_or_warlord = yes
+				any_country_with_original_tag_of = {
+					target = constant:country_groups.china_or_warlord
+					tooltip = any_china_or_warlord_tt
+					NOT = { tag = ROOT }
 					has_country_flag = CHI_kuomintang_flag
 				}
 			}
@@ -6424,19 +6434,25 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
-			any_other_country = {
-				is_china_or_warlord = yes
+			any_country_with_original_tag_of = {
+				target = constant:country_groups.china_or_warlord
+				tooltip = any_china_or_warlord_tt
 				has_country_flag = CHI_zhigongdang_flag
-				NOT = { has_war_with = ROOT } 
+				NOT = { 
+					tag = ROOT
+					has_war_with = ROOT 
+				} 
 			}
 		}
 		bypass = {
 			hidden_trigger = {
 				has_global_flag = yung_feng_incident
 				NOT = {
-					any_other_country = {
-						is_china_or_warlord = yes
+					any_country_with_original_tag_of = {
+						target = constant:country_groups.china_or_warlord
+						tooltip = any_china_or_warlord_tt
 						has_country_flag = CHI_zhigongdang_flag
+						NOT = { tag = ROOT }
 					}
 				}
 			}
@@ -6543,20 +6559,24 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
-			any_other_country = {
-				is_china_or_warlord = yes
+			any_country_with_original_tag_of = {
+				target = constant:country_groups.china_or_warlord
+				tooltip = any_china_or_warlord_tt
 				has_country_flag = CHI_kuomintang_flag
 				NOT = {
 					is_ally_with = ROOT
+					tag = ROOT
 				}
 			}
 		}
 		bypass = {
 			OR = {
 				NOT = {
-					any_other_country = {
-						is_china_or_warlord = yes
+					any_country_with_original_tag_of = {
+						target = constant:country_groups.china_or_warlord
+						tooltip = any_china_or_warlord_tt
 						has_country_flag = CHI_kuomintang_flag
+						NOT = { tag = ROOT }
 					}
 				}
 				has_war_with = KMT
@@ -6627,16 +6647,21 @@ focus_tree = {
 		will_lead_to_war_with = GZC
 		will_lead_to_war_with = GDC
 		completion_reward = {
-			every_other_country = {
-				limit = {
-					is_china_or_warlord_no_tt = yes
-					NOT = {
-						is_ally_with = ROOT
-					}
-					any_owned_state = {
-						OR = {
-							region = 165
-							state = 603
+			every_collection_element = {
+				input = {
+					input = collection:countries_china 
+					operators =  {
+						limit = {
+							NOT = {
+								tag = ROOT
+								is_ally_with = ROOT
+							}
+							any_owned_state = {
+								OR = {
+									region = 165
+									state = 603
+								}
+							}
 						}
 					}
 				}
@@ -8635,9 +8660,11 @@ focus_tree = {
 					is_ally_with = ROOT
 				}
 			}
-			any_other_country = {
-				has_country_flag = CHI_kuomintang_flag
+			any_country_with_original_tag_of = {
+				target = constant:country_groups.china_or_warlord
+				tooltip = any_china_or_warlord_tt
 				NOT = {
+					tag = ROOT
 					has_war_with = ROOT
 					is_neighbor_of_subject = yes
 				}
@@ -8975,7 +9002,12 @@ focus_tree = {
 			factor = 1
 			modifier = {
 				factor = 0
-				any_other_country = {
+				any_country_with_original_tag_of = {
+					target = constant:country_groups.china_or_warlord
+					tooltip = any_china_or_warlord_tt
+					NOT = {
+						tag = ROOT
+					}
 					exists = yes
 					is_subject = no
 					has_country_flag = CHI_kuomintang_flag
@@ -9912,11 +9944,13 @@ focus_tree = {
 			has_global_flag = yung_feng_incident
 			#they'll not ally kmt
 			NOT = {
-				any_other_country = {
-					is_china_or_warlord = yes
+				any_country_with_original_tag_of = {
+					target = constant:country_groups.china_or_warlord
+					tooltip = any_china_or_warlord_tt
 					has_government = communism
 					is_subject = no
 					exists = yes
+					NOT = { tag = ROOT }
 				}
 			}
 			#check candidates
@@ -10050,10 +10084,12 @@ focus_tree = {
 			NOT = {
 				has_government = fascism
 			}
-			any_other_country = {
+			any_country_with_original_tag_of = {
+				target = constant:country_groups.china_or_warlord
+				tooltip = any_china_or_warlord_tt
 				has_country_flag = chinese_united_front_ally
-				exists = yes
 				NOT = {
+					tag = ROOT
 					has_war_with = ROOT
 				}
 			}
@@ -10511,9 +10547,11 @@ focus_tree = {
 			}
 			NOT = {
 				has_idea = CHI_kmt_power_struggle
-				any_other_country = {
-					exists = yes
+				any_country_with_original_tag_of = {
+					target = constant:country_groups.china_or_warlord
+					tooltip = any_china_or_warlord_tt
 					has_country_flag = CHI_zhigongdang_flag
+					NOT = { tag = ROOT }
 				}
 			}
 		}
@@ -11258,11 +11296,8 @@ focus_tree = {
 			}
 			is_faction_leader = yes
 			is_subject = no
-			any_other_country = {
-				OR = {
-					original_tag = GMJ
-					original_tag = SHX
-				}
+			any_country_with_original_tag_of = {
+				target = { GMJ SHX }
 				NOT = {
 					has_war_with = ROOT
 					is_ally_with = ROOT

@@ -509,14 +509,15 @@
 			### To Prevent TRA/MOL/ROM from beinf released in the Carpathians ###
 			if = {
 				limit = {
-					any_country = {
-						owns_state = 867
-						NOT = {
-							any_owned_state = {
-								NOT = {
-									state = 867
-									state = 868
-									state = 866
+					867 = {
+						OWNER = {
+							NOT = {
+								any_owned_state = {
+									NOT = {
+										state = 867
+										state = 868
+										state = 866
+									}
 								}
 							}
 						}
@@ -534,14 +535,15 @@
 			}
 			if = {
 				limit = {
-					any_country = {
-						owns_state = 868
-						NOT = {
-							any_owned_state = {
-								NOT = {
-									state = 867
-									state = 868
-									state = 866
+					868 = {
+						OWNER = {
+							NOT = {
+								any_owned_state = {
+									NOT = {
+										state = 867
+										state = 868
+										state = 866
+									}
 								}
 							}
 						}
@@ -559,14 +561,15 @@
 			}
 			if = {
 				limit = {
-					any_country = {
-						owns_state = 866
-						NOT = {
-							any_owned_state = {
-								NOT = {
-									state = 867
-									state = 868
-									state = 866
+					868 = {
+						OWNER = {
+							NOT = {
+								any_owned_state = {
+									NOT = {
+										state = 867
+										state = 868
+										state = 866
+									}
 								}
 							}
 						}
@@ -591,7 +594,7 @@
 							AND = {
 								owns_state = 81
 								owns_state = 46
-							}							
+							}
 						}	
 					}
 					transfer_state = 866
@@ -735,6 +738,12 @@
 					has_dynamic_modifier = PER_foreign_influence_modifier
 				}
 				PER_calculate_foreign_influnce = yes
+			}
+			else_if = {
+				limit = {
+					has_dynamic_modifier = CHI_foreign_influence_modifier
+				}
+				CHI_calculate_foreign_influnce = yes
 			}
 			every_owned_state = {
 				limit = {
@@ -2151,7 +2160,7 @@
 						has_cosmetic_tag = UKR_SOV_provisional
 					}	
 				}
-				UKR = {
+				UPR = {
 					UKR_yuriy_pyatakov = { 
 						set_nationality = PREV.PREV 
 						promote_character = yes
@@ -3623,7 +3632,7 @@
 						has_cosmetic_tag = UKR_SOV_provisional
 					}	
 				}
-				UKR = {
+				UPR = {
 					UKR_yuriy_pyatakov = { 
 						set_nationality = PREV.PREV 
 						promote_character = yes
@@ -5341,7 +5350,7 @@
 					vassal_of_vassal_logic = yes
 				}
 			}
-		}
+		}	
 	}
 	on_capitulation = {
 		effect = {
@@ -7404,7 +7413,7 @@
 				limit = {
 					tag = JNC
 					any_enemy_country = {
-						is_china_or_warlord_no_tt = yes
+						is_china_or_warlord = yes
 					}
 				}
 				ZHC = {
@@ -7515,7 +7524,7 @@
 			if = {
 				limit = {
 					has_global_flag = northern_expedition
-					is_china_or_warlord_no_tt = yes
+					is_china_or_warlord = yes
 					any_enemy_country = {
 						has_country_flag = CHI_kuomintang_flag
 					}
@@ -7576,17 +7585,18 @@
 			}
 			if = {
 				limit = {
-					is_china_or_warlord_no_tt = yes
+					is_china_or_warlord = yes
 					has_country_flag = CHI_left_kuomintang_flag
 					any_enemy_country = {
-						is_china_or_warlord_no_tt = yes
+						is_china_or_warlord = yes
 					}
 				}
 				if = {
 					limit = {
-						any_other_country = {
-							exists = yes
+						any_country_with_original_tag_of = {
+							target = constant:country_groups.china_or_warlord
 							has_country_flag = CHI_kuomintang_flag
+							NOT = { tag = ROOT }
 						}
 					}
 					transfer_navy = {
@@ -7660,10 +7670,10 @@
 					NOT = {
 						has_global_flag = northern_expedition_end
 					}
-					is_china_or_warlord_no_tt = yes
+					is_china_or_warlord = yes
 					has_country_flag = CHI_kuomintang_flag
 					any_enemy_country = {
-						is_china_or_warlord_no_tt = yes
+						is_china_or_warlord = yes
 					}
 				}
 				KMT = {
@@ -7742,9 +7752,10 @@
 					}
 					if = {
 						limit = {
-							any_other_country = {
-								exists = yes
+							any_country_with_original_tag_of = {
+								target = constant:country_groups.china_or_warlord
 								has_country_flag = CHI_zhigongdang_flag
+								NOT = { tag = ROOT }
 							}
 						}
 						ZGP = {
@@ -7834,7 +7845,7 @@
 						}
 					}
 					every_allied_country = {
-						limit = { is_china_or_warlord_no_tt = yes }
+						limit = { is_china_or_warlord = yes }
 						leave_faction = yes
 						if = {
 							limit = {
@@ -7896,7 +7907,7 @@
 					has_global_flag = first_chiang_gui_war
 					has_country_flag = first_chiang_gui_war
 					any_enemy_country = {
-						is_china_or_warlord_no_tt = yes
+						is_china_or_warlord = yes
 						has_country_flag = CHI_kuomintang_flag
 					}
 				}
@@ -7944,7 +7955,7 @@
 					has_global_flag = second_chiang_gui_war
 					has_country_flag = second_chiang_gui_war
 					any_enemy_country = {
-						is_china_or_warlord_no_tt = yes
+						is_china_or_warlord = yes
 						has_country_flag = CHI_kuomintang_flag
 					}
 				}
@@ -7995,10 +8006,10 @@
 					NOT = {
 						has_global_flag = anti_chiang_war_end
 					}
-					is_china_or_warlord_no_tt = yes
+					is_china_or_warlord = yes
 					has_country_flag = CHI_kuomintang_flag
 					any_enemy_country = {
-						is_china_or_warlord_no_tt = yes
+						is_china_or_warlord = yes
 						has_country_flag = beiping_government
 					}
 				}
@@ -8013,17 +8024,17 @@
 					NOT = {
 						has_global_flag = long_march
 					}
-					is_china_or_warlord_no_tt = yes
+					is_china_or_warlord = yes
 					has_country_flag = CHI_soviet_republic_flag
 					any_enemy_country = {
-						is_china_or_warlord_no_tt = yes
+						is_china_or_warlord = yes
 					}
 				}
 				add_ideas = CHI_idea_long_march
 				set_global_flag = long_march
 				random_enemy_country = {
 					limit = {
-						is_china_or_warlord_no_tt = yes
+						is_china_or_warlord = yes
 					}
 					PREV = {
 						become_exiled_in = {
@@ -9335,7 +9346,7 @@
 								limit = { original_tag = SIC }
 								annex_country = {
 									target = PREV
-									transfer_troops = yes
+									transfer_troops = no
 								}
 							}
 						}
@@ -12006,6 +12017,12 @@
 				}
 				PER_calculate_foreign_influnce = yes
 			}
+			else_if = {
+				limit = {
+					has_dynamic_modifier = CHI_foreign_influence_modifier
+				}
+				CHI_calculate_foreign_influnce = yes
+			}
 			if = {
 				limit = {
 					is_great_war_ongoing = yes
@@ -12339,7 +12356,7 @@
 				if = {
 					limit = {
 						ROOT = {
-							is_china_or_warlord_no_tt = yes
+							is_china_or_warlord = yes
 							598 = {
 								is_owned_by = PREV
 							}
@@ -12440,7 +12457,7 @@
 			if = {
 				limit = {
 					ROOT = {
-						is_china_or_warlord_no_tt = yes
+						is_china_or_warlord = yes
 					}
 					FROM.FROM = {
 						is_core_of = ROOT
@@ -12528,7 +12545,7 @@
 			if = {
 				limit = {
 					ROOT = {
-						is_china_or_warlord_no_tt = yes
+						is_china_or_warlord = yes
 						has_country_flag = CHI_kuomintang_flag
 						has_global_flag = northern_expedition
 						OR = {
@@ -12574,6 +12591,38 @@
 					}
 				}
 				set_state_owner = FROM.FROM
+				every_country = {
+					limit = {
+						has_active_mission = MON_russian_intervention_mission
+						OR = {
+							tag = RUS
+							tag = CHI
+							tag = QIN
+							tag = MON
+						}
+					}
+					if = {
+						limit = {
+							MON = {
+								OR = {
+									surrender_progress > 0.2
+									controls_state = 1227
+									controls_state = 610
+								}
+							}
+						}
+						add_days_mission_timeout = {
+							mission = MON_russian_intervention_mission
+							days = -300
+						}
+					}
+					else = {
+						add_days_mission_timeout = {
+							mission = MON_russian_intervention_mission
+							days = -60
+						}
+					}
+				}
 			}
 		}
 	}
@@ -12637,6 +12686,12 @@
 				}
 				set_country_flag = has_reduce_units_check
 					
+			}
+			if = {
+				limit = {
+					has_dynamic_modifier = CHI_foreign_influence_modifier
+				}
+				CHI_calculate_foreign_influnce = yes
 			}
 		}
 	}
