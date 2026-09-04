@@ -1374,6 +1374,14 @@ country_event = {
 	option = {
 		name = ww1_kiautschou.6.a
 		add_war_support = -0.05
+		hidden_effect = {
+			CHN = {
+				country_event = {
+					id = ww1_kiautschou.12
+					days = 3
+				}
+			}
+		}
 	}
 }
 
@@ -1564,5 +1572,86 @@ country_event = {
 	option = {
 		name = ww1_kiautschou.3.c
 		add_political_power = -75
+	}
+}
+
+# Japan Takes Control of German Assets
+country_event = {
+	id = ww1_kiautschou.12
+	title = ww1_kiautschou.12.t
+	desc = {
+		text = ww1_kiautschou.12.d
+		trigger = {
+			is_china_or_warlord = yes
+		}
+	}
+	desc = {
+		text = ww1_kiautschou.12.d_ger
+		trigger = {
+			tag = GER
+		}
+	}
+	desc = {
+		text = ww1_kiautschou.12.d_jap
+		trigger = {
+			tag = JAP
+		}
+	}
+	picture = GFX_report_event_japanese_army_parade
+	is_triggered_only = yes
+	option = {
+		name = ww1_kiautschou.12.a
+		trigger = {
+			tag = CHN
+		}
+		custom_effect_tooltip = ww1_kiautschou.12.tt
+		if = {
+			limit = {
+				check_variable = { GER.CHI_foreign_influence > 0 }
+			}
+			add_to_variable = {
+				JAP.CHI_foreign_influence = {
+					value = GER.CHI_foreign_influence
+					clamp = { min = 0 max = 1 }
+				}
+				tooltip = CHI_modify_JAP_influence_tt
+			}
+			set_variable = {
+				var = GER.CHI_foreign_influence
+				value = 0
+				tooltip = CHI_modify_GER_influence_tt
+			}			
+		}
+		hidden_effect = {			
+			GER = {
+				country_event = ww1_kiautschou.12
+				CHI_calculate_influnce_in_china_modifiers = yes
+				remove_dynamic_modifier = {
+					modifier = CHI_influence_in_china_modifier
+				}
+			}
+			JAP = {
+				country_event = ww1_kiautschou.12
+				CHI_calculate_influnce_in_china_modifiers = yes
+			}
+			CHI_calculate_foreign_influnce_for_all = yes
+		}
+	}
+	option = {
+		name = ww1_kiautschou.12.b
+		trigger = {
+			is_china_or_warlord = no
+		}
+		custom_effect_tooltip = ww1_kiautschou.12.tt
+		if = {
+			limit = { 
+				tag = GER
+			}
+			effect_tooltip = {
+				remove_dynamic_modifier = {
+					modifier = CHI_influence_in_china_modifier
+				}
+			}
+		}
 	}
 }

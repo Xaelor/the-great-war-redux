@@ -656,10 +656,10 @@ copy_unequal_treaties_ideas = {
 		add_ideas = QIN_idea_payments_of_indemnities_6
 	}
 	if = {
-		limit = {
-			QIN = { has_idea = unequal_treaties }
+		limit = { 
+			QIN = { has_idea = free_trade }
 		}
-		add_ideas = unequal_treaties
+		add_ideas = free_trade
 	}
 }
 
@@ -667,10 +667,10 @@ copy_chinese_ideas = {
 	if = {
 		limit = {
 			CHI = {
-				has_idea = unequal_treaties
+				has_idea = free_trade
 			}
 		}
-		add_ideas = unequal_treaties
+		add_ideas = free_trade
 		add_timed_idea = {
 			idea = QIN_idea_profit_transfer
 			days = 365
@@ -1797,13 +1797,6 @@ CHI_calculate_total_foreign_influnce = {
 		min = 0
 		max = 1
 	}
-	set_variable = {
-		CHI_total_independence = {
-			value = 1
-			subtract = CHI_total_foreign_influence
-			min = 0
-		}
-	}
 }
 CHI_calculate_foreign_influnce_modifiers = {
 	set_variable = {
@@ -1841,25 +1834,59 @@ CHI_calculate_foreign_influnce_modifiers = {
 		limit = { owns_state = 325 } #Yunnan
 		add_to_variable = { CHI_share_of_influence = 0.05 }
 	}
+	clamp_variable = {
+		var = CHI_share_of_influence
+		min = 0
+		max = 1
+	}
+	set_variable = {
+		CHI_local_foreign_influence = {
+			value = CHI_total_foreign_influence
+			multiply = CHI_share_of_influence
+			clamp = { min = 0 max = 1 }
+		}
+	}
+	set_variable = {
+		CHI_domestic_independence = {
+			value = 1
+			subtract = CHI_local_foreign_influence
+			clamp = { min = 0 max = 1 }
+		}
+	}
 	set_variable = { 
 		CHI_political_power_gain = {
-			value = CHI_total_foreign_influence
+			value = CHI_local_foreign_influence
 			multiply = -0.5
-			multiply = CHI_share_of_influence
 		}
 	}
 	set_variable = { 
 		CHI_consumer_goods_factor = {
-			value = CHI_total_foreign_influence
+			value = CHI_local_foreign_influence
 			multiply = 0.5
-			multiply = CHI_share_of_influence
 		}
 	}
 	set_variable = { 
 		CHI_civilian_intel_to_others = {
-			value = CHI_total_foreign_influence
+			value = CHI_local_foreign_influence
 			multiply = 50
-			multiply = CHI_share_of_influence
+		}
+	}
+	set_variable = { 
+		CHI_army_intel_to_others = {
+			value = CHI_local_foreign_influence
+			multiply = 16
+		}
+	}
+	set_variable = { 
+		CHI_navy_intel_to_others = {
+			value = CHI_local_foreign_influence
+			multiply = 33
+		}
+	}
+	set_variable = {
+		CHI_production_speed_rail_way_factor = {
+			value = CHI_local_foreign_influence
+			multiply = -0.5
 		}
 	}
 }
@@ -1886,10 +1913,18 @@ CHI_calculate_foreign_influnce_for_all = {
 }
 
 CHI_calculate_influnce_in_china_modifiers = {
-	set_variable = { var = CHI_political_power_gain value = CHI_foreign_influence }
-	multiply_variable = { var = CHI_political_power_gain value = 0.2 }
-	set_variable = { var = CHI_consumer_goods_factor value = CHI_foreign_influence }
-	multiply_variable = { var = CHI_consumer_goods_factor value = -0.1 }
+	set_variable = { 
+		CHI_political_power_gain = {
+			value = CHI_foreign_influence
+			multiply = 0.4
+		}
+	}
+	set_variable = { 
+		CHI_consumer_goods_factor = {
+			value = CHI_foreign_influence
+			multiply = -0.2
+		}
+	}
 }
 
 CHI_ease_payments_of_indemnities = {
