@@ -10,15 +10,30 @@ CP_surrender_effect = {
 
 	every_faction_member = {
 		limit = {
-			has_idea = MOR_guerrilla_warfare # for guerilla countries like hejaz and asir
+			has_variable = rebel_annex_to
 		}
 		clear_all_relations_except_wars = yes
+		if = {
+			limit = { 
+				has_capitulated = yes
+			}
+			var:rebel_annex_to = {
+				annex_country = {
+					target = PREV
+				}
+			}
+		}
 	}
 
 	ENT = {
 		every_faction_member = {
 			set_country_flag = great_war_winner
-			add_ideas = idea_victors_of_wwi_entente
+			if = {
+				limit = { 
+					is_major = yes
+				}			
+				add_ideas = idea_victors_of_wwi_entente
+			}
 		}
 	}
 	# romania is exception
@@ -32,7 +47,6 @@ CP_surrender_effect = {
 		ROM = {
 			clr_country_flag = great_war_loser
 			set_country_flag = great_war_winner
-			add_ideas = idea_victors_of_wwi_entente
 			set_country_flag = ROM_treaty_of_bucharest_violated
 			set_country_flag = ROM_treaty_of_bucharest_nullified
 		}
@@ -198,9 +212,19 @@ ENT_surrender_effect = {
 
 	every_faction_member = {
 		limit = {
-			has_idea = MOR_guerrilla_warfare # for guerilla countries like hejaz and asir
+			has_variable = rebel_annex_to
 		}
 		clear_all_relations_except_wars = yes
+		if = {
+			limit = { 
+				has_capitulated = yes
+			}
+			var:rebel_annex_to = {
+				annex_country = {
+					target = PREV
+				}
+			}
+		}
 	}
 
 	GER = {
@@ -224,7 +248,12 @@ ENT_surrender_effect = {
 				}				
 			}
 			set_country_flag = great_war_winner
-			add_ideas = idea_victors_of_wwi_cp
+			if = {
+				limit = { 
+					is_major = yes
+				}
+				add_ideas = idea_victors_of_wwi_cp
+			}
 		}
 	}
 
