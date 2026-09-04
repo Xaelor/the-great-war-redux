@@ -1589,42 +1589,66 @@ country_event = {
 							}
 						}
 					}
-					hidden_effect = {
-						every_enemy_country = {
-							limit = {
-								original_tag = UKR
+				}
+			}
+			UKR = { 
+				country_event = { 
+					id = ww1_brest_litovsk.18 
+				}
+			}
+		}
+	}
+	option = {
+		name = ww1_brest_litovsk.17.a
+		hidden_effect = {
+			white_peace = UKR
+		}
+		set_global_flag = ukr_ger_bread_peace 
+		UKR = { 
+			activate_mission_tooltip = UKR_german_food_requirements 
+			hidden_effect = {
+				if = {
+					limit = { 
+						GER = {
+							NOT = { 
+								has_war_with = SOV 
 							}
-							add_ideas = standing_alone	
-							leave_faction = yes
+						}
+					}
+					every_enemy_country = {
+						limit = {
+							original_tag = UKR
+						}
+						add_ideas = standing_alone	
+						leave_faction = yes
+						if = {
+							limit = {
+								is_subject = yes
+							}				
+							OVERLORD = { 
+								end_puppet = PREV 
+								PREV = {
+									give_military_access = PREV
+								}
+							}
 							if = {
 								limit = {
-									is_subject = yes
-								}				
-								OVERLORD = { 
-									end_puppet = PREV 
-									PREV = {
-										give_military_access = PREV
+									NOT = { tag = USR }
+									USR = {
+										has_war_with = UKR
+										has_government = communism
+									}
+								}	
+								get_current_government_type = yes
+								USR = {
+									set_autonomy = {
+										target = PREV
+										autonomous_state = autonomy_tgwr_assr
+										end_civil_wars = no
+										end_wars = no
 									}
 								}
-								if = {
-									limit = {
-										NOT = { tag = USR }
-										USR = {
-											has_war_with = UKR
-											has_government = communism
-										}
-									}	
-									get_current_government_type = yes
-									USR = {
-										set_autonomy = {
-											target = PREV
-											autonomous_state = autonomy_tgwr_assr
-											end_civil_wars = no
-											end_wars = no
-										}
-									}
-									restore_previous_government_type = yes
-								}	
+								restore_previous_government_type = yes
 							}		
 						}
 					}
@@ -1735,6 +1759,35 @@ country_event = {
 			white_peace = UKR
 		}
 		country_event = ww1_brest_litovsk.6
+	}
+}
+
+country_event = {
+	id = ww1_brest_litovsk.18
+	title = ww1_brest_litovsk.18.t
+	desc = ww1_brest_litovsk.18.d
+	picture = GFX_report_event_generic_conference
+	fire_only_once = yes
+	is_triggered_only = yes
+	trigger = {
+	}
+    immediate = {
+		hidden_effect = {
+			activate_mission = UKR_german_food_requirements
+			GER = { country_event = { id = ww1_ukraine_bread_peace.1 days = 79 } }
+		}
+	}
+	option = {
+		name = ww1_brest_litovsk.18.a
+		ai_chance = {
+			base = 100
+		}
+		hidden_effect = {
+			white_peace = UKR
+		}
+		UKR = { 
+			activate_mission_tooltip = UKR_german_food_requirements 
+		}
 	}
 }
 # GERMANY CONTINUES WAR
