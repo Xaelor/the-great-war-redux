@@ -1,0 +1,78 @@
+on_actions = {
+	on_capitulation = {
+		effect = {
+			# BW1
+			# greece, ser and mnt separated peace in case of lone liberator
+			if = {
+				limit = { 
+					NOT = {
+						has_global_flag = balkan_league_success
+					}
+					is_BW1_ongoing = yes
+					OR = {
+						tag = GRE
+						tag = SER
+						tag = MNT
+					}
+				}
+				white_peace = TUR
+				set_country_flag = BW1_separated_peace
+				if = {
+					limit = { 
+						BW1_balkans_crushing_defeat = no
+					}
+					TUR = {
+						country_event = ww1_firstbalkan.128
+					}
+				}
+			}
+			if = {
+				limit = { 
+					is_BW1_ongoing = yes
+					tag = BUL
+				}
+				BW1_turkish_victory_effect = yes
+			}
+			if = {
+				limit = { 
+					is_BW1_ongoing = yes
+					tag = TUR
+				}
+				BW1_balkans_victory_effect = yes
+			}
+			# BW2
+			if = {
+				limit = { 
+					is_BW2_ongoing = yes
+					tag = BUL
+				}
+				BW2_balkans_victory_effect = yes
+			}
+			if = {
+				limit = { 
+					is_BW2_ongoing = yes
+					tag = SER
+				}
+				BW2_bulgaria_victory_effect = yes
+			}
+			if = {
+				limit = { 
+					tag = WTH
+					FROM = {
+						tag = BUL
+					}
+				}
+				BUL = {
+					annex_country = {
+						target = WTH
+					}
+				}
+				WTH = {
+					every_core_state = {
+						remove_core_of = PREV
+					}
+				}
+			}			
+		}
+	}
+}
