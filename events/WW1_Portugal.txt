@@ -1133,11 +1133,12 @@ country_event = {
 			has_cosmetic_tag = POR_REP_provisional
 		}
 		NOT = {
-			any_other_country = {
-				original_tag = POR
+			any_country_with_original_tag = {
+				original_tag_to_check = POR
 				has_war_with = ROOT
 				has_government = neutrality
 				NOT = {
+					tag = ROOT
 					has_cosmetic_tag = POR_REP
 					has_cosmetic_tag = POR_constitutional
 					has_cosmetic_tag = POR_REP_provisional
@@ -1205,12 +1206,13 @@ country_event = {
 				}
 			}
 		}
-		any_other_country = {
-			owns_state = 171
-			NOT = {
-				has_war_with = ROOT
-				has_cosmetic_tag = SPR_REP
-				has_government = communism
+		171 = {
+			OWNER = {
+				NOT = {
+					has_war_with = ROOT
+					has_cosmetic_tag = SPR_REP
+					has_government = communism
+				}
 			}
 		}
 	}
@@ -1871,7 +1873,7 @@ country_event = {
 			limit = {
 				OR = {
 					original_tag = KOG
-					original_tag = KAS
+					original_tag = KSJ
 				}
 			}
 			custom_effect_tooltip = historical_tt
@@ -1893,13 +1895,16 @@ country_event = {
 	}
 
 	option = {
-		name = ww1_portugal.36.a
+		name = ww1_portugal.36.b
 		ai_chance = {
 			base = 0
 			modifier = {
 				add = 10
 				original_tag = MBU
 			}
+		}
+		trigger = {
+			is_puppet = no
 		}
 		if = {
 			limit = {
@@ -1914,24 +1919,9 @@ country_event = {
 				hours = 6
 			}
 			custom_effect_tooltip = will_gain_from_event_tt
-			effect_tooltip = {
-				set_autonomy = {
-					target = FROM
-					autonomy_state = autonomy_free
-				}
-				create_wargoal = {
-					target = FROM
-					type = annex_everything
-				}
-			}
+			event_option_tooltip = ww1_portugal.38.a
 			custom_effect_tooltip = will_gain_from_event_alternatively_tt
-			effect_tooltip = {
-				add_political_power = -50
-				set_autonomy = {
-					target = FROM
-					autonomy_state = autonomy_free
-				}
-			}
+			event_option_tooltip = ww1_portugal.38.b
 		}
 	}
 }
@@ -1965,10 +1955,15 @@ country_event = {
 
 	option = {
 		name = ww1_portugal.38.a
-		set_autonomy = {
-			target = FROM
-			autonomy_state = autonomy_free
-		}
+		if = {
+			limit = {
+				has_subject = FROM
+			}
+			set_autonomy = {
+				target = FROM
+				autonomy_state = autonomy_free
+			}
+		}		
 		create_wargoal = {
 			target = FROM
 			type = annex_everything

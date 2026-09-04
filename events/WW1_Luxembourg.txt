@@ -7,28 +7,41 @@ country_event = {
 	title = ww1_luxembourg.1.t
 	desc = ww1_luxembourg.1.d
 	picture = GFX_report_event_generic_funeral
-	mean_time_to_happen = {
-		days = 24
-	}
 	trigger = {
-		tag = LUX
-		date > 1912.2.1
-		has_start_date < 1914.1.1
 		has_character = LUX_william_iv
-		NOT = {
-			has_country_flag = william_dead
-		}
 	}
+	is_triggered_only = yes
 	fire_only_once = yes
 	immediate = {
-		set_country_flag = william_dead
+		hidden_effect = {
+			if = {
+				limit = {
+					has_idea = LUX_william_iv
+				}
+				swap_ideas = {
+					remove_idea = LUX_william_iv
+					add_idea = LUX_marie_adelaide
+				}
+			}
+			country_event = {
+				id = ww1_luxembourg.9
+				days = 114
+			}
+		}		
 	}
 	option = {
 		name = ww1_luxembourg.1.a
 		retire_character = LUX_william_iv
-		promote_character = LUX_marieadelaide
-		ai_chance = {
-			factor = 100
+		if = {
+			limit = {
+				has_idea = LUX_marie_adelaide
+			}
+			effect_tooltip = {
+				swap_ideas = {
+					remove_idea = LUX_william_iv
+					add_idea = LUX_marie_adelaide
+				}	
+			}						
 		}
 	}
 }
@@ -67,7 +80,7 @@ country_event = {
 			has_government = communism
 		}
 		has_country_leader = {
-			character = LUX_marieadelaide
+			character = LUX_marie_adelaide
 			ruling_only = no
 		}
 	}
@@ -87,7 +100,7 @@ country_event = {
 				popularity = 0.2
 			}
 		}	
-		LUX_marieadelaide = {
+		LUX_marie_adelaide = {
 			remove_country_leader_role = {
 				ideology = semi_constitutional_monarchy
 			}
@@ -464,6 +477,42 @@ country_event = {
 				factor = 0
 				has_global_flag = versailles_treaty
 			}
+		}
+	}
+}
+# Marie-Adélaïde comes of age
+#######################
+country_event = {
+	id = ww1_luxembourg.9
+	title = ww1_luxembourg.9.t
+	desc = ww1_luxembourg.9.d
+	picture = GFX_report_event_royal_parade
+	trigger = {
+		has_character = LUX_marie_adelaide
+	}
+	is_triggered_only = yes
+	fire_only_once = yes
+	immediate = {
+		hidden_effect = {
+			remove_ideas = LUX_marie_adelaide
+			promote_character = LUX_marie_adelaide
+			if = {
+				limit = {
+					NOT = {
+						has_country_leader = {
+							character = LUX_marie_adelaide
+						}
+						has_government = communism
+					}
+				}
+				add_ideas = LUX_marie_adelaide
+			}
+		}
+	}
+	option = {
+		name = ww1_luxembourg.9.a
+		effect_tooltip = {
+			promote_character = LUX_marie_adelaide
 		}
 	}
 }
