@@ -5072,8 +5072,21 @@ focus_tree = {
 		id = GER_establish_the_general_headquarters
 		icon = GFX_focus_ger_oppose_hitler
 		cost = 0
-		x = 5
+		x = 11
 		y = 7
+		offset = {
+			x = -6
+			trigger = {
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				OR = {
+					has_completed_focus = GER_organise_potsdam_conference
+					has_completed_focus = GER_OHL_question
+				}
+			}
+		}
 		available = {
 			custom_trigger_tooltip = {
 				tooltip = GER_establish_the_general_headquarters_tt
@@ -8570,6 +8583,823 @@ focus_tree = {
 		}
 	}
 
+	#### HOLY ROMAN EMPIRE ####
+
+	focus = {
+		id = GER_HRE_focus
+		icon = GFX_focus_ger_HRE
+		cost = 10
+		allow_branch = {
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = {
+					has_completed_focus = GER_organise_potsdam_conference
+					has_completed_focus = GER_OHL_question
+				}
+			}
+		}
+		available = {
+			is_GER_a_monarchy = yes
+			has_country_flag = great_war_winner
+			has_war = no
+			is_subject = no
+		}
+		bypass = {
+			is_GER_a_monarchy = yes
+			has_country_flag = great_war_winner
+			has_war = no
+			has_OHL = no
+		}
+		prerequisite = {
+			focus = GER_bohemia_integration
+		}
+		prerequisite = {
+			focus = GER_recognize_hungarian_sovereignty
+			focus = GER_suppress_the_hungarian_uprising
+		}
+		mutually_exclusive = {
+			focus = GER_OHL_question
+		}
+		x = 0
+		y = 6
+		offset = {
+			x = -4
+			y = 0
+			trigger = {
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				has_completed_focus = GER_HRE_focus
+			}
+		}
+		completion_reward = {
+			set_global_flag = holy_roman_empire
+			set_cosmetic_tag = GER_HRE
+			if = {
+				limit = {
+					has_idea = idea_victors_of_wwi_cp
+				}
+				swap_ideas = {
+					remove_idea = idea_victors_of_wwi_cp
+					add_idea = GER_victors_of_wwi
+				}
+				else = {
+					add_ideas = {
+						GER_victors_of_wwi
+					}
+				}
+			}
+			unlock_decision_category_tooltip = GER_hre_cat
+			add_named_threat = {
+				threat = 20
+				name = GER_HRE_focus
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_leader = {
+							character = GER_erich_ludendorff
+							ruling_only = no
+						}
+					}
+					GER_erich_ludendorff = {
+						add_country_leader_trait = great_war_hero
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				mark_focus_tree_layout_dirty = yes
+			}
+		}
+		ai_will_do = {
+			factor = 5
+		}
+	}
+
+	focus = {
+		id = GER_protect_benelux
+		icon = GFX_focus_hol_liberation
+		cost = 10
+		prerequisite = {
+			focus = GER_HRE_focus
+		}
+		x = 1
+		y = 1
+		relative_position_id = GER_HRE_focus
+		bypass = {
+			OR = {
+				HOL = {
+					is_subject_of = ROOT
+				}
+				NOT = {
+					country_exists = HOL
+				}
+			}
+			OR = {
+				BEL = {
+					is_subject_of = ROOT
+				}
+				NOT = {
+					country_exists = BEL
+				}
+			}
+			OR = {
+				LUX = {
+					is_subject_of = ROOT
+				}
+				NOT = {
+					country_exists = LUX
+				}
+			}
+		}
+		available = {
+			is_subject = no
+			NOT = { 
+				has_idea = idea_armistice
+				has_country_flag = great_war_loser
+			}
+		}
+		will_lead_to_war_with = HOL
+		will_lead_to_war_with = BEL
+		will_lead_to_war_with = LUX
+		completion_reward = {
+			add_named_threat = {
+				threat = 10
+				name = GER_protect_benelux
+			}
+			if = {
+				limit = {
+					HOL = {
+						is_subject = no
+						has_war = no
+						exists = yes
+					}
+				}
+				HOL = {
+					country_event = {
+						id = generic.20
+						days = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					HOL = {
+						exists = yes
+						OR = {
+							is_subject = yes
+							has_war = yes
+						}
+						NOT = {
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_wargoal = {
+					type = puppet_wargoal_focus
+					target = HOL
+				}
+			}
+			if = {
+				limit = {
+					BEL = {
+						exists = yes
+						is_subject = no
+						has_war = no
+					}
+				}
+				BEL = {
+					country_event = {
+						id = generic.20
+						days = 2
+					}
+				}
+			}
+			if = {
+				limit = {
+					BEL = {
+						exists = yes
+						OR = {
+							is_subject = yes
+							has_war = yes
+						}
+						NOT = {
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_wargoal = {
+					type = puppet_wargoal_focus
+					target = BEL
+				}
+			}
+			if = {
+				limit = {
+					LUX = {
+						exists = yes
+						is_subject = no
+						has_war = no
+					}
+				}
+				LUX = {
+					country_event = {
+						id = generic.20
+						days = 3
+					}
+				}
+			}
+			if = {
+				limit = {
+					LUX = {
+						exists = yes
+						OR = {
+							is_subject = yes
+							has_war = yes
+						}
+						NOT = {
+							is_subject_of = ROOT
+						}
+					}
+				}
+				create_wargoal = {
+					type = puppet_wargoal_focus
+					target = LUX
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 10
+		}
+	}
+
+	focus = {
+		id = GER_restore_burgundy
+		icon = GFX_focus_hun_elect_a_king
+		cost = 10
+		prerequisite = {
+			focus = GER_protect_benelux
+		}
+		x = 1
+		y = 2
+		relative_position_id = GER_protect_benelux
+		available = {
+			is_subject = no
+			NOT = { 
+				has_idea = idea_armistice
+				has_country_flag = great_war_loser
+			}
+		}
+		will_lead_to_war_with = FRA
+		completion_reward = {
+			set_country_flag = GER_restore_burgundy
+			unlock_decision_tooltip = GER_restore_burgundy
+			add_named_threat = {
+				threat = 20
+				name = GER_restore_burgundy
+			}
+			every_state = {
+				limit = {
+					NOT = { is_owned_by = ROOT }
+					OR = {
+						state = 6
+						state = 34
+						state = 906
+						state = 907
+						state = 865
+						state = 29
+						state = 785
+						state = 18
+						state = 17
+						state = 863
+						state = 864
+						state = 27
+						state = 20
+						state = 32
+					}
+				}
+				add_claim_by = ROOT
+			}
+			FRA = {
+				if = {
+					limit = {
+						exists = yes
+						NOT = {
+							has_war_with = ROOT
+							is_subject_of = ROOT
+							is_in_faction_with = ROOT
+						}
+					}
+					ROOT = {
+						create_wargoal = {
+							target = PREV
+							type = take_claimed_state
+						}
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+
+	focus = {
+		id = GER_danish_throne
+		icon = GFX_focus_generic_attack_denmark
+		cost = 10
+		prerequisite = {
+			focus = GER_protect_benelux
+		}
+		x = 0
+		y = 1
+		relative_position_id = GER_protect_benelux
+		bypass = {
+			OR = {
+				DEN = {
+					is_subject_of = ROOT
+				}
+				NOT = {
+					country_exists = DEN
+				}
+			}
+		}
+		available = {
+			is_subject = no
+			NOT = { 
+				has_idea = idea_armistice
+				has_country_flag = great_war_loser
+			}
+		}
+		will_lead_to_war_with = DEN
+		completion_reward = {
+			if = {
+				limit = {
+					DEN = {
+						is_subject = no
+						has_war = no
+					}
+				}
+				DEN = {
+					country_event = {
+						days = 1
+						id = generic.20
+					}
+				}
+				else = {
+					create_wargoal = {
+						type = puppet_wargoal_focus
+						target = DEN
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 10
+		}
+	}
+
+	focus = {
+		id = GER_lion_from_the_north
+		icon = GFX_focus_hol_united_netherlands
+		cost = 10
+		prerequisite = {
+			focus = GER_danish_throne
+		}
+		x = 0
+		y = 2
+		relative_position_id = GER_danish_throne
+		bypass = {
+			OR = {
+				SWE = {
+					is_subject_of = ROOT
+				}
+				NOT = {
+					country_exists = SWE
+				}
+			}
+		}
+		available = {
+			is_subject = no
+			NOT = { 
+				has_idea = idea_armistice
+				has_country_flag = great_war_loser
+			}
+		}
+		will_lead_to_war_with = SWE
+		completion_reward = {
+			if = {
+				limit = {
+					SWE = {
+						is_subject = no
+						has_war = no
+					}
+				}
+				SWE = {
+					country_event = {
+						days = 1
+						id = generic.20
+					}
+				}
+				else = {
+					create_wargoal = {
+						type = puppet_wargoal_focus
+						target = SWE
+					}
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = GER_disband_bundestag
+		icon = GFX_focus_ger_HRE_estate
+		cost = 10
+		prerequisite = {
+			focus = GER_HRE_focus
+		}
+		x = -2
+		y = 1
+		relative_position_id = GER_HRE_focus
+		bypass = {
+			has_government = democratic
+		}
+		completion_reward = {
+			add_political_power = 50
+			add_timed_idea = {
+				idea = democratic_revolutionaries
+				days = 365
+			}
+		}
+		ai_will_do = {
+			factor = 10
+		}
+	}
+
+	focus = {
+		id = GER_reichspakt
+		icon = GFX_focus_GER_weltpolitik
+		cost = 10
+		prerequisite = {
+			focus = GER_OHL_question
+			focus = GER_HRE_focus
+		}
+		x = -4
+		y = 1
+		relative_position_id = GER_HRE_focus
+		available = {
+			is_subject = no
+			has_global_flag = frankfurt_treaty
+			has_country_flag = interbellum
+			OR = {
+				is_in_faction = no
+				is_faction_leader = yes
+			}	
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					OR = {
+						is_faction_leader = no
+						is_in_faction = no
+					}
+				}
+				create_faction_from_template = {
+					template = faction_template_generic_dominance
+					name = reichspakt
+				}
+				else = {
+					set_faction_name = reichspakt
+				}
+			}
+			hidden_effect = {
+				news_event = {
+					id = interwar_news.17
+					hours = 3
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 10
+		}
+	}
+
+	focus = {
+		id = GER_defender_of_the_faith
+		icon = GFX_focus_generic_pope
+		cost = 10
+		prerequisite = {
+			focus = GER_reichspakt
+		}
+		prerequisite = {
+			focus = GER_disband_bundestag
+		}
+		x = -1
+		y = 1
+		relative_position_id = GER_disband_bundestag
+		available = {
+			NOT = {
+				has_government = communism
+			}
+		}
+		completion_reward = {
+			add_war_support = 0.1
+			add_stability = -0.1
+		}
+		ai_will_do = {
+			factor = 10
+		}
+	}
+
+	focus = {
+		id = GER_rome_act
+		icon = GFX_focus_attack_italy
+		cost = 10
+		prerequisite = {
+			focus = GER_disband_bundestag
+		}
+		x = 1
+		y = 1
+		relative_position_id = GER_disband_bundestag
+		available = {
+			is_subject = no
+			NOT = { 
+				has_idea = idea_armistice
+			}
+		}
+		will_lead_to_war_with = ITA
+		completion_reward = {
+			unlock_decision_tooltip = GER_rome_act
+			set_country_flag = GER_rome_act
+			every_state = {
+				limit = {
+					NOT = {
+						is_owned_by = ROOT
+					}
+					OR = {
+						state = 2
+						state = 162
+						state = 161
+						state = 158
+						state = 159
+						state = 160
+						state = 161
+						state = 114
+						state = 833
+						state = 835
+					}
+				}
+				add_claim_by = ROOT
+			}
+			every_other_country = {
+				limit = {
+					NOT = {
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+						has_war_with = ROOT
+					}
+					OR = {
+						owns_state = 2
+						owns_state = 162
+						owns_state = 161
+						owns_state = 158
+						owns_state = 159
+						owns_state = 160
+						owns_state = 161
+						owns_state = 114
+						owns_state = 833
+						owns_state = 835
+					}
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = take_claimed_state
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	focus = {
+		id = GER_revive_order_of_the_crusaders
+		icon = GFX_focus_mex_restore_the_army_of_christ
+		cost = 10
+		prerequisite = {
+			focus = GER_rome_act
+		}
+		prerequisite = {
+			focus = GER_defender_of_the_faith
+		}
+		x = -1
+		y = 1
+		relative_position_id = GER_rome_act
+		available = {
+			OR = {
+				owns_state = 2
+				has_subject = PAP
+			}
+			is_subject = no
+			NOT = { 
+				has_idea = idea_armistice
+				has_country_flag = great_war_loser
+			}
+		}
+		completion_reward = {
+			add_named_threat = {
+				threat = 20
+				name = GER_revive_order_of_the_crusaders
+			}
+			add_ideas = GER_holy_order
+			unlock_decision_tooltip = GER_revive_order_of_the_crusaders
+			set_country_flag = GER_revive_order_of_the_crusaders
+			every_state = {
+				limit = {
+					NOT = {
+						is_owned_by = ROOT
+					}
+					OR = {
+						state = 183
+						state = 899
+						state = 116
+					}
+				}
+				add_claim_by = ROOT
+			}
+			every_other_country = {
+				limit = {
+					NOT = {
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+						has_war_with = ROOT
+					}
+					OR = {
+						owns_state = 183
+						owns_state = 899
+						owns_state = 116
+					}
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = take_claimed_state
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 10
+		}
+	}
+
+	focus = {
+		id = GER_we_will_take_jerusalem
+		icon = GFX_focus_generic_catholic_dominion
+		cost = 10
+		prerequisite = {
+			focus = GER_revive_order_of_the_crusaders
+		}
+		x = 1
+		y = 1
+		relative_position_id = GER_revive_order_of_the_crusaders
+		available = {
+			is_subject = no
+			NOT = { 
+				has_idea = idea_armistice
+				has_country_flag = great_war_loser
+			}
+			NOT = {
+				has_government = communism
+			}
+		}
+		bypass = {
+			owns_state = 454
+		}
+		completion_reward = {
+			add_named_threat = {
+				threat = 20
+				name = GER_we_will_take_jerusalem
+			}
+			unlock_decision_tooltip = GER_we_will_take_jerusalem
+			set_country_flag = GER_we_will_take_jerusalem
+			every_state = {
+				limit = {
+					NOT = {
+						is_owned_by = ROOT
+					}
+					OR = {
+						state = 454
+						state = 856
+						state = 858
+						state = 553
+					}
+				}
+				add_claim_by = ROOT
+			}
+			every_other_country = {
+				limit = {
+					NOT = {
+						is_in_faction_with = ROOT
+						is_subject_of = ROOT
+						has_war_with = ROOT
+					}
+					OR = {
+						owns_state = 454
+						owns_state = 856
+						owns_state = 858
+						owns_state = 553
+					}
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = take_claimed_state
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+
+	focus = {
+		id = GER_fall_barbarossa
+		icon = GFX_focus_eng_expose_the_belly_of_the_bear
+		cost = 10
+		prerequisite = {
+			focus = GER_revive_order_of_the_crusaders
+		}
+		x = 0
+		y = 2
+		relative_position_id = GER_revive_order_of_the_crusaders
+		bypass = {
+			OR = {
+				RUS = {
+					is_subject_of = ROOT
+				}
+				SOV = {
+					is_subject_of = ROOT
+				}
+			}
+		}
+		available = {
+			is_subject = no
+			NOT = { 
+				has_idea = idea_armistice
+				has_country_flag = great_war_loser
+			}
+			OR = {
+				country_exists = RUS
+				country_exists = SOV
+			}
+		}
+		completion_reward = {
+			add_named_threat = {
+				threat = 10
+				name = GER_fall_barbarossa
+			}
+			if = {
+				limit = {
+					country_exists = RUS
+				}
+				ROOT = {
+					create_wargoal = {
+						type = puppet_wargoal_focus
+						target = RUS
+					}
+				}
+			}
+			if = {
+				limit = {
+					country_exists = SOV
+				}
+				ROOT = {
+					create_wargoal = {
+						type = puppet_wargoal_focus
+						target = SOV
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 10
+		}
+	}
 
 	#CDI link : "Yeah, I won !"
 	focus = {
@@ -8577,7 +9407,23 @@ focus_tree = {
 		icon = GFX_focus_GER_subdue_the_wehrmacht
 		cost = 3 
 		x = -7
-		y = 7
+		y = 6
+		mutually_exclusive = {
+			focus = GER_HRE_focus
+		}
+		allow_branch = {
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				NOT = {
+					has_completed_focus = GER_HRE_focus
+				}
+			}
+		}
 		available = {
 			is_GER_a_monarchy = yes
 			has_country_flag = great_war_winner
