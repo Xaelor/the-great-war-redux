@@ -741,9 +741,19 @@ RUS_cabinet_category  = {
 		}
 		visible = {
 			has_revolution = no
-			has_completed_focus = RUS_crack_down_on_strikes
-			RUS_vladimir_kokovtsov = {
-				is_prime_minister = yes
+			OR = {
+				AND = {
+					has_completed_focus = RUS_crack_down_on_strikes
+					RUS_vladimir_kokovtsov = {
+						is_prime_minister = yes
+					}
+				}
+				AND = {
+					has_completed_focus = RUS_crack_down_on_revolutionaries
+					RUS_pyotr_durnovo = {
+						is_prime_minister = yes
+					}					
+				}
 			}
 		}
 		modifier = {
@@ -1431,4 +1441,160 @@ RUS_cabinet_category = {
 			}
 		}
 	}
+}
+# Durnovo's mechanic
+RUS_cabinet_category = {
+	RUS_postponement_of_the_revolution = {
+		allowed = {
+			tag = RUS
+		}
+		visible = {
+			has_active_mission = RUS_durnovo_inevetable_collapse_of_the_right_mission
+		}
+		available = {
+			NOT = {
+				has_active_mission = RUS_durnovo_counterreforms
+			}
+			NOT = {
+				has_active_mission = RUS_restrict_minorities_rights
+			}
+			has_completed_focus = RUS_autocracy_through_populism
+			has_completed_focus = RUS_crack_down_on_revolutionaries
+			has_completed_focus = RUS_entrench_the_role_of_the_church
+			has_completed_focus = RUS_cement_the_natural_state
+		}
+		custom_cost_text = decision_cost_INFO
+		custom_cost_trigger = {
+			always = no
+		}
+	}	
+	RUS_durnovo_inevetable_collapse_of_the_right_mission = {
+		icon = generic_political_address
+		allowed = { always = no }
+		activation = {
+			always = no
+		}
+		available = {
+			hidden_trigger = {
+				always = no
+			}	
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_revolution = yes
+					NOT = {
+						RUS_pyotr_durnovo = {
+							is_prime_minister = yes
+						}
+					}
+				}
+			}
+		}
+		is_good = no
+		days_mission_timeout = 365
+		timeout_effect = {
+			country_event = ww1_durnovo.11
+		}
+	}
+	RUS_durnovo_counterreforms = {
+		icon = generic_political_address
+		allowed = { always = no }
+		activation = {
+			always = no
+		}
+		available = {
+			has_completed_focus = RUS_western_zemstvo_issue
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_revolution = yes
+					NOT = {
+						RUS_pyotr_durnovo = {
+							is_prime_minister = yes
+						}
+					}
+				}
+			}
+		}
+		is_good = no
+		days_mission_timeout = 270
+		complete_effect = {
+			set_temp_variable = {
+				RUS_modify_loyalty_far_right_var = 10
+			}
+			RUS_modify_loyalty_far_right = yes			
+		}
+		timeout_effect = {
+			add_days_mission_timeout = {
+				mission = RUS_durnovo_inevetable_collapse_of_the_right_mission
+				days = -90
+			}
+		}
+	}
+	RUS_restrict_minorities_rights = {
+		icon = generic_political_address
+		allowed = { always = no }
+		activation = {
+			always = no
+		}
+		available = {
+			has_country_flag = RUS_law_on_ethnographic_poland_passed_in_sc
+			has_country_flag = RUS_law_of_equality_passed_in_sc
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_revolution = yes
+					NOT = {
+						RUS_pyotr_durnovo = {
+							is_prime_minister = yes
+						}
+					}
+				}
+			}
+		}
+		is_good = no
+		days_mission_timeout = 365
+		complete_effect = {
+			set_temp_variable = {
+				RUS_modify_loyalty_far_right_var = 20
+			}
+			RUS_modify_loyalty_far_right = yes
+		}
+		timeout_effect = {
+			add_days_mission_timeout = {
+				mission = RUS_durnovo_inevetable_collapse_of_the_right_mission
+				days = -90
+			}
+		}
+	}
+	RUS_support_vns = {
+		icon = oppression
+		allowed = {
+			original_tag = RUS
+		}
+		visible = {
+			duma_is_active = yes
+			duma_exists = yes
+			has_completed_focus = RUS_support_vns_political_machines
+			RUS_pyotr_durnovo = {
+				is_prime_minister = yes
+			}			
+		}
+		days_re_enable = 60
+		cost = 20
+		complete_effect = {
+			set_temp_variable = {
+				RUS_modify_loyalty_far_right_var = 2
+			}
+			RUS_modify_loyalty_far_right = yes			
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.025
+			}
+			custom_effect_tooltip = back_in_60_days
+		}
+	}	
 }
