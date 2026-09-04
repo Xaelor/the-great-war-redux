@@ -802,18 +802,6 @@ ALB_greek_minority = {
 	local_factories = -0.5
 }
 
-unequal_treaties_dm = {
-	enable = { always = yes }
-
-	min_export = var:unequal_treaties_resources_to_market
-	consumer_goods_factor = var:unequal_treaties_consumer_goods
-	research_speed_factor = var:unequal_treaties_research_speed
-	production_speed_industrial_complex_factor = var:unequal_treaties_civilian_factory
-	production_speed_arms_factory_factor = var:unequal_treaties_military_factory
-	production_speed_dockyard_factor = var:unequal_treaties_dockyard
-	production_speed_infrastructure_factor = var:unequal_treaties_infrastructure
-}
-
 GRE_integration_efforts = {
 	enable = { controller = { original_tag = GRE } }
 	remove_trigger = { ROOT = { is_core_of = ROOT.controller } }
@@ -2450,7 +2438,7 @@ mongolian_banners_modifier = {
 	remove_trigger = {
 		OR = {
 			NOT = { is_core_of = OWNER }
-			owner = { is_china_or_warlord_no_tt = no }
+			owner = { is_china_or_warlord = no }
 		}
 	}
 	icon = GFX_decision_generic_cavalry
@@ -2467,7 +2455,7 @@ qinghai_modifier = {
 	remove_trigger = {
 		OR = {
 			NOT = { is_core_of = OWNER }
-			owner = { is_china_or_warlord_no_tt = no }
+			owner = { is_china_or_warlord = no }
 		}
 	}
 	icon = GFX_decision_generic_disband_irregulars
@@ -2484,7 +2472,7 @@ xinjiang_modifier = {
 	remove_trigger = { 
 		OR = {
 			NOT = { is_core_of = OWNER }
-			owner = { is_china_or_warlord_no_tt = no }
+			owner = { is_china_or_warlord = no }
 		}
 	}
 	icon = GFX_decision_faction_tur_traditionalist
@@ -2501,7 +2489,7 @@ kumul_modifier = {
 	remove_trigger = { 
 		OR = {
 			NOT = { is_core_of = OWNER }
-			owner = { is_china_or_warlord_no_tt = no }
+			owner = { is_china_or_warlord = no }
 			AND = {
 				owner = {
 					NOT = { original_tag = KUM }
@@ -2525,7 +2513,7 @@ manchu_modifier = {
 	remove_trigger = { 
 		OR = {
 			NOT = { is_core_of = OWNER }
-			owner = { is_china_or_warlord_no_tt = no }
+			owner = { is_china_or_warlord = no }
 			owner = { is_qing_monarchy = yes }
 		}
 	}
@@ -2540,7 +2528,7 @@ gando_modifier = {
 	remove_trigger = { 
 		OR = {
 			NOT = { is_core_of = OWNER }
-			owner = { is_china_or_warlord_no_tt = no }
+			owner = { is_china_or_warlord = no }
 		}
 	}
 	icon = GFX_decision_POL_looming_peasants_strike
@@ -2558,7 +2546,7 @@ xinan_modifier = {
 	remove_trigger = {
 		OR = {
 			NOT = { is_core_of = OWNER }
-			owner = { is_china_or_warlord_no_tt = no }
+			owner = { is_china_or_warlord = no }
 		}
 	}
 	icon = GFX_decision_generic_disband_irregulars
@@ -2571,7 +2559,7 @@ barga_modifier = {
 	remove_trigger = { 
 		OR = {
 			NOT = { is_core_of = OWNER }
-			owner = { is_china_or_warlord_no_tt = no }
+			owner = { is_china_or_warlord = no }
 		}
 	}
 	icon = GFX_decision_eng_ally_imperialist_coup
@@ -2589,7 +2577,7 @@ concessions_modifier = {
 	remove_trigger = { 
 		OR = {
 			is_core_of = OWNER
-			owner = { is_china_or_warlord_no_tt = yes }
+			owner = { is_china_or_warlord = yes }
 		}
 	}
 	icon = GFX_decision_eng_trade_unions_support
@@ -2601,12 +2589,22 @@ concessions_modifier = {
 	compliance_gain = 0.10
 }
 
+concessions_neutral_zone_modifier = {
+	enable = { always = yes }
+
+	icon = GFX_modifiers_demilitarize_zone
+	land_bunker_effectiveness_factor = -1
+	coastal_bunker_effectiveness_factor = -1
+	state_production_speed_bunker_factor = -1
+	state_production_speed_coastal_bunker_factor = -1
+}
+
 chinese_soviet_low_modifier = {
 	enable = { always = yes }
 	remove_trigger = {
 		owner = {
 			OR = {
-				is_china_or_warlord_no_tt = no
+				is_china_or_warlord = no
 				has_government = communism
 			}
 			NOT = { has_idea = CHI_idea_united_front }
@@ -2625,7 +2623,7 @@ chinese_soviet_normal_modifier = {
 	remove_trigger = {
 		owner = {
 			OR = {
-				is_china_or_warlord_no_tt = no
+				is_china_or_warlord = no
 				has_government = communism
 			}
 			NOT = { has_idea = CHI_idea_united_front }
@@ -2644,7 +2642,7 @@ chinese_soviet_heavy_modifier = {
 	remove_trigger = {
 		owner = {
 			OR = {
-				is_china_or_warlord_no_tt = no
+				is_china_or_warlord = no
 				has_government = communism
 			}
 			NOT = { has_idea = CHI_idea_united_front }
@@ -3372,7 +3370,55 @@ PER_influence_in_persia_modifier = {
 	
 	political_power_gain = PER_political_power_gain
 	consumer_goods_factor = PER_consumer_goods_factor
+}
+
+CHI_foreign_influence_modifier = {
+	icon = GFX_idea_CHI_foreign_influence
+
+	enable = {
+		check_variable = {
+			CHI_share_of_influence > 0
+		}
+	}
+	# remove_trigger = {
+	# 	CHN = {
+	# 		NOT = { tag = ROOT }
+	# 		has_dynamic_modifier = {
+	# 			modifier = CHI_foreign_influence_modifier
+	# 		}
+	# 	}
+	# }
+
+	political_power_gain = CHI_political_power_gain
+	consumer_goods_factor = CHI_consumer_goods_factor
+	min_export = CHI_consumer_goods_factor
+	civilian_intel_to_others = CHI_civilian_intel_to_others
+	army_intel_to_others = CHI_army_intel_to_others
+	navy_intel_to_others = CHI_navy_intel_to_others
+	production_speed_rail_way_factor = CHI_production_speed_rail_way_factor
+	custom_modifier_tooltip = CHI_foreign_influence_modifier_tt
+}
+
+CHI_influence_in_china_modifier = {
+	#icon = GFX_idea_CHI_foreign_influence
+	enable = {
+		any_country_with_original_tag_of = {
+			target = constant:country_groups.china_or_warlord
+			has_dynamic_modifier = CHI_foreign_influence_modifier
+			NOT = { has_war_with = ROOT }
+		}
+	}
+	remove_trigger = {
+		OR = {
+			is_subject = yes
+			has_country_flag = great_war_loser
+		}
+	}
+	
+	political_power_gain = CHI_political_power_gain
+	consumer_goods_factor = CHI_consumer_goods_factor
 }	
+
 colonial_war = {
 	enable = {
 		is_in_colonial_war = yes
