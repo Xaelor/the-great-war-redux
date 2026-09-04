@@ -1,54 +1,75 @@
-add_namespace = old_devnote
+add_namespace = old_settings
 
 country_event = {
-	id = old_devnote.1
-	title = old_devnote.1.title
-	desc = old_devnote.1.desc
+	id = old_settings.1
+	title = old_settings.1.title
+	desc = old_settings.1.desc
 
 	is_triggered_only = yes
 
 	option = {
-		name = old_devnote.1.a
+		name = old_settings.1.a
+		custom_effect_tooltip = old_settings_performance_impact_small_tt
+		custom_effect_tooltip = generic_skip_one_line_tt
+		custom_effect_tooltip = old_settings_realism_expl_tt
+		hidden_effect = {
+			if = {
+				limit = {
+					has_global_flag = old_settings_realism_enabled_cflg
+				}
+				clr_global_flag = old_settings_realism_enabled_cflg
+				else = {
+					set_global_flag = old_settings_realism_enabled_cflg
+				}
+			}
+			every_country = {
+				limit = {
+					has_country_flag = old_realism_content_country_cflg
+				}
+				mark_focus_tree_layout_dirty = yes
+			}
+			country_event = old_settings.1
+		}
+	}
+
+	option = {
+		name = old_settings.1.b
 		custom_effect_tooltip = old_settings_performance_impact_large_tt
 		custom_effect_tooltip = generic_skip_one_line_tt
 		custom_effect_tooltip = old_settings_focus_tree_expl_tt
 		hidden_effect = {
 			if = {
 				limit = {
-					has_country_flag = old_settings_focus_tree_enabled_cflg
+					has_global_flag = old_settings_focus_tree_enabled_cflg
 				}
 				clr_global_flag = old_settings_focus_tree_enabled_cflg
+				every_country = {
+					limit = {
+						has_focus_tree = generic_focus_real
+					}
+					load_focus_tree = generic_focus
+					mark_focus_tree_layout_dirty = yes
+				}
 				else = {
 					set_global_flag = old_settings_focus_tree_enabled_cflg
-				}
-			}
-			every_country = {
-				if = {
-					limit = {
-						has_focus_tree = generic_focus
-					}
-					load_focus_tree = generic_focus_real
-					else_if = {
+					every_country = {
 						limit = {
-							has_focus_tree = generic_focus_real
+							has_focus_tree = generic_focus
 						}
-						load_focus_tree = generic_focus
+						load_focus_tree = generic_focus_real
+						mark_focus_tree_layout_dirty = yes
 					}
 				}
 			}
-			country_event = old_devnote.1
+			country_event = old_settings.1
 		}
 	}
 
 	#option = {
-	#	name = old_devnote.1.b
-	#}
-
-	#option = {
-	#	name = old_devnote.1.c
+	#	name = old_settings.1.c
 	#}
 
 	option = {
-		name = old_devnote.1.d
+		name = old_settings.1.d
 	}
 }
