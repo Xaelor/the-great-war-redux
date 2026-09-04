@@ -36,9 +36,155 @@ TGWR_great_power_politics = {
 								state = 983
 								state = 1228
 								state = 1229
+								state = 1306
+								state = 1307
+								state = 1308
 							}
 						}
 						transfer_state_to = ROOT
+					}
+				}
+			}
+		}
+	}
+	MON_prepare_inner_mongolian_campaign_mission = {
+		icon = generic_ignite_civil_war
+		activation = {
+			OR = {
+				tag = MON
+				owns_state = 612
+			}
+			MON = {
+				has_country_flag = MON_inner_mongolia_raid
+			}
+			has_war = no
+		}
+		visible = {
+			great_power_politics_misc_visible = yes
+		}
+		available = {
+			OR = {
+				MON = { owns_state = 612 }
+				MON = { has_war = yes }
+			}
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				OR = {
+					state = 621
+					state = 611
+					state = 612
+					state = 610
+					state = 715
+				}
+			}
+		}
+		fire_only_once = yes
+		is_good = no
+		war_with_on_timeout = MON
+		war_with_on_timeout = CHI
+		war_with_on_timeout = QIN
+		days_mission_timeout = 260
+		timeout_effect = {
+			effect_tooltip = {
+				MON = {
+					declare_war_on = {
+						target = 612.OWNER
+						type = liberate_wargoal
+						generator = {
+							621 611 612 610 715
+						}
+					}
+				}
+			}
+			hidden_effect = {
+				country_event = ww1_mongolia.5
+			}
+		}
+	}
+	MON_russian_intervention_mission = {
+		icon = GFX_decision_eng_trade_unions_demand
+		activation = {
+			OR = {
+				tag = RUS
+				tag = MON
+				has_war_with = MON
+			}
+			MON = {
+				any_enemy_country = {
+					is_in_colonial_war = yes
+					is_china_or_warlord = yes
+				}
+				has_country_flag = MON_inner_mongolia_raid
+			}
+			RUS = {
+				is_subject = no
+				is_neighbor_of = MON
+				NOT = {
+					has_war_with = ROOT
+					tag = SOV
+				}
+				has_civil_war = no
+			}
+		}
+		visible = {
+			great_power_politics_misc_visible = yes
+		}
+		available = {
+			OR = {
+				MON = {
+					has_war = no
+				}
+				NOT = {
+					OR = {
+						country_exists = MON
+						country_exists = RUS
+					}
+				}
+				RUS = { is_subject = yes }
+				RUS = { has_war_with = ROOT }
+			}
+		}
+		is_good = no
+		days_mission_timeout = 240
+		timeout_effect = {
+			if = {
+				limit = { tag = RUS }
+				country_event = ww1_mongolia.9
+			}
+			else = {
+				effect_tooltip = {
+					RUS = {
+						give_guarantee = MON
+					}
+					MON = {
+						every_enemy_country = {
+							limit = {
+								is_china_or_warlord = yes
+							}
+							white_peace = {
+								tag = ROOT
+								message = treaty_of_kyakhta_message
+							}
+						}
+						every_state = {
+							limit = {
+								OR = {
+									region = 143
+									state = 715
+								}
+							}
+							if = {
+								limit = {
+									is_owned_by = ROOT
+								}
+								608 = {
+									owner = {
+										transfer_state = PREV.PREV
+									}
+								}
+							}
+						}
 					}
 				}
 			}
