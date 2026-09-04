@@ -6447,7 +6447,7 @@ country_event = {
 			every_character = {
 				limit = {
 					is_generic_character = no
-					has_character_flag = luoyang_clique
+					has_character_flag = southern_zhili_clique
 				}
 				set_nationality = JNC
 			}
@@ -7161,7 +7161,7 @@ country_event = {
 			every_character = {
 				limit = {
 					is_generic_character = no
-					has_character_flag = southern_luoyang_clique
+					has_character_flag = fujian_clique
 				}
 				set_nationality = FJN
 			}
@@ -7200,9 +7200,6 @@ country_event = {
 					ANC_chen_yi = { set_nationality = FJN }
 					ANC_gao_shidu = { set_nationality = FJN }
 					ANC_wang_haoji = { set_nationality = FJN }
-				}
-				JNC = {
-					JNC_sun_qi = { set_nationality = FJN }
 				}
 				every_state = {
 					limit = {
@@ -10461,6 +10458,7 @@ country_event = {
 				}
 				ANC_wang_haoji = {
 					set_nationality = ZHC
+					set_character_flag = fujian_clique
 				}
 				ANC_jin_yune = {
 					set_nationality = ZHC
@@ -10477,6 +10475,7 @@ country_event = {
 					}
 					CHI_liu_guanxiong = {
 						set_nationality = ZHC
+						set_character_flag = fujian_clique
 					}
 					CHI_liang_shiyi = {
 						set_nationality = ZHC
@@ -10807,6 +10806,11 @@ country_event = {
 				}
 			}
 		}
+		CHI = {
+			CHI_liang_shiyi = {
+				set_nationality = FNG
+			}
+		}
 	}
 }
 
@@ -11065,13 +11069,13 @@ country_event = {
 					CHI_chiang_kaishek = {
 						set_nationality = KMT
 					}
-					retire_character = CHI_cheng_biguang #assassination, event to do
-				}
-				ANC = {
-					ANC_deng_yanda = {
-						set_character_flag = kmt_allegiance
+					CHI_deng_yanda = {
 						set_nationality = KMT
 					}
+					CHI_ye_ting = {
+						set_nationality = KMT
+					}
+					retire_character = CHI_cheng_biguang #assassination, event to do
 				}
 				every_state = {
 					limit = {
@@ -11273,8 +11277,10 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			set_global_flag = yung_feng_incident
-			KMT = {
+			GDC = {
 				retire_character = GDC_deng_keng
+			}
+			KMT = {
 				if = {
 					limit = { has_character = CHI_chen_duxiu }
 					CHI_chen_duxiu = { set_nationality = CHI }
@@ -13064,8 +13070,10 @@ country_event = {
 	immediate = {
 		hidden_effect = {
 			set_global_flag = yung_feng_incident
-			KMT = {
+			GDC = {
 				retire_character = GDC_deng_keng
+			}
+			KMT = {
 				if = {
 					limit = { has_character = CHI_chen_duxiu }
 					CHI_chen_duxiu = { set_nationality = CHI }
@@ -16096,20 +16104,33 @@ country_event = {
 			every_character = {
 				limit = {
 					is_generic_character = no
-					OR = {
-						is_character = CHI_wang_jingwei
-						is_character = HNC_tang_shengzhi
-						is_character = HNC_tan_yankai
-						is_character = ANC_deng_yanda
-						is_character = CHI_li_jishen
-						is_character = YUN_zhu_peide
-						is_character = CHI_soong_tzuwen
-						has_character_flag = communist_chinese_allegiance
-					}
+					has_character_flag = communist_chinese_allegiance
 				}
 				set_nationality = HNC
 			}
+			CHI = {
+				CHI_wang_jingwei = {
+					set_nationality = HNC
+				}
+				CHI_li_jishen = {
+					set_nationality = HNC
+				}
+				CHI_soong_tzuwen = {
+					set_nationality = HNC
+				}
+			}
+			YUN = {
+				YUN_zhu_peide = {
+					set_nationality = HNC
+				}
+			}
 			HNC = {
+				HNC_tang_shengzhi = {
+					set_nationality = HNC
+				}
+				HNC_tan_yankai = {
+					set_nationality = HNC
+				}
 				set_party_name = {
 					ideology = democratic
 					long_name = CHI_left_kuomintang_party
@@ -17377,7 +17398,9 @@ country_event = {
 				clr_character_flag = refused_to_fight
 			}
 		}
-		activate_decision = CHI_sue_for_peace_NPA
+		NPA = {
+			country_event = ww1_china.214
+		}
 	}
 }
 
@@ -19807,10 +19830,8 @@ country_event = {
 				new_term_elections = yes
 			}
 		}
-		CHI_xu_shichang = {
-			remove_advisor_role = {
-				slot = political_advisor
-			}
+		CHI = {
+			retire_character = CHI_xu_shichang
 		}
 		# hidden_effect = {
 		# 	country_event = {
@@ -23112,13 +23133,13 @@ country_event = {
 				country_leader = { 
 					ideology = warlordism 
 					traits = { warrior_general }
-					}
+				}
 			}
 			add_country_leader_role = {
 				promote_leader = yes
 				country_leader = { 
 					ideology = stratocracy 
-				traits = { warrior_general }
+					traits = { warrior_general }
 				}
 			}
 		}
@@ -23501,7 +23522,9 @@ country_event = {
 	option = {
 		name = ww1_china.212.a
 		set_global_flag = guangzhou_client_warlord_uprising
-		retire_character = GXC_yang_ximin
+		YUN = {
+			retire_character = YUN_yang_ximin
+		}
 		delete_unit_template_and_units = {
 			division_template = "Xilu Taozeijun"
 			disband = yes
@@ -23635,7 +23658,7 @@ country_event = {
 		hidden_effect = {
 			every_core_state = {
 				limit = {
-					NOT = { state = 325 } 
+					NOT = { state = 325 }
 				}
 				remove_core_of = ROOT
 			}
