@@ -20,6 +20,121 @@ debug_decisions = {
 	}
 }
 
+TGWR_great_power_politics = {
+	#great_power_politics_balkan_powder_keg
+	GRE_occupy_cyprus = {
+		icon = GFX_decision_infiltrate_state
+		allowed = {
+			original_tag = GRE
+		}
+		targets = {
+			CYP
+		}
+		available = {
+			has_war = no
+			is_subject = no
+			FROM = {
+				has_war = no
+				is_subject = no
+				strength_ratio = {
+					tag = ROOT
+					ratio < 0.5
+				}
+			}
+			NOT = {
+				any_other_country = {
+					has_guaranteed = FROM
+				}
+				has_active_mission = frankfurt_conference
+				has_active_mission = versallies_conference
+			}
+		}
+		visible = {
+			great_power_politics_balkan_powder_keg_visible = yes
+			FROM = {
+				owns_state = 183
+			}
+			NOT = {
+				has_country_flag = great_war_loser
+				has_idea = idea_army_restrictions
+			}
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 183
+			}
+		}
+		fire_only_once = yes
+		days_remove = 10
+		custom_cost_trigger = {
+			command_power > 24.9
+		}
+		ai_will_do = {
+			factor = 1000
+		}
+		complete_effect = {
+			add_command_power = -25
+		}
+		remove_effect = {
+			annex_country = {
+				target = FROM
+				transfer_troops = yes
+			}
+			add_named_threat = {
+				threat = 3
+				name = GRE_occupy_cyprus
+			}
+		}
+	}
+	GRE_capture_thessaloniki = {
+		icon = GFX_decision_generic_ignite_civil_war
+
+		allowed = { original_tag = GRE }
+
+		highlight_states = { highlight_state_targets = { state = 345 } }
+
+		available = {
+			345 = { is_controlled_by = ROOT } 
+		}
+
+		activation = {
+			TUR = {
+				owns_state = 345
+				has_war_with = ROOT
+			}
+		}
+
+		fire_only_once = yes
+
+		is_good = no
+
+		days_mission_timeout = 100
+
+		cancel_trigger = {
+			OR = {
+				TUR = { NOT = { owns_state = 345 } }
+				NOT = { has_war_with = TUR }
+			}
+		}
+
+		timeout_effect = {
+			add_war_support = -0.10
+			add_political_power = -50
+			add_stability = -0.10
+		}
+
+		complete_effect = {
+			add_war_support = 0.10
+			add_political_power = 100
+			add_stability = 0.10
+			add_timed_idea = {
+				idea = GRE_high_morale
+				days = 60
+			}
+		}
+	}
+}
+
 GRE_venizelos_assassination = {
 	GRE_track_venizelos = {
 		icon = GFX_decision_eng_blackshirt_march
@@ -173,124 +288,7 @@ GRE_venizelos_assassination = {
 	
 }
 
-operations = {
-	GRE_occupy_cyprus = {
-		icon = GFX_decision_infiltrate_state
-		allowed = {
-			original_tag = GRE
-		}
-		targets = {
-			CYP
-		}
-		available = {
-			has_war = no
-			is_subject = no
-			FROM = {
-				has_war = no
-				is_subject = no
-				strength_ratio = {
-					tag = ROOT
-					ratio < 0.5
-				}
-			}
-			NOT = {
-				any_other_country = {
-					has_guaranteed = FROM
-				}
-				has_active_mission = frankfurt_conference
-				has_active_mission = versallies_conference
-			}
-		}
-		visible = {
-			FROM = {
-				owns_state = 183
-			}
-			NOT = {
-				has_country_flag = great_war_loser
-				has_idea = idea_army_restrictions
-			}
-		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 183
-			}
-		}
-		fire_only_once = yes
-		days_remove = 10
-		custom_cost_trigger = {
-			command_power > 24.9
-		}
-		ai_will_do = {
-			factor = 1000
-		}
-		complete_effect = {
-			add_command_power = -25
-		}
-		remove_effect = {
-			annex_country = {
-				target = FROM
-				transfer_troops = yes
-			}
-			add_named_threat = {
-				threat = 3
-				name = GRE_occupy_cyprus
-			}
-		}
-	}
-}
-
-GRE_balkan_war = {
-	GRE_capture_thessaloniki = {
-		icon = GFX_decision_generic_ignite_civil_war
-
-		allowed = { original_tag = GRE }
-
-		highlight_states = { highlight_state_targets = { state = 345 } }
-
-		available = {
-			345 = { is_controlled_by = ROOT } 
-		}
-
-		activation = {
-			TUR = {
-				owns_state = 345
-				has_war_with = ROOT
-			}
-		}
-
-		fire_only_once = yes
-
-		is_good = no
-
-		days_mission_timeout = 100
-
-		cancel_trigger = {
-			OR = {
-				TUR = { NOT = { owns_state = 345 } }
-				NOT = { has_war_with = TUR }
-			}
-		}
-
-		timeout_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision timeout GRE_capture_thessaloniki"
-			add_war_support = -0.10
-			add_political_power = -50
-			add_stability = -0.10
-		}
-
-		complete_effect = {
-			log = "[GetDateText]: [Root.GetName]: Decision GRE_capture_thessaloniki"
-			add_war_support = 0.10
-			add_political_power = 100
-			add_stability = 0.10
-			add_timed_idea = {
-				idea = GRE_high_morale
-				days = 60
-			}
-		}
-	}
-}
-political_actions = {
+TGWR_great_power_politics = {
 	#GRE_referendum_timer = {
 	#	icon = GFX_decision_generic_political_discourse
 	#	allowed = {
@@ -326,6 +324,7 @@ political_actions = {
 			controls_province = 4109
 		}
 		visible = {
+			great_power_politics_balkan_powder_keg_visible = yes
 			owns_state = 898
 			898 = {
 				is_capital = no
@@ -3985,7 +3984,7 @@ GRE_territorial_allegeance = {
 			factor = 500
 			modifier = {
 				factor = 0
-				check_variable = { GRE_number_of_states_transfered > 3 }
+				check_variable = { GRE_number_of_states_transferred > 3 }
 			}
 			# remove epistratoi first
 			modifier = {
@@ -4049,7 +4048,7 @@ GRE_territorial_allegeance = {
 				amount = -300
 				producer = GRE
 			}
-			add_to_variable = { GRE_number_of_states_transfered = 1 }
+			add_to_variable = { GRE_number_of_states_transferred = 1 }
 		}
 	}
 
@@ -12301,10 +12300,7 @@ GRE_territorial_allegeance = {
 		available = {
 			OR = {
 				has_war = yes
-				any_country_with_original_tag = {
-					original_tag_to_check = GRE 
-					NOT = { tag = ROOT }
-				}
+				has_other_GRE_government = yes
 				NOT = { has_country_flag = battle_of_influence }
 			}
 			OR = {
@@ -12321,7 +12317,8 @@ GRE_territorial_allegeance = {
 				limit = { has_country_flag = battle_of_influence_royalist_side }
 				GRE_monarchist_civil_war = yes
 				hidden_effect = {
-					every_country = {
+					every_country_with_original_tag = {
+						original_tag_to_check = GRE
 						limit = { has_template = "Ethniki Froura" }
 						delete_unit_template_and_units = {
 							division_template = "Ethniki Froura"
@@ -12349,7 +12346,8 @@ GRE_territorial_allegeance = {
 							}	
 						}
 					}
-					every_country = {
+					every_country_with_original_tag = {
+						original_tag_to_check = GRE
 						limit = { has_template = "Epistratoi" }
 						delete_unit_template_and_units = {
 							division_template = "Epistratoi"
@@ -12425,7 +12423,8 @@ GRE_territorial_allegeance = {
 							}
 						}
 					}
-					every_country = {
+					every_country_with_original_tag = {
+						original_tag_to_check = GRE
 						limit = { has_template = "Stoßtruppen" }
 						delete_unit_template_and_units = {
 							division_template = "Stoßtruppen"
@@ -12590,7 +12589,7 @@ GRE_national_schism = {
 		}
 	}
 }
-crisis = {
+TGWR_great_power_politics = {
 	GRE_retreat_from_new_territories = {
 		icon = GFX_decision_eng_blackshirt_march
 		highlight_states = {
@@ -12817,10 +12816,11 @@ GRE_fund_pontic_rebels = {
 			}
         }
 		available = {
-			any_state = {
-				is_core_of = PON
-				has_dynamic_modifier =  { 
-					modifier = GRE_pontic_nationalism
+			PON = {
+				any_core_state = {
+					has_dynamic_modifier =  { 
+						modifier = GRE_pontic_nationalism
+					}
 				}
 			}
 		}

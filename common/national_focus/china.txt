@@ -29,6 +29,27 @@ focus_tree = {
 	shared_focus = CHI_army_westernization
 	shared_focus = CHI_recovery_of_naval_infrastructure
 	shared_focus = CHI_restore_the_nation
+	
+	shortcut = {
+		name = inner_politics_tree_shortcut
+		target = CHI_stand_with_tongmenghui 
+		scroll_wheel_factor = 1
+	}
+	shortcut = {
+		name = army_tree_shortcut
+		target = CHI_army_westernization 
+		scroll_wheel_factor = 1
+	}
+	shortcut = {
+		name = navy_tree_shortcut
+		target = CHI_recovery_of_naval_infrastructure 
+		scroll_wheel_factor = 1
+	}
+	shortcut = {
+		name = economic_tree_shortcut
+		target = CHI_nation_recovery 
+		scroll_wheel_factor = 1
+	}
 
 	focus = {
 		id = CHI_stand_with_tongmenghui
@@ -354,6 +375,50 @@ focus_tree = {
 		completion_reward = {
 			if = {
 				limit = {
+					has_subject = XKC
+					has_subject = SIC
+				}
+				SIC = {
+					annex_country = {
+						target = XKC
+						transfer_troops = yes
+					}
+					retire_character = SIC_yin_changheng
+				}
+				hidden_effect = {
+					XKC = {
+						every_core_state = {
+							remove_core_of = PREV
+						}
+						every_state = {
+							limit = { is_claimed_by = PREV }
+							remove_claim_by = PREV
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_subject = ZHE
+				}
+				annex_country = {
+					target = ZHE
+					transfer_troops = yes
+				}
+				hidden_effect = {
+					ZHE = {
+						every_core_state = {
+							remove_core_of = PREV
+						}
+						every_state = {
+							limit = { is_claimed_by = PREV }
+							remove_claim_by = PREV
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
 					has_active_mission = CHI_republican_plot
 				}
 				add_days_mission_timeout = {
@@ -507,7 +572,7 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			remove_ideas = CHI_idea_republican_plot
+			add_stability = 0.05
 			add_popularity = {
 				ideology = democratic
 				popularity = -0.05
@@ -2578,10 +2643,9 @@ focus_tree = {
 		y = 1
 		available = {
 			has_war = yes
-			any_state = {
+			any_core_state = {
 				is_fully_controlled_by = ROOT
 				impassable = no
-				is_core_of = ROOT
 			}
 		}
 		completion_reward = {
@@ -2653,10 +2717,9 @@ focus_tree = {
 		y = 1
 		available = {
 			has_war = yes
-			any_state = {
+			any_core_state = {
 				is_fully_controlled_by = ROOT
 				impassable = no
-				is_core_of = ROOT
 			}
 		}
 		completion_reward = {
@@ -2728,10 +2791,9 @@ focus_tree = {
 		y = 1
 		available = {
 			has_war = yes
-			any_state = {
+			any_core_state = {
 				is_fully_controlled_by = ROOT
 				impassable = no
-				is_core_of = ROOT
 			}
 		}
 		bypass = {
@@ -2973,6 +3035,15 @@ focus_tree = {
 			1229 = {
 				is_owned_or_subject_trigger = yes
 			}
+			1306 = {
+				is_owned_or_subject_trigger = yes
+			}
+			1307 = {
+				is_owned_or_subject_trigger = yes
+			}
+			1308 = {
+				is_owned_or_subject_trigger = yes
+			}
 		}
 		completion_reward = {
 			add_political_power = 25
@@ -3031,6 +3102,8 @@ focus_tree = {
 			owns_state = 330
 			owns_state = 1228
 			owns_state = 1229
+			owns_state = 1306
+			owns_state = 1308
 		}
 		completion_reward = {
 			create_wargoal = {
@@ -3351,6 +3424,15 @@ focus_tree = {
 				is_owned_or_subject_trigger = yes
 			}
 			1229 = {
+				is_owned_or_subject_trigger = yes
+			}
+			1306 = {
+				is_owned_or_subject_trigger = yes
+			}
+			1307 = {
+				is_owned_or_subject_trigger = yes
+			}
+			1308 = {
 				is_owned_or_subject_trigger = yes
 			}
 		}
@@ -3728,6 +3810,15 @@ focus_tree = {
 			1229 = {
 				is_owned_or_subject_trigger = yes
 			}
+			1306 = {
+				is_owned_or_subject_trigger = yes
+			}
+			1307 = {
+				is_owned_or_subject_trigger = yes
+			}
+			1308 = {
+				is_owned_or_subject_trigger = yes
+			}
 		}
 		completion_reward = {
 			add_stability = 0.15
@@ -3808,16 +3899,8 @@ focus_tree = {
 				ruling_only = yes
 			}
 			# Southern provinces are not loyal
-			any_other_country = {
-				exists = yes
-				OR = {
-					original_tag = YUN
-					original_tag = GXC
-					original_tag = GDC
-					original_tag = GZC
-					original_tag = HNC
-					original_tag = SIC
-				}
+			any_country_with_original_tag_of = {
+				target = { YUN GXC GDC GZC HNC SIC }
 				NOT = {
 					has_war_with = ROOT
 					is_subject_of = ROOT
@@ -4107,9 +4190,8 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			set_autonomy = {
-				target = ZHC
-				autonomy_state = autonomy_free
+			ZHC = {
+				free_subject_leave_faction = yes
 			}
 			declare_war_on = {
 				target = ZHC

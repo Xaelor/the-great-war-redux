@@ -100,19 +100,9 @@ country_event = {
 					set_cosmetic_tag = RAJ_UK
 					every_subject_country = {
 						limit = {
-							compare_autonomy_state > autonomy_tgwr_integrated_protectorate
+							is_low_level_puppet = no
 						}
-						RAJ = {
-							end_puppet = PREV
-						}
-					}
-					if = {
-						limit = {
-							any_owned_state = {
-								is_core_of = UAE
-							}
-						}
-						release = UAE
+						free_subject = yes
 					}
 					if = {
 						limit = {
@@ -276,7 +266,7 @@ country_event = {
 					}
 					OR = {
 						has_country_flag = great_war_winner
-						is_china_or_warlord_no_tt = yes
+						is_china_or_warlord = yes
 					}
 				}
 				transfer_state = 746
@@ -309,7 +299,7 @@ country_event = {
 						}
 						set_autonomy = {
 							target = TON
-							autonomy_state = autonomy_tgwr_informal_protectorate
+							autonomy_state = autonomy_tgwr_protected_state
 							freedom_level = 0.7
 						}
 						TON = {
@@ -770,7 +760,7 @@ country_event = {
 		PAK = { set_country_flag = protectorate }
 		set_autonomy = {
 			target = PAK
-			autonomy_state = autonomy_tgwr_informal_protectorate
+			autonomy_state = autonomy_tgwr_protected_state
 		}
 		hidden_effect = {
 			PAK = {
@@ -1017,11 +1007,12 @@ country_event = {
 					}
 					else_if = {
 						limit = {
-							any_country = {
-								owns_state = 629
-								is_subject = no
-								NOT = { has_country_flag = great_war_loser } 
-							}
+							629 = { #Hawaii
+								OWNER = {
+									is_subject = no
+									NOT = { has_country_flag = great_war_loser } 
+								}
+							}	
 						}
 						629 = { #Hawaii
 							OWNER = {
@@ -1138,10 +1129,11 @@ country_event = {
 			}
 			if = {
 				limit = {
-					any_country = {
-						NOT = { original_tag = RAJ }
-						has_country_flag = great_war_loser
-						owns_state = 320
+					320 = {
+						OWNER = {
+							NOT = { original_tag = RAJ }
+							has_country_flag = great_war_loser
+						}
 					}
 				}
 				every_country = {
@@ -1157,10 +1149,11 @@ country_event = {
 			}
 			if = {
 				limit = {
-					any_country = {
-						NOT = { original_tag = RAJ }
-						has_country_flag = great_war_loser
-						owns_state = 321
+					321 = {
+						OWNER = {
+							NOT = { original_tag = RAJ }
+							has_country_flag = great_war_loser
+						}
 					}
 				}
 				every_country = {
@@ -1653,7 +1646,7 @@ country_event = {
 		}
 		set_autonomy = {
 			target = BRJ
-			autonomy_state = autonomy_dominion
+			autonomy_state = autonomy_tgwr_dominion
 		}
 		hidden_effect = {
 			BRJ = {
@@ -1994,12 +1987,12 @@ country_event = {
 					}
 					set_autonomy = {
 						target = MYS
-						autonomy_state = autonomy_integrated_puppet
+						autonomy_state = autonomy_tgwr_feudal_autonomy
 						freedom_level = 0.8
 					}
 					set_autonomy = {
 						target = HYD
-						autonomy_state = autonomy_integrated_puppet
+						autonomy_state = autonomy_tgwr_feudal_autonomy
 						freedom_level = 0.8
 					}
 					MYS = {
@@ -2053,7 +2046,13 @@ country_event = {
 			has_subject = KUW
 			has_subject = QAT
 			has_subject = BHR
-			has_subject = UAE
+			has_subject = ABU
+			has_subject = AJM
+			has_subject = DUB
+			has_subject = FJR
+			has_subject = RAK
+			has_subject = SHJ
+			has_subject = UAQ
 			has_subject = MSC
 			has_subject = OMA
 			has_subject = YEM
@@ -2065,7 +2064,13 @@ country_event = {
 					is_claimed_by = KUW
 					is_core_of = QAT
 					is_core_of = BHR
-					is_core_of = UAE
+					is_core_of = ABU
+					is_core_of = AJM
+					is_core_of = DUB
+					is_core_of = FJR
+					is_core_of = RAK
+					is_core_of = SHJ
+					is_core_of = UAQ
 					is_core_of = MSC
 					is_core_of = OMA
 					is_core_of = YEM
@@ -2114,11 +2119,25 @@ country_event = {
 				transfer_state_to = KUW
 			}
 		}
-		if = {
+		every_subject_country = {
 			limit = {
-				has_subject = QAT
+				original_tag = KUW
+				original_tag = QAT
+				original_tag = BHR
+				original_tag = ABU
+				original_tag = AJM
+				original_tag = DUB
+				original_tag = FJR
+				original_tag = RAK
+				original_tag = SHJ
+				original_tag = UAQ
+				original_tag = MSC
+				original_tag = OMA
+				original_tag = YEM
+				original_tag = SAU
+				original_tag = SOM
 			}
-			end_puppet = QAT
+			free_subject = yes
 		}
 		if = {
 			limit = {
@@ -2130,43 +2149,11 @@ country_event = {
 		}
 		if = {
 			limit = {
-				has_subject = BHR
-			}
-			end_puppet = BHR
-		}
-		if = {
-			limit = {
 				any_owned_state = {
 					is_core_of = BHR
 				}
 			}
 			release = BHR
-		}
-		if = {
-			limit = {
-				has_subject = UAE
-			}
-			end_puppet = UAE
-		}
-		if = {
-			limit = {
-				any_owned_state = {
-					is_core_of = UAE
-				}
-			}
-			release = UAE
-		}
-		if = {
-			limit = {
-				has_subject = MSC
-			}
-			end_puppet = MSC
-		}
-		if = {
-			limit = {
-				has_subject = OMA
-			}
-			end_puppet = OMA
 		}
 		if = {
 			limit = {
@@ -2186,12 +2173,6 @@ country_event = {
 		}
 		if = {
 			limit = {
-				has_subject = YEM
-			}
-			end_puppet = YEM
-		}
-		if = {
-			limit = {
 				any_owned_state = {
 					is_core_of = YEM
 				}
@@ -2200,23 +2181,11 @@ country_event = {
 		}
 		if = {
 			limit = {
-				has_subject = SAU
-			}
-			end_puppet = SAU
-		}
-		if = {
-			limit = {
 				any_owned_state = {
 					is_core_of = SAU
 				}
 			}
 			release = SAU
-		}
-		if = {
-			limit = {
-				has_subject = SOM
-			}
-			end_puppet = SOM
 		}
 		if = {
 			limit = {
@@ -2314,7 +2283,7 @@ country_event = {
 		}
 		set_autonomy = {
 			target = JKS
-			autonomy_state = autonomy_dominion
+			autonomy_state = autonomy_tgwr_dominion
 		}
 		hidden_effect = {
 			JKS = {
@@ -2455,7 +2424,7 @@ country_event = {
 		}
 		set_autonomy = {
 			target = KLT
-			autonomy_state = autonomy_dominion
+			autonomy_state = autonomy_tgwr_dominion
 		}
 		hidden_effect = {
 			KLT = {

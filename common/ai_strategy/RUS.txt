@@ -16,6 +16,60 @@ RUS_no_garrision = {
 	}
 }
 
+RUS_peace_with_CENPO = {
+	allowed = {
+		tag = RUS
+	}
+	enable = {
+		has_global_flag = brest_litovsk_negotiations_started
+		NOT = {
+			has_global_flag = RUS_surrender
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = prepare_for_war
+		id = GER
+		value = 10
+	}
+}
+
+CAU_peace_with_TUR = {
+	allowed = {
+		tag = CAU
+	}
+	enable = {
+		has_global_flag = brest_litovsk_negotiations_started
+		NOT = {
+			has_global_flag = treaty_of_batum
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = prepare_for_war
+		id = TUR
+		value = 10
+	}
+}
+
+breakaway_states_dont_defend_SOV = {
+	allowed = {
+		OR = {
+			original_tag = UKR
+			original_tag = CAU
+		}
+	}
+	enable = {
+		has_autonomy_state = autonomy_tgwr_nominal_constituency
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = dont_defend_ally_borders
+		id = RUS
+		value = 1
+	}
+}
+
 RUS_dont_help_anyone = {
 	allowed = {
 		tag = RUS
@@ -1464,7 +1518,7 @@ EST_ignore_NWA = {
 
 RUS_avoid_caspian = {
 	allowed = {
-		is_russian_tag = yes
+		is_russian_tag_no_tt = yes
 		NOT = {
 			original_tag = UCH
 			tag = TRC

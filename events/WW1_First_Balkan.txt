@@ -245,12 +245,18 @@ country_event = {
 							}
 						}
 					}
-					white_peace = BLL
+					white_peace = {
+						tag = BLL
+						message = BW1_balkan_league_won_message
+					}
 				}
 				FROM = {
 					if = {
 						limit = { has_war_with = ALB }
-						white_peace = ALB
+						white_peace = {
+							tag = ALB
+							message = albania_independence_message
+						}
 						ALB = { remove_ideas = standing_alone }
 					}
 				}
@@ -270,7 +276,10 @@ country_event = {
 								has_war_together_with = FROM
 							}
 						}
-						white_peace = PREV
+						white_peace = {
+							tag = PREV
+							message = BW1_balkan_league_won_message
+						}
 					}
 					if = {
 						limit = {
@@ -724,7 +733,10 @@ country_event = {
 						tag = FROM
 					}
 				}
-				white_peace = PREV
+				white_peace = {
+					tag = PREV
+					message = BW1_balkan_turkey_won_message
+				}
 				set_truce = {
 					target = PREV
 					days = 365
@@ -788,7 +800,7 @@ country_event = {
 					ROOT = {
 						set_autonomy = {
 							target = PREV
-							autonomy_state = autonomy_tgwr_integrated_protectorate
+							autonomy_state = autonomy_tgwr_protectorate
 						}
 					}
 					set_politics = {
@@ -918,7 +930,7 @@ country_event = {
 	}
 }
 
-# greek occupation of nothern epirus
+# greek occupation of northern epirus
 country_event = {
 	id = ww1_firstbalkan.50
 	title = ww1_firstbalkan.50.t
@@ -951,14 +963,14 @@ country_event = {
 			has_global_flag = GRE_surrender_in_balkan_war
 		}
 		NOT = {
-			has_country_flag = GRE_decision_on_nothern_epirus
+			has_country_flag = GRE_decision_on_northern_epirus
 		}
 		NOT = {
 			has_completed_focus = GRE_florence_protocol
 		}
 	}
 	immediate = {
-		set_country_flag = GRE_decision_on_nothern_epirus
+		set_country_flag = GRE_decision_on_northern_epirus
 	}
 	fire_only_once = yes
 	mean_time_to_happen = {
@@ -974,7 +986,7 @@ country_event = {
 	}
 }
 
-# situation over nothern Epirus from austria
+# situation over northern Epirus from austria
 country_event = {
 	id = ww1_firstbalkan.51
 	title = ww1_firstbalkan.51.t
@@ -993,7 +1005,7 @@ country_event = {
 			is_owned_and_controlled_by = GRE
 		}
 		GRE = {
-			has_country_flag = GRE_decision_on_nothern_epirus
+			has_country_flag = GRE_decision_on_northern_epirus
 			has_war = no
 			is_subject = no
 			NOT = {
@@ -1001,11 +1013,11 @@ country_event = {
 			}
 		}
 		NOT = {
-			has_country_flag = AUH_ITA_BUL_reaction_to_GRE_occupation_of_nothern_epirus
+			has_country_flag = AUH_ITA_BUL_reaction_to_GRE_occupation_of_northern_epirus
 		}
 	}
 	immediate = {
-		set_country_flag = AUH_ITA_BUL_reaction_to_GRE_occupation_of_nothern_epirus
+		set_country_flag = AUH_ITA_BUL_reaction_to_GRE_occupation_of_northern_epirus
 	}
 	mean_time_to_happen = {
 		days = 24
@@ -1024,7 +1036,7 @@ country_event = {
 						is_in_faction_with = GRE
 					}
 					NOT = {
-						has_country_flag = AUH_ITA_BUL_reaction_to_GRE_occupation_of_nothern_epirus
+						has_country_flag = AUH_ITA_BUL_reaction_to_GRE_occupation_of_northern_epirus
 					}
 				}
 				country_event = ww1_firstbalkan.53
@@ -1061,7 +1073,7 @@ country_event = {
 	}
 }
 
-# situation over nothern Epirus from italy or bulgaria
+# situation over northern Epirus from italy or bulgaria
 country_event = {
 	id = ww1_firstbalkan.53
 	title = ww1_firstbalkan.51.t
@@ -1094,7 +1106,7 @@ country_event = {
 }
 
 
-# situation over nothern Epirus from italy or bulgaria
+# situation over northern Epirus from italy or bulgaria
 country_event = {
 	id = ww1_firstbalkan.54
 	title = ww1_firstbalkan.51.t
@@ -1377,13 +1389,9 @@ news_event = {
 						controls_state = 731
 					}
 				}
-				any_country = {
-					OR = {
-						original_tag = BUL
-						original_tag = SER
-						original_tag = MNT
-						original_tag = GRE
-						original_tag = ROM
+				any_country_with_original_tag_of = {
+					target = {
+						BUL SER MNT GRE ROM
 					}
 					owns_state = 345
 					controls_state = 345
@@ -1560,7 +1568,10 @@ country_event = {
 				}
 			}
 			TUR = {
-				release_puppet = ALB
+				release_autonomy = {
+					target = ALB
+					autonomy_state = autonomy_tgwr_autonomous_governorate
+				}
 				TUR_ahmet_izzet = {
 					set_nationality = ALB
 					set_character_name = ALB_ahmet_izzet
@@ -1664,7 +1675,7 @@ country_event = {
 				}
 				set_autonomy = {
 					target = MAC
-					autonomous_state = autonomy_tgwr_integrated_protectorate
+					autonomous_state = autonomy_tgwr_protectorate
 				}
 			}
 			every_country = {

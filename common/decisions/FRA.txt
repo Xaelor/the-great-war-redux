@@ -2645,7 +2645,8 @@ FRA_defense_of_france = {
 	}
 
 }
-peace_deals = {
+
+TGWR_great_power_politics = {
 	NFA_sue_for_peace_GER = {
 		icon = GFX_decision_eng_trade_unions_support
 		allowed = {
@@ -2659,6 +2660,7 @@ peace_deals = {
 			}
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			NOT = {
 				any_country_with_original_tag = {
 					original_tag_to_check = FRA
@@ -2741,7 +2743,7 @@ peace_deals = {
 					GER = {
 						set_autonomy = {
 							target = PREV
-							autonomous_state = autonomy_satellite
+							autonomous_state = autonomy_tgwr_client_state
 							end_civil_wars = no
 							end_wars = no
 						}
@@ -2786,10 +2788,9 @@ peace_deals = {
 							}
 						}
 					}
-					every_state = {
+					every_core_state = {
 						limit = {
 							is_on_continent = europe
-							is_core_of = PREV
 							is_owned_by = FROM
 							NOT = {
 								is_core_of = FROM
@@ -2820,7 +2821,7 @@ peace_deals = {
 				FROM = {
 					set_autonomy = {
 						target = ROOT
-						autonomy_state = autonomy_satellite
+						autonomy_state = autonomy_tgwr_client_state
 						end_civil_wars = no
 						end_wars = no
 					}
@@ -2837,6 +2838,7 @@ peace_deals = {
 			surrender_progress > 0.7
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			NOT = {
 				has_global_flag = FRA_three_side_civil_war
 			}
@@ -2916,7 +2918,7 @@ peace_deals = {
 					GER = {
 						set_autonomy = {
 							target = PREV
-							autonomous_state = autonomy_satellite
+							autonomous_state = autonomy_tgwr_client_state
 							end_civil_wars = no
 							end_wars = no
 						}
@@ -2961,10 +2963,9 @@ peace_deals = {
 							}
 						}
 					}
-					every_state = {
+					every_core_state = {
 						limit = {
 							is_on_continent = europe
-							is_core_of = PREV
 							is_owned_by = FROM
 							NOT = {
 								is_core_of = FROM
@@ -2995,7 +2996,7 @@ peace_deals = {
 				FROM = {
 					set_autonomy = {
 						target = ROOT
-						autonomy_state = autonomy_satellite
+						autonomy_state = autonomy_tgwr_client_state
 						end_civil_wars = no
 						end_wars = no
 					}
@@ -3013,6 +3014,7 @@ peace_deals = {
 			is_subject = no
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			NOT = {
 				has_global_flag = FRA_three_side_civil_war
 			}
@@ -3081,6 +3083,7 @@ peace_deals = {
 			is_subject = no
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			has_global_flag = FRA_three_side_civil_war
 			has_war_with = FROM
 		}
@@ -3193,7 +3196,7 @@ peace_deals = {
 	}
 }
 
-crisis = {
+TGWR_great_power_politics = {
 	FRA_army_mutiny_crisis = {
 		icon = generic_civil_support
 		allowed = {
@@ -3228,23 +3231,6 @@ crisis = {
 				has_civil_war = yes
 			}
 		}
-		visible = {
-			has_war = yes
-			OR = {
-				casualties > 1500000
-				surrender_progress > 0.15
-			}
-			OR = {
-				has_war_support < 0.5
-				AND = {
-					RUS = {
-						is_in_faction_with = FRA
-					}
-					has_global_flag = russian_revolution
-					has_war_support < 0.9
-				}
-			}
-		}
 		fire_only_once = yes
 		is_good = no
 		timeout_effect = {
@@ -3255,9 +3241,6 @@ crisis = {
 			set_global_flag = french_army_mutinies_escalation
 		}
 	}
-}
-
-war_measures = {
 	FRA_arrest_leaders_of_the_mutiny = {
 		allowed = {
 			original_tag = FRA
@@ -3270,6 +3253,7 @@ war_measures = {
 			has_active_mission = FRA_army_mutiny_crisis
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			has_active_mission = FRA_army_mutiny_crisis
 		}
 		complete_effect = {
@@ -3300,6 +3284,7 @@ war_measures = {
 			has_army_experience > 15
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			has_active_mission = FRA_army_mutiny_crisis
 		}
 		modifier = {
@@ -3334,6 +3319,7 @@ war_measures = {
 			has_country_flag = FRA_mutiny_leaders_arrested
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			has_active_mission = FRA_army_mutiny_crisis
 		}
 		remove_effect = {
@@ -3364,6 +3350,7 @@ war_measures = {
 			has_country_flag = FRA_mutiny_leaders_arrested
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			has_active_mission = FRA_army_mutiny_crisis
 		}
 		remove_effect = {
@@ -3395,6 +3382,7 @@ war_measures = {
 			has_idea = FRA_rebellious_army
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			has_idea = FRA_rebellious_army
 		}
 		remove_effect = {
@@ -3470,68 +3458,6 @@ war_measures = {
 	}
 }
 
-foreign_politics = {
-	NFA_occupy_malta = {
-		icon = GFX_decision_infiltrate_state
-		allowed = {
-			original_tag = FRA
-		}
-		available = {
-			has_country_flag = FRA_nationalist_france_flag
-			has_war = no
-			MLT = {
-				exists = yes
-				is_subject = no
-			}
-		}
-		visible = {
-			has_country_flag = FRA_nationalist_france_flag
-			MLT = {
-				exists = yes
-				is_subject = no
-			}
-		}
-		highlight_states = {
-			highlight_state_targets = { state = 116 } 
-			highlight_color_while_active = 1
-		}
-		fire_only_once = yes
-		cost = 100
-		days_remove = 5
-		targets = {
-			MLT
-		}
-		target_root_trigger = {
-			has_country_flag = FRA_nationalist_france_flag
-		}
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				factor = 0
-				has_war_support < 0.2
-			}
-			modifier = {
-				factor = 0
-				MLT = { is_in_faction = yes }
-			}
-			modifier = {
-				factor = 0
-				MLT = { is_major = yes }
-			}
-			modifier = {
-				factor = 0
-				owns_state = 16
-			}
-		}
-		remove_effect = {
-			transfer_state = 116
-			add_named_threat = {
-				threat = 5
-				name = NFA_occupy_malta
-			}
-		}
-	}
-}
 interwar_decisions = {
 	FRA_conquer_syria = {
 		icon = generic_prepare_civil_war
@@ -3603,6 +3529,14 @@ interwar_decisions = {
 					type = prepare_for_war
 					id = SYR
 					value = 200
+				}
+				SYR = {
+					if = {
+						limit = {
+							has_idea = unification_of_arabia
+						}
+						remove_ideas = unification_of_arabia
+					}
 				}
 			}
 		}
@@ -3696,8 +3630,7 @@ interwar_decisions = {
 	}
 }
 
-
-prestigious_projects = {
+TGWR_great_power_politics = {
 	FRC_valois_seize_the_power = {
 		icon = GFX_decision_oppression
 		allowed = {
@@ -3707,6 +3640,7 @@ prestigious_projects = {
 			fascism > 0.30
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			has_government = communism
 			has_country_leader = {
 				character = FRA_georges_valois
@@ -3750,6 +3684,7 @@ prestigious_projects = {
 			}
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			has_country_flag = FRA_nationalist_france_flag
 			16 = {
 				is_capital = no
@@ -3793,6 +3728,7 @@ prestigious_projects = {
 			has_subject = AOF
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			has_global_flag = AOF
 			is_subject = no
 			has_subject = AOF
@@ -3884,6 +3820,7 @@ prestigious_projects = {
 			has_subject = AEF
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			has_global_flag = AEF
 			is_subject = no
 			has_subject = AEF
@@ -4102,7 +4039,7 @@ FRA_french_army = {
 	}
 }
 
-political_actions = {
+TGWR_great_power_politics = {
 	generic_provide_humanitarian_help = {
 		allowed = {
 			OR = {
@@ -4120,6 +4057,9 @@ political_actions = {
 				has_dynamic_modifier = { modifier = sahel_local_famine }
 			}
         }
+		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
+		}
 		cost = 15
 		remove_effect = {
 			FROM = {

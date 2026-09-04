@@ -34,6 +34,7 @@ country_event = {
 					state = 119
 					state = 134
 					state = 135
+					state = 1298
 				}
 			}
 			remove_core_of = ROOT
@@ -59,6 +60,8 @@ country_event = {
 				}
 				transfer_state = 119
 				add_state_core = 119
+				add_state_core = 1298
+				transfer_state = 1298
 				add_state_claim = 135
 				add_state_claim = 113
 				add_state_claim = 134
@@ -179,6 +182,17 @@ country_event = {
 			}
 			NIR = {
 				transfer_state = 119
+				if = {
+					limit = {
+						ROOT = { owns_state = 1298 }
+					}
+					transfer_state = 1298
+					1298 = {
+						add_core_of = NIR
+						remove_core_of = IRE
+						add_claim_by = IRE
+					}
+				}
 				set_cosmetic_tag = NIR_orange_order
 				division_template = {
 					name = "Ulster Defence Force"
@@ -235,6 +249,7 @@ country_event = {
 			factor = 100
 		}
 		add_state_claim = 119
+		add_state_claim = 1298
 		declare_war_on = {
 			target = NIR
 			type = annex_everything
@@ -302,9 +317,8 @@ country_event = {
 			base = 100
 			modifier = {
 				add = -50
-				any_other_country = {
-					is_major = yes
-					has_war_with = NIR
+				NIR = {
+					has_war_with_major = yes
 				}
 			}
 			modifier = {
@@ -349,7 +363,7 @@ country_event = {
 			white_peace = NIR
 			set_autonomy = {
 				target = NIR
-				autonomy_state = autonomy_integrated_puppet
+				autonomy_state = autonomy_tgwr_regional_government
 				freedom_level = 0.8
 			}
 		}
@@ -378,6 +392,7 @@ country_event = {
 		}
 		FROM = {
 			add_state_core = 119
+			add_state_core = 1298
 			annex_country = {
 				target = NIR
 				transfer_troops = yes
@@ -393,6 +408,7 @@ country_event = {
 		drop_cosmetic_tag = yes
 		FROM = {
 			add_state_claim = 119
+			add_state_claim = 1298
 			create_wargoal = {
 				target = ROOT
 				type = annex_everything
@@ -466,11 +482,10 @@ country_event = {
 					has_country_flag = great_war_loser
 				}
 			}
-			OVERLORD = {
-				end_puppet = ROOT
-			}
+			free_subject_leave_faction = yes
 		}
 		transfer_state = 119
+		transfer_state = 1298
 	}
 }
 
@@ -745,6 +760,7 @@ country_event = {
 	option = {
 		name = orange.13.a
 		add_state_core = 119
+		add_state_core = 1298
 		drop_cosmetic_tag = yes
 		hidden_effect = {
 			clr_global_flag = irish_cold_war_lol
@@ -1042,7 +1058,7 @@ country_event = {
 						limit = { has_country_flag = irish_overlord }				
 						set_autonomy = {
 							target = PREV
-							autonomy_state = autonomy_dominion
+							autonomy_state = autonomy_tgwr_dominion
 							freedom_level = 0.85
 							end_civil_wars = no
 							end_wars = no
@@ -1157,7 +1173,7 @@ country_event = {
 						limit = { has_country_flag = irish_overlord }
 						set_autonomy = {
 							target = PREV.PREV
-							autonomy_state = autonomy_dominion
+							autonomy_state = autonomy_tgwr_dominion
 							freedom_level = 0.85
 							end_civil_wars = no
 							end_wars = no
@@ -1243,7 +1259,7 @@ country_event = {
 			white_peace = ROOT
 			set_autonomy = {
 				target = ROOT
-				autonomy_state = autonomy_integrated_puppet
+				autonomy_state = autonomy_tgwr_regional_government
 				freedom_level = 0.8
 			}
 		}

@@ -7,21 +7,11 @@ focus_tree = {
 			add = 100
 			original_tag = GRE
 		}
-		modifier = {
-			factor = 0
-			has_country_flag = empty_focus
-			any_country_with_original_tag = {
-				original_tag_to_check = GRE
-				NOT = { tag = ROOT }
-			}
-		}
 	}
 	
 	default = no
 
 	continuous_focus_position = { x = 140 y = 1600 }
-	
-	shared_focus = GRE_state_of_the_currency
 
 	#shortcuts
 	shortcut = {
@@ -1326,11 +1316,21 @@ focus = {
 			hidden_effect = {
 				731 = {
 					add_core_of = BUL
-					start_resistance = yes
+					if = {
+						limit = {
+							has_resistance = no
+						}
+						start_resistance = yes
+					}
 				}
 				1256 = {
 					add_core_of = BUL
-					start_resistance = yes
+					if = {
+						limit = {
+							has_resistance = no
+						}
+						start_resistance = yes
+					}
 				}
 			}
 		}
@@ -2210,7 +2210,7 @@ focus = {
 		bypass = {
 			OR = {
 				has_global_flag = great_war_ends
-				has_global_flag = FRA_surrender_alone
+				has_global_flag = FRA_surrender
 				has_country_flag = civil_war_has_been_triggered
 			}	
 		}
@@ -2569,7 +2569,7 @@ focus = {
 				limit = { 
 					NOT = { 
 						has_global_flag = great_war_ends 
-						has_global_flag = FRA_surrender_alone
+						has_global_flag = FRA_surrender
 					}
 				}
 				custom_trigger_tooltip = {
@@ -2653,18 +2653,7 @@ focus = {
 		}
 		completion_reward = {
 			GRE_create_THE = yes
-			ENT = { add_to_faction = PREV }
-			add_to_war = {
-				targeted_alliance = ENT
-				enemy = GER
-			}
-			if = {
-				limit = { ENT = { has_war_with = BUL } }
-				add_to_war = {
-					targeted_alliance = ENT
-					enemy = BUL
-				}
-			}
+			join_ENT_declare_war_on_CENPO = yes
 			if = {
 				limit = {
 					OR = {
@@ -2681,6 +2670,10 @@ focus = {
 					any_country_with_original_tag = {
 						original_tag_to_check = GRE
 						owns_state = 803
+					}
+					ITA = {
+						is_part_of_great_war = yes
+						is_in_faction_with = GRE
 					}
 				}
 				ITA = { transfer_state = 803 }
@@ -2805,7 +2798,7 @@ focus = {
 						is_subject = no
 						NOT = {
 							has_country_flag = great_war_loser
-							has_global_flag = FRA_surrender_alone
+							has_global_flag = FRA_surrender
 						}
 					}
 				}
@@ -3176,12 +3169,7 @@ focus = {
 		}
 		bypass = {
 			OR = {
-				NOT = {
-					any_country_with_original_tag = {
-						original_tag_to_check = GRE
-						NOT = { tag = ROOT }
-					}
-				}
+				has_other_GRE_government = no
 				any_enemy_country = {
 					original_tag = GRE
 				}
@@ -3195,7 +3183,7 @@ focus = {
 				GRE_expansion_cost = 20
 			}
 			set_variable = {
-				GRE_number_of_states_transfered = 0
+				GRE_number_of_states_transferred = 0
 			}
 		}
 		search_filters = {
@@ -3255,7 +3243,7 @@ focus = {
 			OR = {
 				custom_trigger_tooltip = {
 					tooltip = has_tranfered_3_states
-					check_variable = { GRE_number_of_states_transfered > 2 }
+					check_variable = { GRE_number_of_states_transferred > 2 }
 				}
 				has_country_flag = great_war_winner
 			}	
@@ -3279,12 +3267,7 @@ focus = {
 			
 		}
 		bypass = {
-			NOT = {
-				any_country_with_original_tag = {
-					original_tag_to_check = GRE
-					NOT = { tag = ROOT }
-				}
-			}
+			has_other_GRE_government = no
 		}
 		bypass_effect = {
 			hidden_effect = {
@@ -8827,8 +8810,8 @@ focus = {
 						is_subject_of = TUR
 					}
 				}
-				release_puppet = ARM
 				ARM = {
+					free_subject = yes
 					declare_war_on = {
 						target = TUR
 						type = puppet_wargoal_focus
@@ -8841,8 +8824,8 @@ focus = {
 						is_subject_of = TRR
 					}
 				}
-				release_puppet = ARM
 				ARM = {
+					free_subject = yes
 					declare_war_on = {
 						target = TRR
 						type = puppet_wargoal_focus
@@ -8859,7 +8842,7 @@ focus = {
 		}
 	}
 	focus = {
-		id = GRE_prevent_turkish_guerilla_raids
+		id = GRE_prevent_turkish_guerrilla_raids
 		icon = GFX_TUR_spark_the_war_of_independence
 		prerequisite = {
 			focus = GRE_deal_with_socialist_agitators
@@ -8888,7 +8871,7 @@ focus = {
 			focus = GRE_aid_armenians
 		}
 		prerequisite = {
-			focus = GRE_prevent_turkish_guerilla_raids
+			focus = GRE_prevent_turkish_guerrilla_raids
 		}
 		x = 0
 		y = 1
@@ -10286,810 +10269,815 @@ focus = {
 			}
 		}
 	}
-}
 
-############################################################
-## 						  INDUSTRY						  ##
-############################################################
-joint_focus = {
-	id = GRE_state_of_the_currency
-	icon = GFX_focus_drachma
-	x = 4
-	y = 0
-	cost = 5
-	
-	ai_will_do = {
-		factor = 1
+	############################################################
+	## 						  INDUSTRY						  ##
+	############################################################
+	focus = {
+		id = GRE_state_of_the_currency
+		icon = GFX_focus_drachma
+		x = 4
+		y = 0
+		cost = 5
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_political_power = 50
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_POLITICAL
+		}
 	}
-	completion_reward_joint_originator = {
-	    add_political_power = 50
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_POLITICAL
-	}
-}
 
-joint_focus = {
-	id = GRE_support_monopolies
-	icon = GFX_focus_generic_economic_profit
-	x = -4
-	y = 1
-	relative_position_id = GRE_state_of_the_currency
-	cost = 5
-	mutually_exclusive = {
-		focus = GRE_toward_etatism
-	}
-	prerequisite = {
-		focus = GRE_state_of_the_currency
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-		modifier = {
-			is_historical_focus_on = yes
-			factor = 100
+	focus = {
+		id = GRE_support_monopolies
+		icon = GFX_focus_generic_economic_profit
+		x = -4
+		y = 1
+		relative_position_id = GRE_state_of_the_currency
+		cost = 5
+		mutually_exclusive = {
+			focus = GRE_toward_etatism
 		}
-	}
-	completion_reward_joint_originator = {
-		random_owned_controlled_state = {
-			limit = {
-				is_core_of = ROOT
-				impassable = no
-				is_coastal = yes
-			}
-			prioritize = {
-				898
-			}
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = industrial_complex
-				level = 1
-			}
-			add_building_construction = {
-				type = dockyard
-				level = 1
+		prerequisite = {
+			focus = GRE_state_of_the_currency
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 100
 			}
 		}
-		random_owned_controlled_state = {
-			limit = {
-				is_core_of = ROOT
-				impassable = no
-				infrastructure < 5
-			}
-			prioritize = {
-				900
-			}
-			add_building_construction = {
-				type = infrastructure
-				level = 1
-			}
-		}
-	}
-	completion_reward_joint_originator = {
-		custom_effect_tooltip = GRE_IFC_plus_5_tt
-		add_to_variable = {
-			var = global.GRE_IFC_var
-			value = 0.05
-		}
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_INDUSTRY
-		FOCUS_FILTER_GRE_DEBT_TO_IFC
-	}
-}
-
-joint_focus = {
-	id = GRE_toward_etatism
-	icon = GFX_focus_control_economy
-	x = 4
-	y = 1
-    relative_position_id = GRE_state_of_the_currency
-	cost = 5
-	mutually_exclusive = {
-		focus = GRE_support_monopolies
-	}
-	prerequisite = {
-		focus = GRE_state_of_the_currency
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-		modifier = {
-			is_historical_focus_on = yes
-			factor = 0
-		}
-	}
-	completion_reward_joint_originator = {
-		add_stability = 0.05
-		custom_effect_tooltip = GRE_IFC_minus_5_tt
-		subtract_from_variable = {
-			var = global.GRE_IFC_var
-			value = 0.05
-		}
-		if = {
-			limit = {
-				check_variable = { global.GRE_IFC_var < 0 }
-			}
-			multiply_temp_variable = {
-				global.GRE_IFC_var = 0
-			}						
-		}
-	}	
-	search_filters = {
-		FOCUS_FILTER_STABILITY
-		FOCUS_FILTER_GRE_DEBT_TO_IFC
-	}
-}
-joint_focus = {
-	id = GRE_finalize_railway_network
-	icon = GFX_focus_generic_train
-	x = 4
-	y = 1
-	relative_position_id = GRE_support_monopolies
-	cost = 5
-	prerequisite = {
-		focus = GRE_support_monopolies
-		focus = GRE_toward_etatism
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward = {
-	    unlock_decision_category_tooltip = GRE_railway_decision
-		custom_effect_tooltip = available_designer
-		show_ideas_tooltip = EMSE
-	}
-}
-
-joint_focus = {
-	id = GRE_negociation_to_ifc
-	icon = GFX_focus_hol_the_foundations_of_defense
-	x = 2
-	y = 0
-	relative_position_id = GRE_finalize_railway_network
-	cost = 5
-	bypass = {
-		NOT = { has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } }
-	}
-	prerequisite = {
-		focus = GRE_toward_etatism
-		focus = GRE_support_monopolies
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_GRE_DEBT_TO_IFC
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		country_event = {
-			days = 2
-			id = ww1_greece.60
-		}
-	}
-}
-
-joint_focus = {
-	id = GRE_stabilize_exchange_rate
-	icon = GFX_focus_usa_reestablish_the_gold_standard
-	x = 0
-	y = 1
-	relative_position_id = GRE_support_monopolies
-	cost = 5
-	prerequisite = {
-		focus = GRE_support_monopolies
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_GRE_DEBT_TO_IFC
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		custom_effect_tooltip = GRE_IFC_minus_10_tt
-		subtract_from_variable = {
-			var = global.GRE_IFC_var
-			value = 0.1
-		}
-		if = {
-			limit = {
-				check_variable = { global.GRE_IFC_var < 0 }
-			}
-			multiply_temp_variable = {
-				global.GRE_IFC_var = 0
-			}						
-		}
-	}
-}
-
-joint_focus = {
-	id = GRE_cooperation_with_banks
-	icon = GFX_focus_generic_banking
-	x = 0
-	y = 1
-	cost = 10
-	relative_position_id = GRE_stabilize_exchange_rate
-	prerequisite = {
-		focus = GRE_stabilize_exchange_rate
-	}
-	prerequisite = {
-		focus = GRE_stabilize_exchange_rate
-	}
-	
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		random_owned_controlled_state = {
-			limit = {
-				is_core_of = ROOT
-				impassable = no
-			}
-			prioritize = {
-				47
-			}
-			add_extra_state_shared_building_slots = 1
-			add_building_construction = {
-				type = industrial_complex
-				level = 1
-			}
-		}
-		add_tech_bonus = {
-			name = GRE_cooperation_with_banks
-			bonus = 1
-			uses = 1
-			category = industry
-		}
-		custom_effect_tooltip = GRE_IFC_plus_5_tt
-		add_to_variable = {
-			var = global.GRE_IFC_var
-			value = 0.05
-		}
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_RESEARCH
-		FOCUS_FILTER_INDUSTRY
-	}
-}
-
-joint_focus = {
-	id = GRE_economic_rigor
-	icon = GFX_focus_hol_abandon_the_gold_standard
-	x = 2
-	y = 1
-	relative_position_id = GRE_support_monopolies
-	cost = 8
-	prerequisite = {
-		focus = GRE_support_monopolies
-		focus = GRE_toward_etatism
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		add_political_power = 120
-	}
-	completion_reward = {
-		if = {
-			limit = {
-				has_character = GRE_miltiadis_negrepontis
-			}
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = GRE_miltiadis_negrepontis
-		}	
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_POLITICAL
-	}
-}
-
-joint_focus = {
-	id = GRE_focus_on_industrialisation
-	icon = GFX_goal_generic_construction
-	x = 0
-	y = 1
-	cost = 5
-	relative_position_id = GRE_toward_etatism
-	prerequisite = {
-		focus = GRE_toward_etatism
-	}
-	
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		add_timed_idea = {
-			idea = gre_industrialisation_efforts
-			days = 360
-		}
-	}
-}
-
-joint_focus = {
-	id = GRE_support_giants
-	icon = GFX_focus_industry_profit
-	x = 1
-	y = 1
-	cost = 5
-	relative_position_id = GRE_cooperation_with_banks
-	prerequisite = {
-		focus = GRE_cooperation_with_banks
-	}
-	prerequisite = {
-		focus = GRE_administrative_reforms
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		random_owned_controlled_state = {
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = industrial_complex
-				level = 2
-			}
-		}
-		custom_effect_tooltip = GRE_IFC_plus_10_tt
-		add_to_variable = {
-			var = global.GRE_IFC_var
-			value = 0.1
-		}
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_INDUSTRY
-		FOCUS_FILTER_GRE_DEBT_TO_IFC
-	}
-}
-
-joint_focus = {
-	id = GRE_administrative_reforms
-	icon = GFX_focus_generic_improve_the_administration
-	x = 0
-	y = 1
-	cost = 5
-	relative_position_id = GRE_economic_rigor
-	prerequisite = {
-		focus = GRE_economic_rigor
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		add_stability = 0.05
-		every_owned_state = {
-			limit = {
-				is_controlled_by = ROOT
-				is_core_of = ROOT
-				impassable = no
-			}
-			add_extra_state_shared_building_slots = 1
-		}
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_STABILITY
-	}
-}
-
-joint_focus = {
-	id = GRE_manage_debts
-	icon = GFX_focus_GRE_reevaluating_the_drachma
-	x = 0
-	y = 1
-	cost = 5
-	relative_position_id = GRE_negociation_to_ifc
-	prerequisite = {
-		focus = GRE_negociation_to_ifc
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_GRE_DEBT_TO_IFC
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	bypass = {
-		NOT = { has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } }
-	}
-	completion_reward = {
-		custom_effect_tooltip = GRE_decisions_to_manage_debt
-	}
-}
-
-joint_focus = {
-	id = GRE_demand_new_ifc_terms
-	icon = GFX_goal_generic_dangerous_deal
-	x = -1
-	y = 2
-	relative_position_id = GRE_focus_on_industrialisation
-	cost = 5
-	prerequisite = {
-		focus = GRE_mass_employment 
-	}
-	prerequisite = {
-		focus = GRE_manage_debts
-	}
-	available = {
-	}
-	bypass = {
-		NOT = { has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } }
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward = {
-		unlock_decision_tooltip = GRE_demand_new_terms_decision
-	}
-	search_filters = {
-		FOCUS_FILTER_GRE_DEBT_TO_IFC
-	}
-}
-joint_focus = {
-	id = GRE_open_greece_to_investments
-	icon = GFX_goal_generic_major_alliance
-	x = 0
-	y = 1
-	relative_position_id = GRE_finalize_railway_network
-	cost = 5
-	prerequisite = {
-		focus = GRE_finalize_railway_network
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward = {
-		unlock_decision_category_tooltip = GRE_investment_decisions_category
-	}
-}
-joint_focus = {
-	id = GRE_large_debt_repayments
-	icon = GFX_focus_generic_money_deal
-	x = 1
-	y = 1
-	relative_position_id = GRE_open_greece_to_investments
-	cost = 5
-	prerequisite = {
-		focus = GRE_manage_debts
-	}
-	prerequisite = {
-		focus = GRE_mass_employment
-	}
-	prerequisite = {
-		focus = GRE_open_greece_to_investments
-	}
-	prerequisite = {
-		focus = GRE_administrative_reforms
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	bypass = {
-		NOT = { has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } }
-	}
-	completion_reward = {
-		unlock_decision_tooltip = GRE_large_refund_to_IFC
-	}
-	search_filters = {
-		FOCUS_FILTER_GRE_DEBT_TO_IFC
-	}
-}
-
-joint_focus = {
-	id = GRE_take_large_loans
-	icon = GFX_focus_generic_treaty
-	x = 1
-	y = 1
-	relative_position_id = GRE_support_giants
-	cost = 5
-	prerequisite = {
-		focus = GRE_support_giants
-	}
-	prerequisite = {
-		focus = GRE_focus_on_exports
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_GRE_DEBT_TO_IFC
-	}
-	available = {
-	}
-	bypass = {
-		NOT = { has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } }
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward = {
-		unlock_decision_tooltip = GRE_negotiate_new_large_loan
-	}
-}
-joint_focus = {
-	id = GRE_close_foreign_customs_office
-	icon = GFX_focus_generic_annex_country_2
-	x = 2
-	y = 2
-	relative_position_id = GRE_open_greece_to_investments
-	cost = 5
-	prerequisite = {
-		focus = GRE_demand_new_ifc_terms
-	}
-	prerequisite = {
-		focus = GRE_large_debt_repayments
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		hidden_effect = {
-			add_opinion_modifier = { target = ENG modifier = small_decrease }
-			add_opinion_modifier = { target = FRA modifier = small_decrease }
-			add_opinion_modifier = { target = RUS modifier = small_decrease }
-			add_opinion_modifier = { target = GER modifier = small_decrease }
-			add_opinion_modifier = { target = AUS modifier = small_decrease }
-			add_opinion_modifier = { target = ITA modifier = small_decrease }
-		}
-		add_stability = 0.05
-		custom_effect_tooltip = GRE_worsen_relations
-		custom_effect_tooltip = GRE_IFC_minus_10_tt
-		subtract_from_variable = {
-			var = global.GRE_IFC_var
-			value = 0.1
-		}
-		if = {
-			limit = {
-				check_variable = { global.GRE_IFC_var < 0 }
-			}
-			multiply_temp_variable = {
-				global.GRE_IFC_var = 0
-			}						
-		}		
-	}
-	search_filters = {
-		FOCUS_FILTER_STABILITY
-		FOCUS_FILTER_GRE_DEBT_TO_IFC
-	}
-}
-joint_focus = {
-	id = GRE_cooperate_with_the_IFC
-	icon = GFX_goal_tripartite_pact
-	x = 1
-	y = 1
-	relative_position_id = GRE_take_large_loans
-	cost = 5
-	prerequisite = {
-		focus = GRE_take_large_loans
-	}
-	prerequisite = {
-		focus = GRE_prospect_for_resources
-	}
-	mutually_exclusive = { focus = GRE_absorb_the_IFC }
-	available = {
-	}
-	bypass = {
-		NOT = { has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } }
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		add_stability = 0.05
-	}
-	completion_reward_joint_originator = {
-		custom_effect_tooltip = GRE_cooperate_with_the_IFC_tt
-		set_variable = { global.GRE_IFC_production_speed_industrial_complex_factor = 0.15 }
-		set_variable = { global.GRE_IFC_production_speed_arms_factory_factor = 0.15 }
-		set_variable = { global.GRE_IFC_industrial_capacity_factory = 0.15 }
-		set_variable = { global.GRE_IFC_industrial_capacity_dockyard = 0.1 }
-		subtract_from_variable = {
-			var = global.GRE_IFC_var
-			value = 0.1
-		}
-		if = {
-			limit = { check_variable = { global.GRE_IFC_var < 0 } }
-			multiply_temp_variable = { global.GRE_IFC_var = 0 }						
-		}		
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_STABILITY
-		FOCUS_FILTER_GRE_DEBT_TO_IFC
-	}
-}
-joint_focus = {
-	id = GRE_absorb_the_IFC
-	icon = GFX_goal_generic_forceful_treaty
-	x = -1
-	y = 1
-	relative_position_id = GRE_close_foreign_customs_office
-	cost = 5
-	prerequisite = {
-		focus = GRE_close_foreign_customs_office
-	}
-	prerequisite = {
-		focus = GRE_prospect_for_resources
-	}
-	mutually_exclusive = { focus = GRE_cooperate_with_the_IFC }
-	available = {
-	}
-	bypass = {
-		NOT = { has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } }
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward = {
-		unlock_decision_tooltip = GRE_absorb_the_ifc_decision
-	}
-	search_filters = {
-		FOCUS_FILTER_GRE_DEBT_TO_IFC
-	}
-}
-joint_focus = {
-	id = GRE_economic_recovery
-	icon = GFX_focus_FRA_expand_army_budget
-	x = 1
-	y = 1
-	relative_position_id = GRE_cooperate_with_the_IFC
-	cost = 10
-	prerequisite = {
-		focus = GRE_cooperate_with_the_IFC
-		focus = GRE_absorb_the_IFC
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		add_stability = 0.05
-		random_owned_controlled_state = {
-			limit = {
-				is_core_of = ROOT
-				impassable = no
-			}
-			prioritize = {
-				898
-			}
-			add_extra_state_shared_building_slots = 1
-			add_building_construction = {
-				type = industrial_complex
-				level = 1
-			}		
-		}
-		random_owned_controlled_state = {
-			limit = {
-				is_core_of = ROOT
-				impassable = no
-				infrastructure < 5
-			}
-			prioritize = {
-				898
-			}
-			add_building_construction = {
-				type = infrastructure
-				level = 1
-			}
-		}
-	}
-	completion_reward = {
-		custom_effect_tooltip = available_designer
-		show_ideas_tooltip = GRE_neorion
-		custom_effect_tooltip = available_designer
-		show_ideas_tooltip = GRE_pitsos
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_INDUSTRY
-		FOCUS_FILTER_STABILITY
-	}
-}
-joint_focus = {
-	id = GRE_solve_distillery_overproduction
-	icon = GFX_goal_generic_production
-	x = -1
-	y = 1
-	relative_position_id = GRE_economic_recovery
-	cost = 5
-	prerequisite = {
-		focus = GRE_economic_recovery
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		random_owned_controlled_state = {
-			limit = {
-				is_core_of = ROOT
-				impassable = no
-			}
-			prioritize = {
-				186
-			}
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = industrial_complex
-				level = 1
-			}
-		}
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_INDUSTRY
-	}
-}
-joint_focus = {
-	id = GRE_focus_on_agrarianism
-	icon = GFX_focus_generic_land_reclamation
-	x = -1
-	y = 1
-	relative_position_id = GRE_solve_distillery_overproduction
-	cost = 5
-	mutually_exclusive = {
-		focus = GRE_balanced_approach
-		focus = GRE_focus_on_heavy_industrialization
-	}
-	prerequisite = {
-		focus = GRE_solve_distillery_overproduction
-		focus = GRE_expand_metallurgic_industries
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward = {
-		custom_effect_tooltip = GRE_focus_on_agrarianism_tt
-		add_to_variable = {
-			var = GRE_construction_speed_var
-			value = 0.03
-		}
-		add_to_variable = {
-			var = GRE_efficiency_cap_var
-			value = 0.05
-		}
-		add_to_variable = {
-			var = GRE_efficiency_growth_var
-			value = 0.05
-		}
-		add_to_variable = {
-			var = GRE_factory_output_var
-			value = 0.05
-		}
-		add_to_variable = {
-			var = GRE_military_construction_speed_var
-			value = 0.05
-		}
-		every_subject_country = {
-			limit = {
-				has_dynamic_modifier = {
-					modifier = GRE_agrarian_society_dynamic_modifier
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					impassable = no
+					is_coastal = yes
+				}
+				prioritize = {
+					898
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+				add_building_construction = {
+					type = dockyard
+					level = 1
 				}
 			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					impassable = no
+					infrastructure < 5
+				}
+				prioritize = {
+					900
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = GRE_IFC_plus_5_tt
+			add_to_variable = {
+				var = global.GRE_IFC_var
+				value = 0.05
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_GRE_DEBT_TO_IFC
+		}
+	}
+
+	focus = {
+		id = GRE_toward_etatism
+		icon = GFX_focus_control_economy
+		x = 4
+		y = 1
+		relative_position_id = GRE_state_of_the_currency
+		cost = 5
+		mutually_exclusive = {
+			focus = GRE_support_monopolies
+		}
+		prerequisite = {
+			focus = GRE_state_of_the_currency
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+		completion_reward = {
+			add_stability = 0.05
+			custom_effect_tooltip = GRE_IFC_minus_5_tt
+			subtract_from_variable = {
+				var = global.GRE_IFC_var
+				value = 0.05
+			}
+			if = {
+				limit = {
+					check_variable = { global.GRE_IFC_var < 0 }
+				}
+				multiply_temp_variable = {
+					global.GRE_IFC_var = 0
+				}						
+			}
+		}	
+		search_filters = {
+			FOCUS_FILTER_STABILITY
+			FOCUS_FILTER_GRE_DEBT_TO_IFC
+		}
+	}
+	focus = {
+		id = GRE_finalize_railway_network
+		icon = GFX_focus_generic_train
+		x = 4
+		y = 1
+		relative_position_id = GRE_support_monopolies
+		cost = 5
+		prerequisite = {
+			focus = GRE_support_monopolies
+			focus = GRE_toward_etatism
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			unlock_decision_category_tooltip = GRE_railway_decision
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = EMSE
+		}
+	}
+
+	focus = {
+		id = GRE_negotiation_to_ifc
+		icon = GFX_focus_hol_the_foundations_of_defense
+		x = 2
+		y = 0
+		relative_position_id = GRE_finalize_railway_network
+		cost = 5
+		available = {
+			has_other_GRE_government = no
+		}
+		bypass = {
+			NOT = { has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } }
+		}
+		prerequisite = {
+			focus = GRE_toward_etatism
+			focus = GRE_support_monopolies
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_GRE_DEBT_TO_IFC
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			country_event = {
+				days = 2
+				id = ww1_greece.60
+			}
+		}
+	}
+
+	focus = {
+		id = GRE_stabilize_exchange_rate
+		icon = GFX_focus_usa_reestablish_the_gold_standard
+		x = 0
+		y = 1
+		relative_position_id = GRE_support_monopolies
+		cost = 5
+		prerequisite = {
+			focus = GRE_support_monopolies
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_GRE_DEBT_TO_IFC
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			custom_effect_tooltip = GRE_IFC_minus_10_tt
+			subtract_from_variable = {
+				var = global.GRE_IFC_var
+				value = 0.1
+			}
+			if = {
+				limit = {
+					check_variable = { global.GRE_IFC_var < 0 }
+				}
+				multiply_temp_variable = {
+					global.GRE_IFC_var = 0
+				}						
+			}
+		}
+	}
+
+	focus = {
+		id = GRE_cooperation_with_banks
+		icon = GFX_focus_generic_banking
+		x = 0
+		y = 1
+		cost = 10
+		relative_position_id = GRE_stabilize_exchange_rate
+		prerequisite = {
+			focus = GRE_stabilize_exchange_rate
+		}
+		prerequisite = {
+			focus = GRE_stabilize_exchange_rate
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					impassable = no
+				}
+				prioritize = {
+					47
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+			add_tech_bonus = {
+				name = GRE_cooperation_with_banks
+				bonus = 1
+				uses = 1
+				category = industry
+			}
+			custom_effect_tooltip = GRE_IFC_plus_5_tt
+			add_to_variable = {
+				var = global.GRE_IFC_var
+				value = 0.05
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_RESEARCH
+			FOCUS_FILTER_INDUSTRY
+		}
+	}
+
+	focus = {
+		id = GRE_economic_rigor
+		icon = GFX_focus_hol_abandon_the_gold_standard
+		x = 2
+		y = 1
+		relative_position_id = GRE_support_monopolies
+		cost = 8
+		prerequisite = {
+			focus = GRE_support_monopolies
+			focus = GRE_toward_etatism
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_political_power = 120
+			if = {
+				limit = {
+					has_character = GRE_miltiadis_negrepontis
+				}
+				custom_effect_tooltip = available_political_advisor
+				show_ideas_tooltip = GRE_miltiadis_negrepontis
+			}	
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_POLITICAL
+		}
+	}
+
+	focus = {
+		id = GRE_focus_on_industrialisation
+		icon = GFX_goal_generic_construction
+		x = 0
+		y = 1
+		cost = 5
+		relative_position_id = GRE_toward_etatism
+		prerequisite = {
+			focus = GRE_toward_etatism
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_timed_idea = {
+				idea = gre_industrialisation_efforts
+				days = 360
+			}
+		}
+	}
+
+	focus = {
+		id = GRE_support_giants
+		icon = GFX_focus_industry_profit
+		x = 1
+		y = 1
+		cost = 5
+		relative_position_id = GRE_cooperation_with_banks
+		prerequisite = {
+			focus = GRE_cooperation_with_banks
+		}
+		prerequisite = {
+			focus = GRE_administrative_reforms
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+				}
+			}
+			custom_effect_tooltip = GRE_IFC_plus_10_tt
+			add_to_variable = {
+				var = global.GRE_IFC_var
+				value = 0.1
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_GRE_DEBT_TO_IFC
+		}
+	}
+
+	focus = {
+		id = GRE_administrative_reforms
+		icon = GFX_focus_generic_improve_the_administration
+		x = 0
+		y = 1
+		cost = 5
+		relative_position_id = GRE_economic_rigor
+		prerequisite = {
+			focus = GRE_economic_rigor
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_stability = 0.05
+			every_owned_state = {
+				limit = {
+					is_controlled_by = ROOT
+					is_core_of = ROOT
+					impassable = no
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_STABILITY
+		}
+	}
+
+	focus = {
+		id = GRE_manage_debts
+		icon = GFX_focus_GRE_reevaluating_the_drachma
+		x = 0
+		y = 1
+		cost = 5
+		relative_position_id = GRE_negotiation_to_ifc
+		prerequisite = {
+			focus = GRE_negotiation_to_ifc
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_GRE_DEBT_TO_IFC
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		bypass = {
+			NOT = { has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } }
+		}
+		completion_reward = {
+			custom_effect_tooltip = GRE_decisions_to_manage_debt
+		}
+	}
+
+	focus = {
+		id = GRE_demand_new_ifc_terms
+		icon = GFX_goal_generic_dangerous_deal
+		x = -1
+		y = 2
+		relative_position_id = GRE_focus_on_industrialisation
+		cost = 5
+		prerequisite = {
+			focus = GRE_mass_employment 
+		}
+		prerequisite = {
+			focus = GRE_manage_debts
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		bypass = {
+			NOT = { has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } }
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			unlock_decision_tooltip = GRE_demand_new_terms_decision
+		}
+		search_filters = {
+			FOCUS_FILTER_GRE_DEBT_TO_IFC
+		}
+	}
+	focus = {
+		id = GRE_open_greece_to_investments
+		icon = GFX_goal_generic_major_alliance
+		x = 0
+		y = 1
+		relative_position_id = GRE_finalize_railway_network
+		cost = 5
+		prerequisite = {
+			focus = GRE_finalize_railway_network
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			unlock_decision_category_tooltip = GRE_investment_decisions_category
+		}
+	}
+	focus = {
+		id = GRE_large_debt_repayments
+		icon = GFX_focus_generic_money_deal
+		x = 1
+		y = 1
+		relative_position_id = GRE_open_greece_to_investments
+		cost = 5
+		prerequisite = {
+			focus = GRE_manage_debts
+		}
+		prerequisite = {
+			focus = GRE_mass_employment
+		}
+		prerequisite = {
+			focus = GRE_open_greece_to_investments
+		}
+		prerequisite = {
+			focus = GRE_administrative_reforms
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		bypass = {
+			NOT = { has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } }
+		}
+		completion_reward = {
+			unlock_decision_tooltip = GRE_large_refund_to_IFC
+		}
+		search_filters = {
+			FOCUS_FILTER_GRE_DEBT_TO_IFC
+		}
+	}
+
+	focus = {
+		id = GRE_take_large_loans
+		icon = GFX_focus_generic_treaty
+		x = 1
+		y = 1
+		relative_position_id = GRE_support_giants
+		cost = 5
+		prerequisite = {
+			focus = GRE_support_giants
+		}
+		prerequisite = {
+			focus = GRE_focus_on_exports
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_GRE_DEBT_TO_IFC
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		bypass = {
+			NOT = { has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } }
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			unlock_decision_tooltip = GRE_negotiate_new_large_loan
+		}
+	}
+	focus = {
+		id = GRE_close_foreign_customs_office
+		icon = GFX_focus_generic_annex_country_2
+		x = 2
+		y = 2
+		relative_position_id = GRE_open_greece_to_investments
+		cost = 5
+		prerequisite = {
+			focus = GRE_demand_new_ifc_terms
+		}
+		prerequisite = {
+			focus = GRE_large_debt_repayments
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			hidden_effect = {
+				add_opinion_modifier = { target = ENG modifier = small_decrease }
+				add_opinion_modifier = { target = FRA modifier = small_decrease }
+				add_opinion_modifier = { target = RUS modifier = small_decrease }
+				add_opinion_modifier = { target = GER modifier = small_decrease }
+				add_opinion_modifier = { target = AUS modifier = small_decrease }
+				add_opinion_modifier = { target = ITA modifier = small_decrease }
+			}
+			add_stability = 0.05
+			custom_effect_tooltip = GRE_worsen_relations
+			custom_effect_tooltip = GRE_IFC_minus_10_tt
+			subtract_from_variable = {
+				var = global.GRE_IFC_var
+				value = 0.1
+			}
+			if = {
+				limit = {
+					check_variable = { global.GRE_IFC_var < 0 }
+				}
+				multiply_temp_variable = {
+					global.GRE_IFC_var = 0
+				}						
+			}		
+		}
+		search_filters = {
+			FOCUS_FILTER_STABILITY
+			FOCUS_FILTER_GRE_DEBT_TO_IFC
+		}
+	}
+	focus = {
+		id = GRE_cooperate_with_the_IFC
+		icon = GFX_goal_tripartite_pact
+		x = 1
+		y = 1
+		relative_position_id = GRE_take_large_loans
+		cost = 5
+		prerequisite = {
+			focus = GRE_take_large_loans
+		}
+		prerequisite = {
+			focus = GRE_prospect_for_resources
+		}
+		mutually_exclusive = { focus = GRE_absorb_the_IFC }
+		available = {
+			has_other_GRE_government = no
+		}
+		bypass = {
+			NOT = { has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } }
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_stability = 0.05
+			custom_effect_tooltip = GRE_cooperate_with_the_IFC_tt
+			set_variable = { global.GRE_IFC_production_speed_industrial_complex_factor = 0.15 }
+			set_variable = { global.GRE_IFC_production_speed_arms_factory_factor = 0.15 }
+			set_variable = { global.GRE_IFC_industrial_capacity_factory = 0.15 }
+			set_variable = { global.GRE_IFC_industrial_capacity_dockyard = 0.1 }
+			subtract_from_variable = {
+				var = global.GRE_IFC_var
+				value = 0.1
+			}
+			if = {
+				limit = { check_variable = { global.GRE_IFC_var < 0 } }
+				multiply_temp_variable = { global.GRE_IFC_var = 0 }						
+			}		
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_STABILITY
+			FOCUS_FILTER_GRE_DEBT_TO_IFC
+		}
+	}
+	focus = {
+		id = GRE_absorb_the_IFC
+		icon = GFX_goal_generic_forceful_treaty
+		x = -1
+		y = 1
+		relative_position_id = GRE_close_foreign_customs_office
+		cost = 5
+		prerequisite = {
+			focus = GRE_close_foreign_customs_office
+		}
+		prerequisite = {
+			focus = GRE_prospect_for_resources
+		}
+		mutually_exclusive = { focus = GRE_cooperate_with_the_IFC }
+		available = {
+			has_other_GRE_government = no
+		}
+		bypass = {
+			NOT = { has_dynamic_modifier = { modifier = GRE_IFC_dynamic_modifier } }
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			unlock_decision_tooltip = GRE_absorb_the_ifc_decision
+		}
+		search_filters = {
+			FOCUS_FILTER_GRE_DEBT_TO_IFC
+		}
+	}
+	focus = {
+		id = GRE_economic_recovery
+		icon = GFX_focus_FRA_expand_army_budget
+		x = 1
+		y = 1
+		relative_position_id = GRE_cooperate_with_the_IFC
+		cost = 10
+		prerequisite = {
+			focus = GRE_cooperate_with_the_IFC
+			focus = GRE_absorb_the_IFC
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_stability = 0.05
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					impassable = no
+				}
+				prioritize = {
+					898
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}		
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					impassable = no
+					infrastructure < 5
+				}
+				prioritize = {
+					898
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = GRE_neorion
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = GRE_pitsos
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_STABILITY
+		}
+	}
+	focus = {
+		id = GRE_solve_distillery_overproduction
+		icon = GFX_goal_generic_production
+		x = -1
+		y = 1
+		relative_position_id = GRE_economic_recovery
+		cost = 5
+		prerequisite = {
+			focus = GRE_economic_recovery
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					impassable = no
+				}
+				prioritize = {
+					186
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INDUSTRY
+		}
+	}
+	focus = {
+		id = GRE_focus_on_agrarianism
+		icon = GFX_focus_generic_land_reclamation
+		x = -1
+		y = 1
+		relative_position_id = GRE_solve_distillery_overproduction
+		cost = 5
+		mutually_exclusive = {
+			focus = GRE_balanced_approach
+			focus = GRE_focus_on_heavy_industrialization
+		}
+		prerequisite = {
+			focus = GRE_solve_distillery_overproduction
+			focus = GRE_expand_metallurgic_industries
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
 			custom_effect_tooltip = GRE_focus_on_agrarianism_tt
 			add_to_variable = {
 				var = GRE_construction_speed_var
@@ -11111,189 +11099,194 @@ joint_focus = {
 				var = GRE_military_construction_speed_var
 				value = 0.05
 			}
-		}
-		hidden_effect = {
-			remove_dynamic_modifier = { modifier = GRE_agrarian_society_dynamic_modifier }
-			add_dynamic_modifier = { modifier = GRE_farmer_focused_culture_dynamic_modifier }
-		}		
-	}
-}
-joint_focus = {
-	id = GRE_support_the_greek_farmer
-	icon = GFX_focus_GRE_greek_agricultural_revolution
-	x = 1
-	y = 1
-	relative_position_id = GRE_focus_on_agrarianism
-	cost = 10
-	prerequisite = {
-		focus = GRE_focus_on_agrarianism
-		focus = GRE_balanced_approach
-	}
-	available = {
-		owns_state = 185
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		random_owned_controlled_state = {
-			limit = {
-				is_core_of = ROOT
-				impassable = no
-			}
-			prioritize = {
-				185
-			}
-			add_extra_state_shared_building_slots = 1
-			add_building_construction = {
-				type = industrial_complex
-				level = 1
-				instant_build = yes
-			}
-			add_dynamic_modifier = {
-				modifier = GRE_thessalia_supported_farmers
-			}
-		}
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_INDUSTRY
-	}
-}
-joint_focus = {
-	id = GRE_fund_university_of_athens
-	icon = GFX_focus_research2
-	x = 1
-	y = 1
-	relative_position_id = GRE_support_the_greek_farmer
-	cost = 10
-	prerequisite = {
-		focus = GRE_support_the_greek_farmer
-		focus = GRE_develop_textile_industries
-	}
-	available = {
-		owns_state = 898
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward = {
-		add_research_slot = 1
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_RESEARCH
-	}
-}
-joint_focus = {
-	id = GRE_mass_employment
-	icon = GFX_focus_generic_concessions
-	x = 0
-	y = 1
-	relative_position_id = GRE_focus_on_industrialisation
-	cost = 10
-	prerequisite = {
-		focus = GRE_focus_on_industrialisation
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		add_timed_idea = {
-			idea = GRE_mass_employment_idea
-			days = 720
-		}
-	}
-}
-joint_focus = {
-	id = GRE_expand_metallurgic_industries
-	icon = GFX_goal_generic_construct_civ_factory
-	x = 1
-	y = 1
-	relative_position_id = GRE_economic_recovery
-	cost = 5
-	prerequisite = {
-		focus = GRE_economic_recovery
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		random_owned_controlled_state  = {
-			limit = {
-				is_core_of = ROOT
-				impassable = no
-			}
-			prioritize = { 898  }
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = arms_factory
-				level = 1
-			}
-		}
-	}
-	completion_reward = {
-		custom_effect_tooltip = available_designer
-		show_ideas_tooltip = lmc
-	}	
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_INDUSTRY
-	}
-}
-joint_focus = {
-	id = GRE_balanced_approach
-	icon = GFX_goal_generic_consumer_goods
-	x = 1
-	y = 1
-	relative_position_id = GRE_solve_distillery_overproduction
-	cost = 5
-	mutually_exclusive = {
-		focus = GRE_focus_on_heavy_industrialization
-		focus = GRE_focus_on_agrarianism
-		}
-	prerequisite = {
-		focus = GRE_solve_distillery_overproduction
-		focus = GRE_expand_metallurgic_industries
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward = {
-		custom_effect_tooltip = GRE_balanced_approach_tt
-		add_to_variable = {
-			var = GRE_construction_speed_var
-			value = 0.03
-		}
-		add_to_variable = {
-			var = GRE_efficiency_cap_var
-			value = 0.05
-		}
-		add_to_variable = {
-			var = GRE_efficiency_growth_var
-			value = 0.05
-		}
-		add_to_variable = {
-			var = GRE_factory_output_var
-			value = 0.07
-		}
-		add_to_variable = {
-			var = GRE_military_construction_speed_var
-			value = 0.10
-		}
-		every_subject_country = {
-			limit = {
-				has_dynamic_modifier = {
-					modifier = GRE_agrarian_society_dynamic_modifier
+			every_subject_country = {
+				limit = {
+					has_dynamic_modifier = {
+						modifier = GRE_agrarian_society_dynamic_modifier
+					}
+				}
+				custom_effect_tooltip = GRE_focus_on_agrarianism_tt
+				add_to_variable = {
+					var = GRE_construction_speed_var
+					value = 0.03
+				}
+				add_to_variable = {
+					var = GRE_efficiency_cap_var
+					value = 0.05
+				}
+				add_to_variable = {
+					var = GRE_efficiency_growth_var
+					value = 0.05
+				}
+				add_to_variable = {
+					var = GRE_factory_output_var
+					value = 0.05
+				}
+				add_to_variable = {
+					var = GRE_military_construction_speed_var
+					value = 0.05
 				}
 			}
+			hidden_effect = {
+				remove_dynamic_modifier = { modifier = GRE_agrarian_society_dynamic_modifier }
+				add_dynamic_modifier = { modifier = GRE_farmer_focused_culture_dynamic_modifier }
+			}		
+		}
+	}
+	focus = {
+		id = GRE_support_the_greek_farmer
+		icon = GFX_focus_GRE_greek_agricultural_revolution
+		x = 1
+		y = 1
+		relative_position_id = GRE_focus_on_agrarianism
+		cost = 10
+		prerequisite = {
+			focus = GRE_focus_on_agrarianism
+			focus = GRE_balanced_approach
+		}
+		available = {
+			has_other_GRE_government = no
+			owns_state = 185
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					impassable = no
+				}
+				prioritize = {
+					185
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_dynamic_modifier = {
+					modifier = GRE_thessalia_supported_farmers
+				}
+			}
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INDUSTRY
+		}
+	}
+	focus = {
+		id = GRE_fund_university_of_athens
+		icon = GFX_focus_research2
+		x = 1
+		y = 1
+		relative_position_id = GRE_support_the_greek_farmer
+		cost = 10
+		prerequisite = {
+			focus = GRE_support_the_greek_farmer
+			focus = GRE_develop_textile_industries
+		}
+		available = {
+			has_other_GRE_government = no
+			owns_state = 898
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_research_slot = 1
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_RESEARCH
+		}
+	}
+	focus = {
+		id = GRE_mass_employment
+		icon = GFX_focus_generic_concessions
+		x = 0
+		y = 1
+		relative_position_id = GRE_focus_on_industrialisation
+		cost = 10
+		prerequisite = {
+			focus = GRE_focus_on_industrialisation
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_timed_idea = {
+				idea = GRE_mass_employment_idea
+				days = 720
+			}
+		}
+	}
+	focus = {
+		id = GRE_expand_metallurgic_industries
+		icon = GFX_goal_generic_construct_civ_factory
+		x = 1
+		y = 1
+		relative_position_id = GRE_economic_recovery
+		cost = 5
+		prerequisite = {
+			focus = GRE_economic_recovery
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			random_owned_controlled_state  = {
+				limit = {
+					is_core_of = ROOT
+					impassable = no
+				}
+				prioritize = { 898  }
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
+			}
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = lmc
+		}	
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INDUSTRY
+		}
+	}
+	focus = {
+		id = GRE_balanced_approach
+		icon = GFX_goal_generic_consumer_goods
+		x = 1
+		y = 1
+		relative_position_id = GRE_solve_distillery_overproduction
+		cost = 5
+		mutually_exclusive = {
+			focus = GRE_focus_on_heavy_industrialization
+			focus = GRE_focus_on_agrarianism
+			}
+		prerequisite = {
+			focus = GRE_solve_distillery_overproduction
+			focus = GRE_expand_metallurgic_industries
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
 			custom_effect_tooltip = GRE_balanced_approach_tt
 			add_to_variable = {
 				var = GRE_construction_speed_var
@@ -11315,86 +11308,85 @@ joint_focus = {
 				var = GRE_military_construction_speed_var
 				value = 0.10
 			}
+			every_subject_country = {
+				limit = {
+					has_dynamic_modifier = {
+						modifier = GRE_agrarian_society_dynamic_modifier
+					}
+				}
+				custom_effect_tooltip = GRE_balanced_approach_tt
+				add_to_variable = {
+					var = GRE_construction_speed_var
+					value = 0.03
+				}
+				add_to_variable = {
+					var = GRE_efficiency_cap_var
+					value = 0.05
+				}
+				add_to_variable = {
+					var = GRE_efficiency_growth_var
+					value = 0.05
+				}
+				add_to_variable = {
+					var = GRE_factory_output_var
+					value = 0.07
+				}
+				add_to_variable = {
+					var = GRE_military_construction_speed_var
+					value = 0.10
+				}
+				hidden_effect = {
+					remove_dynamic_modifier = { modifier = GRE_agrarian_society_dynamic_modifier }
+					add_dynamic_modifier = { modifier = GRE_balanced_approach_dynamic_modifier }
+				}
+			}
 			hidden_effect = {
 				remove_dynamic_modifier = { modifier = GRE_agrarian_society_dynamic_modifier }
 				add_dynamic_modifier = { modifier = GRE_balanced_approach_dynamic_modifier }
 			}
 		}
-		hidden_effect = {
-			remove_dynamic_modifier = { modifier = GRE_agrarian_society_dynamic_modifier }
-			add_dynamic_modifier = { modifier = GRE_balanced_approach_dynamic_modifier }
+	}
+	focus = {
+		id = GRE_focus_on_heavy_industrialization
+		icon = GFX_focus_generic_industry_2
+		x = 1
+		y = 1
+		relative_position_id = GRE_expand_metallurgic_industries
+		cost = 5
+		mutually_exclusive = {
+			focus = GRE_balanced_approach
+			focus = GRE_focus_on_agrarianism
 		}
-	}
-}
-joint_focus = {
-	id = GRE_focus_on_heavy_industrialization
-	icon = GFX_focus_generic_industry_2
-	x = 1
-	y = 1
-	relative_position_id = GRE_expand_metallurgic_industries
-	cost = 5
-	mutually_exclusive = {
-		focus = GRE_balanced_approach
-		focus = GRE_focus_on_agrarianism
-	}
-	prerequisite = {
-		focus = GRE_solve_distillery_overproduction
-		focus = GRE_expand_metallurgic_industries
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		random_owned_controlled_state = {
-			limit = {
-				is_core_of = ROOT
-				impassable = no
+		prerequisite = {
+			focus = GRE_solve_distillery_overproduction
+			focus = GRE_expand_metallurgic_industries
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					impassable = no
+				}
+				prioritize = {
+					186
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
 			}
-			prioritize = {
-				186
-			}
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = industrial_complex
-				level = 1
-			}
-			add_building_construction = {
-				type = arms_factory
-				level = 1
-			}
-		}
-	}
-	completion_reward = {
-		add_stability = -0.1
-		custom_effect_tooltip = GRE_focus_on_heavy_industrialization_tt
-		add_to_variable = {
-			var = GRE_construction_speed_var
-			value = 0.05
-		}
-		add_to_variable = {
-			var = GRE_efficiency_cap_var
-			value = 0.10
-		}
-		add_to_variable = {
-			var = GRE_efficiency_growth_var
-			value = 0.10
-		}
-		add_to_variable = {
-			var = GRE_factory_output_var
-			value = 0.10
-		}
-		add_to_variable = {
-			var = GRE_military_construction_speed_var
-			value = 0.20
-		}
-		every_subject_country = {
-			limit = {
-				has_dynamic_modifier = {
-					modifier = GRE_agrarian_society_dynamic_modifier
-				}	
-			}
+			add_stability = -0.1
 			custom_effect_tooltip = GRE_focus_on_heavy_industrialization_tt
 			add_to_variable = {
 				var = GRE_construction_speed_var
@@ -11416,184 +11408,213 @@ joint_focus = {
 				var = GRE_military_construction_speed_var
 				value = 0.20
 			}
+			every_subject_country = {
+				limit = {
+					has_dynamic_modifier = {
+						modifier = GRE_agrarian_society_dynamic_modifier
+					}	
+				}
+				custom_effect_tooltip = GRE_focus_on_heavy_industrialization_tt
+				add_to_variable = {
+					var = GRE_construction_speed_var
+					value = 0.05
+				}
+				add_to_variable = {
+					var = GRE_efficiency_cap_var
+					value = 0.10
+				}
+				add_to_variable = {
+					var = GRE_efficiency_growth_var
+					value = 0.10
+				}
+				add_to_variable = {
+					var = GRE_factory_output_var
+					value = 0.10
+				}
+				add_to_variable = {
+					var = GRE_military_construction_speed_var
+					value = 0.20
+				}
+				hidden_effect = {
+					remove_dynamic_modifier = { modifier = GRE_agrarian_society_dynamic_modifier }
+					add_dynamic_modifier = { modifier = GRE_industrializing_society_dynamic_modifier }
+				}
+			}
 			hidden_effect = {
 				remove_dynamic_modifier = { modifier = GRE_agrarian_society_dynamic_modifier }
 				add_dynamic_modifier = { modifier = GRE_industrializing_society_dynamic_modifier }
 			}
 		}
-		hidden_effect = {
-			remove_dynamic_modifier = { modifier = GRE_agrarian_society_dynamic_modifier }
-			add_dynamic_modifier = { modifier = GRE_industrializing_society_dynamic_modifier }
+		search_filters = {
+			FOCUS_FILTER_INDUSTRY
+			FOCUS_FILTER_STABILITY
 		}
 	}
-	search_filters = {
-		FOCUS_FILTER_INDUSTRY
-		FOCUS_FILTER_STABILITY
-	}
-}
 
-joint_focus = {
-	id = GRE_develop_textile_industries
-	icon = GFX_goal_generic_production2
-	x = -1
-	y = 1
-	relative_position_id = GRE_focus_on_heavy_industrialization
-	cost = 10
-	prerequisite = {
-		focus = GRE_focus_on_heavy_industrialization
-		focus = GRE_balanced_approach
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		random_owned_controlled_state = {
-			limit = {
-				is_core_of = ROOT
-				impassable = no
+	focus = {
+		id = GRE_develop_textile_industries
+		icon = GFX_goal_generic_production2
+		x = -1
+		y = 1
+		relative_position_id = GRE_focus_on_heavy_industrialization
+		cost = 10
+		prerequisite = {
+			focus = GRE_focus_on_heavy_industrialization
+			focus = GRE_balanced_approach
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					impassable = no
+				}
+				prioritize = {
+					900
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
 			}
-			prioritize = {
-				900
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_INDUSTRY
+		}
+	}
+	focus = {
+		id = GRE_focus_on_exports
+		icon = GFX_focus_generic_coffee
+		x = 1
+		y = 1
+		relative_position_id = GRE_administrative_reforms
+		cost = 5
+		prerequisite = {
+			focus = GRE_cooperation_with_banks
+		}
+		prerequisite = {
+			focus = GRE_administrative_reforms
+		}
+		prerequisite = {
+			focus = GRE_open_greece_to_investments
+		}
+		prerequisite = {
+			focus = GRE_manage_debts
+		}
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
+			FOCUS_FILTER_GRE_DEBT_TO_IFC
+		}
+		available = {
+			has_other_GRE_government = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = free_trade
+			custom_effect_tooltip = GRE_IFC_minus_5_tt
+			subtract_from_variable = {
+				var = global.GRE_IFC_var
+				value = 0.05
 			}
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = industrial_complex
-				level = 1
-				instant_build = yes
-			}
-			add_building_construction = {
-				type = arms_factory
-				level = 1
-				instant_build = yes
+			if = {
+				limit = {
+					check_variable = { global.GRE_IFC_var < 0 }
+				}
+				multiply_temp_variable = {
+					global.GRE_IFC_var = 0
+				}						
 			}
 		}
 	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_INDUSTRY
-	}
-}
-joint_focus = {
-	id = GRE_focus_on_exports
-	icon = GFX_focus_generic_coffee
-	x = 1
-	y = 1
-	relative_position_id = GRE_administrative_reforms
-	cost = 5
-	prerequisite = {
-		focus = GRE_cooperation_with_banks
-	}
-	prerequisite = {
-		focus = GRE_administrative_reforms
-	}
-	prerequisite = {
-		focus = GRE_open_greece_to_investments
-	}
-	prerequisite = {
-		focus = GRE_manage_debts
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-		FOCUS_FILTER_GRE_DEBT_TO_IFC
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {
-		add_ideas = free_trade
-		custom_effect_tooltip = GRE_IFC_minus_5_tt
-		subtract_from_variable = {
-			var = global.GRE_IFC_var
-			value = 0.05
+	focus = {
+		id = GRE_prospect_for_resources
+		icon = GFX_goal_generic_construction2
+		x = 1
+		y = 1
+		relative_position_id = GRE_focus_on_exports
+		cost = 10
+		prerequisite = {
+			focus = GRE_focus_on_exports
+			focus = GRE_large_debt_repayments
 		}
-		if = {
-			limit = {
-				check_variable = { global.GRE_IFC_var < 0 }
-			}
-			multiply_temp_variable = {
-				global.GRE_IFC_var = 0
-			}						
+		search_filters = {
+			FOCUS_FILTER_HISTORICAL
 		}
-	}
-}
-joint_focus = {
-	id = GRE_prospect_for_resources
-	icon = GFX_goal_generic_construction2
-	x = 1
-	y = 1
-	relative_position_id = GRE_focus_on_exports
-	cost = 10
-	prerequisite = {
-		focus = GRE_focus_on_exports
-		focus = GRE_large_debt_repayments
-	}
-	search_filters = {
-		FOCUS_FILTER_HISTORICAL
-	}
-	available = {
-	}
-	ai_will_do = {
-		factor = 1
-	}
-	completion_reward_joint_originator = {		
-		random_owned_controlled_state = {
-			limit = {
-				is_core_of = ROOT
-				impassable = no
-			}
-			prioritize = {
-				47
-			}
-			add_resource = { 
-				type = aluminium
-				amount = 12
-			}
+		available = {
+			has_other_GRE_government = no
 		}
-		random_owned_controlled_state = {
-			limit = {
-				is_core_of = ROOT
-				impassable = no
-			}
-			prioritize = {
-				186
-			}
-			add_resource = { 
-				type = aluminium
-				amount = 8
-			}
-			add_resource = { 
-				type = steel
-				amount = 8
-			}
-			add_resource = { 
-				type = tungsten
-				amount = 5
-			}
+		ai_will_do = {
+			factor = 1
 		}
-		random_owned_controlled_state = {
-			limit = {
-				is_core_of = ROOT
-				impassable = no
+		completion_reward = {		
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					impassable = no
+				}
+				prioritize = {
+					47
+				}
+				add_resource = { 
+					type = aluminium
+					amount = 12
+				}
 			}
-			prioritize = {
-				185
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					impassable = no
+				}
+				prioritize = {
+					186
+				}
+				add_resource = { 
+					type = aluminium
+					amount = 8
+				}
+				add_resource = { 
+					type = steel
+					amount = 8
+				}
+				add_resource = { 
+					type = tungsten
+					amount = 5
+				}
 			}
-			add_resource = { 
-				type = aluminium
-				amount = 4
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					impassable = no
+				}
+				prioritize = {
+					185
+				}
+				add_resource = { 
+					type = aluminium
+					amount = 4
+				}
+				add_resource = { 
+					type = steel
+					amount = 5
+				}
 			}
-			add_resource = { 
-				type = steel
-				amount = 5
-			}
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = GRE_dep
 		}
-	}
-	completion_reward = {
-		custom_effect_tooltip = available_designer
-		show_ideas_tooltip = GRE_dep
 	}
 }

@@ -488,12 +488,13 @@ default_pp_spend_amount = {
 
 default_pp_relation_spend_amount = {
 	allowed = {
-		is_disabled_tag = no
-	}
-	enable = {
+		#is_disabled_tag = no
 		NOT = {
 			original_tag = TUR
 		}
+	}
+	enable = {
+		always = yes
 	}
 	abort_when_not_enabled = yes
 
@@ -502,44 +503,6 @@ default_pp_relation_spend_amount = {
 		id = relation
 		value = -9999
 	}
-}
-
-default_garrison_production = {
-	allowed = {
-		is_disabled_tag = no
-	}
-	enable = {
-		NOT = { 
-			original_tag = GER 
-			original_tag = USA
-			original_tag = CHI
-			original_tag = FRA
-			original_tag = ENG
-			original_tag = AUS
-			original_tag = BEL
-			original_tag = RUS
-			original_tag = VIN
-		}
-		ai_wants_divisions >  12 #Massively decreasing the amount of garrison and suppression the AI wants
-		is_major = yes
-	}
-	abort = {
-		ai_wants_divisions < 13 #Massively decreasing the amount of garrison and suppression the AI wants
-		is_major = no
-	}
-
-	ai_strategy = {
-		type = role_ratio
-		id = garrison
-		value = 5
-	}
-	
-	# Old garrison system against resistance
-	# ai_strategy = {
-	# 	type = role_ratio
-	# 	id = suppression
-	# 	value = 2
-	# }
 }
 
 slightly_naval_focused_nation = {
@@ -1352,11 +1315,10 @@ protectorates_dont_defend_overlord_borders = {
 		is_subject = yes
 		OR = {
 			has_autonomy_state = autonomy_tgwr_protectorate
-			has_autonomy_state = autonomy_tgwr_informal_protectorate
+			has_autonomy_state = autonomy_tgwr_protected_state
 			has_autonomy_state = autonomy_tgwr_unilateral_union
 			has_autonomy_state = autonomy_tgwr_concession
 			has_autonomy_state = autonomy_tgwr_ottoman_emirate
-			has_autonomy_state = autonomy_tgwr_integrated_protectorate
 		}
 	}	
 	abort = {
@@ -1444,7 +1406,7 @@ default_avoid_caspian = {
 	allowed = {
 		is_disabled_tag = no
 		NOT = {
-			is_russian_tag = yes
+			is_russian_tag_no_tt = yes
 			original_tag = AZR
 			original_tag = GEO
 			original_tag = MOU

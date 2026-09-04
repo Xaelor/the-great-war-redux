@@ -97,8 +97,9 @@ country_event = {
 			}
 			keep_all_characters = yes
 			SOV = {
-				puppet = {
+				set_autonomy = {
 					target = PREV
+					autonomy_state = autonomy_tgwr_assr
 					end_wars = no
 					end_civil_wars = no
 				}
@@ -125,7 +126,7 @@ country_event = {
 				}
 				add_state_core = 196
 			
-				load_focus_tree = empty_focus
+				load_focus_tree = generic_focus
 				
 				set_popularities = {
 					democratic = 29
@@ -133,14 +134,6 @@ country_event = {
 					communism = 71
 				}
 				copy_SOV_army_idea = yes
-				if = {
-					limit = {
-						SOV = {
-							has_idea = RUS_idea_armistice_rus
-						}	
-					}
-					add_ideas = RUS_idea_armistice_rus
-				}
 				division_template = {
 					name = "Krasnaya Gvardiya"
 					template_counter = 69
@@ -187,21 +180,18 @@ country_event = {
 			CRI = {
 				OR = {
 					is_neighbor_of = ROOT
-					any_country = {
-						is_neighbor_of = PREV
+					any_neighbor_country = {
 						is_subject_of = ROOT
 					}
 				}
-				AND = {
+				OR = {
 					is_subject_of = SOV
 					has_government = communism
 				}
 			}
-			any_other_country = {
+			any_neighbor_country = {
 				OR = {
-					is_neighbor_of = ROOT
-					any_country = {
-						is_neighbor_of = PREV
+					any_neighbor_country = {
 						is_subject_of = ROOT
 					}
 				}
@@ -209,7 +199,7 @@ country_event = {
 					is_ally_with = ROOT
 					has_war_with = ROOT
 				}
-				AND = {
+				OR = {
 					is_subject_of = SOV
 					has_government = communism
 				}
@@ -249,7 +239,7 @@ country_event = {
 						PREV = { set_country_flag = protectorate }
 						set_autonomy = {
 							target = PREV
-							autonomous_state = autonomy_tgwr_informal_protectorate
+							autonomous_state = autonomy_tgwr_protected_state
 						}
 					}
 					set_country_flag = released_by_germany #needed for peace conference to not count them as a winner nor a loser
@@ -308,7 +298,7 @@ country_event = {
 				CRI = { set_country_flag = protectorate }
 				set_autonomy = {
 					target = CRI
-					autonomous_state = autonomy_tgwr_informal_protectorate
+					autonomous_state = autonomy_tgwr_protected_state
 				}
 			}
 			custom_effect_tooltip = disagree_effect_tooltip
@@ -468,19 +458,19 @@ country_event = {
 			}
 		}
 	}
-	option = {
-		name = ww1_crimea.3.d
-		UKR = {
-			add_popularity = {
-				ideology = communism
-				popularity = 0.05
-			}
-			add_stability = -0.02
-			add_state_claim = 137
-			add_state_claim = 955
-		}
-		ai_chance = { factor = 0 }
-	}
+	#option = {
+	#	name = ww1_crimea.3.d
+	#	UKR = {
+	#		add_popularity = {
+	#			ideology = communism
+	#			popularity = 0.05
+	#		}
+	#		add_stability = -0.02
+	#		add_state_claim = 137
+	#		add_state_claim = 955
+	#	}
+	#	ai_chance = { factor = 0 }
+	#}
 }
 # Solomon Krym in Crimea
 country_event = {
@@ -500,9 +490,7 @@ country_event = {
 			has_idea = communist_influence
 			communism > 0.20
 		}
-		any_other_country = {
-			is_in_russian_civil_war = yes
-		}
+		has_russian_civil_war = yes
 	}
 	fire_only_once = yes
 	mean_time_to_happen = { days = 60 }
@@ -595,7 +583,7 @@ country_event = {
 					PREV = { set_country_flag = protectorate }
 					set_autonomy = {
 						target = PREV
-						autonomous_state = autonomy_tgwr_informal_protectorate
+						autonomous_state = autonomy_tgwr_protected_state
 					}
 				}
 			}
@@ -622,7 +610,7 @@ country_event = {
 					PREV = { set_country_flag = protectorate }
 					set_autonomy = {
 						target = PREV
-						autonomous_state = autonomy_tgwr_informal_protectorate
+						autonomous_state = autonomy_tgwr_protected_state
 					}
 				}
 				set_country_flag = released_by_germany #needed for peace conference to not count them as a winner nor a loser

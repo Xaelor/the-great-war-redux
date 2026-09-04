@@ -1,0 +1,126 @@
+# These missions are needed only for not losers of great war
+TGWR_great_power_politics = {
+	FRA_return_korice = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			original_tag = FRA
+		}
+		activation = {
+			has_global_flag = great_war_ends
+			NOT = {
+				has_country_flag = great_war_loser
+			}
+			owns_state = 1225
+		}
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+		days_mission_timeout = 720
+		is_good = yes
+		fire_only_once = yes
+		timeout_effect = {					
+			803 = {
+				owner = {
+					transfer_state = 1225
+				}
+			}
+		}
+	}
+
+	SER_return_corfu = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			tag = SER
+		}
+		activation = {
+			has_global_flag = great_war_ends
+			NOT = {
+				has_country_flag = great_war_loser
+			}
+			owns_state = 187
+		}
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}		
+		days_mission_timeout = 10
+		is_good = yes
+		fire_only_once = yes
+		timeout_effect = {					
+			758 = {
+				owner = {
+					transfer_state = 187
+				}
+			}
+		}
+	}
+
+	GER_release_NWA = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			tag = GER
+		}
+		activation = {
+			has_global_flag = great_war_ends
+			has_country_flag = great_war_winner
+			has_global_flag = october_revolution
+			controls_state = 209
+			country_exists = SOV
+			SOV = {
+				has_war = yes
+				any_enemy_country = {
+					is_russian_tag = yes
+				}
+			}
+		}
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}		
+		days_mission_timeout = 3
+		is_good = yes
+		fire_only_once = yes
+		timeout_effect = {					
+			country_event = ww1_nwa.1
+		}
+	}
+
+	AUS_release_ALB = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			tag = AUS
+		}
+		activation = {
+			has_global_flag = great_war_ends
+			has_country_flag = great_war_winner
+			ALB = {
+				has_country_flag = AUH_occupation_of_ALB
+			}
+		}
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}		
+		days_mission_timeout = 10
+		is_good = yes
+		fire_only_once = yes
+		timeout_effect = {					
+			ALB = { # maybe it can be done as puppet later
+				every_core_state = {
+					limit = {
+						is_owned_by = ROOT
+						NOT = {
+							is_core_of = ROOT
+						}
+					}
+					transfer_state_to = ALB
+				}
+			}
+		}
+	}
+}

@@ -332,7 +332,7 @@ country_event = {
 					relation = military_access
 					active = yes
 				}
-				set_country_flag = empty_focus
+				load_focus_tree = generic_focus
 			}
 		}
 	}
@@ -624,7 +624,7 @@ country_event = {
 	#	##############################
 	#	set_autonomy = {
 	#		target = CYR
-	#		autonomy_state = autonomy_colony
+	#		autonomy_state = autonomy_tgwr_colony
 	#	}
 	#	CYR = {
 	#		set_politics = {
@@ -5876,6 +5876,9 @@ country_event = {
 				days = 1
 			}
 		}
+		ai_chance = {
+			base = 0
+		}			
 	}
 }
 #Italy - Yes to Fiume
@@ -5977,6 +5980,9 @@ country_event = {
 				days = 1
 			}
 		}
+		ai_chance = {
+			base = 0
+		}			
 	}
 }
 #Italy - No Fiume
@@ -6141,6 +6147,9 @@ country_event = {
 				days = 1
 			}
 		}
+		ai_chance = {
+			base = 0
+		}		
 	}
 }
 #Italy - Still no Ubari
@@ -8475,7 +8484,7 @@ country_event = {
 				}
 			}
 		}
-		clr_country_flag = protectorate
+		clr_subject_flags = yes
 		custom_effect_tooltip = GAME_OVER_TT
 		hidden_effect = { FROM = { country_event = { id = ww1_italy.305 hours = 8 } } }
 		ai_chance = { base = 100 }
@@ -8491,7 +8500,7 @@ country_event = {
 				}
 			}
 		}
-		clr_country_flag = protectorate
+		clr_subject_flags = yes
 		hidden_effect = { FROM = { country_event = { id = ww1_italy.306 hours = 8 } } }
 		ai_chance = { base = 0 }
 	}
@@ -10600,24 +10609,26 @@ country_event = {
 	desc = ww1_italy.395.d
 	picture = GFX_report_event_ITA_italian_civil_war
 	fire_only_once = yes
-	trigger = {
-		original_tag = ITA
-		OR = {
-			has_war_with = ENT
-			has_war_with = GER
-		}
-		OR = {
-			is_in_faction_with = GER
-			is_in_faction_with = ENT
-		}
-		OR = {
-			communism > 0.45
-			surrender_progress > 0.6
-		}
-		NOT = {
-			has_completed_focus = ITA_demobilize_the_army
-		}
-	}
+	# disabled
+	is_triggered_only = yes
+	#trigger = {
+	#	original_tag = ITA
+	#	OR = {
+	#		has_war_with = ENT
+	#		has_war_with = GER
+	#	}
+	#	OR = {
+	#		is_in_faction_with = GER
+	#		is_in_faction_with = ENT
+	#	}
+	#	OR = {
+	#		communism > 0.45
+	#		surrender_progress > 0.6
+	#	}
+	#	NOT = {
+	#		has_completed_focus = ITA_demobilize_the_army
+	#	}
+	#}
 	option = {
 		name = ww1_italy.395.a
 		add_stability = -0.05
@@ -10794,7 +10805,13 @@ country_event = {
 	title = ww1_italy.399.t
 	desc = ww1_italy.399.d
 	fire_only_once = yes
-	is_triggered_only = yes
+	trigger = {
+		tag = ITA
+		has_country_flag = great_war_loser
+	}
+	mean_time_to_happen = {
+		days = 30
+	}
 	option = {
 		name = ww1_italy.399.a
 		hidden_effect = {
@@ -11884,7 +11901,7 @@ country_event = {
 				set_country_flag = protectorate
 				set_autonomy = {
 					target = ROOT
-					autonomous_state = autonomy_tgwr_informal_protectorate
+					autonomous_state = autonomy_tgwr_protected_state
 				}		
 			}
 			else_if = {
@@ -11894,7 +11911,7 @@ country_event = {
 				set_country_flag = protectorate
 				set_autonomy = {
 					target = ROOT
-					autonomous_state = autonomy_tgwr_informal_protectorate
+					autonomous_state = autonomy_tgwr_protected_state
 				}					
 			}
 			else = {
@@ -11945,7 +11962,7 @@ country_event = {
 				}
 				set_autonomy = {
 					target = FROM
-					autonomous_state = autonomy_tgwr_informal_protectorate
+					autonomous_state = autonomy_tgwr_protected_state
 				}
 				set_country_flag = protectorate
 			}
@@ -21934,6 +21951,7 @@ country_event = {
 	is_triggered_only = yes
 	immediate = {
 		hidden_effect = {
+			set_global_flag = italian_civil_war
 			create_dynamic_country = {
 				original_tag = ITA
 				every_state = {
@@ -22135,6 +22153,7 @@ country_event = {
 				ITA_civil_war_idea_transfer = yes
 			}
 			ITA = {
+				clear_all_relations_except_wars = yes
 				transfer_units_fraction = {
 					target = SRI
 					army_ratio = 0.25
@@ -25654,55 +25673,9 @@ country_event = {
 		name = ww1_iw_italy.1.a
 		complete_national_focus = ITA_the_great_relief
 		set_political_power = 50
-		if = {
-			limit = {
-				AUS = {
-					has_country_flag = great_war_loser
-				}
-			}
-			ITA = {
-				country_event = {
-					id = ww1_iw_br_italy.23
-					days = 4
-				}
-			}
-			FRA = {
-				country_event = {
-					id = ww1_iw_br_italy.23
-					days = 4
-				}
-			}
-			ENG = {
-				country_event = {
-					id = ww1_iw_br_italy.23
-					days = 4
-				}
-			}
-			SER = {
-				country_event = {
-					id = ww1_iw_br_italy.23
-					days = 4
-				}
-			}
-			MNT = {
-				country_event = {
-					id = ww1_iw_br_italy.23
-					days = 4
-				}
-			}
-			if = {
-				limit = {
-					USA = {
-						has_country_flag = great_war_winner
-					}
-				}
-				USA = {
-					country_event = {
-						id = ww1_iw_br_italy.23
-						days = 4
-					}
-				}
-			}
+		country_event = {
+			id = ww1_iw_br_italy.23
+			days = 4
 		}
 	}
 }
@@ -26438,84 +26411,8 @@ country_event = {
 	desc = ww1_iw_br_italy.23.d
 	picture = GFX_report_event_generic_factory
 	is_triggered_only = yes
-	immediate = {
-		hidden_effect = {
-			if = {
-				limit = {
-					tag = ITA
-				}
-				736 = {
-					transfer_state_to = ENG
-					add_contested_owner = ITA
-				}
-				513 = {
-					transfer_state_to = ENG
-					add_contested_owner = ITA
-				}
-				208 = {
-					transfer_state_to = CRO
-				}
-				1006 = {
-					transfer_state_to = ITA
-				}
-				163 = {
-					transfer_state_to = ITA
-				}
-				if = {
-					limit = {
-						USA = {
-							has_country_flag = great_war_winner
-						}
-					}
-					103 = {
-						transfer_state_to = USA
-						add_contested_owner = ITA
-					}
-					1206 = {
-						transfer_state_to = FRA
-						add_contested_owner = ITA
-					}
-				}
-				else = {
-					103 = {
-						transfer_state_to = FRA
-					}
-					1206 = {
-						transfer_state_to = FRA
-					}
-				}
-				1230 = {
-					transfer_state_to = FRA
-				}
-				if = {
-					limit = {
-						1205 = {
-							OWNER = {
-								OR = {
-									has_civil_war = yes
-									has_country_flag = Montenegro_capitulated
-									has_country_flag = great_war_loser
-								}
-							}
-						}
-					}
-					1205 = {
-						transfer_state_to = FRA
-						add_contested_owner = MNT
-					}
-				}
-			}
-		}
-	}
 	option = {
 		name = ww1_iw_br_italy.23.a
-		trigger = {
-			NOT = {
-				has_country_flag = great_war_loser
-				has_country_flag = Montenegro_capitulated
-				has_civil_war = yes
-			}
-		}
 		hidden_effect = {
 			if = {
 				limit = {
@@ -26525,66 +26422,6 @@ country_event = {
 					id = ww1_iw_br_italy.24
 					days = 20
 				}
-			}
-		}
-		effect_tooltip = {
-			1010 = {
-				transfer_state_to = cro
-			}
-			736 = {
-				transfer_state_to = eng
-			}
-			513 = {
-				transfer_state_to = eng
-			}
-			208 = {
-				transfer_state_to = CRO
-			}
-			1006 = {
-				transfer_state_to = ITA
-			}
-			163 = {
-				transfer_state_to = ITA
-			}
-			if = {
-				limit = {
-					USA = {
-						has_country_flag = great_war_winner
-					}
-				}
-				103 = {
-					transfer_state_to = USA
-				}
-				1206 = {
-					transfer_state_to = FRA
-				}
-			}
-			else = {
-				103 = {
-					transfer_state_to = FRA
-				}
-				1206 = {
-					transfer_state_to = FRA
-				}
-			}
-			1230 = {
-				transfer_state_to = FRA
-			}
-		}
-	}
-	option = {
-		name = ww1_iw_br_italy.23.b
-		trigger = {
-			original_tag = MNT
-			OR = {
-				has_country_flag = great_war_loser
-				has_country_flag = Montenegro_capitulated
-				has_civil_war = yes
-			}
-		}
-		effect_tooltip = {
-			FRA = {
-				transfer_state = 1205
 			}
 		}
 	}

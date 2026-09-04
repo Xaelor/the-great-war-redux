@@ -45,8 +45,20 @@ country_event = {
 	title = ww1_mongolia.2.t
 	desc = ww1_mongolia.2.d
 	picture = GFX_report_event_SOV_mongolia_cavalry
-	is_triggered_only = yes
+	trigger = {
+		has_start_date < 1914.1.1
+		tag = MON
+		has_war = no
+		is_subject = no
+		612 = {
+			NOT = { is_owned_by = ROOT }
+			OWNER = { has_war = no }
+		}
+	}
 	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 70
+	}
 	option = {
 		name = ww1_mongolia.2.a
 		set_country_flag = MON_inner_mongolia_raid
@@ -56,22 +68,19 @@ country_event = {
 			owner = {
 				country_event = {
 					id = ww1_mongolia.3
-					hours = 10
+					days = 10
+					random_days = 10
 				}
 			}
 		}
-		hidden_effect = {
-			country_event = {
-				id = ww1_mongolia.16
-				days = 75
-				random_days = 75
-			}
-			country_event = {
-				id = ww1_mongolia.5
-				days = 260
-				random_days = 40
-			}
-		}
+		activate_mission = MON_prepare_inner_mongolian_campaign_mission
+		# hidden_effect = {
+		# 	country_event = {
+		# 		id = ww1_mongolia.5
+		# 		days = 260
+		# 		random_days = 40
+		# 	}
+		# }
 	}
 }
 
@@ -85,18 +94,22 @@ country_event = {
 	fire_only_once = yes
 	option = {
 		name = ww1_mongolia.3.a
+		activate_mission_tooltip = MON_prepare_inner_mongolian_campaign_mission
 		FROM = {
 			transfer_state = 983
 		}
 		every_owned_state = {
 			limit = {
 				OR = {
+					state = 610
+					state = 611
 					state = 612
 					state = 616
 					state = 621
 					state = 715
 				}
 			}
+			set_demilitarized_zone = yes
 			set_border_war = yes
 		}
 	}
@@ -144,20 +157,52 @@ country_event = {
 			}
 		}
 	}
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = { tag = MON }
+				declare_war_on = {
+					target = 612.OWNER
+					type = liberate_wargoal
+					generator = {
+						621 611 612 610 715
+					}
+				}
+				612 = {
+					OWNER = {
+						add_dynamic_modifier = {
+							modifier = colonial_war
+						}
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = colonial_war
+				}
+			}
+		}
+	}
 	option = {
 		name = ww1_mongolia.5.a
 		trigger = {
 			NOT = { original_tag = MON }
 		}
 		effect_tooltip = {
-			MON = { transfer_state = 612 }
-		}
-		hidden_effect = {
-			country_event = {
-				id = ww1_mongolia.6
-				days = 180
+			MON = {
+				declare_war_on = {
+					target = ROOT
+					type = liberate_wargoal
+					generator = {
+						621 611 612 610 715
+					}
+				}
 			}
 		}
+		# hidden_effect = {
+		# 	country_event = {
+		# 		id = ww1_mongolia.6
+		# 		days = 180
+		# 	}
+		# }
 	}
 	option = {
 		name = ww1_mongolia.5.b
@@ -167,17 +212,21 @@ country_event = {
 		hidden_effect = {
 			612 = {
 				OWNER = {
-					country_event = ww1_mongolia.5
+					PREV.PREV = {
+						declare_war_on = {
+							target = PREV
+							type = independence_wargoal
+						}
+					}
 				}
 			}
 		}
-		transfer_state = 612
-		hidden_effect = {
-			country_event = {
-				id = ww1_mongolia.6
-				days = 180
-			}
-		}
+		# hidden_effect = {
+		# 	country_event = {
+		# 		id = ww1_mongolia.6
+		# 		days = 180
+		# 	}
+		# }
 	}
 }
 
@@ -262,36 +311,7 @@ country_event = {
 	title = ww1_mongolia.9.t
 	desc = ww1_mongolia.9.d
 	picture = GFX_report_event_SOV_mongolia_cavalry
-	# is_triggered_only = yes
-	trigger = {
-		tag = RUS
-		is_subject = no
-		MON = {
-			is_neighbor_of = ROOT
-			any_owned_state = {
-				NOT = {
-					state = 1226
-					region = 152
-				}
-			}
-		}
-	}
-	fire_only_once = yes
-	mean_time_to_happen = {
-		days = 200
-		modifier = {
-			factor = 0.1
-			MON = {
-				any_owned_state = {
-					OR = {
-						state = 610
-						state = 611
-						state = 715
-					}
-				}
-			}
-		}
-	}
+	is_triggered_only = yes
 	option = {
 		name = ww1_mongolia.9.a
 		MON = {
@@ -313,6 +333,15 @@ country_event = {
 	fire_only_once = yes
 	option = {
 		name = ww1_mongolia.10.a
+		every_enemy_country = {
+			limit = {
+				is_china_or_warlord = yes
+			}
+			white_peace = {
+				tag = ROOT
+				message = treaty_of_kyakhta_message
+			}
+		}
 		every_state = {
 			limit = {
 				OR = {
@@ -658,13 +687,6 @@ country_event = {
 	option = {
 		name = ww1_mongolia.16.a
 		trigger = { original_tag = MON }
-		hidden_effect = {
-			1226 = {
-				OWNER = {
-					country_event = ww1_mongolia.16
-				}
-			}
-		}
 		transfer_state = 1226
 	}
 	option = {
