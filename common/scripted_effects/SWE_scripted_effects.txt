@@ -806,8 +806,16 @@ SWE_recalculate_second_chamber = {
 		value = SWE_agr_fas_votes_a
 	}
 	
-	if = {	# Representing war-time concerns for now (moving con votes to fas)
+	if = {	# Representing war-time concerns for now (moving con half votes to fas)
 		limit = { has_defensive_war = yes }
+		multiply_temp_variable = {
+			var = con_vote_temp_fake
+			value = 0.5
+		}
+		add_to_temp_variable = {
+			var = fas_vote_temp
+			value = con_vote_temp_fake
+		}
 		add_to_temp_variable = {
 			var = fas_vote_temp
 			value = con_vote_temp_fake
@@ -1494,8 +1502,10 @@ SWE_banning_of_socialists = {
 	
 	if = {
 		limit = {
-			date > 1920.1.1
-			date < 1932.1.1
+			check_variable = {
+				var = LIB_a
+				value = 1
+			}
 		}
 		add_to_variable = {
 			var = LIB_a
@@ -1612,7 +1622,6 @@ SWE_decrease_socialist_radicalisation = {
 
 # This effect when triggered thrice will split SAP
 SWE_communist_tension_increase = {
-	custom_effect_tooltip = SWE_increases_internal_tensions_in_sap
 	if = {
 		limit = {
 			NOT = { has_country_flag = swe_communist_split }
@@ -1623,6 +1632,7 @@ SWE_communist_tension_increase = {
 				}
 			}
 		}
+		custom_effect_tooltip = SWE_increases_internal_tensions_in_sap
 		if = {
 			limit = {
 				has_country_flag = swe_communist_tensions

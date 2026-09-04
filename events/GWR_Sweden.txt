@@ -2298,6 +2298,8 @@ country_event = {
 	
 	is_triggered_only = yes
 	
+	fire_only_once = yes
+	
 	option = {	# Oh no
 		name = ww_sverige.100.a
 		add_popularity = {
@@ -6124,6 +6126,8 @@ country_event = {
 
 # Hilda Nilsson trial
 
+# Biskopstionde abolished during 1910 so gotta check
+
 # King's Approval
 country_event = {
 	id = ww_sverige_general.1001
@@ -7111,6 +7115,157 @@ country_event = {
 		add_political_power = -40
 	}
 }
+
+# Hungerdemonstrationer (1917)
+country_event = {
+	id = ww_sverige_hungerskjold.5
+	title = ww_sverige_hungerskjold.5.t
+	desc = ww_sverige_hungerskjold.5.d
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	trigger = {
+		has_idea = SWE_hungerskjold
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+		modifier = {
+			factor = 0.5
+			has_stability > 0.7
+		}
+		modifier = {
+			factor = 0.5
+			has_stability > 0.8
+		}
+		modifier = {
+			factor = 5
+			SOV = {
+				exists = yes
+				has_government = communism
+			}
+		}
+		modifier = {	# Around historical date, basically make it a lot less likely to miss
+			factor = 100
+			SOV = {
+				exists = yes
+				has_government = communism
+			}
+			date > 1917.2.1
+			date < 1917.6.1
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			country_event = { id = ww_sverige_hungerskjold.6 days = 1 }
+			country_event = { id = ww_sverige_hungerskjold.7 days = 21 }
+			country_event = { id = ww_sverige_hungerskjold.9 days = 97 random_days = 5 }
+			add_timed_idea = {
+				idea = SWE_hunger_demonstrations
+				days = 42
+			}
+		}
+	}
+	
+	option = {	# Nothing can be done
+		name = ww_sverige_hungerskjold.5.a
+		effect_tooltip = {
+			add_timed_idea = {
+				idea = SWE_hunger_demonstrations
+				days = 42
+			}
+		}
+	}
+}
+# Brödupproret, Göteborg (1917)
+country_event = {
+	id = ww_sverige_hungerskjold.6
+	title = ww_sverige_hungerskjold.6.t
+	desc = ww_sverige_hungerskjold.6.d
+	
+	is_triggered_only = yes
+	
+	option = {	# Nothing can be done
+		name = ww_sverige_hungerskjold.6.a
+		add_stability = -0.02
+		add_war_support = -0.05
+		add_popularity = {
+			ideology = communism
+			popularity = 0.01
+		}
+	}
+}
+# Deescalation
+country_event = {
+	id = ww_sverige_hungerskjold.7
+	title = ww_sverige_hungerskjold.7.t
+	desc = ww_sverige_hungerskjold.7.d
+	
+	is_triggered_only = yes
+		
+	immediate = {
+		hidden_effect = {
+			country_event = { id = ww_sverige_hungerskjold.8 days = 25 }
+			swap_ideas = {
+				add_idea = SWE_hunger_and_militarydemonstrations
+				remove_idea = SWE_hunger_demonstrations
+			}
+		}
+	}
+	
+	option = {	# Nothing can be done
+		name = ww_sverige_hungerskjold.7.a
+		effect_tooltip = {
+			swap_ideas = {
+				add_idea = SWE_hunger_and_militarydemonstrations
+				remove_idea = SWE_hunger_demonstrations
+			}
+		}
+	}
+}
+# Seskarö-upproret
+country_event = {
+	id = ww_sverige_hungerskjold.8
+	title = ww_sverige_hungerskjold.8.t
+	desc = ww_sverige_hungerskjold.8.d
+	
+	is_triggered_only = yes
+	
+	option = {	# Frustrating
+		name = ww_sverige_hungerskjold.8.a
+		add_popularity = {
+			ideology = communism
+			popularity = 0.02
+		}
+	}
+}
+# Junikrvallerna (might occur outside June, but should be at this point)
+country_event = {
+	id = ww_sverige_hungerskjold.9
+	title = ww_sverige_hungerskjold.9.t
+	desc = ww_sverige_hungerskjold.9.d
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	trigger = {
+		has_idea = SWE_hungerskjold
+		NOT = { has_country_flag = SWE_suffrage_flag }
+	}
+	
+	option = {
+		name = ww_sverige_hungerskjold.8.a
+		add_manpower = -30
+		add_stability = -0.05
+		add_popularity = {
+			ideology = communism
+			popularity = 0.04
+		}
+	}
+}
+
 
 
 ### GREAT WAR STUFF ###
