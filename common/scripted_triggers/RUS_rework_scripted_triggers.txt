@@ -610,3 +610,24 @@ is_markov_available_as_pm = {
 #		}
 #	}
 #}
+
+@law_cost = 50
+@law_cost_ai = 75
+
+ai_accept_law_state_council = {
+	has_political_power > @law_cost_ai
+	check_variable = {
+		total_loyalist_count > RUS_duma_majority_threshold
+	}
+	if = {
+		limit = { 
+			has_active_mission = RUS_western_zemstvo_reform_deadline
+		}
+		check_variable = {
+			days_mission_timeout@RUS_western_zemstvo_reform_deadline > 30
+		}
+	}
+	else = {
+		always = yes
+	}
+}
