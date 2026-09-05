@@ -403,6 +403,9 @@ FRA_create_FRC = {
 				set_nationality = FRC
 				promote_character = yes
 			}
+			FRA_charles_nollet = {
+				set_nationality = FRC
+			}
 		}
 		add_ideas = standing_alone	
 		add_ideas = FRA_uncontrolled_popular_courts
@@ -481,7 +484,21 @@ FRA_create_NFA = {
 			}
 			FRA_philippe_petain = {
 				set_nationality = NFA
-				promote_character = yes
+				if = {
+					limit = {
+						has_ideology = stratocracy
+					}
+					promote_character = stratocracy
+				}
+				else = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = stratocracy
+							traits = { great_war_hero generallissimo }
+						}
+					}
+				}
 			}
 			FRA_maurice_janin = {
 				set_nationality = NFA
@@ -517,7 +534,17 @@ FRA_create_NFA = {
 				set_nationality = NFA
 			}
 		}
-		add_ideas = standing_alone	
+		add_ideas = standing_alone
+		division_template = {
+			name = "Partisans"
+			is_locked = yes
+			force_allow_recruiting = yes
+			regiments = {
+				militia = { x = 0 y = 0 }
+				militia = { x = 0 y = 1 }
+				militia = { x = 0 y = 2 }
+			}
+		}
 	}
 }
 
