@@ -31,7 +31,7 @@ AST_labour_support = {
 	AST_labour_campaign_western_australia = {
 		icon = GFX_decision_spa_garrison_control_none
 		days_remove = 35
-
+		on_map_mode = map_only
 		highlight_states = {
 			highlight_state_targets = {
 				state = 522
@@ -58,13 +58,13 @@ AST_labour_support = {
 		}
 
 		complete_effect = {
-			add_to_variable = {
-				AST_labour_support_in_western_australia = 1
-			}
 			set_country_flag = AST_active_labour_campaign
 		}
 		remove_effect = {
 			clr_country_flag = AST_active_labour_campaign
+			add_to_variable = {
+				AST_labour_support_in_western_australia = 1
+			}
 		}
 		modifier = {
 			political_power_cost = 0.90
@@ -73,7 +73,7 @@ AST_labour_support = {
 	AST_labour_campaign_south_australia = {
 		icon = GFX_decision_spa_garrison_control_none
 		days_remove = 35
-
+		on_map_mode = map_only
 		highlight_states = {
 			highlight_state_targets = {
 				state = 519
@@ -100,13 +100,13 @@ AST_labour_support = {
 		}
 
 		complete_effect = {
-			add_to_variable = {
-				AST_labour_support_in_south_australia = 1
-			}
 			set_country_flag = AST_active_labour_campaign
 		}
 		remove_effect = {
 			clr_country_flag = AST_active_labour_campaign
+			add_to_variable = {
+				AST_labour_support_in_south_australia = 1
+			}
 		}
 		modifier = {
 			political_power_cost = 0.90
@@ -115,7 +115,7 @@ AST_labour_support = {
 	AST_labour_campaign_victoria = {
 		icon = GFX_decision_spa_garrison_control_none
 		days_remove = 35
-
+		on_map_mode = map_only
 		highlight_states = {
 			highlight_state_targets = {
 				state = 517
@@ -142,10 +142,10 @@ AST_labour_support = {
 		}
 
 		complete_effect = {
+			set_country_flag = AST_active_labour_campaign
 			add_to_variable = {
 				AST_labour_support_in_victoria = 1
 			}
-			set_country_flag = AST_active_labour_campaign
 		}
 		remove_effect = {
 			clr_country_flag = AST_active_labour_campaign
@@ -157,7 +157,7 @@ AST_labour_support = {
 	AST_labour_campaign_nsw = {
 		icon = GFX_decision_spa_garrison_control_none
 		days_remove = 35
-
+		on_map_mode = map_only
 		highlight_states = {
 			highlight_state_targets = {
 				state = 285
@@ -184,13 +184,13 @@ AST_labour_support = {
 		}
 
 		complete_effect = {
-			add_to_variable = {
-				AST_labour_support_in_nsw = 1
-			}
 			set_country_flag = AST_active_labour_campaign
 		}
 		remove_effect = {
 			clr_country_flag = AST_active_labour_campaign
+			add_to_variable = {
+				AST_labour_support_in_nsw = 1
+			}
 		}
 		modifier = {
 			political_power_cost = 0.90
@@ -199,7 +199,7 @@ AST_labour_support = {
 	AST_labour_campaign_queensland = {
 		icon = GFX_decision_spa_garrison_control_none
 		days_remove = 35
-
+		on_map_mode = map_only
 		highlight_states = {
 			highlight_state_targets = {
 				state = 521
@@ -226,13 +226,13 @@ AST_labour_support = {
 		}
 
 		complete_effect = {
-			add_to_variable = {
-				AST_labour_support_in_queensland = 1
-			}
 			set_country_flag = AST_active_labour_campaign
 		}
 		remove_effect = {
 			clr_country_flag = AST_active_labour_campaign
+			add_to_variable = {
+				AST_labour_support_in_queensland = 1
+			}
 		}
 		modifier = {
 			political_power_cost = 0.90
@@ -241,7 +241,7 @@ AST_labour_support = {
 	AST_labour_campaign_tasmania = {
 		icon = GFX_decision_spa_garrison_control_none
 		days_remove = 35
-
+		on_map_mode = map_only
 		highlight_states = {
 			highlight_state_targets = {
 				state = 518
@@ -268,13 +268,13 @@ AST_labour_support = {
 		}
 
 		complete_effect = {
-			add_to_variable = {
-				AST_labour_support_in_tasmania = 1
-			}
 			set_country_flag = AST_active_labour_campaign
 		}
 		remove_effect = {
 			clr_country_flag = AST_active_labour_campaign
+			add_to_variable = {
+				AST_labour_support_in_tasmania = 1
+			}
 		}
 		modifier = {
 			political_power_cost = 0.90
@@ -282,14 +282,14 @@ AST_labour_support = {
 	}
 	
 	AST_random_state_loses_support = {
-		icon = GFX_decision_spa_garrison_control_none
+		icon = GFX_decision_generic_political_rally
 		days_mission_timeout = 70
 		fire_only_once = no
 		allowed = {
 			original_tag = AST
 		}
 		activation = {
-			
+			always = no
 		}
 		visible = {
 			NOT = {
@@ -301,11 +301,76 @@ AST_labour_support = {
 		}
 
 		timeout_effect = {
+			activate_mission_tooltip = AST_1913_elections_mission
 			if = {
 				limit = {
-					
+					has_country_flag = AST_victoria_lose_support
 				}
-				
+				add_to_variable = {
+					AST_labour_support_in_victoria = -1
+				}
+				517 = {
+					custom_effect_tooltip = AST_modify_labour_influence_minus_1_tt
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_flag = AST_nsw_lose_support
+				}
+				add_to_variable = {
+					AST_labour_support_in_nsw = -1
+				}
+				285 = {
+					custom_effect_tooltip = AST_modify_labour_influence_minus_1_tt
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_flag = AST_queensland_lose_support
+				}
+				add_to_variable = {
+					AST_labour_support_in_queensland = -1
+				}
+				521 = {
+					custom_effect_tooltip = AST_modify_labour_influence_minus_1_tt
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_flag = AST_wa_lose_support
+				}
+				add_to_variable = {
+					AST_labour_support_in_western_australia = -1
+				}
+				522 = {
+					custom_effect_tooltip = AST_modify_labour_influence_minus_1_tt
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_flag = AST_sa_lose_support
+				}
+				add_to_variable = {
+					AST_labour_support_in_south_australia = -1
+				}
+				519 = {
+					custom_effect_tooltip = AST_modify_labour_influence_minus_1_tt
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_flag = AST_tasmania_lose_support
+				}
+				add_to_variable = {
+					AST_labour_support_in_tasmania = -1
+				}
+				518 = {
+					custom_effect_tooltip = AST_modify_labour_influence_minus_1_tt
+				}
+			}
+
+			hidden_effect = {
+				country_event = ww1_australia.6
 			}
 		}
 	}
