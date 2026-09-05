@@ -6555,6 +6555,8 @@ country_event = {
 						days = 365
 					}
 				}
+				inherit_technology = ROOT
+				copy_warlord_problem = yes
 				division_template = {
 					name = "Jiangxujun"
 					division_names_group = CHI_INF_02
@@ -7342,8 +7344,7 @@ country_event = {
 						}
 					}
 				}
-				add_ideas = CHI_idea_inflation
-				add_ideas = CHI_idea_army_corruption
+				copy_warlord_problem = yes
 			}
 		}
 	}
@@ -8795,6 +8796,8 @@ country_event = {
 		# has_global_flag = warlord_era
 		is_china_or_warlord = yes
 		NOT = { #because of anhui
+			tag = QIN
+			tag = CHI
 			has_country_flag = reunited_china
 			has_country_flag = part_of_china
 		}
@@ -8807,86 +8810,19 @@ country_event = {
 	}
 	mean_time_to_happen = { days = 0 }
 	immediate = {
-		add_ideas = CHI_idea_warlord_neutrality
-		set_country_flag = part_of_china
 		if = {
 			limit = {
 				is_subject = yes
 				OVERLORD = { has_country_flag = part_of_china }
 			}
-			copy_warlord_problem = yes
-			add_ideas = CHI_ineffective_bureaucracy_warlord
-			add_ideas = PRC_government_corruption
-			add_ideas = CHI_idea_illiteracy
-			add_ideas = CHI_idea_weak_industry
+			OVERLORD = {
+				ROOT = {
+					copy_warlord_problem = yes
+				}
+			}
 		}
 		else = {
-			if = {
-				limit = {
-					NOT = {
-						has_idea = CHI_idea_inflation5
-						has_idea = CHI_idea_inflation4
-						has_idea = CHI_idea_inflation3
-						has_idea = CHI_idea_inflation2
-						has_idea = CHI_idea_inflation
-					}
-				}
-				add_ideas = CHI_idea_inflation5
-			}
-			if = {
-				limit = {
-					NOT = {
-						has_idea = CHI_idea_army_corruption3
-						has_idea = CHI_idea_army_corruption2
-						has_idea = CHI_idea_army_corruption
-					}
-				}
-				add_ideas = CHI_idea_army_corruption
-			}
-			add_ideas = CHI_ineffective_bureaucracy_warlord
-			add_ideas = PRC_government_corruption
-			add_ideas = CHI_idea_illiteracy
-			add_ideas = CHI_idea_weak_industry
-
-			if = {
-				limit = {
-					NOT = {
-						has_idea = MAN_banditry
-						has_idea = CHI_idea_merchant_army
-					}
-				}
-				add_ideas = CHI_banditry
-			}
-
-			if = {
-				limit = {
-					OR = {
-						num_of_factories > 4
-						tag = FNG
-						tag = GXC
-						tag = ANC
-						tag = ZHC
-					}
-				}
-				add_ideas = CHI_rampant_opiate_addiction
-			}
-		}
-		add_ideas = CHI_idea_warlord_army_hidden
-
-		if = {
-			limit = {
-				NOT = { is_in_tech_sharing_group = chinese_tech_share }
-			}
-			add_to_tech_sharing_group = chinese_tech_share
-		}
-		if = {
-			limit = {
-				any_other_country = {
-					is_china_or_warlord = no
-					has_idea = CHI_nine_power_treaty
-				}
-			}
-			add_ideas = CHI_nine_power_treaty
+			copy_warlord_problem = yes
 		}
 	}
 }
@@ -18803,6 +18739,11 @@ country_event = {
 					value < 0
 				}
 			}
+			modifier = {
+				add = 30
+				has_global_flag = MTG_naval_treaty_signatories
+				has_idea = MTG_washington_naval_treaty_adherent
+			}
 		}
 	}
 	option = {
@@ -18827,6 +18768,11 @@ country_event = {
 					tag = FROM
 					ratio < 1
 				}
+			}
+			modifier = {
+				add = -30
+				has_global_flag = MTG_naval_treaty_signatories
+				has_idea = MTG_washington_naval_treaty_adherent
 			}
 		}
 	}
@@ -21852,6 +21798,7 @@ country_event = {
 							}
 						}
 					}
+				}
 				if = {
 					limit = {
 						has_character_flag = kmt_allegiance
@@ -30147,53 +30094,41 @@ country_event = {
 		
 		ENG = {
 			add_to_variable = {
-				var = CHI_foreign_influence
-				tooltip = CHI_modify_THIS_influence_tt
-				value = 0.01
-			}
-			clamp_variable = {
-				var = CHI_foreign_influence
-				min = 0
-				max = 1
+				CHI_foreign_influence = {
+					value = 0.01
+					clamp = { min = 0 max = 1 }
+				}
+				tooltip = CHI_modify_THIS_influence_tt					
 			}
 			CHI_calculate_influnce_in_china_modifiers = yes
 		}
 		FRA = {
 			add_to_variable = {
-				var = CHI_foreign_influence
-				tooltip = CHI_modify_THIS_influence_tt
-				value = 0.01
-			}
-			clamp_variable = {
-				var = CHI_foreign_influence
-				min = 0
-				max = 1
+				CHI_foreign_influence = {
+					value = 0.01
+					clamp = { min = 0 max = 1 }
+				}
+				tooltip = CHI_modify_THIS_influence_tt					
 			}
 			CHI_calculate_influnce_in_china_modifiers = yes
 		}
 		GER = {
 			add_to_variable = {
-				var = CHI_foreign_influence
+				CHI_foreign_influence = {
+					value = 0.01
+					clamp = { min = 0 max = 1 }
+				}
 				tooltip = CHI_modify_THIS_influence_tt
-				value = 0.01
-			}
-			clamp_variable = {
-				var = CHI_foreign_influence
-				min = 0
-				max = 1
 			}
 			CHI_calculate_influnce_in_china_modifiers = yes
 		}
 		USA = {
 			add_to_variable = {
-				var = CHI_foreign_influence
-				tooltip = CHI_modify_THIS_influence_tt
-				value = 0.01
-			}
-			clamp_variable = {
-				var = CHI_foreign_influence
-				min = 0
-				max = 1
+				CHI_foreign_influence = {
+					value = 0.01
+					clamp = { min = 0 max = 1 }
+				}
+				tooltip = CHI_modify_THIS_influence_tt					
 			}
 			CHI_calculate_influnce_in_china_modifiers = yes
 		}

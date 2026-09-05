@@ -4031,85 +4031,85 @@ TGWR_great_power_politics = {
 		}
 	}
 	#great_power_politics_century_of_humiliation
-	CHI_claim_qingdao = {
-		icon = GFX_decision_eng_trade_unions_demand
-		allowed = {
-			is_china_or_warlord_no_tt = yes
-			NOT = { original_tag = QIN }
-		}
-		visible = {
-			great_power_politics_century_of_humiliation_visible = yes
-			is_subject = no
-		}
-		target_root_trigger = {
-			is_subject = no
-		}
-		available = {
-			FROM = {
-				controls_state = 745
-			}
-			872 = { is_owned_and_controlled_by = ROOT }
-			has_war = no
-			NOT = {
-				has_idea = CHI_idea_unstable_republic
-			}
-		}
-		cost = 50
-		days_re_enable = 140
-		fire_only_once = no
-		complete_effect = {
-			FROM = {
-				if = {
-					limit = {
-						is_subject = yes
-					}
-					if = {
-						limit = {
-							is_subject_of = ROOT
-						}
-						ROOT = { transfer_state = 745 }
-					}
-					else = {
-						OVERLORD = { country_event = ww1_china.126 }
-					}
-				}
-				else = {
-					country_event = ww1_china.126
-				}
-			}
-		}
-		targets = {
-			745.OWNER
-		}
-		target_trigger = {
-			FROM = {
-				is_china_or_warlord = no
-			}
-		}
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 1
-				is_in_faction_with = FROM
-				is_historical_focus_on = no
-			}
-			modifier = {
-				add = 1000
-				any_country = {
-					has_idea = idea_naval_treaty_adherent
-				}
-			}
-		}
-	}
+	# CHI_claim_qingdao = {
+	# 	icon = GFX_decision_eng_trade_unions_demand
+	# 	allowed = {
+	# 		is_china_or_warlord_no_tt = yes
+	# 		NOT = { original_tag = QIN }
+	# 	}
+	# 	visible = {
+	# 		great_power_politics_century_of_humiliation_visible = yes
+	# 		is_subject = no
+	# 	}
+	# 	target_root_trigger = {
+	# 		is_subject = no
+	# 	}
+	# 	available = {
+	# 		FROM = {
+	# 			controls_state = 745
+	# 		}
+	# 		872 = { is_owned_and_controlled_by = ROOT }
+	# 		has_war = no
+	# 		NOT = {
+	# 			has_idea = CHI_idea_unstable_republic
+	# 		}
+	# 	}
+	# 	cost = 50
+	# 	days_re_enable = 140
+	# 	fire_only_once = no
+	# 	complete_effect = {
+	# 		FROM = {
+	# 			if = {
+	# 				limit = {
+	# 					is_subject = yes
+	# 				}
+	# 				if = {
+	# 					limit = {
+	# 						is_subject_of = ROOT
+	# 					}
+	# 					ROOT = { transfer_state = 745 }
+	# 				}
+	# 				else = {
+	# 					OVERLORD = { country_event = ww1_china.126 }
+	# 				}
+	# 			}
+	# 			else = {
+	# 				country_event = ww1_china.126
+	# 			}
+	# 		}
+	# 	}
+	# 	targets = {
+	# 		745.OWNER
+	# 	}
+	# 	target_trigger = {
+	# 		FROM = {
+	# 			is_china_or_warlord = no
+	# 		}
+	# 	}
+	# 	ai_will_do = {
+	# 		base = 0
+	# 		modifier = {
+	# 			add = 1
+	# 			is_in_faction_with = FROM
+	# 			is_historical_focus_on = no
+	# 		}
+	# 		modifier = {
+	# 			add = 1000
+	# 			any_country = {
+	# 				has_idea = idea_naval_treaty_adherent
+	# 			}
+	# 		}
+	# 	}
+	# }
 	CHI_claim_weihaiwei = {
 		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
-			is_china_or_warlord_no_tt = yes
-			NOT = { original_tag = QIN }
+			tag = CHN
 		}
 		visible = {
 			great_power_politics_century_of_humiliation_visible = yes
 			is_subject = no
+			has_global_flag = MTG_naval_treaty_signatories
 		}
 		target_root_trigger = {
 			is_subject = no
@@ -4122,6 +4122,17 @@ TGWR_great_power_politics = {
 			has_war = no
 			NOT = {
 				has_idea = CHI_idea_unstable_republic
+			}
+			if = {
+				limit = {
+					has_global_flag = warlord_era
+				}
+				tag = CHN
+				OR = {
+					has_global_flag = warlord_era_end
+					has_country_flag = reunited_china
+					has_country_flag = ready_to_unite_china
+				}
 			}
 		}
 		cost = 50
@@ -4158,19 +4169,15 @@ TGWR_great_power_politics = {
 			}
 		}
 		ai_will_do = {
-			base = 10
+			base = 0
 			modifier = {
 				add = 1
 				is_in_faction_with = FROM
-				is_historical_focus_on = no
 			}
 			modifier = {
-				factor = 0
-				OR = {
-					RUS = { owns_state = 744 }
-					JAP = { owns_state = 744 }
-					date < 1930.10.1
-				}
+				add = 1
+				is_historical_focus_on = yes
+				date > 1930.4.1
 			}
 		}
 	}
@@ -4178,16 +4185,16 @@ TGWR_great_power_politics = {
 		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
 			is_china_or_warlord_no_tt = yes
-			NOT = { tag = CHI }
 		}
 		visible = {
 			great_power_politics_century_of_humiliation_visible = yes
+			tag = CHN
 			is_subject = no
 			FROM = {
 				NOT = {
 					has_war_with = ROOT
 				}
-			}	
+			}
 		}
 		available = {
 			OR = {
@@ -4279,7 +4286,8 @@ TGWR_great_power_politics = {
 			tag = CHN
 		}
 		ai_will_do = {
-			base = 10
+			# base = 10
+			base = 0 #dont do it
 			modifier = {
 				factor = 0
 				has_war_support < 0.5
@@ -6036,6 +6044,27 @@ TGWR_great_power_politics = {
 						clr_country_flag = concessions_war
 					}
 				}
+				if = {
+					limit = {
+						has_dynamic_modifier = {
+							modifier = CHI_influence_in_china_modifier
+						}
+						check_variable = { CHI_foreign_influence > 0 }
+					}
+					add_to_variable = {
+						CHI_foreign_influence = {
+							value = -0.10
+							clamp = { min = 0 max = 1 }
+						}
+						tooltip = CHI_modify_THIS_influence_tt					
+					}
+					if = {
+						limit = { check_variable = { CHI_foreign_influence < 0.001 } }
+						remove_dynamic_modifier = { modifier = CHI_influence_in_china_modifier }
+					}
+					CHI_calculate_influnce_in_china_modifiers = yes
+					CHI_calculate_foreign_influnce_for_all = yes
+				}
 				clr_country_flag = concessions_war
 			}
 			else = {
@@ -6067,6 +6096,21 @@ TGWR_great_power_politics = {
 							transfer_state_to = ROOT
 						}
 						white_peace = ROOT
+						if = {
+							limit = {
+								has_dynamic_modifier = {
+									modifier = CHI_influence_in_china_modifier
+								}
+								check_variable = { CHI_foreign_influence > 0 }
+							}
+							add_to_variable = {
+								CHI_foreign_influence = {
+									value = -0.10
+									clamp = { min = 0 max = 1 }
+								}
+								tooltip = CHI_modify_THIS_influence_tt					
+							}
+						}					
 					}
 				}
 			}

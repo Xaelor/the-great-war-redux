@@ -121,16 +121,18 @@ QIN_restore_xuantong = {
 			QIN = {
 				QIN_xuantong = {
 					set_nationality = PREV.PREV
-				}
-			}
-			if = {
-				limit = {
-					has_government = neutrality
-					is_qing_monarchy = yes
-					has_country_leader_ideology = semi_constitutional_monarchy
-				}
-				QIN_xuantong = {
-					promote_character = semi_constitutional_monarchy
+					if = {
+						limit = {
+							PREV.PREV = {
+								has_government = neutrality
+								is_qing_monarchy = yes
+								has_country_leader_ideology = semi_constitutional_monarchy
+							}
+						}
+						QIN_xuantong = {
+							promote_character = semi_constitutional_monarchy
+						}
+					}
 				}
 			}
 		}
@@ -540,16 +542,19 @@ clear_warlord_cores_and_claims = {
 				is_china_or_warlord = yes
 				exists = no
 			}
+			every_core_state = {
+				remove_core_of = PREV
+			}
 			every_state = {
 				limit = {
-					OR = {
-						is_core_of = PREV
-						is_claimed_by = PREV
-						has_contested_owner = PREV
-					}
+					is_claimed_by = PREV
 				}
-				remove_core_of = PREV
 				remove_claim_by = PREV
+			}
+			every_state = {
+				limit = {
+					has_contested_owner = PREV
+				}
 				remove_contested_owner = PREV
 			}
 		}
@@ -557,62 +562,139 @@ clear_warlord_cores_and_claims = {
 }
 
 copy_warlord_problem = {
-	# inflation
+	set_country_flag = part_of_china
+	add_ideas = CHI_idea_warlord_neutrality
 	if = {
 		limit = {
-			OVERLORD = {
-				has_idea = CHI_idea_inflation5
+			PREV = {
+				has_country_flag = part_of_china
 			}
 		}
-		add_ideas = CHI_idea_inflation5
-	}
-	else_if = {
-		limit = {
-			OVERLORD = {
-				has_idea = CHI_idea_inflation4
+		# inflation
+		if = {
+			limit = {
+				PREV = {
+					has_idea = CHI_idea_inflation5
+				}
 			}
+			add_ideas = CHI_idea_inflation5
 		}
-		add_ideas = CHI_idea_inflation4
-	}
-	else_if = {
-		limit = {
-			OVERLORD = {
-				has_idea = CHI_idea_inflation3
+		else_if = {
+			limit = {
+				PREV = {
+					has_idea = CHI_idea_inflation4
+				}
 			}
+			add_ideas = CHI_idea_inflation4
 		}
-		add_ideas = CHI_idea_inflation3
-	}
-	else_if = {
-		limit = {
-			OVERLORD = {
-				has_idea = CHI_idea_inflation2
+		else_if = {
+			limit = {
+				PREV = {
+					has_idea = CHI_idea_inflation3
+				}
 			}
+			add_ideas = CHI_idea_inflation3
 		}
-		add_ideas = CHI_idea_inflation2
-	}
-	else = {
-		add_ideas = CHI_idea_inflation
-	}
+		else_if = {
+			limit = {
+				PREV = {
+					has_idea = CHI_idea_inflation2
+				}
+			}
+			add_ideas = CHI_idea_inflation2
+		}
+		else = {
+			add_ideas = CHI_idea_inflation
+		}
 
-	# army problem
-	if = {
-		limit = {
-			OVERLORD = {
-				has_idea = CHI_idea_army_corruption3
+		# army problem
+		if = {
+			limit = {
+				PREV = {
+					has_idea = CHI_idea_army_corruption3
+				}
 			}
+			add_ideas = CHI_idea_army_corruption3
 		}
-		add_ideas = CHI_idea_army_corruption3
-	}
-	else_if = {
-		limit = {
-			OVERLORD = {
-				has_idea = CHI_idea_army_corruption2
+		else_if = {
+			limit = {
+				PREV = {
+					has_idea = CHI_idea_army_corruption2
+				}
 			}
+			add_ideas = CHI_idea_army_corruption2
 		}
-		add_ideas = CHI_idea_army_corruption2
+		else = {
+			add_ideas = CHI_idea_army_corruption
+		}
 	}
 	else = {
-		add_ideas = CHI_idea_army_corruption
+		if = {
+			limit = {
+				NOT = {
+					has_idea = CHI_idea_inflation5
+					has_idea = CHI_idea_inflation4
+					has_idea = CHI_idea_inflation3
+					has_idea = CHI_idea_inflation2
+					has_idea = CHI_idea_inflation
+				}
+			}
+			add_ideas = CHI_idea_inflation5
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_idea = CHI_idea_army_corruption3
+					has_idea = CHI_idea_army_corruption2
+					has_idea = CHI_idea_army_corruption
+				}
+			}
+			add_ideas = CHI_idea_army_corruption
+		}
+	}
+	set_country_flag = part_of_china
+	add_ideas = CHI_idea_warlord_neutrality
+	add_ideas = CHI_ineffective_bureaucracy_warlord
+	add_ideas = PRC_government_corruption
+	add_ideas = CHI_idea_illiteracy
+	add_ideas = CHI_idea_weak_industry
+	add_ideas = CHI_idea_warlord_army_hidden
+
+	if = {
+		limit = {
+			OR = {
+				num_of_factories > 4
+				tag = FNG
+				tag = GXC
+				tag = ANC
+				tag = ZHC
+			}
+		}
+		add_ideas = CHI_rampant_opiate_addiction
+	}
+	if = {
+		limit = {
+			NOT = {
+				has_idea = MAN_banditry
+				has_idea = CHI_idea_merchant_army
+			}
+		}
+		add_ideas = CHI_banditry
+	}
+	if = {
+		limit = {
+			NOT = { is_in_tech_sharing_group = chinese_tech_share }
+		}
+		add_to_tech_sharing_group = chinese_tech_share
+	}
+	if = {
+		limit = {
+			any_other_country = {
+				is_china_or_warlord = no
+				has_idea = CHI_nine_power_treaty
+			}
+		}
+		add_ideas = CHI_nine_power_treaty
 	}
 }
 
@@ -1965,4 +2047,33 @@ CHI_ease_payments_of_indemnities = {
 			add_idea = QIN_idea_payments_of_indemnities_2
 		}
 	}
+}
+
+debug_remove_all_chinese_influence = {
+	every_other_country = {
+		limit = {
+			OR = {
+				tag = JAP
+				tag = USA
+				tag = ENG
+				tag = RUS
+				tag = FRA
+				tag = GER
+				tag = ITA
+			}
+		}
+		set_variable = { var = CHI_foreign_influence value = 0 }
+		CHI_calculate_influnce_in_china_modifiers = yes
+		remove_dynamic_modifier = { modifier = CHI_influence_in_china_modifier }
+	}
+	CHI_calculate_foreign_influnce_for_all = yes
+}
+
+debug_remove_ger_chinese_influence = {
+	GER = {
+		set_variable = { var = CHI_foreign_influence value = 0 }
+		CHI_calculate_influnce_in_china_modifiers = yes
+		remove_dynamic_modifier = { modifier = CHI_influence_in_china_modifier }
+	}
+	CHI_calculate_foreign_influnce_for_all = yes
 }
