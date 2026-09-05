@@ -16,7 +16,19 @@ AST_lessons_of_war = {
 						size > 0
 					}
 					divisions_in_state = {
+						state = 865
+						size > 0
+					}
+					divisions_in_state = {
 						state = 17
+						size > 0
+					}
+					divisions_in_state = {
+						state = 863
+						size > 0
+					}
+					divisions_in_state = {
+						state = 864
 						size > 0
 					}
 					divisions_in_state = {
@@ -28,15 +40,19 @@ AST_lessons_of_war = {
 						size > 0
 					}
 					divisions_in_state = {
+						state = 906
+						size > 0
+					}
+					divisions_in_state = {
 						state = 28
 						size > 0
 					} 
 				}
 			}
 		}
-		activation = {
+		visible = {
 			tag = AST
-			has_completed_focus = Australia_the_first_aif
+			has_completed_focus = AST_the_first_aif
 		}
 		complete_effect = {
 			army_experience = -150
@@ -63,9 +79,9 @@ AST_lessons_of_war = {
 				}
 			}
 		}
-		activation = {
+		visible = {
 			tag = AST
-			has_completed_focus = Australia_the_first_aif
+			has_completed_focus = AST_the_first_aif
 		}
 		complete_effect = {
 			army_experience= -150
@@ -78,23 +94,23 @@ AST_lessons_of_war = {
 		icon = decision_cat_generic_byzantine_empire
 		allowed = { tag = AST }
 		available = {
-		has_army_experience > 150
+			has_army_experience > 150
 			AND = {
 				OR = {
 					divisions_in_state = {
-						state = 340 
+						state = 860 
 						size > 0
 					}
 					divisions_in_state = {
-						state = 341
+						state = 861
 						size > 0
 					} 
 				}
 			}
 		}
-		activation = {
+		visible = {
 			tag = AST
-			has_completed_focus = Australia_the_first_aif
+			has_completed_focus = AST_the_first_aif
 		}
 		complete_effect = {
 			army_experience= -150
@@ -104,77 +120,139 @@ AST_lessons_of_war = {
 	}
 }
 
-political_actions = {
-	AST_britain_seize_the_power = {
+prestigious_projects = {
+	AST_form_australasia = {
+		icon = GFX_decision_generic_form_nation
 		allowed = {
-			original_tag = AST
+			OR = {
+				original_tag = AST
+				original_tag = ENG
+				original_tag = CAN
+			}
 		}
 		available = {
-			neutrality > 0.3
+			has_global_flag = interbellum
+			has_war = no
+			if = {
+				limit = {
+					original_tag = AST
+				}
+				OR = {
+					has_subject = NZL
+					AND = {
+						NOT = { country_exists = NZL }
+						owns_state = 284
+						owns_state = 723
+					}
+				}
+			}
+			else = {
+				has_subject = AST
+				has_subject = NZL
+			}
 		}
 		visible = {
-			has_country_flag = australia_is_britain
+			AST = {
+				NOT = { has_cosmetic_tag = AST_australasia }
+			}
 		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 30
-			modifier = {
-				factor = 1000
+		highlight_states = {
+			highlight_states_trigger = {
 				OR = {
-					neutrality > 0.7
-					has_war_with = UOB
+					is_core_of = AST
+					is_core_of = NZL
 				}
 			}
 		}
-		complete_effect = {
-			set_politics = {
-				ruling_party = neutrality
-				elections_allowed = no
+		fire_only_once = yes
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1000
+				has_country_flag = has_british_monarchy
+				has_government = neutrality
 			}
-			add_ideas = ENG_imperial_refuge_neutrality
+			modifier = {
+				add = 1000
+				has_country_flag = has_british_monarchy
+				has_government = neutrality
+			}
+		}
+		cost = 150
+		days_remove = 180
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					has_war = yes
+					if = {
+						limit = {
+							NOT = { original_tag = AST }
+						}
+						NOT = { has_subject = AST }
+						NOT = { has_subject = NZL }
+					}
+					else = {
+						AND = {
+							NOT = { has_subject = NZL }
+							NOT = {
+								owns_state = 284
+								owns_state = 723
+							}
+						}
+					}
+					AST = { has_cosmetic_tag = AST_australasia }
+				}
+			}
+		}
+		cancel_effect = {
+			add_political_power = 100
+		}
+		remove_effect = {
+			effect_tooltip = {
+				AST = {
+					annex_country = {
+						target = NZL
+						transfer_troops = yes
+					}
+					set_cosmetic_tag = AST_australasia
+				}
+			}
+			country_event = ww1_england.174
 		}
 	}
 }
-
-foreign_politics = {
-	AST_entente = {
+ENG_interwar_entente_category = {
+	AST_subjugate_NZL = {
+		icon = GFX_decision_generic_form_nation
 		allowed = {
 			original_tag = AST
 		}
+		targets = {
+			NZL
+		}
+		target_root_trigger = {
+			has_global_flag = interbellum
+			is_subject = no
+		}
 		available = {
 			has_war = no
-			UOB = {
-				exists = yes
-				has_war = no
-			}
-			AST = {
-				exists = yes
-				has_war = no
-				is_in_faction = no
-			}
-			NFA = {
-				exists = yes
-				has_war = no
-				is_in_faction = no
-			}
-			FRC = {
-				exists = yes
+			is_in_faction_with = FROM
+			FROM = {
 				has_war = no
 			}
 		}
 		visible = {
-			is_faction_leader = no
-			has_country_flag = australia_is_britain
+			is_subject = no
+			has_global_flag = interbellum
+			FROM = {
+				is_subject = no
+			}
 		}
 		fire_only_once = yes
-		cost = 100
-		ai_will_do = {
-			factor = 100
-		}
 		complete_effect = {
-			create_faction = entente
-			add_to_faction = NFA
-			news_event = ww1_france.27
+			FROM = {
+				country_event = ww1_australia.22
+			}
 		}
 	}
 }

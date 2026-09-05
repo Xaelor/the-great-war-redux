@@ -1,56 +1,50 @@
-foreign_influence = {
-	PER_persian_british_sphere_states = {
-		icon = gre_faction_management
-		available = {
-			hidden_trigger = { always = no }
-		}
+operations = {
+	PER_annex_BLC = {
+		name = annex_FROM
 		allowed = {
-			OR = {
-				tag = ENG
-				tag = PER
+			original_tag = PER
+		}
+		targets = {
+			BLC
+		}
+		visible = {
+			is_subject = no
+			is_neighbor_of = FROM
+			NOT = {
+				has_war_with = FROM
 			}
 		}
-		highlight_states = {  
-			has_dynamic_modifier = { modifier = per_british_sphere }
-		}
-		highlight_color_before_active = 2
-		on_map_mode = map_only
-		
-		visible = { 
-			always = yes
-			any_state = { 
-				has_dynamic_modifier = { modifier = per_british_sphere }
-			}
-		}
-		#cancel_if_not_visible = no
-		#complete_effect = {
-		#}
-	}
-	PER_persian_russian_sphere_states = {
-		icon = gre_faction_management
 		available = {
-			hidden_trigger = { always = no }
-		}
-		allowed = {
-			OR = {
-				tag = RUS
-				tag = PER
+			has_capitulated = no
+			FROM = {
+				OR = {
+					is_in_faction = no
+					is_in_faction_with = ROOT
+				}
+				OR = {
+					is_subject_of = ROOT
+					is_subject = no
+				}
 			}
 		}
-		highlight_states = {
-			has_dynamic_modifier = { modifier = per_russian_sphere }
-		}
-		highlight_color_before_active = 2
-		on_map_mode = map_only
-		
-		visible = { 
-			always = yes
-			any_state = { 
-				has_dynamic_modifier = { modifier = per_russian_sphere }
+		fire_only_once = yes
+		complete_effect = {
+			if = {
+				limit = {
+					has_subject = FROM
+				}
+				annex_country = {
+					target = FROM
+					transfer_troops = yes
+				}
+			}
+			else = {
+				add_state_core = 410
+				country_event = {
+					id = ww1_persia.14
+					days = 10
+				}
 			}
 		}
-		#cancel_if_not_visible = no
-		#complete_effect = {
-		#}
 	}
 }

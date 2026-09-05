@@ -4,11 +4,13 @@ autonomy_state = {
 	default = yes
 	is_puppet = yes
 	
-	min_freedom_level = 0.4
+	min_freedom_level = 0.5	
 	
 	manpower_influence = 0.9
 	
 	rule = {
+		desc = "RULE_DESC_IS_A_SUBJECT"
+	
 		can_not_declare_war = yes
 		can_decline_call_to_war = no
 		can_be_spymaster = no
@@ -38,25 +40,29 @@ autonomy_state = {
 	}
 
 	allowed = {
-	    NOT = { 
-		    has_country_flag = protectorate
+		NOT = {
+			has_country_flag = protectorate
 		}
 		if = {
 			limit = {
-				has_dlc = "Waking the Tiger"
-                OVERLORD = { 
-                    OR = {
-                    	original_tag = JAP 
-						original_tag = KOR 
+				OR = {
+					has_country_flag = monarchist_puppet
+					has_country_flag = colony
+					OVERLORD = {
+						OR = {
+							original_tag = JAP 
+							original_tag = KOR 
+							original_tag = QIN 
+						}
 					}
+				}				
+			}
+			OR = {
+				has_government = communism
+				OVERLORD = {
+					has_government = communism
 				}
-			}
-			NOT = {
-                OR = {
-					has_government = fascism
-					has_government = neutrality
-                }
-			}
+			}			
 		}
 	}
 

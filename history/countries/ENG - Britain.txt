@@ -1,546 +1,371 @@
 ﻿capital = 126
+oob = "ENG_1910"
 
 set_research_slots = 3
+add_to_tech_sharing_group = commonwealth_research
 set_stability = 0.60
 set_war_support = 0.25
 set_convoys = 638
 
-# Protectorates - countries with own ruler under british protection and diplomatic dependence. Colonies - countries with british administration.
-if = {
-	limit = {
-		has_dlc = "Together for Victory"
-	}
-	set_autonomy = {
-		target = SAF
-		autonomous_state = autonomy_puppet
-		freedom_level = 0.43
-	}
-	set_autonomy = {
-		target = RAJ
-		autonomous_state = autonomy_colony
-		freedom_level = 0.35
-	}
-	set_autonomy = {
-		target = CAN
-		autonomous_state = autonomy_dominion
-		freedom_level = 0.4
-	}
-	set_autonomy = {
-		target = AST
-		autonomous_state = autonomy_dominion
-		freedom_level = 0.2
-	}
-	set_autonomy = {
-		target = NZL
-		autonomous_state = autonomy_dominion
-		freedom_level = 0.15
-	}
-    #Egypt wasn't a protectorate until 1914
-    set_autonomy = {
-		target = EGY
-		autonomous_state = autonomy_puppet
-		freedom_level = 0.3
-	}
-	else = {
-		puppet = SAF
-		puppet = RAJ
-		puppet = CAN
-		puppet = AST
-		puppet = NZL
-		puppet = EGY
-	}
-}
-if = {
-	limit = {
-		OR = {
-			has_dlc = "Together for Victory"
-			has_dlc = "Waking the Tiger"
-		}
-	}
-    #British Malaya were British protectorates with their own local rulers, as well as the Straits Settlements, which were under the sovereignty and direct rule of the British Crown
-    #but mostly protectorates
-	set_autonomy = {
-		target = MAL
-		autonomous_state = autonomy_tgwr_protectorate
-        freedom_level = 1.5
-	}
-    MAL = { set_country_flag = protectorate }
-	set_autonomy = {
-		target = AFG
-		autonomous_state = autonomy_tgwr_informal_protectorate
-		freedom_level = 0.9
-	}
-	AFG = { set_country_flag = protectorate }
-	set_autonomy = {
-		target = BHU
-		autonomous_state = autonomy_tgwr_protectorate
-		freedom_level = 7
-	}
-	BHU = { set_country_flag = protectorate }
-	set_autonomy = {
-		target = NEP
-		autonomous_state = autonomy_tgwr_informal_protectorate
-		freedom_level = 0.9
-	}
-	NEP = { set_country_flag = protectorate }
-	set_autonomy = {
-		target = OMA
-		autonomous_state = autonomy_tgwr_informal_protectorate
-		freedom_level = 0.9
-	}
-	OMA = { set_country_flag = protectorate }
-	set_autonomy = {
-		target = KUW
-		autonomous_state = autonomy_tgwr_informal_protectorate
-		freedom_level = 0.9
-	}
-	KUW  = { set_country_flag = protectorate }
-	else = {
-		puppet = MAL
-        MAL = { add_ideas = protectorate }
-		puppet = AFG
-        AFG = { add_ideas = protectorate }
-        puppet = BHU
-        BHU = { add_ideas = protectorate }
-		puppet = NEP
-        NEP = { add_ideas = protectorate }
-        puppet = OMA
-        OMA = { add_ideas = protectorate }
-		puppet = KUW
-        KUW = { add_ideas = protectorate }
-	}
-}
-
-
+give_guarantee = FRA
+give_guarantee = JAP #Anglo-Japanese Alliance
+give_guarantee = LUX
 give_guarantee = BEL # Treaty of London 1839
+give_guarantee = PER # Russo-British Intervention
+give_guarantee = NOR # Treaty of Norway (1907)
+give_guarantee = GRE # London Protocol (1830)
+
+give_guarantee = SIA # Anglo-Siamese Treaty of 1909
+give_guarantee = JOH
+starting_train_buffer = 4
+
+set_country_flag = Scramble_for_Africa
+
+# Great Game
+add_opinion_modifier = {
+	target = RUS
+	modifier = great_game
+}
+# Naval Race
+add_opinion_modifier = {
+	target = GER
+	modifier = naval_arms_race
+}
+# Doesn't need explaining
+add_opinion_modifier = {
+	target = FRA
+	modifier = historical_rival
+}
+# Anglo-Japanese Alliance
+add_opinion_modifier = {
+	target = JAP
+	modifier = anglo_japanese_alliance
+}
 
 
-create_country_leader = { 
-	name = "Edward Pease"
-	picture = "ENG_Edward_Pease.dds" 
-	expire="1935.1.1" 
-	ideology=council_communism
-	traits = {  } 
-}
-create_country_leader = {
-	name = "Herbert H. Asquith" 
-	picture = "gfx/leaders/ENG/ENG_herbert_henry_asquith.dds" 
-	expire = "1935.1.1" 
-	ideology = liberalism
-	traits = { eng_asquith_trait } 
-}
-create_country_leader = {
-	name = "Edward VII" 
-	picture = "gfx/leaders/ENG/ENG_edward_vii.dds" 
-	expire = "1935.1.1" 
-	ideology = autocracy
-	traits = {} 
-}
-create_country_leader = {
-	name = "Herbert Kitchener"
-	picture = "gfx/leaders/ENG/ENG_herbert_kitchener.dds" 
-	expire = "1935.1.1"
-	ideology = military_dictatorship
-	traits = {}
+set_politics = {
+	ruling_party = democratic
+	last_election = "1906.12.3" #3–19 December 1910	
+	election_frequency = 48 
+	elections_allowed = yes 
+}	
+set_popularities = {
+	fascism = 0
+	communism = 3
+	democratic = 87
+	neutrality = 10
 }
 
-#ID range is 800-899... Kitchener is 899 because I was testing a thing
-#Turns out you can't end IDs in 0!!!
-
-#high ID cus he was originally right at the bottom as a general- turns out he was actually a field marshal!
-create_field_marshal = {
-	name = "Garnet Wolseley" 
-	portrait_path = "gfx/leaders/ENG/ENG_garnet_wolseley.dds" 
-	traits = { politically_connected skilled_staffer expert_delegator logistics_wizard ENG_royalist }
-	id = 824
-	skill = 5
-	attack_skill = 4
-	defense_skill = 4
-	planning_skill = 5
-	logistics_skill = 6
+# Protectorates - countries with own ruler under british protection and diplomatic dependence. Colonies - countries with british administration.
+SAF = { set_country_flag = colony }
+set_autonomy = {
+	target = SAF
+	autonomous_state = autonomy_tgwr_self_governing_colony
+	freedom_level = 0.83
 }
-create_field_marshal = {
-	name = "Herbert Kitchener" 
-	portrait_path = "gfx/leaders/ENG/ENG_herbert_kitchener.dds" 
-	traits = { politically_connected logistics_wizard skilled_staffer expert_delegator organisational_leader ENG_royalist } 
-	id = 899
-	skill = 4 
-	attack_skill = 3
-	defense_skill = 3
-	planning_skill = 4
-	logistics_skill = 4
+ORA = { set_country_flag = colony }
+set_autonomy = {
+	target = ORA
+	autonomous_state = autonomy_tgwr_self_governing_colony
+	freedom_level = 0.43
 }
-create_field_marshal = {
-	name = "John French" 
-	portrait_path = "gfx/leaders/ENG/ENG_john_french.dds" 
-	traits = { old_guard politically_connected defensive_doctrine ENG_royalist } 
-	id = 801
-	skill = 4
-	attack_skill = 3
-	defense_skill = 5
-	planning_skill = 4
-	logistics_skill = 4
+NAT = { set_country_flag = colony }
+set_autonomy = {
+	target = NAT
+	autonomous_state = autonomy_tgwr_self_governing_colony
+	freedom_level = 0.61
 }
-create_field_marshal = {
-	name = "Douglas Haig" 
-	portrait_path = "gfx/leaders/ENG/ENG_douglas_haig.dds" 
-	traits = { politically_connected offensive_doctrine inflexible_strategist cavalry_officer ENG_royalist } 
-	id = 802
-	skill = 4 
-	attack_skill = 4
-	defense_skill = 2
-	planning_skill = 5
-	logistics_skill = 4
+CAP = { set_country_flag = colony }
+set_autonomy = {
+	target = CAP
+	autonomous_state = autonomy_tgwr_self_governing_colony
+	freedom_level = 0.32
 }
-create_field_marshal = {
-	name = "Ian Hamilton" 
-	portrait_path = "gfx/leaders/ENG/ENG_ian_hamilton.dds" 
-	traits = { old_guard career_officer inflexible_strategist ENG_royalist } 
-	id = 803
-	skill = 3 
-	attack_skill = 3
-	defense_skill = 2
-	planning_skill = 4
-	logistics_skill = 4
+RAJ = { set_country_flag = colony }
+set_autonomy = {
+	target = RAJ
+	autonomous_state = autonomy_colony
+	freedom_level = 0.35
 }
-create_field_marshal = {
-	name = "Rudolph Lambart" 
-	portrait_path = "gfx/leaders/ENG/ENG_rudolph_lambart.dds" 
-	traits = { old_guard politically_connected ENG_royalist } 
-	id = 804
-	skill = 3 
-	attack_skill = 3
-	defense_skill = 3
-	planning_skill = 2
-	logistics_skill = 3
+CAN = { set_country_flag = colony }
+set_autonomy = {
+	target = CAN
+	autonomous_state = autonomy_dominion
+	freedom_level = 0.4
 }
-create_field_marshal = {
-	name = "Edmund Allenby" 
-	portrait_path = "gfx/leaders/ENG/ENG_edmund_allenby.dds" 
-	traits = { trickster politically_connected cavalry_officer ENG_royalist } 
-	id = 805
-	skill = 2 
-	attack_skill = 3
-	defense_skill = 3
-	planning_skill = 2
-	logistics_skill = 3
+AST = { set_country_flag = colony }
+set_autonomy = {
+	target = AST
+	autonomous_state = autonomy_dominion
+	freedom_level = 0.2
 }
-create_corps_commander = {
-	name = "Aylmer Hunter-Weston" 
-	portrait_path = "gfx/leaders/ENG/ENG_aylmer_hunter.dds" 
-	traits = { career_officer politically_connected ENG_royalist } 
-	id = 806
-	skill = 3 
-	attack_skill = 4
-	defense_skill = 2
-	planning_skill = 2
-	logistics_skill = 2
+NZL = { set_country_flag = colony }
+set_autonomy = {
+	target = NZL
+	autonomous_state = autonomy_dominion
+	freedom_level = 0.15
 }
-create_corps_commander = {
-	name = "Leslie Rundle" 
-	portrait_path = "gfx/leaders/ENG/ENG_leslie_rundle.dds" 
-	traits = { ENG_royalist } 
-	id = 807
-	skill = 3 
-	attack_skill = 2
-	defense_skill = 2
-	planning_skill = 3
-	logistics_skill = 3
+NFL = { set_country_flag = colony }
+set_autonomy = {
+	target = NFL
+	autonomous_state = autonomy_dominion
+	freedom_level = 0.15
 }
-create_corps_commander = {
-	name = "Robert Baden-Powell" 
-	portrait_path = "gfx/leaders/ENG/ENG_baden_powell.dds" 
-	traits = { old_guard ranger trickster ENG_royalist } 
-	id = 808
-	skill = 3 
-	attack_skill = 1
-	defense_skill = 3
-	planning_skill = 2
-	logistics_skill = 3
+diplomatic_relation = {
+	country = MSC
+	relation = military_access
+	active = yes
 }
-create_corps_commander = {
-	name = "George Harper" 
-	portrait_path = "gfx/leaders/ENG/ENG_george_harper.dds" 
-	traits = { old_guard trait_engineer ENG_royalist } 
-	id = 809
-	skill = 3 
-	attack_skill = 2
-	defense_skill = 2
-	planning_skill = 2
-	logistics_skill = 3
+diplomatic_relation = {
+	country = KUW
+	relation = military_access
+	active = yes
 }
-create_corps_commander = {
-	name = "Hugh Elles" 
-	portrait_path = "gfx/leaders/ENG/ENG_hugh_elles.dds" 
-	traits = { armor_officer panzer_leader brilliant_strategist ENG_royalist } 
-	id = 811
-	skill = 2
-	attack_skill = 3
-	defense_skill = 1
-	planning_skill = 3
-	logistics_skill = 4
-}
-create_corps_commander = {
-	name = "James Grierson" 
-	portrait_path = "gfx/leaders/ENG/ENG_james_grierson.dds" 
-	traits = { ENG_royalist } 
-	id = 812
-	skill = 3
-	attack_skill = 3
-	defense_skill = 2
-	planning_skill = 3
-	logistics_skill = 3
-}
-create_corps_commander = {
-	name = "Henry Horne" 
-	portrait_path = "gfx/leaders/ENG/ENG_henry_horne.dds" 
-	traits = { fortress_buster bearer_of_artillery ENG_royalist } 
-	id = 813
-	skill = 3
-	attack_skill = 3
-	defense_skill = 2
-	planning_skill = 4
-	logistics_skill = 3
-}
-create_corps_commander = {
-	name = "Herbert Plumer" 
-	portrait_path = "gfx/leaders/ENG/ENG_herbert_plumer.dds" 
-	traits = { ENG_royalist }
-	id = 814
-	skill = 3
-	attack_skill = 3
-	defense_skill = 3
-	planning_skill = 3
-	logistics_skill = 2
-}
-create_corps_commander = {
-	name = "Frederick Maude" 
-	portrait_path = "gfx/leaders/ENG/ENG_frederick_maude.dds" 
-	traits = { ENG_royalist }
-	id = 815
-	skill = 3
-	attack_skill = 3
-	defense_skill = 2
-	planning_skill = 2
-	logistics_skill = 3
-}
-create_corps_commander = {
-	name = "Anthony Ashley-Cooper" 
-	portrait_path = "gfx/leaders/ENG/ENG_anthony_cooper.dds" 
-	traits = { politically_connected cavalry_officer ENG_royalist }
-	id = 816
-	skill = 2
-	attack_skill = 2
-	defense_skill = 1
-	planning_skill = 2
-	logistics_skill = 2
-}
-create_corps_commander = {
-	name = "Ivor Maxse" 
-	portrait_path = "gfx/leaders/ENG/ENG_ivor_maxse.dds" 
-	traits = { armor_officer ENG_royalist }
-	id = 817
-	skill = 2
-	attack_skill = 3
-	defense_skill = 3
-	planning_skill = 1
-	logistics_skill = 1
-}
-create_corps_commander = {
-	name = "Henry Rawlinson" 
-	portrait_path = "gfx/leaders/ENG/ENG_henry_rawlinson.dds" 
-	traits = { old_guard ENG_royalist }
-	id = 818
-	skill = 3
-	attack_skill = 2
-	defense_skill = 2
-	planning_skill = 2
-	logistics_skill = 3
-}
-create_corps_commander = {
-	name = "Thomas Snow" 
-	portrait_path = "gfx/leaders/ENG/ENG_thomas_snow.dds" 
-	traits = { }
-	id = 819
-	skill = 2
-	attack_skill = 1
-	defense_skill = 2
-	planning_skill = 2
-	logistics_skill = 2
-}
-create_corps_commander = {
-	name = "William Hickie" 
-	portrait_path = "gfx/leaders/ENG/ENG_william_hickie.dds" 
-	traits = { aggressive_assaulter harsh_leader }
-	id = 821
-	skill = 3
-	attack_skill = 2
-	defense_skill = 2
-	planning_skill = 3
-	logistics_skill = 2
-}
-create_corps_commander = {
-	name = "John Capper" 
-	portrait_path = "gfx/leaders/ENG/ENG_john_capper.dds" 
-	traits = { camouflage_expert panzer_leader ENG_royalist }
-	id = 822
-	skill = 2
-	attack_skill = 2
-	defense_skill = 2
-	planning_skill = 1
-	logistics_skill = 1
-}
-create_corps_commander = {
-	name = "Oliver Nugent" 
-	portrait_path = "gfx/leaders/ENG/ENG_oliver_nugent.dds" 
-	traits = { ENG_royalist }
-	id = 823
-	skill = 2
-	attack_skill = 2
-	defense_skill = 2
-	planning_skill = 2
-	logistics_skill = 2
-}
-create_corps_commander = {
-	name = "George Cockerill" 
-	portrait_path = "gfx/leaders/ENG/ENG_george_cockerill.dds" 
-	traits = { politically_connected ENG_royalist }
-	id = 825
-	skill = 1
-	attack_skill = 2
-	defense_skill = 2
-	planning_skill = 1
-	logistics_skill = 2
-}
-#NAVY
-create_navy_leader = {
-	name = "David Beatty"
-	portrait_path="gfx/leaders/ENG/ENG_david_beatty.dds" 
-	traits = { navy_media_personality superior_tactician gentlemanly } 
-	skill = 4
-	attack_skill = 4
-	defense_skill = 3
-	maneuvering_skill = 3
-	coordination_skill = 4
-}
-create_navy_leader = {
-	name = "Francis Bridgeman"
-	portrait_path="gfx/leaders/ENG/ENG_francis_bridgeman.dds" 
-	traits = { ironside gentlemanly old_guard_navy } 
-	skill = 3
-	attack_skill = 3
-	defense_skill = 4
-	maneuvering_skill = 3
-	coordination_skill = 4
-}
-create_navy_leader = {
-	name = "Percy Scott"
-	portrait_path="gfx/leaders/ENG/ENG_percy_scott.dds" 
-	traits = { gunnery_expert old_guard_navy } 
-	skill = 3
-	attack_skill = 3
-	defense_skill = 3
-	maneuvering_skill = 3
-	coordination_skill = 3
-}
-create_navy_leader = {
-	name = "John Jellicoe"
-	portrait_path="gfx/leaders/ENG/ENG_john_jellicoe.dds" 
-	traits = { superior_tactician gentlemanly } 
-	skill = 3
-	attack_skill = 4
-	defense_skill = 2
-	maneuvering_skill = 4
-	coordination_skill = 3
-}
-create_navy_leader = {
-	name = "William May"
-	portrait_path="gfx/leaders/ENG/ENG_william_may.dds" 
-	traits = { gunnery_expert old_guard_navy arctic_water_expert } 
-	skill = 3
-	attack_skill = 2
-	defense_skill = 4
-	maneuvering_skill = 3
-	coordination_skill = 3
-}
-create_navy_leader = {
-	name = "William Pakenham"
-	portrait_path="gfx/leaders/ENG/ENG_william_pakenham.dds" 
-	traits = { gunnery_expert fleet_protector superior_tactician } 
-	skill = 3
-	attack_skill = 3
-	defense_skill = 3
-	maneuvering_skill = 1
-	coordination_skill = 3
-}
-create_navy_leader = {
-	name = "Horace Hood"
-	portrait_path="gfx/leaders/ENG/ENG_horace_hood.dds" 
-	traits = { gunnery_expert } 
-	skill = 2
-	attack_skill = 2
-	defense_skill = 3
-	maneuvering_skill = 2
-	coordination_skill = 3
-}
-create_navy_leader = {
-	name = "William Goodenough"
-	portrait_path="gfx/leaders/ENG/ENG_william_goodenough.dds" 
-	traits = { superior_tactician } 
-	skill = 2
-	attack_skill = 2
-	defense_skill = 3
-	maneuvering_skill = 3
-	coordination_skill = 1
-}
-create_navy_leader = {
-	name = "Roger Keyes"
-	portrait_path="gfx/leaders/ENG/ENG_roger_keyes.dds" 
-	traits = { gunnery_expert } 
-	skill = 2
-	attack_skill = 2
-	defense_skill = 2
-	maneuvering_skill = 2
-	coordination_skill = 2
-}
-create_navy_leader = {
-	name = "Reginald Tyrwhitt"
-	portrait_path="gfx/leaders/ENG/ENG_reginald_tyrwhitt.dds" 
-	traits = { gentlemanly green_water_expert } 
-	skill = 2
-	attack_skill = 2
-	defense_skill = 2
-	maneuvering_skill = 2
-	coordination_skill = 2
+diplomatic_relation = {
+	country = BHR
+	relation = military_access
+	active = yes
 }
 
+
+#Egypt wasn't a protectorate until 1914
+set_autonomy = {
+	target = EGY
+	autonomous_state = autonomy_puppet
+	freedom_level = 0.3
+}
+
+MAL = { set_country_flag = protectorate }
+set_autonomy = {
+	target = MAL
+	autonomous_state = autonomy_tgwr_integrated_protectorate
+	freedom_level = 0.5
+}
+KED = { set_country_flag = protectorate }
+set_autonomy = {
+	target = KED
+	autonomous_state = autonomy_tgwr_protectorate
+	freedom_level = 0.7
+}
+KEL = { set_country_flag = protectorate }
+set_autonomy = {
+	target = KEL
+	autonomous_state = autonomy_tgwr_protectorate
+	freedom_level = 0.7
+}
+PLS = { set_country_flag = protectorate }
+set_autonomy = {
+	target = PLS
+	autonomous_state = autonomy_tgwr_protectorate
+	freedom_level = 0.7
+}
+TRG = { set_country_flag = protectorate }
+set_autonomy = {
+	target = TRG
+	autonomous_state = autonomy_tgwr_protectorate
+	freedom_level = 0.7
+}
+DAR  = { set_country_flag = protectorate }
+set_autonomy = {
+	target = DAR
+	autonomous_state = autonomy_tgwr_informal_protectorate
+	freedom_level = 0.9
+}
+SAR  = { set_country_flag = protectorate }
+set_autonomy = {
+	target = SAR
+	autonomous_state = autonomy_tgwr_protectorate
+	freedom_level = 0.9
+}
+BRN  = { set_country_flag = protectorate }
+set_autonomy = {
+	target = BRN
+	autonomous_state = autonomy_tgwr_protectorate
+	freedom_level = 0.8
+}
+ZAN  = { set_country_flag = protectorate }
+set_autonomy = {
+	target = ZAN
+	autonomous_state = autonomy_tgwr_protectorate
+	freedom_level = 0.8
+}
+MLD = { set_country_flag = protectorate }
+set_autonomy = {
+	target = MLD
+	autonomous_state = autonomy_tgwr_protectorate
+	freedom_level = 0.5
+}
+TON = { set_country_flag = protectorate }
+set_autonomy = {
+	target = TON
+	autonomous_state = autonomy_tgwr_informal_protectorate
+	freedom_level = 0.7
+}
+
+recruit_character = ENG_henry_hyndman
+recruit_character = ENG_herbert_henry_asquith
+recruit_character = ENG_herbert_kitchener
+recruit_character = ENG_edward_vii
+
+recruit_character = ENG_george_v
+recruit_character = ENG_douglas_haig
+recruit_character = ENG_edmund_allenby
+recruit_character = ENG_david_lloyd_george
+recruit_character = ENG_edward_grey
+recruit_character = ENG_andrew_bonar_law
+recruit_character = ENG_herbert_george_wells
+recruit_character = ENG_edward_reynolds_pease
+recruit_character = ENG_george_lansbury
+
+recruit_character = ENG_victoria_ii
+
+recruit_character = ENG_winston_churchill
+recruit_character = ENG_stanley_baldwin
+recruit_character = ENG_oswald_mosley
+recruit_character = ENG_harry_pollitt
+recruit_character = ENG_john_french
+recruit_character = ENG_william_robertson
+recruit_character = ENG_edward_viii
+recruit_character = ENG_fallen_government
+recruit_character = ENG_john_robert_clynes
+recruit_character = ENG_ramsay_macdonald
+recruit_character = ENG_edward_carson
+recruit_character = ENG_henry_page_croft
+recruit_character = ENG_austen_chamberlain
+recruit_character = ENG_london_commune
+recruit_character = ENG_ellen_wilkinson
+recruit_character = ENG_lewis_pugh_evans
+recruit_character = ENG_james_lowther
+recruit_character = ENG_arthur_connaught
+#recruit_character = ENG_paul_methuen
+recruit_character = ENG_ian_hamilton
+recruit_character = ENG_rudolph_lambart
+recruit_character = ENG_aylmer_hunterweston
+recruit_character = ENG_j_f_c_fuller
+recruit_character = ENG_reginald_wingate
+recruit_character = ENG_leslie_rundle
+recruit_character = ENG_robert_badenpowell
+recruit_character = ENG_george_harper
+recruit_character = ENG_hugh_elles
+recruit_character = ENG_james_grierson
+recruit_character = ENG_henry_horne
+recruit_character = ENG_herbert_plumer
+recruit_character = ENG_frederick_maude
+ENG_frederick_maude = { set_character_flag = unit_leader_can_die_from_sickness }
+recruit_character = ENG_anthony_ashleycooper
+recruit_character = ENG_ivor_maxse
+recruit_character = ENG_henry_rawlinson
+recruit_character = ENG_horace_smith_dorrien
+recruit_character = ENG_julian_byng
+recruit_character = ENG_george_milne
+recruit_character = ENG_thomas_doyly_snow
+recruit_character = ENG_william_hickie
+recruit_character = ENG_john_capper
+recruit_character = ENG_lionel_dunsterville
+recruit_character = ENG_oliver_nugent
+recruit_character = ENG_alfred_knox
+recruit_character = ENG_hubert_gough
+recruit_character = ENG_william_birdwood
+recruit_character = ENG_edmund_ironside
+recruit_character = ENG_frank_crozier
+
+#Admirals
+recruit_character = ENG_john_jellicoe
+recruit_character = ENG_william_pakenham
+recruit_character = ENG_reginald_tyrwhitt
+recruit_character = ENG_david_beatty
+recruit_character = ENG_lionel_halsey
+recruit_character = ENG_john_fisher
+recruit_character = ENG_percy_scott
+recruit_character = ENG_roger_keyes
+recruit_character = ENG_dudley_de_chair
+recruit_character = ENG_christopher_cradock
+recruit_character = ENG_william_may
+recruit_character = ENG_george_callaghan
+recruit_character = ENG_william_goodenough
+recruit_character = ENG_horace_hood
+recruit_character = ENG_reginald_bacon
+recruit_character = ENG_francis_bridgeman
+recruit_character = ENG_archibald_berkeley_milne
+
+
+recruit_character = ENG_mansfield_smith_cumming
+recruit_character = ENG_g_k_chesterton
+recruit_character = ENG_sir_hiram_maxim
+recruit_character = ENG_w_t_stead
+recruit_character = ENG_henry_petty_fitzmaurice
+recruit_character = ENG_herbert_mullaly
+recruit_character = ENG_john_maclean
+recruit_character = ENG_albert_inkpin
+recruit_character = ENG_rudyard_kipling
+recruit_character = ENG_arthur_balfour
+recruit_character = ENG_george_macdonogh
+recruit_character = ENG_reginald_mckenna
+recruit_character = ENG_hugh_trenchard
+recruit_character = ENG_louis_alexander_mountbatten
+recruit_character = ENG_richard_haldane
+recruit_character = ENG_walter_long
+recruit_character = ENG_neville_lyttleton
+recruit_character = ENG_william_peel
+recruit_character = ENG_frederick_roberts
+recruit_character = ENG_frederick_sykes
+recruit_character = ENG_alf_watts
+recruit_character = ENG_ernest_bax
+recruit_character = ENG_manny_shinwell
+recruit_character = ENG_arthur_henderson
+recruit_character = ENG_arthur_wilson
+recruit_character = ENG_george_macaulay_kirkpatrick
+recruit_character = ENG_ormonde_winter
+recruit_character = ENG_edward_james_headlam
+recruit_character = ENG_charles_vaughan_lee
+recruit_character = ENG_percy_zachariah_cox
+recruit_character = ENG_julian_corbett
+recruit_character = ENG_geoffrey_de_havilland
+recruit_character = ENG_herbert_samuel
+recruit_character = ENG_frederic_natusch_maude
+recruit_character = ENG_aretas_akers_douglas
+recruit_character = ENG_archibald_murray
+recruit_character = ENG_david_henderson
+recruit_character = ENG_clement_attlee
+recruit_character = ENG_rotha_lintornorman
+
+#Scientists
+recruit_character = ENG_william_tritton
+recruit_character = ENG_walter_gordon_wilson
+recruit_character = ENG_mervyn_o_gorman
+recruit_character = ENG_philip_watts
+recruit_character = ENG_eustace_tennyson_d_eyncourt
 
 1910.1.1 = {
-	oob = "ENG_1910"
+	give_guarantee = ARB
 
 	set_technology = {
 		#infantry
 		infantry_weapons = 1
 		infantry_weapons1 = 1
+		bicycle_infantry = 1
+		machine_guns = 1
+		support_weapons = 1
 		
 		#support
 		tech_support = 1
 		tech_engineers = 1
 		tech_recon = 1
-		
-		#armored
-		early_armored_car = 1
+		tech_military_police = 1
 		
 		#artillery
-		gw_artillery = 1
-		howitzer1 = 1
+		early_artillery = 1
+		basic_field_gun = 1
+		basic_howitzer = 1
 		
 		#doctrine
-		preliminary_bombardment = 1
+		
+		
+		
 		
 		#air
-		early_fighter = 1
-		airship_bomber = 1
+		airship = 1
+		scout_plane = 1
 		
 		#engineering
 		early_fire_control_system = 1
@@ -548,343 +373,88 @@ create_navy_leader = {
 		radio = 1
 		analytical_engine = 1
 		mechanical_engineering = 1
+		magneto_ignition = 1
 		aircraft_engine = 1
 		generator_battery = 1
+		basic_train = 1
+        basic_railways = 1
+    	construction0 = 1
+        powder_type_b = 1
+        
 	}
 
-	set_politics = {
-		ruling_party = democratic
-		last_election = "1910.1.1" 
-		election_frequency = 48 
-		elections_allowed = yes 
-	}	
-	set_popularities = {
-		fascism = 0
-		communism = 14
-		democratic = 76
-		neutrality = 10
+	# Creating different equipment variants
+	create_equipment_variant = {
+		type = infantry_equipment_1
+		design_team = mio:ENG_rsaf_enfield_organization
+		show_position = no
+		mark_older_equipment_obsolete = yes
 	}
+	create_equipment_variant = {
+		type = machine_gun_equipment_0
+		design_team = mio:ENG_vickers_limited_organization
+		show_position = no
+		mark_older_equipment_obsolete = yes
+	}
+	create_equipment_variant = {
+		type = support_equipment_1
+		design_team = mio:ENG_vickers_limited_organization
+		show_position = no
+		mark_older_equipment_obsolete = yes
+	}
+	create_equipment_variant = {
+		type = field_gun_equipment_1
+		design_team = mio:ENG_elswick_ordnance_company_organization
+		show_position = no
+		mark_older_equipment_obsolete = yes
+	}
+	create_equipment_variant = {
+		type = howitzer_equipment_1
+		design_team = mio:ENG_elswick_ordnance_company_organization
+		show_position = no
+		mark_older_equipment_obsolete = yes
+	}
+
+	#add_breakthrough_progress = {
+	#	specialization = specialization_land
+	#	value = 1.0
+	#}
+	#add_breakthrough_progress = {
+	#	specialization = specialization_naval
+	#	value = 1.0
+	#}
+	#add_breakthrough_progress = {
+	#	specialization = specialization_air
+	#	value = 0.5
+	#}
 	
 	add_ideas = {
-		ww1_Scramble_for_Africa
 		stiff_upper_lip
 		volunteer_only
-		edward_vii
 		eng_overextension
 		eng_fleet_at_rest
-		
-		ENG_edward_grey #suck my cock
+		ENG_lords_opposition
+		ENG_golden_age_espionage
+		edward_vii
+		ENG_idea_naval_arms_race
 	}
+
+	activate_advisor = ENG_edward_grey
 
 	#set_country_flag = monroe_doctrine ???????????????????????????????????????????????????????????
 
-}
-if = {
-	limit = { not = { has_dlc = "Man the Guns" } }
-
-	set_naval_oob = "ENG_1910_Naval_Legacy"
-
-	set_technology = {
-		early_submarine = 1
-		early_destroyer = 1
-		basic_destroyer = 1
-		early_light_cruiser = 1
-		early_heavy_cruiser = 1
-		early_battleship = 1
-		early_battlecruiser = 1
-		transport = 1
-	}
-
-	### Variants ###
-	# Drednoughts #
-	create_equipment_variant = {
-		name = "King George Class"
-		type = battleship_2
-		parent_version = 0
-	}
-	create_equipment_variant = {
-		name = "Bellerophon Class"
-		type = battleship_1
-		parent_version = 0
-	}
-	create_equipment_variant = {
-		name = "Drednought Class"
-		type = battleship_1
-		parent_version = 0
-		obsolete = yes
-	}
-	# Pre-Drednoughts #
-	create_equipment_variant = {
-		name = "Lord Nelson Class"
-		type = battleship_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Swiftsure Class"
-		type = battleship_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "King Edward VII Class"
-		type = battleship_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Duncan Class"
-		type = battleship_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "London Class"
-		type = battleship_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Formidable Class"
-		type = battleship_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Canopus Class"
-		type = battleship_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Majestic Class"
-		type = battleship_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Royal Sovereign Class"
-		type = battleship_1
-		parent_version = 0
-		obsolete = yes
-	}
-	# Battlecruisers #
-	create_equipment_variant = {
-		name = "Invincible Class"
-		type = battle_cruiser_1
-		parent_version = 0
-	}
-	# Armored Cruisers #
-	create_equipment_variant = {
-		name = "Minotaur Class"
-		type = heavy_cruiser_1
-		parent_version = 0
-	}
-	create_equipment_variant = {
-		name = "Warrior Class"
-		type = heavy_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Duke of Edinburgh Class"
-		type = heavy_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Devonshire Class"
-		type = heavy_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Monmouth Class"
-		type = heavy_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Drake Class"
-		type = heavy_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Cressy Class"
-		type = heavy_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	# Protected Cruisers #
-	create_equipment_variant = {
-		name = "Topaze Class"
-		type = light_cruiser_1
-		parent_version = 0
-	}
-	create_equipment_variant = {
-		name = "Challenger Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Highflyer Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Pelorus Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Arrogant Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Diadem Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Powerful Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Edgar Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Pearl Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Blake Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Eclipse Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Astraea Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Apollo Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Boadicea Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Sentinel Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Pathfinder Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Forward Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Adventure Class"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
-	}
-	# Destroyers #
-	create_equipment_variant = {
-		name = "Tribal Class"
-		type = destroyer_2
-		parent_version = 0
-	}
-	create_equipment_variant = {
-		name = "River Class"
-		type = destroyer_2
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "D Class"
-		type = destroyer_2
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "C Class"
-		type = destroyer_2
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "B Class"
-		type = destroyer_2
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "A Class"
-		type = destroyer_2
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Cricket Class"
-		type = destroyer_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "TB 114 Class"
-		type = destroyer_1
-		parent_version = 0
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "TB 81 Class"
-		type = destroyer_1
-		parent_version = 0
-		obsolete = yes
-	}
-	# Submarines #
-	create_equipment_variant = {
-		name = "A/B/C/D Class"
-		type = submarine_1
-		parent_version = 0
+	if = {
+		limit = { has_start_date < 1914.1.1 }
+		country_event = { id = ww1_england.100 days = 5 hours = 12 } #KING DEATH
+		ENG_louis_alexander_mountbatten = { unit_leader_event = { id = ww1_generic.38 days = 4138 }} #died in 1921.9.11
+		# Lado
+		country_event = {
+			id = ww1_belgium.8
+			days = 40
+		}
 	}
 }
+
 if = {
 	limit = {
 		has_dlc = "Man the Guns"
@@ -893,47 +463,156 @@ if = {
 	set_naval_oob = "ENG_1910_naval_mtg"
 
 	set_technology = {
-		basic_naval_mines = 1	
+		# Light Ship Hulls
+		torpedo_boat_ship_hull_light = 1
+		gunboat_ship_hull_light = 1
 		early_ship_hull_light = 1
 		basic_ship_hull_light = 1
+
+		# Submarine Hulls
 		early_ship_hull_submarine = 1
+
+		# Cruiser Hulls
+		victorian_ship_hull_cruiser = 1
 		early_ship_hull_cruiser = 1
 		basic_ship_hull_cruiser = 1
+		improved_ship_hull_cruiser = 1
+
+		# Heavy Ship Hulls
+		ironclad_ship_hull_heavy = 1
+		pre_dreadnought_ship_hull_heavy = 1
 		early_ship_hull_heavy = 1
 		basic_ship_hull_heavy = 1
+
+		# Engines
+		ironclad_coal_engine = 1
+		basic_coal_engine = 1
+		early_oil_engine = 1
+
+		# Batteries
+		ironclad_artillery = 1
 		basic_battery = 1
 		basic_light_battery = 1
 		basic_medium_battery = 1
-		improved_medium_battery = 1
 		basic_heavy_battery = 1
-		improved_heavy_battery = 1
-		basic_torpedo = 1
-		sonar = 1
-		smoke_generator = 1
+
+		# Secondaries
+		
 		basic_secondary_battery = 1
+		improved_secondary_battery = 1
+
+		# Torpedoes
+		early_torpedo_tubes = 1
+		basic_torpedo = 1
+
+		# Armor
+		coastal_defense_ship_armor_scheme = 1
+		basic_armored_cruiser_armor_scheme = 1
+		improved_armored_cruiser_armor_scheme = 1
 		basic_cruiser_armor_scheme = 1
 		basic_heavy_armor_scheme = 1
+
+		# Misc
+		basic_naval_mines = 1	
+		
+		smoke_generator = 1
 		mtg_transport = 1
-		pre_dreadnoughts = 1
 	}
 
 	#Dreadnoughts
+
 	create_equipment_variant = {
 		name = "King George V Class"
 		type = ship_hull_heavy_2
+		icon = GFX_ENG_ship_king_george_v
 		name_group = ENG_BB_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_heavy_battery_2
 			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_1
+			fixed_ship_engine_slot = heavy_ship_engine_2
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_bb_2
+			front_1_custom_slot = ship_heavy_battery_2
+			mid_1_custom_slot = ship_torpedo_2
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = ship_heavy_battery_2
+		}
+	}
+	create_equipment_variant = {
+		name = "Orion Class"
+		type = ship_hull_heavy_2
+		model = ENG_battleship_3_entity
+		icon = GFX_ENG_ship_orion
+		name_group = ENG_BB_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_heavy_battery_2
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_1
+			fixed_ship_engine_slot = heavy_ship_engine_2
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_bb_2
+			front_1_custom_slot = ship_heavy_battery_2
+			mid_1_custom_slot = ship_torpedo_2
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = ship_heavy_battery_2
+		}
+	}
+	create_equipment_variant = {
+		name = "Colossus Class"
+		type = ship_hull_heavy_1
+		name_group = ENG_BB_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_heavy_battery_1
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_1
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bb_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = empty
-			rear_1_custom_slot = empty
+			front_1_custom_slot = ship_heavy_battery_1
+			mid_1_custom_slot = ship_torpedo_2
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = ship_heavy_battery_1
+		}
+	}
+	create_equipment_variant = {
+		name = "Neptune Class"
+		type = ship_hull_heavy_1
+		model = ENG_battleship_2_entity
+		name_group = ENG_BB_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_heavy_battery_1
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_1
+			fixed_ship_engine_slot = heavy_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_bb_1
+			front_1_custom_slot = ship_heavy_battery_1
+			mid_1_custom_slot = ship_torpedo_1
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = ship_heavy_battery_1
+		}
+	}
+	create_equipment_variant = {
+		name = "St Vincent Class"
+		type = ship_hull_heavy_1
+		name_group = ENG_BB_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_heavy_battery_1
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_1
+			fixed_ship_engine_slot = heavy_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_bb_1
+			front_1_custom_slot = ship_heavy_battery_1
+			mid_1_custom_slot = ship_torpedo_1
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = ship_heavy_battery_1
 		}
 	}
 	create_equipment_variant = {
@@ -942,34 +621,35 @@ if = {
 		name_group = ENG_BB_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_heavy_battery_2
+			fixed_ship_battery_slot = ship_heavy_battery_1
 			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bb_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = empty
-			rear_1_custom_slot = empty
+			front_1_custom_slot = ship_heavy_battery_1
+			mid_1_custom_slot = ship_torpedo_1
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = ship_heavy_battery_1
 		}
 	}
 	create_equipment_variant = {
 		name = "Dreadnought Class"
 		type = ship_hull_heavy_1
 		name_group = ENG_BB_HISTORICAL
+		model = ENG_battleship_1_entity
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_heavy_battery_1
 			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bb_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = empty
-			rear_1_custom_slot = empty
+			front_1_custom_slot = ship_heavy_battery_1
+			mid_1_custom_slot = ship_torpedo_1
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = ship_heavy_battery_1
 		}
 		obsolete = yes
 	}
@@ -977,19 +657,19 @@ if = {
 	create_equipment_variant = {
 		name = "Lord Nelson Class"
 		type = ship_hull_pre_dreadnought
+		model = ENG_battleship_1_alt_0_entity
 		name_group = ENG_BB_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_heavy_battery_2
+			fixed_ship_battery_slot = ship_heavy_battery_1
 			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			
 			fixed_ship_engine_slot = heavy_ship_engine_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_bb_1
+			fixed_ship_secondaries_slot = ship_secondaries_2
+			fixed_ship_armor_slot = ship_armor_bb_2
 			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			rear_1_custom_slot = empty
+			mid_1_custom_slot = ship_secondaries_2
+			rear_1_custom_slot = ship_heavy_battery_1
 		}
 		obsolete = yes
 	}
@@ -1001,14 +681,13 @@ if = {
 		modules = {
 			fixed_ship_battery_slot = ship_heavy_battery_1
 			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			
 			fixed_ship_engine_slot = heavy_ship_engine_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_secondaries_slot = ship_secondaries_2
 			fixed_ship_armor_slot = ship_armor_bb_1
 			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			rear_1_custom_slot = empty
+			mid_1_custom_slot = ship_secondaries_2
+			rear_1_custom_slot = ship_heavy_battery_1
 		}
 		obsolete = yes
 	}
@@ -1018,16 +697,15 @@ if = {
 		name_group = ENG_BB_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_heavy_battery_2
+			fixed_ship_battery_slot = ship_heavy_battery_1
 			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			
 			fixed_ship_engine_slot = heavy_ship_engine_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_secondaries_slot = ship_secondaries_2
 			fixed_ship_armor_slot = ship_armor_bb_1
 			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			rear_1_custom_slot = empty
+			mid_1_custom_slot = ship_secondaries_2
+			rear_1_custom_slot = ship_heavy_battery_1
 		}
 		obsolete = yes
 	}
@@ -1037,16 +715,15 @@ if = {
 		name_group = ENG_BB_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_heavy_battery_2
+			fixed_ship_battery_slot = ship_heavy_battery_1
 			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bb_1
 			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			rear_1_custom_slot = empty
+			mid_1_custom_slot = ship_secondaries_2
+			rear_1_custom_slot = ship_heavy_battery_1
 		}
 		obsolete = yes
 	}
@@ -1056,16 +733,15 @@ if = {
 		name_group = ENG_BB_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_heavy_battery_2
+			fixed_ship_battery_slot = ship_heavy_battery_1
 			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bb_1
 			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			rear_1_custom_slot = empty
+			mid_1_custom_slot = ship_secondaries_2
+			rear_1_custom_slot = ship_heavy_battery_1
 		}
 		obsolete = yes
 	}
@@ -1075,16 +751,15 @@ if = {
 		name_group = ENG_BB_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_heavy_battery_2
+			fixed_ship_battery_slot = ship_heavy_battery_1
 			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bb_1
 			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			rear_1_custom_slot = empty
+			mid_1_custom_slot = ship_secondaries_2
+			rear_1_custom_slot = ship_heavy_battery_1
 		}
 		obsolete = yes
 	}
@@ -1094,16 +769,15 @@ if = {
 		name_group = ENG_BB_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_heavy_battery_2
+			fixed_ship_battery_slot = ship_heavy_battery_1
 			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bb_1
 			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			rear_1_custom_slot = empty
+			mid_1_custom_slot = ship_secondaries_2
+			rear_1_custom_slot = ship_heavy_battery_1
 		}
 		obsolete = yes
 	}
@@ -1113,16 +787,15 @@ if = {
 		name_group = ENG_BB_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_heavy_battery_2
+			fixed_ship_battery_slot = ship_heavy_battery_1
 			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bb_1
 			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			rear_1_custom_slot = empty
+			mid_1_custom_slot = ship_secondaries_2
+			rear_1_custom_slot = ship_heavy_battery_1
 		}
 		obsolete = yes
 	}
@@ -1132,56 +805,131 @@ if = {
 		name_group = ENG_BB_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_heavy_battery_2
+			fixed_ship_battery_slot = ship_heavy_battery_1
+			fixed_ship_anti_air_slot = empty
+			
+			fixed_ship_engine_slot = heavy_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_2
+			fixed_ship_armor_slot = ship_armor_bb_2
+			mid_1_custom_slot = empty
+			rear_1_custom_slot = ship_heavy_battery_1
+		}
+		obsolete = yes
+	}
+	# Ironclads
+	create_equipment_variant = {
+		name = "Trafalgar Class"
+		type = ship_hull_pre_dreadnought
+		name_group = ENG_BB_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_heavy_battery_1
+			fixed_ship_anti_air_slot = empty
+			
+			fixed_ship_engine_slot = heavy_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_2
+			fixed_ship_armor_slot = ship_armor_bb_1
+			mid_1_custom_slot = ship_secondaries_1
+			rear_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Admiral Class"
+		type = ship_hull_pre_dreadnought
+		name_group = ENG_BB_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_heavy_battery_1
 			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bb_1
 			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
+			mid_1_custom_slot = empty
 			rear_1_custom_slot = empty
 		}
 		obsolete = yes
 	}
 	# Battlecruisers #
 	create_equipment_variant = {
-		name = "Invincible Class"
+		name = "Lion Class"
 		type = ship_hull_heavy_1
 		name_group = ENG_BC_HISTORICAL
+		model = ENG_battle_cruiser_2_entity
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_heavy_battery_2
 			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_1
+			fixed_ship_engine_slot = heavy_ship_engine_2
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_bc_2
+			front_1_custom_slot = ship_heavy_battery_2
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = ship_heavy_battery_2
+		}
+	}
+	create_equipment_variant = {
+		name = "Indefatigable Class"
+		type = ship_hull_heavy_1
+		icon = GFX_ENG_ship_indefatigable
+		name_group = ENG_BC_HISTORICAL
+		model = ENG_battle_cruiser_1_alt_0_entity
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_heavy_battery_1
+			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = heavy_ship_engine_1
+			fixed_ship_engine_slot = heavy_ship_engine_2
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bc_1
-			front_1_custom_slot = empty
+			front_1_custom_slot = ship_heavy_battery_1
 			mid_1_custom_slot = empty
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = empty
+		}
+	}
+	create_equipment_variant = {
+		name = "Invincible Class"
+		type = ship_hull_heavy_1
+		icon = GFX_ENG_ship_invincible
+		model = ENG_battle_cruiser_1_entity
+		name_group = ENG_BC_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_heavy_battery_1
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_engine_slot = heavy_ship_engine_2
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_bc_1
+			front_1_custom_slot = ship_heavy_battery_1
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = empty
 			rear_1_custom_slot = empty
 		}
 	}
 	# Armored Cruisers #
 	create_equipment_variant = {
 		name = "Minotaur Class"
-		type = ship_hull_cruiser_1
+		type = ship_hull_cruiser_2
 		name_group = ENG_CA_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_medium_battery_3
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			
 			fixed_ship_engine_slot = cruiser_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_cruiser_2
+			fixed_ship_armor_slot = ship_armor_armored_cruiser_2
 			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = ship_torpedo_1
 			rear_1_custom_slot = ship_medium_battery_2
 		}
+		obsolete = yes
 	}
 	create_equipment_variant = {
 		name = "Warrior Class"
@@ -1190,14 +938,12 @@ if = {
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_medium_battery_3
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			
 			fixed_ship_engine_slot = cruiser_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_cruiser_2
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
+			fixed_ship_armor_slot = ship_armor_armored_cruiser_2
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = ship_torpedo_1
 			rear_1_custom_slot = ship_medium_battery_2
 		}
 		obsolete = yes
@@ -1208,16 +954,14 @@ if = {
 		name_group = ENG_CA_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_medium_battery_3
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			fixed_ship_battery_slot = ship_medium_battery_1
+			
 			fixed_ship_engine_slot = cruiser_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_cruiser_2
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			rear_1_custom_slot = ship_medium_battery_2
+			fixed_ship_armor_slot = ship_armor_armored_cruiser_2
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_medium_battery_2
 		}
 		obsolete = yes
 	}
@@ -1227,15 +971,13 @@ if = {
 		name_group = ENG_CA_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_medium_battery_2
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			fixed_ship_battery_slot = ship_medium_battery_1
+			
 			fixed_ship_engine_slot = cruiser_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_cruiser_2
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
+			fixed_ship_armor_slot = ship_armor_armored_cruiser_1
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = ship_torpedo_1
 			rear_1_custom_slot = ship_light_medium_battery_2
 		}
 		obsolete = yes
@@ -1246,16 +988,14 @@ if = {
 		name_group = ENG_CA_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_light_medium_battery_2
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			fixed_ship_battery_slot = ship_light_medium_battery_1
+			
 			fixed_ship_engine_slot = cruiser_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_cruiser_2
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			rear_1_custom_slot = empty
+			fixed_ship_armor_slot = ship_armor_armored_cruiser_1
+			mid_1_custom_slot = ship_secondaries_1
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_medium_battery_1
 		}
 		obsolete = yes
 	}
@@ -1265,16 +1005,14 @@ if = {
 		name_group = ENG_CA_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_medium_battery_2
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_battery_slot = ship_medium_battery_1
+			
+			fixed_ship_engine_slot = cruiser_ship_engine_2
 			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_cruiser_2
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			rear_1_custom_slot = ship_light_medium_battery_2
+			fixed_ship_armor_slot = ship_armor_armored_cruiser_1
+			mid_1_custom_slot = ship_secondaries_1
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_medium_battery_1
 		}
 		obsolete = yes
 	}
@@ -1284,284 +1022,52 @@ if = {
 		name_group = ENG_CA_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_medium_battery_2
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
+			fixed_ship_battery_slot = ship_medium_battery_1
+			
 			fixed_ship_engine_slot = cruiser_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_cruiser_2
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			rear_1_custom_slot = ship_light_medium_battery_2
-		}
-		obsolete = yes
-	}
-	# Protected Cruisers #
-	create_equipment_variant = {
-		name = "Topaze Class"
-		type = ship_hull_cruiser_1
-		name_group = ENG_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_light_medium_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = empty
-		}
-	}
-	create_equipment_variant = {
-		name = "Challenger Class"
-		type = ship_hull_cruiser_1
-		name_group = ENG_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_light_medium_battery_2
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = empty
-		}
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Highflyer Class"
-		type = ship_hull_cruiser_1
-		name_group = ENG_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_light_medium_battery_2
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = empty
-		}
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Pelorus Class"
-		type = ship_hull_cruiser_1
-		name_group = ENG_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_light_medium_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = empty
-		}
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Arrogant Class"
-		type = ship_hull_cruiser_1
-		name_group = ENG_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_light_medium_battery_2
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_armored_cruiser_1
+			mid_1_custom_slot = ship_secondaries_1
+			mid_2_custom_slot = ship_torpedo_1
 			rear_1_custom_slot = ship_light_medium_battery_1
 		}
 		obsolete = yes
 	}
+	# Light Cruisers #
 	create_equipment_variant = {
-		name = "Diadem Class"
-		type = ship_hull_cruiser_1
+		name = "Town Class"
+		type = ship_hull_cruiser_3
 		name_group = ENG_CL_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_medium_battery_2
 			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
+			
+			fixed_ship_engine_slot = cruiser_ship_engine_2
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_light_cruiser_1
 			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = empty
-		}
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Powerful Class"
-		type = ship_hull_cruiser_1
-		name_group = ENG_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_medium_battery_3
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = ship_torpedo_2
 			rear_1_custom_slot = ship_light_medium_battery_2
+			rear_2_custom_slot = empty
 		}
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Edgar Class"
-		type = ship_hull_cruiser_1
-		name_group = ENG_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_medium_battery_3
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = ship_light_medium_battery_2
-		}
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Pearl Class"
-		type = ship_hull_cruiser_1
-		name_group = ENG_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_light_medium_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = empty
-		}
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Blake Class"
-		type = ship_hull_cruiser_1
-		name_group = ENG_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_medium_battery_3
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = ship_light_medium_battery_2
-		}
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Eclipse Class"
-		type = ship_hull_cruiser_1
-		name_group = ENG_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_light_medium_battery_2
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = ship_light_medium_battery_1
-		}
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Astraea Class"
-		type = ship_hull_cruiser_1
-		name_group = ENG_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_light_medium_battery_2
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = ship_light_medium_battery_1
-		}
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Apollo Class"
-		type = ship_hull_cruiser_1
-		name_group = ENG_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_light_medium_battery_2
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
-			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = ship_light_medium_battery_1
-		}
-		obsolete = yes
 	}
 	create_equipment_variant = {
 		name = "Boadicea Class"
-		type = ship_hull_cruiser_1
+		type = ship_hull_cruiser_2
 		name_group = ENG_CL_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_2
-			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
+			fixed_ship_engine_slot = cruiser_ship_engine_2
+			fixed_ship_secondaries_slot = empty
+			fixed_ship_armor_slot = ship_armor_light_cruiser_1
 			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = empty
+			mid_2_custom_slot = empty
+			rear_1_custom_slot = ship_light_battery_2
 		}
-		obsolete = yes
 	}
 	create_equipment_variant = {
 		name = "Sentinel Class"
@@ -1569,15 +1075,12 @@ if = {
 		name_group = ENG_CL_HISTORICAL
 		parent_version = 0
 		modules = {
-			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
+			fixed_ship_battery_slot = ship_light_battery_2
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
+			fixed_ship_engine_slot = cruiser_ship_engine_2
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_light_cruiser_1
 			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
 			rear_1_custom_slot = empty
 		}
 		obsolete = yes
@@ -1589,15 +1092,12 @@ if = {
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
+			fixed_ship_engine_slot = cruiser_ship_engine_2
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_light_cruiser_1
 			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = empty
+			rear_1_custom_slot = ship_light_battery_1
 		}
 		obsolete = yes
 	}
@@ -1608,15 +1108,12 @@ if = {
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
+			fixed_ship_engine_slot = cruiser_ship_engine_2
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_light_cruiser_1
 			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = empty
+			rear_1_custom_slot = empty # Left empty to represent the very weak main battery
 		}
 		obsolete = yes
 	}
@@ -1627,19 +1124,384 @@ if = {
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			front_1_custom_slot = empty
+			fixed_ship_engine_slot = cruiser_ship_engine_2
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_light_cruiser_1
 			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = ship_secondaries_1
 			rear_1_custom_slot = empty
 		}
 		obsolete = yes
 	}
+	# Protected Cruisers #
+	create_equipment_variant = {
+		name = "Topaze Class"
+		type = ship_hull_cruiser_2
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_2
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_2
+			front_1_custom_slot = empty
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_battery_1
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Challenger Class"
+		type = ship_hull_cruiser_1
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_medium_battery_2
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_2
+			mid_1_custom_slot = ship_secondaries_1
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_medium_battery_2
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Highflyer Class"
+		type = ship_hull_cruiser_1
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_medium_battery_2
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_2
+			mid_1_custom_slot = ship_secondaries_1
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_medium_battery_2
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Pelorus Class"
+		type = ship_hull_cruiser_1
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_2
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_battery_1
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Diadem Class"
+		type = ship_hull_cruiser_1
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_medium_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_2
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_medium_battery_1
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Arrogant Class"
+		type = ship_hull_cruiser_1
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_medium_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_battery_1
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Powerful Class"
+		type = ship_hull_cruiser_1
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_medium_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_2
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_medium_battery_1
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Eclipse Class"
+		type = ship_hull_cruiser_1
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_medium_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_2
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_medium_battery_1
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Astraea Class"
+		type = ship_hull_cruiser_1
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_medium_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_battery_1
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Edgar Class"
+		type = ship_hull_cruiser_1
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_medium_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_1
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_medium_battery_1
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Apollo Class"
+		type = ship_hull_cruiser_0
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_medium_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_0
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			mid_1_custom_slot = ship_torpedo_1
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Apollo Class (Minelayer)" # Andromache Class
+		type = ship_hull_cruiser_0
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_0
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			mid_1_custom_slot = ship_mine_layer_1
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Blake Class"
+		type = ship_hull_cruiser_1
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_medium_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_0
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			mid_1_custom_slot = empty
+			mid_2_custom_slot = ship_torpedo_1
+			rear_1_custom_slot = ship_light_medium_battery_1
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Pearl Class"
+		type = ship_hull_cruiser_0
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_0
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			mid_1_custom_slot = ship_torpedo_1
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Barham Class"
+		type = ship_hull_cruiser_0
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_0
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			mid_1_custom_slot = ship_torpedo_tb
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Marathon Class"
+		type = ship_hull_cruiser_0
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_medium_battery_0
+			fixed_ship_engine_slot = cruiser_ship_engine_0
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			mid_1_custom_slot = ship_torpedo_tb
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Surprise Class"
+		type = ship_hull_cruiser_0
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_0
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = empty
+			mid_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Mersey Class"
+		type = ship_hull_cruiser_0
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_medium_battery_0
+			fixed_ship_engine_slot = cruiser_ship_engine_0
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			mid_1_custom_slot = ship_torpedo_tb
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Leander Class"
+		type = ship_hull_cruiser_0
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_medium_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_0
+			fixed_ship_secondaries_slot = ship_secondaries_1
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			mid_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Iris Class"
+		type = ship_hull_cruiser_0
+		name_group = ENG_PROTECTED_CRUISERS_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_engine_slot = cruiser_ship_engine_0
+			fixed_ship_secondaries_slot = empty
+			fixed_ship_armor_slot = ship_armor_protected_cruiser_1
+			mid_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
+	# Gunboats
+	create_equipment_variant = {
+		name = "Cadmus Class"
+		type = ship_hull_gunboat
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_torpedo_slot = empty
+			fixed_ship_engine_slot = light_ship_engine_1
+			mid_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Bramble Class"
+		type = ship_hull_gunboat
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_torpedo_slot = empty
+			fixed_ship_engine_slot = light_ship_engine_0
+			mid_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Alert Class"
+		type = ship_hull_gunboat
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_torpedo_slot = empty
+			fixed_ship_engine_slot = light_ship_engine_0
+			mid_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Redbreast Class"
+		type = ship_hull_gunboat
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_torpedo_slot = empty
+			fixed_ship_engine_slot = light_ship_engine_0
+			mid_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
 	#Destroyers
+	create_equipment_variant = {
+		name = "Swift Class"
+		type = ship_hull_light_2
+		name_group = ENG_DD_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_anti_air_slot = empty
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = light_ship_engine_2
+			fixed_ship_torpedo_slot = ship_torpedo_1
+			mid_1_custom_slot = empty
+			rear_1_custom_slot = empty
+		}
+	}
 	create_equipment_variant = {
 		name = "Tribal Class"
 		type = ship_hull_light_2
@@ -1648,9 +1510,9 @@ if = {
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
 			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = empty
+			
 			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = light_ship_engine_1
+			fixed_ship_engine_slot = light_ship_engine_2
 			fixed_ship_torpedo_slot = ship_torpedo_1
 			mid_1_custom_slot = empty
 			rear_1_custom_slot = empty
@@ -1658,13 +1520,12 @@ if = {
 	}
 	create_equipment_variant = {
 		name = "River Class"
-		type = ship_hull_light_2
+		type = ship_hull_light_1
 		name_group = ENG_DD_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = empty
+			
 			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = light_ship_engine_1
 			fixed_ship_torpedo_slot = ship_torpedo_1
@@ -1675,13 +1536,12 @@ if = {
 	}
 	create_equipment_variant = {
 		name = "D Class"
-		type = ship_hull_light_2
+		type = ship_hull_light_1
 		name_group = ENG_DD_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = empty
+			
 			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = light_ship_engine_1
 			fixed_ship_torpedo_slot = ship_torpedo_1
@@ -1692,13 +1552,12 @@ if = {
 	}
 	create_equipment_variant = {
 		name = "C Class"
-		type = ship_hull_light_2
+		type = ship_hull_light_1
 		name_group = ENG_DD_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = empty
+			
 			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = light_ship_engine_1
 			fixed_ship_torpedo_slot = ship_torpedo_1
@@ -1709,13 +1568,12 @@ if = {
 	}
 	create_equipment_variant = {
 		name = "B Class"
-		type = ship_hull_light_2
+		type = ship_hull_light_1
 		name_group = ENG_DD_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = empty
+			
 			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = light_ship_engine_1
 			fixed_ship_torpedo_slot = ship_torpedo_1
@@ -1726,15 +1584,14 @@ if = {
 	}
 	create_equipment_variant = {
 		name = "A Class"
-		type = ship_hull_light_2
+		type = ship_hull_light_1
 		name_group = ENG_DD_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = empty
+			
 			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = light_ship_engine_1
+			fixed_ship_engine_slot = light_ship_engine_0
 			fixed_ship_torpedo_slot = ship_torpedo_1
 			mid_1_custom_slot = empty
 			rear_1_custom_slot = empty
@@ -1748,16 +1605,16 @@ if = {
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = empty
+			
 			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = light_ship_engine_1
+			fixed_ship_engine_slot = light_ship_engine_0
 			fixed_ship_torpedo_slot = ship_torpedo_1
 			mid_1_custom_slot = empty
 			rear_1_custom_slot = empty
 		}
 		obsolete = yes
 	}
+	
 	create_equipment_variant = {
 		name = "TB 114 Class"
 		type = ship_hull_light_1
@@ -1765,10 +1622,9 @@ if = {
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = empty
+			
 			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = light_ship_engine_1
+			fixed_ship_engine_slot = light_ship_engine_0
 			fixed_ship_torpedo_slot = ship_torpedo_1
 			mid_1_custom_slot = empty
 			rear_1_custom_slot = empty
@@ -1782,13 +1638,51 @@ if = {
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = empty
+			
 			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = light_ship_engine_1
+			fixed_ship_engine_slot = light_ship_engine_0
 			fixed_ship_torpedo_slot = ship_torpedo_1
 			mid_1_custom_slot = empty
 			rear_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Dryad Class"
+		type = ship_hull_torpedo_boat
+		name_group = ENG_DD_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_2
+			fixed_ship_torpedo_slot = ship_torpedo_2
+			fixed_ship_engine_slot = light_ship_engine_1
+		}
+		obsolete = yes
+	}
+	# Minesweeper
+	create_equipment_variant = {
+		name = "Alarm Class"
+		type = ship_hull_gunboat
+		name_group = ENG_DD_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_torpedo_slot = empty
+			fixed_ship_engine_slot = light_ship_engine_0
+			mid_1_custom_slot = ship_mine_sweeper_1
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Sharpshooter Class"
+		type = ship_hull_gunboat
+		name_group = ENG_DD_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_1
+			fixed_ship_torpedo_slot = empty
+			fixed_ship_engine_slot = light_ship_engine_0
+			mid_1_custom_slot = ship_mine_sweeper_1
 		}
 		obsolete = yes
 	}
@@ -1801,7 +1695,6 @@ if = {
 		modules = {
 			fixed_ship_torpedo_slot = ship_torpedo_sub_1
 			fixed_ship_engine_slot = sub_ship_engine_1
-			rear_1_custom_slot = empty
 		}
 	}
 }
@@ -1813,7 +1706,7 @@ if = {
 	#Give player chance to build it.
 	create_operative_leader = {
 		name = "Sidney Reilly"
-		picture = "ENG_Sidney_Reilly.dds"
+		GFX = GFX_ENG_Sidney_Reilly
 		traits = { operative_double_agent operative_tough operative_infiltrator operative_seducer }
 		bypass_recruitment = no
 		available_to_spy_master = yes
@@ -1821,10 +1714,241 @@ if = {
 	}
 	create_operative_leader = {
 		name = "Harry Houdini"
-		picture = "ENG_harry_houdini.dds"
+		GFX = GFX_ENG_harry_houdini
 		traits = { operative_infiltrator operative_safe_cracker operative_escape_artist }
 		bypass_recruitment = no
+		available_to_spy_master = no
+		nationalities = { USA AUS HUN }
+	}
+	create_operative_leader = {
+		name = "Oswald Rayner"
+		GFX = GFX_ENG_oswald_rayner
+		traits = { operative_infiltrator operative_linguist operative_well_groomed }
+		bypass_recruitment = no
 		available_to_spy_master = yes
-		nationalities = { ENG USA AUH HUN }
+		nationalities = { ENG }
+	}
+}
+country_event = { id = ww1_developer_note.1 days = 1}
+
+1914.1.1 = {
+	set_global_flag = titanic_sinked
+	set_global_flag = king_edward_death
+	set_country_flag = eng_socialist_unity_conference
+	set_country_flag = eng_Parliament_Debates_Irish_Home_Rule
+	set_country_flag = eng_Ulstermen_protest_Home_Rule
+	set_country_flag = eng_ulst_sligos_reply
+
+	add_manpower = 2070
+
+	add_political_power = 1178
+	add_command_power = 100
+
+	give_guarantee = TIB
+
+	retire_character = ENG_edward_vii
+	promote_character = ENG_george_v			
+
+	set_politics = {
+		ruling_party = democratic
+		last_election = "1914.12.14" #14 December 1918
+		election_frequency = 48 
+		elections_allowed = yes 
+	}
+
+	set_party_name = {
+		ideology = communism
+		long_name = ENG_socialist_party_long
+		name = ENG_socialist_party
+	}
+	add_popularity = {
+		ideology = communism
+		popularity = 0.02
+	}
+
+	unlock_national_focus = ENG_free_saf
+	complete_national_focus = ENG_Legacy_Boer_War
+	complete_national_focus = ENG_Boer_Blues
+	unlock_national_focus = ENG_Legacy_Of_Industrial_Revolution	
+	complete_national_focus = ENG_The_Best
+	complete_national_focus = ENG_Engage_Continental
+	complete_national_focus = ENG_deal_with_the_lords
+	complete_national_focus = ENG_Liberal_Government
+	complete_national_focus = ENG_Pension_Act
+	complete_national_focus = ENG_naval_focus
+	complete_national_focus = ENG_Neo_Liberalism
+	complete_national_focus = ENG_imperial_general_staff
+	complete_national_focus = ENG_Lee_Enfield
+	complete_national_focus = ENG_commonwealth_individuality	
+	unlock_national_focus = ENG_Naval_Arms_Race	
+	complete_national_focus = ENG_refresh_the_british_fleet
+	unlock_national_focus = ENG_intercontinental_dockyards
+	complete_national_focus = ENG_encourage_africa_colony
+	unlock_national_focus = ENG_Kenyan_Farmland
+	complete_national_focus = ENG_aviation_focus
+	complete_national_focus = ENG_Reaffirm_Triple_Entente
+	unlock_national_focus = ENG_nationalise_persian_oil
+	complete_national_focus = ENG_singapore_strategy
+	complete_national_focus = ENG_mobilization_of_repair_yards
+	complete_national_focus = ENG_joint_staff
+	complete_national_focus = ENG_fleet_mobilization
+	unlock_national_focus = ENG_Royal_Armament_Factories
+	complete_national_focus = ENG_strenhten_malayan_administration
+
+	remove_ideas = {
+		edward_vii
+	}
+	add_ideas = {
+		#ENG_orange_order
+	}
+
+	ENG_arthur_connaught = { set_nationality = CAN }
+
+	set_autonomy = {
+		target = SAF
+		autonomous_state = autonomy_dominion
+		freedom_level = 0.55
+	}
+	end_puppet = ORA
+	end_puppet = NAT
+	end_puppet = CAP
+
+	set_technology = {
+        scout_plane2 = 1
+		prewar_field_gun = 1
+		basic_howitzer = 1
+		infantry_weapons2 = 1
+		improved_infantry_weapons_2 = 1
+		basic_machine_guns = 1
+		tech_trucks = 1
+		
+		#armor
+		basic_armored_car = 1
+
+		#doctrines
+		#Air
+
+		#electronics
+		electrical_engineering = 1
+		radio = 1
+		analytical_engine = 1
+		generator_battery = 1
+		basic_cryptography = 1
+		basic_cryptanalysis = 1
+
+		#industry
+		early_machine_tools = 1
+		stainless_steel = 1
+		haber_process = 1
+		standard_gauge_railway = 1
+		machine_tools2 = 1
+		
+		fortification2 = 1
+		excavation1 = 1
+		excavation2 = 1
+		oil_production1 = 1
+		oil_production2 = 1
+		fuel_silos = 1
+		construction1 = 1
+		construction2 = 1
+		industrial_complex1 = 1
+		dispersed_industry = 1
+		dispersed_industry2 = 1
+		electric_railway = 1
+		coil_ignition = 1
+        double_base_propellant = 1
+	}
+
+	ENG_louis_alexander_mountbatten = { unit_leader_event = { id = ww1_generic.38 days = 2633 }} #died in 1921.9.11
+
+	if = {
+		limit = {
+			has_dlc = "Man the Guns"
+		}
+		set_naval_oob = "ENG_1914_Naval_MtG"
+		set_technology = {
+			basic_ship_hull_submarine = 1
+			improved_ship_hull_submarine = 1
+			improved_ship_hull_light = 1
+			improved_ship_hull_cruiser = 1
+			basic_ship_hull_heavy = 1
+		}
+		create_equipment_variant = {
+			name = "Iron Duke Class"
+			type = ship_hull_heavy_2
+			icon = GFX_ENG_ship_iron_duke
+			name_group = ENG_BB_HISTORICAL
+			parent_version = 0
+			modules = {
+				fixed_ship_battery_slot = ship_heavy_battery_2
+				fixed_ship_anti_air_slot = empty
+				fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+				fixed_ship_engine_slot = heavy_ship_engine_1
+				fixed_ship_secondaries_slot = ship_secondaries_1
+				fixed_ship_armor_slot = ship_armor_bb_2
+				front_1_custom_slot = empty
+				mid_1_custom_slot = empty
+				rear_1_custom_slot = empty
+			}
+		}
+		create_equipment_variant = {
+			name = "Tiger Class"
+			type = ship_hull_heavy_1
+			name_group = ENG_BC_HISTORICAL
+			model = ENG_battle_cruiser_2_alt_0_entity
+			parent_version = 0
+			modules = {
+				fixed_ship_battery_slot = ship_heavy_battery_2
+				fixed_ship_anti_air_slot = empty
+				fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+				fixed_ship_engine_slot = heavy_ship_engine_1
+				fixed_ship_secondaries_slot = ship_secondaries_1
+				fixed_ship_armor_slot = ship_armor_bc_1
+				front_1_custom_slot = empty
+				mid_1_custom_slot = empty
+				rear_1_custom_slot = empty
+			}
+		}
+		create_equipment_variant = {
+			name = "Queen Mary Class"
+			type = ship_hull_heavy_1
+			name_group = ENG_BC_HISTORICAL
+			parent_version = 0
+			modules = {
+				fixed_ship_battery_slot = ship_heavy_battery_2
+				fixed_ship_anti_air_slot = empty
+				fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+				fixed_ship_engine_slot = heavy_ship_engine_1
+				fixed_ship_secondaries_slot = ship_secondaries_1
+				fixed_ship_armor_slot = ship_armor_bc_1
+				front_1_custom_slot = empty
+				mid_1_custom_slot = empty
+				rear_1_custom_slot = empty
+			}
+		}
+		create_equipment_variant = {
+			name = "Chatham Class"
+			type = ship_hull_cruiser_3
+			name_group = ENG_CL_HISTORICAL
+			parent_version = 0
+			modules = {
+				fixed_ship_battery_slot = ship_light_medium_battery_2
+				fixed_ship_engine_slot = cruiser_ship_engine_3
+				fixed_ship_secondaries_slot = empty
+				fixed_ship_armor_slot = ship_armor_light_cruiser_1
+				mid_2_custom_slot = ship_torpedo_1
+				rear_1_custom_slot = ship_light_medium_battery_2
+			}
+		}
+		create_equipment_variant = {
+			name = "E Class"
+			type = ship_hull_submarine_2
+			name_group = ENG_SS_HISTORICAL
+			parent_version = 0
+			modules = {
+				fixed_ship_torpedo_slot = ship_torpedo_sub_2
+				fixed_ship_engine_slot = sub_ship_engine_2
+			}
+		}
 	}
 }

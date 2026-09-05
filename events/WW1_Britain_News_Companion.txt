@@ -28,7 +28,15 @@ news_event = {
 	
 	option = {
 		name = eng_news.2.a
-		ai_chance = { factor = 100 }
+		trigger = {
+			NOT = { has_war_with = ENG }
+		}
+	}
+	option = {
+		name = eng_news.2.b
+		trigger = {
+			has_war_with = ENG
+		}
 	}
 }
 #British Civil War begins
@@ -36,7 +44,7 @@ news_event = {
 	id = eng_news.3
 	title = eng_news.3.t
 	desc = eng_news.3.d
-	picture = GFX_news_event_023
+	picture = GFX_news_event_eng_civil_war
 
 	major = yes
 	is_triggered_only = yes
@@ -66,28 +74,13 @@ news_event = {
 	id = eng_news.5
 	title = eng_news.5.t
 	desc = eng_news.5.d
-	picture = GFX_news_event_038
+	picture = GFX_news_event_egyptian_revolution
 
 	major = yes
 	is_triggered_only = yes
 	
 	option = {
 		name = eng_news.5.a
-		ai_chance = { factor = 100 }
-	}
-}
-#Battle of Juba begins
-news_event = {
-	id = eng_news.6
-	title = eng_news.6.t
-	desc = eng_news.6.d
-	picture = GFX_news_event_042
-
-	major = yes
-	is_triggered_only = yes
-	
-	option = {
-		name = eng_news.6.a
 		ai_chance = { factor = 100 }
 	}
 }
@@ -144,17 +137,25 @@ news_event = {
 	picture = GFX_news_event_george_v
 
 	major = yes
-	trigger = {
-		ENG = {
-			has_country_leader = { name = "George V" ruling_only = yes }
-		}
-		NOT = { has_global_flag = george_v_royal_prerogative }
-	}
-	fire_only_once = yes
+	is_triggered_only = yes
 	option = {
 		name = eng_news.10.a
 		ai_chance = { factor = 100 }
-		hidden_effect = { set_global_flag = george_v_royal_prerogative }
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = rule_superevent
+					option = DEFAULT
+				}
+				is_ai = no
+			}
+			hidden_effect = {
+				clear_superevents = yes
+			    play_song = "SE_eng_george_v"
+			    set_country_flag = se_eng_george_v
+				update_superevents = yes
+			}
+		}
 	}
 }
 #Anarchists seize London
@@ -165,17 +166,12 @@ news_event = {
 	picture = GFX_news_event_english_anarchists
 
 	major = yes
-	trigger = {
-		ENG = {
-			has_country_leader = { name = "London Commune" ruling_only = yes }
-		}
-		NOT = { has_global_flag = anarchists_in_london }
-	}
-	fire_only_once = yes
+	is_triggered_only = yes
+
 	option = {
 		name = eng_news.11.a
 		ai_chance = { factor = 100 }
-		hidden_effect = { set_global_flag = anarchists_in_london }
+		
 	}
 }
 #Kitchener restores order
@@ -186,16 +182,26 @@ news_event = {
 	picture = GFX_news_event_kitchener_2
 
 	major = yes
-	trigger = {
-		ENG = {
-			has_country_leader = { name = "Herbert Kitchener" ruling_only = yes }
-		}
-		NOT = { has_global_flag = kitchener_restores_order }
-	}
+	is_triggered_only = yes
+
 	option = {
 		name = eng_news.12.a
 		ai_chance = { factor = 100 }
-		hidden_effect = { set_global_flag = kitchener_restores_order }
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = rule_superevent
+					option = DEFAULT
+				}
+				is_ai = no
+			}
+			hidden_effect = {
+				clear_superevents = yes
+			    play_song = "SE_eng_kitchener"
+			    set_country_flag = se_eng_kitchener
+				update_superevents = yes
+			}
+		}
 	}
 }
 #Kenya Crisis
@@ -223,6 +229,21 @@ news_event = {
 	is_triggered_only = yes
 	option = {
 		name = eng_news.14.a
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = rule_superevent
+					option = DEFAULT
+				}
+				is_ai = no
+			}
+			hidden_effect = {
+				clear_superevents = yes
+			    play_song = "SE_eng_republic"
+			    set_country_flag = SE_eng_republic
+				update_superevents = yes
+			}
+		}
 		ai_chance = { factor = 100 }
 	}
 }
@@ -316,23 +337,33 @@ news_event = {
 	title = eng_news.21.t
 	desc = eng_news.21.d
 	picture = GFX_news_event_sidney_street
-
 	major = yes
+	fire_only_once = yes
 	trigger = {
+		tag = ENG
 		date > 1911.01.03
-		NOT = { has_global_flag = sidney_street }
-		ENG = { NOT = { has_government = communism } }
+		date < 1911.03.03
+		ENG = {
+			has_character = ENG_winston_churchill
+			NOT = { has_government = communism }
+		}
+		NOT = {
+			has_global_flag = sidney_street
+		}
 	}
-	immediate = { hidden_effect = { set_global_flag = sidney_street } }
+	immediate = {
+		hidden_effect = {
+			set_global_flag = sidney_street
+		}
+	}
 	option = {
 		name = eng_news.21.a
 		trigger = { 
 			NOT = { 
 				OR = { 
-					original_tag = RUS 
-					original_tag = SOV 
+					original_tag = RUS
 					original_tag = LAT
-					is_subject_of = ENG 
+					is_subject_of = ENG
 					AND = {
 						is_major = yes
 						NOT = {
@@ -355,7 +386,6 @@ news_event = {
 						OR = { 
 							original_tag = ENG 
 							original_tag = RUS
-							original_tag = SOV
 							original_tag = LAT
 						}
 					} 
@@ -366,7 +396,7 @@ news_event = {
 	}
 	option = {
 		name = eng_news.21.c
-		trigger = { OR = { original_tag = RUS original_tag = SOV original_tag = LAT } }
+		trigger = { OR = { original_tag = RUS original_tag = LAT } }
 		ai_chance = { factor = 100 }
 	}
 }
@@ -393,4 +423,117 @@ news_event = {
 		trigger = { original_tag = BEL }
 	}
 
+}
+#Imperial Federation
+news_event = {
+	id = eng_news.23
+	title = eng_news.23.t
+	desc = eng_news.23.d
+	picture = GFX_news_event_021
+
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = eng_news.23.a
+		trigger = { original_tag = ENG }
+	}
+	option = {
+		name = eng_news.23.b
+		trigger = { NOT = { original_tag = ENG } }
+	}
+	after = {
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = rule_superevent
+					option = DEFAULT
+				}
+				is_ai = no
+			}
+			hidden_effect = {
+				clear_superevents = yes
+			    play_song = "SE_eng_imperial_federation"
+			    set_country_flag = se_eng_imperial_federation
+				update_superevents = yes
+			}
+		}
+	}
+}
+#America falls
+news_event = {
+	id = eng_news.24
+	title = eng_news.24.t
+	desc = eng_news.24.d
+	picture = GFX_news_event_eng_america_falls
+	is_triggered_only = yes
+	major = yes
+	immediate = {
+		set_global_flag = eng_news_america_falls
+	}
+	trigger = {
+		NOT = { has_global_flag = eng_news_america_falls }
+	}
+	option = {
+		name = eng_news.24.a
+		trigger = {
+			OR = {
+				original_tag = ENG
+				is_ally_with = ENG
+			}
+		}
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = rule_superevent
+					option = DEFAULT
+				}
+				is_ai = no
+			}
+			hidden_effect = {
+				clear_superevents = yes
+			    play_song = "SE_eng_fall_of_america"
+			    set_country_flag = SE_eng_fall_of_america
+				update_superevents = yes
+			}
+		}
+	}
+	option = {
+		name = eng_news.24.b
+		trigger = {
+			NOT = {
+				original_tag = ENG
+				is_ally_with = ENG
+			}
+		}
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = rule_superevent
+					option = DEFAULT
+				}
+				is_ai = no
+			}
+			hidden_effect = {
+				clear_superevents = yes
+			    play_song = "SE_eng_fall_of_america"
+			    set_country_flag = SE_eng_fall_of_america
+				update_superevents = yes
+			}
+		}
+	}
+}
+
+#Northern Ireland mobilised
+news_event = {
+	id = eng_news.25
+	title = eng_news.25.t
+	desc = eng_news.25.d
+	picture = GFX_news_event_northern_ireland
+
+	major = yes
+	is_triggered_only = yes
+	option = {
+		name = eng_news.25.a
+	}
 }

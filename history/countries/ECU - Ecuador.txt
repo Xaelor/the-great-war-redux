@@ -1,107 +1,184 @@
 ﻿capital = 305
+oob = "ECU_1910"
 
+set_research_slots = 2
 set_stability = 0.3
 set_convoys = 20
 set_country_flag = monroe_doctrine
 
-#create_country_leader={ name = "Alfredo Baquerizo Moreno" desc=ECU_alfredo_baquerizo_moreno_DESC picture="gfx/leaders/ECU_alfredo_baquerizo_moreno.dds" expire="1935.1.1" ideology=liberalism traits={  } }
-#create_country_leader={ name = "José Luis Tamayo" desc=ECU_jose_luis_tamayo_DESC picture="gfx/leaders/ECU_jose_luis_tamayo.dds" expire="1935.1.1" ideology=liberalism traits={  } }
+recruit_character = ECU_leonidas_plaza
+recruit_character = ECU_eloy_alfaro
 
-create_country_leader={ 
-    name = "Leónidas Plaza" 
-	picture="gfx/leaders/ECU/ECU_leonidas_plaza_gutierrez.dds" 
-	expire="1935.1.1" 
-	ideology=moderatism 
-	traits={  } 
-}
+recruit_character = ECU_flavio_alfaro
+recruit_character = ECU_emilio_estrada
+recruit_character = ECU_freile_zaldumbide
+recruit_character = ECU_carlos_concha
+recruit_character = ECU_alfredo_baquerizo
+recruit_character = ECU_pedro_jacinto_montero
 
-create_country_leader={ 
-    name = "Eloy Alfaro" 
-	picture="gfx/leaders/ECU/ECU_eloy_alfaro.dds" 
-	expire="1935.1.1" 
-	ideology=liberalism 
-	traits={ old_fighter } 
-}
-
-create_field_marshal={  
-    name = "Eloy Alfaro" 
-	id=27002 
-	portrait_path="gfx/leaders/ECU/ECU_eloy_alfaro.dds" 
-	traits = {
-		inflexible_strategist
-		old_guard
-		media_personality
-		inspirational_leader
-	}
-	skill = 2
-	attack_skill = 1
-	defense_skill = 2
-	planning_skill = 2
-	logistics_skill = 2
-}
-create_corps_commander = {
-	name = "Leónidas Plaza"
-	portrait_path = "gfx/leaders/ECU/ECU_leonidas_plaza_gutierrez_general.dds"
-	id=27005
-	traits = {
-		politically_connected
-		media_personality
-	}
-	skill = 2
-	attack_skill = 2
-	defense_skill = 1
-	planning_skill = 2
-	logistics_skill = 1
-}
-create_corps_commander = {
-	name = "Flavio Alfaro"
-	portrait_path = "gfx/leaders/ECU/ECU_flavio_alfaro.dds"
-	id=27003
-	traits = {
-		politically_connected
-		career_officer
-	}
-	skill = 1
-}
-create_corps_commander = {
-	name = "Pedro Jacinto Montero"
-	portrait_path = "gfx/leaders/ECU/ECU_pedro_jacinto_montero.dds"
-	id=27004
-	traits = {
-		trait_reckless
-		politically_connected
-	}
-	skill = 2
-	attack_skill = 1
-	defense_skill = 3
-	planning_skill = 1
-	logistics_skill = 2
-}
-
-oob = "ECU_1910"
-
-set_research_slots = 2
+1910.1.1 = {
 
 	set_technology = {
 		#infantry
 		infantry_weapons = 1
-        support_weapons = 1
 		
 		#artillery
-		gw_artillery = 1
+		early_artillery = 1
+		basic_field_gun = 1
 		
 		#engineering
+		basic_train = 1
+		basic_railways = 1
+		construction0 = 1
+		powder_type_b = 1
+	}
+	add_ideas = {
+		VEN_hacienda
+		ECU_caudillismo
+		ECU_regionalismo
 	}
 
-set_politics = {
-	ruling_party = democratic
-	last_election = "1907.7.1" 
-	election_frequency = 48 
-	elections_allowed = yes 
-}	
-set_popularities = {
-	fascism = 0
-	communism = 1
-	democratic = 58
-	neutrality = 41
+	set_politics = {
+		ruling_party = democratic
+		last_election = "1907.7.1" 
+		election_frequency = 48 
+		elections_allowed = yes 
+	}	
+	set_popularities = {
+		fascism = 0
+		communism = 1
+		democratic = 58
+		neutrality = 41
+	}
 }
+1914.1.1 = {
+	add_political_power = 1198
+	add_command_power = 100
+
+	set_country_flag = Emilio_Estrada_chosen
+	set_country_flag = Eloy_Alfaro_keept_the_power
+
+	retire_character = ECU_flavio_alfaro
+	retire_character = ECU_pedro_jacinto_montero
+	retire_character = ECU_emilio_estrada
+	retire_character = ECU_eloy_alfaro
+
+	promote_character = ECU_leonidas_plaza
+
+	#generic focuses
+	complete_national_focus = state_of_the_country_army
+	complete_national_focus = modernize_equipment
+	complete_national_focus = capital_manoeuvers
+	complete_national_focus = naval_experience
+	complete_national_focus = naval_expansion
+	complete_national_focus = early_industrialization
+	complete_national_focus = new_roads
+	complete_national_focus = develop_capital
+	complete_national_focus = capital_country_arsenal
+	complete_national_focus = open_the_political_sphere
+	
+	set_politics = {
+		ruling_party = neutrality
+		elections_allowed = yes
+		last_election = "1912.9.1"
+	}
+	add_popularity = {
+		ideology = neutrality
+		popularity = 0.3
+	}
+	
+	ECU_carlos_concha = {
+		add_country_leader_role = {
+			promote_leader = yes
+			country_leader={
+				ideology=social_liberalism
+				traits={ first_among_equals }
+			}
+		}
+		add_corps_commander_role = {
+			traits = {
+				militias_officer
+				trickster
+				guerilla_fighter
+				militias_officer
+			}
+			skill = 2
+			attack_skill = 2
+			defense_skill = 3
+			planning_skill = 1
+			logistics_skill = 2
+			visible = {
+				is_country_leader = yes
+			}	
+		}
+	}	
+	create_dynamic_country = {
+	    original_tag = PREV
+		set_cosmetic_tag = ECU_civil_war_democratic
+		set_country_flag = ECU_civil_war
+		set_politics = {
+			ruling_party = democratic
+			elections_allowed = no
+		}
+		set_popularities = {
+			democratic = 60
+			neutrality = 30
+			communism = 10
+		}
+		transfer_state = 1089
+		set_war_support = 0.7
+		add_manpower = 20000
+		load_oob = "ECU_civil_war"		
+	}
+	ECU_carlos_concha = {
+		set_nationality = ECW	
+		promote_character = social_liberalism
+	}	
+	declare_war_on = {
+        target = ECW
+        type = civil_war
+    }
+	add_civil_war_target = ECW
+}
+
+if = {
+	limit = {
+		has_dlc = "Man the Guns"
+	}
+	set_technology = {	
+		gunboat_ship_hull_light = 1
+        torpedo_boat_ship_hull_light = 1
+        victorian_ship_hull_cruiser = 1
+
+		mtg_transport = 1
+		early_torpedo_tubes = 1
+		
+	}
+	set_naval_oob = "ECU_1910_naval_mtg"
+	ENG = {
+		create_equipment_variant = {
+			name = "Abdón Calderón Class"
+			type = ship_hull_cruiser_0
+			#name_group = ECU_CL_HISTORICAL
+			design_team = mio:ENG_armstrong_whitworth_organization
+			parent_version = 0
+			modules = {
+				fixed_ship_battery_slot = ship_light_battery_1
+				fixed_ship_engine_slot = cruiser_ship_engine_0
+				mid_1_custom_slot = empty
+			}
+			obsolete = yes
+		}
+	}
+	create_equipment_variant = {
+		name = "Tarqui Class" #couldn't find any info on when and where this ship was made
+		type = ship_hull_torpedo_boat
+		#name_group = ECU_DD_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_engine_slot = light_ship_engine_0
+			fixed_ship_torpedo_slot = ship_torpedo_tb
+		}
+		obsolete = yes
+	}
+}	

@@ -1,57 +1,54 @@
-capital = 2
+capital = 1001
 
-set_research_slots = 3
+set_research_slots = 1
 set_stability = 0.6
 set_war_support = 0.5
 #set_convoys = 175
 
-#LEADERS
-create_country_leader = { 
-	name = "Benedict XV"
-	picture = "gfx/leaders/ITA/PAP_Benedict_XV.dds" 
-	expire = "1935.1.1" 
-	ideology = theocracy
-	traits = { pope }
+recruit_character = PAP_pius_x
+
+recruit_character = PAP_benedict_xv
+recruit_character = PAP_pius_xi
+recruit_character = PAP_pius_xii
+recruit_character = PAP_college_of_cardinals
+
+recruit_character = PAP_jules_maxim_repond
+
+add_opinion_modifier = {
+	target = ITA
+	modifier = ITA_roman_question
 }
 
-1910.1.1 = {
-	#oob = "ITA_1910"
+send_embargo = ITA
 
+1910.1.1 = {
 	set_technology = {
 		#infantry
 		infantry_weapons = 1
-		infantry_weapons1 = 1
 		
 		#support
 		tech_support = 1
-		tech_engineers = 1
-		tech_recon = 1
 		
-		#armored
-		early_armored_car = 1
+		#armor	
 		
 		#artillery
-		gw_artillery = 1
-		howitzer1 = 1
-		
-		#doctrine
-		dispersed_offensive = 1
-
-		#air
-		early_fighter = 1
-		airship_bomber = 1
+		early_artillery = 1
+		basic_field_gun = 1
 		
 		#engineering
 		electrical_engineering = 1
 		radio = 1
 		mechanical_engineering = 1
-		aircraft_engine = 1
-		generator_battery = 1
+		basic_train = 1
+        basic_railways = 1
+		construction0 = 1
+		powder_type_b = 1
+        
 	}
 	
 	set_politics = {
 		ruling_party = neutrality
-		last_election = "1919.1.1"
+		last_election = "1903.8.4"
 		election_frequency = 48
 		elections_allowed = no
 	}
@@ -64,28 +61,23 @@ create_country_leader = {
 
 	add_ideas = {
 		disarmed_nation
-		civilian_economy
+		isolation  
+		PAP_holy_see
+		PAP_captivus_vaticani
+		closed_economy
+	}
+	if = {
+		limit = {
+			has_start_date < 1914.1.1
+		}
+		news_event = { id = kis_news.147 days = 3668 }
 	}
 }
-
-if = {
-	limit = {
-		not = { has_dlc = "Man the Guns" }
-	}
-
-	#set_naval_oob = "ITA_1910_naval_legacy"
-
-	set_technology = {
-		early_submarine = 1
-		early_destroyer = 1
-		basic_destroyer = 1
-		early_light_cruiser = 1
-		early_heavy_cruiser = 1
-		early_battleship = 1
-		early_battlecruiser = 1
-		transport = 1
-	}
+1914.1.1 = {
+	news_event = { id = kis_news.147 days = 2163 }
 }
+
+
 
 if = {
 	limit = {
@@ -97,27 +89,29 @@ if = {
 	set_technology = {
 		basic_naval_mines = 1	
 		early_ship_hull_light = 1
+		gunboat_ship_hull_light = 1
+        torpedo_boat_ship_hull_light = 1
 		basic_ship_hull_light = 1
 		early_ship_hull_submarine = 1
 		early_ship_hull_cruiser = 1
+			basic_armored_cruiser_armor_scheme = 1
+        victorian_ship_hull_cruiser = 1
+		
 		early_ship_hull_heavy = 1
 		basic_battery = 1
-		basic_light_battery = 1
-		improved_light_battery = 1
-		advanced_light_battery = 1
-		basic_medium_battery = 1
-		improved_medium_battery = 1
-		advanced_medium_battery = 1
-		basic_heavy_battery = 1
-		improved_heavy_battery = 1
+		
+		ironclad_artillery = 1
+		ironclad_coal_engine = 1
+		
+		basic_coal_engine = 1
+		early_oil_engine = 1
+		early_torpedo_tubes = 1
+		
 		basic_torpedo = 1
-		basic_secondary_battery = 1
-		improved_secondary_battery = 1
-		basic_cruiser_armor_scheme = 1
-		improved_cruiser_armor_scheme = 1
-		advanced_cruiser_armor_scheme = 1
-		basic_heavy_armor_scheme = 1
+		
+			basic_secondary_battery = 1
 		mtg_transport = 1
-		pre_dreadnoughts = 1
+		ironclad_ship_hull_heavy = 1
+		pre_dreadnought_ship_hull_heavy = 1
 	}
 }

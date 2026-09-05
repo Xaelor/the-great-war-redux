@@ -1,5 +1,5 @@
 ﻿###########################
-# turkey Events
+# Generic Events
 ###########################
 
 add_namespace = generic
@@ -29,36 +29,13 @@ country_event = {
 		trigger = {
 			has_government = FROM
 		}
-		if = {
-			limit = {
-				FROM = {
-					tag = ENG
-					has_completed_focus = uk_china_focus
-				}
-				tag = event_target:WTT_current_china_leader
-			}
-			effect_tooltip = {
-				add_offsite_building = { type = arms_factory level = 2 }
-			}
-		}
 	}
 	option = {
 		name = generic.1.b
 		trigger = {
 			NOT = { has_government = FROM }
 		}
-		if = {
-			limit = {
-				FROM = {
-					tag = ENG
-					has_completed_focus = uk_china_focus
-				}
-				tag = event_target:WTT_current_china_leader
-			}
-			effect_tooltip = {
-				add_offsite_building = { type = arms_factory level = 2 }
-			}
-		}
+
 	}
 }
 
@@ -268,7 +245,7 @@ country_event = {
 	option = { #Reject
 		name = generic.2.f
 		ai_chance = {
-			factor = 50
+			base = 50
 			
 			modifier = {
 				factor = 0.5
@@ -323,6 +300,21 @@ country_event = {
 				FROM = {
 					is_major = yes
 				}
+			}
+
+			modifier = {
+				factor = 0
+				FROM = {
+					tag = BEL
+				}
+				has_country_flag = FRA_say_yes_to_BEL
+			}
+			modifier = {
+				factor = 0
+				FROM = {
+					tag = MOR
+				}
+				has_country_flag = GER_say_yes_to_MOR
 			}
 		}
 		FROM = { 
@@ -579,7 +571,6 @@ country_event = {
 		hidden_effect = {
 			set_country_flag = alliance_applicant@ROOT
 			FROM = { set_country_flag = alliance_inviter@ROOT }
-			news_event = { id = news.289 hours = 12 }
 		}
 	}
 	option = { #Agree / Both Fascist
@@ -610,7 +601,6 @@ country_event = {
 		hidden_effect = {
 			set_country_flag = alliance_applicant@ROOT
 			FROM = { set_country_flag = alliance_inviter@ROOT }
-			news_event = { id = news.289 hours = 12 }
 		}
 	}
 	option = { #Agree / Both Communist
@@ -708,7 +698,6 @@ country_event = {
 		hidden_effect = {
 			set_country_flag = alliance_applicant@ROOT
 			FROM = { set_country_flag = alliance_inviter@ROOT }
-			news_event = { id = news.289 hours = 12 }
 		}
 	}
 	
@@ -718,7 +707,7 @@ country_event = {
 			is_in_faction = no
 		}
 		ai_chance = {
-			factor = 50
+			base = 50
 			
 			modifier = {
 				factor = 0.5
@@ -932,75 +921,6 @@ country_event = {
 		}
 	}
 
-}
-
-# Race for the Bomb success event
-country_event = {
-	id = generic.8
-	title = generic.8.t
-	desc = generic.8.d
-	
-	picture = GFX_report_event_physics_lab_01 #todo picture of Little Boy
-
-	is_triggered_only = yes
-	
-	option = {
-		name = generic.8.a
-		clr_country_flag = racing_for_the_bomb
-		remove_ideas = race_for_the_bomb
-		add_war_support = 0.1
-		every_other_country = {
-			limit = {
-				has_country_flag = racing_for_the_bomb
-				NOT = { is_in_faction_with = ROOT }
-			}
-			country_event = { id = generic.9 }
-		}
-		every_other_country = {
-			limit = {
-				has_country_flag = racing_for_the_bomb
-				is_in_faction_with = ROOT
-			}
-			country_event = { id = generic.10 }
-		}
-	}	
-}
-
-# Race for the Bomb failure event
-country_event = {
-	id = generic.9
-	title = generic.9.t
-	desc = generic.9.d
-	
-	picture = GFX_report_event_physics_lab_01
-
-	is_triggered_only = yes
-	
-	option = {
-		name = generic.9.a
-		clr_country_flag = racing_for_the_bomb
-		remove_ideas = race_for_the_bomb
-		add_timed_idea = { idea = race_for_the_bomb_outclassed days = 360 }
-		add_stability = -0.1
-	}	
-}
-
-# Race for the Bomb faction member success event
-country_event = {
-	id = generic.10
-	title = generic.10.t
-	desc = generic.10.d
-	
-	picture = GFX_report_event_physics_lab_01
-
-	is_triggered_only = yes
-	
-	option = {
-		name = generic.10.a
-		clr_country_flag = racing_for_the_bomb
-		remove_ideas = race_for_the_bomb
-		add_war_support = 0.05
-	}	
 }
 
 # Ideology civil war won
@@ -1404,62 +1324,63 @@ country_event = {
 }
 
 # Notification event that leader has gotten sick
-unit_leader_event = {
-	id = generic.17
-	title = generic.17.t
-	desc = generic.17.d
+# unit_leader_event = {
+# 	id = generic.17
+# 	title = generic.17.t
+# 	desc = generic.17.d
 	
-	picture = GFX_report_event_military_planning
+# 	picture = GFX_report_event_military_planning
 
-	is_triggered_only = yes
+# 	is_triggered_only = yes
 
-	immediate = {
-		hidden_effect = {
-			FROM = {
-				set_unit_leader_flag = {
-					flag = recently_sick
-					value = 1
-					days = 180
-				}
-			}
-		}
-	}
+# 	immediate = {
+# 		hidden_effect = {
+# 			FROM = {
+# 				set_unit_leader_flag = {
+# 					flag = recently_sick
+# 					value = 1
+# 					days = 180
+# 				}
+# 			}
+# 		}
+# 	}
 
-	option = {
-		name = unfortunate
-		effect_tooltip = {
-			FROM = {
-				add_timed_unit_leader_trait = {
-					trait = sick
-					days = 30
-				}
-			}
-		}
-	}	
-}
+# 	option = {
+# 		name = unfortunate
+# 		effect_tooltip = {
+# 			FROM = {
+# 				add_timed_unit_leader_trait = {
+# 					trait = sick
+# 					days = 30
+# 				}
+# 			}
+# 		}
+# 	}	
+# }
 
 # Notification event that leader has been wounded
-country_event = {
-	id = generic.18
-	title = generic.18.t
-	desc = generic.18.d
+# unit_leader_event = {
+# 	id = generic.18
+# 	title = generic.18.t
+# 	desc = generic.18.d
 	
-	picture = GFX_report_event_military_planning
+# 	picture = GFX_report_event_military_planning
 
-	is_triggered_only = yes
+# 	is_triggered_only = yes
 
-	option = {
-		name = unfortunate
-		effect_tooltip = {
-			FROM = {
-				add_timed_unit_leader_trait = {
-					trait = wounded
-					days = 90
-				}
-			}
-		}
-	}	
-}
+# 	option = {
+# 		name = unfortunate
+# 		effect_tooltip = {
+# 			FROM = {
+# 				add_timed_unit_leader_trait = {
+# 					trait = wounded
+# 					days = 90
+# 				}
+# 			}
+# 		}
+# 	}	
+# }
+
 
 # Notification event that FROM has sent industrial support
 country_event = {
@@ -1488,7 +1409,7 @@ country_event = {
 		trigger = {
 			has_opinion = {
 				target = FROM
-				value = 150
+				value > 99
 			}
 		}
 	}
@@ -1498,7 +1419,7 @@ country_event = {
 			NOT = { 
 				has_opinion = {
 					target = FROM
-					value = 150
+					value < 100
 				}
 			}
 		}
@@ -1510,17 +1431,15 @@ country_event = {
 	option = {
 		name = generic.20.a
 		trigger = {
-			NOT = { 
-				has_opinion = {
-					target = FROM
-					value = 150
-				}
+			has_opinion = {
+				target = FROM
+				value < 100
 			}
 		}
 		ai_chance = {
-			factor = 20
+			base = 20
 			modifier = {
-				threat > 20
+				threat > 0.2
 				factor = 2
 			}
 			modifier = {
@@ -1535,6 +1454,10 @@ country_event = {
 				is_in_faction = yes
 				NOT = { is_in_faction_with = FROM }
 				factor = 0.5
+			}
+			modifier = {
+				has_country_flag = must_accept
+				factor = 1000
 			}
 		}
 		effect_tooltip = { 
@@ -1562,13 +1485,13 @@ country_event = {
 		trigger = {
 			has_opinion = {
 				target = FROM
-				value = 150
+				value > 99
 			}
 		}
 		ai_chance = {
-			factor = 25
+			base = 25
 			modifier = {
-				threat > 20
+				threat > 0.2
 				factor = 2
 			}
 			modifier = {
@@ -1583,6 +1506,10 @@ country_event = {
 				is_in_faction = yes
 				NOT = { is_in_faction_with = FROM }
 				factor = 0.5
+			}
+			modifier = {
+				has_country_flag = must_accept
+				factor = 1000
 			}
 		}
 		effect_tooltip = { 
@@ -1608,24 +1535,42 @@ country_event = {
 	option = {
 		name = generic.20.c
 		ai_chance = {
-			factor = 30
+			base = 30
 			modifier = {
 				is_in_faction = yes
 				NOT = { is_in_faction_with = FROM }
 				factor = 2
 			}
 			modifier = {
-				threat < 20
+				threat < 0.2
 				factor = 2
+			}
+			modifier = {
+				has_country_flag = must_accept
+				factor = 0
 			}
 		}
 		effect_tooltip = { 
-			FROM = { 
-				create_wargoal = {
-					type = puppet_wargoal_focus
-					target = ROOT
+			if = {
+				limit = {
+					has_country_flag = hostile_country_want_to_annex_on_denial
+				}
+				FROM = { 
+					create_wargoal = {
+						type = annex_everything
+						target = ROOT
+					}
+				}
+				else = {
+					FROM = { 
+						create_wargoal = {
+							type = puppet_wargoal_focus
+							target = ROOT
+						}
+					}
 				}
 			}
+
 		}
 		hidden_effect = {
 			FROM = { country_event = { id = generic.22 hours = 6 } }
@@ -1645,9 +1590,6 @@ country_event = {
 
 	option = {
 		name = generic.21.a
-		ai_chance = {
-			factor = 1
-		}
 		ROOT = { puppet = FROM }
 		if = {
 			limit = {
@@ -1676,15 +1618,28 @@ country_event = {
 
 	option = {
 		name = generic.22.a
-		ai_chance = {
-			factor = 1
-		}
-		ROOT = { 
-			create_wargoal = {
-				type = puppet_wargoal_focus
-				target = FROM
+		if = {
+			limit = {
+				FROM = {
+					has_country_flag = hostile_country_want_to_annex_on_denial
+				}
+			}
+			ROOT = { 
+				create_wargoal = {
+					type = annex_everything
+					target = FROM
+				}
+			}
+			else = {
+				ROOT = { 
+					create_wargoal = {
+						type = puppet_wargoal_focus
+						target = FROM
+					}
+				}
 			}
 		}
+
 	}
 
 }
@@ -1702,7 +1657,7 @@ country_event = {
 	option = {
 		name = generic.23.a
 		ai_chance = {
-			factor = 90
+			base = 90
 			modifier = { # If they stand a chance they will fight
 				factor = 0
 				strength_ratio = {
@@ -1750,7 +1705,7 @@ country_event = {
 	option = {
 		name = generic.23.b
 		ai_chance = { 
-			factor = 10 
+			base = 10 
 			modifier = {
 				factor = 0.5
 				strength_ratio = {
@@ -1804,9 +1759,6 @@ country_event = {
 
 	option = {
 		name = generic.25.a
-		ai_chance = {
-			factor = 90
-		}
 		create_wargoal = {
 			type = annex_everything 
 			target = FROM
@@ -1814,50 +1766,151 @@ country_event = {
 		hidden_effect = { clear_global_event_target = demanded_prov_target }
 	}
 }
-#Golira Rise
+
+
+
+#FROM want to annex ROOT
 country_event = {
-	id = generic.26
-	hidden = yes
-	fire_only_once = yes
-	trigger = {
-		tag = COG
-		country_exists = COG
-		COG = { is_subject = no }
+	id = generic.100
+	title = generic.100.t
+	desc = {
+		text = generic.100.d_friends
+		trigger = {
+			has_opinion = {
+				target = FROM
+				value > 50
+			}
+		}
 	}
-	immediate = {
-		set_cosmetic_tag = COG_Gorilla
-		add_manpower = 100000000
-		add_offsite_building = { type = arms_factory level = 25 }
-		295 = {
-			add_extra_state_shared_building_slots = 20
-			add_building_construction = {
-    				type = arms_factory
-    				level = 20
-    				instant_build = yes
+	desc = {
+		text = generic.100.d_enemies
+		trigger = {
+			has_opinion = {
+				target = FROM
+				value < 51
 			}
 		}
-		538 = {
-			add_extra_state_shared_building_slots = 20
-			add_building_construction = {
-    				type = arms_factory
-    				level = 20
-    				instant_build = yes
-			}
-		}
-		718 = {
-			add_extra_state_shared_building_slots = 20
-			add_building_construction = {
-    				type = arms_factory
-    				level = 20
-    				instant_build = yes
-			}
-		}
-		add_state_core = 772
-		add_state_core = 752
-		add_state_core = 548
-		add_state_core = 118
-		every_country = { end_puppet = COG }
-		leave_faction = yes
-		create_faction = Monkey
 	}
+	picture = GFX_report_event_generic_read_write
+	
+	is_triggered_only = yes
+
+	option = {
+		name = generic.100.b
+		ai_chance = {
+			base = 25
+			modifier = {
+				threat > 0.2
+				add = 2
+			}
+			modifier = {
+				is_in_faction = no
+				add = 2
+			}
+			modifier = {
+				is_in_faction_with = FROM
+				add = 50
+			}
+			modifier = {
+				is_in_faction = yes
+				NOT = { is_in_faction_with = FROM }
+				add = -25
+			}
+			modifier = {
+				is_puppet_of = FROM
+				add = 200
+			}
+			modifier = {
+				OR = { tag = CRE tag = SMS tag = IKR }
+				add = 500
+			}
+			
+		}		
+		custom_effect_tooltip = GAME_OVER_TT
+		hidden_effect = {
+			FROM = { country_event = { id = generic.101 hours = 6 } }
+		}
+	}
+
+	option = {
+		name = generic.100.c
+		ai_chance = {
+			base = 30
+			modifier = {
+				is_in_faction = yes
+				NOT = { is_in_faction_with = FROM }
+				factor = 2
+			}
+			modifier = {
+				threat < 0.2
+				factor = 2
+			}
+			modifier = {
+				is_puppet_of = FROM
+				factor = 0
+			}
+			modifier = {
+				OR = { tag = CRE tag = SMS tag = IKR }
+				factor = 0
+			}
+		}
+		effect_tooltip = { 
+			FROM = { 
+				create_wargoal = {
+					type = annex_everything
+					target = ROOT
+				}
+			}
+		}
+		hidden_effect = {
+			FROM = { country_event = { id = generic.102 hours = 6 } }
+		}
+	}
+}
+
+#annexed
+country_event = {
+	id = generic.101
+	title = generic.101.t
+	desc = generic.101.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	option = {
+		name = generic.101.a
+		ROOT = {
+			annex_country = {
+				target = FROM
+				transfer_troops = yes
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					FROM = { tag = CRE }
+				}
+				FROM = { drop_cosmetic_tag = yes }
+			}
+		}
+	}
+}
+
+#Denied annexation
+country_event = {
+	id = generic.102
+	title = generic.102.t
+	desc = generic.102.d
+	picture = GFX_report_event_generic_read_write
+	
+	is_triggered_only = yes
+
+	option = {
+		name = generic.102.a
+		ROOT = { 
+			create_wargoal = {
+				type = annex_everything
+				target = FROM
+			}
+		}
+	}
+
 }

@@ -1,56 +1,254 @@
 ideas = {
 
-	mobilization_laws = { 
+	mobilization_laws = {
 		law = yes
 		use_list_view = yes
+
 		disarmed_nation = {
 			cost = 150
 			removal_cost = -1
 			level = 7
 			
+			allowed = {
+				always = no
+			}
 			available = {
-				#has_manpower_for_recruit_change_to = { value = 0.005 group = mobilization_laws }
+				hidden_trigger = { always = no }
 			}
 			equipment_bonus = {
 				infantry_equipment = {
 					build_cost_ic = 0.5
 					instant = yes
 				}
+				artillery = {
+					build_cost_ic = 0.5
+					instant = yes
+				}
+				armor = {
+					build_cost_ic = 0.5
+					instant = yes
+				}
 			}
 			research_bonus = {
 				infantry_weapons = -0.2
-				artillery = -0.2
-				land_doctrine = -0.2
+				cat_artillery = -0.2
+				armor = -0.2
+				naval_equipment = -0.2
 			}
 			modifier = {
+				land_mastery_gain_factor = -0.5
 				conscription = 0.005
 			}
-			cancel_if_invalid = no
+			allowed_to_remove = {
+				NOT = { has_idea = idea_army_restrictions }
+				if = {
+					limit = {
+						original_tag = FIN
+					}
+					NOT = {
+						AND = {
+							has_country_flag = monarchist_puppet
+							is_subject = yes
+						}
+					}	
+				}
+				else_if = {
+					limit = {
+						original_tag = EGY
+					}
+					NOT = {
+						has_idea = EGY_british_colonial_interference
+					}	
+				}
+				if = {
+					limit = {
+						has_autonomy_state = autonomy_tgwr_integrated_protectorate
+					}
+					NOT = {
+						has_autonomy_state = autonomy_tgwr_integrated_protectorate
+					}	
+				}			
+			}
 
+			on_add = {
+				if = {
+					limit = {
+						tag = AUS
+						any_subject_country = {
+							has_idea = HUN_ausgleich
+						}
+					}
+					every_subject_country = {
+						limit = {
+							has_idea = HUN_ausgleich
+						}
+						country_event = {
+							id = ww1_auh.217
+							days = 1
+						}
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							tag = AUS
+							tag = HUN
+						}	
+						any_subject_country = {
+							has_idea = BOS_landesstatut_constitution
+						}
+					}
+					every_subject_country = {
+						limit = {
+							has_idea = BOS_landesstatut_constitution
+						}
+						country_event = {
+							id = ww1_auh.217
+							days = 1
+						}
+					}
+				}
+			}
+			cancel_if_invalid = no
+			ai_will_do = {
+				factor = 0
+			}
 		}
 		
-		volunteer_only = {	
+		volunteer_only = {
 			cost = 150
 			removal_cost = -1
 			level = 6
 			
 			available = {
-				#has_manpower_for_recruit_change_to =  { value = 0.015 group = mobilization_laws }
-				NOT = { has_idea = undisturbed_isolation }
-				NOT = { has_idea = isolation }
+				NOT = { has_idea = undisturbed_isolation }	
 				if = {
-					limit = { tag = USA }
+					limit = { original_tag = USA }
 					has_completed_focus = USA_volunteer_act
+				}
+				else_if = {
+					limit = {
+						original_tag = SWE
+						has_completed_focus = SWE_disarm_nation
+						has_idea = disarmed_nation
+					}
+					OR = {
+						NOT = {
+							has_country_leader = { character = SWE_karl_staaff }
+						}
+						has_war = yes
+					}
+				}
+				else_if = {
+					limit = { has_idea = SOV_idea_red_guard }
+					NOT = { has_idea = SOV_idea_red_guard }
+				}
+				if = {
+					limit = {
+						tag = BEL
+					}
+					NOT = {
+						has_idea = BEL_outdated_military
+					}
+				}
+				if = {
+					limit = { has_idea = SRA_marching_army }
+					NOT = { has_idea = SRA_marching_army }
+				}
+				else_if = {
+					limit = { original_tag = LUX }
+					OR = {
+						has_war = yes
+						NOT = {
+							has_idea = LUX_london_treaty
+						}
+					}
+					if = {
+						limit = {
+							has_idea = LUX_occupation
+						}
+						NOT = {
+							has_idea = LUX_occupation
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = HUN_ausgleich
+					}
+					NOT = {
+						has_idea = HUN_ausgleich
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = BOS_landesstatut_constitution
+					}
+					NOT = {
+						has_idea = BOS_landesstatut_constitution
+					}
 				}
 			}
 
 			modifier = {
-				conscription = 0.01
+				conscription = 0.015
+			}
+
+			on_add = {
+				if = {
+					limit = {
+						tag = AUS
+						any_subject_country = {
+							has_idea = HUN_ausgleich
+						}
+					}
+					every_subject_country = {
+						limit = {
+							has_idea = HUN_ausgleich
+						}
+						country_event = {
+							id = ww1_auh.217
+							days = 1
+						}
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							tag = AUS
+							tag = HUN
+						}	
+						any_subject_country = {
+							has_idea = BOS_landesstatut_constitution
+						}
+					}
+					every_subject_country = {
+						limit = {
+							has_idea = BOS_landesstatut_constitution
+						}
+						country_event = {
+							id = ww1_auh.217
+							days = 1
+						}
+					}
+				}
 			}
 			
 			default = yes
 			
 			cancel_if_invalid = no
+			
+			ai_will_do = {
+				base = 1
+				modifier = {
+					add = 100
+					has_idea = disarmed_nation
+				}
+				modifier = {
+					factor = 0
+					NOT = { has_idea = disarmed_nation }
+				}
+			}
 		}
 		
 		limited_conscription = {		
@@ -59,36 +257,87 @@ ideas = {
 			level = 5
 
 			available = {
-				#has_manpower_for_recruit_change_to =  { value = 0.025 group = mobilization_laws }
-				has_war_support > 0.1
+				OR = {
+					has_war_support > 0.1
+					has_manpower < 1000
+				}
 				NOT = { has_idea = undisturbed_isolation }
-				NOT = { has_idea = isolation }
 				if = {
-					limit = { tag = AST }
-					AST = {
-						NOT = { has_idea = AST_idea_Citizen_Army } 
+					limit = { 
+						original_tag = ENG 
+						has_government = democratic
+					}
+					OR = {
+						has_global_flag = great_war
+						surrender_progress > 0					
+					}			
+				}
+				else_if = {
+					limit = { original_tag = USA }
+					has_completed_focus = USA_continental_corps
+				}
+				else_if = {
+					limit = { original_tag = RUS has_idea = RUS_idea_volunteer_army }
+					has_war_support > 0.8
+				}
+				else_if = {
+					limit = {
+						original_tag = SWE
+						has_completed_focus = SWE_disarm_nation
+						has_idea = disarmed_nation
+					}
+					OR = {
+						NOT = {
+							has_country_leader = { character = SWE_karl_staaff }
+						}
+						has_war = yes
 					}
 				}
-				if = {
-					limit = { tag = ENG }
-					has_global_flag = kis_war
+				else_if = {
+					limit = { has_idea = SOV_idea_red_guard }
+					NOT = { has_idea = SOV_idea_red_guard }
 				}
-				if = {
-					limit = { tag = USA }
-					has_completed_focus = USA_continental_corps
-					NOT = { has_idea = undisturbed_isolation }
-					NOT = { has_idea = isolation }
+				else_if = {
+					limit = { original_tag = BEL }
+					NOT = {
+						has_idea = BEL_outdated_military
+					}				
 				}
-				if = {
-					limit = { tag = RUS }
-					RUS = {
-						OR = {
-							NOT = { has_idea = RUS_idea_volunteer_army }
-							AND = {
-								has_idea = RUS_idea_volunteer_army
-								has_war_support > 0.8
-							}
+				else_if = {
+					limit = { has_idea = SRA_marching_army }
+					NOT = { has_idea = SRA_marching_army }
+				}
+				else_if = {
+					limit = { original_tag = LUX }
+					OR = {
+						has_war = yes
+						NOT = {
+							has_idea = LUX_london_treaty
 						}
+					}
+					if = {
+						limit = {
+							has_idea = LUX_occupation
+						}
+						NOT = {
+							has_idea = LUX_occupation
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = HUN_ausgleich
+					}
+					NOT = {
+						has_idea = HUN_ausgleich
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = BOS_landesstatut_constitution
+					}
+					NOT = {
+						has_idea = BOS_landesstatut_constitution
 					}
 				}
 			}
@@ -96,49 +345,160 @@ ideas = {
 			modifier = {
 				conscription = 0.025
 			}
+
+			on_add = {
+				if = {
+					limit = {
+						tag = AUS
+						any_subject_country = {
+							has_idea = HUN_ausgleich
+						}
+					}
+					every_subject_country = {
+						limit = {
+							has_idea = HUN_ausgleich
+						}
+						country_event = {
+							id = ww1_auh.217
+							days = 1
+						}
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							tag = AUS
+							tag = HUN
+						}	
+						any_subject_country = {
+							has_idea = BOS_landesstatut_constitution
+						}
+					}
+					every_subject_country = {
+						limit = {
+							has_idea = BOS_landesstatut_constitution
+						}
+						country_event = {
+							id = ww1_auh.217
+							days = 1
+						}
+					}
+				}
+			}
 			
 			cancel_if_invalid = no
+			
+			ai_will_do = {
+				base = 1
+				modifier = {
+					# Ignore if high on manpower
+					factor = 0.5
+					manpower_per_military_factory > 5000
+				}
+				modifier = {
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory < 2000
+				}
+			}
 		}
 		
 		extensive_conscription = {
 			
 			available = {
-				#has_manpower_for_recruit_change_to = { value = 0.05 group = mobilization_laws }
 				OR = {
+					has_war_support > 0.5
 					has_government = fascism
-					has_government = communism
+					custom_trigger_tooltip = {
+    					tooltip = has_government_vanguardism_tt
+    					has_country_leader_ideology = vanguardism
+					}
 					AND = {
 						has_war = yes
-						enemies_strength_ratio > 0.5
+						OR = {
+							enemies_strength_ratio > 0.5
+							has_manpower < 1000
+							surrender_progress > 0.15
+						}
 					}					
 				}
-				has_war_support > 0.2
-				if = {
-					limit = { tag = ENG }
-					has_global_flag = kis_war
+				NOT = {
+					has_idea = undisturbed_isolation
 				}
 				if = {
-					limit = { tag = AST }
-					AST = {
-						NOT = { has_idea = AST_idea_Citizen_Army } 
+					limit = { original_tag = ENG }
+					OR = {
+						has_global_flag = great_war
+						threat > 0.5
+						surrender_progress > 0					
 					}
 				}
-				if = {
-					limit = { tag = USA }
+				else_if = {
+					limit = { original_tag = USA }
 					has_completed_focus = USA_continental_corps
-					NOT = { has_idea = undisturbed_isolation }
-					NOT = { has_idea = isolation }
 				}
-				if = {
-					limit = { tag = RUS }
-					RUS = {
-						OR = {
-							NOT = { has_idea = RUS_idea_volunteer_army }
-							AND = {
-								has_idea = RUS_idea_volunteer_army
-								has_war_support > 0.8
-							}
+				else_if = {
+					limit = { original_tag = RUS has_idea = RUS_idea_volunteer_army }
+					has_war_support > 0.8
+				}
+				else_if = {
+					limit = {
+						original_tag = SWE
+						has_completed_focus = SWE_disarm_nation
+						has_idea = disarmed_nation
+					}
+					OR = {
+						NOT = {
+							has_country_leader = { character = SWE_karl_staaff }
 						}
+						has_war = yes
+					}
+				}
+				else_if = {
+					limit = { has_idea = SOV_idea_red_guard }
+					NOT = { has_idea = SOV_idea_red_guard }
+				}
+				else_if = {
+					limit = { original_tag = BEL }
+					NOT = {
+						has_idea = BEL_outdated_military
+					}				
+				}
+				else_if = {
+					limit = { has_idea = SRA_marching_army }
+					NOT = { has_idea = SRA_marching_army }
+				}
+				else_if = {
+					limit = { original_tag = LUX }
+					OR = {
+						has_war = yes
+						NOT = {
+							has_idea = LUX_london_treaty
+						}
+					}
+					if = {
+						limit = {
+							has_idea = LUX_occupation
+						}
+						NOT = {
+							has_idea = LUX_occupation
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = HUN_ausgleich
+					}
+					NOT = {
+						has_idea = HUN_ausgleich
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = BOS_landesstatut_constitution
+					}
+					NOT = {
+						has_idea = BOS_landesstatut_constitution
 					}
 				}
 			}
@@ -146,6 +506,46 @@ ideas = {
 			cost = 150
 			removal_cost = -1
 			level = 4
+
+			on_add = {
+				if = {
+					limit = {
+						tag = AUS
+						any_subject_country = {
+							has_idea = HUN_ausgleich
+						}
+					}
+					every_subject_country = {
+						limit = {
+							has_idea = HUN_ausgleich
+						}
+						country_event = {
+							id = ww1_auh.217
+							days = 1
+						}
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							tag = AUS
+							tag = HUN
+						}	
+						any_subject_country = {
+							has_idea = BOS_landesstatut_constitution
+						}
+					}
+					every_subject_country = {
+						limit = {
+							has_idea = BOS_landesstatut_constitution
+						}
+						country_event = {
+							id = ww1_auh.217
+							days = 1
+						}
+					}
+				}
+			}
 			
 			modifier = {
 				conscription = 0.05
@@ -155,21 +555,19 @@ ideas = {
 				training_time_factor = 0.1
 			}
 			ai_will_do = {
-   				factor = 100
-				
+				base = 1
 				modifier = {
-					factor = 0
-					has_manpower > 500000
+					# Ignore if high on manpower
+					factor = 0.5
+					manpower_per_military_factory > 3000
 				}
+
 				modifier = {
-					factor = 1000
-					tag = FRA
-					OR = {
-						has_war = yes
-						has_manpower < 450000
-					}
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory <  800
 				}
-			}	
+			}
 			
 			cancel_if_invalid = no
 		}
@@ -178,50 +576,136 @@ ideas = {
 			
 			
 			available = {
-				#has_manpower_for_recruit_change_to =  { value = 0.1 group = mobilization_laws }
+				has_war = yes
 				OR = {
 					has_government = fascism
-					has_government = communism
-					AND = {
-						has_war = yes
-						enemies_strength_ratio > 0.6
-						#any_enemy_country = {
-						#	strength_ratio = {
-						#		tag = ROOT 
-						#		ratio > 0.6
-						#	}
-						#}
+					custom_trigger_tooltip = {
+    					tooltip = has_government_vanguardism_tt
+    					has_country_leader_ideology = vanguardism
 					}
-				}
-				OR = {
 					has_war_support > 0.6
+					enemies_strength_ratio > 0.6
 					surrender_progress > 0
+					has_manpower < 1000
+				}
+				NOT = {
+					has_idea = undisturbed_isolation
 				}
 				if = {
-					limit = { tag = ENG }
-					has_global_flag = kis_war
-				}
-				if = {
-					limit = { tag = AST }
-					AST = {
-						NOT = { has_idea = AST_idea_Citizen_Army } 
+					limit = { original_tag = ENG }
+					OR = {
+						has_global_flag = great_war
+						threat > 0.7
+						surrender_progress > 0					
 					}
 				}
-				if = {
-					limit = { tag = USA }
+				else_if = {
+					limit = { original_tag = USA }
 					has_completed_focus = USA_continental_corps
 					NOT = { has_idea = undisturbed_isolation }
 					NOT = { has_idea = isolation }
 				}
+				else_if = {
+					limit = { original_tag = RUS has_idea = RUS_idea_volunteer_army }
+					has_war_support > 0.8
+				}
+				else_if = {
+					limit = {
+						original_tag = SWE
+						has_completed_focus = SWE_disarm_nation
+						has_idea = disarmed_nation
+					}
+					OR = {
+						NOT = {
+							has_country_leader = { character = SWE_karl_staaff }
+						}
+						has_war = yes
+					}
+				}
+				else_if = {
+					limit = { has_idea = SOV_idea_red_guard }
+					NOT = { has_idea = SOV_idea_red_guard }
+				}
+				else_if = {
+					limit = { original_tag = BEL }
+					NOT = {
+						has_idea = BEL_outdated_military
+					}					
+				}
+				else_if = {
+					limit = { has_idea = SRA_marching_army }
+					NOT = { has_idea = SRA_marching_army }
+				}
+				else_if = {
+					limit = { original_tag = LUX }
+					OR = {
+						has_war = yes
+						NOT = {
+							has_idea = LUX_london_treaty
+						}
+					}
+					if = {
+						limit = {
+							has_idea = LUX_occupation
+						}
+						NOT = {
+							has_idea = LUX_occupation
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = HUN_ausgleich
+					}
+					NOT = {
+						has_idea = HUN_ausgleich
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = BOS_landesstatut_constitution
+					}
+					NOT = {
+						has_idea = BOS_landesstatut_constitution
+					}
+				}
+			}
+
+			on_add = {
 				if = {
-					limit = { tag = RUS }
-					RUS = {
+					limit = {
+						tag = AUS
+						any_subject_country = {
+							has_idea = HUN_ausgleich
+						}
+					}
+					every_subject_country = {
+						limit = {
+							has_idea = HUN_ausgleich
+						}
+						country_event = {
+							id = ww1_auh.217
+							days = 1
+						}
+					}
+				}
+				if = {
+					limit = {
 						OR = {
-							NOT = { has_idea = RUS_idea_volunteer_army }
-							AND = {
-								has_idea = RUS_idea_volunteer_army
-								has_war_support > 0.8
-							}
+							tag = AUS
+							tag = HUN
+						}	
+						any_subject_country = {
+							has_idea = BOS_landesstatut_constitution
+						}
+					}
+					every_subject_country = {
+						limit = {
+							has_idea = BOS_landesstatut_constitution
+						}
+						country_event = {
+							id = ww1_auh.217
+							days = 1
 						}
 					}
 				}
@@ -239,66 +723,172 @@ ideas = {
 				training_time_factor = 0.2
 			}
 			ai_will_do = {
-   				factor = 100
+				base = 1
+				modifier = {
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory <  700
+				}
+				modifier = {
+					#Lower chance if has decent amount
+					factor = 0.5
+					manpower_per_military_factory >  1000
+				}
+				modifier = { #much stronger than the enemy
+					factor = 0
+					has_war = yes
+					enemies_strength_ratio > 0.5
+					has_manpower > 100000
+				}
 				modifier = {
 					factor = 0
-					has_manpower > 500000
+					tag = GER
+					has_focus_tree = german_focus
+					NOT = {
+						has_completed_focus = GER_loosen_conscription_standards
+					}
+					is_historical_focus_on = yes
 				}
 				modifier = {
-					factor = 1000
-					tag = FRA
-					OR = {
-						has_war = yes
-						has_manpower < 450000
+					factor = 0
+					original_tag = TUR
+					NOT = {
+						has_global_flag = great_war
+						AND = {
+							any_enemy_country = {
+								is_major = yes
+							}
+						}
 					}
 				}
+				modifier = {
+					factor = 0
+					NOT = { has_idea = extensive_conscription }
+				}
 			}		
+
+			cancel = {			
+				has_war = no
+				if = {
+					limit = {
+						has_idea = HUN_ausgleich
+					}
+					NOT = {
+						has_idea = HUN_ausgleich
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = BOS_landesstatut_constitution
+					}
+					NOT = {
+						has_idea = BOS_landesstatut_constitution
+					}
+				}
+			}
+
 			cancel_if_invalid = no
 		}
 		
 		all_adults_serve = {
 			
 			available = {
-				#has_manpower_for_recruit_change_to =  { value = 0.2 group = mobilization_laws }
 				has_war = yes
 				OR = {
-					has_war_support > 0.7
-					surrender_progress > 0
-				}
-				enemies_strength_ratio > 0.75
-				#any_enemy_country = {
-				#	strength_ratio = {
-				#		tag = ROOT 
-				#		ratio > 0.75
-				#	}
-				#}
-				if = {
-					limit = { tag = ENG }
-					has_global_flag = kis_war
-				}
-				if = {
-					limit = { tag = AST }
-					AST = {
-						NOT = { has_idea = AST_idea_Citizen_Army } 
-					}
-				}
-				if = {
-					limit = { tag = RUS }
-					RUS = {
-						OR = {
-							NOT = { has_idea = RUS_idea_volunteer_army }
-							AND = {
-								has_idea = RUS_idea_volunteer_army
-								has_war_support > 0.8
+					AND = {
+						has_war_support > 0.7
+						OR = {						
+							has_government = fascism
+							custom_trigger_tooltip = {
+    							tooltip = has_government_vanguardism_tt
+    							has_country_leader_ideology = vanguardism
 							}
-						}
-					}
+						}	
+					}			
+					enemies_strength_ratio > 0.75
+					surrender_progress > 0.15
+					has_manpower < 1000
+				}
+				NOT = {
+					has_idea = undisturbed_isolation
 				}
 				if = {
-					limit = { tag = USA }
+					limit = { original_tag = ENG }
+					OR = {
+						has_global_flag = great_war
+						threat > 0.9
+						surrender_progress > 0					
+					}
+				}
+				else_if = {
+					limit = { original_tag = RUS has_idea = RUS_idea_volunteer_army }
+					has_war_support > 0.8
+				}
+				else_if = {
+					limit = { original_tag = USA }
 					has_completed_focus = USA_continental_corps
 					NOT = { has_idea = undisturbed_isolation }
 					NOT = { has_idea = isolation }
+				}
+				else_if = {
+					limit = {
+						original_tag = SWE
+						has_completed_focus = SWE_disarm_nation
+						has_idea = disarmed_nation
+					}
+					OR = {
+						NOT = {
+							has_country_leader = { character = SWE_karl_staaff }
+						}
+						has_war = yes
+					}
+				}
+				else_if = {
+					limit = { has_idea = SOV_idea_red_guard }
+					NOT = { has_idea = SOV_idea_red_guard }
+				}
+				else_if = {
+					limit = { original_tag = BEL }
+					NOT = {
+						has_idea = BEL_outdated_military
+					}					
+				}
+				else_if = {
+					limit = { has_idea = SRA_marching_army }
+					NOT = { has_idea = SRA_marching_army }
+				}
+				else_if = {
+					limit = { original_tag = LUX }
+					OR = {
+						has_war = yes
+						NOT = {
+							has_idea = LUX_london_treaty
+						}
+					}
+					if = {
+						limit = {
+							has_idea = LUX_occupation
+						}
+						NOT = {
+							has_idea = LUX_occupation
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = HUN_ausgleich
+					}
+					NOT = {
+						has_idea = HUN_ausgleich
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = BOS_landesstatut_constitution
+					}
+					NOT = {
+						has_idea = BOS_landesstatut_constitution
+					}
 				}
 			}
 		
@@ -315,7 +905,7 @@ ideas = {
 				training_time_factor = 0.3
 			}
 			ai_will_do = {
-   				factor = 100
+				base = 1
 				modifier = {
 					#Prio if low on manpower
 					factor = 20
@@ -326,14 +916,97 @@ ideas = {
 					factor = 0.5
 					manpower_per_military_factory >  1000
 				}
-				modifier = {
-					#Block has plenty manpower
+				modifier = { #much stronger than the enemy, unless at zero manpower
 					factor = 0
-					NOT = { tag = CHI }
-					manpower_per_military_factory >  5000
+					has_war = yes
+					enemies_strength_ratio < 0.5
+					has_manpower > 0
 				}
-				
-			}	
+				modifier = {
+					factor = 0
+					tag = GER
+					has_focus_tree = german_focus
+					NOT = {
+						has_completed_focus = GER_loosen_conscription_standards
+					}
+					is_historical_focus_on = yes
+				}
+				modifier = {
+					factor = 0
+					NOT = {
+						original_tag = FRA
+						original_tag = TUR
+						original_tag = GER
+						original_tag = AUS
+					}
+					has_manpower > 500000
+					manpower_per_military_factory >  800
+				}
+				modifier = {
+					factor = 0
+					has_manpower > 100000
+				}
+			}
+
+			on_add = {
+				if = {
+					limit = {
+						tag = AUS
+						any_subject_country = {
+							has_idea = HUN_ausgleich
+						}
+					}
+					every_subject_country = {
+						limit = {
+							has_idea = HUN_ausgleich
+						}
+						country_event = {
+							id = ww1_auh.217
+							days = 1
+						}
+					}
+				}
+				if = {
+					limit = {
+						OR = {
+							tag = AUS
+							tag = HUN
+						}	
+						any_subject_country = {
+							has_idea = BOS_landesstatut_constitution
+						}
+					}
+					every_subject_country = {
+						limit = {
+							has_idea = BOS_landesstatut_constitution
+						}
+						country_event = {
+							id = ww1_auh.217
+							days = 1
+						}
+					}
+				}
+			}
+
+			cancel = {
+				has_war = no
+				if = {
+					limit = {
+						has_idea = HUN_ausgleich
+					}
+					NOT = {
+						has_idea = HUN_ausgleich
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = BOS_landesstatut_constitution
+					}
+					NOT = {
+						has_idea = BOS_landesstatut_constitution
+					}
+				}
+			}
 			
 			cancel_if_invalid = no
 		}
@@ -341,34 +1014,140 @@ ideas = {
 		scraping_the_barrel = {
 			
 			available = {
-				#has_manpower_for_recruit_change_to =  { value = 0.25 group = mobilization_laws }
 				has_war = yes
 				OR = {
-					has_war_support > 0.85
+					AND = {
+						has_war_support > 0.85
+						OR = {						
+							has_government = fascism
+							custom_trigger_tooltip = {
+    							tooltip = has_government_vanguardism_tt
+    							has_country_leader_ideology = vanguardism
+							}
+						}	
+					}
 					surrender_progress > 0.25
+					has_manpower < 1000
+					enemies_strength_ratio > 1
+				}		
+				NOT = {
+					has_idea = undisturbed_isolation
 				}
-				enemies_strength_ratio > 1
-				#any_enemy_country = {
-				#	strength_ratio = {
-				#		tag = ROOT 
-				#		ratio > 1
-				#	}
-				#}
 				if = {
-					limit = { tag = AST }
-					AST = {
-						NOT = { has_idea = AST_idea_Citizen_Army } 
+					limit = { original_tag = ENG }
+					OR = {
+						has_global_flag = great_war
+						threat > 0.99
+						surrender_progress > 0					
+					}
+				}
+				else_if = {
+					limit = { original_tag = USA }
+					has_completed_focus = USA_continental_corps
+				}
+				else_if = {
+					limit = { original_tag = RUS has_idea = RUS_idea_volunteer_army }
+					has_war_support > 0.8
+				}
+				else_if = {
+					limit = {
+						original_tag = SWE
+						has_completed_focus = SWE_disarm_nation
+						has_idea = disarmed_nation
+					}
+					OR = {
+						NOT = {
+							has_country_leader = { character = SWE_karl_staaff }
+						}
+						has_war = yes
+					}
+				}
+				else_if = {
+					limit = { has_idea = SOV_idea_red_guard }
+					NOT = { has_idea = SOV_idea_red_guard }
+				}
+				else_if = {
+					limit = { original_tag = BEL }
+					NOT = {
+						has_idea = BEL_outdated_military
+					}				
+				}
+				else_if = {
+					limit = { has_idea = SRA_marching_army }
+					NOT = { has_idea = SRA_marching_army }
+				}
+				else_if = {
+					limit = { original_tag = LUX }
+					OR = {
+						has_war = yes
+						NOT = {
+							has_idea = LUX_london_treaty
+						}
+					}
+					if = {
+						limit = {
+							has_idea = LUX_occupation
+						}
+						NOT = {
+							has_idea = LUX_occupation
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = HUN_ausgleich
+					}
+					NOT = {
+						has_idea = HUN_ausgleich
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = BOS_landesstatut_constitution
+					}
+					NOT = {
+						has_idea = BOS_landesstatut_constitution
+					}
+				}
+			}
+
+			on_add = {
+				if = {
+					limit = {
+						tag = AUS
+						any_subject_country = {
+							has_idea = HUN_ausgleich
+						}
+					}
+					every_subject_country = {
+						limit = {
+							has_idea = HUN_ausgleich
+						}
+						country_event = {
+							id = ww1_auh.217
+							days = 1
+						}
 					}
 				}
 				if = {
-					limit = { tag = ENG }
-					has_global_flag = kis_war
-				}
-				if = {
-					limit = { tag = USA }
-					has_completed_focus = USA_volunteer_act
-					NOT = { has_idea = undisturbed_isolation }
-					NOT = { has_idea = isolation }
+					limit = {
+						OR = {
+							tag = AUS
+							tag = HUN
+						}	
+						any_subject_country = {
+							has_idea = BOS_landesstatut_constitution
+						}
+					}
+					every_subject_country = {
+						limit = {
+							has_idea = BOS_landesstatut_constitution
+						}
+						country_event = {
+							id = ww1_auh.217
+							days = 1
+						}
+					}
 				}
 			}
 			
@@ -384,12 +1163,12 @@ ideas = {
 				training_time_factor = 0.5
 			}
 			ai_will_do = {
-   				factor = 100
+				base = 1
 				modifier = {
 					#Prio if low on manpower
 					factor = 20
 					manpower_per_military_factory <  500
-				}				
+				}
 				modifier = {
 					#Lower chance if has decent amount
 					factor = 0.5
@@ -400,9 +1179,108 @@ ideas = {
 					factor = 0
 					manpower_per_military_factory >  5000
 				}
-				
-			}	
+				modifier = {
+					factor = 0
+					NOT = { has_idea = all_adults_serve }
+				}
+				modifier = { #much stronger than the enemy, unless at zero manpower
+					factor = 0
+					has_war = yes
+					enemies_strength_ratio < 0.5
+					has_manpower > 0
+				}
+				modifier = {
+					factor = 0
+					tag = GER
+					has_focus_tree = german_focus
+					NOT = {
+						has_completed_focus = GER_loosen_conscription_standards
+					}
+					is_historical_focus_on = yes
+				}
+			}
+
+			cancel = {
+				has_war = no
+				if = {
+					limit = {
+						has_idea = HUN_ausgleich
+					}
+					NOT = {
+						has_idea = HUN_ausgleich
+					}
+				}
+				else_if = {
+					limit = {
+						has_idea = BOS_landesstatut_constitution
+					}
+					NOT = {
+						has_idea = BOS_landesstatut_constitution
+					}
+				}
+			}
 			
+			cancel_if_invalid = no
+		}
+		
+		### Ethiopian National Levy
+		ETH_chitet_law = {
+			picture = ETH_chitet_law
+			cost = 150
+			removal_cost = -1
+			level = 6
+
+			allowed = {
+				always = no
+			}
+			allowed_to_remove = {
+				always = no
+			}
+
+			ai_will_do = {
+   				factor = 0
+			}
+
+			modifier = {
+				conscription = 0.045
+				custom_modifier_tooltip = ETH_chitet_law_tt
+				industrial_capacity_factory = -0.05
+				industrial_capacity_dockyard = -0.05
+				production_speed_buildings_factor = -0.05
+			}
+
+			default = yes
+
+			cancel_if_invalid = no
+		}
+		ETH_chitet_law_peace_time = {
+			picture = ETH_chitet_law
+
+			cost = 150
+			removal_cost = -1
+			level = 6
+
+			allowed = {
+				always = no
+			}
+			allowed_to_remove = {
+				always = no
+			}
+
+			ai_will_do = {
+   				factor = 0
+			}
+
+			modifier = {
+				conscription = 0.005
+				custom_modifier_tooltip = ETH_chitet_law_tt
+				industrial_capacity_factory = 0.05
+				industrial_capacity_dockyard = 0.05
+				production_speed_buildings_factor = 0.05
+			}
+
+			default = yes
+
 			cancel_if_invalid = no
 		}
 	}

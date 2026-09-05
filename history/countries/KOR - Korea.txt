@@ -1,231 +1,176 @@
 ﻿capital=800 #Gyeongseong
-oob="KOR_1910"
 
-if = {
-	limit = {
-		NOT = { has_dlc = "Man the Guns" }
+1910.1.1 = {
+	oob="KOR_1910"
+
+	if = {
+		limit = { has_dlc = "Man the Guns" }
+		set_naval_oob = "KOR_1910_naval_mtg"
 	}
-	set_naval_oob = "KOR_1910_naval_legacy"
-}
 
-if = {
-	limit = { has_dlc = "Man the Guns" }
-	set_naval_oob = "KOR_1910_naval_mtg"
-}
+	set_technology = {
+		#infantry
+		infantry_weapons = 1
+		
+		#support
+		tech_support = 1
+		tech_engineers = 1
+		
+		#artillery
+		early_artillery = 1
+		basic_field_gun = 1
 
-set_technology = {
-	#infantry
-	infantry_weapons = 1
-	
-	#support
-	tech_support = 1
-	tech_engineers = 1
-	
-	#artillery
-	gw_artillery = 1
+		#navy
+		
 
-	#navy
-	transport = 1
-
-	#engineering
-	electrical_engineering = 1
-}
-
-set_politics = {
-	ruling_party = neutrality
-	last_election = "1910.1.1"
-	election_frequency = 48
-	elections_allowed = no
-}
-set_popularities = {
-	democratic = 6
-	fascism = 0
-	communism = 3
-	neutrality = 91
-}
-add_ideas = {
-	KOR_disbanded_army
-	KOR_risk_of_famine
-	KOR_agrarian_society
-	disarmed_nation
-	isolation
-}
-
-set_rule = {
-	can_not_declare_war = yes
-}
-
-country_lock_all_division_template = yes
-
-add_opinion_modifier = {
-	target = JAP
-	modifier = HOI4TGW_Opinion_hostile_diplomatic_relations
-}
-
-if = {
-	limit = {
-		not = { has_dlc = "Man the Guns" }
+		#engineering
+		electrical_engineering = 1
+		basic_train = 1
+   		basic_railways = 1
+   		construction0 = 1
+   		powder_type_b = 1
+        
 	}
-	### Ship Variants ###
-	create_equipment_variant = {
-		name = "Gwangjeho"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
+
+	set_politics = {
+		ruling_party = neutrality
+		last_election = "1908.4.22"
+		election_frequency = 12
+		elections_allowed = no
 	}
-	create_equipment_variant = {
-		name = "Yangmuho"
-		type = light_cruiser_1
-		parent_version = 0
-		obsolete = yes
+	set_popularities = {
+		democratic = 6
+		fascism = 0
+		communism = 3
+		neutrality = 91
+	}
+	add_ideas = {
+		KOR_disbanded_army
+		KOR_risk_of_famine
+		KOR_agrarian_society
+		disarmed_nation
+		isolation
+		unequal_treaties
+	}
+
+	set_rule = {
+		can_not_declare_war = yes
+	}
+
+	country_lock_all_division_template = yes
+
+	add_opinion_modifier = {
+		target = JAP
+		modifier = HOI4TGW_Opinion_anti_jap_policy_malus
 	}
 }
+
+
 
 if = {
 	limit = { has_dlc = "Man the Guns" }
-	create_equipment_variant = {
-		name = "Gwangjeho"
-		type = ship_hull_cruiser_1
-		#name_group = KOR_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			mid_1_custom_slot = ship_light_battery_1
-			mid_2_custom_slot = ship_light_battery_1
-			rear_1_custom_slot = empty
-		}
-		obsolete = yes
+	set_technology = {
+		torpedo_boat_ship_hull_light = 1
+        gunboat_ship_hull_light = 1
+
+		victorian_ship_hull_cruiser = 1
+		
+		basic_battery = 1
+		
+		ironclad_artillery = 1
+		ironclad_coal_engine = 1
+		
+		basic_coal_engine = 1
+		early_oil_engine = 1
+		
+			basic_secondary_battery = 1
+
+		mtg_transport = 1
 	}
-	create_equipment_variant = {
-		name = "Yangmuho"
-		type = ship_hull_cruiser_1
-		#name_group = KOR_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			mid_1_custom_slot = empty
-			mid_2_custom_slot = empty
-			rear_1_custom_slot = empty
+	JAP = {
+		create_equipment_variant = {
+			name = "Gwangje"
+			type = ship_hull_gunboat
+			# name_group = KOR_CL_HISTORICAL
+			parent_version = 0
+			design_team = mio:JAP_kawasaki_shipbuilding_organization 
+			modules = {
+				fixed_ship_battery_slot = ship_light_battery_1
+				fixed_ship_torpedo_slot = empty
+				fixed_ship_engine_slot = light_ship_engine_1
+				mid_1_custom_slot = empty
+			}
+			obsolete = yes
 		}
-		obsolete = yes
 	}
+	# ENG = {
+	# 	create_equipment_variant = { #Decommissioned in 1907
+	# 		name = "Pallas"
+	# 		type = ship_hull_cruiser_0
+	# 		# name_group = KOR_CL_HISTORICAL
+	# 		parent_version = 0
+	# 		modules = {
+	# 			fixed_ship_battery_slot = ship_light_battery_1
+	# 			fixed_ship_engine_slot = cruiser_ship_engine_0
+	# 			fixed_ship_secondaries_slot = ship_secondaries_1
+	# 			
+	# 			fixed_ship_armor_slot = empty
+	# 			mid_1_custom_slot = empty
+	# 		}
+	# 		obsolete = yes
+	# 	}
+	# }	
 }
 
 set_stability=0.36
 
-create_country_leader={
-	name = "Yi Dong-hwi"
-	picture="gfx/leaders/KOR/KOR_yi_dong_hwi.dds"
-	expire="1935.1.1"
-	ideology = council_communism
-	traits = { }
-}
-create_country_leader = {
-	name = "Syngman Rhee"
-	picture = "gfx/leaders/KOR/KOR_syngman_rhee.dds"
-	expire = "1935.1.1"
-	ideology = conservatism
-	traits = { anti_communist }
-}
-create_country_leader = {
-	name = "Supreme Council"
-	picture = "gfx/leaders/KOR/KOR_scnr.dds"
-	expire = "1935.1.1"
-	ideology = military_dictatorship
-	traits = { generallissimo }
-}
-create_country_leader={
-	name = "Yi Cheok"
-	picture = "gfx/leaders/KOR/KOR_yi_cheok.dds"
-	expire = "1935.1.1"
-	ideology = autocracy
-	traits = { assassination_survivor inexperienced_monarch }
-}
 
-create_field_marshal = {
-	name = "Yi Kang"
-	portrait_path="gfx/leaders/KOR/KOR_yi_kang.dds" 
-	traits={ politically_connected unyielding_defender } 
-	skill = 3
-	attack_skill = 2
-	defense_skill = 3
-	planning_skill = 3
-	logistics_skill = 3
-}
 
-create_corps_commander = {  
-	name = "Hong Beom-do" 
-	portrait_path="gfx/leaders/KOR/KOR_hong_beom_do.dds" 
-	traits={ trickster } 
-	skill= 3 
-	attack_skill = 4
-	defense_skill = 3
-	planning_skill = 4
-	logistics_skill = 3
-}
+recruit_character = KOR_yi_cheok
+recruit_character = KOR_yi_hui
+recruit_character = KOR_yi_un
 
-create_corps_commander = {  
-	name = "Shin Pal-gyun" 
-	portrait_path="gfx/leaders/KOR/KOR_shin_pal_gyun.dds" 
-	traits={ organizer } 
-	skill= 3 
-	attack_skill = 3
-	defense_skill = 3
-	planning_skill = 4
-	logistics_skill = 4
-}
+recruit_character = KOR_terauchi_masatake
 
-create_corps_commander = {  
-	name = "Yu Dong-yeol" 
-	portrait_path="gfx/leaders/KOR/KOR_yu_dong_yeol.dds" 
-	traits={ cavalry_officer } 
-	skill= 3 
-	attack_skill = 4
-	defense_skill = 3
-	planning_skill = 4
-	logistics_skill = 3
-}
+recruit_character = KOR_yi_donghwi
+recruit_character = KOR_syngman_rhee
 
-create_corps_commander = {  
-	name = "Cho Sung-hwan" 
-	portrait_path="gfx/leaders/KOR/KOR_cho_sung_hwan.dds" 
-	traits={ career_officer } 
-	skill= 3 
-	attack_skill = 3
-	defense_skill = 3
-	planning_skill = 2
-	logistics_skill = 3
-}
+recruit_character = KOR_supreme_council
 
-create_corps_commander = {  
-	name = "Shin Kyu-sik" 
-	portrait_path="gfx/leaders/KOR/KOR_shin_gyu_sik.dds" 
-	traits={ infantry_leader } 
-	skill= 3 
-	attack_skill = 3
-	defense_skill = 2
-	planning_skill = 3
-	logistics_skill = 3
-}
+recruit_character = KOR_yi_sangsul
+recruit_character = KOR_lyuh_woonhyung
+recruit_character = KOR_shin_palgyun
+recruit_character = KOR_oh_dong_jin
+recruit_character = KOR_kim_dong_sam
+recruit_character = KOR_hong_beomdo
+recruit_character = KOR_yu_dongyeol
+recruit_character = KOR_cho_sunghwan
+recruit_character = KOR_shin_kyusik
+recruit_character = KOR_kim_gyu_sik
+recruit_character = KOR_shin_sunseong
+recruit_character = KOR_yi_beom_jin
+recruit_character = KOR_kim_chang_sook
+recruit_character = KOR_yi_sang_jae
+recruit_character = KOR_yi_beom_yun
+recruit_character = KOR_alexandra_kim
+recruit_character = KOR_chae_sang_deok
+recruit_character = KOR_yang_gi_tak
+recruit_character = KOR_lee_bom_suk
+recruit_character = KOR_sim_ui_seok
+recruit_character = KOR_yi_kang
+recruit_character = KOR_ahn_chang_ho
+recruit_character = KOR_roh_baek_rin
+recruit_character = KOR_kim_ga_jin
+recruit_character = KOR_kim_gu
+recruit_character = KOR_park_eun_sik
+recruit_character = KOR_park_yong_man
+recruit_character = KOR_seo_wal_bo
 
-create_navy_leader = {
-	name = "Sin Sun-seong"
-	portrait_path = "gfx/leaders/KOR/KOR_sin_sun_seong.dds"
-	traits = { inshore_fighter }
-	skill = 3
-	attack_skill = 4
-	defense_skill = 4
-	maneuvering_skill = 3
-	coordination_skill = 3
-}
+recruit_character = KOR_army_theorist
+recruit_character = KOR_navy_theorist
+recruit_character = KOR_air_theorist
 
+recruit_character = KOR_jipgangso
+recruit_character = KOR_japanese_administraton
+
+country_event = { id = ww1_developer_note.3 days = 1 }

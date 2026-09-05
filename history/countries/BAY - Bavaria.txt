@@ -1,45 +1,51 @@
 ﻿capital = 52 # Munich
 
-set_research_slots = 2
+set_research_slots = 3
 set_stability = 0.5
 
-#LEADERS
-create_country_leader = {
-	name = "Ludwig III"
-	picture="gfx/leaders/GER/BAY_Ludwig_III.dds" 
-	expire="1935.1.1" 
-	ideology = autocracy 
-	traits = { } 
+set_country_flag = spd_m_party
+set_party_name = {
+	ideology = democratic
+	name = GER_democratic_party
+	long_name = GER_democratic_party_long
 }
-create_country_leader = { 
-	name = "Karl Liebknecht"
-	picture = "gfx/leaders/GER/GER_karl_liebknecht.dds" 
-	expire = "1935.1.1" 
-	ideology = council_communism #trust me it makes sense
-	traits = {  } 
+set_country_flag = spd_r_party
+set_party_name = {
+	ideology = communism
+	name = GER_communism_party
+	long_name = GER_communism_party_long
 }
 
-oob = "BAY_1910"
+recruit_character = BAY_luitpold_von_bayern
+recruit_character = BAY_ludwig_von_bayern
+recruit_character = BAY_rupprecht_von_bayern
+recruit_character = BAY_kurt_eisner
+recruit_character = BAY_johannes_hoffmann
+recruit_character = BAY_ernst_toller
+recruit_character = BAY_eugen_levine
+recruit_character = BAY_franz_ritter_von_epp
 
+1910.1.1 = {
 	set_politics = {
 		ruling_party = neutrality
-		last_election = "1910.1.1"
-		election_frequency = 48 
-		elections_allowed = no 
+		last_election = "1907.1.12"
+		election_frequency = 60 
+		elections_allowed = yes 
 	}
 	
 	set_popularities = {
-		fascism = 29
-		communism = 19
-		democratic = 7
-		neutrality = 45
+		fascism = 5
+		communism = 5
+		democratic = 42
+		neutrality = 48
 	}
 	set_technology = {
 		#infantry
 		infantry_weapons = 1
 		infantry_weapons1 = 1
+		machine_guns = 1
 		support_weapons = 1
-		motorised_infantry = 1
+		tech_trucks = 1
 		tech_mountaineers = 1	
 		#bicycle_infantry = 1
 		
@@ -48,19 +54,16 @@ oob = "BAY_1910"
 		tech_engineers = 1
 		tech_recon = 1
 		
-		#armored
-		early_armored_car = 1
+		#armor
+		
 		
 		#artillery
-		gw_artillery = 1
-		howitzer1 = 1
-		
-		#doctrine
-		continuous_offensive = 1
-
+		early_artillery = 1
+		basic_field_gun = 1
+		basic_howitzer = 1
 		#air
-		early_fighter = 1
-		airship_bomber = 1
+		scout_plane = 1
+		airship = 1
 		
 		#engineering
 		early_fire_control_system = 1
@@ -70,8 +73,39 @@ oob = "BAY_1910"
 		mechanical_engineering = 1
 		aircraft_engine = 1
 		generator_battery = 1
+		basic_train = 1
+        basic_railways = 1
+   		construction0 = 1
+        powder_type_b = 1
+        
+	}
+	
+
+	add_ideas = {
+		limited_conscription
+		BAY_king_otto_i
+		GER_customs_union
 	}
 
-add_ideas = {
-	limited_conscription
+	add_opinion_modifier = {
+		target = GER
+		modifier = customs_union
+	}
+	reverse_add_opinion_modifier = {
+		target = GER
+		modifier = customs_union
+	}
+}	
+
+1914.1.1 = {
+	retire_character = BAY_luitpold_von_bayern
+	BAY_ludwig_von_bayern = {
+		promote_character = yes
+		set_character_name = BAY_ludwig_iii
+	}
+	add_popularity = {
+		ideology = democratic
+		popularity = 0.05
+	}
+	remove_ideas = BAY_king_otto_i 	
 }

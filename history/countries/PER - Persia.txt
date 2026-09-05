@@ -1,80 +1,197 @@
 ﻿capital = 266
 oob = "PER_1910"
 
-set_politics = {
-    ruling_party = neutrality
-    last_election = "1910.1.1"
-    election_frequency = 48
-    elections_allowed = no
-}
-set_popularities = {
-    democratic = 38
-    fascism = 0
-    communism = 6
-    neutrality = 56
-}
-set_stability = 0.24
-set_war_support = 0.24
-add_ideas = { low_economic_mobilisation }
-add_timed_idea = { idea = PER_idea_aftermath_of_revolution days = 360 }
+give_military_access = ENG
+give_military_access = RAJ
 
 set_convoys = 10
 
-create_country_leader = { 
-	name = "Ahmad Shah Qajar"
-	picture = "gfx/leaders/PER/PER_ahmad_shah_qajar.dds" 
-	expire = "1935.1.1" 
-	ideology = autocracy  
-	traits = { underage_monarch } 
+set_autonomy = {
+	target = ARB
+	autonomous_state = autonomy_integrated_puppet
+	freedom_level = 0.9
 }
 
-create_corps_commander = {  
-	name = "Salat ed-Dauleh" 
-	traits = {   } 
-	skill = 2 
-	attack_skill = 1
-	defense_skill = 2
-	planning_skill = 1
-	logistics_skill = 2
-}
-create_corps_commander = {  
-	name = "Azod Soltan Mirza" 
-	traits = { politically_connected } 
-	skill = 2 
-	attack_skill = 2
-	defense_skill = 2
-	planning_skill = 1
-	logistics_skill = 1
-}
-create_field_marshal = {  
-	name = "Malek Mansour Mirza"
-	traits = { politically_connected } 
-	skill=2 
-	attack_skill = 2
-	defense_skill = 2
-	planning_skill = 1
-	logistics_skill = 1
-}
+recruit_character = PER_ahmad_shah_qajar
+recruit_character = PER_soleyman_eskandari
 
-set_technology = {
-	#infantry
-	infantry_weapons = 1
-	tech_mountaineers = 1
+recruit_character = PER_nezam_us_saltaneh
+recruit_character = PER_reza_khan
+recruit_character = PER_abdollah_amir_tahmasebi
+recruit_character = PER_karim_buzarjomehri
+recruit_character = PER_mohammad_taqi_pessian
+recruit_character = PER_mirza_kuchik_khan
+
+1910.1.1 = {
+	set_politics = {
+		ruling_party = neutrality
+		last_election = "1909.12.6"
+		election_frequency = 60
+		elections_allowed = yes
+	}
+	set_popularities = {
+		democratic = 38
+		fascism = 0
+		communism = 6
+		neutrality = 56
+	}
+	set_stability = 0.14
+	set_war_support = 0.3
+	add_ideas = {
+		PER_idea_rural_society
+		PER_idea_foreign_reliance
+	}
+	add_timed_idea = { idea = PER_idea_constitutional_revolution days = 360 }
+
+	set_technology = {
+		#infantry
+		infantry_weapons = 1
+		tech_mountaineers = 1
+			
+		#support
+		tech_support = 1
+		tech_engineers = 1
+
+		#artillery
+		early_artillery = 1
+		basic_field_gun = 1
+
+		#navy
 		
-	#support
-	tech_support = 1
-	tech_engineers = 1
 
-	#artillery
-	gw_artillery = 1
-
-	#navy
-	transport = 1
-
-	#engineering
-	electrical_engineering = 1
-	mechanical_engineering = 1
+		#engineering
+		electrical_engineering = 1
+		mechanical_engineering = 1
+		construction0 = 1
+	}
 }
+1914.1.1 = {
+
+	add_political_power = 1198
+	add_command_power = 100
+
+	#generic focuses
+	complete_national_focus = state_of_the_country_army
+	complete_national_focus = modernize_equipment
+	complete_national_focus = capital_manoeuvers
+	complete_national_focus = naval_experience
+	complete_national_focus = naval_expansion
+	complete_national_focus = early_industrialization
+	complete_national_focus = new_roads
+	complete_national_focus = develop_capital
+	complete_national_focus = capital_country_arsenal
+	complete_national_focus = open_the_political_sphere
+
+	set_country_flag = PER_ahmad_shah_qajar_mature
+	set_country_flag = persian_gendarmerie_formed
+
+	PER_ahmad_shah_qajar = {
+		remove_country_leader_trait = underage_monarch
+		set_portraits = {
+			civilian = {
+				large="gfx/leaders/PER/PER_ahmad_shah_qajar.png"
+			}
+		}
+	}
+
+	add_opinion_modifier = {
+		target = RUS
+		modifier = small_decrease
+	}	
+	
+	remove_ideas = {
+		PER_idea_constitutional_revolution
+	}
+
+	add_ideas = {
+		PER_idea_government_gendarmerie
+		PER_idea_nationalised_oil
+	}
+	
+	give_resource_rights = {
+		receiver = ENG
+		state = 412
+	}
+}
+
+if = {
+	limit = {
+		has_dlc = "Man the Guns"
+	}
+
+	set_technology = {
+		basic_naval_mines = 1
+		early_ship_hull_light = 1
+		gunboat_ship_hull_light = 1
+        torpedo_boat_ship_hull_light = 1
+		early_ship_hull_cruiser = 1
+		basic_armored_cruiser_armor_scheme = 1
+        victorian_ship_hull_cruiser = 1
+		
+		basic_ship_hull_cruiser = 1
+		basic_battery = 1
+		
+		ironclad_artillery = 1
+		ironclad_coal_engine = 1
+		
+		basic_coal_engine = 1
+		early_oil_engine = 1
+		basic_light_battery = 1
+		early_torpedo_tubes = 1
+		
+		basic_torpedo = 1
+		
+		basic_secondary_battery = 1
+		mtg_transport = 1
+	}
+
+	set_naval_oob = "PER_1910_naval_mtg"
+
+	# Protected Cruisers #
+	GER = {	
+		create_equipment_variant = {
+			name = "Persepolis Class"
+			type = ship_hull_cruiser_0
+			design_team = mio:GER_ag_weser_organization
+			parent_version = 0
+			modules = {
+				fixed_ship_battery_slot = ship_light_battery_1
+				fixed_ship_engine_slot = cruiser_ship_engine_0
+				#fixed_ship_armor_slot = ship_armor_light_cruiser_1
+				#mid_1_custom_slot = ship_secondaries_1
+			}
+			obsolete = yes
+		}	
+	}
+	#Small Gunboats#
+	GER = {
+		create_equipment_variant = {
+			name = "Susa Class"
+			type = ship_hull_torpedo_boat
+			design_team = mio:GER_ag_weser_organization
+			parent_version = 0
+			modules = {
+				#fixed_ship_battery_slot = ship_light_battery_1
+				fixed_ship_engine_slot = light_ship_engine_0
+				fixed_ship_torpedo_slot = ship_torpedo_1
+			}
+			obsolete = yes
+		}
+	}
+	FRA = {
+		create_equipment_variant = {
+			name = "Selika Class"
+			type = ship_hull_gunboat
+			parent_version = 0
+			modules = {
+				fixed_ship_battery_slot = ship_light_battery_1
+				fixed_ship_engine_slot = light_ship_engine_1
+			}
+			obsolete = yes
+		}
+	}
+}
+
 
 410 = {
 	add_dynamic_modifier = { modifier = per_british_sphere }

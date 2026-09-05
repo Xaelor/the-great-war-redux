@@ -15,30 +15,88 @@ country_event = {
 
 	option = {
 		name = ww1_entente_capitulation.1.a
+		custom_effect_tooltip = frankfurt_armistice_message
 		hidden_effect = {
 			every_country = {
 				limit = {
-					is_in_faction_with = FRA
+					OR = {
+						tag = ENT
+						is_ally_with = ENT
+					}
 					has_war_with = GER
+					NOT = { has_country_flag = member_of_central_powers }
 				}
 				set_country_flag = member_of_entente
 			}
 			every_other_country = {
 				limit = {
-					is_in_faction_with = GER		
-					has_war_with = FRA
+					OR = {
+						tag = GER
+						is_ally_with = GER
+					}
+					has_war_with = ENT
+					NOT = { has_country_flag = member_of_entente }
 				}
 				set_country_flag = member_of_central_powers
 			}
+			every_other_country = {
+				limit = {
+					is_subject = no
+					NOT = {
+						has_country_flag = member_of_entente
+						has_country_flag = member_of_central_powers
+						tag = SOV
+						AND = {
+							is_russian_tag = yes
+							has_war_with = SOV
+						}									
+					}
+					has_war_with = ENT
+					OR = {
+						is_faction_leader = yes
+						is_in_faction = no
+					}
+				}
+				country_event = ww1_entente_capitulation.14
+			}
+			add_named_threat = {
+				threat = -10
+				name = ENT_capitulation
+			}
 		}
-		set_global_flag = germany_accepts_FRA_capitulation
+		set_global_flag = GER_accepts_ENT_capitulation
 		
 		news_event = { id = ww1_entente_capitulation.2 }
-		ai_chance = { factor = 100 }
+		hidden_effect = {
+			GER = {
+				if = {
+					limit = {
+						has_global_flag = october_revolution
+						209 = {
+							is_controlled_by = GER
+						}
+						country_exists = SOV
+						SOV = {
+							has_war = yes
+							any_enemy_country = {
+								is_russian_tag = yes
+							}
+						}
+					}
+					country_event = {
+						id = ww1_nwa.1
+						days = 1
+					}
+				}
+			}
+		}
 	}
 	option = { #НЕ ПРИНИМАТЬ (для игроков)
 		name = ww1_entente_capitulation.1.b
-		ai_chance = { factor = 0 }
+		custom_effect_tooltip = no_scripted_peace_warning_tt
+		trigger = {
+			is_ai = no
+		}
 		news_event = { id = ww1_entente_capitulation.3 }
 	}
 }
@@ -57,16 +115,20 @@ news_event = {
 	option = {
 		name = ww1_entente_capitulation.2.a
 		trigger = {
-			tag = GER
-			is_in_faction_with = GER 
+			OR = {
+				tag = GER
+				is_in_faction_with = GER
+			}
 		}
 		ai_chance = { factor = 100 }
 	}
 	option = {
 		name = ww1_entente_capitulation.2.b
 		trigger = {
-			tag = FRA
-			is_in_faction_with = FRA 
+			OR = {
+				tag = ENT
+				is_in_faction_with = ENT 
+			}
 		}
 		ai_chance = { factor = 100 }
 	}
@@ -75,12 +137,30 @@ news_event = {
 		trigger = {
 			NOT = {
 				tag = GER
-				tag = FRA
+				tag = ENT
 				is_in_faction_with = GER
-				is_in_faction_with = FRA 
+				is_in_faction_with = ENT 
 			}
 		}
 		ai_chance = { factor = 100 }
+		
+	}
+	after = {
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = rule_superevent
+					option = DEFAULT
+				}
+				is_ai = no
+			}
+			hidden_effect = {
+				clear_superevents = yes
+				play_song = "SE_ger_victory"
+				set_country_flag = se_ger_victory
+				update_superevents = yes
+			}		
+		}
 	}
 }
 
@@ -101,7 +181,7 @@ news_event = {
 	}
 }
 
-# 2. ROOT REFUSED SURRENDER
+# 2. FROM REFUSED SURRENDER
 #########################
 news_event = {
 	id = ww1_entente_capitulation.4
@@ -131,27 +211,6 @@ news_event = {
 
 	option = {
 		name = ww1_entente_capitulation.5.a
-		ai_chance = { factor = 100 }
-	}
-}
-# 3. FRANKFURT CONFERENCE
-##################
-country_event = {
-	id = ww1_entente_capitulation.6
-	title = ww1_entente_capitulation.6.t
-	desc = ww1_entente_capitulation.6.d
-	picture = GFX_report_event_generic_read_write
-
-	is_triggered_only = yes	
-
-	option = {
-		name = ww1_entente_capitulation.6.a
-		add_ideas = interwar_recovery
-		activate_mission = mission_interwar_demobilization
-		if = {
-			limit = { has_country_flag = great_war_loser }
-			add_ideas = disarmed_nation
-		}
 		ai_chance = { factor = 100 }
 	}
 }
@@ -257,15 +316,20 @@ news_event = {
 	id = ww1_entente_capitulation.13
 	title = ww1_entente_capitulation.13.t
 	desc = ww1_entente_capitulation.13.d
-	picture = GFX_news_event_german_soldiers
+	picture = GFX_news_event_german_troops_marching_in_brussels
 	
-	major = yes	
+	major = yes
 	trigger = {
-		6 = { is_controlled_by = GER }
-		6 = { is_owned_by = BEL }
-		FRA = { has_war_with = GER }
+		BEL = {
+			owns_state = 6
+			any_enemy_country = {
+				controls_province = 516
+			}
+			has_war_with = GER
+			is_in_faction_with = ENT
+		}
 		NOT = { has_global_flag = fall_of_brussels_ger }
-	}	
+	}
 	immediate = {
 		set_global_flag = fall_of_brussels_ger
 	}
@@ -289,5 +353,50 @@ news_event = {
 	option = {
 		name = news.100.c
 		trigger = { TAG = BEL }
+	}
+}
+# EVENT FOR OTHER FACTIONS ( FRENCH SURRENDER )
+##################################
+country_event = {
+	id = ww1_entente_capitulation.14
+	title =ww1_entente_capitulation.1.t
+	desc = ww1_entente_capitulation.14.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						tag = ROOT
+						is_ally_with = ROOT
+					}
+					has_war_with = ENT				
+				}
+				set_country_flag = accepted_entente_surrender
+			}
+		}
+	}
+	option = {
+		name = ww1_entente_capitulation.1.a
+	}
+	option = {
+		name = ww1_entente_capitulation.14.b
+		set_country_flag = refused_to_surrender
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						tag = ROOT
+						is_ally_with = ROOT
+					}
+				}
+				clr_country_flag = accepted_entente_surrender
+			}
+		}
+		trigger = {
+			is_ai = no
+		}
 	}
 }

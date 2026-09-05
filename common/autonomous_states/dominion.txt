@@ -1,13 +1,16 @@
 autonomy_state = {
 	id = autonomy_dominion
 	
-	min_freedom_level = 0.8
+	min_freedom_level = 0.75
 	
 	manpower_influence = 0.2
 	
 	rule = {
+		desc = "RULE_DESC_IS_A_SUBJECT"
+	
 		can_not_declare_war = yes
 		can_decline_call_to_war = no
+		can_be_spymaster = yes
 	}
 	
 	modifier = {
@@ -29,28 +32,19 @@ autonomy_state = {
 	}
 
 	allowed = {
-		has_dlc = "Together for Victory"
-        NOT = { 
-		    has_country_flag = protectorate
-		}
-        if = {
-			limit = {
-				has_dlc = "Waking the Tiger"
-                OVERLORD = { 
-                    OR = {
-                    	original_tag = JAP 
-						original_tag = KOR 
-					}
-				}
-			}
-			NOT = {
-                OR = {
-					has_government = fascism
-					has_government = neutrality
-                }
-			}
-		}
+		OVERLORD = {
+			is_commonwealth_tag = yes
+			NOT = { has_government = communism }
+		}	
+		NOT = { has_government = communism }
+		has_country_flag = colony
 	}
+
+	# allowed_levels_filter = {
+	# 	autonomy_dominion
+	# 	autonomy_tgwr_self_governing_colony
+	# 	autonomy_colony
+	# }
 	
 	can_take_level = {
 		if = {
@@ -66,10 +60,5 @@ autonomy_state = {
 	}
 
 	can_lose_level = {
-		if = {
-			limit = {
-
-			}
-		}
 	}
 }

@@ -136,20 +136,24 @@ USA_interventionalism = {
 		allowed = {
 			tag = USA
 		}
-		target_trigger = {
-			FROM = {
-				tag = HAI
-			}
+		targets = {
+			HAI
 		}
 		available = {
-			#any_war_score < 39
+			has_capitulated = no
 			is_subject = no
 			is_in_faction = no
-			HAI = {
-				is_subject = no
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
 				is_in_faction = no
 			}
-			NOT = { has_country_flag = banana_wars }
+			NOT = {
+				has_country_flag = banana_wars
+				has_idea = idea_great_depression
+			}
 			OR = {
 				AND = {
 					has_completed_focus = USA_expand_american_intervention
@@ -163,7 +167,7 @@ USA_interventionalism = {
 		}
 		cost = 75	
 		visible = {
-			NOT = { has_war_with = HAI }
+			NOT = { has_war_with = FROM }
 			has_completed_focus = USA_strike_caribbean_islands
 		}	
 		complete_effect = {
@@ -172,7 +176,12 @@ USA_interventionalism = {
 		days_remove = 30
 		remove_effect = {
 			add_war_support = 0.02
-			HAI = { country_event = ww1_usa.6 }
+			FROM = { country_event = ww1_usa.6 }
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				is_owned_by = FROM
+			}
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -185,6 +194,14 @@ USA_interventionalism = {
 				factor = 0
 				has_war_support > 0.75
 			}
+			modifier = {
+				factor = 0
+				has_stability < 0.20
+			}
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}
 		}
 	}
 	USA_occupation_of_cuba = {
@@ -192,19 +209,24 @@ USA_interventionalism = {
 		allowed = {
 			tag = USA
 		}
-		target_trigger = {
-			FROM = {
-				tag = CUB
-			}
+		targets = {
+			CUB
 		}
 		available = {
+			has_capitulated = no
 			is_subject = no
 			is_in_faction = no
-			CUB = {
-				is_subject = no
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
 				is_in_faction = no
 			}
-			NOT = { has_country_flag = banana_wars }
+			NOT = {
+				has_country_flag = banana_wars
+				has_idea = idea_great_depression
+			}
 			OR = {
 				AND = {
 					has_completed_focus = USA_expand_american_intervention
@@ -218,7 +240,7 @@ USA_interventionalism = {
 		}
 		cost = 75	
 		visible = {
-			NOT = { has_war_with = CUB }
+			NOT = { has_war_with = FROM }
 			has_completed_focus = USA_strike_caribbean_islands
 		}	
 		complete_effect = {
@@ -227,7 +249,12 @@ USA_interventionalism = {
 		days_remove = 30
 		remove_effect = {
 			add_war_support = 0.02
-			CUB = { country_event = ww1_usa.6 }
+			FROM = { country_event = ww1_usa.6 }
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				is_owned_by = FROM
+			}
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -235,6 +262,14 @@ USA_interventionalism = {
 			modifier = {
 				factor = 0
 				is_historical_focus_on = yes
+			}
+			modifier = {
+				factor = 0
+				FROM = { has_government = ROOT } 
+			}
+			modifier = {
+				factor = 0
+				has_civil_war = yes
 			}
 			modifier = {
 				factor = 0
@@ -247,19 +282,24 @@ USA_interventionalism = {
 		allowed = {
 			tag = USA
 		}
-		target_trigger = {
-			FROM = {
-				tag = DOM
-			}
+		targets = {
+			DOM
 		}
 		available = {
+			has_capitulated = no
 			is_subject = no
 			is_in_faction = no
-			DOM = {
-				is_subject = no
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
 				is_in_faction = no
 			}
-			NOT = { has_country_flag = banana_wars }
+			NOT = {
+				has_country_flag = banana_wars
+				has_idea = idea_great_depression
+			}
 			OR = {
 				AND = {
 					has_completed_focus = USA_expand_american_intervention
@@ -273,7 +313,7 @@ USA_interventionalism = {
 		}
 		cost = 75
 		visible = {
-			NOT = { has_war_with = DOM }
+			NOT = { has_war_with = FROM }
 			has_completed_focus = USA_strike_caribbean_islands
 		}	
 		complete_effect = {
@@ -282,7 +322,12 @@ USA_interventionalism = {
 		days_remove = 30
 		remove_effect = {
 			add_war_support = 0.02
-			DOM = { country_event = ww1_usa.6 }
+			FROM = { country_event = ww1_usa.6 }
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				is_owned_by = FROM
+			}
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -293,7 +338,19 @@ USA_interventionalism = {
 			}
 			modifier = {
 				factor = 0
+				FROM = { has_government = ROOT } 
+			}
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}
+			modifier = {
+				factor = 0
 				has_war_support > 0.5
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.20
 			}
 		}
 	}
@@ -303,19 +360,23 @@ USA_interventionalism = {
 		allowed = {
 			tag = USA
 		}
-		target_trigger = {
-			FROM = {
-				tag = NIC
-			}
+		targets = {
+			NIC
 		}
 		available = {
 			is_subject = no
 			is_in_faction = no
-			NIC = {
-				is_subject = no
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
 				is_in_faction = no
 			}
-			NOT = { has_country_flag = banana_wars }
+			NOT = {
+				has_country_flag = banana_wars
+				has_idea = idea_great_depression
+			}
 			OR = {
 				AND = {
 					has_completed_focus = USA_expand_american_intervention
@@ -329,7 +390,7 @@ USA_interventionalism = {
 		}
 		cost = 75	
 		visible = {
-			NOT = { has_war_with = NIC }
+			NOT = { has_war_with = FROM }
 			has_completed_focus = USA_strike_central_america
 		}	
 		complete_effect = {
@@ -338,8 +399,12 @@ USA_interventionalism = {
 		days_remove = 30
 		remove_effect = {
 			add_war_support = 0.02
-			
-			NIC = { country_event = ww1_usa.6 }
+			FROM = { country_event = ww1_usa.6 }
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				is_owned_by = FROM
+			}
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -352,6 +417,14 @@ USA_interventionalism = {
 				factor = 0
 				has_war_support > 0.75
 			}
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.20
+			}
 		}
 	}
 	USA_occupation_of_honduras = {
@@ -359,19 +432,23 @@ USA_interventionalism = {
 		allowed = {
 			tag = USA
 		}
-		target_trigger = {
-			FROM = {
-				tag = HON
-			}
+		targets = {
+			HON
 		}
 		available = {
 			is_subject = no
 			is_in_faction = no
-			HON = {
-				is_subject = no
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
 				is_in_faction = no
 			}
-			NOT = { has_country_flag = banana_wars }
+			NOT = {
+				has_country_flag = banana_wars
+				has_idea = idea_great_depression
+			}
 			OR = {
 				AND = {
 					has_completed_focus = USA_expand_american_intervention
@@ -385,7 +462,7 @@ USA_interventionalism = {
 		}
 		cost = 75	
 		visible = {
-			NOT = { has_war_with = HON }
+			NOT = { has_war_with = FROM }
 			has_completed_focus = USA_strike_central_america
 		}	
 		complete_effect = {
@@ -394,8 +471,12 @@ USA_interventionalism = {
 		days_remove = 30
 		remove_effect = {
 			add_war_support = 0.02
-			
-			HON = { country_event = ww1_usa.6 }
+			FROM = { country_event = ww1_usa.6 }
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				is_owned_by = FROM
+			}
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -406,7 +487,19 @@ USA_interventionalism = {
 			}
 			modifier = {
 				factor = 0
+				FROM = { has_government = ROOT } 
+			}
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}
+			modifier = {
+				factor = 0
 				has_war_support > 0.5
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.20
 			}
 		}
 	}
@@ -415,19 +508,23 @@ USA_interventionalism = {
 		allowed = {
 			tag = USA
 		}
-		target_trigger = {
-			FROM = {
-				tag = ELS
-			}
+		targets = {
+			ELS
 		}
 		available = {
 			is_subject = no
 			is_in_faction = no
-			ELS = {
-				is_subject = no
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
 				is_in_faction = no
 			}
-			NOT = { has_country_flag = banana_wars }
+			NOT = {
+				has_country_flag = banana_wars
+				has_idea = idea_great_depression
+			}
 			OR = {
 				AND = {
 					has_completed_focus = USA_expand_american_intervention
@@ -441,7 +538,7 @@ USA_interventionalism = {
 		}
 		cost = 75	
 		visible = {
-			NOT = { has_war_with = ELS }
+			NOT = { has_war_with = FROM }
 			has_completed_focus = USA_strike_central_america
 		}	
 		complete_effect = {
@@ -450,8 +547,12 @@ USA_interventionalism = {
 		days_remove = 30
 		remove_effect = {
 			add_war_support = 0.02
-			
-			ELS = { country_event = ww1_usa.6 }
+			FROM = { country_event = ww1_usa.6 }
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				is_owned_by = FROM
+			}
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -462,7 +563,19 @@ USA_interventionalism = {
 			}
 			modifier = {
 				factor = 0
+				FROM = { has_government = ROOT } 
+			}
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}
+			modifier = {
+				factor = 0
 				has_war_support > 0.5
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.20
 			}
 		}
 	}
@@ -471,19 +584,23 @@ USA_interventionalism = {
 		allowed = {
 			tag = USA
 		}
-		target_trigger = {
-			FROM = {
-				tag = GUA
-			}
+		targets = {
+			GUA
 		}
 		available = {
 			is_subject = no
 			is_in_faction = no
-			GUA = {
-				is_subject = no
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
 				is_in_faction = no
 			}
-			NOT = { has_country_flag = banana_wars }
+			NOT = {
+				has_country_flag = banana_wars
+				has_idea = idea_great_depression
+			}
 			OR = {
 				AND = {
 					has_completed_focus = USA_expand_american_intervention
@@ -497,7 +614,7 @@ USA_interventionalism = {
 		}
 		cost = 75	
 		visible = {
-			NOT = { has_war_with = GUA }
+			NOT = { has_war_with = FROM }
 			has_completed_focus = USA_strike_central_america
 		}	
 		complete_effect = {
@@ -506,8 +623,12 @@ USA_interventionalism = {
 		days_remove = 30
 		remove_effect = {
 			add_war_support = 0.02
-			
-			GUA = { country_event = ww1_usa.6 }
+			FROM = { country_event = ww1_usa.6 }
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				is_owned_by = FROM
+			}
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -518,7 +639,19 @@ USA_interventionalism = {
 			}
 			modifier = {
 				factor = 0
+				FROM = { has_government = ROOT } 
+			}
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}
+			modifier = {
+				factor = 0
 				has_war_support > 0.5
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.20
 			}
 		}
 	}
@@ -527,19 +660,23 @@ USA_interventionalism = {
 		allowed = {
 			tag = USA
 		}
-		target_trigger = {
-			FROM = {
-				tag = COS
-			}
+		targets = {
+			COS
 		}
 		available = {
 			is_subject = no
 			is_in_faction = no
-			COS = {
-				is_subject = no
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
 				is_in_faction = no
 			}
-			NOT = { has_country_flag = banana_wars }
+			NOT = {
+				has_country_flag = banana_wars
+				has_idea = idea_great_depression
+			}
 			OR = {
 				AND = {
 					has_completed_focus = USA_expand_american_intervention
@@ -553,7 +690,7 @@ USA_interventionalism = {
 		}
 		cost = 75	
 		visible = {
-			NOT = { has_war_with = COS }
+			NOT = { has_war_with = FROM }
 			has_completed_focus = USA_strike_central_america
 		}
 		complete_effect = {
@@ -562,8 +699,12 @@ USA_interventionalism = {
 		days_remove = 30
 		remove_effect = {
 			add_war_support = 0.02
-			
-			COS = { country_event = ww1_usa.6 }
+			FROM = { country_event = ww1_usa.6 }
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				is_owned_by = FROM
+			}
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -574,7 +715,19 @@ USA_interventionalism = {
 			}
 			modifier = {
 				factor = 0
+				FROM = { has_government = ROOT } 
+			}
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}
+			modifier = {
+				factor = 0
 				has_war_support > 0.5
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.20
 			}
 		}
 	}
@@ -583,19 +736,23 @@ USA_interventionalism = {
 		allowed = {
 			tag = USA
 		}
-		target_trigger = {
-			FROM = {
-				tag = PAN
-			}
+		targets = {
+			PAN
 		}
 		available = {
 			is_subject = no
 			is_in_faction = no
-			PAN = {
-				is_subject = no
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
 				is_in_faction = no
 			}
-			NOT = { has_country_flag = banana_wars }
+			NOT = {
+				has_country_flag = banana_wars
+				has_idea = idea_great_depression
+			}
 			OR = {
 				AND = {
 					has_completed_focus = USA_expand_american_intervention
@@ -609,7 +766,7 @@ USA_interventionalism = {
 		}
 		cost = 75	
 		visible = {
-			NOT = { has_war_with = PAN }
+			NOT = { has_war_with = FROM }
 			has_completed_focus = USA_strike_central_america
 		}
 		complete_effect = {
@@ -618,8 +775,12 @@ USA_interventionalism = {
 		days_remove = 30
 		remove_effect = {
 			add_war_support = 0.02
-			
-			PAN = { country_event = ww1_usa.6 }
+			FROM = { country_event = ww1_usa.6 }
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				is_owned_by = FROM
+			}
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -630,7 +791,19 @@ USA_interventionalism = {
 			}
 			modifier = {
 				factor = 0
+				FROM = { has_government = ROOT } 
+			}
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}
+			modifier = {
+				factor = 0
 				has_war_support > 0.5
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.20
 			}
 		}
 	}
@@ -640,19 +813,23 @@ USA_interventionalism = {
 		allowed = {
 			tag = USA
 		}
-		target_trigger = {
-			FROM = {
-				tag = COL
-			}
+		targets = {
+			COL
 		}
 		available = {
 			is_subject = no
 			is_in_faction = no
-			COL = {
-				is_subject = no
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
 				is_in_faction = no
 			}
-			NOT = { has_country_flag = banana_wars }
+			NOT = {
+				has_country_flag = banana_wars
+				has_idea = idea_great_depression
+			}
 			OR = {
 				AND = {
 					has_completed_focus = USA_expand_american_intervention
@@ -666,7 +843,7 @@ USA_interventionalism = {
 		}
 		cost = 100	
 		visible = {
-			NOT = { has_war_with = COL }
+			NOT = { has_war_with = FROM }
 			has_completed_focus = USA_expand_american_intervention
 		}
 		complete_effect = {
@@ -674,7 +851,12 @@ USA_interventionalism = {
 		}
 		days_remove = 45
 		remove_effect = {			
-			COL = { country_event = ww1_usa.6 }
+			FROM = { country_event = ww1_usa.6 }
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				is_owned_by = FROM
+			}
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -685,7 +867,19 @@ USA_interventionalism = {
 			}
 			modifier = {
 				factor = 0
+				FROM = { has_government = ROOT } 
+			}
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}
+			modifier = {
+				factor = 0
 				has_war_support > 0.5
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.20
 			}
 		}
 	}
@@ -694,19 +888,23 @@ USA_interventionalism = {
 		allowed = {
 			tag = USA
 		}
-		target_trigger = {
-			FROM = {
-				tag = VEN
-			}
+		targets = {
+			VEN
 		}
 		available = {
 			is_subject = no
 			is_in_faction = no
-			VEN = {
-				is_subject = no
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
 				is_in_faction = no
 			}
-			NOT = { has_country_flag = banana_wars }
+			NOT = {
+				has_country_flag = banana_wars
+				has_idea = idea_great_depression
+			}
 			OR = {
 				AND = {
 					has_completed_focus = USA_expand_american_intervention
@@ -720,7 +918,7 @@ USA_interventionalism = {
 		}
 		cost = 100	
 		visible = {
-			NOT = { has_war_with = VEN }
+			NOT = { has_war_with = FROM }
 			has_completed_focus = USA_expand_american_intervention
 		}
 		complete_effect = {
@@ -728,7 +926,12 @@ USA_interventionalism = {
 		}
 		days_remove = 45
 		remove_effect = {			
-			VEN = { country_event = ww1_usa.6 }
+			FROM = { country_event = ww1_usa.6 }
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				is_owned_by = FROM
+			}
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -739,7 +942,19 @@ USA_interventionalism = {
 			}
 			modifier = {
 				factor = 0
+				FROM = { has_government = ROOT } 
+			}
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}
+			modifier = {
+				factor = 0
 				has_war_support > 0.5
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.20
 			}
 		}
 	}
@@ -748,19 +963,23 @@ USA_interventionalism = {
 		allowed = {
 			tag = USA
 		}
-		target_trigger = {
-			FROM = {
-				tag = PRU
-			}
+		targets = {
+			PRU
 		}
 		available = {
 			is_subject = no
 			is_in_faction = no
-			PRU = {
-				is_subject = no
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
 				is_in_faction = no
 			}
-			NOT = { has_country_flag = banana_wars }
+			NOT = {
+				has_country_flag = banana_wars
+				has_idea = idea_great_depression
+			}
 			OR = {
 				AND = {
 					has_completed_focus = USA_expand_american_intervention
@@ -774,7 +993,7 @@ USA_interventionalism = {
 		}
 		cost = 100	
 		visible = {
-			NOT = { has_war_with = PRU }
+			NOT = { has_war_with = FROM }
 			has_completed_focus = USA_expand_american_intervention
 		}
 		complete_effect = {
@@ -782,7 +1001,12 @@ USA_interventionalism = {
 		}
 		days_remove = 45
 		remove_effect = {			
-			PRU = { country_event = ww1_usa.6 }
+			FROM = { country_event = ww1_usa.6 }
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				is_owned_by = FROM
+			}
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -790,6 +1014,14 @@ USA_interventionalism = {
 			modifier = {
 				factor = 0
 				is_historical_focus_on = yes
+			}
+			modifier = {
+				factor = 0
+				FROM = { has_government = ROOT } 
+			}
+			modifier = {
+				factor = 0
+				has_civil_war = yes
 			}
 			modifier = {
 				factor = 0
@@ -802,19 +1034,23 @@ USA_interventionalism = {
 		allowed = {
 			tag = USA
 		}
-		target_trigger = {
-			FROM = {
-				tag = ECU
-			}
+		targets = {
+			ECU
 		}
 		available = {
 			is_subject = no
 			is_in_faction = no
-			ECU = {
-				is_subject = no
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ROOT
+				}
 				is_in_faction = no
 			}
-			NOT = { has_country_flag = banana_wars }
+			NOT = {
+				has_country_flag = banana_wars
+				has_idea = idea_great_depression
+			}
 			OR = {
 				AND = {
 					has_completed_focus = USA_expand_american_intervention
@@ -828,7 +1064,7 @@ USA_interventionalism = {
 		}
 		cost = 100	
 		visible = {
-			NOT = { has_war_with = ECU }
+			NOT = { has_war_with = FROM }
 			has_completed_focus = USA_expand_american_intervention
 		}
 		complete_effect = {
@@ -836,7 +1072,12 @@ USA_interventionalism = {
 		}
 		days_remove = 45
 		remove_effect = {			
-			ECU = { country_event = ww1_usa.6 }
+			FROM = { country_event = ww1_usa.6 }
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				is_owned_by = FROM
+			}
 		}
 		fire_only_once = yes
 		ai_will_do = {
@@ -847,7 +1088,19 @@ USA_interventionalism = {
 			}
 			modifier = {
 				factor = 0
+				FROM = { has_government = ROOT } 
+			}
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}
+			modifier = {
+				factor = 0
 				has_war_support > 0.5
+			}
+			modifier = {
+				factor = 0
+				has_stability < 0.20
 			}
 		}
 	}
@@ -859,38 +1112,38 @@ USA_interventionalism = {
 		}
 		available = {
 			is_subject = no
-			PHI = { exists = no }
+			has_capitulated = no
+			327 = { is_owned_and_controlled_by = ROOT }
+			623 = { is_owned_and_controlled_by = ROOT }
+			624 = { is_owned_and_controlled_by = ROOT }
+			625 = { is_owned_and_controlled_by = ROOT }
+			626 = { is_owned_and_controlled_by = ROOT }
+			627 = { is_owned_and_controlled_by = ROOT }
+			628 = { is_owned_and_controlled_by = ROOT }
 		}
 		visible = {
+			has_completed_focus = USA_fourteen_points
 			PHI = { exists = no }
-			all_state = {
+			any_owned_state = {
 				is_core_of = PHI
-				is_owned_and_controlled_by = USA 
 			}
-			#has_completed_focus = USA_stimson_doctrine
+			has_global_flag = interbellum
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				is_core_of = PHI
+			}
 		}
 		complete_effect = {
-			every_state = {
+			every_owned_state = {
 				limit = { is_core_of = PHI }
-				PHI = { transfer_state = PREV }
+				transfer_state_to = PHI
 			}
-			USA = {
-				if = {
-					limit = {
-						OR = {
-							has_dlc = "Together for Victory"
-							has_dlc = "Man the Guns"
-						}
-					}
-					set_autonomy = {
-						target = PHI
-						autonomous_state = autonomy_colony
-						freedom_level = 0.10
-					}
-					else = {
-						puppet = PHI
-					}
-				}
+			PHI = { set_country_flag = colony }
+			set_autonomy = {
+				target = PHI
+				autonomous_state = autonomy_tgwr_self_governing_colony
+				freedom_level = 0.10
 			}
 		}
 		fire_only_once = yes
@@ -905,157 +1158,307 @@ USA_interventionalism = {
 	}
 }
 USA_russian_intervention = {
-	USA_intervene_in_murmansk = {
-		allowed = { tag = USA }
-		available = {
-			is_subject = no
-			SOV = { has_war_with = RUS }
-			OR = {
-				SOV = { has_full_control_of_state = 213 }
-				RUS = { has_full_control_of_state = 213 }
+	USA_start_russian_intervention = {
+		name = JAP_start_siberian_intervention
+		icon = GFX_decision_generic_operation
+		allowed = {
+			original_tag = USA
+		}
+		target_trigger = {
+			FROM = {
+				NOT = {
+					has_war_with = ROOT
+					has_government = communism
+					has_country_flag = usa_intervention_in_rcw
+				}			
 			}
 		}
-		highlight_state_targets = { state = 213 }
-		on_map_mode = map_only
-		cost = 46
-		fire_only_once = yes
+		targets = {
+			RSO
+			SIB
+			CER
+			PRI
+		}
+		custom_cost_trigger = {
+			command_power > 9.9
+		}
+		custom_cost_text = decision_cost_CP_10
 		visible = {
-			SOV = { has_war_with = RUS }
-			NOT = { has_war_with = RUS }
-			NOT = { has_war_with = SOV }
-			NOT = { has_country_flag = USA_intervene_in_russia_timer }
-		}
-		cancel_if_not_visible = yes
-		days_remove = 78
-		complete_effect = {
-			set_country_flag = { flag = USA_intervene_in_russia_timer days = 90 value = 1 }
-		}
-		remove_effect = {
-			transfer_state = 213
-			if = {
-				limit = { NOT = { has_global_flag = intervention_in_russia } }
-				news_event = ww1_usa.120
+			country_exists = SOV
+			NOT = { 
+				has_government = communism 
+			}
+			FROM = {
 				if = {
-					limit = { NOT = { has_government = communism } }
-					SOV = { add_war_support = -0.02 }
+					limit = {
+						is_subject = yes
+					}
+					OVERLORD = {
+						OR = {
+							is_russian_tag = yes
+							tag = ROOT
+						}
+					}
 				}
-				if = {
-					limit = { has_government = communism }
-					RUS = { add_war_support = -0.02 }
+			}
+		}
+		available = {
+			FROM = {
+				any_controlled_state = {
+					is_coastal = yes
+					naval_base > 0
 				}
-				set_global_flag = intervention_in_russia
-				add_ideas = USA_idea_intervention_in_russia
 			}
 		}
 		ai_will_do = {
-			factor = 100
+			base = 100
 			modifier = {
 				factor = 0
-				date < 1918.6.1
+				surrender_progress > 0
+			}
+		}
+		cancel_if_not_visible = yes
+		fire_only_once = yes
+		days_remove = 10
+		complete_effect = {
+			add_command_power = -10
+		}
+		remove_effect = {
+			FROM = {
+				set_country_flag = usa_intervention_in_rcw
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = large_increase
+				}
+			}
+			diplomatic_relation = {
+				country = FROM
+				relation = military_access
+				active = yes
+			}
+			add_opinion_modifier = {
+				target = FROM
+				modifier = large_increase
+			}
+			add_ai_strategy = {
+				type = protect
+				id = FROM
+				value = 100
+			}
+			add_ai_strategy = {
+				type = send_volunteers_desire
+				id = FROM
+				value = 100
+			}
+			add_ai_strategy = {
+				type = support
+				id = FROM
+				value = 100
 			}
 		}
 	}
-	USA_intervene_in_archangelsk = {
-		allowed = { tag = USA }
-		available = {
-			is_subject = no
-			SOV = { has_war_with = RUS }
-			OR = {
-				SOV = { has_full_control_of_state = 214 }
-				RUS = { has_full_control_of_state = 214 }
+	USA_send_manpower_to_whites = {
+		name = JAP_send_manpower_to_siberia
+		icon = GFX_decision_generic_operation
+		allowed = {
+			original_tag = USA
+		}
+		target_trigger = {
+			FROM = {
+				is_russian_tag = yes
+				NOT = {
+					has_war_with = ROOT
+					has_government = communism
+				}
+				has_country_flag = usa_intervention_in_rcw
 			}
-		}	
-		highlight_state_targets = { state = 214 }
-		on_map_mode = map_only
-		
-		cost = 57
+		}
+		targets = {
+			RSO
+			SIB
+			CER
+			PRI
+		}
 		visible = {
-			SOV = { has_war_with = RUS }
-			NOT = { has_war_with = RUS }
-			NOT = { has_war_with = SOV }
-			NOT = { has_country_flag = USA_intervene_in_russia_timer }
-		}
-		cancel_if_not_visible = yes
-		days_remove = 85
-		complete_effect = {
-			set_country_flag = { flag = USA_intervene_in_russia_timer days = 90 value = 1 }
-		}
-		remove_effect = {
-			transfer_state = 214
-			if = {
-				limit = { NOT = { has_global_flag = intervention_in_russia } }
-				news_event = ww1_usa.120
+			NOT = {
+				has_government = communism 
+			}
+			FROM = {
 				if = {
-					limit = { NOT = { has_government = communism } }
-					SOV = { add_war_support = -0.02 }
+					limit = {
+						is_subject = yes
+					}
+					OVERLORD = {
+						OR = {
+							is_russian_tag = yes
+							tag = ROOT
+						}
+					}
 				}
-				if = {
-					limit = { has_government = communism }
-					RUS = { add_war_support = -0.02 }
-				}
-				set_global_flag = intervention_in_russia
-				add_ideas = USA_idea_intervention_in_russia
 			}
 		}
-		fire_only_once = yes
+		available = {
+			has_manpower > 2999
+			FROM = { has_capitulated = no }
+		}
+		days_re_enable = 50
 		ai_will_do = {
-			factor = 10
+			base = 0
+		}
+		fire_only_once = no
+		complete_effect = {
+			army_experience = 5
+			add_manpower = -3000
+			FROM = { add_manpower = 3000 }
+		}
+	}
+	USA_send_rifles_to_whites = {
+		name = JAP_send_rifles_to_siberia
+		icon = ger_military_buildup
+		allowed = {
+			original_tag = USA
+		}
+		target_trigger = {
+			FROM = {
+				is_russian_tag = yes
+				NOT = {
+					has_war_with = ROOT
+					has_government = communism
+				}
+				has_country_flag = usa_intervention_in_rcw
+			}
+		}
+		targets = {
+			RSO
+			SIB
+			CER
+			PRI
+		}
+		available = {
+			FROM = { has_capitulated = no }
+		}
+		visible = {
+			NOT = {
+				has_government = communism 
+			}
+			FROM = {
+				if = {
+					limit = {
+						is_subject = yes
+					}
+					OVERLORD = {
+						OR = {
+							is_russian_tag = yes
+							tag = ROOT
+						}
+					}
+				}
+			}
+		}
+		fire_only_once = no
+		custom_cost_trigger = {
+			has_equipment = { infantry_equipment > 1999 }
+		}
+		custom_cost_text = 2000_infantry_equipment_1
+		ai_will_do = {
+			base = 100
 			modifier = {
 				factor = 0
-				date < 1918.6.1
+				OR = {
+					surrender_progress > 0
+					has_equipment = { infantry_equipment < 10000 }
+					FROM = {
+						OR = {
+							has_equipment = { infantry_equipment > 4999 } 
+							has_war = no
+						}					
+					}			
+				}	
+			}
+		}
+		days_re_enable = 50
+		complete_effect = {
+			army_experience = 5
+			send_equipment = {
+				target = FROM
+				type = infantry_equipment
+				amount = 2000
 			}
 		}
 	}
-	USA_intervene_in_vladivostok = {
-		allowed = { tag = USA }
-		available = {
-			is_subject = no
-			SOV = { has_war_with = RUS }
-			OR = {
-				SOV = { has_full_control_of_state = 408 }
-				RUS = { has_full_control_of_state = 408 }
-			}
-		}	
-		highlight_state_targets = { state = 408 }
-		on_map_mode = map_only
-		
-		cost = 71
-		visible = {
-			SOV = { has_war_with = RUS }
-			NOT = { has_war_with = RUS }
-			NOT = { has_war_with = SOV }
-			NOT = { has_country_flag = USA_intervene_in_russia_timer }
+	USA_end_russian_intervention = {
+		name = JAP_end_siberian_intervention
+		icon = GFX_decision_eng_blackshirt_march
+		allowed = {
+			original_tag = USA
 		}
-		cancel_if_not_visible = yes
-		days_remove = 92
+		target_trigger = {
+			FROM = {
+				is_russian_tag = yes
+				has_country_flag = usa_intervention_in_rcw
+			}
+		}
 		complete_effect = {
-			set_country_flag = { flag = USA_intervene_in_russia_timer days = 90 value = 1 }
-		}
-		remove_effect = {
-			transfer_state = 408
-			if = {
-				limit = { NOT = { has_global_flag = intervention_in_russia } }
-				news_event = ww1_usa.120
-				if = {
-					limit = { NOT = { has_government = communism } }
-					SOV = { add_war_support = -0.02 }
+			FROM = {
+				clr_country_flag = usa_intervention_in_rcw
+				remove_opinion_modifier = {
+					target = ROOT
+					modifier = large_increase
 				}
-				if = {
-					limit = { has_government = communism }
-					RUS = { add_war_support = -0.02 }
-				}
-				set_global_flag = intervention_in_russia
-				add_ideas = USA_idea_intervention_in_russia
+			}
+			diplomatic_relation = {
+				country = FROM
+				relation = military_access
+				active = no
+			}
+			diplomatic_relation = {
+				country = FROM
+				relation = guarantee
+				active = no
+			}
+			remove_opinion_modifier = {
+				target = FROM
+				modifier = large_increase
+			}
+			add_ai_strategy = {
+				type = protect
+				id = FROM
+				value = -100
+			}
+			add_ai_strategy = {
+				type = send_volunteers_desire
+				id = FROM
+				value = -100
+			}
+			add_ai_strategy = {
+				type = support
+				id = FROM
+				value = -100
 			}
 		}
-		fire_only_once = yes
 		ai_will_do = {
-			factor = 10
+			base = 0
 			modifier = {
-				factor = 0
-				date < 1919.1.1
+				add = 100
+				OR = {
+					surrender_progress > 0
+					NOT = {
+						country_exists = SOV
+						FROM = {
+							any_controlled_state = {
+								is_coastal = yes
+								naval_base > 0
+							}
+						}
+					}
+					FROM = {
+						has_government = communism
+					}
+					has_government = communism
+				}			
 			}
 		}
+		fire_only_once = no
 	}
 }
 USA_civil_war_category = {
@@ -1163,7 +1566,7 @@ USA_wild_west = {
 				has_completed_focus = USA_american_autarky
 			}
 		}
-		highlight_state_targets = { state = 379 }
+		highlight_states = {highlight_state_targets = { state = 379 }}
         cost = 50
         fire_only_once = yes
 		
@@ -1220,7 +1623,7 @@ USA_wild_west = {
 				}
 			}
 		}
-		highlight_state_targets = { state = 380 }
+		highlight_states = {highlight_state_targets = { state = 380 }}
         ai_will_do = {
 			factor = 200
 			modifier = {
@@ -1260,7 +1663,7 @@ USA_wild_west = {
 				}
 			}
 		}
-		highlight_state_targets = { state = 382 }
+		highlight_states = {highlight_state_targets = { state = 382 }}
         ai_will_do = {
 			factor = 200
 			modifier = {
@@ -1300,7 +1703,7 @@ USA_wild_west = {
 				}
 			}
 		}
-		highlight_state_targets = { state = 376 }
+		highlight_states = {highlight_state_targets = { state = 376 }}
         ai_will_do = {
 			factor = 200
 			modifier = {
@@ -1340,7 +1743,7 @@ USA_wild_west = {
 				}
 			}
 		}
-		highlight_state_targets = { state = 377 }
+		highlight_states = {highlight_state_targets = { state = 377 }}
         ai_will_do = {
 			factor = 200
 			modifier = {
@@ -1368,25 +1771,52 @@ USA_wild_west = {
 
 foreign_politics = {
 	USA_buy_virgin_islands = {
-		icon = ger_mefo_bills
+		icon = GFX_decision_hol_attract_foreign_investors
 		allowed = {
 			tag = USA
 		}
 		available = {
 			is_subject = no
-			any_other_country = {
-				NOT = { has_war_with = ROOT }
-				has_full_control_of_state = 750
+			750 = {
+				owner = {
+					NOT = { has_war_with = ROOT }
+				}
 			}
 		}
 		cost = 25
 		visible = {
 			has_completed_focus = USA_protect_the_caribbean
+			NOT = { owns_state = 750 }
+		}
+		target_trigger = {
+			FROM = {
+				owns_state = 750
+			}
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 750
+			}
 		}
 		complete_effect = {
-			random_country = {
-				limit = { has_full_control_of_state = 750 }
-				country_event = ww1_usa.84
+			750 = {
+				owner = {
+					if = {
+						limit = {
+							ROOT = { has_war_with = GER }
+						}
+						country_event = {
+							id = ww1_denmark.2
+							hours = 3
+						}
+					}
+					else = {
+						country_event = {
+							id = ww1_usa.84
+							hours = 3
+						}
+					}
+				}
 			}
 		}
 		fire_only_once = yes
@@ -1399,7 +1829,7 @@ foreign_politics = {
 		}
 	}
 	USA_buy_greenland = {
-		icon = ger_mefo_bills
+		icon = GFX_decision_hol_attract_foreign_investors
 		allowed = {
 			tag = USA
 		}
@@ -1412,11 +1842,13 @@ foreign_politics = {
 		}
 		cost = 25
 		visible = {
-			NOT = { has_idea = undisturbed_isolation }
-			NOT = { has_idea = isolation }
+			NOT = {
+				has_idea = undisturbed_isolation
+				has_idea = isolation
+			}
 		}
 		complete_effect = {
-			random_country = {
+			every_other_country = {
 				limit = { has_full_control_of_state = 101 }
 				country_event = ww1_usa.89
 			}
@@ -1426,22 +1858,25 @@ foreign_politics = {
 			factor = 5
 			modifier = {
 				factor = 0
-				DEN = { is_in_faction = no }
+				any_other_country = {
+					has_full_control_of_state = 101
+					is_in_faction = no
+				}
 			}
 		}
 	}
 	USA_claim_696_690_693 = {
+		icon = GFX_decision_generic_operation
 		allowed = {
 			original_tag = USA
 		}
 		available = {
-			any_other_country = {
+			any_enemy_country = {
 				OR = {
 					owns_state = 690
 					owns_state = 693
 					owns_state = 696
 				}
-				has_war_with = USA
 			}
 		}
 		ai_will_do = {
@@ -1449,13 +1884,12 @@ foreign_politics = {
 		}
 		cost = 25
 		visible = {
-			any_other_country = {
+			any_enemy_country = {
 				OR = {
 					owns_state = 690
 					owns_state = 693
 					owns_state = 696
 				}
-				has_war_with = USA
 			}
 		}
 		fire_only_once = yes
@@ -1466,13 +1900,13 @@ foreign_politics = {
 		}
 	}
 	USA_claim_311 = {
+		icon = GFX_decision_generic_operation
 		allowed = {
 			original_tag = USA
 		}
 		available = {
-			any_other_country = {
+			any_enemy_country = {
 				owns_state = 311
-				has_war_with = USA
 			}
 		}
 		ai_will_do = {
@@ -1480,9 +1914,8 @@ foreign_politics = {
 		}
 		cost = 10
 		visible = {
-			any_other_country = {
+			any_enemy_country = {
 				owns_state = 311
-				has_war_with = USA
 			}
 		}
 		fire_only_once = yes
@@ -1491,13 +1924,13 @@ foreign_politics = {
 		}
 	}
 	USA_claim_695 = {
+		icon = GFX_decision_generic_operation
 		allowed = {
 			original_tag = USA
 		}
 		available = {
-			any_other_country = {
+			any_enemy_country = {
 				owns_state = 695
-				has_war_with = USA
 			}
 		}
 		ai_will_do = {
@@ -1505,14 +1938,529 @@ foreign_politics = {
 		}
 		cost = 10
 		visible = {
-			any_other_country = {
+			any_enemy_country = {
 				owns_state = 695
-				has_war_with = USA
 			}
 		}
 		fire_only_once = yes
 		complete_effect = {
 			add_state_claim = 695
+		}
+	}
+	philippine_american_war = {
+		allowed = { tag = USA }
+		days_mission_timeout = 120
+		available = { 
+			PHI = {
+				surrender_progress > 0.8
+			}
+		}
+		activation = { has_war_with = PHI }
+		visible = { has_war_with = PHI }
+		selectable_mission = no
+		is_good = no
+		timeout_effect = {
+			USA = {
+				country_event = {
+					id = ww1_USA.130
+					days = 3
+				}	
+			}
+		}
+		complete_effect = {
+			USA = {
+				annex_country = {
+					target = PHI
+					transfer_troops = no
+				}
+			}
+		}
+	}
+}
+GER_great_war = {
+	USA_declare_neutrality = {
+		icon = GFX_decision_generic_industry
+		allowed = {
+			tag = USA
+		}
+		available = {
+			has_idea = isolation
+			has_war = no
+		}
+		visible = {
+			is_great_war_ongoing = yes
+			NOT = {
+				has_war_with = CSA
+				has_war_with = USB
+			}
+			is_subject = no
+		}
+		fire_only_once = yes
+		days_remove = 15
+		remove_effect = {
+			add_political_power = 25
+			news_event = ww1_usa.18
+		}
+		cost = 0
+		ai_will_do = {
+			factor = 1000
+			modifier = {
+				factor = 0
+				NOT = { has_government = democratic }
+			}
+		}
+	}
+	USA_ww1_sell_rifles = {
+		icon = GFX_decision_generic_industry
+		allowed = {
+			tag = USA
+		}
+		available = {
+			has_capitulated = no
+			FROM = {
+				has_capitulated = no
+				any_owned_state = {
+					is_coastal = yes
+					is_controlled_by = PREV
+				}
+			}
+		}
+		visible = {
+			is_great_war_ongoing = yes
+			NOT = {
+				has_war_with = CSA
+				has_war_with = USB
+				has_government = communism
+			}
+			is_subject = no
+			has_civil_war = no
+			FROM = {
+				any_owned_state = {
+					is_coastal = yes
+				}
+			}
+		}
+		fire_only_once = no
+		custom_cost_trigger = {
+			has_equipment = { infantry_equipment > 1999 }
+		}
+		custom_cost_text = 2000_infantry_equipment_1
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_equipment = { infantry_equipment < 4000 }
+			}
+			modifier = {
+				factor = 0
+				surrender_progress > 0.01
+			}
+			modifier = {
+				factor = 0
+				has_opinion = {
+					target = FROM
+					value < -30
+				}
+			}
+			modifier = {
+				factor = 0
+				FROM = { surrender_progress > 0.90 }
+			}
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+				has_government = democratic
+				FROM = { 
+					OR = {
+						tag = RUS
+						tag = GER
+						tag = TUR
+						tag = AUS
+					}
+				 }
+			}
+		}
+		target_trigger = {
+			FROM = {
+				NOT = {
+					original_tag = ITA
+				}
+				NOT = {
+					has_country_flag = dont_want_usa_guns
+				}
+				is_major = yes
+				is_subject = no
+				NOT = {
+					has_war_with = ROOT
+				}
+				AND = {
+					OR = {
+						is_in_faction_with = FRA
+						is_in_faction_with = GER
+					}
+					has_war_with_major = yes
+				}
+			}
+		}
+		complete_effect = {
+			FROM = { country_event = ww1_usa.136 }
+		}
+		days_re_enable = 70
+	}
+	USA_ww1_sell_arts = {
+		icon = ger_military_buildup
+		allowed = {
+			tag = USA
+		}
+		visible = {
+			is_great_war_ongoing = yes
+			NOT = {
+				has_war_with = CSA
+				has_war_with = USB
+				has_government = communism
+			}
+			is_subject = no
+			has_civil_war = no
+			FROM = {
+				any_owned_state = {
+					is_coastal = yes
+				}
+			}
+		}
+		available = {
+			has_capitulated = no
+			FROM = {
+				has_capitulated = no
+				any_owned_state = {
+					is_coastal = yes
+					is_controlled_by = PREV
+				}
+			}
+		}
+		fire_only_once = no
+		custom_cost_trigger = {
+			has_equipment = { field_gun_equipment > 100 }
+		}
+		custom_cost_text = 100_artillery_equipment_1
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_equipment = { field_gun_equipment < 1000 }
+			}
+			modifier = {
+				factor = 0
+				surrender_progress > 0.01
+			}
+			modifier = {
+				factor = 0
+				has_opinion = {
+					target = FROM
+					value < -30
+				}
+			}
+			modifier = {
+				factor = 0
+				FROM = { surrender_progress > 0.90 }
+			}
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+				has_government = democratic
+				FROM = { 
+					OR = {
+						tag = RUS
+						tag = GER
+						tag = TUR
+						tag = AUS
+					}
+				 }
+			}
+		}
+		target_trigger = {
+			FROM = {
+				NOT = {
+					original_tag = ITA
+				}
+				NOT = {
+					has_country_flag = dont_want_usa_guns
+				}
+				is_major = yes
+				is_subject = no
+				NOT = {
+					has_war_with = ROOT
+				}
+				AND = {
+					OR = {
+						is_in_faction_with = FRA
+						is_in_faction_with = GER
+					}
+					has_war_with_major = yes
+				}
+			}
+		}
+		complete_effect = {
+			FROM = { country_event = ww1_usa.139 }
+		}
+		days_re_enable = 140
+	}
+	USA_ww1_sell_foods = {
+		icon = GFX_decision_generic_factory
+		allowed = {
+			tag = USA
+		}
+		visible = {
+			is_great_war_ongoing = yes
+			NOT = {
+				has_war_with = CSA
+				has_war_with = USB
+				has_government = communism
+			}
+			is_subject = no
+			has_civil_war = no
+			FROM = {
+				any_owned_state = {
+					is_coastal = yes
+				}
+			}
+		}
+		available = {
+			has_capitulated = no
+			NOT = { has_idea = USA_idea_sending_foods }
+			FROM = {
+				has_capitulated = no
+				any_owned_state = {
+					is_coastal = yes
+					is_controlled_by = PREV
+				}
+				NOT = { has_idea = USA_idea_food_supply }
+			}
+		}
+		fire_only_once = no
+		custom_cost_trigger = {
+			num_of_civilian_factories_available_for_projects > 5
+		}
+		custom_cost_text = decision_cost_5_civ
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				num_of_civilian_factories_available_for_projects < 10
+			}
+			modifier = {
+				factor = 0
+				surrender_progress > 0.01
+			}
+			modifier = {
+				factor = 0
+				has_opinion = {
+					target = FROM
+					value < -30
+				}
+			}
+			modifier = {
+				factor = 0
+				FROM = { surrender_progress > 0.90 }
+			}
+			modifier = {
+				factor = 0
+				FROM = { 
+					OR = {
+						tag = RUS
+						tag = GER
+						tag = TUR
+						tag = AUS
+					}
+				 }
+			}
+		}
+		target_trigger = {
+			FROM = {
+				NOT = {
+					original_tag = ITA
+				}
+				NOT = {
+					has_country_flag = dont_want_usa_guns
+				}
+				is_major = yes
+				is_subject = no
+				NOT = {
+					has_war_with = ROOT
+				}
+				AND = {
+					OR = {
+						is_in_faction_with = FRA
+						is_in_faction_with = GER
+					}
+					has_war_with_major = yes
+				}
+			}
+		}
+		complete_effect = {
+			FROM = { country_event = ww1_usa.142 }
+		}
+		days_re_enable = 140
+	}
+}
+
+economy_decisions = {
+	USA_build_hales_bar_dam = {
+		icon = GFX_decision_generic_construction
+		visible = {
+			has_start_date < 1914.1.1
+			368 = {
+				dam_hydroelectric < 1
+				is_owned_by = ROOT
+			}
+		}
+		available = {
+			controls_state = 368
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 368
+			}
+		}
+		modifier = {
+			civilian_factory_use = 1
+		}
+		fire_only_once = yes
+		days_remove = 365
+		remove_effect = {
+			368 = {
+				add_building_construction = {
+					type = dam_hydroelectric
+					level = 1
+					province = 1758
+					instant_build = yes
+				}
+			}
+		}
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 100
+				date > 1912.11.1
+			}
+		}
+	}
+	USA_build_medina_dam = {
+		icon = GFX_decision_generic_construction
+		visible = {
+			has_start_date < 1914.1.1
+			375 = {
+				dam < 1
+				is_owned_by = ROOT
+			}
+		}
+		available = {
+			controls_state = 375
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 375
+			}
+		}
+		modifier = {
+			civilian_factory_use = 1
+		}
+		fire_only_once = yes
+		days_remove = 365
+		remove_effect = {
+			375 = {
+				add_building_construction = {
+					type = dam
+					level = 1
+					province = 12782
+					instant_build = yes
+				}
+			}
+		}
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 100
+				date > 1912.5.1
+			}
+		}
+	}
+	USA_build_theodor_roosevelt_dam = {
+		icon = GFX_decision_generic_construction
+		visible = {
+			has_start_date < 1914.1.1
+			377 = {
+				dam_hydroelectric < 1
+				is_owned_by = ROOT
+			}
+		}
+		available = {
+			controls_state = 377
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 377
+			}
+		}
+		modifier = {
+			civilian_factory_use = 1
+		}
+		fire_only_once = yes
+		days_remove = 365
+		remove_effect = {
+			377 = {
+				add_building_construction = {
+					type = dam_hydroelectric
+					level = 1
+					province = 7747
+					instant_build = yes
+				}
+			}
+		}
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 100
+			}
+		}
+	}
+	USA_build_keokuk_dam = {
+		icon = GFX_decision_generic_construction
+		visible = {
+			has_start_date < 1914.1.1
+			395 = {
+				dam_hydroelectric < 1
+				is_owned_by = ROOT
+			}
+		}
+		available = {
+			controls_state = 395
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 395
+			}
+		}
+		modifier = {
+			civilian_factory_use = 1
+		}
+		fire_only_once = yes
+		days_remove = 365
+		remove_effect = {
+			395 = {
+				add_building_construction = {
+					type = dam_hydroelectric
+					level = 1
+					province = 10393
+					instant_build = yes
+				}
+			}
+		}
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 100
+				date > 1912.5.1
+			}
 		}
 	}
 }

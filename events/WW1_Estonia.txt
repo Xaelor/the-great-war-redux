@@ -1,96 +1,51 @@
 add_namespace = ww1_estonia
 
-# Collapse of Baltic Duchy
-####################
+# Lennuk and Wambola
 country_event = {
 	id = ww1_estonia.1
+	title = ww1_estonia.1.t
+	desc = ww1_estonia.1.d
+	picture = GFX_report_event_destroyers
 	trigger = {
-		GER = { has_country_flag = great_war_loser }
-		NOT = { has_global_flag = versallies_treaty}
-		OR = {
-			GER = {
-				AND = {
-				    owns_state = 13
-				    owns_state = 191
-				    owns_state = 12			
-				}
-			}	
-			UBD = { exists = yes }
-        }
+		date > 1915.1.1
+		tag = EST
+		is_subject = no
+		NOT = {
+			ENG = {
+				is_subject = yes
+				has_government = communism
+			}
+			has_war_with = ENG
+		}
+		any_owned_state = {
+			is_coastal = yes
+			naval_base > 0
+		}
+		has_global_flag = russian_civil_war
 	}
 	fire_only_once = yes
-	hidden = yes
-	mean_time_to_happen = { days = 31 }
-	immediate = {
-		hidden_effect = {
-			if = {
-				limit = {
-					LTR = {
-						OR = {
-					        has_country_flag = LAT_iskolata
-						    has_cosmetic_tag = LAT_iskolata
-						}
-						exists = no
-					}
-                }					
-			    LTR = {
-				    clr_country_flag = LAT_iskolata	
-				    drop_cosmetic_tag = yes
-					retire_ideology_leader = communism
-					set_politics = {
-					   	ruling_party = democratic
-						elections_allowed = yes
-					}
-					set_rule = {
-				        can_join_factions = yes
-				    }
-					set_popularities = {
-					   	democratic = 50
-					   	neutrality = 30
-					   	fascism = 0
-					   	communism = 20
-				    }
-				}
-			}	
-		    every_state = {
-			    limit = {
-				    OR = {
-					   is_core_of = LIT 
-					   is_core_of = LAT
-					   is_core_of = EST
-				    }
-				    NOT = { state = 96 }
-			   }
-			   remove_core_of = RUS
-			   remove_core_of = SOV
-		    }		     
-			SOV = { transfer_state = 96 }
-			COU = {
-				remove_state_core = 190	
-			}
+	mean_time_to_happen = {
+		days = 120
+	}
+	option = {
+		name = ww1_estonia.1.a
+		create_ship = {
+			type = ship_hull_light_2
+			creator = RUS
+			equipment_variant = "Leytenant Illyin Class"
+			name = "Wambola"
 		}
-		set_global_flag = estonia_released
-		ESR = {
-			transfer_state = 13
-			transfer_state = 191
-		}
-		set_global_flag = latvia_released
-        LTR = {
-			transfer_state = 12
-			transfer_state = 96
-			transfer_state = 190
-		}
-		every_state = {
-		    limit = {	
-			    is_core_of = UBD
-			}
-			remove_core_of = UBD
+		create_ship = {
+			type = ship_hull_light_2
+			creator = RUS
+			equipment_variant = "Izyaslav Class"
+			name = "Lennuk"
 		}
 	}
 }
 
-#NORTHWESTERN ARMY
-##################
+# NORTHWESTERN ARMY
+######################
 country_event = {
 	id = ww1_estonia.2
 	title = ww1_estonia.2.t
@@ -110,7 +65,7 @@ country_event = {
 		}
 		209 = {
 			create_unit = {
-				division = "division_template = \"White Guard Corps\"	start_experience_factor = 0.6	start_equipment_factor = 1"
+				division = "division_template = \"Belogvardeyskiy Korpus\"	start_experience_factor = 0.6	start_equipment_factor = 1"
 				owner = RUS
 				allow_spawning_on_enemy_provs = no
 				count = 2
@@ -119,7 +74,7 @@ country_event = {
 				}
 			}
 			create_unit = {
-				division = "division_template = \"White Guard Cavalry\"	start_experience_factor = 0.6	start_equipment_factor = 1"
+				division = "division_template = \"Belogvardeyskaya Kavaleriya\"	start_experience_factor = 0.6	start_equipment_factor = 1"
 				owner = RUS
 				allow_spawning_on_enemy_provs = no
 				count = 1
@@ -130,20 +85,24 @@ country_event = {
 		}
 		SOV = {
 			add_opinion_modifier = {
-				target = ESR
+				target = EST
 				modifier = large_decrease
 			}
 		}
-		ai_chance = { factor = 100 } 
+		ai_chance = {
+			factor = 100
+		}
 	}
 	option = {
 		name = ww1_estonia.2.a
 		RUS = {
 			add_opinion_modifier = {
-				target = ESR
+				target = EST
 				modifier = large_decrease
 			}
 		}
-		ai_chance = { factor = 0 }
+		ai_chance = {
+			factor = 0
+		}
 	}
 }

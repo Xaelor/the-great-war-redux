@@ -1,80 +1,42 @@
-﻿capital = 271
+give_military_access = FRA #Ethio-Djibouti Railway
+
+capital = 271
+oob = "ETH_1910"
 
 set_research_slots = 2
 set_stability = 0.40
 set_convoys = 1
 set_cosmetic_tag = ETH_menelik
 
-create_country_leader = {
-	name = "Menelik II"
-	picture="gfx/leaders/ETH/ETH_menelik_ii.dds" 
-	expire="1935.1.1" 
-	ideology=autocracy  
-	traits={  
-    	lion_of_judah
-	} 
-}
+recruit_character = ETH_menelik_ii
 
-create_field_marshal = {
-	name = "Menelik II"
-	id=30012 
-	portrait_path="gfx/leaders/ETH/ETH_menelik_ii.dds" 
-	traits = {
-		politically_connected
-		media_personality
-		old_guard
-	}
-	skill = 2
-	attack_skill = 2
-	defense_skill = 1
-	planning_skill = 2
-	logistics_skill = 2
-}
-create_corps_commander={  
-    name = "Balcha Safo" 
-	id=30004 
-    traits = {
-		trickster
-		guerilla_fighter
-		war_hero
-		media_personality
-	}
-	skill = 3
-	attack_skill = 2
-	defense_skill = 3
-	planning_skill = 2
-    logistics_skill = 3
-}
-create_corps_commander = {
-	name = "Hailu Tekle Haymanot"
-	id=30014 
-	traits = {
-		politically_connected
-		harsh_leader
-	}
-	skill = 1
-	attack_skill = 1
-	defense_skill = 1
-	planning_skill = 1
-	logistics_skill = 1
-}	
+recruit_character = ETH_lij_iyasu
+recruit_character = ETH_zewditu
+recruit_character = ETH_tafari_makonnen
 
+recruit_character = ETH_balcha_safo
+recruit_character = ETH_hailu_tekle_haymanot
+recruit_character = ETH_habte_giyorgis_dinagde
+
+add_opinion_modifier = {
+	target = ITA
+	modifier = ITA_italo_ethiopian_war
+}
 
 1910.1.1 = {
-	oob = "ETH_1910"
-
 	set_technology = {
 		#infantry
 		infantry_weapons = 1
 		infantry_weapons1 = 1
-		support_weapons = 1
+		camelry = 1
 		
 		#support
 		tech_support = 1
 		tech_engineers = 1
 		
 		#artillery
-		gw_artillery = 1
+		early_artillery = 1
+		basic_field_gun = 1
 		
 		#engineering
 		electrical_engineering = 1
@@ -93,8 +55,40 @@ create_corps_commander = {
 		democratic = 0
 		neutrality = 100
 	}
-
+	
 	add_ideas = {
-
+		isolation
+		ETH_the_heroes_of_adwa_idea
+		ETH_chitet_law_peace_time
+		ETH_conservative_high_command_idea
 	}	
+
+	if = {
+		limit = { has_start_date < 1914.1.1 }
+		country_event = { id = ww1_england.100 days = 5 hours = 12 } #KING DEATH
+		ETH_habte_giyorgis_dinagde = { unit_leader_event = { id = ww1_generic.38 days = 4557 }} #died in 1926.12.8, very important person should get a unique event
+	}
+}
+1914.1.1 = { 
+	add_political_power = 1198
+	add_command_power = 100
+
+	#generic focuses
+	complete_national_focus = state_of_the_country_army
+	complete_national_focus = modernize_equipment
+	complete_national_focus = capital_manoeuvers
+	complete_national_focus = early_industrialization
+	complete_national_focus = new_roads
+	complete_national_focus = develop_capital
+	complete_national_focus = capital_country_arsenal
+	complete_national_focus = open_the_political_sphere
+
+	drop_cosmetic_tag = yes
+
+	drop_cosmetic_tag = yes
+	retire_character = ETH_menelik_ii
+		
+	promote_character = ETH_lij_iyasu
+
+	ETH_habte_giyorgis_dinagde = { unit_leader_event = { id = ww1_generic.38 days = 3052 }} #died in 1926.12.8, very important person should get a unique event
 }

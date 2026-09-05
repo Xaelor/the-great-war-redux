@@ -18,30 +18,90 @@ country_event = {
 
 	option = {
 		name = ww1_centre_capitulation.1.a
+		custom_effect_tooltip = compiegne_armistice_message
 		hidden_effect = {
 			every_country = {
 				limit = {
-					is_in_faction_with = FRA
+					OR = {
+						tag = ENT
+						is_ally_with = ENT
+					}
 					has_war_with = GER
+					NOT = { has_country_flag = member_of_central_powers }
 				}
 				set_country_flag = member_of_entente
-			}
+			}	
 			every_other_country = {
 				limit = {
-					is_in_faction_with = GER		
-					has_war_with = FRA
+					OR = {
+						tag = GER
+						is_ally_with = GER
+					}	
+					has_war_with = ENT
+					NOT = { has_country_flag = member_of_entente }
 				}
 				set_country_flag = member_of_central_powers
+			}	
+			every_other_country = {
+				limit = {
+					is_subject = no
+					NOT = {
+						has_country_flag = member_of_entente
+						has_country_flag = member_of_central_powers
+						tag = SOV
+						AND = {
+							is_russian_tag = yes
+							has_war_with = SOV
+						}
+					}
+					has_war_with = GER
+					OR = {
+						is_faction_leader = yes
+						is_in_faction = no
+					}
+				}
+				country_event =  ww1_centre_capitulation.12
+			}
+			add_named_threat = {
+				threat = -10
+				name = GER_capitulation
 			}
 		}
-		set_global_flag = france_accepts_GER_capitulation
+		set_global_flag = ENT_accepts_GER_capitulation
 		
 		news_event = { id = ww1_centre_capitulation.2 }
-		ai_chance = { factor = 100 }
+		hidden_effect = {
+			GER = {
+				if = {
+					limit = {
+						has_global_flag = october_revolution
+						209 = {
+							is_controlled_by = GER
+						}
+						country_exists = SOV
+						SOV = {
+							has_war = yes
+							any_enemy_country = {
+								is_russian_tag = yes
+							}
+						}
+					}
+					country_event = {
+						id = ww1_nwa.17
+						days = 1
+					}
+				}
+			}
+		}
 	}
 	option = { #НЕ ПРИНИМАТЬ (для игроков)
 		name = ww1_centre_capitulation.1.b
-		ai_chance = { factor = 0 }
+		custom_effect_tooltip = no_scripted_peace_warning_tt
+		trigger = {
+			is_ai = no
+			#why would you resist lol
+			NOT = { has_idea = FRA_interim_government }
+		}
 		news_event = { id = ww1_centre_capitulation.3 }
 	}
 }
@@ -60,30 +120,83 @@ news_event = {
 	option = {
 		name = ww1_centre_capitulation.2.a
 		trigger = {
-			tag = GER
-			is_in_faction_with = GER 
+			OR = {
+				tag = GER
+				is_in_faction_with = GER 
+			}	
 		}
-		ai_chance = { factor = 100 }
+		ai_chance = { base = 100 }
 	}
 	option = {
 		name = ww1_centre_capitulation.2.b
 		trigger = {
-			tag = FRA
-			is_in_faction_with = FRA 
+			OR = {
+				tag = ENT
+				is_in_faction_with = ENT
+			}
 		}
-		ai_chance = { factor = 100 }
+		ai_chance = { base = 100 }
 	}
 	option = {
 		name = ww1_centre_capitulation.2.c
 		trigger = {
 			NOT = {
 				tag = GER
-				tag = FRA
+				tag = ENT
 				is_in_faction_with = GER
-				is_in_faction_with = FRA 
+				is_in_faction_with = ENT
 			}
 		}
-		ai_chance = { factor = 100 }
+		ai_chance = { base = 100 }
+	}
+	after = {
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = rule_superevent
+					option = DEFAULT
+				}
+				is_ai = no
+			}
+			clear_superevents = yes
+			if = {
+				limit = { 
+					ENT = { tag = FRA }
+					NOT = {
+						has_global_flag = FRA_surrender_alone
+					}
+				}
+				hidden_effect = {
+					play_song = "SE_fra_victory"
+					set_country_flag = se_fra_victory
+				}
+			}
+			else_if = {
+				limit = { 
+					ENT = { tag = RUS }
+					RUS = {
+						is_russia_a_monarchy = yes
+					}
+				}
+				hidden_effect = {
+					play_song = "SE_rus_victory_great_war"
+					set_country_flag = SE_rus_victory_great_war
+				}
+			}
+			else_if = {
+				limit = { 
+					ENT = { tag = RUS }
+					RUS = {
+						is_russia_a_monarchy = no
+					}
+				}
+				hidden_effect = {
+					play_song = "SE_rus_victory_great_war_republic"
+					set_country_flag = SE_rus_victory_great_war_republic
+				}
+			}
+			update_superevents = yes
+		}		
 	}
 }
 
@@ -104,7 +217,7 @@ news_event = {
 	}
 }
 
-# 2. ROOT REFUSED SURRENDER
+# 2. FROM REFUSED SURRENDER
 #########################
 news_event = {
 	id = ww1_centre_capitulation.4
@@ -144,35 +257,66 @@ country_event = {
 	title = {
 		text = ww1_centre_capitulation.6.t
 		trigger = {
-			GER = { has_country_flag = great_war_loser }
+			ENT = { has_country_flag = great_war_winner }
 		}
 	}
 	title = {
 		text = ww1_centre_capitulation.6.t_centre
 		trigger = {
-			FRA = { has_country_flag = great_war_loser }
+			GER = { has_country_flag = great_war_winner }
 		}
 	}
 	desc = {
 		text = ww1_centre_capitulation.6.d
 		trigger = {
-			GER = { has_country_flag = great_war_loser }
+			ENT = { has_country_flag = great_war_winner }
 		}
 	}
 	desc = {
 		text = ww1_centre_capitulation.6.d_centre
 		trigger = {
-			FRA = { has_country_flag = great_war_loser }
+			GER = { has_country_flag = great_war_winner }
 		}
 	}
 	picture = GFX_report_event_generic_read_write
 
-	is_triggered_only = yes	
+	trigger = {
+		has_global_flag = great_war_ends
+		has_war = no
+		OR = {
+			has_global_flag = frankfurt_treaty
+			has_global_flag = versailles_treaty
+		}
+		OR = {
+			has_country_flag = great_war_loser
+			has_country_flag = great_war_winner
+		}
+		NOT = {
+			has_country_flag = interbellum
+		}
+		if = {
+			limit = { 
+				tag = ROM
+				has_country_flag = great_war_winner
+				HUN = {
+					has_country_flag = great_war_loser
+				}
+			}
+			has_global_flag = ROM_HUN_war_1919
+		}
+	}
+	
+	immediate = {
+		set_country_flag = interbellum
+		set_global_flag = interbellum
+	}
+
+	mean_time_to_happen = {
+		days = 0
+	}
 
 	option = {
 		name = ww1_centre_capitulation.6.a
-		set_country_flag = interbellum
-		set_global_flag = interbellum
 		add_ideas = interwar_recovery
 		activate_mission = mission_interwar_demobilization
 		if = {
@@ -181,210 +325,76 @@ country_event = {
 		}
 		if = {
 			limit = {
+				tag = ENT 
 				has_country_flag = great_war_winner
-				is_faction_leader = yes
 			}
-			dismantle_faction = yes
+			country_event = league_of_nations.6
 		}
 		if = {
+			limit = {
+				has_country_flag = great_war_winner
+				is_faction_leader = yes
+				OR = {
+					tag = ENT
+					tag = GER
+				}
+			}
+			dismantle_faction = yes
+			clr_country_flag = entente_leader
+		}
+		else_if = {
 			limit = {
 				has_country_flag = great_war_loser
 				is_faction_leader = yes
 			}
 			dismantle_faction = yes
 		}
-		if = {
-			limit = { NOT = { tag = GER } is_in_faction_with = GER }
-			leave_faction = yes
-		}
-		if = {
-			limit = { NOT = { tag = FRA } is_in_faction_with = FRA }
-			leave_faction = yes
-		}
 		ai_chance = { factor = 100 }
 	}
 }
-# технический
-##################
-country_event = {
-	id = ww1_centre_capitulation.7
-	is_triggered_only = yes	
-	hidden = yes
-	
-	immediate = {
-		every_other_country = {
-			limit = { has_country_flag = great_war_loser }
-			every_owned_state = {
-				limit = { 
-				    is_core_of = ROOT 
-					is_owned_by = PREV
-					if = {
-					    limit = {
-						    83 = {is_owned_by = HUN}
-							154 = {is_owned_by = HUN}
-							NOT = { 154 = { OR = { is_core_of = ROOT is_claimed_by = ROOT}}}
-						}
-                        NOT = {state = 83}				
-	                }
-				}
-				set_state_flag = core_state_conference
-				ROOT = {
-					transfer_state = PREV
-				}
-				remove_core_of = PREV
-			}
-		}
-		country_event = { id = ww1_centre_capitulation.8 hours = 1 }
-	}
-}
-country_event = {
-	id = ww1_centre_capitulation.8
-	is_triggered_only = yes	
-	hidden = yes
-	
-	immediate = {
-		if = {
-			limit = { 
-				has_army_manpower = {
-					size < 1000000
-				}
-			}
-			every_other_country = {
-				limit = {
-					has_country_flag = great_war_loser 					
-				}
-				every_owned_state = {
-					limit = { 
-						is_claimed_by = ROOT 
-						is_owned_by = PREV 
-						NOT = { has_state_flag = core_state_conference } 
-						if = {
-					        limit = {
-						        83 = {is_owned_by = HUN}
-								154 = {is_owned_by = HUN}
-						    	NOT = { 154 = { OR = { is_core_of = ROOT is_claimed_by = ROOT}}}
-						    }
-                            NOT = {state = 83}				
-	                    }
-					}
-					ROOT = {
-						transfer_state = PREV
-					}
-				}
-			}
-		}
-		country_event = { id = ww1_centre_capitulation.9 }
-	}
-}
-country_event = {
-	id = ww1_centre_capitulation.9
-	is_triggered_only = yes	
-	hidden = yes
-	
-	immediate = {
-		if = {
-			limit = { 
-				has_army_manpower = {
-					size > 1000000
-				}
-			}
-			every_other_country = {
-				limit = {
-					has_country_flag = great_war_loser 		
-				}
-				every_owned_state = {
-					limit = { 
-						is_claimed_by = ROOT 
-						is_owned_by = PREV 
-						NOT = { has_state_flag = core_state_conference } 
-						if = {
-					        limit = {
-						        83 = {is_owned_by = HUN}
-								154 = {is_owned_by = HUN}
-						    	NOT = { 154 = { OR = { is_core_of = ROOT is_claimed_by = ROOT}}}
-						    }
-                            NOT = {state = 83}				
-	                    }
-					}
-					ROOT = {
-						transfer_state = PREV
-					}
-				}
-			}
-		}
-	}
-}
-country_event = {
-	id = ww1_centre_capitulation.10
-	is_triggered_only = yes	
-	hidden = yes
-	
-	immediate = {
-		every_country = {
-			limit = { is_subject_of = ROOT }
-			ROOT = { end_puppet = PREV }
-		}
-	}
-}
-# NOT CLAIMED COLONIES REVOLT
+
+# EVENT FOR OTHER FACTIONS ( GERMAN SURRENDER )
 ##################################
 country_event = {
-	id = ww1_centre_capitulation.11
-	trigger = {
-		tag = GER
-		NOT = { has_government = neutrality }
-		has_country_flag = great_war_loser
-		has_country_flag = interbellum
-	}
-	mean_time_to_happen = {
-		days = 15
-	}
-	hidden = yes
+	id = ww1_centre_capitulation.12
+	title =ww1_centre_capitulation.1.t
+	desc = ww1_centre_capitulation.12.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
 	
 	immediate = {
-		if = {
-			limit = {
-				owns_state = 539
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						tag = ROOT
+						is_ally_with = ROOT
+					}
+					has_war_with = GER	
+				}
+				set_country_flag = accepted_german_surrender
 			}
-			CMR = {
-				transfer_state = 539
-				add_state_core = 539
-			}
-		}
-		if = {
-			limit = {
-				owns_state = 813
-			}
-			CMR = {
-				transfer_state = 813
-				add_state_core = 813
-			}
-		}
-		if = {
-			limit = {
-				owns_state = 546
-			}
-			TZN = {
-				transfer_state = 546
-				add_state_core = 546
-			}
-		}
-		if = {
-			limit = {
-				owns_state = 768
-			}
-			RWA = {
-				transfer_state = 768
-				add_state_core = 768
+		}		
+	}
+	option = {
+		name = ww1_centre_capitulation.1.a
+	}
+	option = {
+		name = ww1_centre_capitulation.12.b
+		set_country_flag = refused_to_surrender
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						tag = ROOT
+						is_ally_with = ROOT
+					}			
+				}
+				clr_country_flag = accepted_german_surrender
 			}
 		}
-		if = {
-			limit = {
-				owns_state = 745
-			}
-			CHI = {
-				transfer_state = 745
-			}
+		trigger = {
+			is_ai = no
 		}
 	}
 }

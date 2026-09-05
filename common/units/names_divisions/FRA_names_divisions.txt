@@ -32,11 +32,24 @@
 #                                      the current game version.
 FRA_INF_01 = 
 {
-	name = "Infantry Division"
+	name = div_infantry_division
 
-	for_countries = { FRA }
+	for_countries = { FRA IND MOR TUN }
 
-	can_use = { always = yes }
+	can_use = { 
+		if  = {
+			limit = {
+				OR = {
+					original_tag = MOR
+					original_tag = TUN
+				}
+			}
+			OR = {
+				is_subject_of = FRA
+				has_cosmetic_tag = TUN_FRA
+			}
+		}	
+	}
 
 	division_types = { "infantry" }
 
@@ -199,13 +212,41 @@ FRA_INF_01 =
 	}
 }
 
+FRA_generic_INF_01 = 
+{
+	name = div_infantry_division
+
+	for_countries = { BRI HAI QBC MCO SEN IVO DAH GNA VOL CAR GAB MAD }
+
+	division_types = { "infantry" }
+
+	# Number reservation system will tie to another group.
+	#link_numbering_with = { FRA_INF_01 }
+
+	fallback_name = "%dème Division d'Infanterie"
+
+	# Names with numbers (only one number per entry). 
+	# It's okay to have gaps in numbering.
+	ordered =
+	{
+		1 = { "%dème Division d'Infanterie" }
+		2 = { "%dème Division d'Infanterie" }
+		3 = { "%dème Division d'Infanterie" }
+		4 = { "%dème Division d'Infanterie" }
+		5 = { "%dème Division d'Infanterie" }
+		6 = { "%dème Division d'Infanterie" }
+		7 = { "%dème Division d'Infanterie" }
+		8 = { "%dème Division d'Infanterie" }
+		9 = { "%dème Division d'Infanterie" }
+		10 = { "%dème Division d'Infanterie" }
+	}
+}
+
 FRA_CAV_01 = 
 {
-	name = "Cavalry Division"
+	name = div_cavalry_division
 
-	for_countries = { FRA }
-
-	can_use = { always = yes }
+	for_countries = { FRA IND }
 
 	division_types = { "cavalry" }
 
@@ -243,11 +284,9 @@ FRA_CAV_01 =
 
 FRA_MOT_01 = 
 {
-	name = "Motorized Division"
+	name = div_motorized_division
 
-	for_countries = { FRA }
-
-	can_use = { always = yes }
+	for_countries = { FRA IND }
 
 	division_types = { "motorized" }
 
@@ -300,65 +339,11 @@ FRA_MOT_01 =
 	}
 }
 
-FRA_MEC_01 = 
-{
-	name = "Light Mechanized Division"
-
-	for_countries = { FRA }
-
-	can_use = { always = yes }
-
-	division_types = { "light_armor" "medium_armor" }
-
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { FRA_INF_01 }
-
-	fallback_name = "%dème Division Légère Mécanique"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
-	ordered =
-	{
-		1 = { "%dère Division Légère Mécanique" }
-		2 = { "%dème Division Légère Mécanique" }
-		3 = { "%dème Division Légère Mécanique" }
-		4 = { "%dème Division Légère Mécanique" }
-		7 = { "%dème Division Légère Mécanique" }
-		5 = { "%dème Division Légère Mécanique" }		# fictional divisions start here
-		6 = { "%dème Division Légère Mécanique" }
-		8 = { "%dème Division Légère Mécanique" }
-		9 = { "%dème Division Légère Mécanique" }
-		10 = { "%dème Division Légère Mécanique" }
-		11 = { "%dème Division Légère Mécanique" }
-		12 = { "%dème Division Légère Mécanique" }
-		13 = { "%dème Division Légère Mécanique" }
-		14 = { "%dème Division Légère Mécanique" }
-		15 = { "%dème Division Légère Mécanique" }
-		16 = { "%dème Division Légère Mécanique" }
-		17 = { "%dème Division Légère Mécanique" }
-		18 = { "%dème Division Légère Mécanique" }
-		19 = { "%dème Division Légère Mécanique" }
-		20 = { "%dème Division Légère Mécanique" }
-		21 = { "%dème Division Légère Mécanique" }
-		22 = { "%dème Division Légère Mécanique" }
-		23 = { "%dème Division Légère Mécanique" }
-		24 = { "%dème Division Légère Mécanique" }
-		25 = { "%dème Division Légère Mécanique" }
-		26 = { "%dème Division Légère Mécanique" }
-		27 = { "%dème Division Légère Mécanique" }
-		28 = { "%dème Division Légère Mécanique" }
-		29 = { "%dème Division Légère Mécanique" }
-		30 = { "%dème Division Légère Mécanique" }
-	}
-}
-
 FRA_DLC_01 = 
 {
-	name = "Light Cavalry Division"
+	name = div_light_cavalry_division
 
-	for_countries = { FRA }
-
-	can_use = { always = yes }
+	for_countries = { FRA IND }
 
 	division_types = { "motorized" "cavalry" }
 
@@ -406,13 +391,11 @@ FRA_DLC_01 =
 
 FRA_ARM_01 = 
 {
-	name = "Armored Division"
+	name = div_armoured_division
 
-	for_countries = { FRA }
+	for_countries = { FRA IND }
 
-	can_use = { always = yes }
-
-	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+	division_types = { "light_armor" "medium_armor" "heavy_armor" }
 
 	# Number reservation system will tie to another group.
 	#link_numbering_with = { FRA_INF_01 }
@@ -471,13 +454,11 @@ FRA_ARM_01 =
 
 FRA_ARM_02 = 
 {
-	name = "Tank Brigade"
+	name = div_armoured_brigade
 
-	for_countries = { FRA }
+	for_countries = { FRA IND }
 
-	can_use = { always = yes }
-
-	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+	division_types = { "light_armor" "medium_armor" "heavy_armor" }
 
 	# Number reservation system will tie to another group.
 	#link_numbering_with = { FRA_INF_01 }
@@ -536,13 +517,11 @@ FRA_ARM_02 =
 
 FRA_ARM_03 = 
 {
-	name = "Armored Division (late)"
+	name = div_late_armoured_division
 
-	for_countries = { FRA }
+	for_countries = { FRA IND }
 
-	can_use = { always = yes }
-
-	division_types = { "medium_armor" "modern_armor" }
+	division_types = { "medium_armor" }
 
 	# Number reservation system will tie to another group.
 	link_numbering_with = { FRA_ARM_01 }
@@ -599,49 +578,11 @@ FRA_ARM_03 =
 	}
 }
 
-FRA_PAR_01 = 
-{
-	name = "Paratrooper Division"
-
-	for_countries = { FRA }
-
-	can_use = { always = yes }
-
-	division_types = { "paratrooper" }
-
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { FRA_INF_01 }
-
-	fallback_name = "%dème Division Parachutiste"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
-	ordered =
-	{
-		10 = { "%dème Division Parachutiste" }
-		25 = { "%dème Division Parachutiste" }
-		24 = { "%dème Division Aéroportée" }
-		801 = { "Division Légère d'Intervention" }
-		11 = { "%dème Division Parachutiste" }
-		1 = { "%dère Division Parachutiste" }
-		2 = { "%dème Division Parachutiste" }
-		3 = { "%dème Division Parachutiste" }
-		4 = { "%dème Division Parachutiste" }
-		5 = { "%dème Division Parachutiste" }
-		6 = { "%dème Division Parachutiste" }
-		7 = { "%dème Division Parachutiste" }
-		8 = { "%dème Division Parachutiste" }
-		9 = { "%dème Division Parachutiste" }
-	}
-}
-
 FRA_MAR_01 = 
 {
-	name = "Marine Division"
+	name = div_marine_division
 
-	for_countries = { FRA }
-
-	can_use = { always = yes }
+	for_countries = { FRA IND }
 
 	division_types = { "marine" }
 
@@ -679,11 +620,9 @@ FRA_MAR_01 =
 
 FRA_MNT_01 = 
 {
-	name = "Mountain Division"
+	name = div_mountain_division
 
 	for_countries = { FRA }
-
-	can_use = { always = yes }
 
 	division_types = { "mountaineers" }
 
@@ -738,11 +677,9 @@ FRA_MNT_01 =
 
 FRA_GAR_01 = 
 {
-	name = "Garrison Division"
+	name = div_garrison_division
 
-	for_countries = { FRA }
-
-	can_use = { always = yes }
+	for_countries = { FRA IND }
 
 	division_types = { "infantry" }
 
@@ -824,11 +761,24 @@ FRA_GAR_01 =
 
 FRA_COL_01 = 
 {
-	name = "Colonial Division"
+	name = div_colonial_division
 
-	for_countries = { FRA }
+	for_countries = { FRA IND MOR TUN }
 
-	can_use = { always = yes }
+	can_use = { 
+		if  = {
+			limit = {
+				OR = {
+					original_tag = MOR
+					original_tag = TUN
+				}
+			}
+			OR = {
+				is_subject_of = FRA
+				has_cosmetic_tag = TUN_FRA
+			}
+		}	
+	}
 
 	division_types = { "infantry" }
 

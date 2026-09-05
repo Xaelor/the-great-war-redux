@@ -156,11 +156,11 @@ country_event = {
 	
 	
 	trigger = {
+		NOT = { has_country_flag = dont_trigger_political_event }
 		has_idea_with_trait = communist_revolutionary
 		NOT = { has_government = communism }
 		communism > 0.2
 		NOT = { communism > 0.59 }
-		NOT = { has_country_flag = dont_trigger_political_event }
 	}
 
 	mean_time_to_happen = {
@@ -308,11 +308,6 @@ country_event = {
 		fascism > 0.6
 		NOT = { fascism > 0.7 }
 		check_has_focus_tree_to_switch_to_fascism = yes
-		NOT = { has_country_flag = dont_trigger_political_event }
-	}
-
-	trigger = {
-		NOT = { has_government = fascism }
 		NOT = { has_country_flag = dont_trigger_political_event }
 	}
 	
@@ -645,6 +640,7 @@ country_event = {
 		democratic > 0.6
 		NOT = { democratic > 0.7 }
 		check_has_focus_tree_to_switch_to_democratic = yes
+		NOT = { has_country_flag = dont_trigger_political_event }
 	}
 	
 	fire_only_once = yes
@@ -875,6 +871,7 @@ country_event = {
 	picture = GFX_report_event_fascist_militia
 
     trigger = {
+		is_major = no
 		fascism > 0.7
 		num_of_controlled_states > 1
 		#has_idea = fascist_revolutionaries
@@ -926,6 +923,15 @@ country_event = {
 				ruling_party = fascism
 				ideology = communism
 				size = 0.5
+				keep_unit_leaders_trigger = {
+					OR = {
+						has_trait = trait_royalist
+						has_trait = trait_royal
+						has_trait = old_guard
+						has_trait = politically_connected
+						has_trait = old_guard_navy
+					}
+				}
 			}
 		}
 		if = {
@@ -986,6 +992,15 @@ country_event = {
 		start_civil_war = {
 			ideology = communism
 			size = 0.5
+			keep_unit_leaders_trigger = {
+				OR = {
+					has_trait = trait_royalist
+					has_trait = trait_royal
+					has_trait = old_guard
+					has_trait = politically_connected
+					has_trait = old_guard_navy
+				}
+			}
 		}
 	}
 
@@ -1213,7 +1228,15 @@ country_event = {
 	trigger = {
 		OR = {
 			has_government = fascism
-			has_government = communism
+			AND = {			
+				has_government = communism
+				NOT = {
+					has_country_leader_ideology = reformist_socialism
+					has_country_leader_ideology = market_socialism
+					has_country_leader_ideology = agrarian_socialism
+					has_country_flag = jaures_neutrality
+				}
+			}	
 		}
 		has_idea = neutrality_idea
 		NOT = { has_country_flag = dont_trigger_political_event }
@@ -1241,17 +1264,26 @@ country_event = {
 		is_subject = no
 		has_civil_war = yes
 		NOT = {
-			tag = ROI
-			tag = SRI
-			tag = ITS
-			tag = NFA
-			tag = FRC
-			tag = BRE
-			tag = UOB	
+			original_tag = FRA
+			original_tag = ENG
+			has_country_flag = CHI_national_protection_flag
+			has_country_flag = CHI_kuomintang_flag
+			has_country_flag = CHI_soviet_republic_flag
+			has_country_flag = PER_gendarmerie_flag
+			has_country_flag = CHI_left_kuomintang_flag
+			has_cosmetic_tag = COG_belgium_in_exile
+			original_tag = GDC
+			original_tag = ITA
+			original_tag = TUR
+			original_tag = QIN
+			tag = BAK
+			original_tag = ALB
+			original_tag = CHA
+			original_tag = ROM
 		}
-		any_other_country = {
+		any_country_with_original_tag = {
+			original_tag_to_check = ROOT
 			NOT = { tag = ROOT }
-			original_tag = ROOT
 			is_subject = no
 			has_government = ROOT
 			has_war_with = ROOT
@@ -1264,12 +1296,169 @@ country_event = {
 
 	option = {
 		name = political.28.a
-		random_country = {
+		random_country_with_original_tag = {
+			original_tag_to_check = ROOT
 			limit = {
-				original_tag = ROOT
 				NOT = { tag = ROOT }
+				has_civil_war = yes
+				is_subject = no
 			}
 			ROOT = { annex_country = { target = PREV transfer_troops = yes } }
 		}
+	}
+}
+
+# Unification event
+country_event = {
+	id = political.32
+	title = political.32.t
+	desc = political.32.desc
+
+	picture = GFX_report_event_journalists_speech
+
+	trigger = {
+		is_subject = no
+		has_country_flag = yes_to_unification_flag
+		any_country_with_original_tag = {
+			original_tag_to_check = ROOT
+			NOT = { tag = ROOT }
+			has_country_flag = yes_to_unification_flag
+			is_subject = no
+			has_government = ROOT
+			has_war = no
+		}
+		NOT = {
+			any_country_with_original_tag = {
+				original_tag_to_check = ROOT
+				NOT = { tag = ROOT }
+				has_government = ROOT
+				has_country_flag = unification_request_sent_flag
+			}
+		}
+	}
+	mean_time_to_happen = {
+		days = 2
+	}
+	immediate = {
+		# LOG = "[ROOT.GetLeader]'s [ROOT.GetName] to unify countries" #TODO_TA Remove logging
+
+	}
+
+	option = {
+		name = political.32.a
+		trigger = {
+			ROOT = { is_ai = no }
+		}
+		clr_country_flag = yes_to_unification_flag 
+		clr_country_flag = unification_request_sent_flag
+		#log = "Player ROOT [ROOT.GetName] to annex"
+		every_country_with_original_tag = {
+			original_tag_to_check = ROOT
+			limit = {
+				NOT = { tag = ROOT }
+				has_country_flag = yes_to_unification_flag
+				is_subject = no
+				has_government = ROOT
+				has_war = no
+			}
+			clr_country_flag = yes_to_unification_flag
+			ROOT = { annex_country = { target = PREV transfer_troops = yes } }
+		}
+		news_event = {
+			id = news.350
+			hours = 8 
+			random_hours = 8 
+		}
+	}
+	option = {
+		name = political.32.b
+		trigger = {
+			ROOT = { is_ai = yes }
+		}
+		IF = {
+			limit = {
+				any_country_with_original_tag = {
+					original_tag_to_check = ROOT
+					NOT = { tag = ROOT }
+					has_country_flag = yes_to_unification_flag
+					is_subject = no
+					has_government = ROOT
+					has_war = no
+					is_ai = no 
+				}
+			}
+			log = "ai ROOT - Human player [ROOT.GetName] to annex"
+			random_country_with_original_tag = {
+				original_tag_to_check = ROOT
+				limit = { 
+					NOT = { tag = ROOT }
+					has_country_flag = yes_to_unification_flag
+					is_subject = no
+					has_government = ROOT
+					has_war = no
+					is_ai = no 
+				}
+				clr_country_flag = yes_to_unification_flag 
+				clr_country_flag = unification_request_sent_flag
+				every_other_country = {
+					limit = { 
+						original_tag = ROOT
+						has_country_flag = yes_to_unification_flag
+						is_subject = no
+						has_government = ROOT
+						has_war = no
+					}
+					clr_country_flag = yes_to_unification_flag
+					PREV = { annex_country = { target = PREV transfer_troops = yes } }
+				}
+				news_event = {
+					id = news.350
+					hours = 8 
+					random_hours = 8 
+				}
+			}
+		}
+		ELSE = {
+			#log = "AI ROOT [ROOT.GetName] to annex"
+			clr_country_flag = yes_to_unification_flag 
+			clr_country_flag = unification_request_sent_flag
+			every_other_country = {
+				limit = {
+					original_tag = ROOT
+					has_country_flag = yes_to_unification_flag
+					is_subject = no
+					has_government = ROOT
+					has_war = no
+				}
+				clr_country_flag = yes_to_unification_flag
+				ROOT = { annex_country = { target = PREV transfer_troops = yes } }
+			}
+			news_event = {
+				id = news.350
+				hours = 8 
+				random_hours = 8 
+			}
+		}
+	}
+}
+	
+country_event = {
+	id = political.33
+	title = political.33.t
+	desc = political.33.desc
+
+	picture = GFX_report_event_journalists_speech
+
+	trigger = {
+	}
+	
+	is_triggered_only = yes
+	
+	immediate = {
+	}
+
+	option = {
+		name = political.33.a
+		add_war_support = 0.1
 	}
 }

@@ -1,1845 +1,1939 @@
 add_namespace = prussian
-
-# Russian Empire is victorious over Germany before Soviet revolution fired
-# The Occupation of Memel
-country_event = {
-	id = prussian.1
-	title = prussian.1.t
-	desc = prussian.1.d
-	fire_only_once = yes
-	trigger = {
-		tag = RUS
-		GER = {
-			has_country_flag = great_war_loser
-			owns_state = 188
-		}
-		RUS = {
-			has_country_flag = great_war_winner
-		}
-		FRA = {
-			owns_state = 42
-		}
-		NOT = { has_global_flag = russian_revolution }
-	}
-	mean_time_to_happen = { days = 7 }
-	option = {
-		name = prussian.1.a
-		ai_chance = { factor = 100 }
-
-		if = {
-			limit = {
-				LIT = { exists = no }
-			}
-			RUS = { transfer_state = 188 }
-		}
-
-		if = {
-			limit = {
-				LIT = { exists = yes is_subject_of = RUS }
-			}
-			LIT = { transfer_state = 188 add_state_core = 188 }
-		}
-
-		hidden_effect = {
-			set_global_flag = prussian_blue
-		}
-	}
-}
+# Russian Empire is victorious over Germany before Febuary revolution fired
 # Proposal of Conference of Berlin
-country_event = {
-	id = prussian.2
-	title = prussian.2.t
-	desc = prussian.2.d
-	fire_only_once = yes
-	trigger = {
-		tag = RUS
-		has_global_flag = prussian_blue
+# country_event = {
+# 	id = prussian.2
+# 	title = prussian.2.t
+# 	desc = prussian.2.d
+# 	picture = GFX_report_event_german_reichstag_gathering
+# 	fire_only_once = yes
+# 	trigger = {
+# 		tag = RUS
+# 		has_country_flag = great_war_winner
+# 		has_war = no
+# 		has_global_flag = versailles_treaty
+# 		has_global_flag = occupation_of_rhineland
+# 		has_country_leader = {
+# 			character = RUS_nikolai_ii
+# 			ruling_only = no
+# 		}
+# 		OR = {
+# 			has_cosmetic_tag = RUS_absolutism
+# 			NOT = {
+# 				has_government = communism
+# 			}
+# 		}
+# 		OR = {
+# 			NOT = {
+# 				has_completed_focus = RUS_unite_poland
+# 			}
+# 			has_country_flag = rus_poland_unite_triggered
+# 		}
+# 		NOT = {
+# 			has_global_flag = support_spartacists
+# 			# has_global_flag = spartakist_in_bavaria
+# 		}
+# 		GER = {
+# 			exists = yes
+# 			has_country_flag = great_war_loser
+# 			is_GER_a_monarchy = yes
+# 		}
+# 		FRA = {
+# 			has_war = no
+# 			has_country_flag = great_war_winner
+# 		}
+# 		USA = {
+# 			NOT = {
+# 				has_country_flag = great_war_winner
+# 			}
+# 		}
+# 	}
+# 	mean_time_to_happen = {
+# 		days = 7
+# 	}
+# 	option = {
+# 		name = prussian.2.a
+# 		set_global_flag = prussian_blue
+# 		ai_chance = {
+# 			factor = 80
+# 		}
+# 		FRA = {
+# 			country_event = {
+# 				id = prussian.3
+# 				days = 1
+# 			}
+# 		}
+# 		if = {
+# 			limit = {
+# 				ENG = {
+# 					has_country_flag = great_war_winner
+# 				}
+# 			}
+# 			ENG = {
+# 				country_event = {
+# 					id = prussian.3
+# 					days = 1
+# 				}
+# 			}
+# 		}
+# 		if = {
+# 			limit = {
+# 				AUS = {
+# 					has_country_flag = great_war_winner
+# 				}
+# 			}
+# 			AUS = {
+# 				country_event = {
+# 					id = prussian.3
+# 					days = 1
+# 				}
+# 			}
+# 		}
+# 		custom_effect_tooltip = prussian_blue_tt
+# 	}
+# 	option = {
+# 		name = prussian.2.b
+# 		ai_chance = {
+# 			factor = 20
+# 		}
+# 		custom_effect_tooltip = prussian_blue_reject_tt
+# 	}
+# }
 
-		RUS = {
-			has_war = no
-			has_country_flag = great_war_winner
-		}
-		FRA = {
-			has_war = no
-			has_country_flag = great_war_winner
-		}
-		USA = {
-			NOT = { has_country_flag = great_war_winner }
-		}
-	}
-	mean_time_to_happen = { days = 7 }
-	option = {
-		name = prussian.2.a
-		ai_chance = { factor = 100 }
+# # Response on Proposal of Conference of Berlin
+# country_event = {
+# 	id = prussian.3
+# 	title = prussian.3.t
+# 	desc = prussian.3.d
+# 	picture = GFX_report_event_german_reichstag_gathering
+# 	is_triggered_only = yes
+# 	option = {
+# 		name = prussian.3.a
+# 		ai_chance = {
+# 			base = 100
+# 			modifier = {
+# 				factor = 0
+# 				has_opinion = {
+# 					target = RUS
+# 					value > 0
+# 				}
+# 			}
+# 		}
+# 		set_country_flag = agreed_on_treaty_of_berlin
+# 	}
+# 	option = {
+# 		name = prussian.3.b
+# 		ai_chance = {
+# 			base = 0
+# 		}
+# 		set_country_flag = disagreed_on_treaty_of_berlin
+# 	}
+# }
 
-		FRA = { country_event = { id = prussian.3 days = 1 } }
+# # Treaty of Berlin
+# news_event = {
+# 	id = prussian.4
+# 	title = prussian.4.t
+# 	picture = EVENT_hoi4tgw_treaty_of_versailles
+# 	desc = {
+# 		text = prussian.4.desc
+# 		trigger = {
+# 			ENG = {
+# 				has_country_flag = agreed_on_treaty_of_berlin
+# 			}
+# 			FRA = {
+# 				has_country_flag = agreed_on_treaty_of_berlin
+# 			}
+# 		}
+# 	}
+# 	desc = {
+# 		text = prussian.4.desc_britain
+# 		trigger = {
+# 			ENG = {
+# 				has_country_flag = agreed_on_treaty_of_berlin
+# 			}
+# 			FRA = {
+# 				NOT = {
+# 					has_country_flag = agreed_on_treaty_of_berlin
+# 				}
+# 			}
+# 		}
+# 	}
+# 	desc = {
+# 		text = prussian.4.desc_france
+# 		trigger = {
+# 			FRA = {
+# 				has_country_flag = agreed_on_treaty_of_berlin
+# 			}
+# 			ENG = {
+# 				NOT = {
+# 					has_country_flag = agreed_on_treaty_of_berlin
+# 				}
+# 			}
+# 		}
+# 	}
+# 	major = yes
+# 	trigger = {
+# 		#has_global_flag = prussian_blue
+# 		if = {
+# 			limit = {
+# 				ENG = {
+# 					exists = yes
+# 					has_country_flag = great_war_winner
+# 				}
+# 			}
+# 			ENG = {
+# 				OR = {
+# 					has_country_flag = agreed_on_treaty_of_berlin
+# 					has_country_flag = disagreed_on_treaty_of_berlin
+# 				}
+# 			}
+# 		}
+# 		FRA = {
+# 			OR = {
+# 				has_country_flag = agreed_on_treaty_of_berlin
+# 				has_country_flag = disagreed_on_treaty_of_berlin
+# 			}
+# 		}
+# 		NOT = {
+# 			#has_global_flag = treaty_of_berlin
+# 		}
+# 	}
+# 	mean_time_to_happen = {
+# 		days = 14
+# 	}
+# 	immediate = {
+# 		hidden_effect = {
+# 			set_global_flag = treaty_of_berlin
+# 			if = {
+# 				limit = {
+# 					FRA = {
+# 						has_country_flag = agreed_on_treaty_of_berlin
+# 					}
+# 				}
+# 				RHN = {
+# 					set_country_flag = great_war_loser
+# 					every_state = {
+# 						limit = {
+# 							OR = {
+# 								state = 42
+# 								state = 51
+# 								state = 55
+# 								state = 343
+# 								state = 1183
+# 								state = 1184
+# 								state = 1185
+# 							}
+# 						}
+# 						remove_core_of = GER
+# 						add_core_of = PREV
+# 						remove_claim_by = FRA
+# 					}
+# 					every_state = {
+# 						limit = {
+# 							is_core_of = PREV
+# 							OR = {
+# 								is_owned_by = GER
+# 								is_owned_by = HAN
+# 								is_owned_by = FRA
+# 							}
+# 							NOT = { state = 869 }
+# 						}
+# 						transfer_state_to = PREV
+# 					}
+# 					set_country_flag = protectorate
+# 					FRA = {
+# 						set_autonomy = {
+# 							target = RHN
+# 							autonomous_state = autonomy_tgwr_protectorate
+# 							freedom_level = 0.5
+# 						}
+# 					}
+# 					set_politics = {
+# 						ruling_party = democratic
+# 						elections_allowed = yes
+# 					}
+# 					set_popularities = {
+# 						democratic = 64
+# 						neutrality = 15
+# 						fascism = 6
+# 						communism = 15
+# 					}
+# 					promote_character = GER_konrad_adenauer
+# 					inherit_technology = GER
+# 				}
+# 			}
+# 			# HAN = {
+# 			# 	every_state = {
+# 			# 		limit = {
+# 			# 			OR = {
+# 			# 				is_core_of = SHL
+# 			# 				state = 55
+# 			# 				state = 56
+# 			# 				state = 57
+# 			# 				state = 873
+# 			# 			}
+# 			# 		}
+# 			# 		remove_core_of = GER
+# 			# 		add_core_of = PREV
+# 			# 		if = {
+# 			# 			limit = {
+# 			# 				is_owned_by = GER
+# 			# 			}
+# 			# 			transfer_state_to = PREV
+# 			# 		}
+# 			# 	}
+# 			# 	every_state = {
+# 			# 		limit = {
+# 			# 			OR = {
+# 			# 				is_owned_by = GER
+# 			# 				is_owned_by = ENG
+# 			# 				is_owned_by = BEL
+# 			# 				is_owned_by = HOL
+# 			# 			}
+# 			# 			is_core_of = PREV
+# 			# 			if = {
+# 			# 				limit = {
+# 			# 					is_owned_by = BEL
+# 			# 				}
+# 			# 				NOT = {
+# 			# 					is_core_of = BEL
+# 			# 				}
+# 			# 			}
+# 			# 			else_if = {
+# 			# 				limit = {
+# 			# 					is_owned_by = HOL
+# 			# 				}
+# 			# 				NOT = {
+# 			# 					is_core_of = HOL
+# 			# 				}
+# 			# 			}
+# 			# 		}
+# 			# 		if = {
+# 			# 			limit = {
+# 			# 				is_owned_by = BEL
+# 			# 			}
+# 			# 			if = {
+# 			# 				limit = {
+# 			# 					BEL = { has_country_flag = great_war_winner }
+# 			# 				}
+# 			# 				OWNER = { BEL = { give_guarantee = PREV } }
+# 			# 				PREV = { give_military_access = BEL }
+# 			# 			}
+# 			# 		}
+# 			# 		else_if = {
+# 			# 			limit = {
+# 			# 				is_owned_by = HOL
+# 			# 			}
+# 			# 			if = {
+# 			# 				limit = {
+# 			# 					HOL = { has_country_flag = great_war_winner }
+# 			# 				}
+# 			# 				OWNER = { HOL = { give_guarantee = PREV } }
+# 			# 				PREV = { give_military_access = HOL }
+# 			# 			}
+# 			# 		}
+# 			# 		add_core_of = PREV
+# 			# 		transfer_state_to = PREV
+# 			# 	}
+# 			# 	set_politics = {
+# 			# 		ruling_party = democratic
+# 			# 		elections_allowed = yes
+# 			# 	}
+# 			# 	set_popularities = {
+# 			# 		democratic = 54
+# 			# 		neutrality = 35
+# 			# 		fascism = 6
+# 			# 		communism = 5
+# 			# 	}
+# 			# 	set_party_name = {
+# 			# 		ideology = democratic
+# 			# 		long_name = GER_social_democratic_party_long
+# 			# 		name = GER_social_democratic_party
+# 			# 	}
+# 			# 	create_country_leader = {
+# 			# 		name = "GER_friedrich_ebert"
+# 			# 		picture = "gfx/leaders/GER/GER_friedrich_ebert.png"
+# 			# 		ideology = social_democracy
+# 			# 	}
+# 			# 	set_capital = {
+# 			# 		state = 58
+# 			# 	}
+# 			# 	#Hamburg, because it is not Hannover
+# 			# 	set_cosmetic_tag = HAN_niederdeutschland
+# 			# 	add_ideas = SHL_kiel_canal_profits
+# 			# 	inherit_technology = GER
+# 			# }
+# 			# if = {
+# 			# 	limit = {
+# 			# 		ENG = {
+# 			# 			has_country_flag = agreed_on_treaty_of_berlin
+# 			# 		}
+# 			# 	}
+# 			# 	ENG = {
+# 			# 		set_autonomy = {
+# 			# 			target = HAN
+# 			# 			autonomous_state = autonomy_puppet
+# 			# 			freedom_level = 0.5
+# 			# 		}
+# 			# 		every_owned_state = {
+# 			# 			limit = {
+# 			# 				OR = {
+# 			# 					is_core_of = GER
+# 			# 					is_core_of = HAN
+# 			# 				}
+# 			# 			}
+# 			# 			transfer_state_to = HAN
+# 			# 		}
+# 			# 	}
+# 			# }
+# 			GER = {
+# 				every_state = {
+# 					limit = {
+# 						OR = {
+# 							is_owned_by = RUS
+# 							owner = { is_subject_of = RUS }
+# 						}
+# 						OR = {
+# 							state = 5
+# 							state = 85
+# 							state = 86
+# 							state = 404
+# 							state = 763
+# 							state = 995
+# 						}
+# 					}
+# 					transfer_state_to = PREV
+# 				}
+# 				release = BAY
+# 				SAX = { inherit_technology = BAY }
+# 				release = SAX
+# 				SAX = { inherit_technology = GER }
+# 				release = WUR
+# 				WUR = {
+# 					inherit_technology = GER
+# 					add_state_core = 986
+# 					add_state_core = 987
+# 					transfer_state = 986
+# 					transfer_state = 987
+# 				}
+# 				GER_lepold_von_bayern = {
+# 					set_nationality = BAY
+# 				}
+# 				GER_rupprecht_von_bayern = {				
+# 					if = {
+# 						limit = {
+# 							has_character_flag = BAY_rupprecht_i
+# 						}
+# 						set_character_name = BAY_rupprecht_i
+# 					}
+# 					set_nationality = BAY
+# 				}
+# 				GER_felix_von_bothmer = {
+# 					set_nationality = BAY
+# 				}
+# 				GER_kress_von_kressenstein = {
+# 					set_nationality = BAY
+# 				}
+# 				GER_krafft_von_dellmensingen = {
+# 					set_nationality = BAY
+# 				}
+# 				GER_friedrich_august_iii = {
+# 					set_character_name = {
+# 						name = SAX_friedrich_august_iii
+# 					}
+# 					set_nationality = SAX
+# 				}
+# 				GER_karl_ludwig_delsa = {
+# 					set_nationality = SAX
+# 				}
+# 				GER_wilhelm_ii_von_wurttemberg = {
+# 					set_character_name = {
+# 						name = WUR_wilhelm_ii
+# 					}
+# 					set_nationality = WUR
+# 				}
+# 				GER_albrecht_von_wurttemberg = {
+# 					set_nationality = WUR
+# 				}
+# 				GER_wilhelm_karl_von_urach= {
+# 					set_nationality = WUR
+# 				}
+# 				GER_friedrich_ii = {
+# 					set_character_name = {
+# 						name = BAD_friedrich_ii
+# 					}
+# 					promote_leader = yes
+# 					set_nationality = BAD
+# 				}
+# 				GER_friedrich_franz_iv = {
+# 					set_character_name = {
+# 						name = MEK_friedrich_franz_iv
+# 					}
+# 					promote_leader = yes
+# 					set_nationality = MEK
+# 				}
+# 				GER_wilhelm_ii = {
+# 					add_country_leader_role = {
+# 						country_leader = {
+# 							ideology = semi_constitutional_monarchy
+# 							traits = { unpopular_monarch ww_one_trauma }
+# 						}
+# 					}
+# 					promote_character = semi_constitutional_monarchy
+# 				}
+# 				set_party_name = {
+# 					ideology = neutrality
+# 					long_name = GER_neutrality_party
+# 					name = GER_neutrality_party
+# 				}
+# 				set_party_name = {
+# 					ideology = democratic
+# 					long_name = GER_democratic_party_zentrum_long
+# 					name = GER_democratic_party_zentrum
+# 				}
+# 				add_country_leader_role = {
+# 					character = GER_constantin_fehrenbach
+# 					promote_leader = yes
+# 					country_leader = {
+# 						ideology = classical_liberalism
+# 						traits = {
+# 							appeaser
+# 						}
+# 					}
+# 				}
+# 				set_cosmetic_tag = PRE
+# 				load_focus_tree = {
+# 					tree = generic_focus
+# 					keep_completed = no
+# 				}
+# 				set_politics = {
+# 					ruling_party = neutrality
+# 					elections_allowed = no
+# 				}
+# 				set_popularities = {
+# 					democratic = 27
+# 					neutrality = 53
+# 					fascism = 12
+# 					communism = 8
+# 				}
+# 				remove_ideas = GER_idea_freikorps
+# 				add_timed_idea = {
+# 					idea = GER_idea_freikorps
+# 					days = 180
+# 				}
+# 			}
+# 			BAY = {
+# 				set_politics = {
+# 					ruling_party = neutrality
+# 					elections_allowed = no
+# 				}
+# 				set_popularities = {
+# 					democratic = 36
+# 					neutrality = 15
+# 					fascism = 10
+# 					communism = 39
+# 				}
+# 				set_party_name = {
+# 					ideology = fascism
+# 					long_name = GER_fascism_party_DAP_long
+# 					name = GER_fascism_party_DAP
+# 				}
+# 				# set_party_name = {
+# 				# 	ideology = communism
+# 				# 	long_name = GER_communism_party_interwar_long
+# 				# 	name = GER_communism_party_interwar
+# 				# }
+# 				# promote_character = BAY_eugen_levine
+# 				promote_character = BAY_ernst_toller
+# 			}
+# 			WUR = {
+# 				set_politics = {
+# 					ruling_party = democratic
+# 					elections_allowed = yes
+# 				}
+# 				set_popularities = {
+# 					democratic = 54
+# 					neutrality = 13
+# 					fascism = 1
+# 					communism = 32
+# 				}
+# 				set_cosmetic_tag = BADWUR
+# 			}
+# 			if = {
+# 				limit = {
+# 					FRA = {
+# 						has_country_flag = agreed_on_treaty_of_berlin
+# 					}
+# 					NOT = {
+# 							AUS = { has_country_flag = agreed_on_treaty_of_berlin }
+# 					}
+# 				}
+# 				FRA = {
+# 					puppet = WUR
+# 					set_autonomy = {
+# 						target = WUR
+# 						autonomous_state = autonomy_puppet
+# 						freedom_level = 0.5
+# 					}
+# 				}
+# 			}
+# 			else_if = {
+# 				limit = {
+# 					AUS = {
+# 						has_country_flag = agreed_on_treaty_of_berlin
+# 					}
+# 				}
+# 				AUS = {
+# 					set_autonomy = {
+# 						target = WUR
+# 						autonomous_state = autonomy_satellite
+# 					}
+# 				}
+# 			}
+# 			if = {
+# 				limit = {
+# 					FRA = {
+# 						has_country_flag = agreed_on_treaty_of_berlin
+# 					}
+# 					ENG = {
+# 						has_country_flag = agreed_on_treaty_of_berlin
+# 					}
+# 				}
+# 				RUS = {
+# 					give_guarantee = GER
+# 					set_autonomy = {
+# 						target = GER
+# 						autonomous_state = autonomy_puppet
+# 						freedom_level = 0.5
+# 					}
+# 					if = {
+# 						limit = {
+# 							is_russia_a_monarchy = yes
+# 						}
+# 						GER = {
+# 							if = {
+# 								limit = {
+# 									has_government = democratic
+# 								}
+# 								set_politics = {
+# 									ruling_party = democratic
+# 									elections_allowed = no
+# 								}
+# 								add_ideas = GER_wilhelm_ii
+# 							}
+# 						}
+# 					}
+# 				}
+# 			}
+# 			if = {
+# 				limit = {
+# 					GER = {
+# 						owns_state = 55
+# 					}
+# 					FRA = {
+# 						NOT = {
+# 							has_country_flag = agreed_on_treaty_of_berlin
+# 						}
+# 					}
+# 				}
+# 				GER = {
+# 					remove_state_core = 55
+# 				}
+# 				HAN = {
+# 					add_state_core = 55
+# 					transfer_state = 55
+# 				}
+# 			}
+# 			if = {
+# 				limit = {
+# 					HAN = {
+# 						owns_state = 60
+# 					}
+# 				}
+# 				HAN = {
+# 					remove_state_core = 60
+# 				}
+# 				GER = {
+# 					add_state_core = 60
+# 					transfer_state = 60
+# 				}
+# 			}
+# 			GER = {
+# 				set_autonomy = {
+# 					target = SAX
+# 					autonomous_state = autonomy_satellite
+# 					freedom_level = 0.5
+# 				}
+# 				SAX = {
+# 					set_politics = {
+# 						ruling_party = neutrality
+# 						elections_allowed = no
+# 					}
+# 					set_popularities = {
+# 						democratic = 20
+# 						fascism = 10
+# 						communism = 0
+# 						neutrality = 70
+# 					}
+# 				}
+# 			}
+# 			if = {
+# 				limit = {
+# 					ITA = {
+# 						exists = yes
+# 						has_country_flag = great_war_winner
+# 					}
+# 				}
+# 				every_state = {
+# 					limit = {
+# 						OR = {
+# 							state = 103
+# 							state = 163
+# 							state = 513
+# 							state = 736
+# 							state = 1006
+# 							state = 1010
+# 						}
+# 						OWNER = {
+# 							OR = {
+# 								has_country_flag = great_war_loser
+# 								tag = CRO
+# 								tag = SER
+# 							}
+# 							NOT = { tag = ITA }
+# 						}
+# 					}
+# 					transfer_state_to = ITA
+# 				}
+# 			}
+# 			GER = {
+# 				transfer_units_fraction = {
+# 					target = BAY
+# 					size = 0.25
+# 					target_organization = 1
+# 					source_organization = 1
+# 					stockpile_ratio = 0.4
+# 					army_ratio = 0.3
+# 					navy_ratio = 0
+# 					air_ratio = 0.1
+# 					keep_unit_leaders_trigger = {
+# 						always = yes
+# 					}
+# 				}
+# 				transfer_units_fraction = {
+# 					target = WUR
+# 					size = 0.1
+# 					target_organization = 1
+# 					source_organization = 1
+# 					stockpile_ratio = 0.1
+# 					army_ratio = 0.1
+# 					navy_ratio = 0
+# 					air_ratio = 0.1
+# 					keep_unit_leaders_trigger = {
+# 						always = yes
+# 					}
+# 				}
+# 				transfer_units_fraction = {
+# 					target = SAX
+# 					size = 0.1
+# 					target_organization = 1
+# 					source_organization = 1
+# 					stockpile_ratio = 0.1
+# 					army_ratio = 0.1
+# 					navy_ratio = 0
+# 					air_ratio = 0
+# 					keep_unit_leaders_trigger = {
+# 						always = yes
+# 					}
+# 				}
+# 				transfer_units_fraction = {
+# 					target = HAN
+# 					size = 0.25
+# 					target_organization = 1
+# 					source_organization = 1
+# 					stockpile_ratio = 0.5
+# 					army_ratio = 0.4
+# 					navy_ratio = 0.4
+# 					air_ratio = 0.3
+# 					keep_unit_leaders_trigger = {
+# 						always = yes
+# 					}
+# 				}
+# 				if = {
+# 					limit = {
+# 						FRA = {
+# 							has_country_flag = agreed_on_treaty_of_berlin
+# 						}
+# 					}
+# 					transfer_units_fraction = {
+# 						target = RHN
+# 						size = 0.1
+# 						target_organization = 1
+# 						source_organization = 1
+# 						stockpile_ratio = 0.1
+# 						army_ratio = 0.1
+# 						navy_ratio = 0
+# 						air_ratio = 0.1
+# 						keep_unit_leaders_trigger = {
+# 							always = yes
+# 						}
+# 					}
+# 				}
+# 			}
+# 			RUS = {
+# 				add_named_threat = {
+# 					threat = 1
+# 					name = prussian.4.t
+# 				}
+# 			}
+# 			hidden_effect = {
+# 				ROM = {
+# 					add_opinion_modifier = {
+# 						target = RUS
+# 						modifier = HOI4TGW_Opinion_alliance_malus
+# 					}
+# 				}
+# 				CZE = {
+# 					add_opinion_modifier = {
+# 						target = RUS
+# 						modifier = HOI4TGW_Opinion_alliance_malus
+# 					}
+# 				}
+# 				SER = {
+# 					add_opinion_modifier = {
+# 						target = RUS
+# 						modifier = HOI4TGW_Opinion_alliance_malus
+# 					}
+# 				}
+# 			}
+# 			if = {
+# 				limit = {
+# 					GER = {
+# 						owns_state = 751
+# 					}
+# 				}
+# 				GER = {
+# 					remove_state_core = 751
+# 				}
+# 				DEN = {
+# 					transfer_state = 751
+# 				}
+# 			}
+# 			if = {
+# 				limit = {
+# 					FRA = {
+# 						NOT = {
+# 							has_country_flag = agreed_on_treaty_of_berlin
+# 						}
+# 					}
+# 					GER = {
+# 						OR = {
+# 							owns_state = 42
+# 							owns_state = 989
+# 						}
+# 					}
+# 				}
+# 				every_state = {
+# 					limit = {
+# 						is_owned_by = GER
+# 						OR = {
+# 							state = 42
+# 							state = 989
+# 						}
+# 					}
+# 					transfer_state_to = FRA
+# 				}
+# 			}
+# 			if = {
+# 				limit = {
+# 					FRA = {
+# 						NOT = {
+# 							has_country_flag = agreed_on_treaty_of_berlin
+# 						}
+# 					}
+# 					GER = {
+# 						owns_state = 51
+# 					}
+# 				}
+# 				if = {
+# 					limit = {
+# 						BEL = {
+# 							exists = yes
+# 							has_country_flag = great_war_winner
+# 						}
+# 					}
+# 					BEL = {
+# 						transfer_state = 51
+# 					}
+# 				}
+# 				else = {
+# 					FRA = {
+# 						transfer_state = 51
+# 					}
+# 				}
+# 			}
+# 			if = {
+# 				limit = {
+# 					FRA = {
+# 						NOT = {
+# 							has_country_flag = agreed_on_treaty_of_berlin
+# 						}
+# 					}
+# 					GER = {
+# 						owns_state = 343
+# 					}
+# 				}
+# 				if = {
+# 					limit = {
+# 						HAN = {
+# 							is_subject_of = ENG
+# 						}
+# 					}
+# 					HAN = {
+# 						transfer_state = 343
+# 						add_state_core = 343
+# 					}
+# 				}
+# 				else_if = {
+# 					limit = {
+# 						ENG = {
+# 							exists = yes
+# 							has_country_flag = great_war_winner
+# 						}
+# 					}
+# 					ENG = {
+# 						transfer_state = 343
+# 					}
+# 				}
+# 				else = {
+# 					FRA = {
+# 						transfer_state = 343
+# 					}
+# 				}
+# 			}
+# 			if = {
+# 				limit = {
+# 					GER = {
+# 						owns_state = 541
+# 					}
+# 				}
+# 				SAF = {
+# 					transfer_state = 541
+# 				}
+# 			}
+# 			if = {
+# 				limit = {
+# 					GER = {
+# 						owns_state = 1050
+# 					}
+# 				}
+# 				SAF = {
+# 					transfer_state = 1050
+# 				}
+# 			}
+# 			if = {
+# 				limit = {
+# 					GER = {
+# 						owns_state = 794
+# 					}
+# 				}
+# 				ENG = {
+# 					transfer_state = 794
+# 				}
+# 			}
+# 			AUS = {
+# 				if = {
+# 					limit = {
+# 						has_country_flag = agreed_on_treaty_of_berlin
+# 					}
+# 					set_autonomy = {
+# 						target = BAY
+# 						autonomous_state = autonomy_satellite
+# 						freedom_level = 0.8
+# 					}
+# 				}
+# 			}
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.4.a
+# 		trigger = {
+# 			OR = {
+# 				original_tag = GER
+# 				has_country_flag = great_war_loser
+# 				tag = BAY
+# 				tag = SAX
+# 				tag = WUR
+# 				tag = HAN
+# 			}
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.4.b
+# 		trigger = {
+# 			has_country_flag = agreed_on_treaty_of_berlin
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.4.c
+# 		trigger = {
+# 			NOT = {
+# 				original_tag = GER
+# 				has_country_flag = great_war_loser
+# 				has_country_flag = agreed_on_treaty_of_berlin
+# 				tag = BAY
+# 				tag = SAX
+# 				tag = WUR
+# 				tag = HAN
+# 				tag = ROM
+# 				tag = CZE
+# 				tag = SER
+# 			}
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.4.d
+# 		trigger = {
+# 			OR = {
+# 				tag = ROM
+# 				tag = CZE
+# 				tag = SER
+# 			}
+# 		}
+# 	}
+# }
 
-		if = {
-			limit = {
-				ENG = { has_country_flag = great_war_winner }
-			}
-			ENG = { country_event = { id = prussian.3 days = 1 } }
-		}
-	}
-}
-# Response on Proposal of Conference of Berlin
-country_event = {
-	id = prussian.3
-	title = prussian.3.t
-	desc = prussian.3.d
-	fire_only_once = yes
-	is_triggered_only = yes
-	option = {
-		name = prussian.3.a
-		ai_chance = { factor = 100 }
-		set_country_flag = agreed_on_treaty_of_berlin
-	}
-	option = {
-		name = prussian.3.b
-		ai_chance = {
-			factor = 0
-			modifier = {
-				factor = 100
-				has_opinion = { target = RUS value < 0 }
-			}
-		}
-	}
-}
-# Treaty of Berlin
-news_event = {
-	id = prussian.4
-	title = prussian.4.t
-	picture = EVENT_hoi4tgw_treaty_of_versailles
-	desc = {
-		text = prussian.4.desc
-		trigger = {
-			ENG = { has_country_flag = agreed_on_treaty_of_berlin }
-			FRA = { has_country_flag = agreed_on_treaty_of_berlin }
-		}
-	}
-	desc = {
-		text = prussian.4.desc_britain
-		trigger = {
-			ENG = { has_country_flag = agreed_on_treaty_of_berlin }
-			FRA = { NOT = { has_country_flag = agreed_on_treaty_of_berlin } }
-		}
-	}
-	desc = {
-		text = prussian.4.desc_france
-		trigger = {
-			FRA = { has_country_flag = agreed_on_treaty_of_berlin }
-			ENG = { NOT = { has_country_flag = agreed_on_treaty_of_berlin } }
-		}
-	}
-	fire_only_once = yes
-	major = yes
-	trigger = {
-		has_global_flag = prussian_blue
-		OR = {
-			ENG = { has_country_flag = agreed_on_treaty_of_berlin }
-			FRA = { has_country_flag = agreed_on_treaty_of_berlin }
-		}
-	}
-	mean_time_to_happen = { days = 14 }
-	immediate = {
-		hidden_effect = {
-			if = {
-				limit = {
-					FRA = { has_country_flag = agreed_on_treaty_of_berlin }
-				}
-				create_dynamic_country = {
-					original_tag = GER
-					set_capital = 55
-					set_politics = {
-						ruling_party = democratic
-						elections_allowed = yes
-					}
-					set_popularities = {
-						democratic = 64
-						neutrality = 15
-						fascism = 6
-						communism = 15
-					}
-					set_country_flag = great_war_loser
-					set_country_flag = GER_rhine_federation_flag
-					set_cosmetic_tag = RHN
-					28 = { remove_core_of = GER }
-					every_state = {
-						limit = {
-							is_core_of = GER
-						}
-						remove_core_of = PREV
-					}
-					every_state = {
-						limit = {
-							is_core_of = GER
-							is_owned_by = FRA
-							NOT = { state = 28 }
-						}
-						add_core_of = PREV
-					}
-					add_state_core = 55
-					add_state_core = 343
-					transfer_state = 55
-					transfer_state = 343
-					reserve_dynamic_country = yes
-				}
-				every_state = {
-					limit = {
-						is_core_of = RHN
-					}
-					RHN = {
-						transfer_state = PREV
-					}
-					GER = {
-						remove_state_core = PREV
-					}
-				}
-				every_state = {
-					limit = {
-						is_owned_by = RHN
-						is_claimed_by = FRA
-					}
-					remove_claim_by = FRA
-				}
-				FRA = {
-					puppet = RHN
+# # Bavarian Soviet Republic - News Event
+# news_event = {
+# 	id = prussian.5
+# 	title = prussian.5.t
+# 	desc = prussian.5.d
+# 	picture = GFX_news_event_ger_civil_war
+# 	fire_only_once = yes
+# 	is_triggered_only = yes
+# 	major = yes
+# 	option = {
+# 		name = prussian.5.a
+# 		ai_chance = {
+# 			factor = 100
+# 		}
+# 		trigger = {
+# 			OR = {
+# 				tag = BAY
+# 				has_government = communism
+# 			}
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.5.b
+# 		ai_chance = {
+# 			factor = 100
+# 		}
+# 		trigger = {
+# 			NOT = {
+# 				tag = BAY
+# 				has_government = communism
+# 			}
+# 		}
+# 	}
+# }
 
-					if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
-						set_autonomy = {
-							target = RHN
-							autonomous_state = autonomy_tgwr_protectorate
-							freedom_level = 0.5
-						}
-						RHN = { set_country_flag = protectorate }
-					}
-				}
-				RHN = {
-					set_politics = {
-						ruling_party = fascism
-						elections_allowed = yes
-					}
-					set_popularities = {
-						democratic = 34
-						neutrality = 15
-						fascism = 36
-						communism = 15
-					}
-					set_party_name = { 
-						ideology = fascism
-						long_name = RHN_french_military_long
-						name = RHN_french_military
-					}
-					set_party_name = { 
-						ideology = democratic
-						long_name = GER_democratic_party_zentrum_long
-						name = GER_democratic_party_zentrum
-					}
-					create_country_leader = {
-						name = "French Military Government"
-						picture = "gfx/leaders/FRA/FRA_provisional_government.dds" 
-						expire = "1935.1.1"
-						ideology = military_dictatorship
-						traits = {}
-					}
-					create_country_leader = {
-						name = "Konrad Adenauer"
-						picture = "gfx/leaders/GER/GER_Konrad_Adenauer.dds"
-						expire = "1935.1.1"
-						ideology = conservatism
-						traits = {}
-					}
-					add_ideas = democratic_influence
-				}
-			}
-			GER = {
-				release = HAN
-				release = SHL
-			}
-			HAN = {
-				annex_country = {
-					target = SHL
-				}
-				every_state = {
-					limit = {
-						is_owned_by = HAN
-						NOT = { is_core_of = HAN }
-					}
-					add_core_of = HAN
-				}
-				set_politics = {
-					ruling_party = democratic
-					elections_allowed = yes
-				}
-				set_popularities = {
-					democratic = 54
-					neutrality = 35
-					fascism = 6
-					communism = 5
-				}
-				set_party_name = { 
-					ideology = democratic
-					long_name = GER_democratic_party_long
-					name = GER_democratic_party
-				}
-				set_party_name = { 
-					ideology = neutrality
-					long_name = GER_neutrality_party
-					name = GER_neutrality_party
-				}
-				set_party_name = { 
-					ideology = communism
-					long_name = GER_communism_party
-					name = GER_communism_party
-				}
-				create_country_leader = { 
-					name = "Friedrich Ebert"
-					picture = "gfx/leaders/GER/GER_friedrich_ebert.dds" 
-					expire = "1935.1.1" 
-					ideology = socialism
-					traits = {} 
-				}
-				set_cosmetic_tag = HAN_niederdeutschland
-			}
-			if = {
-				limit = {
-					ENG = { has_country_flag = agreed_on_treaty_of_berlin }
-				}
-				ENG = {
-					puppet = HAN
+# # Berliner Pakt
+# ##########################
+# country_event = {
+# 	id = prussian.6
+# 	hidden = yes
+# 	fire_only_once = yes
+# 	trigger = {
+# 		tag = GER
+# 		NOT = {
+# 			has_government = communism
+# 		}
+# 		#has_global_flag = prussian_blue
+# 		#has_global_flag = treaty_of_berlin
+# 		is_subject = no
+# 		64 = {
+# 			is_owned_by = PREV
+# 			is_capital = yes
+# 		}
+# 		OR = {
+# 			is_in_faction = no
+# 			is_faction_leader = yes
+# 		}
+# 	}
+# 	immediate = {
+# 		if = {
+# 			limit = {
+# 				is_faction_leader = yes
+# 			}
+# 			set_faction_name = berlin_pact
+# 			else = {
+# 				create_faction = berlin_pact
+# 			}
+# 		}
+# 	}
+# }
 
-					if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
-						set_autonomy = {
-							target = HAN
-							autonomous_state = autonomy_supervised_state
-							freedom_level = 0.5
-						}
-					}
-				}
-			}
-			GER = {
-				release = BAY
-				release = SAX
-				release = WUR
-				set_cosmetic_tag = PRE
-				load_focus_tree = {
-					tree = generic_focus
-					keep_completed = no
-				}
-				set_politics = {
-					ruling_party = neutrality
-					elections_allowed = no
-				}
-				set_popularities = {
-					democratic = 27
-					neutrality = 53
-					fascism = 12
-					communism = 8
-				}
-				remove_ideas = GER_idea_reparations
-				add_timed_idea = {
-					idea = GER_idea_reparations
-					days = 1095
-				}
-				remove_ideas = GER_idea_freikorps
-				add_timed_idea = {
-					idea = GER_idea_freikorps
-					days = 180
-				}
-			}
-			BAY = {
-				set_politics = {
-					ruling_party = neutrality
-					elections_allowed = no
-				}
-				set_popularities = {
-					democratic = 31
-					neutrality = 20
-					fascism = 0
-					communism = 49
-				}
-				set_party_name = { 
-					ideology = communism
-					long_name = GER_communism_party
-					name = GER_communism_party
-				}
-				add_ideas = communist_influence
-			}
-			WUR = {
-				set_politics = {
-					ruling_party = democratic
-					elections_allowed = yes
-				}
-				set_popularities = {
-					democratic = 54
-					neutrality = 13
-					fascism = 1
-					communism = 32
-				}
-				set_cosmetic_tag = BADWUR
-			}
-			if = {
-				limit = {
-					FRA = { has_country_flag = agreed_on_treaty_of_berlin }
-				}
-
-				FRA = {
-					puppet = WUR
-
-					if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
-						set_autonomy = {
-							target = WUR
-							autonomous_state = autonomy_supervised_state
-							freedom_level = 0.5
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					FRA = { has_country_flag = agreed_on_treaty_of_berlin }
-					ENG = { has_country_flag = agreed_on_treaty_of_berlin }
-				}
-
-				RUS = {
-					give_guarantee = GER
-
-					if = {
-						limit = {
-							NOT = { has_global_flag = russian_revolution }
-							RUS = {
-								has_government = democratic
-							}
-						}
-						GER = {
-							set_politics = {
-								ruling_party = democratic
-								elections_allowed = yes
-							}
-							set_popularities = {
-								democratic = 37
-								neutrality = 45
-								fascism = 15
-								communism = 3
-							}
-							set_party_name = {
-								ideology = democratic
-								long_name = GER_democratic_party_zentrum_long
-								name = GER_democratic_party_zentrum
-							}
-							if = {
-								limit = {
-									date < 1917.7.13
-								}
-								create_country_leader = {
-									name = "Theobald von Bethmann-Hollweg"
-									picture="gfx/leaders/GER/GER_Theobald_von_Hollweg.dds"
-									expire = "1935.1.1"
-									ideology = conservatism
-									traits = { }
-								}
-							}
-							if = {
-								limit = {
-									date > 1917.7.14
-									date < 1917.11.1
-								}
-								create_country_leader = {
-									name = "Georg Michaelis"
-									picture="gfx/leaders/GER/GER_Georg_Michaelis.dds"
-									expire = "1935.1.1"
-									ideology = conservatism
-									traits = { }
-								}
-							}
-							if = {
-								limit = {
-									date > 1917.11.1
-									date < 1918.10.30
-								}
-								create_country_leader = {
-									name = "Georg von Hertling"
-									picture="gfx/leaders/GER/GER_Georg_von_Hertling.dds"
-									expire = "1935.1.1"
-									ideology = conservatism
-									traits = { }
-								}
-							}
-							if = {
-								limit = {
-									date > 1918.10.30
-								}
-								create_country_leader = {
-									name = "Prinz Maximilian von Baden"
-									picture="gfx/leaders/GER/GER_Maximilian_von_Baden.dds"
-									expire = "1935.1.1"
-									ideology = conservatism
-									traits = { }
-								}
-							}
-							add_ideas = GER_idea_wilhelm_ii
-						}
-					}
-
-					if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
-						puppet = GER
-						set_autonomy = {
-							target = GER
-							autonomous_state = autonomy_supervised_state
-							freedom_level = 0.5
-						}
-					}
-
-					if = {
-						limit = {
-							POL = {
-								exists = yes
-								is_subject_of = RUS
-							}
-						}
-						POL = {
-							add_state_core = 762
-							transfer_state = 762
-						}
-					}
-
-					if = {
-						limit = {
-							POL = {
-								exists = no
-							}
-						}
-						RUS = {
-							transfer_state = 762
-						}
-					}
-				}
-			}
-			if = {
-				limit = {
-					OR = {
-						NOT = { FRA = { has_country_flag = agreed_on_treaty_of_berlin } }
-						NOT = { ENG = { has_country_flag = agreed_on_treaty_of_berlin } }
-					}
-				}
-
-				if = {
-					limit = {
-						POL = { exists = yes is_subject_of = RUS }
-					}
-					POL = {
-						add_state_core = 85
-						add_state_core = 86
-						transfer_state = 85
-						transfer_state = 86
-					}
-				}
-				if = {
-					limit = {
-						POL = { exists = no }
-					}
-
-					RUS = {
-						transfer_state = 85
-						transfer_state = 86
-					}
-				}
-			}
-			if = {
-				limit = {
-					GER = {
-						owns_state = 55
-						owns_state = 343
-					}
-					FRA = {
-						NOT = { has_country_flag = agreed_on_treaty_of_berlin }
-					}
-				}
-
-				GER = {
-					remove_state_core = 55
-					remove_state_core = 343
-				}
-
-				HAN = {
-					add_state_core = 55
-					add_state_core = 343
-					transfer_state = 55
-					transfer_state = 343
-				}
-			}
-			if = {
-				limit = {
-					HAN = {
-						owns_state = 60
-					}
-				}
-				HAN = {
-					remove_state_core = 60
-				}
-				GER = {
-					add_state_core = 60
-					transfer_state = 60
-				}
-			}
-			GER = {
-				puppet = SAX
-
-				if = {
-					limit = {
-						has_dlc = "Together for Victory"
-					}
-					set_autonomy = {
-						target = SAX
-						autonomous_state = autonomy_dominion
-						freedom_level = 0.5
-					}
-				}
-			}
-			if = {
-				limit = {
-					GAL = {
-						exists = no
-					}
-					RUS = {
-						owns_state = 88
-						owns_state = 89
-						owns_state = 91
-					}
-				}
-
-				GAL = {
-					add_state_core = 88
-					add_state_core = 89
-					add_state_core = 91
-					transfer_state = 88
-					transfer_state = 89
-					transfer_state = 91
-				}
-				RUS = {
-					puppet = GAL
-
-					if = {
-						limit = {
-							has_dlc = "Together for Victory"
-						}
-						set_autonomy = {
-							target = GAL
-							autonomous_state = autonomy_tgwr_informal_protectorate
-							freedom_level = 0.5
-						}
-						GAL = { set_country_flag = protectorate }
-					}
-				}
-				GAL = {
-					add_state_core = 72
-					add_state_core = 80
-					transfer_state = 72
-					transfer_state = 80
-				}
-			}
-			if = {
-				limit = {
-					POL = {
-						exists = yes
-						is_subject_of = RUS
-					}
-					GAL = {
-						exists = yes
-					}
-				}
-
-				POL = {
-					annex_country = {
-						target = GAL
-					}
-				}
-			}
-			if = {
-				limit = {
-					AUS = {
-						exists = yes
-						NOT = { owns_state = 102 }
-					}
-				}
-
-				AUS = {
-					transfer_state = 102
-				}
-				RUS = {
-					give_guarantee = AUS
-					give_guarantee = SER
-				}
-				if = {
-					limit = {
-						SER = { has_cosmetic_tag = SER_YUG }
-					}
-					SER = { set_cosmetic_tag = YUG }
-				}
-			}
-			GER = {
-				transfer_units_fraction= {
-					target = BAY
-					size = 0.3
-					stockpile_ratio = 0.4
-					army_ratio = 0.3
-					navy_ratio = 0.0
-					air_ratio = 0.1
-				}
-				transfer_units_fraction= {
-					target = WUR
-					size = 0.1
-					stockpile_ratio = 0.1
-					army_ratio = 0.1
-					navy_ratio = 0.0
-					air_ratio = 0.1
-				}
-				transfer_units_fraction= {
-					target = WUR
-					size = 0.1
-					stockpile_ratio = 0.1
-					army_ratio = 0.1
-					navy_ratio = 0.0
-					air_ratio = 0.0
-				}
-				transfer_units_fraction= {
-					target = HAN
-					size = 0.2
-					stockpile_ratio = 0.5
-					army_ratio = 0.4
-					navy_ratio = 0.4
-					air_ratio = 0.3
-				}
-				if = {
-					limit = {
-						FRA = { has_country_flag = agreed_on_treaty_of_berlin }
-					}
-					transfer_units_fraction= {
-						target = RHN
-						size = 0.1
-						stockpile_ratio = 0.1
-						army_ratio = 0.1
-						navy_ratio = 0.0
-						air_ratio = 0.1
-					}
-				}
-			}
-			RUS = {
-				add_named_threat = {
-					threat = 20
-					name = prussian.4.t
-				}
-			}
-			hidden_effect = {
-				ROM = {
-					add_opinion_modifier = {
-						target = RUS
-						modifier = HOI4TGW_Opinion_alliance_malus
-					}
-				}
-
-				CZE = {
-					add_opinion_modifier = {
-						target = RUS
-						modifier = HOI4TGW_Opinion_alliance_malus
-					}
-				}
-			}
-			if = {
-				limit = {
-					GER = {
-						owns_state = 751
-					}
-				}
-				GER = {
-					remove_state_core = 751
-				}
-				DEN = {
-					transfer_state = 751
-				}
-			}
-		}
-	}
-	option = {
-		name = prussian.4.a
-		trigger = {
-			OR = {
-				original_tag = GER
-				has_country_flag = great_war_loser
-				tag = BAY
-				tag = SAX
-				tag = WUR
-				tag = HAN
-			}
-		}
-	}
-	option = {
-		name = prussian.4.b
-		trigger = {
-			has_country_flag = agreed_on_treaty_of_berlin
-		}
-	}
-	option = {
-		name = prussian.4.c
-		trigger = {
-			NOT = {
-				OR = {
-					original_tag = GER
-					has_country_flag = great_war_loser
-					has_country_flag = agreed_on_treaty_of_berlin
-					tag = BAY
-					tag = SAX
-					tag = WUR
-					tag = HAN
-					tag = ROM
-					tag = CZE
-					tag = SER
-				}
-			}
-		}
-	}
-	option = {
-		name = prussian.4.d
-		trigger = {
-			OR = {
-				tag = ROM
-				tag = CZE
-				tag = SER
-			}
-		}
-	}
-}
-# Bavarian Soviet Republic
-news_event = {
-	id = prussian.5
-	title = prussian.5.t
-	desc = prussian.5.d
-	picture = GFX_news_event_ger_civil_war
-	fire_only_once = yes
-	trigger = {
-		has_global_flag = prussian_blue
-
-		BAY = {
-			exists = yes
-			is_subject = no
-			communism > 0.5
-		}
-	}
-	major = yes
-	immediate = {
-		hidden_effect = {
-			BAY = {
-				set_politics = {
-					ruling_party = communism
-				}
-
-				set_cosmetic_tag = BAY_communism
-
-				add_named_threat = {
-					threat = 10
-					name = prussian.5.t
-				}
-			}
-
-			GER = {
-				add_opinion_modifier = {
-					target = BAY
-					modifier = HOI4TGW_Opinion_hostile_diplomatic_relations
-				}
-			}
-
-			WUR = {
-				add_opinion_modifier = {
-					target = BAY
-					modifier = HOI4TGW_Opinion_hostile_diplomatic_relations
-				}
-			}
-
-			HAN = {
-				add_opinion_modifier = {
-					target = BAY
-					modifier = HOI4TGW_Opinion_hostile_diplomatic_relations
-				}
-			}
-
-			SAX = {
-				add_opinion_modifier = {
-					target = BAY
-					modifier = HOI4TGW_Opinion_hostile_diplomatic_relations
-				}
-			}
-
-			if = {
-				limit = {
-					FRA = { has_country_flag = agreed_on_treaty_of_berlin }
-				}
-
-				RHN = {
-					add_opinion_modifier = {
-						target = BAY
-						modifier = HOI4TGW_Opinion_hostile_diplomatic_relations
-					}
-				}
-			}
-		}
-	}
-	option = {
-		name = prussian.5.a
-		ai_chance = { factor = 100 }
-		trigger = {
-			OR = {
-				tag = BAY
-				has_government = communism
-			}
-		}
-	}
-	option = {
-		name = prussian.5.b
-		ai_chance = { factor = 100 }
-		trigger = {
-			NOT = {
-				OR = {
-					tag = BAY
-					has_government = communism
-				}
-			}
-		}
-	}
-}
-# Annexation of Galicia by Russia
-country_event = {
-	id = prussian.6
-	title = prussian.6.t
-	desc = prussian.6.d
-	fire_only_once = yes
-	trigger = {
-		tag = RUS
-		GAL = {
-			is_subject_of = RUS
-		}
-		POL = {
-			exists = no
-		}
-	}
-	mean_time_to_happen = { days = 180 }
-	option = {
-		name = prussian.6.a
-		ai_chance = { factor = 0 }
-		annex_country = {
-			target = GAL
-		}
-		add_named_threat = {
-			threat = 10
-			name = prussian.6.t
-		}
-	}
-	option = {
-		name = prussian.6.b
-		ai_chance = { factor = 100 }
-	}
-}
 # Second Hungarian Revolution
-country_event = {
-	id = prussian.7
-	title = prussian.7.t
-	desc = prussian.7.d
-	fire_only_once = yes
-	trigger = {
-		tag = HUN
-		has_global_flag = prussian_blue
-		has_global_flag = hungarian_revolution
-		HUN = {
-			has_war = no
-			has_government = neutrality
-			is_subject = no
-		}
-		BAY = {
-			has_government = communism
-			communism > 0.55
-		}
-	}
-	mean_time_to_happen = { days = 60 }
-	option = {
-		name = prussian.7.a
-		ai_chance = { factor = 99 }
-		set_politics = {
-			ruling_party = communism
-			last_election = "1918.10.31"
-			election_frequency = 60
-			elections_allowed = no
-		}
-		set_popularities = {
-			democratic = 17
-			neutrality = 22
-			fascism = 10
-			communism = 51
-		}
-		create_country_leader = {
-			name = "Bela Kun"
-			picture = "gfx/leaders/HUN/HUN_bela_kun.dds"
-			expire = "1935.1.1"
-			ideology = leninism
-			traits = {}
-		}
-		set_cosmetic_tag = HUN_communism
-		add_named_threat = {
-			threat = 10
-			name = prussian.7.t
-		}
-		news_event = prussian.8
-		hidden_effect = {
-			add_opinion_modifier = {
-				target = BAY
-				modifier = HOI4TGW_Opinion_alliance_bonus
-			}
-		}
-		set_global_flag = second_hungarian_revolution
-	}
-	option = {
-		name = prussian.7.b
-		ai_chance = { factor = 1 }
-		add_popularity = { ideology = communism popularity = 0.25 }
-		add_stability = -0.25
-		add_political_power = -150
-	}
-}
+#####################################
+# country_event = {
+# 	id = prussian.7
+# 	title = prussian.7.t
+# 	desc = prussian.7.d
+# 	fire_only_once = yes
+# 	trigger = {
+# 		tag = HUN
+# 		#has_global_flag = prussian_blue
+# 		has_global_flag = hungarian_revolution
+# 		HUN = {
+# 			has_war = no
+# 			has_government = neutrality
+# 			is_subject = no
+# 		}
+# 		BAY = {
+# 			has_government = communism
+# 			communism > 0.55
+# 		}
+# 	}
+# 	mean_time_to_happen = {
+# 		days = 60
+# 	}
+# 	option = {
+# 		name = prussian.7.a
+# 		ai_chance = {
+# 			factor = 99
+# 		}
+# 		set_politics = {
+# 			ruling_party = communism
+# 			elections_allowed = no
+# 		}
+# 		set_popularities = {
+# 			democratic = 17
+# 			neutrality = 22
+# 			fascism = 10
+# 			communism = 51
+# 		}
+# 		set_cosmetic_tag = HUN_socialism
+# 		add_named_threat = {
+# 			threat = 5
+# 			name = prussian.7.t
+# 		}
+# 		every_other_country = {
+# 			limit = {
+# 				is_neighbor_of = PREV
+# 				NOT = {
+# 					has_government = communism
+# 				}
+# 			}
+# 			add_timed_idea = {
+# 				idea = communist_pressure
+# 				days = 100
+# 			}
+# 		}
+# 		hidden_effect = {
+# 			news_event = prussian.8
+# 			add_opinion_modifier = {
+# 				target = BAY
+# 				modifier = HOI4TGW_Opinion_alliance_bonus
+# 			}
+# 			set_global_flag = second_hungarian_revolution
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.7.b
+# 		ai_chance = {
+# 			factor = 1
+# 		}
+# 		start_civil_war = {
+# 			ideology = communism
+# 			size = 0.55
+# 			set_cosmetic_tag = HUN_socialism
+# 			keep_unit_leaders_trigger = {
+# 				OR = {
+# 					has_trait = trait_royal
+# 					has_trait = trait_royalist
+# 					has_trait = old_guard
+# 					has_trait = politically_connected
+# 					has_trait = old_guard_navy
+# 				}
+# 			}
+# 		}
+# 	}
+# }
 # News for Hungarian Revolution
-news_event = {
-	id = prussian.8
-	title = prussian.7.t
-	desc = prussian.8.d
-	picture = GFX_news_event_ger_civil_war
-	fire_only_once = yes
-	is_triggered_only = yes
-	major = yes
-	option = {
-		name = prussian.8.a
-		ai_chance = { factor = 100 }
-		trigger = {
-			has_government = communism
-		}
-	}
-	option = {
-		name = prussian.8.b
-		ai_chance = { factor = 100 }
-		trigger = {
-			NOT = {
-				has_government = communism
-			}
-		}
-	}
-}
-# Czech and Slovakia
-country_event = {
-	id = prussian.9
-	title = prussian.9.t
-	desc = prussian.9.d
-	fire_only_once = yes
-	trigger = {
-		tag = RUS
-		has_global_flag = prussian_blue
-		has_global_flag = hungarian_revolution
-		has_global_flag = second_hungarian_revolution
-		BAY = {
-			has_government = communism
-		}
-		HUN = {
-			has_government = communism
-		}
-		CZE = {
-			is_subject = no
-			owns_state = 9
-			owns_state = 70
-		}
-		SLO = {
-			exists = no
-		}
-		RUS = { NOT = { has_government = communism } }
-		OR = {
-			GAL = {
-				exists = yes
-				is_subject_of = RUS
-			}
-			POL = {
-				exists = yes
-				is_subject_of = RUS
-				owns_state = 88
-			}
-			RUS = {
-				owns_state = 88
-			}
-		}
-	}
-	mean_time_to_happen = { days = 14 }
-	option = {
-		name = prussian.9.a
-		ai_chance = { factor = 90 }
-		CZE = {
-			hidden_effect = {
-				SLO = {
-					add_state_core = 70
-					add_state_core = 71
-					add_state_core = 73
-					add_state_core = 664
-				}
-				remove_state_core = 70
-				remove_state_core = 71
-				remove_state_core = 73
-				remove_state_core = 664
-				add_state_claim = 70
-				add_state_claim = 71
-				add_state_claim = 73
-				add_state_claim = 664
-				release = SLO
-				country_event = ww1_czechoslovakia.4
+# news_event = {
+# 	id = prussian.8
+# 	title = prussian.7.t
+# 	desc = prussian.8.d
+# 	picture = GFX_news_event_ger_civil_war
+# 	fire_only_once = yes
+# 	is_triggered_only = yes
+# 	major = yes
+# 	option = {
+# 		name = prussian.8.a
+# 		ai_chance = {
+# 			factor = 100
+# 		}
+# 		trigger = {
+# 			has_government = communism
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.8.b
+# 		ai_chance = {
+# 			factor = 100
+# 		}
+# 		trigger = {
+# 			NOT = {
+# 				has_government = communism
+# 			}
+# 		}
+# 	}
+# }
 
-				add_opinion_modifier = {
-					target = RUS
-					modifier = HOI4TGW_Opinion_anti_ru_policy_malus
-				}
-			}
-		}
-		RUS = {
-			give_guarantee = SLO
-			give_guarantee = ROM
+# Treaty of Sevastopol following Skyes-Picot
+# country_event = {
+# 	id = prussian.11
+# 	title = prussian.11.t
+# 	desc = prussian.11.d
+# 	picture = GFX_report_event_generic_peaceful_annexation
+# 	fire_only_once = yes
+# 	trigger = {
+# 		tag = RUS
+# 		has_completed_focus = RUS_Constantinople_Agreement
+# 		##has_global_flag = prussian_blue
+# 		NOT = {
+# 			has_global_flag = greco_turkish_war_turkey_won
+# 		}
+# 		is_russia_a_monarchy = yes
+# 		has_country_flag = great_war_winner
+# 		NOT = {
+# 			owns_state = 341
+# 			owns_state = 347
+# 		}
+# 		TUR = {
+# 			has_country_flag = great_war_loser
+# 			has_war = no
+# 			OR = {
+# 				owns_state = 341
+# 				owns_state = 347
+# 			}
+# 		}
+# 	}
+# 	mean_time_to_happen = {
+# 		days = 60
+# 	}
+# 	option = {
+# 		name = prussian.11.a
+# 		ai_chance = {
+# 			base = 100
+# 		}
+# 		TUR = {
+# 			country_event = {
+# 				id = prussian.12
+# 				days = 3
+# 			}
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.11.b
+# 		ai_chance = {
+# 			base = 0
+# 		}
+# 		add_war_support = -0.1
+# 	}
+# }
 
-			add_named_threat = {
-				threat = 10
-				name = prussian.10.t
-			}
+# Turkish reaction for Russian demands
+# country_event = {
+# 	id = prussian.12
+# 	title = prussian.12.t
+# 	desc = prussian.12.d
+# 	fire_only_once = yes
+# 	is_triggered_only = yes
+# 	option = {
+# 		name = prussian.12.a
+# 		ai_chance = {
+# 			base = 100
+# 			modifier = {
+# 				strength_ratio = {
+# 					tag = RUS
+# 					ratio > 1
+# 				}
+# 				factor = 0
+# 			}
+# 		}
+# 		every_owned_state = {
+# 			limit = {
+# 				OR = {
+# 					state = 341
+# 					state = 347
+# 				}
+# 			}
+# 			RUS = {
+# 				transfer_state = PREV
+# 				add_named_threat = {
+# 					threat = 5
+# 					name = prussian.4.t
+# 				}
+# 			}
+# 		}
+# 		TUR = {
+# 			add_opinion_modifier = {
+# 				target = RUS
+# 				modifier = HOI4TGW_Opinion_anti_ru_policy_malus
+# 			}
+# 		}
+# 		# To fix ugly, nonsense enclaves
+# 		if = {
+# 			limit = {
+# 				BUL = {
+# 					NOT = {
+# 						has_country_flag = great_war_loser
+# 					}
+# 				}
+# 			}
+# 			every_owned_state = {
+# 				limit = {
+# 					OR = {
+# 						is_core_of = BUL
+# 						state = 200
+# 						state = 756
+# 					}
+# 				}
+# 				BUL = {
+# 					transfer_state = PREV
+# 					add_opinion_modifier = {
+# 						target = RUS
+# 						modifier = BUL_treaty_of_friendship
+# 					}
+# 				}
+# 			}
+# 			every_owned_state = {
+# 				limit = {
+# 					OR = {
+# 						region = 25
+# 						region = 14
+# 						region = 202
+# 					}
+# 					is_core_of = GRE
+# 				}
+# 				GRE = {
+# 					transfer_state = PREV
+# 				}
+# 			}
+# 		}
+# 		else_if = {
+# 			limit = {
+# 				GRE = {
+# 					has_country_flag = great_war_winner
+# 				}
+# 			}
+# 			every_owned_state = {
+# 				limit = {
+# 					state = 756
+# 				}
+# 				RUS = {
+# 					transfer_state = PREV
+# 				}
+# 			}
+# 			every_owned_state = {
+# 				limit = {
+# 					OR = {
+# 						region = 25
+# 						region = 14
+# 						region = 202
+# 					}
+# 					is_core_of = GRE
+# 				}
+# 				GRE = {
+# 					transfer_state = PREV
+# 				}
+# 			}
+# 			every_owned_state = {
+# 				limit = {
+# 					is_core_of = BUL
+# 				}
+# 				BUL = {
+# 					transfer_state = PREV
+# 				}
+# 			}
+# 		}
+# 		else = {
+# 			every_owned_state = {
+# 				limit = {
+# 					OR = {
+# 						state = 756
+# 						state = 200
+# 					}
+# 				}
+# 				RUS = {
+# 					transfer_state = PREV
+# 				}
+# 			}
+# 			every_owned_state = {
+# 				limit = {
+# 					OR = {
+# 						region = 25
+# 						region = 14
+# 						region = 202
+# 					}
+# 					is_core_of = GRE
+# 				}
+# 				GRE = {
+# 					transfer_state = PREV
+# 				}
+# 			}
+# 			every_owned_state = {
+# 				limit = {
+# 					is_core_of = BUL
+# 				}
+# 				BUL = {
+# 					transfer_state = PREV
+# 				}
+# 			}
+# 		}
+# 		news_event = prussian.13
+# 	}
+# 	option = {
+# 		name = prussian.12.b
+# 		ai_chance = {
+# 			base = 0
+# 			modifier = {
+# 				strength_ratio = {
+# 					tag = RUS
+# 					ratio > 1
+# 				}
+# 				add = 100
+# 			}
+# 		}
+# 		RUS = {
+# 			declare_war_on = {
+# 				target = TUR
+# 				type = take_state
+# 				generator = {
+# 					341
+# 					347
+# 				}
+# 			}
+# 			hidden_effect = {
+# 				set_state_controller = 347
+# 				division_template = {
+# 					name = "Militia"
+# 					regiments = {
+# 						militia = {
+# 							x = 0
+# 							y = 0
+# 						}
+# 						militia = {
+# 							x = 0
+# 							y = 1
+# 						}
+# 					}
+# 				}
+# 			}
+# 			347 = {
+# 				create_unit = {
+# 					division = "name = \"Orthodox Militia\" division_template = \"Militia\" start_experience_factor = 0"
+# 					owner = RUS
+# 				}
+# 			}
+# 		}
+# 		TUR = {
+# 			add_opinion_modifier = {
+# 				target = RUS
+# 				modifier = HOI4TGW_Opinion_anti_ru_policy_malus
+# 			}
+# 		}
+# 		news_event = prussian.13
+# 	}
+# }
 
-			hidden_effect = {
-				if = {
-					limit = {
-						has_dlc = "Man the Guns"
-					}
-					set_autonomy = {
-						target = SLO
-						autonomous_state = autonomy_supervised_state
-						freedom_level = 0.5
-					}
-				}
-				if = {
-					limit = {
-						NOT = { has_dlc = "Man the Guns" }
-					}
-					SLO = {
-						give_military_access = RUS
-					}
-				}
-			}
-		}
-		HUN = {
-			hidden_effect = {
-				add_opinion_modifier = {
-					target = RUS
-					modifier = HOI4TGW_Opinion_anti_ru_policy_malus
-				}
-			}
-		}
-		news_event = prussian.10
-	}
-	option = {
-		name = prussian.9.b
-		ai_chance = { factor = 10 }
-		CZE = {
-			add_popularity = { ideology = communism popularity = 0.25 }
-			add_stability = -0.25
-		}
-	}
-}
-# Russia Intervene Slovakia
-news_event = {
-	id = prussian.10
-	title = prussian.10.t
-	desc = prussian.10.d
-	picture = GFX_news_event_ger_civil_war
-	fire_only_once = yes
-	is_triggered_only = yes
-	major = yes
-	option = {
-		name = prussian.10.a
-		ai_chance = { factor = 100 }
-		trigger = {
-			has_government = communism
-		}
-	}
-	option = {
-		name = prussian.10.b
-		ai_chance = { factor = 100 }
-		trigger = {
-			NOT = {
-				tag = RUS
-				has_government = communism
-			}
-		}
-	}
-	option = {
-		name = prussian.10.c
-		ai_chance = { factor = 100 }
-		trigger = {
-			tag = RUS
-		}
-	}
-}
-# Treaty of Sevastopol, Russian version of Treaty of Sèvres
-country_event = {
-	id = prussian.11
-	title = prussian.11.t
-	desc = prussian.11.d
-	fire_only_once = yes
-	trigger = {
-		tag = RUS
-		has_global_flag = prussian_blue
-		RUS = {
-			has_country_flag = great_war_winner
-			has_government = neutrality
-		}
-		TUR = {
-			has_country_flag = great_war_loser
-			has_war = no
-		}
-	}
-	mean_time_to_happen = { days = 60 }
-	option = {
-		name = prussian.11.a
-		ai_chance = { factor = 100 }
-		TUR = {
-			country_event = { id = prussian.12 days = 3 }
-		}
-	}
-	option = {
-		name = prussian.11.b
-		ai_chance = { factor = 0 }
-		add_war_support = -0.1
-	}
-}
-# Turkish reaction for Treaty of Sevastopol
-country_event = {
-	id = prussian.12
-	title = prussian.12.t
-	desc = prussian.12.d
-	fire_only_once = yes
-	is_triggered_only = yes
-	option = {
-		name = prussian.12.a
-		ai_chance = { factor = 98 }
-		RUS = {
-			transfer_state = 341
-			transfer_state = 347
-			transfer_state = 756
+# # Russia Seizes Tsargrad
+# news_event = {
+# 	id = prussian.13
+# 	title = prussian.13.t
+# 	desc = prussian.13.desc
+# 	picture = GFX_news_event_generic_sign_treaty2
+# 	major = yes
+# 	trigger = {
+# 		NOT = {
+# 			has_global_flag = russia_seizes_tsargrad
+# 		}
+# 		original_tag = RUS
+# 		owns_state = 347
+# 	}
+# 	mean_time_to_happen = {
+# 		days = 0
+# 	}
+# 	immediate = {
+# 		hidden_effect = {
+# 			set_global_flag = russia_seizes_tsargrad
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.13.a
+# 		trigger = {
+# 			owns_state = 347
+# 			is_russia_a_monarchy = yes
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.13.b
+# 		trigger = {
+# 			owns_state = 347
+# 			is_russia_a_monarchy = no
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.13.c
+# 		trigger = {
+# 			NOT = {
+# 				owns_state = 347
+# 				original_tag = TUR
+# 			}
+# 			OR = {
+# 				is_islamic_nation = no
+# 				is_ally_with = ROOT
+# 			}
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.13.d
+# 		trigger = {
+# 			OR = {
+# 				is_islamic_nation = yes
+# 				original_tag = TUR
+# 			}
+# 			NOT = {
+# 				owns_state = 347
+# 				is_ally_with = ROOT
+# 			}
+# 		}
+# 	}
+# }
 
-			add_named_threat = {
-				threat = 10
-				name = prussian.4.t
-			}
-		}
-
-		TUR = {
-			add_opinion_modifier = {
-				target = RUS
-				modifier = HOI4TGW_Opinion_anti_ru_policy_malus
-			}
-		}
-
-		if = {
-			limit = {
-				BUL = {
-					exists = yes
-					owns_state = 757
-				}
-			}
-			BUL = {
-				transfer_state = 756
-
-				add_opinion_modifier = {
-					target = RUS
-					modifier = BUL_treaty_of_friendship
-				}
-			}
-		}
-
-		news_event = prussian.13
-	}
-	option = {
-		name = prussian.12.b
-		ai_chance = { factor = 2 }
-		RUS = {
-			declare_war_on = {
-				target = TUR
-				type = take_state
-				generator = { 341 347 756 }
-			}
-			set_state_controller = 341
-
-			division_template = {
-				name = "Militia"
-				regiments = {
-					infantry = { x=0  y=0 }
-				}
-			}
-			341 = {
-				create_unit = {
-					division = "name = \"Orthodox Militia\" division_template = \"Militia\" start_experience_factor = 0" 
-					owner = RUS
-				}
-			}
-		}
-		TUR = {
-			add_opinion_modifier = {
-				target = RUS
-				modifier = HOI4TGW_Opinion_anti_ru_policy_malus
-			}
-		}
-		news_event = prussian.13
-	}
-}
-# Russia Seizes Tsargrad
-news_event = {
-	id = prussian.13
-	title = prussian.13.t
-	desc = prussian.13.d
-	picture = GFX_news_event_ger_civil_war
-	fire_only_once = yes
-	is_triggered_only = yes
-	major = yes
-	immediate = {
-		hidden_effect = { ENG = { country_event = { id = prussian.14 days = 3 } } }
-	}
-	option = {
-		name = prussian.13.a
-		ai_chance = { factor = 100 }
-		trigger = {
-			tag = RUS
-		}
-	}
-	option = {
-		name = prussian.13.b
-		ai_chance = { factor = 100 }
-		trigger = {
-			tag = ENG
-		}
-	}
-	option = {
-		name = prussian.13.c
-		ai_chance = { factor = 100 }
-		trigger = {
-			NOT = {
-				tag = ENG
-				tag = RUS
-			}
-		}
-	}
-}
-# British reaction to Treaty of Sevastopol
-country_event = {
-	id = prussian.14
-	title = prussian.14.t
-	desc = prussian.14.d
-	fire_only_once = yes
-	is_triggered_only = yes
-	option = {
-		name = prussian.14.a
-		ai_chance = { factor = 1 }
-		trigger = {
-			has_war = no
-			has_stability > 0.3
-			has_war_support > 0.01
-		}
-		declare_war_on = {
-			target = RUS
-			type = topple_government
-		}
-		add_named_threat = {
-			threat = 50
-			name = prussian.14.t
-		}
-		set_global_flag = prussian_blue_british_russian_war
-		news_event = prussian.15
-
-		if = {
-			limit = {
-				TUR = {
-					NOT = { has_war_with = RUS }
-				}
-			}
-			TUR = {
-				declare_war_on = {
-					target = RUS
-					type = take_state
-					generator = { 341 347 756 }
-				}
-			}
-		}
-	}
-	option = {
-		name = prussian.14.b
-		ai_chance = { factor = 99 }
-		news_event = prussian.15
-	}
-}
-# British reaction to Treaty of Sevastopol
-news_event = {
-	id = prussian.15
-	title = prussian.15.t
-	desc = {
-		text = prussian.15.d
-		trigger = {
-			ENG = { NOT = { has_war_with = RUS } }
-		}
-	}
-	desc = {
-		text = prussian.15.d_war
-		trigger = {
-			ENG = { has_war_with = RUS }
-		}
-	}
-	picture = GFX_news_event_ger_civil_war
-	fire_only_once = yes
-	is_triggered_only = yes
-	major = yes
-	option = {
-		name = prussian.15.a
-		ai_chance = { factor = 100 }
-		trigger = {
-			OR = {
-				tag = ENG
-				is_in_faction_with = ENG
-				is_subject_of = ENG
-				has_war_with = RUS
-			}
-		}
-	}
-	option = {
-		name = prussian.15.b
-		ai_chance = { factor = 100 }
-		trigger = {
-			OR = {
-				tag = RUS
-				is_in_faction_with = RUS
-				is_subject_of = RUS
-				has_war_with = ENG
-			}
-		}
-	}
-	option = {
-		name = prussian.15.c
-		ai_chance = { factor = 100 }
-		trigger = {
-			NOT = {
-				tag = ENG
-				is_in_faction_with = ENG
-				is_subject_of = ENG
-				has_war_with = RUS
-				tag = RUS
-				is_in_faction_with = RUS
-				is_subject_of = RUS
-				has_war_with = ENG
-			}
-		}
-	}
-}
-# White peace between Russia and Britain
-country_event = {
-	id = prussian.16
-	title = prussian.16.t
-	desc = prussian.16.d
-	fire_only_once = yes
-	trigger = {
-		OR = {
-			AND = {
-				tag = ENG
-				has_war_with =  RUS
-			}
-			AND = {
-				tag = RUS
-				has_war_with =  ENG
-			}
-		}
-		has_global_flag = prussian_blue_british_russian_war
-		surrender_progress > 0.15
-	}
-	option = {
-		name = prussian.16.a
-		ai_chance = { factor = 95 }
-		if = {
-			limit = {
-				tag = ENG
-			}
-
-			RUS = { country_event = prussian.17 }
-		}
-		if = {
-			limit = {
-				tag = RUS
-			}
-
-			ENG = { country_event = prussian.17 }
-		}
-	}
-	option = {
-		name = prussian.16.b
-		ai_chance = { factor = 5 }
-		add_stability = -0.3
-		add_war_support = -0.3
-	}
-}
-# Answer for white peace
-country_event = {
-	id = prussian.17
-	title = prussian.17.t
-	desc = prussian.17.d
-	fire_only_once = yes
-	is_triggered_only = yes
-	option = {
-		name = prussian.17.a
-		ai_chance = { factor = 100 }
-		every_country = {
-			limit = {
-				has_war_with = ENG
-				NOT = { has_war_with = RUS }
-			}
-			white_peace = ENG
-		}
-		every_country = {
-			limit = {
-				has_war_with = RUS
-				NOT = { has_war_with = ENG }
-			}
-			white_peace = RUS
-		}
-
-		if = {
-			limit = {
-				tag = ENG
-			}
-			give_guarantee = TUR
-			every_state = {
-				limit = {
-					is_owned_by = RUS
-					OR = {
-						state = 341
-						state = 347
-						state = 756
-					}
-				}
-				ENG = { transfer_state = PREV }
-				set_demilitarized_zone = yes
-			}
-		}
-
-		news_event = prussian.18
-	}
-	option = {
-		name = prussian.17.b
-		ai_chance = { factor = 0 }
-		add_stability = -0.1
-		add_war_support = -0.1
-	}
-}
-# White peace news
-news_event = {
-	id = prussian.18
-	title = prussian.18.t
-	desc = prussian.18.d
-	picture = GFX_news_event_ger_civil_war
-	fire_only_once = yes
-	is_triggered_only = yes
-	major = yes
-	option = {
-		name = prussian.18.a
-		ai_chance = { factor = 100 }
-		add_war_support = -0.1
-		add_stability = 0.1
-	}
-}
 # News for Response on Proposal of Conference of Berlin
-news_event = {
-	id = prussian.19
-	title = prussian.19.t
-	desc = {
-		text = prussian.19.d
-		trigger = {
-			FRA = {
-				has_country_flag = agreed_on_treaty_of_berlin
-			}
-			ENG = {
-				has_country_flag = agreed_on_treaty_of_berlin
-			}
-		}
-	}
-	desc = {
-		text = prussian.19.d_france
-		trigger = {
-			FRA = {
-				has_country_flag = agreed_on_treaty_of_berlin
-			}
-			ENG = {
-				NOT = { has_country_flag = agreed_on_treaty_of_berlin }
-			}
-		}
-	}
-	desc = {
-		text = prussian.19.d_britain
-		trigger = {
-			ENG = {
-				has_country_flag = agreed_on_treaty_of_berlin
-			}
-			FRA = {
-				NOT = { has_country_flag = agreed_on_treaty_of_berlin }
-			}
-		}
-	}
-	picture = EVENT_hoi4tgw_treaty_of_versailles
-	fire_only_once = yes
+# news_event = {
+# 	id = prussian.19
+# 	title = prussian.19.t
+# 	desc = {
+# 		text = prussian.19.d
+# 		trigger = {
+# 			FRA = {
+# 				has_country_flag = agreed_on_treaty_of_berlin
+# 			}
+# 			ENG = {
+# 				has_country_flag = agreed_on_treaty_of_berlin
+# 			}
+# 		}
+# 	}
+# 	desc = {
+# 		text = prussian.19.d_france
+# 		trigger = {
+# 			FRA = {
+# 				has_country_flag = agreed_on_treaty_of_berlin
+# 			}
+# 			ENG = {
+# 				NOT = {
+# 					has_country_flag = agreed_on_treaty_of_berlin
+# 				}
+# 			}
+# 		}
+# 	}
+# 	desc = {
+# 		text = prussian.19.d_britain
+# 		trigger = {
+# 			ENG = {
+# 				has_country_flag = agreed_on_treaty_of_berlin
+# 			}
+# 			FRA = {
+# 				NOT = {
+# 					has_country_flag = agreed_on_treaty_of_berlin
+# 				}
+# 			}
+# 		}
+# 	}
+# 	picture = EVENT_hoi4tgw_treaty_of_versailles
+# 	fire_only_once = yes
+# 	trigger = {
+# 		any_country = {
+# 			has_country_flag = agreed_on_treaty_of_berlin
+# 		}
+# 		OR = {
+# 			tag = RUS
+# 			has_country_flag = agreed_on_treaty_of_berlin
+# 		}
+# 	}
+# 	mean_time_to_happen = {
+# 		days = 1
+# 	}
+# 	option = {
+# 		name = prussian.19.a
+# 		ai_chance = {
+# 			factor = 100
+# 		}
+# 		trigger = {
+# 			ENG = {
+# 				has_country_flag = agreed_on_treaty_of_berlin
+# 			}
+# 			FRA = {
+# 				has_country_flag = agreed_on_treaty_of_berlin
+# 			}
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.19.b
+# 		ai_chance = {
+# 			factor = 100
+# 		}
+# 		trigger = {
+# 			OR = {
+# 				NOT = {
+# 					ENG = {
+# 						has_country_flag = agreed_on_treaty_of_berlin
+# 					}
+# 				}
+# 				NOT = {
+# 					FRA = {
+# 						has_country_flag = agreed_on_treaty_of_berlin
+# 					}
+# 				}
+# 			}
+# 		}
+# 	}
+# }
+
+# Otto von Habsburg for Federal State of Austria
+#####################################################
+# country_event = {
+# 	id = prussian.28
+# 	title = prussian.28.t
+# 	desc = prussian.28.d
+# 	fire_only_once = yes
+# 	trigger = {
+# 		tag = AUR
+# 		#has_global_flag = prussian_blue
+# 		has_government = fascism
+# 		has_character = AUH_otto_von_habsburg
+# 		has_country_leader = {
+# 			character = AUS_engelbert_dollfuss
+# 			ruling_only = yes
+# 		}
+# 		has_cosmetic_tag = AUS_vaterland
+# 		date > 1932.11.20
+# 	}
+# 	mean_time_to_happen = {
+# 		days = 120
+# 		modifier = {
+# 			factor = 0.5
+# 			is_historical_focus_on = no
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.28.a
+# 		ai_chance = {
+# 			factor = 100
+# 		}
+# 		hidden_effect = {
+# 			AUH_otto_von_habsburg = {
+# 				add_country_leader_role = {
+# 					country_leader = {
+# 						ideology = semi_constitutional_monarchy
+# 					}
+# 				}
+# 				add_country_leader_role = {
+# 					country_leader = {
+# 						ideology = fascism_ideology
+# 					}
+# 				}
+# 				set_character_name = "AUH_otto_von_habsburg"
+# 				promote_character = semi_constitutional_monarchy
+# 				promote_character = fascism_ideology
+# 			}
+# 		}
+# 		effect_tooltip = {
+# 			promote_character = AUS_otto_von_habsburg
+# 		}
+# 		news_event = news.291
+# 	}
+# 	option = {
+# 		name = prussian.28.b
+# 		ai_chance = {
+# 			factor = 0
+# 		}
+# 		add_political_power = 100
+# 	}
+# }
+
+# Bavarian Soviet Republic
+#####################################
+# country_event = {
+# 	id = prussian.29
+# 	title = prussian.29.t
+# 	desc = prussian.29.d
+# 	picture = GFX_report_event_ger_civil_war
+# 	fire_only_once = yes
+# 	trigger = {
+# 		tag = BAY
+# 		#has_global_flag = prussian_blue
+# 		NOT = {
+# 			has_government = communism
+# 		}
+# 		OR = {
+# 			is_subject = no
+# 			is_subject_of = AUS
+# 		}
+# 		communism > 0.5
+# 	}
+# 	immediate = {
+# 		hidden_effect = {
+# 			if = {
+# 				limit = {
+# 					NOT = { has_global_flag = karl_liebknecht_dead }
+# 				}
+# 				GER = {
+# 					GER_karl_liebknecht = { 
+# 						set_nationality = BAY
+# 						promote_character = revolutionary_socialism
+# 					}
+# 					GER_rosa_luxemburg = { set_nationality = BAY }
+# 				}
+# 			}
+# 			else = {
+# 				promote_character = BAY_ernst_toller
+# 			}
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.29.a
+# 		news_event = prussian.5
+# 		ai_chance = {
+# 			factor = 100
+# 		}
+# 		hidden_effect = {
+# 			every_other_country = {
+# 				limit = {
+# 					original_tag = GER
+# 					tag = WUR
+# 					tag = HAN
+# 					tag = SAX
+# 					NOT = {
+# 						has_government = communism
+# 					}
+# 				}
+# 				add_opinion_modifier = {
+# 					target = BAY
+# 					modifier = HOI4TGW_Opinion_hostile_diplomatic_relations
+# 				}
+# 			}
+# 			if = {
+# 				limit = {
+# 					is_subject_of = AUS
+# 				}
+# 				AUS = {
+# 					end_puppet = PREV
+# 					country_event = prussian.30
+# 				}
+# 			}
+# 		}
+# 		set_politics = {
+# 			ruling_party = communism
+# 			elections_allowed = no
+# 		}
+# 		set_cosmetic_tag = BAY_socialism
+# 		add_named_threat = {
+# 			threat = 2
+# 			name = prussian.5.t
+# 		}
+# 		every_other_country = {
+# 			limit = {
+# 				is_neighbor_of = PREV
+# 				NOT = {
+# 					has_government = communism
+# 				}
+# 			}
+# 			add_timed_idea = {
+# 				idea = communist_pressure
+# 				days = 100
+# 			}
+# 		}
+# 		create_faction = komintern
+# 	}
+# 	option = {
+# 		name = prussian.29.b
+# 		ai_chance = {
+# 			factor = 0
+# 		}
+# 		check_communism_civil_war_popularity = yes
+# 		start_civil_war = {
+# 			ideology = communism
+# 			size = civil_war_size_var
+# 		}
+# 	}
+# }
+
+# Austrian Reaction to Bavarian Revolution
+# country_event = {
+# 	id = prussian.30
+# 	title = prussian.30.t
+# 	desc = prussian.30.d
+# 	picture = GFX_report_event_generic_rifles
+# 	is_triggered_only = yes
+# 	option = {
+# 		name = prussian.30.a
+# 		add_popularity = {
+# 			ideology = communism
+# 			popularity = 0.1
+# 		}
+# 		declare_war_on = {
+# 			target = FROM
+# 			type = puppet_wargoal_focus
+# 		}
+# 		if = {
+# 			limit = {
+# 				OR = {
+# 					has_stability < 0.4
+# 					communism > 0.35
+# 				}
+# 			}
+# 			hidden_effect = {
+# 				check_communism_civil_war_popularity = yes
+# 				start_civil_war = {
+# 					ideology = communism
+# 					size = civil_war_size_var
+# 					keep_unit_leaders_trigger = {
+# 						OR = {
+# 							has_trait = trait_royal
+# 							has_trait = trait_royalist
+# 							has_trait = old_guard
+# 							has_trait = politically_connected
+# 							has_trait = old_guard_navy
+# 						}
+# 					}
+# 				}
+# 			}
+# 		}
+# 		ai_chance = {
+# 			base = 10
+# 			modifier = {
+# 				add = -5
+# 				communism > 0.3
+# 			}
+# 			modifier = {
+# 				factor = 0
+# 				has_government = communism
+# 			}
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.30.b
+# 		add_war_support = -0.1
+# 		add_popularity = {
+# 			ideology = communism
+# 			popularity = 0.15
+# 		}
+# 		ai_chance = {
+# 			base = 10
+# 			modifier = {
+# 				add = 10
+# 				has_government = fascism
+# 			}
+# 		}
+# 	}
+# }
+
+# Saarland Problem with Rhine
+################################
+country_event = {
+	id = prussian.31
+	title = prussian.31.t
+	desc = prussian.31.d
+	picture = GFX_report_event_generic_peaceful_annexation
 	trigger = {
-		any_country = {
-			has_country_flag = agreed_on_treaty_of_berlin
-		}
-		OR = {
-			tag = RUS
-			has_country_flag = agreed_on_treaty_of_berlin
-		}
+		original_tag = FRA
+		has_subject = RHN
+		owns_state = 869
 	}
-	mean_time_to_happen = { days = 1 }
+	fire_only_once = yes
 	option = {
-		name = prussian.19.a
-		ai_chance = { factor = 100 }
-		trigger = {
-			ENG = {
-				has_country_flag = agreed_on_treaty_of_berlin
-			}
-			FRA = {
-				has_country_flag = agreed_on_treaty_of_berlin
-			}
+		name = prussian.31.a
+		add_political_power = 50
+		RHN = {
+			transfer_state = 869
 		}
 	}
 	option = {
-		name = prussian.19.b
-		ai_chance = { factor = 100 }
-		trigger = {
-			OR = {
-				NOT = { ENG = { has_country_flag = agreed_on_treaty_of_berlin } }
-				NOT = { FRA = { has_country_flag = agreed_on_treaty_of_berlin } }
-			}
-		}
+		name = prussian.31.b
+		add_political_power = -50
 	}
 }
-# Reichskanzler
-country_event = {
-	id = prussian.20
-	title = prussian.20.t
-	desc = prussian.20.d
-	fire_only_once = yes
-	hidden = yes
-	trigger = {
-		tag = GER
-		has_country_leader = {
-			name = "Theobald von Bethmann-Hollweg"
-		}
-		date > 1917.7.13
-		date < 1917.11.1
-	}
-	immediate = {
-		retire_ideology_leader = democratic
-		create_country_leader = {
-			name = "Georg Michaelis"
-			picture="gfx/leaders/GER/GER_Georg_Michaelis.dds"
-			expire = "1935.1.1"
-			ideology = conservatism
-			traits = { }
-		}
-	}
-}
-country_event = {
-	id = prussian.21
-	title = prussian.21.t
-	desc = prussian.21.d
-	fire_only_once = yes
-	hidden = yes
-	trigger = {
-		tag = GER
-		has_country_leader = {
-			name = "Georg Michaelis"
-		}
-		date > 1917.11.1
-		date < 1918.10.30
-	}
-	immediate = {
-		retire_ideology_leader = democratic
-		create_country_leader = {
-			name = "Georg von Hertling"
-			picture="gfx/leaders/GER/GER_Georg_von_Hertling.dds"
-			expire = "1935.1.1"
-			ideology = conservatism
-			traits = { }
-		}
-	}
-}
-country_event = {
-	id = prussian.22
-	title = prussian.22.t
-	desc = prussian.22.d
-	fire_only_once = yes
-	hidden = yes
-	trigger = {
-		tag = GER
-		has_country_leader = {
-			name = "Georg von Hertling"
-		}
-		date > 1918.10.30
-		has_country_flag = great_war_loser
-	}
-	immediate = {
-		retire_ideology_leader = democratic
-		create_country_leader = {
-			name = "Prinz Maximilian von Baden"
-			picture="gfx/leaders/GER/GER_Maximilian_von_Baden.dds"
-			expire = "1935.1.1"
-			ideology = conservatism
-			traits = { }
-		}
-	}
-}
-country_event = {
-	id = prussian.23
-	title = prussian.23.t
-	desc = prussian.23.d
-	fire_only_once = yes
-	hidden = yes
-	trigger = {
-		tag = GER
-		has_country_leader = {
-			name = "Erich Ludendorff"
-			ruling_only = yes
-		}
-		has_government = democratic
-		date > 1923.7.24
-		date < 1930.6.3
-		NOT = { has_country_flag = great_war_loser }
-	}
-	immediate = {
-		retire_ideology_leader = democratic
-		create_country_leader = {
-			name = "Alfred von Tirpitz"
-			picture="gfx/leaders/GER/GER_Alfred_Tirpitz.dds"
-			expire = "1935.1.1"
-			ideology = conservatism
-			traits = { }
-		}
-	}
-}
-country_event = {
-	id = prussian.24
-	title = prussian.24.t
-	desc = prussian.24.d
-	fire_only_once = yes
-	hidden = yes
-	trigger = {
-		tag = GER
-		NOT = {
-			OR = {
-				has_country_leader = {
-					name = "Theobald von Bethmann-Hollweg"
-				}
-				has_country_leader = {
-					name = "Friedrich Ebert"
-				}
-			}
-		}
-		has_global_flag = weimar_republic
-	}
-	immediate = {
-		retire_ideology_leader = democratic
-		create_country_leader = {
-			name = "Friedrich Ebert"
-			picture = "gfx/leaders/GER/GER_friedrich_ebert.dds"
-			expire = "1935.1.1"
-			ideology = socialism
-			traits = {}
-		}
-		set_party_name = {
-			ideology = democratic
-			long_name = GER_democratic_party_long
-			name = GER_democratic_party
-		}
-	}
-}
-country_event = {
-	id = prussian.25
-	title = prussian.25.t
-	desc = prussian.25.d
-	fire_only_once = yes
-	hidden = yes
-	trigger = {
-		tag = GER
-		has_country_leader = {
-			name = "Georg von Hertling"
-		}
-		date > 1918.10.30
-		date < 1923.7.24
-		NOT = { has_country_flag = great_war_loser }
-	}
-	immediate = {
-		retire_ideology_leader = democratic
-		create_country_leader = {
-			name = "Erich Ludendorff"
-			desc=GER_erich_ludendorff_DESC
-			picture="gfx/leaders/GER/GER_Erich_Ludendorff.dds"
-			expire = "1935.1.1"
-			ideology = conservatism
-			traits = { }
-		}
-		set_party_name = {
-			ideology = democratic
-			long_name = GER_democratic_party_nationalist_long
-			name = GER_democratic_party_nationalist
-		}
-	}
-}
-country_event = {
-	id = prussian.26
-	title = prussian.26.t
-	desc = prussian.26.d
-	fire_only_once = yes
-	trigger = {
-		tag = GER
-		has_country_leader = {
-			name = "Alfred von Tirpitz"
-		}
-		date > 1930.6.3
-		NOT = { has_country_flag = great_war_loser }
-	}
-	immediate = {
-		hidden_effect = {
-			kill_ideology_leader = democratic
-			create_country_leader = {
-				name = "Kuno Graf von Westarp"
-				picture="gfx/leaders/GER/GER_Kuno_Graf_von_Westarp.dds"
-				expire = "1935.1.1"
-				ideology = conservatism
-				traits = { }
-			}
-			set_party_name = {
-				ideology = democratic
-				long_name = GER_democratic_party_conservative_long
-				name = GER_democratic_party_conservative
-			}
-		}
-	}
-	option = {
-		name = prussian.26.a
-	}
-}
+
+# Rhineland Occupation End?
+################################
+# country_event = {
+# 	id = prussian.32
+# 	title = prussian.32.t
+# 	desc = prussian.32.d
+# 	picture = GFX_report_event_generic_peaceful_annexation
+# 	trigger = {
+# 		has_country_flag = great_war_winner
+# 		#has_global_flag = treaty_of_berlin
+# 		OR = {
+# 			owns_state = 51
+# 			owns_state = 343
+# 		}
+# 		NOT = {
+# 			original_tag = FRA
+# 			has_country_flag = keep_rhineland
+# 		}
+# 	}
+# 	fire_only_once = yes
+# 	option = {
+# 		name = prussian.32.a
+# 		every_owned_state = {
+# 			limit = {
+# 				is_core_of = RHN
+# 				NOT = { state = 793 }
+# 			}
+# 			RHN = {
+# 				give_resource_rights = {
+# 					receiver = ROOT
+# 					state = PREV
+# 				}
+# 				transfer_state = PREV
+# 			}
+# 		}
+# 		RHN = { give_military_access = ROOT }
+# 		give_guarantee = RHN
+# 		add_offsite_building = { type = industrial_complex level = 1 }
+# 		ai_chance = {
+# 			factor = 10
+# 			modifier = {
+# 				factor = 0
+# 				51 = { is_owned_by = ROOT is_core_of = ROOT }
+# 			}
+# 		}
+# 	}
+# 	option = {
+# 		name = prussian.32.b
+# 		set_country_flag = keep_rhineland
+# 		if = {
+# 			limit = {
+# 				any_owned_state = {
+# 					is_core_of = RHN
+# 					NOT = { is_core_of = ROOT }
+# 				}
+# 			}
+# 			add_political_power = -25
+# 		}
+# 		ai_chance = {
+# 			base = 0
+# 			modifier = {
+# 				add = 10
+# 				51 = { is_owned_by = ROOT is_core_of = ROOT }
+# 			}
+# 		}
+# 	}
+# }

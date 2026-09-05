@@ -7,11 +7,13 @@ operations = {
 			hidden_trigger = { always = no }
 		}
 		war_with_target_on_timeout = yes
-		days_mission_timeout = 30
+		days_mission_timeout = 5
 		fire_only_once = yes
 		is_good = no
-		highlight_state_targets = {
-			state = 420	
+		highlight_states = {
+			highlight_state_targets = {
+				state = 420	
+			}
 		}
 		timeout_effect = {
 			#custom_effect_tooltip = escalation_possible_tooltip_for_defender
@@ -22,10 +24,10 @@ operations = {
 				}
 				RUS = {
 					add_war_support = 0.05
-					add_tech_bonus = {
+					add_doctrine_cost_reduction = {
 						name = RUS_border_conflict_won
 						category = land_doctrine
-						bonus = 0.5
+						cost_reduction = 0.25
 					}
 				}
 			}
@@ -41,11 +43,13 @@ operations = {
 		available = {
 			hidden_trigger = { always = no }
 		}
-		highlight_state_targets = {
-			state = 420	
+		highlight_states = {
+			highlight_state_targets = {
+				state = 420	
+			}
 		}
 		war_with_target_on_timeout = yes
-		days_mission_timeout = 30
+		days_mission_timeout = 5
 		fire_only_once = yes
 		is_good = no
 		
@@ -54,11 +58,13 @@ operations = {
 				remove_targeted_decision = { target = PER decision = RUS_escalate_incident_to_border_conflict_PER_1911 }
 				419 = { set_border_war = no }
 				420 = { set_border_war = no }
+				877 = { set_border_war = no }
+				1212 = { set_border_war = no }
 			}
 			start_border_war = {
 				change_state_after_war = no
 				attacker = {
-					state = 229
+					state = 877
 					num_provinces = 3
 					on_win = ww1_russia.64
 					on_lose = ww1_russia.65
@@ -74,9 +80,9 @@ operations = {
 			}
 			hidden_effect = {
 				set_border_war_data = {
-					attacker = 229
+					attacker = 877
 					defender = 420
-					attacker_modifier = 0.35
+					attacker_modifier = 0.60
 					combat_width = 100
 				}
 				RUS = {
@@ -85,13 +91,275 @@ operations = {
 			}
 		}
 	}
-	#RUS_1911_campaign_mission = {
-	#}
+	RUS_battalion_of_death = {
+		icon = generic_prepare_civil_war
+		allowed = {
+			tag = RUS
+		}
+		available = {
+			has_war = yes
+			OR = {
+				has_country_leader = {
+					character = RUS_alexander_kerensky
+				}
+				surrender_progress > 0.15
+			}
+			NOT = {
+				has_government = communism
+			}
+		}
+		cost = 25
+		ai_will_do = {
+			factor = 50
+		}
+		visible = {
+			has_war = yes
+			NOT = {
+				tag = SOV
+				tag = STV
+			}		
+		}
+		fire_only_once = yes
+		complete_effect = {
+			country_event = { id = ww1_russia.55 }
+		}
+	}
+	# RUS_great_retreat = {
+	# 	icon = generic_prepare_civil_war
+	# 	allowed = {
+	# 		tag = RUS
+	# 	}
+	# 	visible = {
+	# 		OR = {
+	# 			NOT = {
+	# 				has_full_control_of_state = 98 #plock
+	# 				has_full_control_of_state = 87 #kalisz
+	# 				has_full_control_of_state = 90 #Kielce
+	# 			}
+	# 			AND = {
+	# 				NOT = {
+	# 					has_full_control_of_state = 98 #plock
+	# 				}
+	# 				OR = {
+	# 					NOT = {
+	# 						has_full_control_of_state = 92 #lublin
+	# 						has_full_control_of_state = 93 #volyn
+	# 						has_full_control_of_state = 766 #kholm					
+	# 					}
+	# 				}
+	# 			}
+	# 			NOT = {
+	# 				has_full_control_of_state = 98 #plock
+	# 				has_full_control_of_state = 87 #kalisz
+	# 				has_full_control_of_state = 90 #Kielce
+	# 			}
+	# 			NOT = {
+	# 				has_full_control_of_state = 10 #Warsaw
+	# 				has_full_control_of_state = 98 #plock
+	# 				controls_state = 87 #Warsaw
+	# 			}
+	# 		}
+	# 		casualties > 500000
+	# 	}
+	# 	available = {
+
+	# 	}
+		
+	# 	cost = 0
+
+	# 	complete_effect = {
+	# 		add_timed_idea = {
+	# 			idea = RUS_idea_great_retreat
+	# 			days = 70
+	# 		}
+	# 		set_country_flag = {
+	# 			flag = rus_enacted_great_retreat
+	# 			days = 300
+	# 			value = 1
+	# 		}
+	# 	}
+
+	# 	fire_only_once = yes
+
+	# 	ai_will_do = {
+	# 		base = 0
+	# 		modifier = {
+	# 			add = 10000
+	# 			NOT = {
+	# 				controls_state = 90
+	# 				controls_state = 87
+	# 				controls_state = 98
+	# 			}
+	# 			casualties > 500000
+	# 		}		
+	# 		# OR = {
+	# 		# 	NOT = {
+	# 		# 		controls_state = 10
+	# 		# 		has_full_control_of_state =  92
+	# 		# 	}
+	# 		# 	NOT = {
+	# 		# 		has_full_control_of_state =  90
+	# 		# 		has_full_control_of_state =  92
+	# 		# 	}
+	# 		# 	NOT = {
+	# 		# 		controls_state = 10
+	# 		# 		has_full_control_of_state = 90
+	# 		# 	}
+	# 		# }
+	# 		# AUS = {
+	# 		# 	NOT = {
+	# 		# 		has_full_control_of_state = 88
+	# 		# 	}
+	# 		# }
+	# 	}
+	# }
+	# RUS_launch_brusilov_offensive = {
+	# 	icon = generic_prepare_civil_war
+	# 	allowed = {
+	# 		tag = RUS
+	# 	}
+	# 	visible = {
+	# 		date > 1916.07.01
+	# 	}
+	# 	available = {
+
+	# 	}
+		
+	# 	cost = 0
+
+	# 	complete_effect = {
+	# 		add_timed_idea = {
+	# 			idea = RUS_idea_brusilov_offensive
+	# 			days = 100
+	# 		}
+	# 		activate_mission = RUS_brusilov_offensive
+	# 		hidden_effect = {
+	# 			news_event = {
+	# 				id = ww1_russia.67
+	# 				hours = 12
+	# 			}
+	# 		}
+	# 	}
+
+	# 	fire_only_once = yes
+
+	# 	ai_will_do = {
+	# 		factor = 100
+	# 	}
+	# }
+	# RUS_brusilov_offensive = {
+	# 	icon = generic_ignite_civil_war
+
+	# 	allowed = {
+	# 		tag = RUS
+	# 	}
+
+	# 	available = {
+	# 		controls_province = 11479
+	# 	}
+
+	# 	days_mission_timeout = 100
+	# 	fire_only_once = yes
+	# 	on_map_mode = map_and_decisions_view
+	# 	highlight_states = {
+	# 		highlight_state_targets = { state = 234 } 
+	# 		highlight_color_while_active = 1
+	# 	}
+	# 	is_good = no
+
+	# 	activation = {
+	# 		always = no
+	# 	}
+
+	# 	timeout_effect = {
+	# 		add_war_support = -0.1
+	# 	}
+
+	# 	complete_effect = {
+	# 		add_war_support = 0.10
+	# 	}
+	# }
 }
 foreign_politics = {
-	RUS_claim_762 = {
+	RUS_help_balkans = {
+		icon = GFX_decision_generic_prepare_civil_war
 		allowed = {
-			original_tag = RUS
+			tag = RUS
+		}
+		target_trigger = {
+			FROM = {
+				has_idea = SER_russian_protection
+				any_other_country = {
+					is_actual_major = yes
+					has_offensive_war_with = PREV
+					NOT = {
+						has_war_with = ROOT
+						is_ally_with = ROOT
+						has_idea = SER_russian_protection
+						is_guaranteed_by = ROOT
+					}
+					is_balkan_nation = no
+				}
+				NOT = {
+					has_war_with = ROOT
+					is_ally_with = ROOT
+				}
+			}
+		}
+		visible = {
+			is_subject = no
+			NOT = {
+				has_global_flag = great_war_ends
+				has_global_flag = russian_revolution
+				has_war_with = FROM
+				has_government = communism
+				FROM = {
+					has_government = communism
+					is_subject = no
+				}
+				has_guaranteed = FROM
+			}
+		}
+		available = {
+			has_capitulated = no
+			has_civil_war = no
+			NOT = {
+				has_idea = idea_armistice
+				has_idea = idea_army_restrictions
+			}
+		}
+		fire_only_once = yes
+		cost = 0
+		cancel_if_not_visible = yes
+		days_remove = 45
+		remove_effect = {
+			FROM = {
+				every_enemy_country = {
+					limit = {
+						is_actual_major = yes
+						has_offensive_war_with = PREV
+						NOT = {
+							has_war_with = ROOT
+							is_ally_with = ROOT
+							has_idea = SER_russian_protection
+							is_guaranteed_by = ROOT
+						}
+						is_balkan_nation = no
+					}
+					ROOT = {
+						add_to_war = {
+							targeted_alliance = FROM
+							enemy = PREV
+						}
+					}
+				}
+			}
+		}
+	}
+	RUS_claim_762 = {
+		icon = GFX_decision_eng_trade_unions_demand
+		allowed = {
+			tag = RUS
 		}
 		available = {
 			POL = { exists = no }
@@ -103,6 +371,9 @@ foreign_politics = {
 		}
 		cost = 25
 		visible = {
+			NOT = {
+				tag = SOV
+			}
 			NOT = { owns_state = 762 }
 			has_war_with = GER
 			has_completed_focus = RUS_resist_the_duma
@@ -113,8 +384,9 @@ foreign_politics = {
 		}
 	}
 	RUS_claim_86 = {
+		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
-			original_tag = RUS
+			tag = RUS
 		}
 		available = {
 			POL = { exists = no }
@@ -126,6 +398,9 @@ foreign_politics = {
 		}
 		cost = 25
 		visible = {
+			NOT = {
+				tag = SOV
+			}
 			NOT = { owns_state = 86 }
 			has_war_with = GER
 			has_completed_focus = RUS_resist_the_duma
@@ -136,8 +411,9 @@ foreign_politics = {
 		}
 	}
 	RUS_claim_85 = {
+		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
-			original_tag = RUS
+			tag = RUS
 		}
 		available = {
 			POL = { exists = no }
@@ -149,6 +425,9 @@ foreign_politics = {
 		}
 		cost = 25
 		visible = {
+			NOT = {
+				tag = SOV
+			}
 			NOT = { owns_state = 85 }
 			has_war_with = GER
 			has_completed_focus = RUS_resist_the_duma
@@ -159,8 +438,9 @@ foreign_politics = {
 		}
 	}
 	RUS_claim_188 = {
+		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
-			original_tag = RUS
+			tag = RUS
 		}
 		available = {
 			POL = { exists = no }
@@ -172,6 +452,9 @@ foreign_politics = {
 		}
 		cost = 25
 		visible = {
+			NOT = {
+				tag = SOV
+			}
 			NOT = { owns_state = 188 }
 			has_war_with = GER
 			has_completed_focus = RUS_resist_the_duma
@@ -182,8 +465,9 @@ foreign_politics = {
 		}
 	}
 	RUS_claim_341 = {
+		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
-			original_tag = RUS
+			tag = RUS
 		}
 		available = {
 			has_war_with = TUR
@@ -194,6 +478,9 @@ foreign_politics = {
 		}
 		cost = 25
 		visible = {
+			NOT = {
+				tag = SOV
+			}
 			NOT = { owns_state = 341 }
 			has_war_with = TUR
 			341 = { is_fully_controlled_by = RUS }
@@ -208,12 +495,16 @@ foreign_politics = {
 		}
 	}
 	RUS_claim_714_717 = {
+		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
-			original_tag = RUS
+			tag = RUS
 		}
 		available = {
-			NOT = { owns_state = 714 }
-			NOT = { owns_state = 717 }
+			NOT = {
+				owns_state = 714
+				owns_state = 717
+				owns_state = 1226
+			}
 		}
 		ai_will_do = {
 			factor = 100
@@ -227,8 +518,14 @@ foreign_politics = {
 		}
 		cost = 25
 		visible = {
-			NOT = { owns_state = 714 }
-			NOT = { owns_state = 717 }
+			NOT = {
+				tag = SOV
+			}
+			NOT = {
+				owns_state = 714
+				owns_state = 717
+				owns_state = 1226
+			}
 			QIN = { exists = no }
 			has_completed_focus = RUS_resist_the_duma
 		}
@@ -238,44 +535,16 @@ foreign_politics = {
 			add_state_claim = 717
 		}
 	}
-	RUS_release_KOR = {
-		allowed = {
-			original_tag = RUS
-		}
-		available = {
-			controls_state = 525
-			controls_state = 527
-			controls_state = 800
-			controls_state = 801
-			controls_state = 802
-			NOT = { country_exists = KOR }
-		}
-		ai_will_do = {
-			factor = 100
-		}
-		cost = 0
-		visible = {
-			controls_state = 525
-			controls_state = 527
-			controls_state = 800
-			controls_state = 801
-			controls_state = 802
-			NOT = { country_exists = KOR }
-		}
-		fire_only_once = no
-		complete_effect = {
-			RUS = { country_event = ww1_korea.2 }
-		}
-	}
 }
-political_actions = {	
+political_actions = {
 	RUS_move_capital_to_moscow = {
+		icon = GFX_decision_generic_operation
 		allowed = {
-			original_tag = RUS
+			tag = RUS
 		}
 		available = {
 			NOT = { has_full_control_of_state = 195 }
-			owns_state = 219			
+			owns_state = 219
 			has_full_control_of_state = 219
 		}
 		ai_will_do = {
@@ -283,49 +552,46 @@ political_actions = {
 		}
 		cost = 25
 		visible = {
+			NOT = {
+				tag = SOV
+			}
+			219 = { is_capital = no }
 			NOT = { has_full_control_of_state = 195 }
 		}
 		fire_only_once = yes
 		complete_effect = {
-			set_capital = 219
+			set_capital = { state = 219 }
 		}
 	}
-	RUS_call_unclded = {
-		icon = generic_prepare_civil_war
+	RUS_move_capital_to_petersburg = {
+		icon = GFX_decision_generic_operation
 		allowed = {
-			original_tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			has_completed_focus = RUS_resist_the_duma
-			has_war = yes
-			NOT = { has_global_flag = unclded }
+			tag = RUS
 		}
 		available = {
-			has_completed_focus = RUS_resist_the_duma
-		}
-		cost = 25
-		fire_only_once = yes
-		complete_effect = {
-			set_global_flag = unclded
-			create_field_marshal = {
-				name = "Pavel Chistyakoff"
-				portrait_path = "gfx/leaders/QIN/QIN_gachi_boi.dds"
-				traits = { brilliant_strategist media_personality trait_reckless } 
-				skill = 5
-				attack_skill = 4
-				defense_skill = 3
-				planning_skill = 5
-				logistics_skill = 2
-			}
+			has_war = no
+			owns_state = 195
+			has_full_control_of_state = 195
 		}
 		ai_will_do = {
-			factor = 0
+			factor = 1
+		}
+		cost = 25
+		visible = {
+			NOT = {
+				tag = SOV
+			}
+			195 = { is_capital = no }
+		}
+		fire_only_once = no
+		complete_effect = {
+			set_capital = { state = 195 }
 		}
 	}
 	RUS_draft_the_constitution = {
+		icon = GFX_decision_eng_trade_unions_support
 		visible = {
-			has_completed_focus = RUS_convene_iv_state_duma
+			has_completed_focus = RUS_centrist_duma
 			has_government = neutrality
 		}
 		cost = 50
@@ -358,8 +624,11 @@ political_actions = {
 	}
 	RUS_raid_on_marxist_printing_house = {
 		visible = {
-			has_completed_focus = RUS_convene_iv_state_duma
-			NOT = { has_government = communism }
+			has_completed_focus = RUS_centrist_duma
+			NOT = {
+				has_government = communism
+				has_war_with = SOV
+			}
 		}
 		icon = generic_arrest
 		days_re_enable = 90
@@ -400,10 +669,10 @@ political_actions = {
 	}
 	RUS_eradicate_bureaucratic_bribery = { #tsar visit
 		visible = {
-			has_completed_focus = RUS_convene_iv_state_duma
+			has_completed_focus = RUS_centrist_duma
 			has_government = neutrality
 		}
-		icon = generic_nationalism
+		icon = GFX_decision_generic_monarchy
 		days_re_enable = 90
 		days_remove = 30
 		available = {
@@ -421,7 +690,7 @@ political_actions = {
 			modifier = {
 				OR = {
 					has_stability < 0.30
-					political_power_daily > 0.1
+					political_power_daily > 0.5
 					neutrality < 0.25
 				}
 				factor = 10
@@ -454,60 +723,10 @@ political_actions = {
 			}
 		}
 	}
-	RUS_battalion_of_death = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			original_tag = RUS
-		}
-		available = {
-			has_war = yes
-			OR = {
-				has_country_leader = {
-					name = "Alexander Kerensky"
-					ruling_only = yes
-				}
-				surrender_progress > 0.15
-			}
-		}
-		cost = 25
-		ai_will_do = {
-			factor = 50
-		}
-		visible = {
-			has_war = yes			
-		}
-		fire_only_once = yes
-		complete_effect = {
-			country_event = { id = ww1_russia.55 }
-		}
-	}
 }
 propaganda_efforts = {
-	RUS_rename_constantinople = {
-		allowed = {
-			original_tag = RUS
-		}
-		available = {
-			owns_state = 341 
-			has_full_control_of_state = 341
-		}
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				NOT = { has_government = neutrality }
-				factor = 0
-			}
-		}
-		cost = 50
-		visible = {
-			has_full_control_of_state = 341
-		}
-		fire_only_once = yes
-		complete_effect = {
-			set_province_name = { id = 9833 name = TSARGRAD_PROV }
-		}
-	}
 	RUS_rename_petersburg = {
+		icon = GFX_decision_eng_install_government
 		allowed = {
 			original_tag = RUS
 		}
@@ -528,12 +747,72 @@ propaganda_efforts = {
 	}
 }
 economy_decisions = {
+	#RUS_sold_cer = {
+	#	icon = GFX_decision_generic_railway
+	#
+	#	allowed = {
+	#		original_tag = RUS
+	#	}
+	#
+	#	target_trigger = {
+	#		FROM = {
+	#			tag = MAN
+	#		}
+	#	}
+	#	visible = {
+	#		is_subject = no
+	#		has_capitulated = no
+	#		any_country = {
+	#			OR = {
+	#				tag = ROOT
+	#				is_subject_of = ROOT
+	#			}
+	#			owns_state = 563
+	#			controls_state = 563
+	#		}
+	#		any_country = {
+	#			OR = {
+	#				tag = ROOT
+	#				is_subject_of = ROOT
+	#			}
+	#			owns_state = 408
+	#			controls_state = 408
+	#		}
+	#		NOT = {
+	#			has_global_flag = chinese_eastern_railway_sold
+	#			is_in_faction_with = FROM
+	#			has_subject = FROM
+	#			has_war_with = FROM
+	#		}
+	#	}
+	#
+	#	fire_only_once = yes
+	#
+	#	ai_will_do = {
+	#		factor = 100
+	#	}
+	#
+	#	complete_effect = {
+	#		set_global_flag = chinese_eastern_railway_sold
+	#		FROM = {
+	#			diplomatic_relation = {
+	#				country = ROOT
+	#				relation = military_access
+	#				active = no
+	#			}
+	#			add_political_power = -100
+	#		}
+	#		add_political_power = 100
+	#	}
+	#}
 	RUS_urgent_strengthening_of_airfleet = {
 		allowed = {
-			original_tag = RUS
+			tag = RUS
 		}
 		visible = {
-			original_tag = RUS
+			NOT = {
+				tag = SOV
+			}
 			has_completed_focus = RUS_urgent_strengthening_of_airfleet
 		}		
 		icon = generic_air
@@ -562,28 +841,94 @@ economy_decisions = {
 	}
 	RUS_denounce_portsmouth = {	
 		allowed = {
-			original_tag = RUS
+			tag = RUS
 		}
 		visible = {
-			original_tag = RUS
+			NOT = {
+				tag = SOV
+			}
 			has_completed_focus = RUS_denounce_portsmouth
 		}		
 		icon = generic_naval
 		available = {
+			NOT = {
+				is_subject_of = JAP
+				has_idea = idea_armistice
+				has_idea = idea_army_restrictions
+			}
 		}
 		modifier = {
 			industrial_capacity_dockyard = 0.25
 			production_speed_dockyard_factor = 0.25
 			production_speed_naval_base_factor = 0.25
 		}
-		activation = {
-			tag = RUS
-			has_completed_focus = RUS_denounce_portsmouth
-		}
+		#activation = {
+		#	tag = RUS
+		#	has_completed_focus = RUS_denounce_portsmouth
+		#}
 		fire_only_once = yes
 		days_remove = 500
 		#days_mission_timeout = 500  
-		is_good = yes
+		#is_good = yes
+	}
+	RUS_build_amur_railway = {
+		icon = GFX_decision_generic_railway
+		allowed = {
+			original_tag = RUS
+		}
+		visible = {
+			OR = {
+				owns_state = 409
+				owns_state = 561
+				owns_state = 563
+				owns_state = 967
+			}
+			NOT = {
+				has_railway_connection = {
+					start_province = 10574
+					target_province = 7763
+				}
+				has_railway_connection = {
+					start_province = 7763
+					target_province = 12189
+				}
+			}
+		}
+		available = {	
+			num_of_civilian_factories_available_for_projects > 2
+			can_build_railway = {
+				path = { 10574 12556 12543 7851 10678 12657 7763 }
+			}
+			can_build_railway = {
+				path = { 7763 12654 1802 4246 12261 4805 12192 12189 }
+			}
+		}
+		icon = GFX_decision_generic_railway
+		days_remove = 140
+		modifier = {
+			civilian_factory_use = 2
+		}
+		remove_effect = {
+			build_railway = {
+				path = { 10574 12556 12543 7851 10678 12657 7763 }
+				level = 1
+			}
+			build_railway = {
+				path = { 7763 12654 1802 4246 12261 4805 12192 12189 }
+				level = 1
+			}
+			add_victory_points = {
+				province = 12657 #Alexeyevsk
+				value = 1
+			}
+		}
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				date > 1914.6.1
+			}
+		}
 	}
 }
 RUS_tsar_decision = {
@@ -592,15 +937,13 @@ RUS_tsar_decision = {
 		icon = eng_support_imperialist_coup
 		available = {
 			OR = {
-				NOT = { 
+				NOT = {
 					has_country_leader = {
-						name = "Nicholas II"
-						ruling_only = yes
+						character = RUS_nikolai_ii
 					} 
 				}
 				has_completed_focus = RUS_force_tsar_abdtication
 				has_completed_focus = RUS_resist_the_duma
-				has_completed_focus = RUS_Soviet_Russia
 				has_completed_focus = RUS_provisional_committee
 			}
 		}
@@ -608,81 +951,203 @@ RUS_tsar_decision = {
 		activation = {
 			tag = RUS
 			has_country_leader = {
-				name = "Nicholas II"
-				ruling_only = yes
-			}		
-			OR = {
-				has_idea = RUS_threat_of_revolution
-				has_idea = RUS_threat_of_revolution2
-				has_idea = RUS_threat_of_revolution3
+				character = RUS_nikolai_ii
 			}
-			has_stability < 0.35
+			has_threat_of_revolution = yes
 			OR = {
 				AND = {
-					has_war = no
-					custom_trigger_tooltip = {
-						tooltip = RUS_constitution_support
-						set_temp_variable = { RUS_constitution_support = party_popularity@democratic }
-						add_to_temp_variable = { RUS_constitution_support = party_popularity@neutrality }
-						check_variable = { RUS_constitution_support < 0.5 }
+					war_length_with = { 
+						tag = GER 
+						months > 28 
 					}
-				}
-				AND = {
-					has_war = yes
 					OR = {
-						has_war_support < 0.35
-						surrender_progress > 0.1
-						casualties > 2500000
+						AND = {
+							surrender_progress > 0.1
+							casualties > 1500000
+						}
+						AND = {
+							POL = {
+								exists = yes
+							}
+							surrender_progress > 0.04
+							casualties > 1500000
+						}
 					}
 				}
+				# we are in a big danger
+				AND = {
+					surrender_progress > 0.2
+					casualties > 1000000
+				}	
+				surrender_progress > 0.35
+				# removing this shi-
+				# # very extremly low stablity or war support
+				# AND = {
+				# 	OR = {
+				# 		has_stability < 0.05
+				# 		has_war_support < 0.05
+				# 	}
+				# 	#fallbacks
+				# 	OR = {
+				# 		10 = {
+				# 			is_owned_or_subject_trigger = yes
+				# 			any_country = {
+				# 				has_war_with = ROOT
+				# 				controls_state = PREV
+				# 			}
+				# 		}
+				# 		11 = {
+				# 			is_owned_or_subject_trigger = yes
+				# 			any_country = {
+				# 				has_war_with = ROOT
+				# 				controls_state = PREV
+				# 			}
+				# 		}
+				# 		190 = {
+				# 			is_owned_or_subject_trigger = yes
+				# 			any_country = {
+				# 				has_war_with = ROOT
+				# 				controls_state = PREV
+				# 			}
+				# 		}
+				# 		137 = {
+				# 			is_owned_or_subject_trigger = yes
+				# 			any_country = {
+				# 				has_war_with = ROOT
+				# 				controls_state = PREV
+				# 			}
+				# 		}
+				# 		202 = {
+				# 			is_owned_or_subject_trigger = yes
+				# 			any_country = {
+				# 				has_war_with = ROOT
+				# 				controls_state = PREV
+				# 			}
+				# 		}
+				# 		206 = {
+				# 			is_owned_or_subject_trigger = yes
+				# 			any_country = {
+				# 				has_war_with = ROOT
+				# 				controls_state = PREV
+				# 			}
+				# 		}
+				# 	}
+				# }
+				# # extremly low stablity or war support
+				# AND = {
+				# 	OR = {
+				# 		has_stability < 0.10
+				# 		has_war_support < 0.10
+				# 	}
+				# 	# tested, that amount is poland and courland
+				# 	surrender_progress > 0.05 #fallback
+				# }
+				# # very extremly high war casualties
+				# AND = {
+				# 	OR = {
+				# 		has_stability < 0.50
+				# 		has_war_support < 0.50
+				# 	}
+				# 	casualties > 2000000
+				# 	#fallbacks
+				# 	OR = {
+				# 		10 = {
+				# 			is_owned_or_subject_trigger = yes
+				# 			any_country = {
+				# 				has_war_with = ROOT
+				# 				controls_state = PREV
+				# 			}
+				# 		}
+				# 		11 = {
+				# 			is_owned_or_subject_trigger = yes
+				# 			any_country = {
+				# 				has_war_with = ROOT
+				# 				controls_state = PREV
+				# 			}
+				# 		}
+				# 		190 = {
+				# 			is_owned_or_subject_trigger = yes
+				# 			any_country = {
+				# 				has_war_with = ROOT
+				# 				controls_state = PREV
+				# 			}
+				# 		}
+				# 		137 = {
+				# 			is_owned_or_subject_trigger = yes
+				# 			any_country = {
+				# 				has_war_with = ROOT
+				# 				controls_state = PREV
+				# 			}
+				# 		}
+				# 		202 = {
+				# 			is_owned_or_subject_trigger = yes
+				# 			any_country = {
+				# 				has_war_with = ROOT
+				# 				controls_state = PREV
+				# 			}
+				# 		}
+				# 		206 = {
+				# 			is_owned_or_subject_trigger = yes
+				# 			any_country = {
+				# 				has_war_with = ROOT
+				# 				controls_state = PREV
+				# 			}
+				# 		}
+				# 	}
+				# }
+				# # extremly high war casualties
+				# AND = {
+				# 	OR = {
+				# 		has_stability < 0.50
+				# 		has_war_support < 0.50
+				# 	}
+				# 	casualties > 2000000
+				# 	surrender_progress > 0.07 #fallback
+				# }
+				# # average
+				# AND = {
+				# 	has_stability < 0.30
+				# 	has_war_support < 0.50
+				# 	surrender_progress > 0.40
+				# 	casualties > 775000
+				# 	OR = {
+				# 		10 = { is_controlled_by_ROOT_or_ally = no } #warsaw
+				# 		91 = { is_controlled_by_ROOT_or_ally = no } #lemberg
+				# 		137 = { is_controlled_by_ROOT_or_ally = no } #sevastopol
+				# 		763 = { is_controlled_by_ROOT_or_ally = no } #königsberg
+				# 	}
+				# }
+				# # RocksaR
+				# AND = {
+				# 	has_stability < 0.25
+				# 	surrender_progress > 0.05
+				# 	casualties > 1750000
+				# 	10 = { is_controlled_by_ROOT_or_ally = no } #warsaw
+				# }
+				# # we are in a big danger
+				# surrender_progress > 0.6
 			}
+			
 			SOV = { exists = no }
 			hidden_trigger = {
 				NOT = { has_completed_focus = RUS_force_tsar_abdtication }
 				NOT = { has_completed_focus = RUS_resist_the_duma }
-				NOT = { has_completed_focus = RUS_Soviet_Russia }
 				NOT = { has_completed_focus = RUS_provisional_committee }
 			}
-			NOT = { has_global_flag = nicholas_ii_abdication }
 			NOT = { has_global_flag = russian_revolution }
 		}
 		allowed = {
 			original_tag = RUS
-		}		
-		visible = {
-			has_stability < 0.35
-			OR = {
-				AND = {
-					has_war = no
-					custom_trigger_tooltip = {
-						tooltip = RUS_constitution_support
-						set_temp_variable = { RUS_constitution_support = party_popularity@democratic }
-						add_to_temp_variable = { RUS_constitution_support = party_popularity@neutrality }
-						check_variable = { RUS_constitution_support < 0.5 }
-					}
-				}
-				AND = {
-					has_war = yes
-					OR = {
-						has_war_support < 0.35
-						surrender_progress > 0.1
-						casualties > 2500000
-					}
-				}
-			}
 		}
+		visible = {
+			has_war = yes		
+		}
+		cancel_if_not_visible = yes
 		fire_only_once = yes
 		is_good = no
 		timeout_effect = {
 			set_global_flag = russian_revolution
-			if = {
-				limit = { has_war = yes }
-				country_event = { id = rusrevolt.2 }
-			}
-			if = {
-				limit = { has_war = no }
-				country_event = { id = rusrevolt.20 }
-			}
+			country_event = { id = rusrevolt.2 }
 		}	
 	}
 	RUS_abdicate_in_favor_of_brother = {
@@ -692,7 +1157,7 @@ RUS_tsar_decision = {
 		visible = {
 			NOT = { has_global_flag = russian_revolution }
 			has_country_leader = {
-				name = "Nicholas II"
+				character = RUS_nikolai_ii
 				ruling_only = yes
 			}
 			has_war = yes
@@ -702,7 +1167,7 @@ RUS_tsar_decision = {
 		available = {
 			has_active_mission = RUS_mission_tsar_abdication
 			has_country_leader = {
-				name = "Nicholas II"
+				character = RUS_nikolai_ii
 				ruling_only = yes
 			}
 		}
@@ -710,16 +1175,68 @@ RUS_tsar_decision = {
 		ai_will_do = {
 			factor = 1
 			modifier = {
-				is_historical_focus_on = yes
 				factor = 0
+				OR = {
+					AND = {
+						is_historical_focus_on = yes
+						has_game_rule = {
+							rule = russian_revolution_path 
+							option = DEFAULT
+						}
+					}
+					has_country_flag = RUS_AI_RANDOM_HISTORICAL
+					has_game_rule = {
+						rule = RUS_ai_behavior 
+						option = HISTORICAL
+					}
+					has_country_flag = RUS_REV_AI_RANDOM_HISTORICAL
+					has_game_rule = {
+						rule = russian_revolution_path 
+						option = HISTORICAL
+					}
+					has_country_flag = RUS_REV_AI_RANDOM_KORNILOV_IN_POWER
+					has_game_rule = {
+						rule = russian_revolution_path
+						option = KORNILOV_IN_POWER
+					}
+					has_country_flag = RUS_REV_AI_RANDOM_KERENSKY_DICTATORSHIP
+					has_game_rule = {
+						rule = russian_revolution_path
+						option = KERENSKY_DICTATORSHIP
+					}
+				}
+				NOT = {
+					has_country_flag = RUS_REV_AI_RANDOM_TSAR_MIKHAIL_CROWNED
+					has_game_rule = {
+						rule = russian_revolution_path
+						option = TSAR_MIKHAIL_CROWNED
+					}
+				}				
 			}
 			modifier = {
+				factor = 0
 				is_historical_focus_on = no
 				OR = {
 					has_stability < 0.5
 					has_war_support < 0.5
 				}
-				factor = 0
+				NOT = {
+					has_country_flag = RUS_REV_AI_RANDOM_TSAR_MIKHAIL_CROWNED
+					has_game_rule = {
+						rule = russian_revolution_path
+						option = TSAR_MIKHAIL_CROWNED
+					}
+				}				
+			}
+			modifier = {
+				factor = 1000
+				OR = {
+					has_country_flag = RUS_REV_AI_RANDOM_TSAR_MIKHAIL_CROWNED
+					has_game_rule = {
+						rule = russian_revolution_path
+						option = TSAR_MIKHAIL_CROWNED
+					}
+				}				
 			}
 		}
 
@@ -736,7 +1253,7 @@ RUS_tsar_decision = {
 		visible = {
 			NOT = { has_global_flag = russian_revolution }
 			has_country_leader = {
-				name = "Nicholas II"
+				character = RUS_nikolai_ii
 				ruling_only = yes
 			}
 			has_war = yes
@@ -746,13 +1263,13 @@ RUS_tsar_decision = {
 		available = {
 			has_active_mission = RUS_mission_tsar_abdication
 			has_country_leader = {
-				name = "Nicholas II"
+				character = RUS_nikolai_ii
 				ruling_only = yes
 			}
 		}
 		
-		fire_only_once = no
-		days_re_enable = 10
+		fire_only_once = yes
+
 		cost = 35
 
 		ai_will_do = {
@@ -778,11 +1295,11 @@ RUS_tsar_decision = {
 	}
 	###
 	RUS_resist_the_duma = {
-		icon = generic_nationalism
+		icon = oppression
 		available = {
 			has_war = no
-			has_stability > 0.7
-			neutrality > 0.75
+			has_stability > 0.59
+			neutrality > 0.69
 			NOT = { has_completed_focus = RUS_orthodoxy_autocracy_nationality }
 		}
 		days_mission_timeout = 365
@@ -794,91 +1311,110 @@ RUS_tsar_decision = {
 			original_tag = RUS
 		}		
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_resist_the_duma
 			NOT = { has_completed_focus = RUS_orthodoxy_autocracy_nationality }
+			has_government = neutrality
 		}
+		cancel_if_not_visible = yes
 		fire_only_once = yes
 		is_good = no
 		timeout_effect = {
-			
+			add_stability = -0.25
 		}
 		complete_effect = {
 			set_country_flag = russian_revolutionaires_lose
+			custom_effect_tooltip = russian_revolutionaires_lose
+			add_stability = -0.20
 		}
-		
+		cancel_effect = {
+			add_stability = -0.20
+		}
 	}
 	
 	RUS_bribing_parliamentarians = {
-		icon = generic_prepare_civil_war
+		icon = hol_exchange_intelligence_data
 		allowed = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_resist_the_duma
 			NOT = { has_completed_focus = RUS_orthodoxy_autocracy_nationality }
+			has_active_mission = RUS_resist_the_duma
 		}
 		available = {
 			has_completed_focus = RUS_resist_the_duma
 			NOT = { has_country_flag = russian_revolutionaires_lose }
 			NOT = { has_completed_focus = RUS_orthodoxy_autocracy_nationality }
+			has_active_mission = RUS_resist_the_duma
 		}
 		cost = 25
 		
 		days_remove = 30
-		days_re_enable = 10
+		days_re_enable = 30
 		remove_effect = {
-			add_popularity = { ideology = neutrality popularity = 0.02 }
+			add_popularity = { ideology = neutrality popularity = 0.04 }
 		}
 		ai_will_do = {
-			factor = 100
+			base = 150
+			modifier = {
+				factor = 0
+				neutrality > 0.74
+			}
 		}
 	}
 	RUS_black_hundred_march = {
-		icon = generic_prepare_civil_war
+		icon = GFX_decision_eng_blackshirt_march
 		allowed = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_resist_the_duma
 			NOT = { has_completed_focus = RUS_orthodoxy_autocracy_nationality }
+			has_active_mission = RUS_resist_the_duma
 		}
 		available = {
 			has_completed_focus = RUS_resist_the_duma
 			NOT = { has_country_flag = russian_revolutionaires_lose }
 			NOT = { has_completed_focus = RUS_orthodoxy_autocracy_nationality }
+			has_active_mission = RUS_resist_the_duma
 		}
 
-		days_remove = 30
+		days_remove = 5
 		days_re_enable = 30
 		remove_effect = {
-			add_stability = 0.02
+			add_stability = -0.02
 			add_popularity = { ideology = fascism popularity = 0.02 }
+			add_popularity = { ideology = neutrality popularity = 0.05 }
 		}
+		cost = 10
 		ai_will_do = {
-			factor = 10
+			base = 100
+			modifier = {
+				factor = 0 
+				has_stability < 0.66
+			}
 		}
 	}
 	RUS_give_speech = {
-		icon = eng_propaganda_campaigns
+		icon = generic_speech
 		allowed = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_resist_the_duma
 			NOT = { has_completed_focus = RUS_orthodoxy_autocracy_nationality }
+			has_active_mission = RUS_resist_the_duma
 		}
 		available = {
 			has_completed_focus = RUS_resist_the_duma
 			NOT = { has_country_flag = russian_revolutionaires_lose }
 			NOT = { has_completed_focus = RUS_orthodoxy_autocracy_nationality }
+			has_active_mission = RUS_resist_the_duma
 		}
 
 		days_remove = 30
 		days_re_enable = 30
+		cost = 20
 		remove_effect = {
 			add_stability = 0.02
 			add_popularity = { ideology = neutrality popularity = 0.02 }
@@ -893,19 +1429,20 @@ RUS_tsar_decision = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_resist_the_duma
 			NOT = { has_completed_focus = RUS_orthodoxy_autocracy_nationality }
+			has_active_mission = RUS_resist_the_duma
 		}
 		available = {
 			has_completed_focus = RUS_resist_the_duma
 			NOT = { has_country_flag = russian_revolutionaires_lose }
 			NOT = { has_completed_focus = RUS_orthodoxy_autocracy_nationality }
-			
+			has_active_mission = RUS_resist_the_duma
 		}
 
-		days_remove = 30
-		days_re_enable = 60
+		days_remove = 10
+		days_re_enable = 30
+		cost = 10
 		remove_effect = {
 			add_popularity = { ideology = fascism popularity = 0.02 }
 			add_popularity = { ideology = neutrality popularity = 0.02 }
@@ -920,127 +1457,33 @@ RUS_tsar_decision = {
 			original_tag = RUS
 		}
 		visible = {
-			original_tag = RUS
 			has_completed_focus = RUS_resist_the_duma
 			NOT = { has_completed_focus = RUS_orthodoxy_autocracy_nationality }
+			has_active_mission = RUS_resist_the_duma
 		}
 		available = {
 			has_completed_focus = RUS_resist_the_duma
 			NOT = { has_country_flag = russian_revolutionaires_lose }
 			NOT = { has_completed_focus = RUS_orthodoxy_autocracy_nationality }
-			
+			has_active_mission = RUS_resist_the_duma
 		}
 
 		days_remove = 30
-		days_re_enable = 10
+		days_re_enable = 30
+		cost = 50
 		remove_effect = {
 			add_stability = 0.05
 		}
 		ai_will_do = {
-			factor = 100
+			factor = 150
 		}
 		modifier = {
 			political_power_gain = -0.05
 			neutrality_drift = 0.1
-        }
+		}
 	}
 }
 crisis = {
-	RUS_threat_of_bolshevik_revolution = {
-		icon = generic_ignite_civil_war		
-		highlight_states = {
-			state = 195
-		}		
-		allowed = {
-			original_tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			OR = { 
-				has_idea = RUS_threat_of_revolution
-				has_idea = RUS_threat_of_revolution2
-				has_idea = RUS_threat_of_revolution3 
-			}
-			OR = {
-				has_country_flag = RUS_bolshevik_threat
-				AND = {
-					NOT = { has_global_flag = russian_revolution }
-					NOT = { 
-						has_country_leader = {
-							name = "Nicholas II"
-							ruling_only = yes
-						}
-					}
-					OR = {
-						AND = {
-							has_stability < 0.5
-							has_war_support < 0.5
-						}
-						AND = {
-							has_war = yes	
-							OR = {
-								surrender_progress > 0.1
-								casualties > 2000000
-							}
-						}
-					}
-				}
-			}
-		}		
-		available = {
-			OR = {
-				has_war = no
-				has_government = communism
-			}
-			NOT = {
-				OR = { 
-					has_idea = RUS_threat_of_revolution
-					has_idea = RUS_threat_of_revolution2
-					has_idea = RUS_threat_of_revolution3 
-				}
-			}
-		}		
-		activation = {
-			tag = RUS
-			OR = { 
-				has_idea = RUS_threat_of_revolution
-				has_idea = RUS_threat_of_revolution2
-				has_idea = RUS_threat_of_revolution3 
-			}
-			OR = {
-				has_country_flag = RUS_bolshevik_threat
-				AND = {
-					NOT = { has_global_flag = russian_revolution }
-					NOT = { 
-						has_country_leader = {
-							name = "Nicholas II"
-							ruling_only = yes
-						}
-					}
-					OR = {
-						AND = {
-							has_stability < 0.5
-							has_war_support < 0.5
-						}
-						AND = {
-							has_war = yes	
-							OR = {
-								surrender_progress > 0.1
-								casualties > 2000000
-							}
-						}
-					}
-				}
-			}
-		}		
-		timeout_effect = {
-			clr_country_flag = RUS_bolshevik_threat
-			country_event = { id = rusrevolt.6 }
-		}		
-		fire_only_once = yes
-		days_mission_timeout = 60  
-		is_good = no
-	}
 }
 RUS_fight_for_trade_unions = {
 	RUS_prime_minister_socialist = {
@@ -1069,6 +1512,12 @@ RUS_fight_for_trade_unions = {
 		fire_only_once = yes
 		remove_effect = {
 			remove_ideas = RUS_idea_strike_movement
+			if = {
+				limit = {
+					has_idea = RUS_idea_strike_movement2
+				}
+				remove_ideas = RUS_idea_strike_movement2
+			}
 			set_country_flag = strikes_end
 		}		
 		ai_will_do = {
@@ -1076,7 +1525,7 @@ RUS_fight_for_trade_unions = {
 		}
 	}
 	RUS_negotiations_with_strikers = {
-		icon = generic_construction
+		icon = GFX_decision_POL_looming_peasants_strike
 		allowed = {
 			original_tag = RUS
 		}
@@ -1102,13 +1551,13 @@ RUS_fight_for_trade_unions = {
 		modifier = {
 			industrial_capacity_factory = -0.15
 			production_factory_start_efficiency_factor = -0.05
-        }		
+		}		
 		ai_will_do = {
 			factor = 100
 		}
 	}
 	RUS_factory_self_management = {
-		icon = generic_political_discourse
+		icon = GFX_decision_generic_merge_plant_materiel
 		allowed = {
 			original_tag = RUS
 		}
@@ -1133,7 +1582,7 @@ RUS_fight_for_trade_unions = {
 		modifier = {
 			political_power_gain = -0.05
 			production_factory_max_efficiency_factor = -0.1
-        }		
+		}		
 		ai_will_do = {
 			factor = 100
 		}
@@ -1162,13 +1611,14 @@ RUS_fight_for_trade_unions = {
 			add_popularity = { ideology = communism popularity = 0.02 }
 		}
 		modifier = {
-			consumer_goods_factor = 0.15
-        }		
+			consumer_goods_factor = 0.3
+		}		
 		ai_will_do = {
 			factor = 0
 		}
 	}
 	RUS_facilitate_trade_union_registration = {
+		icon = GFX_decision_hol_exchange_intelligence_data
 		allowed = {
 			original_tag = RUS
 		}
@@ -1193,7 +1643,7 @@ RUS_fight_for_trade_unions = {
 		}
 		modifier = {
 			political_power_gain = -0.25
-        }		
+		}		
 		ai_will_do = {
 			factor = 100
 		}
@@ -1223,21 +1673,145 @@ RUS_fight_for_trade_unions = {
 		modifier = {
 			training_time_factor = 0.25
 			mobilization_speed = -0.1
-        }		
+		}		
 		ai_will_do = {
 			factor = 100
 		}
 	}
 }
 RUS_civil_war = {
-	RUS_white_terror = {	
-		icon = generic_ignite_civil_war	
+	
+	RUS_reunite_russia = {
+		icon = GFX_decision_SOV_place_hq
+
 		allowed = {
-			tag = RUS
+			OR = {
+				original_tag = RUS
+				original_tag = FER
+				original_tag = CER
+			}
+		}
+
+		available = {
+			has_war = no
+			219 = {
+				is_owned_or_subject_trigger = yes
+			}
+			SOV = {
+				exists = no
+			}
+			#has_war = no
 		}
 		visible = {
-			original_tag = RUS
-			has_global_flag = russian_civil_war
+			is_subject = no
+			has_global_flag = october_revolution
+			NOT = {
+				has_country_leader_ideology = vanguardism
+				has_country_leader_ideology = revolutionary_socialism
+			}
+			if = {
+				limit = {
+					tag = SIB 
+				}
+				OR = {
+					has_completed_focus = SIB_national_constituent_assembly
+					has_completed_focus = SIB_federative_republic
+				}
+			}
+		}
+		days_remove = 70
+		fire_only_once = yes
+		complete_effect = {
+			set_variable = {
+				votes_for_republic = 0
+			}
+			set_variable = {
+				votes_for_tsardom = 0
+			}
+			set_variable = {
+				votes_for_dictatorship = 0
+			}
+			set_variable = {
+				vote_to_let_former_territories = 0
+			}
+			set_variable = {
+				vote_to_puppet_former_territories = 0
+			}
+			set_variable = {
+				has_support_to_annex_former_territories = 0
+			}
+			clr_country_flag = has_left_the_conference
+			if = {
+				limit = {
+					tag = SIB
+					has_idea = SIB_red_partisans
+				}
+				remove_ideas = SIB_red_partisans
+			}
+			country_event = {
+				id = ww1_rcw_unification.4
+				days = 1
+			}
+			every_other_country = {
+				limit = {
+					is_russian_tag = yes
+					OR = {
+						is_subject_of = ROOT
+						is_subject = no
+					}
+					NOT = {
+						has_country_leader_ideology = vanguardism
+						has_country_leader_ideology = revolutionary_socialism
+					}
+				}
+				if = {
+					limit = {
+						has_idea = SIB_red_partisans
+					}
+					remove_ideas = SIB_red_partisans
+				}
+				clr_country_flag = has_left_the_conference
+				country_event = {
+					id = ww1_rcw_unification.4
+					days = 1
+				}
+			}
+		}
+		remove_effect = {
+			constituent_assembly_effect = yes
+			every_state = {
+				limit = {
+					is_russian_core = yes
+					NOT = {
+						is_core_of = ROOT
+					}
+				}
+				add_core_of = ROOT
+			}
+			if = {
+				limit = {
+					owns_state = 195
+				}
+				set_capital = {
+					state = 195
+				}
+				else = {
+					set_capital = {
+						state = 219
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	RUS_white_terror = {	
+		icon = GFX_decision_oppression	
+		allowed = {
+			NOT = {
+				tag = SRA
+			}
 		}
 		available = {
 			has_war_with = SOV
@@ -1261,920 +1835,470 @@ RUS_civil_war = {
 			}
 		}
 	}
-	RUS_form_volunteer_south_army = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			has_war_with = SOV
-			DKB = { is_in_faction_with = RUS }
-		}
-		available = {
-			has_war_with = SOV
-			has_manpower > 50000
-		}
-		cost = 25
-		
-		days_remove = 25
-		fire_only_once = yes
-		complete_effect = {
-			add_manpower = -50000
-		}
-		remove_effect = {
-			random_state = {
-				limit = { 
-					is_controlled_by = RUS
-					region = 137
-				}
-				create_unit = {
-					division = "division_template = \"White Guard Corps\"	start_experience_factor = 0.6	start_equipment_factor = 1"
-					owner = RUS
-					allow_spawning_on_enemy_provs = no
-					count = 4
-					country_score = {
-						base = 100
-					}
-				}
-				create_unit = {
-					division = "division_template = \"White Guard Cavalry\"	start_experience_factor = 0.6	start_equipment_factor = 1"
-					owner = RUS
-					allow_spawning_on_enemy_provs = no
-					count = 4
-					country_score = {
-						base = 100
-					}
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 10
-		}
-	}
-	RUS_form_army_of_komuch = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			has_war_with = SOV
-		}
-		available = {
-			has_war_with = SOV
-			has_manpower > 50000
-		}
-		cost = 25
-		
-		days_remove = 25
-		fire_only_once = yes
-		complete_effect = {
-			add_manpower = -50000
-		}
-		remove_effect = {
-			random_state = {
-				limit = { 
-					is_controlled_by = RUS
-					region = 40
-				}
-				create_unit = {
-					division = "division_template = \"White Guard Corps\"	start_experience_factor = 0.6	start_equipment_factor = 1"
-					owner = RUS
-					allow_spawning_on_enemy_provs = no
-					count = 6
-					country_score = {
-						base = 100
-					}
-				}
-				create_unit = {
-					division = "division_template = \"White Guard Cavalry\"	start_experience_factor = 0.6	start_equipment_factor = 1"
-					owner = RUS
-					allow_spawning_on_enemy_provs = no
-					count = 2
-					country_score = {
-						base = 100
-					}
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 10
-		}
-	}
-	RUS_form_northwestern_army = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			has_war_with = SOV
-		}
-		available = {
-			has_war_with = SOV
-			has_manpower > 30000
-			ESR = { 
-				exists = yes
-				is_subject = no
-			}
-		}
-		cost = 25
-		days_remove = 25
-		fire_only_once = yes
-		remove_effect = {
-			ESR = { country_event = { id = ww1_estonia.2 } }
-		}
-		ai_will_do = {
-			factor = 10
-		}
-	}
-	RUS_form_siberian_army = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			has_war_with = SOV
-		}
-		available = {
-			has_war_with = SOV
-			has_manpower > 50000
-		}
-		cost = 25
-		
-		days_remove = 25
-		fire_only_once = yes
-		complete_effect = {
-			add_manpower = -50000
-		}
-		remove_effect = {
-			set_country_flag = RUS_siberian_army_formed
-			random_state = {
-				limit = { 
-					is_controlled_by = RUS
-					region = 14
-				}
-				create_unit = {
-					division = "division_template = \"White Guard Corps\"	start_experience_factor = 0.6	start_equipment_factor = 1"
-					owner = RUS
-					allow_spawning_on_enemy_provs = no
-					count = 7
-					country_score = {
-						base = 100
-					}
-				}
-				create_unit = {
-					division = "division_template = \"White Guard Cavalry\"	start_experience_factor = 0.6	start_equipment_factor = 1"
-					owner = RUS
-					allow_spawning_on_enemy_provs = no
-					count = 1
-					country_score = {
-						base = 100
-					}
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 10
-		}
-	}
-	RUS_form_far_eastern_army = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			has_war_with = SOV
-			has_country_flag = RUS_siberian_army_formed
-		}
-		available = {
-			has_war_with = SOV
-			has_manpower > 50000			
-		}
-		cost = 25
-		
-		days_remove = 25
-		fire_only_once = yes
-		complete_effect = {
-			add_manpower = -50000
-		}
-		remove_effect = {
-			random_state = {
-				limit = { 
-					is_controlled_by = RUS
-					region = 148
-				}
-				create_unit = {
-					division = "division_template = \"White Guard Corps\"	start_experience_factor = 0.6	start_equipment_factor = 1"
-					owner = RUS
-					allow_spawning_on_enemy_provs = no
-					count = 7
-					country_score = {
-						base = 100
-					}
-				}
-				create_unit = {
-					division = "division_template = \"White Guard Cavalry\"	start_experience_factor = 0.6	start_equipment_factor = 1"
-					owner = RUS
-					allow_spawning_on_enemy_provs = no
-					count = 1
-					country_score = {
-						base = 100
-					}
-				}
-			}
-		}
-		ai_will_do = {
-			factor = 10
-		}
-	}
-	RUS_revolt_of_czechoslovak_legion = {
-		icon = generic_prepare_civil_war
-		allowed = {
-			tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			has_global_flag = russian_civil_war
-		}
-		available = {
-			has_war_with = SOV
-		}
-		cost = 50
-		fire_only_once = yes
-		days_remove = 10
-		remove_effect = {
-			hidden_effect = { SOV = { country_event = { id = ww1_russia.48 } } }
-			country_event = { id = ww1_russia.48 }
-		}
-		highlight_states = {
-			state = 652
-			state = 651
-			state = 582
-			state = 572
-			state = 590
-			state = 583
-		}
-		ai_will_do = {
-			factor = 100
-			modifier = {
-				factor = 0
-				surrender_progress > 0.25
-			}
-		}
-	}
-}
-RUS_reunite_white_generals = {
-	RUS_annex_siberia = {
-		icon = generic_ignite_civil_war	
-		allowed = {
-			tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			has_global_flag = russian_civil_war
-		}
-		available = {
-			OR = {
-				has_completed_focus = RUS_reunite_white_generals
-				has_completed_focus = RUS_united_russia
-			}
-			SIB = { exists = yes is_puppet_of = RUS }
-		}
-		
-		cost = 50
-		
-		days_remove = 20
-		remove_effect = {
-			RUS = {
-				annex_country = {
-					target = SIB
-					transfer_troops = yes
-				}
-			}
-			every_state = {
-				limit = { is_core_of = SIB }
-				remove_core_of = SIB
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 100
-				RUS = { surrender_progress > 0.4 }
-			}
-			modifier = {
-				factor = 100
-				SOV = { surrender_progress > 0.4 }
-			}
-		}
-	}
-	RUS_annex_crimea = {
-		icon = generic_ignite_civil_war	
-		allowed = {
-			tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			has_global_flag = russian_civil_war
-		}
-		available = {
-			OR = {
-				has_completed_focus = RUS_reunite_white_generals
-				has_completed_focus = RUS_united_russia
-			}
-			CRI = { exists = yes is_puppet_of = RUS }
-		}
-		
-		cost = 50
-		
-		days_remove = 20
-		remove_effect = {
-			RUS = {
-				annex_country = {
-					target = CRI
-					transfer_troops = yes
-				}
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 100
-				RUS = { surrender_progress > 0.4 }
-			}
-			modifier = {
-				factor = 100
-				SOV = { surrender_progress > 0.4 }
-			}
-		}
-	}
-	RUS_annex_kuban = {
-		icon = generic_ignite_civil_war	
-		allowed = {
-			tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			has_global_flag = russian_civil_war
-		}
-		available = {
-			OR = {
-				has_completed_focus = RUS_reunite_white_generals
-				has_completed_focus = RUS_united_russia
-			}
-			KBN = { exists = yes is_puppet_of = RUS }
-		}
-		
-		cost = 50
-		
-		days_remove = 20
-		remove_effect = {
-			RUS = {
-				annex_country = {
-					target = KBN
-					transfer_troops = yes
-				}
-			}
-			every_state = {
-				limit = { is_core_of = KBN }
-				remove_core_of = KBN
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 100
-				RUS = { surrender_progress > 0.4 }
-			}
-			modifier = {
-				factor = 100
-				SOV = { surrender_progress > 0.4 }
-			}
-		}
-	}
-	RUS_annex_don = {
-		icon = generic_ignite_civil_war	
-		allowed = {
-			tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			has_global_flag = russian_civil_war
-		}
-		available = {
-			OR = {
-				has_completed_focus = RUS_reunite_white_generals
-				has_completed_focus = RUS_united_russia
-			}
-			DKB = { exists = yes is_puppet_of = RUS }
-		}
-		
-		cost = 50
-		
-		days_remove = 20
-		remove_effect = {
-			RUS = {
-				annex_country = {
-					target = DKB
-					transfer_troops = yes
-				}
-			}
-			every_state = {
-				limit = { is_core_of = DKB }
-				remove_core_of = DKB
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 100
-				RUS = { surrender_progress > 0.4 }
-			}
-			modifier = {
-				factor = 100
-				SOV = { surrender_progress > 0.4 }
-			}
-		}
-	}
-	RUS_annex_chechnya = {
-		icon = generic_ignite_civil_war	
-		allowed = {
-			tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			has_global_flag = russian_civil_war
-		}
-		available = {
-			OR = {
-				has_completed_focus = RUS_reunite_white_generals
-				has_completed_focus = RUS_united_russia
-			}
-			MOU = { exists = yes is_puppet_of = RUS }
-		}
-		
-		cost = 50
-		
-		days_remove = 20
-		remove_effect = {
-			RUS = {
-				annex_country = {
-					target = MOU
-					transfer_troops = yes
-				}
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 100
-				RUS = { surrender_progress > 0.4 }
-			}
-			modifier = {
-				factor = 100
-				SOV = { surrender_progress > 0.4 }
-			}
-		}
-	}
-	RUS_annex_alash = {
-		icon = generic_ignite_civil_war	
-		allowed = {
-			tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			has_global_flag = russian_civil_war
-		}
-		available = {
-			OR = {
-				has_completed_focus = RUS_reunite_white_generals
-				has_completed_focus = RUS_united_russia
-			}
-			KAZ = { exists = yes is_puppet_of = RUS }
-		}
-		
-		cost = 50
-		
-		days_remove = 20
-		remove_effect = {
-			RUS = {
-				annex_country = {
-					target = KAZ
-					transfer_troops = yes
-				}
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 100
-				RUS = { surrender_progress > 0.4 }
-			}
-			modifier = {
-				factor = 100
-				SOV = { surrender_progress > 0.4 }
-			}
-		}
-	}
-	RUS_annex_turkestan = {
-		icon = generic_ignite_civil_war	
-		allowed = {
-			tag = RUS
-		}
-		visible = {
-			original_tag = RUS
-			has_global_flag = russian_civil_war
-		}
-		available = {
-			OR = {
-				has_completed_focus = RUS_reunite_white_generals
-				has_completed_focus = RUS_united_russia
-			}
-			TMS = { exists = yes is_puppet_of = RUS }
-		}
-		
-		cost = 50
-		
-		days_remove = 20
-		remove_effect = {
-			RUS = {
-				annex_country = {
-					target = TMS
-					transfer_troops = yes
-				}
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				factor = 100
-				RUS = { surrender_progress > 0.4 }
-			}
-			modifier = {
-				factor = 100
-				SOV = { surrender_progress > 0.4 }
-			}
-		}
-	}
+	# RUS_invade_finland = {
+	# 	icon = GFX_decision_generic_ignite_civil_war
+	# 	allowed = {
+	# 		original_tag = RUS
+	# 	}
+	# 	available = {
+	# 		is_subject = no
+	# 		FIN = {
+	# 			is_subject = no
+	# 			has_government = communism
+	# 			has_civil_war = no
+	# 		}
+	# 		has_global_flag = interbellum
+	# 	}
+	# 	visible = {
+	# 		FIN = {
+	# 			is_neighbor_of = ROOT
+	# 			NOT = {
+	# 				has_war_with = ROOT
+	# 				is_in_faction_with = ROOT
+	# 			}
+	# 		}
+	# 		has_country_flag = russian_civil_war_winner
+	# 		NOT = { has_government = communism }
+	# 	}
+	# 	fire_only_once = yes
+	# 	cost = 100
+	# 	days_remove = 30
+	# 	target_trigger = {
+	# 		FROM = {
+	# 			tag = FIN
+	# 		}
+	# 	}
+	# 	war_with_on_remove = FIN
+	# 	remove_effect = {
+	# 		country_event = ww1_finland.4
+	# 	}
+	# 	ai_will_do = {
+	# 		base = 0
+	# 		modifier = {
+	# 			add = 100
+	# 			strength_ratio = {
+	# 				tag = FIN
+	# 				ratio > 1
+	# 			}
+	# 			has_war_support > 0.3
+	# 			has_stability > 0.3
+	# 			has_war = no
+	# 		}
+	# 	}
+	# }
 }
 RUS_release_country = {
-	RUS_release_FIN = {
-		allowed = {
-			original_tag = RUS
-		}
-		available = {
-			any_owned_state = {
-				is_core_of = FIN
-				is_fully_controlled_by = RUS
-			}	
-			FIN = { exists = no }
-			NOT = { has_global_flag = finland_released }
-		}
-		ai_will_do = {
-			factor = 150
-		}
-		highlight_states = {
-			state = 111
-		}
-		visible = {
-			has_completed_focus = RUS_self_determination_of_nations
-		}
-		cost = 10
-		fire_only_once = yes
-		complete_effect = {
-			set_global_flag = finland_released
-			FIN = {
-				clr_country_flag = FIN_senate
-				set_country_flag = released_by_russia
-			}
-			every_state = {
-				limit = {
-					is_core_of = FIN
-					is_owned_by = RUS
-				}
-				FIN = {
-				    transfer_state = PREV
-				}
-				RUS = {
-					remove_state_core = PREV
-				}	
-			}
-			hidden_effect = {
-                FIN = {				
-				    load_oob = "FIN_1918"
-				}
-				RUS = {
-					remove_unit_leader = 76235
-				}
-			}
-			add_stability = 0.05
-			if = {
-				limit = { RUS = { is_faction_leader = yes } }
-				add_to_faction = FIN
-			}
-			if = {
-				limit = { RUS = { is_in_faction_with = FRA } }
-				FRA = { add_to_faction = FIN }
-			}
-			if = {
-				limit = {
-					OR = {
-						has_dlc = "Together for Victory"
-						has_dlc = "Man the Guns"
-					}
-				}
-				set_autonomy = {
-					target = FIN
-					autonomous_state = autonomy_dominion
-					freedom_level = 0.5
-				}
-				FIN = { set_cosmetic_tag = FIN_RUS }
-			}
-		}
-	}
+	# RUS_release_FIN = {
+	# 	icon = generic_nationalism
+	# 	allowed = {
+	# 		original_tag = RUS
+	# 	}
+	# 	available = {
+	# 		any_owned_state = {
+	# 			is_core_of = FIN
+	# 			is_fully_controlled_by = RUS
+	# 		}		
+	# 	}
+	# 	ai_will_do = {
+	# 		factor = 150
+	# 	}
+	# 	highlight_states = {
+	# 		highlight_states_trigger = {
+	# 			is_core_of = FIN
+	# 		}
+	# 	}
+	# 	visible = {
+	# 		FIN = { exists = no }
+	# 		is_subject = no
+	# 		has_completed_focus = RUS_self_determination_of_nations
+	# 	}
+	# 	cost = 30
+	# 	fire_only_once = yes
+	# 	complete_effect = {
+	# 		set_global_flag = finland_released
+	# 		FIN = {
+	# 			set_country_flag = released_by_russia
+	# 			set_cosmetic_tag = FIN_RUS
+	# 		}
+	# 		every_owned_state = {
+	# 			limit = {
+	# 				is_core_of = FIN
+	# 			}
+	# 			transfer_state_to = FIN
+	# 		}
+	# 		hidden_effect = {
+	# 					FIN = {				
+	# 				load_oob = "FIN_1918"
+	# 			}
+	# 			RUS = {
+	# 				retire_character = RUS_gustav_karlovich
+	# 			}
+	# 		}
+	# 		add_stability = 0.05
+	# 		set_autonomy = {
+	# 			target = FIN
+	# 			autonomous_state = autonomy_satellite
+	# 			freedom_level = 0.3
+	# 		}
+	# 	}
+	#}
 	RUS_release_EST = {
+		icon = generic_nationalism
 		allowed = {
 			original_tag = RUS
 		}
 		available = {
 			owns_state = 13
 			has_full_control_of_state = 13
-			EST = { exists = no }
-			NOT = { has_global_flag = estonia_released }
 		}
 		ai_will_do = {
 			factor = 200
 		}
 		highlight_states = {
-			state = 13
+			highlight_states_trigger = {
+				is_core_of = EST
+				NOT = {
+					state = 191
+					state = 944
+					state = 945
+					state = 952
+				}
+			}
 		}
 		visible = {
+			is_subject = no
 			has_completed_focus = RUS_self_determination_of_nations
+			EST = { exists = no }
 		}
 		cost = 10
 		fire_only_once = yes
 		complete_effect = {
 			set_global_flag = estonia_released
-			ESR = {
-				set_country_flag = released_by_russia
-				transfer_state = 13
-				hidden_effect = {
-					load_oob = "EST_army"
-					RUS = {
-						remove_state_core = 13
+			every_owned_state = {
+				limit = {
+					is_core_of = EST
+					NOT = {
+						state = 191
+						state = 944
+						state = 945
+						state = 952
 					}
+				}
+				transfer_state_to = EST
+			}
+			EST = {
+				set_country_flag = released_by_russia
+				set_cosmetic_tag = EST_RUS
+				hidden_effect = {
+					#load_oob = "EST_army"
 				}			
 			}
 			add_stability = 0.05
-			if = {
-				limit = { RUS = { is_faction_leader = yes } }
-				add_to_faction = ESR
-			}
-			if = {
-				limit = { RUS = { is_in_faction_with = FRA } }
-				FRA = { add_to_faction = ESR }
-			}
-			if = {
-				limit = {
-					OR = {
-						has_dlc = "Together for Victory"
-						has_dlc = "Man the Guns"
-					}
-				}
-				set_autonomy = {
-					target = ESR
-					autonomous_state = autonomy_dominion
-					freedom_level = 0.25
-				}
-				ESR = { set_cosmetic_tag = EST_RUS }
+			set_autonomy = {
+				target = EST
+				autonomous_state = autonomy_puppet
+				freedom_level = 0.25
 			}
 		}
 	}
 	RUS_release_LAT = {
+		icon = generic_nationalism
 		allowed = {
 			original_tag = RUS
 		}
 		available = {
 			owns_state = 12
-			has_full_control_of_state = 12
-			LAT = { exists = no }
-			NOT = { has_global_flag = latvia_released }
+			has_full_control_of_state = 12			
 		}
 		ai_will_do = {
 			factor = 200
 		}
 		visible = {
+			is_subject = no
 			has_completed_focus = RUS_self_determination_of_nations
+			LAT = { exists = no }
 		}
 		highlight_states = {
-			state = 12
+			highlight_states_trigger = {
+				OR = {
+					is_core_of = LAT
+					state = 191
+					state = 946
+					state = 952
+				}
+				NOT = {
+					state = 96
+					state = 947
+				}
+			}
 		}
-		cost = 10
+		cost = 15
 		fire_only_once = yes
 		complete_effect = {
 			set_global_flag = latvia_released
-			LTR = {
-				set_country_flag = released_by_russia
-				transfer_state = 12
-				transfer_state = 190
-				transfer_state = 191
-				add_state_core = 191
-				hidden_effect = {
-					load_oob = "LAT_army"
-					RUS = {
-						remove_state_core = 191
-						remove_state_core = 12
-						remove_state_core = 190
-					}
-				}			
-			}
-			add_stability = 0.05
-			if = {
-				limit = { RUS = { is_faction_leader = yes } }
-				add_to_faction = LTR
-			}
-			if = {
-				limit = { RUS = { is_in_faction_with = FRA } }
-				FRA = { add_to_faction = LTR }
-			}
-			if = {
+			every_owned_state = {
 				limit = {
 					OR = {
-						has_dlc = "Together for Victory"
-						has_dlc = "Man the Guns"
+						is_core_of = LAT
+						state = 191
+						state = 946
+						state = 952
+					}
+					NOT = {
+						state = 96
+						state = 947
 					}
 				}
-				set_autonomy = {
-					target = LTR
-					autonomous_state = autonomy_dominion
-					freedom_level = 0.25
-				}
-				LTR = { set_cosmetic_tag = LAT_RUS }
+				transfer_state_to = LAT
+				# add_core_of = LAT
+			}
+			LAT = {
+				set_country_flag = released_by_russia
+				set_cosmetic_tag = LAT_RUS	
+			}
+			add_stability = 0.05
+			set_autonomy = {
+				target = LAT
+				autonomous_state = autonomy_puppet
+				freedom_level = 0.25
 			}
 		}
 	}
 	RUS_release_LIT = {
+		icon = generic_nationalism
 		allowed = {
 			original_tag = RUS
 		}
 		available = {
-			owns_state = 11
-			has_full_control_of_state = 11
-			LIT = { exists = no }
-			NOT = { has_global_flag = litva_released }
+			owns_state = 784
+			has_full_control_of_state = 784
 		}
 		highlight_states = {
-			state = 11
+			highlight_states_trigger = {
+				OR = {
+					is_core_of = LIT
+					state = 188
+				}
+				NOT = { state = 946 }
+			}
 		}
 		ai_will_do = {
 			factor = 200
 		}
 		visible = {
+			LIT = { exists = no }
+			is_subject = no
 			has_completed_focus = RUS_self_determination_of_nations
 		}
-		cost = 10
+		cost = 15
 		fire_only_once = yes
 		complete_effect = {
 			set_global_flag = litva_released
-			LIT = {
-				set_country_flag = released_by_russia
-				transfer_state = 11
-				transfer_state = 189
-				transfer_state = 784
-				hidden_effect = {
-					load_oob = "LIT_army"
-					RUS = {
-						remove_state_core = 11
-						remove_state_core = 189
-						remove_state_core = 784
-					}
-				}		
-			}
-			add_stability = 0.05
-			if = {
-				limit = { RUS = { is_faction_leader = yes } }
-				add_to_faction = LIT
-			}
-			if = {
-				limit = { RUS = { is_in_faction_with = FRA } }
-				FRA = { add_to_faction = LIT }
-			}
-			if = {
+			every_owned_state = {
 				limit = {
 					OR = {
-						has_dlc = "Together for Victory"
-						has_dlc = "Man the Guns"
+						is_core_of = LIT
+						state = 188
 					}
+					NOT = { state = 946 }
 				}
-				set_autonomy = {
-					target = LIT
-					autonomous_state = autonomy_dominion
-					freedom_level = 0.25
-				}
-				LIT = { set_cosmetic_tag = LIT_RUS }
+				transfer_state_to = LIT			
+			}
+			LIT = {
+				set_country_flag = released_by_russia
+				set_cosmetic_tag = LIT_RUS	
+			}
+			add_stability = 0.05
+			set_autonomy = {
+				target = LIT
+				autonomous_state = autonomy_puppet
+				freedom_level = 0.25
 			}
 		}
 	}
 	RUS_release_POL = {
+		icon = generic_nationalism
 		allowed = {
 			original_tag = RUS
 		}
 		available = {
-			any_owned_state = {
-				is_core_of = POL
-				is_fully_controlled_by = RUS
-			}
-			POL = { exists = no }
-			NOT = { has_global_flag = poland_released }
+			has_full_control_of_state = 10
+			owns_state = 10
 		}
 		highlight_states = {
-			state = 10
+			highlight_states_trigger = {
+				OR = {
+					is_core_of = POL
+					state = 86
+					state = 85
+					state = 5
+					state = 68
+					state = 404
+					state = 762
+					state = 67
+					state = 995 #just in case
+				}
+				OR = {
+					state = 766
+					state = 1017
+					NOT = {
+						is_core_of = BLR
+						is_core_of = UKR
+						is_core_of = WUK
+					}
+				}
+			}
 		}
 		ai_will_do = {
 			factor = 200
 		}
 		visible = {
+			POL = { exists = no }
+			is_subject = no
 			has_completed_focus = RUS_self_determination_of_nations
 		}
-		cost = 10
+		cost = 30
 		fire_only_once = yes
 		complete_effect = {
 			set_global_flag = poland_released
 			POL = {
 				set_country_flag = released_by_russia
-		    }
-			every_state = {
+				if = {
+					limit = {
+						PREV = {
+							NOT = { has_government = communism }
+						}
+					}
+					set_cosmetic_tag = POL_RUS
+				}
+			}
+			if = {
 				limit = {
-					is_core_of = POL
-					is_owned_by = RUS
+					has_government = neutrality
 				}
 				POL = {
-				    transfer_state = PREV
+					POL_roman_dmowski = {
+						promote_character = {
+							ideology = authoritarian_democracy
+						}
+					}	
+					set_party_name = {
+						ideology = neutrality
+						name = POL_democratic_party
+						long_name = POL_democratic_party_long
+					}
 				}
-				RUS = {
-					remove_state_core = PREV
-				}	
+			}
+			if = {
+				limit = {
+					has_government = democratic
+				}
+				POL = {
+					POL_roman_dmowski = {
+						promote_character = {
+							ideology = conservatism
+						}
+					}
+					set_party_name = {
+						ideology = democratic
+						name = POL_democratic_party
+						long_name = POL_democratic_party_long
+					}
+				}
+			}
+			every_owned_state = {
+				limit = {
+					OR = {
+						is_core_of = POL
+						state = 86
+						state = 85
+						state = 5
+						state = 68
+						state = 404
+						state = 762
+						state = 67
+						state = 995 #just in case
+					}
+					OR = {
+						state = 766
+						state = 1017
+						NOT = {
+							is_core_of = BLR
+							is_core_of = UKR
+							is_core_of = WUK
+						}
+					}
+				}
+				transfer_state_to = POL
+				add_core_of = POL
 			}
 			hidden_effect = {
 				POL = {
-					load_oob = "POL_1910"
+					load_oob = "POL_divisions"
 				}	
 			}		
 			add_stability = 0.05
-			if = {
-				limit = { RUS = { is_faction_leader = yes } }
-				add_to_faction = POL
+			set_autonomy = {
+				target = POL
+				autonomous_state = autonomy_satellite
+				freedom_level = 0.4
 			}
-			if = {
-				limit = { RUS = { is_in_faction_with = FRA } }
-				FRA = { add_to_faction = POL }
-			}
-			if = {
-				limit = {
-					OR = {
-						has_dlc = "Together for Victory"
-						has_dlc = "Man the Guns"
-					}
-				}
-				set_autonomy = {
-					target = POL
-					autonomous_state = autonomy_dominion
-					freedom_level = 0.75
-				}
-				POL = { set_cosmetic_tag = POL_RUS }
-			}
+			country_event = ww1_poland.12
 		}
 	}
 	RUS_release_UKR = {
+		icon = generic_nationalism
 		allowed = {
 			original_tag = RUS
 		}
 		available = {
-			owns_state = 202
 			has_full_control_of_state = 202
-			UKR = { exists = no }
-			NOT = { has_global_flag = ukraine_released }
+			owns_state = 202	
 		}
 		ai_will_do = {
 			factor = 200
 		}
 		visible = {
+			is_subject = no
 			has_completed_focus = RUS_self_determination_of_nations
+			UKR = {
+				exists = no
+			}
 		}
-		cost = 10
+		cost = 20
 		highlight_states = {
-			state = 202
+			highlight_states_trigger = {
+				OR = {
+					#Malorossiya
+					region = 130
+					#East Galicia and Carpathia Ruthenia
+					AND = {
+						OR = {
+							region = 27
+							region = 39
+						}
+						is_core_of = WUK
+					}
+					#Novorossiya
+					AND = {
+						region = 192
+						OR = {
+							state = 78 #Bessarabia
+							is_core_of = UKR
+						}
+					}
+
+					#Moldavia
+					is_core_of = MOL
+				}
+				OR = {
+					is_owned_by = ROOT
+					OWNER = {
+						is_subject_of = ROOT
+						tag = WUK
+					}
+				}
+			}
 		}
 		fire_only_once = yes
 		complete_effect = {
@@ -2183,860 +2307,1032 @@ RUS_release_country = {
 				set_country_flag = released_by_russia
 				hidden_effect = {
 					load_oob = "UKR_army"
-					add_state_core = 808
-					every_state = {
-						limit = { is_core_of = UKR }
-						remove_core_of = SOV
-						remove_core_of = RUS
-					}
 				}
 			}
-			every_state = {
-				limit = { is_owned_by = ROOT is_core_of = UKR }
-				UKR = { transfer_state = PREV }
+			RUS = {
+				UKR_pavlo_skoropadskyi = {		
+					set_nationality = UKR	
+					if = {
+						limit = {
+							is_field_marshal = no									
+						}
+						promote_leader = yes
+					}
+					set_character_name = UKR_pavlo_skoropadskyi
+					if = {
+						limit = { has_ideology = personalistic_dictatorship }
+						promote_character = personalistic_dictatorship
+					}
+					else = {
+						add_country_leader_role = {
+							country_leader = {
+								ideology = personalistic_dictatorship
+								traits = { russophile }
+							}
+							promote_leader = yes
+						}
+					}
+				}		
 			}
-			add_stability = 0.05
-			if = {
-				limit = { RUS = { is_faction_leader = yes } }
-				add_to_faction = UKR
-			}
-			if = {
-				limit = { RUS = { is_in_faction_with = FRA } }
-				FRA = { add_to_faction = UKR }
-			}
-			if = {
+			every_owned_state = {
 				limit = {
 					OR = {
-						has_dlc = "Together for Victory"
-						has_dlc = "Man the Guns"
+						#Malorossiya
+						region = 130
+						#East Galicia and Carpathia Ruthenia
+						AND = {
+							OR = {
+								region = 27
+								region = 39
+							}
+							is_core_of = WUK
+						}
+						#Novorossiya
+						AND = {
+							region = 192
+							OR = {
+								state = 78 #Bessarabia
+								is_core_of = UKR
+							}
+						}
 					}
 				}
-				set_autonomy = {
-					target = UKR
-					autonomous_state = autonomy_dominion
-					freedom_level = 0.25
-				}
-				UKR = { set_cosmetic_tag = UKR_RUS }
-			}
-			every_unit_leader = {
-				limit = {
- 				    has_id = 76234
-				}
-                set_nationality = UKR
-			    promote_leader = yes
-			}
-			if = {
-				limit = {
-					MOL = {exists = no}
-				}
-                puppet = MOL
-				every_state = {
-					limit = { is_owned_by = ROOT is_core_of = MOL }
-					MOL = { transfer_state = PREV }
-				}
-				else = {
-					every_state = {
-						limit = { is_owned_by = ROOT is_core_of = MOL }
-						UKR = { transfer_state = PREV }
-					}
-				}	
-			}
-		}
-	}
-	RUS_release_BLR = {
-		allowed = {
-			original_tag = RUS
-		}
-		available = {
-			owns_state = 206
-			has_full_control_of_state = 206
-			BLR = { exists = no }
-			NOT = { has_global_flag = belarus_released }
-		}
-		ai_will_do = {
-			factor = 0
-		}
-		visible = {
-			has_completed_focus = RUS_self_determination_of_nations
-		}
-		cost = 10
-		fire_only_once = yes
-		highlight_states = {
-			state = 206
-		}
-		complete_effect = {
-			set_global_flag = belarus_released
-			BLR = {
-				set_country_flag = released_by_russia
-				transfer_state = 206
-				transfer_state = 204
-				transfer_state = 194
-				transfer_state = 94
-				transfer_state = 95
-				hidden_effect = {
-						load_oob = "BLR_1918"
-					RUS = {
-						remove_state_core = 206
-						remove_state_core = 204
-						remove_state_core = 194
-						remove_state_core = 94
-						remove_state_core = 95
-					}
-				}
+				transfer_state_to = UKR
+				add_core_of = UKR
 			}
 			add_stability = 0.05
-			if = {
-				limit = { RUS = { is_faction_leader = yes } }
-				add_to_faction = BLR
-			}
-			if = {
-				limit = { RUS = { is_in_faction_with = FRA } }
-				FRA = { add_to_faction = BLR }
+			set_autonomy = {
+				target = UKR
+				autonomous_state = autonomy_puppet
+				freedom_level = 0.1
 			}
 			if = {
 				limit = {
-					OR = {
-						has_dlc = "Together for Victory"
-						has_dlc = "Man the Guns"
+					MOL = { exists = no }
+				}
+				every_owned_state = {
+					limit = { is_core_of = MOL }
+					transfer_state_to = MOL
+				}
+				puppet = MOL
+			}
+			if = {
+				limit = {
+					has_subject = WUK
+				}
+				UKR = {
+					annex_country = {
+						target = WUK
+						transfer_troops = yes
 					}
 				}
-				set_autonomy = {
-					target = BLR
-					autonomous_state = autonomy_dominion
-					freedom_level = 0.25
-				}
-				BLR = { set_cosmetic_tag = BLR_RUS }
 			}
 		}
 	}
 	RUS_release_GEO = {
+		icon = generic_nationalism
 		allowed = {
 			original_tag = RUS
 		}
 		available = {
 			owns_state = 231
 			has_full_control_of_state = 231
-			GEO = { exists = no }
-			NOT = { has_global_flag = georgia_released }
 		}
 		ai_will_do = {
 			factor = 200
 		}
 		visible = {
+			GEO = { exists = no }
+			is_subject = no
 			has_completed_focus = RUS_self_determination_of_nations
 		}
 		highlight_states = {
-			state = 231
+			highlight_states_trigger = {
+				is_owned_by = ROOT
+				is_core_of = GEO
+			}
 		}
 		cost = 10
 		fire_only_once = yes
 		complete_effect = {
 			set_global_flag = georgia_released
-			GEO = {
-				set_country_flag = released_by_russia
-				transfer_state = 231
-				hidden_effect = {
-					load_oob = "GEO_1910"
-					RUS = {
-						remove_state_core = 231
-					}
-				}			
-			}
-			add_stability = 0.05
-			if = {
-				limit = { RUS = { is_faction_leader = yes } }
-				add_to_faction = GEO
-			}
-			if = {
-				limit = { RUS = { is_in_faction_with = FRA } }
-				FRA = { add_to_faction = GEO }
-			}
-			if = {
+			every_owned_state = {
 				limit = {
-					OR = {
-						has_dlc = "Together for Victory"
-						has_dlc = "Man the Guns"
-					}
+					is_core_of = GEO
 				}
-				set_autonomy = {
-					target = GEO
-					autonomous_state = autonomy_dominion
-					freedom_level = 0.25
-				}
-				GEO = { set_cosmetic_tag = GEO_RUS }
+				transfer_state_to = GEO
 			}
+			GEO = {
+				set_country_flag = released_by_russia	
+				set_cosmetic_tag = GEO_RUS		
+			}
+			add_stability = 0.03
+			puppet = GEO
 		}
 	}
 	RUS_release_ARM = {
+		icon = generic_nationalism
 		allowed = {
 			original_tag = RUS
 		}
 		available = {
 			owns_state = 230
 			has_full_control_of_state = 230
-			ARM = { exists = no }
-			NOT = { has_global_flag = armenia_released }
 		}
 		ai_will_do = {
 			factor = 200
 		}
 		visible = {
+			ARM = { exists = no }
+			is_subject = no
 			has_completed_focus = RUS_self_determination_of_nations
 		}
 		highlight_states = {
-			state = 230
+			highlight_states_trigger = {
+				is_owned_by = ROOT
+				OR = {
+					is_core_of = ARM
+					state = 354
+					state = 1034
+					is_TUR_armenian_state = yes
+				}
+				NOT = {
+					state = 816
+				}
+			}
 		}
 		cost = 10
 		fire_only_once = yes
 		complete_effect = {
 			set_global_flag = armenia_released
-			ARM = {
-				set_country_flag = released_by_russia
-				transfer_state = 230
-				transfer_state = 806
-				hidden_effect = {
-					load_oob = "ARM_1918"
-					RUS = {
-						remove_state_core = 230
-					}
-				}			
-			}
-			add_stability = 0.05
-			if = {
-				limit = { RUS = { is_faction_leader = yes } }
-				add_to_faction = ARM
-			}
-			if = {
-				limit = { RUS = { is_in_faction_with = FRA } }
-				FRA = { add_to_faction = ARM }
-			}
-			if = {
+			every_owned_state = {
 				limit = {
 					OR = {
-						has_dlc = "Together for Victory"
-						has_dlc = "Man the Guns"
+						is_core_of = ARM
+						state = 354
+						state = 1034
+						is_TUR_armenian_state = yes
+					}					
+					NOT = {
+						state = 816
 					}
 				}
-				set_autonomy = {
-					target = ARM
-					autonomous_state = autonomy_dominion
-					freedom_level = 0.25
-				}
-				ARM = { set_cosmetic_tag = ARM_RUS }
+				transfer_state_to = ARM
 			}
+			ARM = {
+				set_country_flag = released_by_russia
+				set_cosmetic_tag = ARM_RUS
+				hidden_effect = {
+					load_oob = "ARM_1918"
+				}			
+			}
+			add_stability = 0.03
+			puppet = ARM
 		}
 	}
 	RUS_release_AZR = {
+		icon = generic_nationalism
 		allowed = {
 			original_tag = RUS
 		}
 		available = {
 			owns_state = 229
 			has_full_control_of_state = 229
-			AZR = { exists = no }
-			NOT = { has_global_flag = azerbaijan_released }
 		}
 		ai_will_do = {
 			factor = 150
 		}
 		visible = {
+			AZR = { exists = no }
+			is_subject = no
 			has_completed_focus = RUS_self_determination_of_nations
 		}
 		highlight_states = {
-			state = 229
+			highlight_states_trigger = {
+				is_owned_by = ROOT
+				is_core_of = AZR
+				NOT = {
+					is_core_of = ARM
+					region = 116
+				}
+			}
 		}
 		cost = 10
 		fire_only_once = yes
 		complete_effect = {
 			set_global_flag = azerbaijan_released
+			every_owned_state = {
+				limit = {
+					is_core_of = AZR
+					NOT = {
+						is_core_of = ARM
+						region = 116
+					}
+				}
+				transfer_state_to = AZR
+			}
 			AZR = {
+				set_cosmetic_tag = AZR_RUS
 				set_country_flag = released_by_russia
-				transfer_state = 229
 				hidden_effect = {
 					load_oob = "AZR_1918"
-					RUS = {
-						remove_state_core = 229
-					}
-				}			
-			}
-			add_stability = 0.05
-			if = {
-				limit = { RUS = { is_faction_leader = yes } }
-				add_to_faction = AZR
-			}
-			if = {
-				limit = { RUS = { is_in_faction_with = FRA } }
-				FRA = { add_to_faction = AZR }
-			}
-			if = {
-				limit = {
-					OR = {
-						has_dlc = "Together for Victory"
-						has_dlc = "Man the Guns"
-					}
 				}
-				set_autonomy = {
-					target = AZR
-					autonomous_state = autonomy_dominion
-					freedom_level = 0.25
-				}
-				AZR = { set_cosmetic_tag = AZR_RUS }
 			}
+			add_stability = 0.03
+			puppet = AZR
 		}
 	}
-	######################
-	RUS_mission_self_determination_dummy = {
-		icon = generic_nationalism
+}
+GER_great_war = {
+	RUS_send_AuH_battleplan_to_serbia = {
+		icon = GFX_decision_hol_draw_up_staff_plans
+		fire_only_once = yes
 		allowed = {
-			original_tag = RUS
+			tag = RUS
+		}
+		targets = {
+			SER
+		}
+		available = {
+			NOT = {
+				is_in_faction_with = AUS
+			}
+			SER = {
+				has_war_with = AUS
+			}
 		}
 		visible = {
-			NOT = { has_completed_focus = RUS_self_determination_of_nations }
-			has_stability > 0.15
-		}		
-		available = {
-			OR = {
-				has_completed_focus = RUS_self_determination_of_nations
-				AND = {
-					NOT = { has_completed_focus = RUS_russification_of_non_titular_nations }
-					has_stability < 0.1
+			NOT = {
+				tag = SOV
+				tag = STV
+				has_war_with = SER
+				is_ally_with = AUS
+				has_country_flag = plan_III_sent_to_serbia
+			}
+		}
+		custom_cost_trigger = {
+			command_power > 9.9
+		}
+		custom_cost_text = decision_cost_CP_10
+		complete_effect = {
+			add_command_power = -10
+			set_country_flag = plan_III_sent_to_serbia
+			FROM = {
+				country_event = {
+					id = ww1_auh.157
+					hours = 5
+				}
+				effect_tooltip = {
+					add_timed_idea = {
+						idea = AUH_copy_of_Austrian_battleplan
+						days = 200
+					}
 				}
 			}
+		}
+		ai_will_do = {
+			factor = 1000
+		}
+	}
+	RUS_foreign_support_RUS = {
+		icon = ger_military_buildup
+		allowed = {
+			NOT = { original_tag = RUS }
+		}
+		available = {
+			OR = {
+				AND = {
+					is_major = yes
+					is_in_faction_with = RUS
+					has_war_with = GER
+				}
+				original_tag = USA
+			}
+			RUS = {
+				NOT = {
+					has_government = communism
+				}
+				has_war_with = GER
+			}
+		}
+		visible = {
+			OR = {
+				AND = {
+					is_major = yes
+					is_in_faction_with = RUS
+					has_war_with = GER
+				}
+				original_tag = USA
+			}
+			NOT = {
+				has_war_with = RUS
+			}
+			RUS = {
+				NOT = {
+					has_government = communism
+				}
+			}
+		}
+		fire_only_once = no
+		custom_cost_trigger = {
+			has_equipment = { infantry_equipment > 2000 }
+		}
+		cancel_trigger = { 
+			RUS = {
+				has_government = communism
+			}
+		} 	
+		custom_cost_text = 2000_infantry_equipment_1
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 0
+				has_equipment = { infantry_equipment < 10000 }
+			}
+			modifier = {
+				factor = 0
+				NOT = { has_government = democratic }
+			}
+		}
+		days_remove = 30
+		days_re_enable = 30
+		remove_effect = {
+			send_equipment = {
+				target = RUS
+				type = infantry_equipment
+				amount = 2000
+			}
+		}
+	}
+	# RUS_foreign_support_RUS_large = {
+	# 	icon = ger_military_buildup
+	# 	allowed = {
+	# 		NOT = { original_tag = RUS }
+	# 	}
+	# 	available = {
+	# 		original_tag = USA
+	# 		RUS = {
+	# 			NOT = {
+	# 				has_government = communism
+	# 			}
+	# 			has_war_with = GER
+	# 		}
+	# 	}
+	# 	visible = {
+	# 		OR = {
+	# 			AND = {
+	# 				is_major = yes
+	# 				is_in_faction_with = RUS
+	# 				has_war_with = GER
+	# 			}
+	# 			original_tag = USA
+	# 		}
+	# 		RUS = {
+	# 			NOT = {
+	# 				has_government = communism
+	# 			}
+	# 		}
+	# 	}
+	# 	fire_only_once = no
+	# 	custom_cost_trigger = {
+	# 		has_equipment = { infantry_equipment > 10000 }
+	# 	}
+	# 	cancel_trigger = { 
+	# 		RUS = {
+	# 			has_government = communism
+	# 		}
+	# 	} 	
+	# 	custom_cost_text = 10000_infantry_equipment_1
+	# 	ai_will_do = {
+	# 		factor = 100
+	# 		modifier = {
+	# 			factor = 0
+	# 			has_equipment = { infantry_equipment < 20000 }
+	# 		}
+	# 		modifier = {
+	# 			factor = 0
+	# 			RUS = {
+	# 				has_equipment = { infantry_equipment > 10000 }
+	# 			}
+	# 		}
+	# 		modifier = {
+	# 			factor = 0
+	# 			NOT = { has_government = democratic }
+	# 		}
+	# 	}
+	# 	days_remove = 30
+	# 	days_re_enable = 30
+	# 	remove_effect = {
+	# 		send_equipment = {
+	# 			target = RUS
+	# 			type = infantry_equipment
+	# 			amount = 10000
+	# 		}
+	# 	}
+	# }
+	RUS_demobilizing_army_timer = {
+		icon = eng_blackshirt_march
+
+		allowed = {
+			original_tag = RUS
+		}
+
+		available = {
+			OR = {
+				NOT = { has_idea = RUS_demobilizing_army }
+				custom_trigger_tooltip = {
+					tooltip = TGWR_under_max_battalions_limit
+					has_reached_maximum_divisions = no
+				}
+			}
+		}
+
+		days_mission_timeout = 30
+		fire_only_once = no
+		is_good = no
+
+		activation = { # Will be activated from focus aswell
+			has_idea = RUS_demobilizing_army
+			has_reached_maximum_divisions = yes
+		}
+		timeout_effect = {
+			hidden_effect = {
+				disband_fifty_percent_units = yes
+				set_equipment_fraction = 0.8
+				country_event = ww1_political.4
+			}
+			custom_effect_tooltip = rus_demobilize_army_tt
+			if = {
+				limit = {
+					has_reached_maximum_divisions = no
+				}
+				if = {
+					limit = {
+						has_idea = RUS_demobilizing_army
+					}
+					remove_ideas = RUS_demobilizing_army
+				}
+			}
+		}
+		complete_effect = {
+			if = {
+				limit = {
+					has_idea = RUS_demobilizing_army
+				}
+				remove_ideas = RUS_demobilizing_army
+			}
+		}
+	}
+}
+
+RUS_provisional_government = {
+	RUS_kerensky_offensive = {
+		icon = generic_ignite_civil_war
+
+		allowed = {
+			always = no
+		}
+
+		available = {
+			91 = { is_controlled_by_ROOT_or_ally = yes } #Lemberg
+			206 = { is_controlled_by_ROOT_or_ally = yes } #Minsk
+			12 = { is_controlled_by_ROOT_or_ally = yes } #Vidzeme
+		}
+		cancel_trigger = {
+			has_war = no
+			is_subject = no
+		}
+
+		days_mission_timeout = 18
+		fire_only_once = yes
+		on_map_mode = map_and_decisions_view
+		highlight_states = {
+			highlight_state_targets = { state = 91 } 
+			highlight_color_while_active = 1
+		}
+		is_good = no
+
+		activation = {
+			always = no
+		}
+
+		timeout_effect = {
+			add_war_support = -0.10
+			hidden_effect = {
+				country_event = rusrevolt.30
+			}
+		}
+
+		complete_effect = {
+			add_war_support = 0.10
+			add_days_mission_timeout = {
+				mission = RUS_lvov_goverment
+				days = 100
+			}
+		}
+	}
+	RUS_lvov_universal_suffrage = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			tag = RUS
+		}
+		visible = {
+			has_country_leader = {
+				character = RUS_georgiy_lvov
+				ruling_only = yes
+			}
+		}
+		available = {
+			has_country_leader = {
+				character = RUS_georgiy_lvov
+				ruling_only = yes
+			}
+		}
+
+		days_remove = 7
+		fire_only_once = yes
+		complete_effect = {
+
 		}
 		remove_effect = {
-			custom_effect_tooltip = RUS_mission_self_determination_dummy_tt
+			add_stability = 0.02
+			add_popularity = { ideology = democratic popularity = 0.02 }
+			add_days_mission_timeout = {
+				mission = RUS_lvov_goverment
+				days = 30
+			}
 		}
-		fire_only_once = yes
-		days_remove = 180 
-		is_good = no
+		ai_will_do = {
+			factor = 100
+		}
 	}
-	RUS_mission_self_determination_FIN = {
-		icon = generic_nationalism	
+	RUS_lvov_freedom_of_speech = {
+		icon = GFX_decision_eng_trade_unions_support
 		allowed = {
-			original_tag = RUS
+			tag = RUS
+		}
+		visible = {
+			has_country_leader = {
+				character = RUS_georgiy_lvov
+				ruling_only = yes
+			}
 		}
 		available = {
-			OR = {
-				FIN = { exists = yes }
-				NOT = {
-					any_owned_state = {
-						is_fully_controlled_by = RUS
-				   		is_core_of = FIN
-			    	}
-				}
-				has_global_flag = finland_released
-				has_completed_focus = RUS_russification_of_non_titular_nations
+			has_country_leader = {
+				character = RUS_georgiy_lvov
+				ruling_only = yes
 			}
-		}		
+		}
+
+		days_remove = 7
+		fire_only_once = yes
+		complete_effect = {
+
+		}
+		remove_effect = {
+			add_stability = 0.02
+			add_popularity = { ideology = democratic popularity = 0.02 }
+			add_days_mission_timeout = {
+				mission = RUS_lvov_goverment
+				days = 30
+			}
+		}
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	RUS_lvov_abolish_capital_punishment = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			tag = RUS
+		}
+		visible = {
+			has_country_leader = {
+				character = RUS_georgiy_lvov
+				ruling_only = yes
+			}
+		}
+		available = {
+			has_country_leader = {
+				character = RUS_georgiy_lvov
+				ruling_only = yes
+			}
+		}
+
+		days_remove = 7
+		fire_only_once = yes
+		complete_effect = {
+
+		}
+		remove_effect = {
+			add_stability = 0.02
+			add_popularity = { ideology = democratic popularity = 0.02 }
+			add_days_mission_timeout = {
+				mission = RUS_lvov_goverment
+				days = 30
+			}
+		}
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	RUS_lvov_abolish_class_race_religion_restriction = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			tag = RUS
+		}
+		visible = {
+			has_country_leader = {
+				character = RUS_georgiy_lvov
+				ruling_only = yes
+			}
+		}
+		available = {
+			has_country_leader = {
+				character = RUS_georgiy_lvov
+				ruling_only = yes
+			}
+		}
+
+		days_remove = 7
+		fire_only_once = yes
+		complete_effect = {
+
+		}
+		remove_effect = {
+			add_stability = 0.02
+			add_popularity = { ideology = democratic popularity = 0.02 }
+			add_days_mission_timeout = {
+				mission = RUS_lvov_goverment
+				days = 30
+			}
+		}
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	RUS_lvov_goverment = {
+		icon = GFX_decision_generic_political_discourse
+
+		allowed = {
+			always = no
+		}
+
+		available = {
+			OR = {
+				has_war = no
+				10 = { is_controlled_by_ROOT_or_subject = yes }
+			}
+		}
+		cancel_trigger = {
+			NOT = {
+				has_country_leader = {
+					character = RUS_georgiy_lvov
+				}
+			}
+		}
+
+		days_mission_timeout = 30
+		fire_only_once = yes
+		is_good = no
+
 		activation = {
-			FIN = { exists = no }
-			any_owned_state = {
-				is_fully_controlled_by = RUS
-				is_core_of = FIN
-			}
-			OR = {
-				has_completed_focus = RUS_self_determination_of_nations
-				AND = {
-					NOT = { has_completed_focus = RUS_russification_of_non_titular_nations }
-					has_stability < 0.1
-				}
-			}
+			always = no
 		}
-		highlight_states = {
-			state = 111
-		}
-		timeout_effect = {
-			set_global_flag = finland_released
-			every_state = {
+		cancel_effect = {
+			if = {
 				limit = {
-					is_core_of = FIN
-					is_owned_by = RUS
+					has_active_mission = RUS_kerensky_offensive
 				}
-				FIN = {
-				    transfer_state = PREV
-				}
-			}
-			hidden_effect = {
-				FIN = {
-					set_politics = {
-						ruling_party = democratic
-						elections_allowed = yes
-					}
-					create_country_leader = {
-						name = "Pehr Evind Svinhufvud" 
-						desc = FIN_pehr_evind_svinhufvud_DESC 
-						picture = "gfx/leaders/FIN/FIN_pehr_evind_svinhufvud.dds" 
-						expire = "1935.1.1" 
-						ideology = oligarchism 
-						traits = {}
-					}
-					remove_unit_leader = 100
-					drop_cosmetic_tag = yes
-					clr_country_flag = FIN_senate
-					load_oob = "FIN_1918"
-					declare_war_on = {
-						target = RUS
-						type = liberate_wargoal
-					}
-				}
-			}
-		}
-		fire_only_once = yes
-		days_mission_timeout = 283  
-		is_good = no
-	}
-	RUS_mission_self_determination_EST = {
-		icon = generic_nationalism
-		allowed = {
-			original_tag = RUS
-		}
-		highlight_states = {
-			state = 13
-		}
-		available = {		
-			OR = {
-				EST = { exists = yes }
-				NOT = { owns_state = 13 }
-				has_global_flag = estonia_released
-				has_global_flag = estonia_russification
-			}
-		}		
-		activation = {
-			owns_state = 13
-			EST = { exists = no }
-			OR = {
-				has_completed_focus = RUS_self_determination_of_nations
-				AND = {
-					NOT = { has_completed_focus = RUS_russification_of_non_titular_nations }
-					has_stability < 0.1
-				}
+				remove_mission = RUS_kerensky_offensive
 			}
 		}
 		timeout_effect = {
-			set_global_flag = estonia_released
-			ESR = {
-				transfer_state = 13
-				transfer_state = 191
-				hidden_effect = {
-					load_oob = "EST_army"
-				}			
-			}
-			ESR = {
-				declare_war_on = {
-					target = RUS
-					type = liberate_wargoal
-				}
-			}
-		}
-		fire_only_once = yes
-		days_mission_timeout = 288
-		is_good = no
-	}
-	RUS_mission_self_determination_LAT = {
-		icon = generic_nationalism
-		allowed = {
-			original_tag = RUS
-		}
-		highlight_states = {
-			state = 12
-		}
-		available = {		
-			OR = {
-				LAT = { exists = yes }
-				NOT = { owns_state = 12 }
-				has_global_flag = latvia_released
-			}
-		}		
-		activation = {
-			LAT = { exists = no }
-			OR = {
-				has_completed_focus = RUS_self_determination_of_nations
-				AND = {
-					NOT = { has_completed_focus = RUS_russification_of_non_titular_nations }
-					has_stability < 0.1
-				}
-			}
-		}
-		timeout_effect = {
-			set_global_flag = latvia_released
-			LTR = {
-				transfer_state = 12
-				transfer_state = 190
-				transfer_state = 96
-				hidden_effect = {
-					load_oob = "LAT_army"
-				}			
-			}
-			LTR = {
-				declare_war_on = {
-					target = RUS
-					type = liberate_wargoal
-				}
-			}
-		}
-		fire_only_once = yes
-		days_mission_timeout = 288
-		is_good = no
-	}
-	RUS_mission_self_determination_LIT = {
-		icon = generic_nationalism
-		allowed = {
-			original_tag = RUS
-		}
-		highlight_states = {
-			state = 11
-		}
-		available = {			
-			OR = {
-				LIT = { exists = yes }
-				NOT = { owns_state = 11 }
-				has_global_flag = litva_released
-			}
-		}		
-		activation = {
-			owns_state = 11
-			OR = {
-				has_completed_focus = RUS_self_determination_of_nations
-				AND = {
-					NOT = { has_completed_focus = RUS_russification_of_non_titular_nations }
-					has_stability < 0.1
-				}
-			}
-		}
-		timeout_effect = {
-			set_global_flag = litva_released
-			LIT = {
-				transfer_state = 11
-				transfer_state = 189
-				transfer_state = 784
-				hidden_effect = {
-					load_oob = "LIT_army"
-				}			
-			}
-			LIT = {
-				declare_war_on = {
-					target = RUS
-					type = liberate_wargoal
-				}
-			}
-		}
-		fire_only_once = yes
-		days_mission_timeout = 288
-		is_good = no
-	}
-	RUS_mission_self_determination_POL = {
-		icon = generic_nationalism
-		allowed = {
-			original_tag = RUS
-		}
-		highlight_states = {
-			state = 10
-		}
-		available = {			
-			OR = {
-				POL = { exists = yes }
-				NOT = {
-					any_owned_state = {
-						is_fully_controlled_by = RUS
-				   		is_core_of = POL
-			    	}
-				}
-				has_global_flag = poland_released
-			}
-		}		
-		activation = { #Начинается кризис, если есть Самоопределение, либо стаб<10% и нет Руссификации.
-			OR = {
-				has_completed_focus = RUS_self_determination_of_nations
-				AND = {
-					NOT = { has_completed_focus = RUS_russification_of_non_titular_nations }
-					has_stability < 0.1
-				}
-			}
-			any_owned_state = {
-				is_core_of = POL
-			}
-		}
-		timeout_effect = {
-			set_global_flag = poland_released
-			POL = {
-				transfer_state = 10
-				transfer_state = 87
-				transfer_state = 90
-				transfer_state = 92
-				transfer_state = 97
-				transfer_state = 98
-				hidden_effect = {
-					load_oob = "POL_1910"
-				}		
-			}
-			POL = {
-				declare_war_on = {
-					target = RUS
-					type = liberate_wargoal
-				}
-			}
-		}
-		fire_only_once = yes
-		days_mission_timeout = 176
-		is_good = no
-	}
-	RUS_mission_self_determination_GEO = {
-		icon = generic_nationalism
-		allowed = {
-			original_tag = RUS
-		}
-		highlight_states = {
-			state = 231
-		}
-		available = {
-			OR = {
-				GEO = { exists = yes }
-				NOT = { owns_state = 231 }
-				has_global_flag = georgia_released
-				has_global_flag = caucasus_released
-			}
-		}		
-		activation = {
-			owns_state = 231
-			OR = {
-				has_completed_focus = RUS_self_determination_of_nations
-				AND = {
-					NOT = { has_completed_focus = RUS_russification_of_non_titular_nations }
-					has_stability < 0.1
-				}
-			}
-		}
-		timeout_effect = {
-			set_global_flag = georgia_released
-			GEO = {
-				transfer_state = 231
-				hidden_effect = {
-					load_oob = "GEO_1910"
-				}		
-			}
-			GEO = {
-				declare_war_on = {
-					target = RUS
-					type = liberate_wargoal
-				}
-			}
-		}
-		fire_only_once = yes
-		days_mission_timeout = 204
-		is_good = no
-	}
-	RUS_mission_self_determination_AZR = {
-		icon = generic_nationalism
-		allowed = {
-			original_tag = RUS
-		}
-		highlight_states = {
-			state = 229
-		}
-		available = {		
-			OR = {
-				AZR = { exists = yes }
-				NOT = { owns_state = 229 }
-				has_global_flag = azerbaijan_released
-				has_global_flag = caucasus_released
-			}
-		}		
-		activation = {
-			owns_state = 229
-			OR = {
-				has_completed_focus = RUS_self_determination_of_nations
-				AND = {
-					NOT = { has_completed_focus = RUS_russification_of_non_titular_nations }
-					has_stability < 0.1
-				}
-			}
-		}
-		timeout_effect = {
-			set_global_flag = azerbaijan_released
-			AZR = {
-				transfer_state = 229
-				hidden_effect = {
-					load_oob = "AZR_1910"
-				}		
-			}
-			AZR = {
-				declare_war_on = {
-					target = RUS
-					type = liberate_wargoal
-				}
-			}
-		}
-		fire_only_once = yes
-		days_mission_timeout = 205
-		is_good = no
-	}
-	RUS_mission_self_determination_ARM = {
-		icon = generic_nationalism
-		allowed = {
-			original_tag = RUS
-		}
-		highlight_states = {
-			state = 230
-		}
-		available = {
-			OR = {
-				ARM = { exists = yes }
-				has_global_flag = armenia_released
-				has_global_flag = caucasus_released
-			}
-		}		
-		activation = {
-			OR = {
-				has_completed_focus = RUS_self_determination_of_nations
-				AND = {
-					NOT = { has_completed_focus = RUS_russification_of_non_titular_nations }
-					has_stability < 0.1
-				}
-			}
-		}
-		timeout_effect = {
-			set_global_flag = armenia_released
-			ARM = {
-				transfer_state = 230
-				transfer_state = 806
-				hidden_effect = {
-					load_oob = "ARM_1910"
-				}		
-			}
-			ARM = {
-				declare_war_on = {
-					target = RUS
-					type = liberate_wargoal
-				}
-			}
-		}
-		fire_only_once = yes
-		days_mission_timeout = 201
-		is_good = no
-	}
-	RUS_mission_self_determination_KAZ = {
-		icon = generic_nationalism
-		allowed = {
-			original_tag = RUS
-		}
-		highlight_states = {
-			state = 588
-		}
-		available = {
-			OR = {
-				KAZ = { exists = yes }
-				has_global_flag = alash_released
-			}
-		}		
-		activation = {
-			KAZ = { exists = no }
-			OR = {
-				has_completed_focus = RUS_self_determination_of_nations
-				AND = {
-					NOT = { has_completed_focus = RUS_russification_of_non_titular_nations }
-					has_stability < 0.1
-				}
-			}
-		}
-		timeout_effect = {
-			set_global_flag = alash_released
-			every_state = {
+			add_stability = -0.05
+			country_event = rusrevolt.1
+			if = {
 				limit = {
+					has_active_mission = RUS_kerensky_offensive
+				}
+				remove_mission = RUS_kerensky_offensive
+			}
+		}
+
+		complete_effect = {
+			add_war_support = 0.10
+			add_stability = 0.10
+		}
+	}
+	RUS_kerensky_goverment = {
+		icon = GFX_decision_generic_political_discourse
+
+		allowed = {
+			always = no
+		}
+
+		available = {
+			OR = {
+				has_war = no
+				10 = { is_controlled_by_ROOT_or_subject = yes }
+			}
+		}
+		cancel_trigger = {
+			NOT = {
+				has_country_leader = {
+					character = RUS_alexander_kerensky
+				}
+			}
+		}
+
+		days_mission_timeout = 60
+		fire_only_once = yes
+		is_good = no
+
+		activation = {
+			always = no
+		}
+
+		timeout_effect = {
+			add_stability = -0.05
+			activate_mission = RUS_kornilov_affair
+			if = {
+				limit = {
+					has_active_mission = RUS_kerensky_offensive
+				}
+				remove_mission = RUS_kerensky_offensive
+			}
+		}
+
+		complete_effect = {
+			add_war_support = 0.10
+			add_stability = 0.10
+		}
+	}
+	RUS_kornilov_affair = {
+		icon = GFX_decision_eng_blackshirt_march
+
+		allowed = {
+			always = no
+		}
+
+		available = {
+			has_war = no
+		}
+		cancel_trigger = {
+			has_country_leader = {
+				character = RUS_lavr_kornilov
+			}
+		}
+
+		days_mission_timeout = 3
+		fire_only_once = yes
+		is_good = no
+
+		activation = {
+			always = no
+		}
+
+		timeout_effect = {
+			country_event = rusrevolt.4
+		}
+
+	}
+	RUS_threat_of_bolshevik_revolution = {
+		icon = revolt		
+		highlight_states = {
+			highlight_state_targets = {
+				state = 195
+			}
+		}		
+		allowed = {
+			tag = RUS
+		}
+		visible = {
+			NOT = {
+				tag = SOV
+			}
+			has_threat_of_revolution = yes
+			OR = {
+				has_country_flag = RUS_bolshevik_threat
+				AND = {
+					NOT = { has_global_flag = russian_revolution }
 					NOT = {
-						state = 587
-						state = 590
+						has_country_leader = {
+							character = RUS_nikolai_ii
+							ruling_only = yes
+						}
 					}
-					is_core_of = KAZ
-					is_owned_by = RUS
+					OR = {
+						AND = {
+							has_stability < 0.5
+							has_war_support < 0.5
+						}
+						AND = {
+							has_war = yes	
+							OR = {
+								surrender_progress > 0.1
+								casualties > 2000000
+							}
+						}
+					}
 				}
-				KAZ = {
-				    transfer_state = PREV
+			}
+			NOT = { has_global_flag = great_war_ends }
+		}		
+		available = {
+			OR = {
+				tag = SOV
+				has_capitulated = yes
+				has_war = no
+				has_government = communism
+				has_global_flag = great_war_ends
+				has_capitulated = yes
+				has_threat_of_revolution = no
+			}
+		}
+		activation = {
+			tag = RUS
+			has_war = yes
+			has_capitulated = no
+			has_threat_of_revolution = yes
+			OR = {
+				has_country_flag = RUS_bolshevik_threat
+				AND = {
+					NOT = { has_global_flag = russian_revolution }
+					NOT = { 
+						has_country_leader = {
+							character = RUS_nikolai_ii
+							ruling_only = yes
+						}
+					}
+					OR = {
+						AND = {
+							has_stability < 0.5
+							has_war_support < 0.5
+						}
+						AND = {
+							has_war = yes	
+							OR = {
+								surrender_progress > 0.1
+								casualties > 2000000
+							}
+						}
+					}
 				}
-			}			
-			KAZ = {
-				hidden_effect = {
-					load_oob = "KAZ_1918"
-				}
-				declare_war_on = {
-					target = RUS
-					type = liberate_wargoal
+			}
+			NOT = { 
+				has_global_flag = great_war_ends
+				tag = SOV
+			}
+		}
+		timeout_effect = {
+			clr_country_flag = RUS_bolshevik_threat
+			country_event = { id = rusrevolt.6 }
+		}
+		fire_only_once = yes
+		days_mission_timeout = 60
+		is_good = no
+	}
+	RUS_kerensky_krasnov_uprising = {
+		icon = generic_ignite_civil_war
+
+		allowed = {
+			always = no
+		}
+
+		available = {
+			AND = {
+				has_war = yes	
+				OR = {
+					surrender_progress < 0.05
 				}
 			}
 		}
+
+		days_mission_timeout = 5
 		fire_only_once = yes
-		days_mission_timeout = 235
 		is_good = no
+
+		activation = {
+			always = no
+		}
+
+		timeout_effect = {
+			custom_effect_tooltip = RUS_kerensky_krasnov_uprising_tt
+			# you can notice it will always go fail...
+			hidden_effect = {
+				country_event = rusrevolt.31
+			}
+		}
+
 	}
-	RUS_mission_self_determination_TMS = {
-		icon = generic_nationalism
+}
+
+war_measures = {
+	RUS_remove_aland_dmz = {
+		icon = GFX_decision_generic_operation
+		fire_only_once = yes
+		allowed = {
+			OR = {
+				tag = RUS
+				tag = SWE
+				tag = FIN
+			}
+		}
+		available = {
+			145 = {
+				is_controlled_by_ROOT_or_subject = yes
+			}	
+			OR = {
+				tag = FIN
+				tag = SWE
+				has_war_with = GER
+				145 = {
+					is_demilitarized_zone = yes
+				}
+			}
+		}
+		visible = {
+			is_subject = no
+			145 = {
+				is_controlled_by_ROOT_or_subject = yes
+			}
+			145 = {
+				has_dynamic_modifier = {
+					modifier = aland_dmz_modifier
+				}
+			}
+		}
+		complete_effect = {
+			145 = {
+				remove_dynamic_modifier = { modifier = aland_dmz_modifier }
+			}	
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 145
+			}
+		}
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 1000
+				date > 1916.1.1
+			}
+			modifier = {
+				add = 1000
+				tag = SWE
+			}
+			modifier = {
+				add = 1000
+				tag = FIN
+			}
+		}
+	}
+}
+
+debug_decisions = {
+	RUS_demobilizing_army_debug = {
+		icon = eng_blackshirt_march
+
 		allowed = {
 			original_tag = RUS
 		}
 		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
+		remove_effect = {
+			hidden_effect = {
+				disband_fifty_percent_units = yes
+				country_event = ww1_political.4
+			}
+			custom_effect_tooltip = rus_demobilize_army_tt
+		}
+	}
+	constituent_assembly_effect = {
+		allowed = {
 			OR = {
-				TMS = { exists = yes }
-				has_global_flag = basmach_released
-				NOT = {
-					any_owned_state = {
-						is_core_of = TMS
-						is_fully_controlled_by = RUS
-					}
-			    }				
-			}
-		}	
-		highlight_states = {
-			state = 584
-		}
-		activation = {
-			TMS = { exists = no }
-			any_owned_state = {
-				is_core_of = TMS
-				is_fully_controlled_by = RUS
-			}
-			OR = {
-				has_completed_focus = RUS_self_determination_of_nations
-				AND = {
-					NOT = { has_completed_focus = RUS_russification_of_non_titular_nations }
-					has_stability < 0.1
-				}
+				original_tag = RUS
+				original_tag = FER
+				original_tag = CER
 			}
 		}
-		timeout_effect = {
-			set_global_flag = basmach_released
-			every_state = {
-				limit = {
-					is_core_of = TMS
-					is_owned_by = RUS
-				}
-				TMS = {
-				    transfer_state = PREV
-				}
-			}
-			TMS = {
-				hidden_effect = {
-			    	load_oob = "TMS_1918"
-					create_faction = basmachi_movement
-					set_politics = {
-         			    ruling_party = fascism
-						elections_allowed = no
-        			}
-					add_popularity = {
-					    ideology = democratic
-					    popularity = -0.5
-					}
-					add_popularity = {
-					    ideology = communism
-					    popularity = -0.5
-					}
-				}
-				declare_war_on = {
-					target = RUS
-					type = liberate_wargoal
-				}
-			}
+		available = {
+			is_ai = no
 		}
-		fire_only_once = yes
-		days_mission_timeout = 235
-		is_good = no
+		visible = {
+			is_debug = yes
+			NOT = {
+				tag = SOV
+				tag = STV
+			}
+			has_global_flag = october_revolution
+		}
+		complete_effect = {
+			constituent_assembly_effect = yes
+		}
 	}
 }

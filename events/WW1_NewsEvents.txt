@@ -1,6 +1,4 @@
 ﻿add_namespace = kis_news
-
-
 # THE GREAT WAR TRIGGERED
 #########################
 news_event = {
@@ -8,55 +6,103 @@ news_event = {
 	title = kis_news.1.t
 	desc = kis_news.1.d
 	picture = EVENT_hoi4tgw_great_war
-	
-	trigger = {
-		OR = {
-			GER = { has_war_with = FRA }
-			GER = { has_war_with = RUS }
-			GER = { has_war_with = ENG }
-		}
-		NOT = { has_global_flag = kis_war }
-	}
+	is_triggered_only = yes
 	major = yes
-	mean_time_to_happen = {
-		days = 0
-	}
-	
 	immediate = {
-		set_global_flag = kis_war
+		set_global_flag = {
+			flag = WW1_intented_duration
+			days = 1840
+			value = 1
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					RUS = {
+						is_in_faction_with = GER
+					}
+				}
+				FRA = {
+					add_ideas = FRA_germans_and_russians_are_allied
+				}
+			}
+			if = {
+				limit = {
+					ITA = {
+						is_in_faction_with = GER
+					}
+				}
+				FRA = {
+					add_ideas = FRA_germans_and_italians_are_allied
+				}
+			}
+			FROM = {
+				add_named_threat = {
+					threat = 10
+					name = kis_news.1.t
+				}
+			}
+		}
 	}
-	
 	option = {
 		name = kis_news.1.a
-		ai_chance = { factor = 100 }
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = rule_superevent
+					option = DEFAULT
+				}
+				is_ai = no
+			}
+			hidden_effect = {
+				clear_superevents = yes
+				play_song = "SE_great_war"
+				set_country_flag = se_great_war
+				update_superevents = yes
+			}
+		}
+		if = {
+			limit = {
+				has_focus_tree = romania_focus
+				NOT = {
+					has_completed_focus = ROM_the_great_war_redux
+				}
+			}
+			complete_national_focus = ROM_the_great_war_redux
+		}
+		ai_chance = {
+			factor = 100
+		}
 	}
 }
+
 # FALL OF INSTANBUL
 ####################
 news_event = {
 	id = kis_news.2
 	title = kis_news.2.t
 	desc = kis_news.2.d
-	picture = GFX_news_event_soldiers_marching
-	major = yes	
+	picture = GFX_news_event_fall_of_constantinople
+	major = yes
 	trigger = {
-		OR = {
-			341 = { is_controlled_by = SER }
-			341 = { is_controlled_by = BUL }
-			341 = { is_controlled_by = GRE }
+		NOT = {
+			has_global_flag = fall_of_istanbul
 		}
-		341 = { is_owned_by = TUR }
-		OR = {
-			SER = { has_war_with = TUR }
-			BUL = { has_war_with = TUR }
-			GRE = { has_war_with = TUR }
+		TUR = {
+			owns_state = 347
+			any_enemy_country = {
+				NOT = {
+					original_tag = TUR
+				}
+				controls_province = 9833
+			}
 		}
-		NOT = { has_global_flag = fall_of_istanbul }
 	}
 	immediate = {
 		set_global_flag = fall_of_istanbul
-	}	
-	mean_time_to_happen = { days = 2 }
+	}
+	mean_time_to_happen = {
+		days = 2
+	}
 	option = {
 		name = kis_news.2.a
 		trigger = {
@@ -68,9 +114,12 @@ news_event = {
 	option = {
 		name = kis_news.2.b
 		add_war_support = -0.05
-		trigger = { TAG = TUR }
+		trigger = {
+			TAG = TUR
+		}
 	}
 }
+
 # FALL OF MOSCOW
 ####################
 news_event = {
@@ -78,40 +127,54 @@ news_event = {
 	title = kis_news.3.t
 	desc = kis_news.3.d
 	picture = GFX_news_event_soviet_soldiers_ruins
-	major = yes	
+	major = yes
 	trigger = {
-		OR = {
-			219 = { is_controlled_by = GER }
-			219 = { is_controlled_by = AUH }
+		NOT = {
+			has_global_flag = fall_of_moscow
 		}
-		
 		OR = {
-			219 = { is_owned_by = RUS }
-			219 = { is_owned_by = SOV }
+			219 = {
+				is_controlled_by = GER
+			}
+			219 = {
+				is_controlled_by = AUS
+			}
 		}
-		NOT = { has_global_flag = fall_of_moscow }
+		OR = {
+			219 = {
+				is_owned_by = RUS
+			}
+			219 = {
+				is_owned_by = SOV
+			}
+		}
 	}
 	immediate = {
 		set_global_flag = fall_of_moscow
-	}	
-	mean_time_to_happen = { days = 2 }
+	}
+	mean_time_to_happen = {
+		days = 2
+	}
 	option = {
 		name = kis_news.3.a
-		trigger = { 
+		trigger = {
 			OR = {
-				has_war_with = RUS 
+				has_war_with = RUS
 				has_war_with = SOV
 			}
 		}
 	}
 	option = {
 		name = kis_news.3.b
-		trigger = { 
-			NOT = { has_war_with = RUS }
-			NOT = { has_war_with = SOV }
+		trigger = {
+			NOT = {
+				has_war_with = RUS
+				has_war_with = SOV
+			}
 		}
 	}
 }
+
 # FALL OF WARSAW
 ####################
 news_event = {
@@ -119,55 +182,100 @@ news_event = {
 	title = kis_news.4.t
 	desc = kis_news.4.d
 	picture = GFX_news_event_019
-	major = yes	
-	trigger = {
+	major = yes
+	trigger = {	
+		NOT = {
+			has_global_flag = fall_of_warsaw
+		}
 		OR = {
-			10 = { is_controlled_by = GER }
-			10 = { is_controlled_by = AUH }
-		}		
-		OR = {
-			10 = { is_owned_by = RUS }
-			AND = {
-				10 = { is_owned_by = POL }
-				POL = { is_puppet_of = RUS }
+			10 = {
+				is_controlled_by = GER
+			}
+			10 = {
+				is_controlled_by = AUS
 			}
 		}
-		NOT = { has_global_flag = fall_of_warsaw }
+		OR = {
+			10 = {
+				is_owned_by = RUS
+			}
+			AND = {
+				10 = {
+					is_owned_by = POL
+				}
+				POL = {
+					is_subject_of = RUS
+				}
+			}
+		}
 	}
 	immediate = {
 		set_global_flag = fall_of_warsaw
-	}	
-	mean_time_to_happen = { days = 2 }
+	}
+	mean_time_to_happen = {
+		days = 2
+	}
 	option = {
 		name = kis_news.4.a
-		trigger = { 
+		trigger = {
 			OR = {
-				has_war_with = RUS 
+				has_war_with = RUS
 				has_war_with = POL
 			}
 		}
 	}
 	option = {
 		name = kis_news.4.b
-		trigger = { 
-			NOT = { has_war_with = RUS }
-			NOT = { has_war_with = POL }
+		trigger = {
+			NOT = {
+				has_war_with = RUS
+				has_war_with = POL
+			}
 		}
 	}
 }
-# BOER REVOLT
-######################
+
+# FALL OF LONDON
+####################
 news_event = {
-	id = kis_news.5
-	title = kis_news.5.t
-	desc = kis_news.5.d
-	picture = kis_news_5
-	
+	id = kis_news.6
+	title = kis_news.6.t
+	desc = kis_news.6.d
+	picture = GFX_news_event_fall_of_london
 	major = yes
-	is_triggered_only = yes
-	
+	trigger = {
+		NOT = {
+			has_global_flag = fall_of_london
+		}
+		126 = {
+			OWNER = {
+				original_tag = ENG
+			}
+		}
+		NOT = {
+			original_tag = ENG
+		}
+		controls_province = 6103
+	}
+	immediate = {
+		set_global_flag = fall_of_london
+	}
+	mean_time_to_happen = {
+		days = 2
+	}
 	option = {
-		name = kis_news.5.a
+		name = kis_news.6.a
+		trigger = {
+			NOT = {
+				tag = ENG
+			}
+		}
+	}
+	option = {
+		name = kis_news.6.b
+		trigger = {
+			tag = ENG
+		}
 	}
 }
 
@@ -178,22 +286,8 @@ news_event = {
 	title = kis_news.100.t
 	desc = kis_news.100.d
 	picture = ww1_news_2
-	
 	major = yes
-	
-	trigger = {
-		date > 1911.12.13
-		NOT = { has_global_flag = kis_northpole }
-	}
-	
-	mean_time_to_happen = {
-		days = 0
-	}
-
-	immediate = {
-		set_global_flag = kis_northpole
-	}
-	
+	is_triggered_only = yes
 	option = {
 		name = kis_news.100.a
 	}
@@ -205,24 +299,9 @@ news_event = {
 	id = kis_news.101
 	title = kis_news.101.t
 	desc = kis_news.101.d
-
 	picture = ww1_news_4
-	
 	major = yes
-	
-	trigger = {
-		date > 1911.6.24
-		NOT = { has_global_flag = kis_machupicchu }
-	}
-	
-	mean_time_to_happen = {
-		days = 0
-	}
-
-	immediate = {
-		set_global_flag = kis_machupicchu
-	}
-	
+	is_triggered_only = yes
 	option = {
 		name = kis_news.101.a
 	}
@@ -231,65 +310,68 @@ news_event = {
 # NEWS - SUFFRAGETTES DEMONSTRATION
 #################################
 # feminist event is banned lol (transfered to ww1_usa)
-
 # OLYMPIC GAMES
 ################
 news_event = {
 	id = kis_news.106
 	title = kis_news.106.t
 	desc = kis_news.106.d
-
 	picture = ww1_news_12
-	
 	major = yes
-	
-	trigger = {
-		date > 1912.5.1
-		NOT = { has_global_flag = kis_olympicgames }
-	}
-	
-	mean_time_to_happen = {
-		days = 0
-	}
-
-	immediate = {
-		set_global_flag = kis_olympicgames
-		hidden_effect = {}
-	}
-	
+	is_triggered_only = yes
 	option = {
 		name = kis_news.106.a
 	}
 }
 
 # XINHAI REVOLUTION
-########################3
+#########################
 news_event = {
 	id = kis_news.107
 	title = ww1_xinhai.2.t
 	desc = ww1_xinhai.2.d
-
 	picture = EVENT_hoi4tgw_xinhai_revolution
-	
 	major = yes
-	
-	trigger = {
-		has_global_flag = kis_xinhairenews
-		
-		NOT = { has_global_flag = kis_xinhaire }
-		NOT = { tag = QIN }
-	}
-	
-	mean_time_to_happen = {
-		days = 0
-	}
-
-	immediate = {
-		set_global_flag = kis_xinhaire
-	}
-	
+	is_triggered_only = yes
 	option = {
 		name = kis_news.107.a
+		trigger = {
+			NOT = {
+				is_china_or_warlord = yes
+			}
+		}
+	}
+	option = {
+		name = kis_news.107.b
+		trigger = {
+			is_china_or_warlord = yes
+			NOT = {
+				tag = QIN
+			}
+		}
+	}
+	option = {
+		name = kis_news.107.c
+		trigger = {
+			tag = QIN
+		}
+	}
+	after = {
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = rule_superevent
+					option = DEFAULT
+				}
+				is_ai = no
+			}
+			hidden_effect = {
+				clear_superevents = yes
+				set_country_flag = SE_chi_xinhai_revolution
+				play_song = "SE_chi_xinhai_revolution"
+				update_superevents = yes
+			}
+		}
 	}
 }
 
@@ -300,10 +382,13 @@ news_event = {
 	title = kis_news.108.t
 	desc = kis_news.108.d
 	picture = EVENT_hoi4tgw_balkan_league
-	
+	show_major = {
+		NOT = {
+			tag = TUR
+		}
+	}
 	major = yes
 	is_triggered_only = yes
-	
 	option = {
 		name = kis_news.108.a
 	}
@@ -315,60 +400,62 @@ news_event = {
 	id = kis_news.109
 	title = kis_news.109.t
 	desc = kis_news.109.d
-
 	picture = EVENT_hoi4tgw_assassination_jean_jaures
-	
 	major = yes
-	
 	trigger = {
-		date > 1914.7.31
-		NOT = { has_global_flag = kis_jauresassassination }
-		
-		FRA = {	has_war = yes }
+		has_global_flag = great_war
+		is_major = yes
+		has_war_with = FRA
+		NOT = {
+			has_global_flag = Jaures_survived
+			has_global_flag = kis_jauresassassination
+			FRA = {
+				AND = {
+					has_government = communism
+					has_country_leader = {
+						character = FRA_jean_jaures
+					}
+					NOT = {
+						has_idea = FRA_jaures_in_danger
+					}
+				}
+			}
+		}
 	}
-	
 	mean_time_to_happen = {
-		days = 0
+		days = 3
 	}
-
 	immediate = {
 		set_global_flag = kis_jauresassassination
+		hidden_effect = {
+			FRA = {
+				retire_character = FRA_jean_jaures
+			}
+		}
 	}
-	
 	option = {
 		name = kis_news.109.a
-		FRA = {
-			remove_ideas = FRA_jean_jaures
+		if = {
+			limit = {
+				tag = FRA
+			}
+			effect_tooltip = {
+				retire_character = FRA_jean_jaures
+			}
 		}
 	}
 }
-#____________________________________________________________
 
+#____________________________________________________________
 # Mona Lisa
 #____________________________________________________________
 news_event = {
 	id = kis_news.111
 	title = kis_news.111.t
 	desc = kis_news.111.d
-
 	picture = EVENT_hoi4tgw_mona_lisa
-	
 	major = yes
-	
-	trigger = {
-		date > 1911.8.21
-		NOT = { has_global_flag = kis_monalisastolen }
-	}
-	
-	mean_time_to_happen = {
-		days = 0
-	}
-
-	immediate = {
-		set_global_flag = kis_monalisastolen
-		hidden_effect = {}
-	}
-	
+	is_triggered_only = yes
 	option = {
 		name = kis_news.111.a
 	}
@@ -380,89 +467,179 @@ news_event = {
 	id = kis_news.112
 	title = kis_news.112.t
 	desc = kis_news.112.d
-	picture = GFX_news_event_generic_sign_treaty1
-	
-	major = yes	
+	picture = GFX_news_event_ottomans_germany
 	trigger = {
 		TUR = {
 			is_in_faction_with = GER
 		}
-		NOT = { has_global_flag = kis_ottomanjoinedcentralpower }
-	}	
-	mean_time_to_happen = {
-		days = 0
 	}
-	immediate = {
-		set_global_flag = kis_ottomanjoinedcentralpower
-	}	
+	major = yes
+	is_triggered_only = yes
 	option = {
 		name = kis_news.112.a
 	}
 }
-#____________________________________________________________
 
+# OTTOMANS JOIN ENTENTE
+#######################
+news_event = {
+	id = kis_news.113
+	title = kis_news.113.t
+	desc = kis_news.113.d
+	picture = GFX_news_event_ottomans_france
+	trigger = {
+		TUR = {
+			is_in_faction_with = FRA
+		}
+	}
+	major = yes
+	is_triggered_only = yes
+	option = {
+		name = kis_news.113.a
+	}
+}
+
+#____________________________________________________________
 # Serbia accepted Austrian Demands
 #____________________________________________________________
 news_event = {
 	id = kis_news.114
 	title = kis_news.114.t
 	desc = kis_news.114.d
-
 	picture = ww1_news_12
-	
 	major = yes
-	
-	trigger = {
-		has_global_flag = kis_serbia_accept
-		NOT = { has_global_flag = kis_serbia_accept_news }
-	}
-	
-	mean_time_to_happen = {
-		days = 0
-	}
-
-	immediate = {
-		set_global_flag = kis_serbia_accept_news
-		hidden_effect = {}
-	}
-	
+	is_triggered_only = yes
 	option = {
 		name = kis_news.114.a
+		trigger = {
+			NOT = {
+				original_tag = SER
+			}
+		}
+	}
+	option = {
+		name = kis_news.114.b
+		trigger = {
+			original_tag = SER
+		}
 	}
 }
+
 #____________________________________________________________
-
-
-# 1916 Olympic
+# 1916 Olympics
 #____________________________________________________________
 news_event = {
 	id = kis_news.115
-	title = kis_news.115.t
-	desc = kis_news.115.d
-	picture=EVENT_hoi4tgw_1916_olympics	
-	major = yes
-	
-	trigger = {
-		OR = {
-			FRA = { has_war = yes }
-			ENG = { has_war = yes }
-			RUS = { has_war = yes }
-			GER = { has_war = yes }
-			AUH = { has_war = yes }
-			ITA = { has_war = yes }
+	title = {
+		text = kis_news.115.t
+		trigger = {
+			64 = {
+				owner = {
+					has_war = yes
+				}
+			}
 		}
-		date > 1915.11.15
-		date < 1916.1.1
-		NOT = { has_global_flag = kis_1916_olympic }
-	}	
+	}
+	title = {
+		text = kis_news.115.t_olympic
+		trigger = {
+			64 = {
+				owner = {
+					has_war = no
+				}
+			}
+		}
+	}
+	desc = {
+		text = kis_news.115.d
+		trigger = {
+			64 = {
+				owner = {
+					has_war = yes
+				}
+			}
+		}
+	}
+	desc = {
+		text = kis_news.115.d_olympic
+		trigger = {
+			64 = {
+				owner = {
+					has_war = no
+				}
+			}
+		}
+	}
+	picture = EVENT_hoi4tgw_1916_olympics
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = kis_1916_olympic
+		}
+		owns_state = 64
+		OR = {
+			AND = {
+				has_war = yes
+				date > 1915.11.15
+			}
+			AND = {
+				has_war = no
+				date > 1916.7.1
+			}
+		}
+	}
 	mean_time_to_happen = {
 		days = 0
 	}
 	immediate = {
-		set_global_flag = kis_1916_olympic
-	}	
+		hidden_effect = {
+			set_global_flag = kis_1916_olympic
+		}
+	}
 	option = {
 		name = kis_news.115.a
+		trigger = {
+			any_country = {
+				owns_state = 64
+				has_war = yes
+			}
+		}
+	}
+	option = {
+		name = kis_news.115.b
+		trigger = {
+			any_country = {
+				owns_state = 64
+				has_war = no
+				ROOT = {
+					has_war = no
+					NOT = {
+						has_opinion = {
+							target = PREV
+							value < -50
+						}
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = kis_news.115.c
+		trigger = {
+			any_country = {
+				owns_state = 64
+				has_war = no
+				ROOT = {
+					OR = {
+						has_war = yes
+						has_opinion = {
+							target = PREV
+							value < -50
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -473,25 +650,13 @@ news_event = {
 	title = kis_news.118.t
 	desc = kis_news.118.d
 	picture = EVENT_hoi4tgw_roland_garros_mediterranean
-	
 	major = yes
-	
-	trigger = {
-		date > 1913.9.23
-		NOT = { has_global_flag = kis_roland_garros }
-	}
-	
-	mean_time_to_happen = {
-		days = 0
-	}
-	
-	immediate = {
-		set_global_flag = kis_roland_garros
-	}
-	
+	is_triggered_only = yes
 	option = {
 		name = kis_news.118.a
-		ai_chance = { factor = 100 }
+		ai_chance = {
+			factor = 100
+		}
 	}
 }
 
@@ -503,26 +668,1609 @@ news_event = {
 	desc = {
 		text = kis_news.119.d_china
 		trigger = {
-			CHI = { has_country_flag = xinhai_victory }
+			CHI = {
+				has_country_flag = xinhai_victory
+			}
 		}
 	}
 	desc = {
 		text = kis_news.119.d_qing
 		trigger = {
-			QIN = { has_country_flag = xinhai_victory }
+			QIN = {
+				has_country_flag = xinhai_victory
+			}
 		}
 	}
-
 	picture = EVENT_hoi4tgw_xinhai_end
-	
 	major = yes
 	is_triggered_only = yes
-
-	immediate = {
-		set_global_flag = kis_xinhaire_end
-	}
-	
 	option = {
 		name = kis_news.119.a
+		trigger = {
+			NOT = {
+				is_china_or_warlord = yes
+			}
+		}
+	}
+	option = {
+		name = kis_news.119.b
+		trigger = {
+			is_china_or_warlord = yes
+		}
+	}
+}
+
+# 1920 Olympics
+############################################
+news_event = {
+	id = kis_news.120
+	title = {
+		text = kis_news.120.t
+		trigger = {
+			6 = {
+				owner = {
+					has_war = yes
+				}
+			}
+		}
+	}
+	title = {
+		text = kis_news.120.t_olympic
+		trigger = {
+			6 = {
+				owner = {
+					has_war = no
+				}
+			}
+		}
+	}
+	desc = {
+		text = kis_news.120.d
+		trigger = {
+			6 = {
+				owner = {
+					has_war = yes
+				}
+			}
+		}
+	}
+	desc = {
+		text = kis_news.120.d_olympic
+		trigger = {
+			6 = {
+				owner = {
+					has_war = no
+				}
+			}
+			has_global_flag = great_war
+		}
+	}
+	desc = {
+		text = kis_news.120.d_olympic_no_great_war
+		trigger = {
+			6 = {
+				owner = {
+					has_war = no
+				}
+			}
+			NOT = {
+				has_global_flag = great_war
+			}
+		}
+	}
+	picture = EVENT_hoi4tgw_1920_olympics
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = kis_1920_olympic
+		}
+		owns_state = 6
+		OR = {
+			AND = {
+				has_war = yes
+				date > 1919.11.15
+			}
+			AND = {
+				has_war = no
+				date > 1920.8.14
+			}
+		}
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+	immediate = {
+		hidden_effect = {
+			set_global_flag = kis_1920_olympic
+		}
+	}
+	option = {
+		name = kis_news.120.a
+		trigger = {
+			any_country = {
+				owns_state = 6
+				has_war = yes
+			}
+		}
+	}
+	option = {
+		name = kis_news.120.b
+		trigger = {
+			any_country = {
+				owns_state = 6
+				has_war = no
+			}
+			has_war = no
+			NOT = {
+				has_country_flag = great_war_loser
+			}
+		}
+	}
+	option = {
+		name = kis_news.120.c
+		trigger = {
+			any_country = {
+				owns_state = 6
+				has_war = no
+			}
+			OR = {
+				has_war = yes
+				has_country_flag = great_war_loser
+			}
+		}
+	}
+}
+
+# NATIONAL PROTECTION WAR
+############################
+news_event = {
+	id = kis_news.121
+	title = kis_news.121.t
+	desc = {
+		text = kis_news.121.d
+		trigger = {
+			NOT = {
+				has_completed_focus = CHI_kuomintang
+			}
+		}
+	}
+	desc = {
+		text = kis_news.121.d1
+		trigger = {
+			has_completed_focus = CHI_kuomintang
+		}
+	}
+	picture = GFX_news_event_chinese_soldiers_city_ruin
+	major = yes
+	is_triggered_only = yes
+	option = {
+		name = kis_news.121.a
+	}
+}
+
+# Fall of Kiev
+###################################
+news_event = {
+	id = kis_news.122
+	title = kis_news.122.t
+	desc = kis_news.122.d
+	picture = GFX_news_event_fall_of_kiev
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = fall_of_kiev
+		}
+		202 = {
+			OR = {
+				is_owned_by = RUS
+				AND = {
+					is_owned_by = UKR
+					RUS = {
+						has_subject = UKR
+					}
+				}
+			}
+		}
+		OR = {
+			GER = {
+				controls_province = 525
+			}
+			AUS = {
+				controls_province = 525
+				is_in_faction_with = GER
+			}
+		}
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+	immediate = {
+		set_global_flag = fall_of_kiev
+	}
+	option = {
+		name = kis_news.122.a
+		trigger = {
+			OR = {
+				is_in_faction_with = GER
+				tag = GER
+			}
+		}
+	}
+	option = {
+		name = kis_news.122.b
+		trigger = {
+			NOT = {
+				is_in_faction_with = RUS
+				tag = RUS
+				is_in_faction_with = GER
+				tag = GER
+			}
+		}
+	}
+	option = {
+		name = kis_news.122.c
+		trigger = {
+			OR = {
+				is_in_faction_with = RUS
+				tag = RUS
+			}
+		}
+	}
+}
+
+# Fall of Minsk
+###################################
+news_event = {
+	id = kis_news.123
+	title = kis_news.123.t
+	desc = kis_news.123.d
+	picture = GFX_news_event_fall_of_minsk
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = fall_of_minsk
+		}
+		206 = {
+			is_owned_by = RUS
+		}
+		OR = {
+			GER = {
+				controls_province = 11370
+			}
+			AUS = {
+				controls_province = 11370
+				is_in_faction_with = GER
+			}
+		}
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+	immediate = {
+		set_global_flag = fall_of_minsk
+	}
+	option = {
+		name = kis_news.123.a
+		trigger = {
+			OR = {
+				is_in_faction_with = GER
+				tag = GER
+			}
+		}
+	}
+	option = {
+		name = kis_news.123.b
+		trigger = {
+			NOT = {
+				is_in_faction_with = RUS
+				tag = RUS
+				is_in_faction_with = GER
+				tag = GER
+			}
+		}
+	}
+	option = {
+		name = kis_news.123.c
+		trigger = {
+			OR = {
+				is_in_faction_with = RUS
+				tag = RUS
+			}
+		}
+	}
+}
+
+# Fall of Konigsberg
+###################################
+news_event = {
+	id = kis_news.124
+	title = kis_news.124.t
+	desc = kis_news.124.d
+	picture = GFX_news_event_004
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = fall_of_konigsberg
+		}
+		763 = {
+			is_owned_by = GER
+		}
+		RUS = {
+			controls_province = 6332
+		}
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+	immediate = {
+		set_global_flag = fall_of_konigsberg
+	}
+	option = {
+		name = kis_news.124.a
+		trigger = {
+			OR = {
+				is_in_faction_with = GER
+				tag = GER
+			}
+		}
+	}
+	option = {
+		name = kis_news.124.b
+		trigger = {
+			NOT = {
+				is_in_faction_with = RUS
+				tag = RUS
+				is_in_faction_with = GER
+				tag = GER
+			}
+		}
+	}
+	option = {
+		name = kis_news.124.c
+		trigger = {
+			OR = {
+				is_in_faction_with = RUS
+				tag = RUS
+			}
+		}
+	}
+}
+
+# Fall of Lemberg
+###################################
+news_event = {
+	id = kis_news.125
+	title = kis_news.125.t
+	desc = kis_news.125.d
+	picture = GFX_news_event_004
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = fall_of_lemberg
+		}
+		91 = {
+			is_owned_by = AUS
+		}
+		RUS = {
+			controls_province = 11479
+		}
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+	immediate = {
+		set_global_flag = fall_of_lemberg
+	}
+	option = {
+		name = kis_news.125.a
+		trigger = {
+			OR = {
+				is_in_faction_with = AUS
+				tag = AUS
+			}
+		}
+	}
+	option = {
+		name = kis_news.125.b
+		trigger = {
+			NOT = {
+				is_in_faction_with = RUS
+				tag = RUS
+				is_in_faction_with = AUS
+				tag = AUS
+			}
+		}
+	}
+	option = {
+		name = kis_news.125.c
+		trigger = {
+			OR = {
+				is_in_faction_with = RUS
+				tag = RUS
+			}
+		}
+	}
+}
+
+# Fall of Straßburg
+###################################
+news_event = {
+	id = kis_news.126
+	title = kis_news.126.t
+	desc = kis_news.126.d
+	picture = EVENT_hoi4tgw_france_at_war
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = fall_of_strassburg
+		}
+		28 = {
+			is_owned_by = GER
+		}
+		FRA = {
+			controls_province = 9503
+		}
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+	immediate = {
+		set_global_flag = fall_of_strassburg
+	}
+	option = {
+		name = kis_news.126.a
+		trigger = {
+			OR = {
+				is_in_faction_with = GER
+				tag = GER
+			}
+		}
+	}
+	option = {
+		name = kis_news.126.b
+		trigger = {
+			NOT = {
+				is_in_faction_with = GER
+				tag = GER
+				is_in_faction_with = FRA
+				tag = FRA
+			}
+		}
+	}
+	option = {
+		name = kis_news.126.c
+		trigger = {
+			OR = {
+				is_in_faction_with = FRA
+				tag = FRA
+			}
+		}
+	}
+}
+
+# Fall of Venice
+###################################
+news_event = {
+	id = kis_news.127
+	title = kis_news.127.t
+	desc = kis_news.127.d
+	picture = GFX_news_event_austrian_soldiers
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = fall_of_venice
+		}
+		160 = {
+			is_owned_by = ITA
+		}
+		AUS = {
+			controls_province = 11584
+		}
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+	immediate = {
+		set_global_flag = fall_of_venice
+	}
+	option = {
+		name = kis_news.127.a
+		trigger = {
+			OR = {
+				is_in_faction_with = AUS
+				tag = AUS
+			}
+		}
+	}
+	option = {
+		name = kis_news.127.b
+		trigger = {
+			NOT = {
+				is_in_faction_with = AUS
+				tag = AUS
+				is_in_faction_with = ITA
+				tag = ITA
+			}
+		}
+	}
+	option = {
+		name = kis_news.127.c
+		trigger = {
+			OR = {
+				is_in_faction_with = ITA
+				tag = ITA
+			}
+		}
+	}
+}
+
+# Fall of Belgrade
+###################################
+news_event = {
+	id = kis_news.128
+	title = kis_news.128.t
+	desc = kis_news.128.d
+	picture = GFX_news_event_fall_of_belgrade
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = fall_of_belgrade
+		}
+		107 = {
+			is_owned_by = SER
+		}
+		AUS = {
+			controls_province = 11586
+		}
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+	immediate = {
+		set_global_flag = fall_of_belgrade
+	}
+	option = {
+		name = kis_news.128.a
+		trigger = {
+			OR = {
+				is_in_faction_with = AUS
+				tag = AUS
+			}
+		}
+	}
+	option = {
+		name = kis_news.128.b
+		trigger = {
+			NOT = {
+				is_in_faction_with = AUS
+				tag = AUS
+				is_in_faction_with = SER
+				tag = SER
+			}
+		}
+	}
+	option = {
+		name = kis_news.128.c
+		trigger = {
+			OR = {
+				is_in_faction_with = SER
+				tag = SER
+			}
+		}
+	}
+}
+
+# Fall of Suez
+###################################
+news_event = {
+	id = kis_news.129
+	title = kis_news.129.t
+	desc = kis_news.129.d
+	picture = GFX_news_event_montreux_convention_war
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = fall_of_suez
+		}
+		447 = {
+			is_owned_by = ENG
+			is_controlled_by = TUR
+		}
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+	immediate = {
+		set_global_flag = fall_of_suez
+	}
+	option = {
+		name = kis_news.129.a
+		trigger = {
+			OR = {
+				is_in_faction_with = TUR
+				tag = TUR
+			}
+		}
+	}
+	option = {
+		name = kis_news.129.b
+		trigger = {
+			NOT = {
+				is_in_faction_with = TUR
+				tag = TUR
+				is_in_faction_with = ENG
+				tag = ENG
+			}
+		}
+	}
+	option = {
+		name = kis_news.129.c
+		trigger = {
+			OR = {
+				is_in_faction_with = ENG
+				tag = ENG
+			}
+		}
+	}
+}
+
+# Schlieffen Plan
+#########################
+news_event = {
+	id = kis_news.130
+	title = kis_news.130.t
+	desc = kis_news.130.d
+	picture = GFX_news_event_german_soldiers
+	is_triggered_only = yes
+	major = yes
+	option = {
+		name = kis_news.130.a
+		trigger = {
+			OR = {
+				tag = GER
+				is_ally_with = GER
+				has_war_with = FRA
+			}
+		}
+	}
+	option = {
+		name = kis_news.130.b
+		trigger = {
+			OR = {
+				tag = FRA
+				is_ally_with = FRA
+				has_war_with = GER
+			}
+		}
+	}
+	option = {
+		name = kis_news.130.c
+		trigger = {
+			NOT = {
+				tag = GER
+				is_ally_with = GER
+				has_war_with = FRA
+				tag = FRA
+				is_ally_with = FRA
+				has_war_with = GER
+			}
+		}
+	}
+}
+
+# Greece joined the Great War and Alexandros
+###############################
+news_event = {
+	id = kis_news.131
+	title = kis_news.131.t
+	desc = kis_news.131.d
+	picture = GFX_news_event_greek_civil_war
+	is_triggered_only = yes
+	major = yes
+	option = {
+		name = kis_news.131.a
+		trigger = {
+			OR = {
+				tag = GER
+				is_ally_with = GER
+				has_war_with = FRA
+			}
+		}
+	}
+	option = {
+		name = kis_news.131.b
+		trigger = {
+			OR = {
+				tag = FRA
+				is_ally_with = FRA
+				has_war_with = GER
+			}
+		}
+	}
+	option = {
+		name = kis_news.131.c
+		trigger = {
+			NOT = {
+				tag = GER
+				is_ally_with = GER
+				has_war_with = FRA
+				tag = FRA
+				is_ally_with = FRA
+				has_war_with = GER
+			}
+		}
+	}
+}
+
+# Fall of Sofia
+###################################
+news_event = {
+	id = kis_news.132
+	title = kis_news.132.t
+	desc = kis_news.132.d
+	picture = GFX_news_event_bulgarian_troops
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = fall_of_sofia
+		}
+		BUL = {
+			owns_state = 48
+			any_enemy_country = {
+				controls_province = 949
+			}
+		}
+	}
+	mean_time_to_happen = {
+		days = 2
+	}
+	immediate = {
+		set_global_flag = fall_of_sofia
+	}
+	option = {
+		name = kis_news.132.a
+		trigger = {
+			OR = {
+				tag = BUL
+				is_in_faction_with = BUL
+				is_subject_of = BUL
+			}
+		}
+	}
+	option = {
+		name = kis_news.132.b
+		trigger = {
+			NOT = {
+				tag = BUL
+				is_in_faction_with = BUL
+				is_subject_of = BUL
+				has_war_with = BUL
+			}
+		}
+	}
+	option = {
+		name = kis_news.132.c
+		trigger = {
+			has_war_with = BUL
+		}
+	}
+}
+
+# Fall of Athens
+###################################
+news_event = {
+	id = kis_news.133
+	title = kis_news.133.t
+	desc = kis_news.133.d
+	picture = GFX_news_event_greek_civil_war
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = fall_of_athens
+		}
+		GRE = {
+			owns_state = 898
+			any_enemy_country = {
+				controls_province = 4109
+			}
+		}
+	}
+	mean_time_to_happen = {
+		days = 2
+	}
+	immediate = {
+		set_global_flag = fall_of_athens
+	}
+	option = {
+		name = kis_news.133.a
+		trigger = {
+			OR = {
+				tag = GRE
+				is_ally_with = GRE
+			}
+		}
+	}
+	option = {
+		name = kis_news.133.b
+		trigger = {
+			NOT = {
+				tag = GRE
+				is_ally_with = GRE
+				has_war_with = GRE
+			}
+		}
+	}
+	option = {
+		name = kis_news.133.c
+		trigger = {
+			has_war_with = GRE
+		}
+	}
+}
+
+# Fall of Budapest
+###################################
+news_event = {
+	id = kis_news.135
+	title = kis_news.135.t
+	desc = kis_news.135.d
+	picture = GFX_news_event_kiev_ruins
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = fall_of_budapest
+		}
+		AUS = {
+			OR = {
+				owns_state = 43
+				HUN = {
+					is_subject_of = PREV
+					owns_state = 43
+				}
+			}
+			any_enemy_country = {
+				controls_province = 9660
+			}
+		}
+	}
+	mean_time_to_happen = {
+		days = 2
+	}
+	immediate = {
+		set_global_flag = fall_of_budapest
+	}
+	option = {
+		name = kis_news.135.a
+		trigger = {
+			OR = {
+				tag = AUS
+				is_ally_with = AUS
+			}
+		}
+	}
+	option = {
+		name = kis_news.135.b
+		trigger = {
+			NOT = {
+				tag = AUS
+				is_ally_with = AUS
+				has_war_with = AUS
+			}
+		}
+	}
+	option = {
+		name = kis_news.135.c
+		trigger = {
+			has_war_with = AUS
+		}
+	}
+}
+
+# Fall of Vienna
+###################################
+news_event = {
+	id = kis_news.136
+	title = kis_news.136.t
+	desc = kis_news.136.d
+	picture = GFX_news_event_kiev_ruins
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = fall_of_vienna
+		}
+		AUS = {
+			owns_state = 4
+			any_enemy_country = {
+				controls_province = 11666
+			}
+		}
+	}
+	mean_time_to_happen = {
+		days = 2
+	}
+	immediate = {
+		set_global_flag = fall_of_vienna
+	}
+	option = {
+		name = kis_news.136.a
+		trigger = {
+			OR = {
+				tag = AUS
+				is_ally_with = AUS
+			}
+		}
+	}
+	option = {
+		name = kis_news.136.b
+		trigger = {
+			NOT = {
+				tag = AUS
+				is_ally_with = AUS
+				has_war_with = AUS
+			}
+		}
+	}
+	option = {
+		name = kis_news.136.c
+		trigger = {
+			has_war_with = AUS
+		}
+	}
+}
+
+# Allied Troops Land
+###################################
+news_event = {
+	id = kis_news.137
+	title = kis_news.137.t
+	desc = kis_news.137.d
+	picture = GFX_news_event_salonika
+	major = yes
+	is_triggered_only = yes
+	option = {
+		name = kis_news.137.a
+		trigger = {
+			OR = {
+				tag = GER
+				is_ally_with = GER
+				has_war_with = FRA
+				tag = GRE
+			}
+		}
+	}
+	option = {
+		name = kis_news.137.b
+		trigger = {
+			OR = {
+				tag = FRA
+				is_ally_with = FRA
+				has_war_with = GER
+			}
+		}
+	}
+	option = {
+		name = kis_news.137.c
+		trigger = {
+			NOT = {
+				tag = GER
+				is_ally_with = GER
+				has_war_with = FRA
+				tag = FRA
+				is_ally_with = FRA
+				has_war_with = GER
+				tag = GRE
+			}
+		}
+	}
+}
+
+# CHRISTMAS TRUCE
+####################
+news_event = {
+	id = kis_news.138
+	title = kis_news.138.t
+	desc = {
+		text = kis_news.138.d
+		trigger = {
+			NOT = {
+				tag = BEL
+			}
+		}
+	}
+	desc = {
+		text = kis_news.138.d_belgium
+		trigger = {
+			tag = BEL
+		}
+	}
+	picture = GFX_news_event_christmas_truce
+	major = yes
+	trigger = {
+		is_great_war_ongoing = yes
+		NOT = {
+			has_global_flag = christmas_truce
+		}
+		OR = {
+			AND = {
+				tag = ENG
+				has_war_with = GER
+				is_in_faction_with = FRA
+			}
+			AND = {
+				tag = FRA
+				has_war_with = GER
+			}
+			AND = {
+				tag = BEL
+				has_war_with = GER
+				is_in_faction_with = FRA
+			}
+			AND = {
+				tag = GER
+				has_war_with = ENG
+			}
+		}
+		OR = {
+			AND = {
+				date > 1910.12.1
+				date < 1911.1.1
+			}
+			AND = {
+				date > 1911.12.1
+				date < 1912.1.1
+			}
+			AND = {
+				date > 1912.12.1
+				date < 1913.1.1
+			}
+			AND = {
+				date > 1913.12.1
+				date < 1914.1.1
+			}
+			AND = {
+				date > 1914.12.1
+				date < 1915.1.1
+			}
+			AND = {
+				date > 1915.12.1
+				date < 1916.1.1
+			}
+			AND = {
+				date > 1916.12.1
+				date < 1917.1.1
+			}
+			AND = {
+				date > 1917.12.1
+				date < 1918.1.1
+			}
+			AND = {
+				date > 1918.12.1
+				date < 1919.1.1
+			}
+			AND = {
+				date > 1919.12.1
+				date < 1920.1.1
+			}
+			AND = {
+				date > 1920.12.1
+				date < 1921.1.1
+			}
+		}
+	}
+	immediate = {
+		hidden_effect = {
+			set_global_flag = christmas_truce
+		}
+	}
+	mean_time_to_happen = {
+		days = 25
+	}
+	option = {
+		name = kis_news.138.a
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+# CHEMICAL WARFARE
+##########################
+news_event = {
+	id = kis_news.139
+	title = kis_news.139.t
+	desc = kis_news.139.d
+	picture = GFX_news_event_chemical_warfare
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = chemical_warfare
+		}
+		is_great_war_ongoing = yes
+		casualties > 25000
+		OR = {
+			is_in_faction_with = GER
+			is_in_faction_with = ENT
+		}
+		any_enemy_country = {
+			any_country_division = { # has_template_containing_unit dont check support companies
+				OR = {
+					division_has_battalion_in_template = gas_cylinder
+					division_has_battalion_in_template = gas_artillery
+					division_has_battalion_in_template = gas_projector
+					division_has_battalion_in_template = poisonous_gas_cylinder
+					division_has_battalion_in_template = poisonous_gas_artillery
+					division_has_battalion_in_template = poisonous_gas_projector
+				}
+			}
+		}
+	}
+	immediate = {
+		hidden_effect = {
+			set_global_flag = chemical_warfare
+		}
+	}
+	mean_time_to_happen = {
+		days = 10
+	}
+	option = {
+		name = kis_news.139.a
+	}
+}
+
+# ARMORED WARFARE
+##########################
+news_event = {
+	id = kis_news.140
+	title = kis_news.140.t
+	desc = kis_news.140.d
+	picture = GFX_news_event_tank_warfare
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = armored_warfare
+		}
+		has_war = yes
+		OR = {
+			has_template_containing_unit = light_armor
+			has_template_containing_unit = medium_armor
+			has_template_containing_unit = heavy_armor
+		}
+	}
+	immediate = {
+		hidden_effect = {
+			set_global_flag = armored_warfare
+		}
+	}
+	mean_time_to_happen = {
+		days = 100
+	}
+	option = {
+		name = kis_news.140.a
+	}
+}
+
+# YUGOSLAVIA
+##########################
+news_event = {
+	id = kis_news.141
+	title = kis_news.141.t
+	desc = kis_news.141.d
+	picture = GFX_news_event_yugoslavia
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = form_yugoslavia
+		}
+		has_country_flag = SER_yugoslavia_formed
+	}
+	immediate = {
+		hidden_effect = {
+			set_global_flag = form_yugoslavia
+		}
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+	option = {
+		name = kis_news.141.a
+	}
+}
+
+# International Socialist Congress, Copenhagen 1910
+news_event = {
+	id = kis_news.142
+	title = kis_news.142.t
+	desc = kis_news.142.d
+	picture = GFX_news_event_international_1910
+	major = yes
+	is_triggered_only = yes
+	option = {
+		name = kis_news.142.a
+	}
+}
+
+##dutch revolt 
+news_event = {
+	id = kis_news.143
+	title = kis_news.143.t
+	desc = kis_news.143.d
+	picture = GFX_news_event_troelstra
+	major = yes
+	immediate = {
+		hidden_effect = {
+			set_global_flag = dutch_failed_uprising
+		}
+	}
+	trigger = {
+		NOT = {
+			has_global_flag = dutch_failed_uprising
+		}
+		date > 1918.12.14
+		HOL = {
+			communism > 0.12
+			NOT = {
+				OR = {
+					has_government = communism
+					has_government = neutrality
+					has_government = fascism
+					is_subject = yes
+				}
+			}
+		}
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+	option = {
+		name = kis_news.143.a
+	}
+}
+
+# Austria takes back Budapest in Hungarian war of independence
+news_event = {
+	id = kis_news.144
+	title = kis_news.144.t
+	desc = kis_news.144.d
+	picture = GFX_news_event_kiev_ruins
+	major = yes
+	trigger = {
+		NOT = {
+			has_global_flag = austria_retakes_budapest
+		}
+		has_global_flag = AUH_civil_war
+		HUN = {
+			owns_state = 43
+		}
+		AUS = {
+			controls_province = 9660
+		}
+	}
+	mean_time_to_happen = {
+		days = 2
+	}
+	immediate = {
+		set_global_flag = austria_retakes_budapest
+	}
+	option = {
+		name = kis_news.144.a
+		trigger = {
+			OR = {
+				tag = AUS
+				is_ally_with = AUS
+			}
+		}
+	}
+	option = {
+		name = kis_news.144.b
+		trigger = {
+			NOT = {
+				tag = AUS
+				is_ally_with = AUS
+				has_war_with = AUS
+			}
+		}
+	}
+	option = {
+		name = kis_news.144.c
+		trigger = {
+			has_war_with = AUS
+			original_tag = HUN
+		}
+	}
+}
+
+#conrad von hotzendorf takes power
+news_event = {
+	id = kis_news.145
+	title = kis_news.145.t
+	desc = kis_news.145.d
+	picture = GFX_news_event_conrad
+	major = yes
+	is_triggered_only = yes
+	option = {
+		name = kis_news.145.a
+		trigger = {
+			NOT = {
+				original_tag = AUS
+			}
+		}
+	}
+	option = {
+		name = kis_news.145.b
+		trigger = {
+			original_tag = AUS
+		}
+	}
+}
+
+#conrad von hotzendorf becomes dictator
+news_event = {
+	id = kis_news.146
+	title = kis_news.146.t
+	desc = kis_news.146.d
+	picture = GFX_news_event_conrad
+	major = yes
+	is_triggered_only = yes
+	option = {
+		name = kis_news.146.a
+		trigger = {
+			NOT = {
+				original_tag = AUS
+			}
+		}
+	}
+	option = {
+		name = kis_news.146.b
+		trigger = {
+			original_tag = AUS
+		}
+	}
+}
+
+#Joan of Arc becoming a saint
+news_event = {
+	id = kis_news.147
+	title = kis_news.147.t
+	desc = kis_news.147.d
+	picture = GFX_news_event_joan
+	major = yes
+	is_triggered_only = yes
+	option = {
+		name = kis_news.147.a
+		trigger = {
+			original_tag = FRA
+		}
+	}
+	option = {
+		name = kis_news.147.b
+		trigger = {
+			original_tag = ENG
+		}
+	}
+	option = {
+		name = kis_news.147.c
+		trigger = {
+			OR = {
+				original_tag = GER
+				has_war_with = FRA
+			}
+		}
+	}
+	option = {
+		name = kis_news.147.e
+		trigger = {
+			NOT = {
+				original_tag = FRA
+				original_tag = GER
+				has_war_with = FRA
+				original_tag = ENG
+			}
+		}
+	}
+}
+
+#Lake Anjikuni Goes Missing
+news_event = {
+	id = kis_news.148
+	title = kis_news.148.t
+	desc = kis_news.148.d
+	major = yes
+	picture = GFX_news_event_lake_anjikuni_mystery
+	trigger = {
+		NOT = {
+			has_global_flag = lake_anjikuni_missing
+		}
+		date > 1930.11.1
+		country_exists = CAN
+	}
+	mean_time_to_happen = {
+		days = 29
+	}
+	immediate = {
+		hidden_effect = {
+			set_global_flag = lake_anjikuni_missing
+		}
+	}
+	option = {
+		name = kis_news.148.a
+	}
+}
+
+# Einstein Submits the Definitive Version of General Relativity
+news_event = {
+	id = kis_news.149
+	title = kis_news.149.t
+	desc = kis_news.149.d
+	major = yes
+	picture = GFX_news_event_einstein
+	trigger = {
+		date > 1915.11.1
+		NOT = {
+			has_global_flag = general_relativity
+		}
+	}
+	mean_time_to_happen = {
+		days = 10
+	}
+	immediate = {
+		hidden_effect = {
+			set_global_flag = general_relativity
+		}
+	}
+	option = {
+		name = kis_news.149.a
+	}
+}
+
+# Alfred Wegener Presents His Continental Drift Theory
+news_event = {
+	id = kis_news.150
+	title = kis_news.150.t
+	desc = kis_news.150.d
+	major = yes
+	picture = GFX_news_event_alfred_wegener
+	trigger = {
+		NOT = {
+			has_global_flag = continental_drift
+		}
+		date > 1911.12.15
+		has_start_date < 1914.1.1
+	}
+	mean_time_to_happen = {
+		days = 20
+	}
+	immediate = {
+		hidden_effect = {
+			set_global_flag = continental_drift
+		}
+	}
+	option = {
+		name = kis_news.150.a
+	}
+}
+
+# Tomb of Tutankhamun Decovered
+news_event = {
+	id = kis_news.151
+	title = kis_news.151.t
+	desc = kis_news.151.d
+	major = yes
+	picture = GFX_news_event_tutankhamun_discovery
+	trigger = {
+		date > 1922.11.1
+		NOT = {
+			has_global_flag = tutankhamun_discovery
+		}
+	}
+	mean_time_to_happen = {
+		days = 30
+	}
+	immediate = {
+		hidden_effect = {
+			set_global_flag = tutankhamun_discovery
+		}
+	}
+	option = {
+		name = kis_news.151.a
+	}
+}
+
+# Zimmerwald Conference
+news_event = {
+	id = kis_news.152
+	title = kis_news.152.t
+	desc = kis_news.152.d
+	major = yes
+	picture = GFX_news_event_zimmerwald_conference
+	trigger = {
+		NOT = {
+			has_global_flag = zimmerwald_conference
+			has_global_flag = lenin_is_dead
+		}
+		is_great_war_ongoing = yes
+		war_length_with = {
+			tag = GER
+			months > 13
+		}
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+	immediate = {
+		hidden_effect = {
+			set_global_flag = zimmerwald_conference
+		}
+	}
+	option = {
+		name = kis_news.152.a
+	}
+}
+
+news_event = {
+	id = kis_news.153
+	title = kis_news.153.t
+	desc = kis_news.153.d
+	major = yes
+	picture = GFX_news_event_generic_factory
+	trigger = {
+		NOT = {
+			has_global_flag = sliced_bread_invention
+		}
+		date > 1928.7.1
+	}
+	mean_time_to_happen = {
+		days = 0
+	}
+	immediate = {
+		set_global_flag = sliced_bread_invention
+	}
+	option = {
+		name = kis_news.153.a
+	}
+}
+
+news_event = {
+	id = kis_news.154
+	title = kis_news.154.t
+	desc = kis_news.154.d
+	picture = GFX_news_event_german_soldiers
+	is_triggered_only = yes
+	major = yes
+	option = {
+		name = kis_news.154.a
+		trigger = {
+			OR = {
+				tag = GER
+				is_in_faction_with = GER
+				is_subject_of = GER
+				has_war_with = FRA
+			}
+		}
+	}
+	option = {
+		name = kis_news.154.b
+		trigger = {
+			OR = {
+				tag = FRA
+				is_in_faction_with = FRA
+				is_subject_of = FRA
+				has_war_with = GER
+			}
+		}
+	}
+	option = {
+		name = kis_news.154.c
+		trigger = {
+			NOT = {
+				tag = GER
+				is_in_faction_with = GER
+				is_subject_of = GER
+				has_war_with = FRA
+				tag = FRA
+				is_in_faction_with = FRA
+				is_subject_of = FRA
+				has_war_with = GER
+			}
+		}
 	}
 }

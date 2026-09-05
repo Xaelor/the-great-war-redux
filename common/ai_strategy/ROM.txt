@@ -1,9 +1,22 @@
 ROM_prepare_for_great_war = {
-	enable = {
+	allowed = {
 		tag = ROM
+	}
+	enable = {	
+		NOT = {
+			has_war_with = RUS
+			has_war_with = BUL
+			has_war_with = MOL
+		}	
 		OR = {
 			date > 1914.1.1
 			threat > 0.5
+			has_global_flag = great_war
+		}
+		NOT = {
+			has_country_leader = {
+				character = ROM_carol_i
+			}
 		}
 	}
 	abort = {
@@ -15,7 +28,211 @@ ROM_prepare_for_great_war = {
 	}
 	ai_strategy = {
 		type = antagonize
-		id = "AUH"
+		id = "AUS"
 		value = 100
+	}
+	ai_strategy = {
+		type = alliance
+		id = AUS
+		value = -200
+	}
+}
+ENTENTE_ignore_ROM = {
+	allowed = {
+		NOT = {
+			original_tag = ROM
+			original_tag = RUS
+			original_tag = MOL
+			original_tag = TRA
+			original_tag = UKR
+		}	
+	}		
+	enable = {
+		is_in_faction_with = ROM
+		NOT = {
+			is_subject_of = ROM
+		}
+		OR = {	## different rule because the germany and austria hungary can access to romania if romanie is in central powers
+			tag = ENT
+			is_in_faction_with = ENT
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = dont_defend_ally_borders
+		id = ROM
+		value = 1
+	}
+	ai_strategy = {
+		type = ignore
+		id = ROM
+		value = 1000
+	}
+}
+
+ROM_second_balkan_war = {
+	allowed = {
+		original_tag = ROM
+	}		
+	enable = {
+		has_global_flag = kis_firstbalkanwar_victory
+		NOT = {
+			has_country_flag = kis_secondbalkan_war_winner
+			has_global_flag = kis_secondbalkanwar_victory
+			has_global_flag = kis_secondbalkanwar_lose
+			has_global_flag = great_war
+			has_global_flag = great_war_ends
+			AND = {
+				has_war = yes
+				NOT = {
+					has_war_with = BUL
+				}
+			}
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = front_unit_request
+		tag = RUS
+		value = -100
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = AUS
+		value = -100
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = HUN
+		value = -100
+	}
+	ai_strategy = {
+		type = prepare_for_war
+		id = BUL
+		value = 1
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = BUL
+		value = 100
+	}
+}
+
+ROM_fight_hun = {
+	allowed = {
+		original_tag = ROM
+	}		
+	enable = {
+		has_war_with = HUN
+		NOT = {
+			has_war_with = BUL
+			has_war_with = RUS
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = front_unit_request
+		tag = HUN
+		value = 9999
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = AUS
+		value = 5000
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = RUS
+		value = -9999
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = BUL
+		value = -9999
+	}
+	ai_strategy = {
+		type = prepare_for_war
+		id = HUN
+		value = 100
+	}
+	ai_strategy = {
+		type = prepare_for_war
+		id = BUL
+		value = -100
+	}
+}
+ROM_take_bessarabia = {
+	allowed = {
+		original_tag = ROM
+	}
+	enable = {
+		any_country_with_original_tag = {
+			original_tag_to_check = UKR
+			has_country_flag = UKR_rumcherod
+			owns_state = 78
+		}
+		OR = {
+			has_war = no
+			has_active_mission = ROM_bessarabian_gamble
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = front_unit_request
+		country_trigger = {
+			original_tag = UKR
+			has_country_flag = UKR_rumcherod
+		}
+		value = 100
+	}
+	ai_strategy = {
+		type = prepare_for_war
+		id = RUC
+		value = 1
+	}
+}
+ROM_fight_with_soviet_hungary = {
+	allowed = {
+		original_tag = ROM
+	}
+	enable = {
+		has_war_with = HUN
+		has_global_flag = ROM_HUN_war_1919
+		HUN = {
+			has_government = communism
+		}
+		NOT = {
+			has_idea = ROM_armistice
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = front_control
+		tag = HUN
+		priority = 100
+		ordertype = front
+		execution_type = rush
+		execute_order = yes
+		manual_attack = yes
+	}
+}
+
+ROM_romanian_hungarian_war_peace = {
+	allowed = {
+		tag = ROM
+	}
+	enable = {
+		has_global_flag = ROM_HUN_war_1919
+		has_war_with = HUN
+		has_idea = ROM_armistice
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = front_control
+		tag = HUN
+		priority = 1
+		execution_type = careful
+		manual_attack = yes
+		execute_order = no
 	}
 }

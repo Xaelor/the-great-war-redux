@@ -2,11 +2,70 @@ bookmarks = {
 	bookmark = {
 		name = "POWDERKEG_NAME"
 		desc = "POWDERKEG_DESC"
-		date = 1910.5.1.1
+		date = 1910.5.1.12
 		picture = "GFX_select_date_1910"
 		default_country = "GER"
 		default = yes
-        
+		sort_unplayed_first = no
+		
+		filters = { label }
+		label_order = { label_entente label_neutral label_central_powers }
+		# filters can also contain 'label'
+		# in that case the countries below can have 'label = { label_1 }' or 'label = { label_1 label_2 }'
+		# all these labels will be gathered and displayed as filter buttons
+
+		# sort_unplayed_first = no            # defaults to yes: countries with unplayed content are listed first
+		# include_majors_in_minor_list = no   # defaults to yes: when a filter is active, majors also show in the mini list
+		# apply_filter_to_majors = yes        # defaults to no: when yes, the major row also respects the filter (only majors matching it are shown)
+		# apply_filter_to_other_country = yes # defaults to no: by default the "other" (---) entry is always shown; when yes it respects the filter too
+		# label_order = { label_1 label_2 }   # optional: forces the label filter button order; a warning is logged for
+		#                                     # any label used by a country that is missing from this list
+		# scrollable_country_list = yes       # defaults to no: scroll the minor list with its vertical scrollbar instead of the overflow dropdown
+
+		# NOTE: DO NOT USE filters = {}. These are only for hardcoded ones as shown above.
+		# Instead define labels for each respective tag
+		# Current Labels:
+		# label_entente
+		# label_central_powers
+		# label_neutral
+       
+		"FRA"={
+			history = "FRA_POWDERKEG_DESC"
+			ideology = democratic
+			override_leader_portrait = FRA_armand_fallieres
+			ideas = {
+				FRA_memories_of_1870
+				FRA_incompetent_industry
+				FRA_disjointed_government
+				FRA_ww1_agricultural_sector_strike
+			}
+			focuses = {
+				FRA_ww1_plan_xvii
+				FRA_ww1_union_sacree
+				FRA_ww1_the_french_miracle
+			}
+			label = { label_entente }
+		}
+		
+		"ENG"={
+			history = "ENG_POWDERKEG_DESC"
+			ideology = democratic
+			override_leader_portrait = ENG_edward_vii
+			ideas = {
+				ENG_lords_opposition
+				eng_overextension
+				eng_fleet_at_rest
+				stiff_upper_lip
+				ENG_golden_age_espionage
+			}
+			focuses = {
+				ENG_The_British_Are_Coming
+				ENG_Red_Flag_London
+				ENG_Pro_Patria_Mori
+			}
+			label = { label_entente }
+		}
+
 		"USA"={
 			history = "USA_POWDERKEG_DESC"
 			ideology = democratic
@@ -21,21 +80,59 @@ bookmarks = {
 				USA_border_war
 				USA_cult_of_the_american_nation
 			}
+			label = { label_neutral }
 		}
-		"FRA"={
-			history = "FRA_POWDERKEG_DESC"
+
+		"ITA"={
+			history = "ITA_POWDERKEG_DESC"
 			ideology = democratic
+			override_leader_portrait = ITA_vittorio_emanuele_iii
 			ideas = {
-				FRA_ww1_Revanchism
-				FRA_disjointed_government
-				ww1_Scramble_for_Africa
+				ITA_industrialization_program_dummy_1910
+				ITA_social_unrest_dummy_1910
+				ITA_italian_army_dummy_1910
+				ITA_italian_navy_dummy_1910
 			}
 			focuses = {
-				FRA_ww1_triple_alliance
-				FRA_ww1_agadir_crisis
-				FRA_ww1_ready_country
+				ITA_giolitti_era
+				ITA_fall_of_the_great
+				ITA_arise_workers_of_italy
 			}
+			label = { label_neutral }
 		}
+
+		"GER"={
+			history = "GER_POWDERKEG_DESC"
+			ideology = neutrality
+			ideas = {
+				GER_idea_bismarksche_reichsverassung_fake
+				GER_idea_rising_unions
+				GER_idea_germany_encircled
+			}
+			focuses = {
+				ENG_GER_haldane_mission
+				GER_wilhelmine_germany
+				GER_establish_the_general_headquarters
+			}
+			label = { label_central_powers }
+		}	
+
+		"AUS"={
+			history = "AUH_POWDERKEG_DESC"
+			ideology = neutrality
+			ideas = {
+				AUH_ww1_House_Habsburg_Lorraine
+				AUH_czech_separatism
+				AUH_multi_ethnic_army
+			}
+			focuses = {
+				AUH_anti_serb_policy
+				AUH_army_question_statemate
+				AUH_wargames
+			}
+			label = { label_central_powers }
+		}
+		
 		"RUS"={
 			history = "RUS_POWDERKEG_DESC"
 			ideology = neutrality
@@ -49,100 +146,94 @@ bookmarks = {
 				RUS_union_of_russian_people
 				RUS_dalnyi_or_war
 			}
+			label = { label_entente }
+		}		
+		 
+		"---"={
+			history = "OTHER_BLITZKRIEG_DESC"
 		}
-		"ENG"={
-			history = "ENG_POWDERKEG_DESC"
-			ideology = democratic
-			ideas = {
-				stiff_upper_lip
-				eng_overextension
-				eng_fleet_at_rest
-				ENG_orange_order
-			}
-			focuses = {
-				ENG_The_British_Are_Coming
-				ENG_Red_Flag_London
-				ENG_Pro_Patria_Mori
-			}
-		}
-		"ITA"={
-			history = "ITA_POWDERKEG_DESC"
+
+		"JAP"={
+			history = "JAP_POWDERKEG_DESC"
 			ideology = neutrality
 			ideas = {
-				ITA_ww1_Risorgimento
-				idea_italy_triple_alliance
+				state_shintoism
+				JAP_zaibatsus
+				idea_naval_arms_race
 			}
 			focuses = {
-				ITA_spirit_of_risorgimento
-				ITA_claim_on_lybia
-				ITA_denouncing_triple_alliance
+				spiritual_mobilization_focus
+				JAP_ww1_Invasion_of_Manchuria
+				JAP_ww1_siberian_intervention
 			}
+			label = { label_neutral }
 		}
-		"GER"={
-			history = "GER_POWDERKEG_DESC"
-			ideology = neutrality
-			ideas = {
-				GER_idea_norddeutscher_bund_legacy
-				GER_idea_OHL
-				ww1_Scramble_for_Africa
-			}
-			focuses = {
-				GER_turn_to_asia
-				GER_war_with_france
-				GER_HRE_focus
-			}
-		}
-		"AUH"={
-			history = "AUH_POWDERKEG_DESC"
-			ideology = neutrality
-			ideas = {
-				AUH_ww1_House_Habsburg_Lorraine
-				AUH_hungarian_opposition
-				AUH_croatian_separatism
-			}
-			focuses = {
-				AUH_federalism
-				AUH_integration_of_bosnia
-				AUH_crush_the_serbian_terrorists
-			}
-		}
+		
 		"TUR"={
 			history = "TUR_POWDERKEG_DESC"
 			ideology = neutrality
+			override_leader_portrait = TUR_mehmed_v
 			ideas = {
 				TUR_sick_man
-				TUR_officers_struggle
-				TUR_balkan_separatism
+				TUR_harbiyeli_officers_extended_power_neutral
+				TUR_minorities_idea
 			}
 			focuses = {
-				TUR_three_pashas
-				TUR_empower_sultan
-				TUR_pan_turkism
+				TUR_empower_the_sultan
+				TUR_our_place_in_the_world
+				TUR_three_pasha_government
 			}
+			label = { label_neutral }
+		}		
+
+		"---"={
+			history = "OTHER_BLITZKRIEG_DESC"
 		}
 
+		"HUN"={
+			history = "HUN_POWDERKEG_DESC"
+			ideology = neutrality
+			override_leader_portrait = HUN_franz_joseph_i
+			ideas = {
+				HUN_croatian_sabor
+				HUN_ausgleich
+				HUN_minority_government
+			}
+			focuses = {
+				AUH_silence_the_labour_movements
+				AUH_hungarian_universal_franchise
+				AUH_independence_or_war
+			}
+			label = { label_central_powers }
+		}	
+
 		# Minors ####
-	
+		
 		"SER"={
 			minor = yes
 			history = "SER_POWDERKEG_DESC"
-			ideology = neutrality
+			ideology = democratic
+			#override_leader_portrait = SER_petar_i
 			ideas = {
-
+				SER_idea_grand_coalition
+				SER_idea_bloody_throne
+				SER_idea_pig_war
 			}
 			focuses = {
-				SER_black_hand
-				SER_establish_regency
-				SER_war_with_ottomans
+				SER_grand_coalition
+				SER_balkan_strategy
+				SER_serbian_golden_age
 			}
-		}
+			label = { label_neutral }
+		}	
 
-		"BUL"={
+		"BUL"= {
 			minor = yes
 			history = "BUL_POWDERKEG_DESC"
 			ideology = neutrality
 			ideas = {
                 BUL_idea_national_assembly
+				BUL_idea_agrarian_economy
 			}
 			focuses = {
 				BUL_bulgarian_revanchism
@@ -150,8 +241,58 @@ bookmarks = {
 				BUL_balkan_hegemon
 				
 			}
+			label = { label_neutral }	
 		}
 
+		"GRE"={
+			minor = yes
+			history = "GRE_POWDERKEG_DESC"
+			ideology = democratic
+			#override_leader_portrait = GRE_george_i
+			ideas = {
+                gre_the_megali_idea
+				GRE_idea_george_i
+			    gre_shadow_of_97
+			}
+			focuses = {
+				GRE_appoint_venizelos
+				GRE_establish_the_macedonian_front
+				GRE_prepare_for_the_balkan_confict
+			}
+			label = { label_neutral }
+		}
+		"ROM"={
+			minor = yes
+			history = "ROM_POWDERKEG_DESC"
+			ideology = democratic
+			ideas = {
+				ROM_unionist_zeal
+				ROM_economy_idea_for_bookmark
+				ROM_carol_i_disaprove
+			}
+			focuses = {
+				ROM_the_natural_party_of_governance
+				ROM_the_kings_government
+				ROM_bratianu_resign
+			}
+			label = { label_neutral }
+		}
+		"BEL"={
+			minor = yes
+			history = "BEL_POWDERKEG_DESC"
+			ideology = democratic
+			ideas = {
+				BEL_idea_albert_i
+				BEL_inefficient_conscription_law
+				BEL_outdated_military
+			}
+			focuses = {
+				BEL_schollart_1910_cabinet
+				BEL_anglo_belgian_defense_talks
+				BEL_second_conscription_reform
+			}
+			label = { label_neutral }
+		}
 		"HOL"={
 			minor = yes
 			history = "HOL_POWDERKEG_DESC"
@@ -166,6 +307,24 @@ bookmarks = {
 				HOL_imperial_spirit
 				HOL_independent_course
 			}
+			label = { label_neutral }
+		}
+		
+		"SWE"={
+			minor = yes
+			history = "SWE_POWDERKEG_DESC"
+			ideology = democratic
+			ideas = {
+				SWE_gustaf_v
+				SWE_economic_turbulence_1
+				SWE_high_emigration_1
+			}
+			focuses = {
+				SWE_staaff
+				SWE_royal_dictatorship
+				SWE_anslutning
+			}
+			label = { label_neutral }
 		}
 
 		"CAN"={
@@ -183,37 +342,8 @@ bookmarks = {
 				CAN_Americanism
 				CAN_kingdom_own
 			}
-		}
-
-		"AST"={
-			minor = yes
-			history = "AST_POWDERKEG_DESC"
-			ideology = democratic
-			ideas = {
-				AST_idea_Citizen_Army
-				AST_idea_Wool_Monopoly
-				AST_idea_Dominion_Army
-			}
-			focuses = {
-				Australia_imperial_security
-				Australia_hold_the_conscription_plebiscite
-				Australia_the_first_aif
-			}
-		}
-
-		"JAP"={
-			minor = yes
-			history = "JAP_POWDERKEG_DESC"
-			ideology = neutrality
-			ideas = {
-				state_shintoism
-			}
-			focuses = {
-				spiritual_mobilization_focus
-				JAP_ww1_Invasion_of_Manchuria
-				JAP_ww1_siberian_intervention
-			}
-		}
+			label = { label_entente }
+		}	
 		
 		"QIN"={
 			minor = yes
@@ -225,10 +355,11 @@ bookmarks = {
 				QIN_idea_tongmenghui
 			}
 			focuses = {
-				CHI_continue_qing_new_reforms
-				CHI_second_empire
-				CHI_kuomintang			
+				QIN_constitutional_monarchy
+				QIN_mandate_of_heaven
+				QIN_continue_new_policies
 			}
+			label = { label_neutral }
 		}
 
 		"KOR"={
@@ -245,8 +376,24 @@ bookmarks = {
 				KOR_start_eagle_project
 				KOR_discussions_on_japanese_korea
 			}
+			label = { label_neutral }
 		}
-
+		"IND"={
+			minor = yes
+			history = "IND_POWDERKEG_DESC"
+			ideology = neutrality
+			ideas = {
+				VIN_union_of_protectorates
+				VIN_french_exploitation
+				VIN_colonial_army
+			}
+			focuses = {
+				VIN_integrate_laos
+				VIN_sarraut_administration
+				VIN_takeover_the_asian_fleet
+			}
+			label = { label_entente }
+		}
 		"BRA"={
 			minor = yes
 			history = "BRA_POWDERKEG_DESC"
@@ -261,7 +408,72 @@ bookmarks = {
 				BRA_republic_of_the_sword
 				BRA_congressos_de_trabalhadores
 			}
+			label = { label_neutral }
 		}
+
+		#"LIB"={
+		#	minor = yes
+		#	history = "LIB_POWDERKEG_DESC"
+		#	ideology = neutrality
+		#	#version = base_game
+		#	ideas = {
+		#		LIB_frontier_force
+		#		LIB_johnson_binger_treaty_1909
+                #LIB_pacification_of_the_hinterlands
+		#	}
+		#	focuses = {
+		#		LIB_pacification_of_the_hinterlands
+		#		LIB_out_with_old_in_with_new
+		#		LIB_try_the_whig_party
+		#	}
+		#}
+		# "MSC"={
+		# 	minor = yes
+		# 	history = "MSC_POWDERKEG_DESC"
+		# 	ideology = neutrality
+		# 	#version = base_game
+		#	ideas = {
+		# 		GULF_slavery
+		# 	}
+		# 	focuses = {
+		# 		MSC_matters_of_the_sultanate
+		# 		MSC_the_oyrx_and_the_lion
+		# 		MSC_restore_omani_empire
+		# 	}
+		# }
+
+		# "SAU"={
+		# 	minor = yes
+		# 	history = "SAU_POWDERKEG_DESC"
+		# 	ideology = neutrality
+		# 	#version = base_game
+		#	ideas = {
+		# 		unification_of_arabia
+		# 		SAU_Urban_influence_dummy
+		# 		SAU_Tribal_influence_dummy
+		# 	}
+		# 	focuses = {
+		# 		SAU_Convene_Shura
+		# 		SAU_Dynasty_Politics
+		# 		SAU_conquest_of_hejaz
+		# 	}
+		# }
+
+		# "CHL" = {
+		# 	minor = yes
+		# 	history = "CHL_POWDERKEG_DESC"
+		# 	ideology = democratic
+		# 	#version = base_game
+		#	ideas = {
+		# 		CHL_prussian_army
+		# 		CHL_parlamentary_republic
+		# 	}
+		# 	focuses = {
+		# 		CHL_milnovecientoselecion
+		# 		CHL_federation_of_chile
+		# 		CHL_rewrite_1928
+		# 	}
+		# }
 
 		effect = {
 			randomize_weather = 22345 # <- Obligatory in every bookmark !

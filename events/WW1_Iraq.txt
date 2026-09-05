@@ -1,189 +1,247 @@
-﻿add_namespace = ww1_iraq
+add_namespace = ww1_iraq
 
-# Great Iraqi Revolt
-########
+# Iraqi Revolt
 country_event = {
-	title = ww1_iraq.1.t
-	desc = ww1_iraq.1.d
-	id = ww1_iraq.1
-	picture = GFX_report_event_soldiers_marching
-	
+	id = ww1_iraq.3
+	title = ww1_iraq.3.t
+	desc = ww1_iraq.3.d
+	picture = GFX_report_event_peasant_revolt
 	fire_only_once = yes
 	trigger = {
-		any_country = {
-			has_country_flag = great_war_winner
-			any_owned_state = {
-				is_core_of = IRQ
-				NOT = { is_core_of = PREV }
+		has_global_flag = interbellum
+		291 = {
+			is_owned_and_controlled_by = ROOT
+			NOT = { is_core_of = ROOT }
+		}
+		NOT = {
+			original_tag = IRQ
+			original_tag = TUR
+			original_tag = SYR
+			original_tag = HJZ
+			original_tag = JBS
+			original_tag = SAU
+		}
+	}
+	mean_time_to_happen = { days = 130 }
+	option = {
+		name = ww1_iraq.3.a
+		every_owned_state = {
+			limit = {
+				OR = {
+					is_core_of = IRQ
+					is_core_of = KUR
+				}
+				NOT = { is_core_of = ROOT }
+			}
+			add_compliance = -70
+			add_resistance = 50
+		}
+		news_event = interwar_news.14
+	}
+}
+
+# Kingdom of Iraq
+country_event = {
+	id = ww1_iraq.1
+	title = ww1_iraq.1.t
+	desc = ww1_iraq.1.d
+	picture = GFX_report_event_tur_turkish_soldiers
+	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 23
+	}
+	trigger = {
+		tag = ENG
+		is_subject = no
+		owns_state = 291
+		controls_state = 291
+		NOT = {
+			country_exists = IRQ
+		}
+		SYR = {
+			OR = {
+				exists = no
+				NOT = {
+					has_country_leader = {
+						character = HJZ_faisal_bin_hussein_bin_ali
+					}
+				}	
 			}
 		}
-		IRQ = { exists = no }
+		date > 1921.8.1
+		has_global_flag = interwar_iraqi_revolt
 	}
-	mean_time_to_happen = { days = 365 }
-
 	option = {
 		name = ww1_iraq.1.a
-		every_owned_state = {
-			limit = { is_core_of = IRQ }
-			IRQ = { transfer_state = PREV }
+		set_global_flag = kingdom_of_iraq
+		release_puppet = IRQ
+		IRQ = { set_country_flag = protectorate }
+		set_autonomy = {
+			target = IRQ
+			autonomy_state = autonomy_tgwr_protectorate
+			freedom_level = 0.8
 		}
-		if = {
-			limit = { owns_state = 675 }
-			IRQ = {
-				add_state_core = 675
-				transfer_state = 675
-			}
-		}
-		puppet = IRQ
-		if = {
-			limit = {
-				has_dlc = "Together for Victory"
-			}
-			set_autonomy = {
-				target = IRQ
-				autonomous_state = autonomy_tgwr_informal_protectorate
-				freedom_level = 0.5
-			}
-			IRQ = { set_country_flag = protectorate }
-		}
-		hidden_effect = {
-			if = {
-				limit = { 
-					SYR = {
-						has_country_flag = faisal_of_syria
-						exists = no 
+		HJZ = {
+			HJZ_faisal_bin_hussein_bin_ali = {
+				set_nationality = IRQ
+				promote_leader = yes
+				set_character_name = SYR_faisal_i
+				if = {
+					limit = {
+						has_ideology = semi_constitutional_monarchy
 					}
-				}
-				SYR = { retire_ideology_leader = neutrality }
-				IRQ = {
-					set_country_flag = faisal_of_iraq
-					create_country_leader = {
-						name = "Faisal I" 	
-						picture = "gfx/leaders/IRQ/IRQ_faisal_i.dds" 
-						expire = "1935.1.1" 
-						ideology = despotism 
-						traits = {  } 
-					}
-				}
-				JOR = {
-					create_country_leader = {
-						name = "Abdullah I" 	
-						picture = "gfx/leaders/JOR/JOR_abdullah_i.dds" 
-						expire = "1935.1.1" 
-						ideology = despotism 
-						traits = {  } 
-					}
+					promote_character = semi_constitutional_monarchy
 				}
 				else = {
-					IRQ = {
-						set_country_flag = abdullah_of_iraq
-						create_country_leader = {
-							name = "Abdullah I" 	
-							picture = "gfx/leaders/JOR/JOR_abdullah_i.dds" 
-							expire = "1935.1.1" 
-							ideology = despotism 
-							traits = {  } 
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = semi_constitutional_monarchy
 						}
 					}
 				}
 			}
+			HJZ_ghazi_bin_faisal = {
+				set_nationality = IRQ
+			}
+		}
+		hidden_effect = {
 			IRQ = {
 				set_politics = {
 					ruling_party = neutrality
-					last_election = "1910.1.1"
-					election_frequency = 48
 					elections_allowed = no
 				}
 				set_popularities = {
-					democratic = 5
-					fascism = 5
-					communism = 0
-					neutrality = 90
+					democratic = 18
+					fascism = 1
+					communism = 1
+					neutrality = 80
 				}
 			}
+			every_state = {
+				limit = {
+					is_core_of = IRQ
+					is_claimed_by = ROOT
+				}
+				remove_claim_by = ROOT
+			}
 		}
-		ai_chance = { factor = 50 }
+	}
+	option = {
+		name = ww1_iraq.1.b
+		release = IRQ
+		declare_war_on = {
+			target = IRQ
+			type = annex_everything
+		}
+		ai_chance = {
+			factor = 0
+		}
 	}
 }
-# Fix Iraq
+
+# Iraqi Independence
 country_event = {
 	id = ww1_iraq.2
 	title = ww1_iraq.2.t
 	desc = ww1_iraq.2.d
+	picture = GFX_report_event_tur_turkish_soldiers
 	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 3
+	}
 	trigger = {
-		tag = IRQ
+		tag = ENG
+		has_subject = IRQ
+		has_global_flag = kingdom_of_iraq
+		date > 1932.8.1
+	}
+	option = {
+		name = ww1_iraq.2.a
+		end_puppet = IRQ
+		give_guarantee = IRQ
 		IRQ = {
-			exists = yes
-			is_subject = no
-			NOT = {
-				owns_state = 675
-				has_country_flag = great_war_winner
-			}
-		}
-		SYR = {
-			exists = no
-		}
-		TUR = {
-			has_country_flag = great_war_loser
+			give_military_access = ROOT
+			add_ideas = IRQ_anglo_iraqi_treaty
+			clr_country_flag = protectorate
 		}
 	}
-	hidden = yes
-	immediate = {
-		every_other_country = {
-			limit = {
-				has_country_flag = great_war_winner
-				owns_state = 675
-			}
-			set_country_flag = iraqi_protector
-			puppet = IRQ
-			
-			if = {
-				limit = {
-					has_dlc = "Together for Victory"
-				}
-				set_autonomy = {
-					target = IRQ
-					autonomous_state = autonomy_tgwr_informal_protectorate
-					freedom_level = 0.5
-				}
-				IRQ = { set_country_flag = protectorate }
-			}
+	option = {
+		name = ww1_iraq.1.b
+		end_puppet = IRQ
+		declare_war_on = {
+			target = IRQ
+			type = annex_everything
 		}
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
 
-		IRQ = {
-			add_state_core = 675
-			transfer_state = 675
-			set_country_flag = faisal_of_iraq
-			create_country_leader = {
-				name = "Faisal I"
-				picture = "gfx/leaders/IRQ/IRQ_faisal_i.dds" 
-				expire = "1935.1.1"
-				ideology = despotism
-				traits = { }
-			}
-			set_politics = {
-				ruling_party = neutrality
-				last_election = "1910.1.1"
-				election_frequency = 48
-				elections_allowed = no
-			}
-			set_popularities = {
-				democratic = 5
-				fascism = 5
-				communism = 0
-				neutrality = 90
+# Ghazi I
+country_event = {
+	id = ww1_iraq.4
+	title = ww1_iraq.4.t
+	desc = ww1_iraq.4.d
+	picture = GFX_report_event_generic_funeral
+	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 8
+	}
+	trigger = {
+		OR = {
+			tag = IRQ
+			tag = SYR
+		}
+		has_character = HJZ_faisal_bin_hussein_bin_ali
+		has_country_leader = {
+			character = HJZ_faisal_bin_hussein_bin_ali
+		}
+		date > 1933.9.1
+	}
+	option = {
+		name = ww1_iraq.4.a
+		retire_character = HJZ_faisal_bin_hussein_bin_ali
+		HJZ_ghazi_bin_faisal = {
+			set_character_name = IRQ_ghazi_i
+			add_country_leader_role = {
+				promote_leader = yes
+				country_leader = {
+					ideology = semi_constitutional_monarchy
+				}
 			}
 		}
+	}
+}
 
-		every_other_country = {
-			limit = {
-				has_country_flag = iraqi_protector
-			}
-			annex_country = {
-				target = IRQ
-				transfer_troops = no
+# Kingdom of Kurdistan
+country_event = {
+	id = ww1_iraq.5
+	title = ww1_iraq.5.t
+	desc = ww1_iraq.5.d
+	picture = GFX_report_event_tur_kurdish_guerillas
+	fire_only_once = yes
+	mean_time_to_happen = {
+		days = 140
+	}
+	trigger = {
+		tag = ENG
+		owns_state = 883
+		has_global_flag = interwar_iraqi_revolt
+		date > 1921.1.1
+		NOT = { country_exists = KUR }
+	}
+	option = {
+		name = ww1_iraq.5.a
+		KUR = {
+			transfer_state = 883
+			send_embargo = ROOT
+			set_truce = {
+				target = ROOT
+				days = 365
 			}
 		}
+		unlock_decision_tooltip = ENG_annex_kurdistan
 	}
 }
