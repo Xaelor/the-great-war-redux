@@ -10,15 +10,30 @@ CP_surrender_effect = {
 
 	every_faction_member = {
 		limit = {
-			has_idea = MOR_guerrilla_warfare # for guerilla countries like hejaz and asir
+			has_variable = rebel_annex_to
 		}
 		clear_all_relations_except_wars = yes
+		if = {
+			limit = { 
+				has_capitulated = yes
+			}
+			var:rebel_annex_to = {
+				annex_country = {
+					target = PREV
+				}
+			}
+		}
 	}
 
 	ENT = {
 		every_faction_member = {
 			set_country_flag = great_war_winner
-			add_ideas = idea_victors_of_wwi_entente
+			if = {
+				limit = { 
+					is_major = yes
+				}			
+				add_ideas = idea_victors_of_wwi_entente
+			}
 		}
 	}
 	# romania is exception
@@ -32,7 +47,6 @@ CP_surrender_effect = {
 		ROM = {
 			clr_country_flag = great_war_loser
 			set_country_flag = great_war_winner
-			add_ideas = idea_victors_of_wwi_entente
 			set_country_flag = ROM_treaty_of_bucharest_violated
 			set_country_flag = ROM_treaty_of_bucharest_nullified
 		}
@@ -198,9 +212,19 @@ ENT_surrender_effect = {
 
 	every_faction_member = {
 		limit = {
-			has_idea = MOR_guerrilla_warfare # for guerilla countries like hejaz and asir
+			has_variable = rebel_annex_to
 		}
 		clear_all_relations_except_wars = yes
+		if = {
+			limit = { 
+				has_capitulated = yes
+			}
+			var:rebel_annex_to = {
+				annex_country = {
+					target = PREV
+				}
+			}
+		}
 	}
 
 	GER = {
@@ -224,7 +248,12 @@ ENT_surrender_effect = {
 				}				
 			}
 			set_country_flag = great_war_winner
-			add_ideas = idea_victors_of_wwi_cp
+			if = {
+				limit = { 
+					is_major = yes
+				}
+				add_ideas = idea_victors_of_wwi_cp
+			}
 		}
 	}
 
@@ -372,6 +401,55 @@ FRA_surrender_effect_ENT = {
 					}
 				}
 
+				# return korice
+				if = {
+					limit = { 
+						owns_state = 1225
+					}
+					if = {
+						limit = { 
+							ALB = {
+								has_country_flag = AUH_occupation_of_ALB
+							}
+							AUS = {
+								is_part_of_great_war = yes
+							}
+						}
+						if = {
+							limit = { 
+								1225 = {
+									is_controlled_by = FRA
+								}
+							}
+							AUS = {
+								set_state_owner = 1225
+							}
+						}
+						else = {
+							AUS = {
+								transfer_state = 1225
+							}
+						}
+					}
+					else = {						
+						if = {
+							limit = { 
+								1225 = {
+									is_controlled_by = FRA
+								}
+							}
+							ALB = {
+								set_state_owner = 1225
+							}
+						}
+						else = {
+							ALB = {
+								transfer_state = 1225
+							}
+						}
+					}
+				}				
+
 				white_peace = GER
 				every_enemy_country = {
 					PREV = {
@@ -427,31 +505,6 @@ FRA_surrender_effect_ENT = {
 						}
 					}
 					transfer_state_to = TUR
-				}
-
-				# return korice
-				if = {
-					limit = { 
-						owns_state = 1225
-					}
-					if = {
-						limit = { 
-							ALB = {
-								has_country_flag = AUH_occupation_of_ALB
-							}
-							AUS = {
-								is_part_of_great_war = yes
-							}
-						}
-						AUS = {
-							set_state_owner = 1225
-						}
-					}
-					else = {						
-						ALB = {
-							set_state_owner = 1225
-						}
-					}
 				}
 
 				every_state = {
@@ -510,21 +563,6 @@ FRA_surrender_effect_ENT = {
 					add_state_claim = 863
 					add_state_claim = 864
 				}
-			}
-			
-			every_owned_state = {
-				limit = {
-					OR = {
-						region = 19 # Northern France
-						state = 15 # Normandy
-					}
-					NOT = {
-						state = 16 # Ile de France
-						state = 24 # Centre - Val de Loire
-						state = 27 # Burgundy
-					}
-				}
-				set_demilitarized_zone = yes
 			}
 
 			# start of french civil war
@@ -1064,11 +1102,11 @@ RUS_surrender_effect_ENT = {
 							if = {
 								limit = {
 									is_subject = yes
-								}	
-								free_subject = yes
+								}
 								OVERLORD = {
 									PREV = {
 										give_military_access = PREV
+										free_subject = yes
 									}
 								}
 								if = {
@@ -3709,6 +3747,58 @@ ITA_surrender_giveup_libya = {
 				}
 			}
 			transfer_state_to = TUR
+			if = {
+				limit = {
+					LBA = {
+						exists = yes
+						is_subject = no
+						NOT = {
+							has_war_with = TUR
+						}
+					}
+				}
+				LBA = {
+					every_owned_state = {
+						limit = {
+							OR = {
+								state = 273
+								state = 1124
+								state = 1122
+								state = 1128
+								state = 812
+								state = 661
+								state = 1154
+								state = 1157
+								state = 1160
+								state = 448
+							}
+						}
+						transfer_state_to = TUR
+					}
+				}
+				TUR = {
+					set_autonomy = {
+						target = LBA
+						autonomy_state = autonomy_tgwr_ottoman_emirate
+					}
+				}
+			}
+			if = {
+				limit = {
+					TRP = {
+						exists = yes
+						is_subject = no
+						NOT = {
+							has_war_with = TUR
+						}
+					}
+				}
+				TUR = {
+					annex_country = {
+						target = TRP
+					}
+				}
+			}
 		}
 		else = {
 			transfer_state_to = TRP

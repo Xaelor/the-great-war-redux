@@ -16,9 +16,7 @@ FRA_area_priority = {
 	enable = {
 		always = yes
 	}
-	abort = {
-		always = no
-	}
+	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = area_priority
 		id = europe
@@ -124,6 +122,14 @@ FRA_less_prio_africa_great_war = {
 	}
 	enable = {
 		is_great_war_ongoing = yes
+		# suppress uprisings
+		NOT = {
+			any_enemy_country = {
+				capital_scope = {
+					is_on_continent = africa
+				}
+			}
+		}
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
@@ -135,6 +141,23 @@ FRA_less_prio_africa_great_war = {
 		type = front_unit_request
 		area = africa
 		value = -50
+	}
+}
+
+FRA_fight_MOR_great_war = {
+	allowed = {
+		original_tag = FRA
+	}
+	enable = {
+		is_great_war_ongoing = yes
+		country_exists = GUD
+		has_war_with = GUD
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = force_defend_ally_borders
+		id = MOR
+		value = 100
 	}
 }
 
@@ -1193,83 +1216,6 @@ FRA_VIN_fight_long_mission = {
 			671
 		}
 		subtract_fronts_from_need = no
-	}
-}
-
-FRA_MOR_protect = {
-	allowed = {
-		original_tag = FRA
-	}
-	enable = {
-		country_exists = MOR
-		has_war_with_major = no
-		MOR = {
-			is_subject_of = FRA
-		}
-		OR = {
-			has_global_flag = casablanca_crisis_alert
-			NOT = {
-				has_global_flag = crisis_in_progress
-				has_wargoal_against = GER
-				is_justifying_wargoal_against = GER
-				any_allied_country = {
-					OR = {
-						has_wargoal_against = GER
-						has_war_with = GER
-						is_justifying_wargoal_against = GER
-						GER = {
-							OR = {
-								is_justifying_wargoal_against = PREV
-								has_wargoal_against = PREV
-							}
-						}
-					}
-				}
-				GER = {
-					is_justifying_wargoal_against = ROOT
-					has_wargoal_against = ROOT
-				}
-			}
-		}
-		OR = {
-			has_war_with = RMO
-			has_war_with = GUD
-			date < 1914.1.1
-		}
-	}
-	abort_when_not_enabled = yes
-	ai_strategy = {
-		type = put_unit_buffers
-		ratio = 0.2
-		states = {
-			462
-			108
-			461
-			1094
-			1095
-			1237
-		}
-		subtract_fronts_from_need = no
-	}
-}
-
-FRA_RMO_low_prio = {
-	allowed = {
-		original_tag = FRA
-	}
-	enable = {
-		country_exists = MOR
-		has_war_with_major = no
-		MOR = {
-			is_subject_of = FRA
-			surrender_progress < 0.02
-		}
-	}
-	abort_when_not_enabled = yes
-	ai_strategy = {
-		type = front_unit_request
-		strategic_region = 182
-		value = -40
 	}
 }
 

@@ -11228,18 +11228,9 @@ country_event = {
 				is_locked = yes
 				force_allow_recruiting = yes
 				regiments = {
-					militia = {
-						x = 0
-						y = 0
-					}
-					militia = {
-						x = 0
-						y = 1
-					}
-					militia = {
-						x = 0
-						y = 2
-					}
+					militia = { x = 0 y = 0 }
+					militia = { x = 0 y = 1 }
+					militia = { x = 0 y = 2 }
 				}
 			}
 			if = {
@@ -11250,9 +11241,6 @@ country_event = {
 				}
 				FRA_create_FRC = yes
 				FRC = {
-					FRA_jean_longuet = {
-						promote_character = yes
-					}
 					load_focus_tree = france_socialist_focus
 				}
 				every_owned_state = {
@@ -11293,7 +11281,6 @@ country_event = {
 								is_character = FRA_charles_nollet
 							}	
 							OR = {
-								is_character = FRA_philippe_petain
 								has_trait = old_guard
 								has_trait = old_guard_navy
 								has_trait = trait_royalist
@@ -11315,7 +11302,6 @@ country_event = {
 									is_character = FRA_charles_nollet
 								}	
 								OR = {
-									is_character = FRA_philippe_petain
 									has_trait = old_guard
 									has_trait = old_guard_navy
 									has_trait = trait_royalist
@@ -11338,9 +11324,6 @@ country_event = {
 				}
 				FRA_create_NFA = yes
 				NFA = {
-					FRA_ferdinand_foch = {
-						promote_character = yes
-					}
 					load_focus_tree = france_nationalist_focus
 				}
 				every_owned_state = {
@@ -11459,9 +11442,16 @@ country_event = {
 			limit = {
 				original_tag = FRA
 			}
-			declare_war_on = {
-				target = PREV
-				type = civil_war
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = PREV
+					}
+				}
+				declare_war_on = {
+					target = PREV
+					type = civil_war
+				}
 			}
 			add_ideas = extensive_conscription
 			add_ideas = partial_economic_mobilisation
@@ -12084,21 +12074,6 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_france.24.a
-		# if = {
-		# 	limit = {
-		# 		tag = FRA
-		# 	}
-		# 	add_state_core = 459
-		# 	set_capital = { state = 459 }
-		# 	# to fix weird desert mechanism
-		# 	if = {
-		# 		limit = {
-		# 			owns_state = 567
-		# 		}
-		# 		transfer_state = 515
-		# 		transfer_state = 775
-		# 	}
-		# }
 		every_enemy_country = {
 			limit = {
 				OR = {
@@ -12147,7 +12122,53 @@ country_event = {
 			}
 			white_peace = ROOT
 		}
+		load_focus_tree = france_nationalist_focus
 		mark_focus_tree_layout_dirty = yes
+
+		hidden_effect = {
+			set_politics = {
+				ruling_party = fascism
+				elections_allowed = no
+			}
+			set_popularities = {
+				democratic = 18
+				neutrality = 0
+				fascism = 82
+				communism = 0
+			}
+			set_country_flag = FRA_nationalist_france_flag
+			set_cosmetic_tag = FRA_proto_fascism
+			set_party_name = {
+				ideology = fascism
+				long_name = FRA_FSN_long
+				name = FRA_FSN
+			}
+			add_ideas = FRA_disjointed_government2
+			FRA_ferdinand_foch = {
+				set_nationality = ROOT
+				promote_character = yes
+			}
+			FRA = {
+				FRA_philippe_petain = {
+					set_nationality = ROOT
+					if = {
+						limit = {
+							has_ideology = stratocracy
+						}
+						promote_character = stratocracy
+					}
+					else = {
+						add_country_leader_role = {
+							promote_leader = yes
+							country_leader = {
+								ideology = stratocracy
+								traits = { great_war_hero generallissimo }
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
