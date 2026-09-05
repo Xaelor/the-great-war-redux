@@ -5556,225 +5556,275 @@ country_event = {
 	}
 	immediate = {
 		XSM = {
-			every_other_country = {
+			if = {
 				limit = {
-					is_china_or_warlord = yes
+					exists = no
+				}
+				every_other_country = {
+					limit = {
+						is_china_or_warlord = yes
+					}
+					every_owned_state = {
+						limit = {
+							state = 604
+						}
+						add_core_of = XSM
+						transfer_state_to = XSM
+					}
 				}
 				every_owned_state = {
-					limit = {
-						state = 604
-					}
-					add_core_of = XSM
-					transfer_state_to = XSM
+					set_demilitarized_zone = no
 				}
-			}
-			every_owned_state = {
-				set_demilitarized_zone = no
-			}
-			hidden_effect = {
-				CHI = {
+				hidden_effect = {
+					CHI = {
+						CHI_ma_qi = {
+							set_nationality = XSM
+						}
+					}
 					CHI_ma_qi = {
-						set_nationality = XSM
-					}
-				}
-				CHI_ma_qi = {
-					add_country_leader_role = {
-						promote_leader = yes
-						country_leader = {
-							ideology = warlordism
+						if = {
+							limit = {
+								has_ideology = warlordism
+							}
+							promote_character = warlordism
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = warlordism
+								}
+							}
+						}
+						if = {
+							limit = {
+								has_ideology = stratocracy
+							}
+							promote_character = stratocracy
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = stratocracy
+								}
+							}
 						}
 					}
-					add_country_leader_role = {
-						promote_leader = yes
-						country_leader = {
-							ideology = stratocracy
+					load_oob = CHI_warlord
+					capital_scope = {
+						create_unit = {
+							division = "division_template = \"Xinjian Lujun Hùnchéngxié\"	start_experience_factor = 0.4	start_equipment_factor = 1"
+							owner = PREV
+							allow_spawning_on_enemy_provs = yes
+							count = 3
 						}
-					}
-				}
-				load_oob = CHI_warlord
-				capital_scope = {
-					create_unit = {
-						division = "division_template = \"Xinjian Lujun Hùnchéngxié\"	start_experience_factor = 0.4	start_equipment_factor = 1"
-						owner = PREV
-						allow_spawning_on_enemy_provs = yes
-						count = 3
-					}
-				}
-				if = {
-					limit = {
-						country_exists = QIN
-					}
-					inherit_technology = QIN
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 5000
-						producer = QIN
 					}
 					if = {
 						limit = {
-							has_tech = tech_support
+							country_exists = QIN
 						}
+						inherit_technology = QIN
 						add_equipment_to_stockpile = {
-							type = support_equipment
-							amount = 500
+							type = infantry_equipment
+							amount = 5000
 							producer = QIN
 						}
-					}
-					# QIN = {
-					# 	add_to_faction = PREV
-					# }
-					
-				}
-				else = {
-					inherit_technology = CHI
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 5000
-						producer = CHI
-					}
-					if = {
-						limit = {
-							has_tech = tech_support
+						if = {
+							limit = {
+								has_tech = tech_support
+							}
+							add_equipment_to_stockpile = {
+								type = support_equipment
+								amount = 500
+								producer = QIN
+							}
 						}
+						# QIN = {
+						# 	add_to_faction = PREV
+						# }
+						
+					}
+					else = {
+						inherit_technology = CHI
 						add_equipment_to_stockpile = {
-							type = support_equipment
-							amount = 500
+							type = infantry_equipment
+							amount = 5000
 							producer = CHI
 						}
-					}
-					get_current_government_type = yes
-					CHI = {
-						set_autonomy = {
-							target = PREV
-							autonomy_state = autonomy_tgwr_regional_government
+						if = {
+							limit = {
+								has_tech = tech_support
+							}
+							add_equipment_to_stockpile = {
+								type = support_equipment
+								amount = 500
+								producer = CHI
+							}
 						}
+						get_current_government_type = yes
+						CHI = {
+							set_autonomy = {
+								target = PREV
+								autonomy_state = autonomy_tgwr_regional_government
+							}
+						}
+						restore_previous_government_type = yes
 					}
-					restore_previous_government_type = yes
 				}
 			}
 		}
 		GSM = {
-			every_other_country = {
+			if = {
 				limit = {
-					is_china_or_warlord = yes
+					exists = no
 				}
-				every_owned_state = {
+				every_other_country = {
 					limit = {
-						OR = {
-							state = 616
-							state = 755
-						}
-					}
-					add_core_of = GSM
-					transfer_state_to = GSM
-				}
-				if = {
-					limit = {
-						country_exists = QIN
-						NOT = { country_exists = CHI }
+						is_china_or_warlord = yes
 					}
 					every_owned_state = {
 						limit = {
 							OR = {
-								state = 283
-								state = 621
+								state = 616
+								state = 755
 							}
 						}
 						add_core_of = GSM
 						transfer_state_to = GSM
 					}
+					if = {
+						limit = {
+							country_exists = QIN
+							NOT = { country_exists = CHI }
+						}
+						every_owned_state = {
+							limit = {
+								OR = {
+									state = 283
+									state = 621
+								}
+							}
+							add_core_of = GSM
+							transfer_state_to = GSM
+						}
+					}
 				}
-			}
-			every_owned_state = {
-				set_demilitarized_zone = no
-			}
-			hidden_effect = {
-				CHI = {
+				every_owned_state = {
+					set_demilitarized_zone = no
+				}
+				hidden_effect = {
+					CHI = {
+						CHI_ma_fuxiang = {
+							set_nationality = GSM
+						}
+					}
 					CHI_ma_fuxiang = {
-						set_nationality = GSM
-					}
-				}
-				CHI_ma_fuxiang = {
-					add_country_leader_role = {
-						promote_leader = yes
-						country_leader = {
-							ideology = warlordism
-							traits = { scholar_general }
+						if = {
+							limit = {
+								has_ideology = warlordism
+							}
+							promote_character = warlordism
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = warlordism
+									traits = { scholar_general }
+								}
+							}
+						}
+						if = {
+							limit = {
+								has_ideology = stratocracy
+							}
+							promote_character = stratocracy
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = stratocracy
+									traits = { scholar_general }
+								}
+							}
+						}
+						if = {
+							limit = {
+								has_ideology = conservatism
+							}
+							promote_character = conservatism
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = conservatism
+									traits = { scholar_general }
+								}
+							}
 						}
 					}
-					add_country_leader_role = {
-						promote_leader = yes
-						country_leader = {
-							ideology = stratocracy
-							traits = { scholar_general }
+					load_oob = CHI_warlord
+					capital_scope = {
+						create_unit = {
+							division = "division_template = \"Xinjian Lujun Hùnchéngxié\"	start_experience_factor = 0.4	start_equipment_factor = 1"
+							owner = PREV
+							allow_spawning_on_enemy_provs = yes
+							count = 5
 						}
-					}
-					add_country_leader_role = {
-						promote_leader = yes
-						country_leader = {
-							ideology = conservatism
-							traits = { scholar_general }
-						}
-					}
-				}
-				load_oob = CHI_warlord
-				capital_scope = {
-					create_unit = {
-						division = "division_template = \"Xinjian Lujun Hùnchéngxié\"	start_experience_factor = 0.4	start_equipment_factor = 1"
-						owner = PREV
-						allow_spawning_on_enemy_provs = yes
-						count = 5
-					}
-				}
-				if = {
-					limit = {
-						country_exists = QIN
-					}
-					inherit_technology = QIN
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 5000
-						producer = QIN
 					}
 					if = {
 						limit = {
-							has_tech = tech_support
+							country_exists = QIN
 						}
+						inherit_technology = QIN
 						add_equipment_to_stockpile = {
-							type = support_equipment
-							amount = 500
+							type = infantry_equipment
+							amount = 5000
 							producer = QIN
 						}
-					}
-					# QIN = {
-					# 	add_to_faction = PREV
-					# }
-				}
-				else = {
-					inherit_technology = CHI
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 5000
-						producer = CHI
-					}
-					if = {
-						limit = {
-							has_tech = tech_support
+						if = {
+							limit = {
+								has_tech = tech_support
+							}
+							add_equipment_to_stockpile = {
+								type = support_equipment
+								amount = 500
+								producer = QIN
+							}
 						}
+						# QIN = {
+						# 	add_to_faction = PREV
+						# }
+					}
+					else = {
+						inherit_technology = CHI
 						add_equipment_to_stockpile = {
-							type = support_equipment
-							amount = 500
+							type = infantry_equipment
+							amount = 5000
 							producer = CHI
 						}
-					}
-					get_current_government_type = yes
-					CHI = {
-						set_autonomy = {
-							target = PREV
-							autonomy_state = autonomy_tgwr_regional_government
+						if = {
+							limit = {
+								has_tech = tech_support
+							}
+							add_equipment_to_stockpile = {
+								type = support_equipment
+								amount = 500
+								producer = CHI
+							}
 						}
+						get_current_government_type = yes
+						CHI = {
+							set_autonomy = {
+								target = PREV
+								autonomy_state = autonomy_tgwr_regional_government
+							}
+						}
+						restore_previous_government_type = yes
 					}
-					restore_previous_government_type = yes
 				}
 			}
 		}
@@ -6360,6 +6410,21 @@ country_event = {
 						set_nationality = HNC
 					}
 				}
+				inherit_technology = CHN
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = 5000
+					producer = CHN
+				}
+				add_equipment_to_stockpile = {
+					type = support_equipment
+					amount = 500
+					producer = CHN
+				}
+				set_truce = {
+					target = CHN
+					days = 330
+				}
 				load_oob = CHI_warlord
 				capital_scope = {
 					create_unit = {
@@ -6367,54 +6432,6 @@ country_event = {
 						owner = PREV
 						allow_spawning_on_enemy_provs = yes
 						count = 4
-					}
-				}
-				if = {
-					limit = {
-						country_exists = QIN
-					}
-					inherit_technology = QIN
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 5000
-						producer = QIN
-					}
-					if = {
-						limit = {
-							has_tech = tech_support
-						}
-						add_equipment_to_stockpile = {
-							type = support_equipment
-							amount = 500
-							producer = QIN
-						}
-					}
-					# QIN = {
-					# 	add_to_faction = PREV
-					# }
-				}
-				else = {
-					inherit_technology = CHI
-					add_equipment_to_stockpile = {
-						type = infantry_equipment
-						amount = 5000
-						producer = CHI
-					}
-					if = {
-						limit = {
-							has_tech = tech_support
-						}
-						add_equipment_to_stockpile = {
-							type = support_equipment
-							amount = 500
-							producer = CHI
-						}
-					}
-					CHI = {
-						set_truce = {
-							target = PREV
-							days = 330
-						}
 					}
 				}
 			}
@@ -7408,36 +7425,24 @@ country_event = {
 			every_owned_state = {
 				set_demilitarized_zone = no
 			}
-			load_oob = CHI_warlord
-			capital_scope = {
-				create_unit = {
-					division = "division_template = \"Xinjian Lujun Hùnchéngxié\"	start_experience_factor = 0.4	start_equipment_factor = 1"
-					owner = PREV
-					allow_spawning_on_enemy_provs = yes
-					count = 10
-				}
+			inherit_technology = CHN
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 5000
+				producer = CHN
 			}
-			if = {
-				limit = {
-					country_exists = QIN
-				}
-				inherit_technology = QIN
-				add_equipment_to_stockpile = {
-					type = infantry_equipment
-					amount = 5000
-					producer = QIN
-				}
+			add_equipment_to_stockpile = {
+				type = support_equipment
+				amount = 500
+				producer = CHN
+			}
+			set_truce = {
+				target = CHN
+				days = 330
+			}
+			CHN = {
 				if = {
-					limit = {
-						has_tech = tech_support
-					}
-					add_equipment_to_stockpile = {
-						type = support_equipment
-						amount = 500
-						producer = QIN
-					}
-				}
-				QIN = {
+					limit = { tag = QIN }
 					if = {
 						limit = {
 							has_completed_focus = QIN_appeal_to_the_militarists
@@ -7461,30 +7466,8 @@ country_event = {
 						}
 					}
 				}
-			}
-			else = {
-				inherit_technology = CHI
-				add_equipment_to_stockpile = {
-					type = infantry_equipment
-					amount = 5000
-					producer = CHI
-				}
-				if = {
-					limit = {
-						has_tech = tech_support
-					}
-					add_equipment_to_stockpile = {
-						type = support_equipment
-						amount = 500
-						producer = CHI
-					}
-				}
-				get_current_government_type = yes
-				CHI = {
-					set_truce = {
-						target = PREV
-						days = 330
-					}
+				else = {
+					FNG = { get_current_government_type = yes }
 					set_autonomy = {
 						target = PREV
 						autonomy_state = autonomy_tgwr_regional_government
@@ -7498,27 +7481,36 @@ country_event = {
 							always = yes
 						}
 					}
+					FNG = { restore_previous_government_type = yes }
 				}
-				restore_previous_government_type = yes
+			}
+			load_oob = CHI_warlord
+			capital_scope = {
+				create_unit = {
+					division = "division_template = \"Xinjian Lujun Hùnchéngxié\"	start_experience_factor = 0.4	start_equipment_factor = 1"
+					owner = PREV
+					allow_spawning_on_enemy_provs = yes
+					count = 10
+				}
 			}
 		}
 		JLN = {
 			QIN = {
-				QIN_meng_enyuan = { set_nationality = JLN }
-			}
-			QIN_meng_enyuan = {
-				add_country_leader_role = {
-					promote_leader = yes
-					country_leader = {
-						ideology = warlordism
-						traits = { hairpin_general }
+				QIN_meng_enyuan = {
+					set_nationality = JLN
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = warlordism
+							traits = { hairpin_general }
+						}
 					}
-				}
-				add_country_leader_role = {
-					promote_leader = yes
-					country_leader = {
-						ideology = stratocracy
-						traits = { hairpin_general }
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = stratocracy
+							traits = { hairpin_general }
+						}
 					}
 				}
 			}
@@ -7546,58 +7538,24 @@ country_event = {
 			every_owned_state = {
 				set_demilitarized_zone = no
 			}
-			load_oob = CHI_warlord
-			capital_scope = {
-				create_unit = {
-					division = "division_template = \"Xinjian Lujun Hùnchéngxié\"	start_experience_factor = 0.4	start_equipment_factor = 1"
-					owner = PREV
-					allow_spawning_on_enemy_provs = yes
-					count = 4
-				}
+			inherit_technology = CHN
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 2500
+				producer = CHN
 			}
-			if = {
-				limit = {
-					country_exists = QIN
-				}
-				inherit_technology = QIN
-				add_equipment_to_stockpile = {
-					type = infantry_equipment
-					amount = 2500
-					producer = QIN
-				}
+			add_equipment_to_stockpile = {
+				type = support_equipment
+				amount = 250
+				producer = CHN
+			}
+			CHN = {
 				if = {
-					limit = {
-						has_tech = tech_support
-					}
-					add_equipment_to_stockpile = {
-						type = support_equipment
-						amount = 250
-						producer = QIN
-					}
-				}
-				QIN = {
+					limit = { tag = QIN }
 					add_to_faction = PREV
 				}
-			}
-			else = {
-				inherit_technology = CHI
-				add_equipment_to_stockpile = {
-					type = infantry_equipment
-					amount = 2500
-					producer = CHI
-				}
-				if = {
-					limit = {
-						has_tech = tech_support
-					}
-					add_equipment_to_stockpile = {
-						type = support_equipment
-						amount = 250
-						producer = CHI
-					}
-				}
-				get_current_government_type = yes
-				CHI = {
+				else = {
+					JLN = { get_current_government_type = yes }
 					set_truce = {
 						target = PREV
 						days = 330
@@ -7606,8 +7564,17 @@ country_event = {
 						target = PREV
 						autonomy_state = autonomy_tgwr_regional_government
 					}
+					JLN = { restore_previous_government_type = yes }
 				}
-				restore_previous_government_type = yes
+			}
+			load_oob = CHI_warlord
+			capital_scope = {
+				create_unit = {
+					division = "division_template = \"Xinjian Lujun Hùnchéngxié\"	start_experience_factor = 0.4	start_equipment_factor = 1"
+					owner = PREV
+					allow_spawning_on_enemy_provs = yes
+					count = 4
+				}
 			}
 		}
 	}
@@ -7910,6 +7877,42 @@ country_event = {
 				}
 				dismantle_faction = yes
 			}
+			if = {
+				limit = {
+					country_exists = QZC
+				}
+				GXC = {
+					annex_country = {
+						target = QZC
+					}
+				}
+				CHI = {
+					CHI_long_jiguang = {
+						set_nationality = ANC
+						if = {
+							limit = {
+								has_ideology = warlordism
+							}
+							remove_country_leader_role = {
+								ideology = warlordism
+							}
+						}
+						if = {
+							limit = {
+								has_ideology = stratocracy
+							}
+							remove_country_leader_role = {
+								ideology = stratocracy
+							}
+						}
+					}
+				}
+				QZC = {
+					QZC_long_yuguang = {
+						set_nationality = ANC
+					}
+				}
+			}
 		}
 	}
 	option = {
@@ -8082,9 +8085,9 @@ country_event = {
 						}
 					}
 				}
-				CHI_long_jiguang = {
-					set_nationality = ANC
-				}
+				# CHI_long_jiguang = {
+				# 	set_nationality = ANC
+				# }
 				CHI_liu_guanxiong = {
 					set_nationality = ANC
 				}
@@ -8254,8 +8257,8 @@ country_event = {
 							# state = 597
 							# state = 872
 							#Henan
-							state = 607
-							state = 891
+							# state = 607
+							# state = 891
 							#Jiangsu
 							state = 598
 							#Hubei
@@ -8364,6 +8367,9 @@ country_event = {
 					hours = 10
 				}
 				change_tag_from = CHI
+			}
+			CHN = {
+				CHI_calculate_foreign_influnce_for_all = yes
 			}
 		}
 	}
@@ -8787,8 +8793,11 @@ country_event = {
 	hidden = yes
 	trigger = {
 		# has_global_flag = warlord_era
-		is_chinese_warlord = yes
-		NOT = { has_country_flag = part_of_china }
+		is_china_or_warlord = yes
+		NOT = { #because of anhui
+			has_country_flag = reunited_china
+			has_country_flag = part_of_china
+		}
 		if = {
 			limit = {
 				original_tag = MAN
@@ -8869,6 +8878,15 @@ country_event = {
 				NOT = { is_in_tech_sharing_group = chinese_tech_share }
 			}
 			add_to_tech_sharing_group = chinese_tech_share
+		}
+		if = {
+			limit = {
+				any_other_country = {
+					is_china_or_warlord = no
+					has_idea = CHI_nine_power_treaty
+				}
+			}
+			add_ideas = CHI_nine_power_treaty
 		}
 	}
 }
@@ -9357,17 +9375,37 @@ country_event = {
 						}
 					}
 					set_character_name = CHI_yuan_shikai
-					remove_country_leader_role = {
-						ideology = authoritarian_democracy
+					if = {
+						limit = {
+							has_ideology = authoritarian_democracy
+						}
+						remove_country_leader_role = {
+							ideology = authoritarian_democracy
+						}
 					}
-					remove_country_leader_role = {
-						ideology = stratocracy
+					if = {
+						limit = {
+							has_ideology = stratocracy
+						}
+						remove_country_leader_role = {
+							ideology = stratocracy
+						}
 					}
-					remove_country_leader_role = {
-						ideology = personalistic_dictatorship
+					if = {
+						limit = {
+							has_ideology = personalistic_dictatorship
+						}
+						remove_country_leader_role = {
+							ideology = personalistic_dictatorship
+						}
 					}
-					remove_country_leader_role = {
-						ideology = semi_constitutional_monarchy
+					if = {
+						limit = {
+							has_ideology = semi_constitutional_monarchy
+						}
+						remove_country_leader_role = {
+							ideology = semi_constitutional_monarchy
+						}
 					}
 					remove_unit_leader_role = yes
 				}
@@ -9540,7 +9578,6 @@ country_event = {
 							}
 						}
 					}
-					clr_country_flag = CHI_national_protection_flag
 				}
 				else = {
 					every_character = {
@@ -9588,6 +9625,14 @@ country_event = {
 			can_not_declare_war = yes
 		}
 		hidden_effect = {
+			YUN = {
+				if = {
+					limit = {
+						has_country_flag = CHI_national_protection_flag
+					}
+					clr_country_flag = CHI_national_protection_flag
+				}
+			}
 			set_global_flag = warlord_era
 			add_ideas = CHI_idea_warlord_army_hidden
 			country_event = ww1_china.2
@@ -9710,6 +9755,17 @@ country_event = {
 			CHI = {
 				change_tag_from = NPA
 				change_tag_from = YUN #to do - remove later
+			}
+			every_state = {
+				limit = {
+					OWNER = { is_china_or_warlord = yes }
+				}
+				teleport_armies = {
+					limit = {
+						tag = CHI
+					}
+					to_state = 608
+				}
 			}
 			set_global_flag = national_protection_war_end
 		}
@@ -9975,28 +10031,30 @@ country_event = {
 						target = QZC
 					}
 				}
-				QZC = {
-					if = {
-						limit = {
-							has_character = CHI_long_jiguang
-						}
-						CHI_long_jiguang = {
+				CHI = {
+					CHI_long_jiguang = {
+						set_nationality = ANC
+						if = {
+							limit = {
+								has_ideology = warlordism
+							}
 							remove_country_leader_role = {
 								ideology = warlordism
+							}
+						}
+						if = {
+							limit = {
+								has_ideology = stratocracy
 							}
 							remove_country_leader_role = {
 								ideology = stratocracy
 							}
-							set_nationality = ANC
 						}
 					}
-					if = {
-						limit = {
-							has_character = QZC_long_yuguang
-						}
-						QZC_long_yuguang = {
-							set_nationality = ANC
-						}
+				}
+				QZC = {
+					QZC_long_yuguang = {
+						set_nationality = ANC
 					}
 				}
 			}
@@ -13174,8 +13232,9 @@ country_event = {
 					}
 					set_nationality = ZGP
 				}
-				ZGP = {
+				CHI = {
 					CHI_chen_jiongming = {
+						set_nationality = ZGP
 						if = {
 							limit = {
 								has_ideology = social_liberalism
@@ -13241,6 +13300,8 @@ country_event = {
 							}
 						}
 					}
+				}
+				ZGP = {
 					set_party_name = {
 						ideology = democratic
 						long_name = CHI_zhigong_party_long
@@ -21758,39 +21819,39 @@ country_event = {
 		name = ww1_china.181.a
 		hidden_effect = {
 			set_country_leader_ideology = tridemism
-			CHI_zhao_hengti = {
-				if = {
-					limit = {
-						has_ideology = authoritarian_democracy
-					}
-					promote_character = authoritarian_democracy
-					else = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = authoritarian_democracy
-								
+			CHI = {
+				CHI_zhao_hengti = {
+					set_nationality = HNC
+					if = {
+						limit = {
+							has_ideology = authoritarian_democracy
+						}
+						promote_character = authoritarian_democracy
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = authoritarian_democracy
+									
+								}
 							}
 						}
 					}
-				}
-				if = {
-					limit = {
-						has_ideology = social_liberalism
-					}
-					promote_character = social_liberalism
-					else = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = social_liberalism
-								
+					if = {
+						limit = {
+							has_ideology = social_liberalism
+						}
+						promote_character = social_liberalism
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = social_liberalism
+									
+								}
 							}
 						}
 					}
-				}
-			}
-			CHI_zhao_hengti = {
 				if = {
 					limit = {
 						has_character_flag = kmt_allegiance
@@ -24030,9 +24091,16 @@ country_event = {
 			character = ZHC_sun_chuanfang
 			ruling_only = yes
 		}
+		OR = {
+			NOT = {
+				country_exists = JNC
+			}
+			FNG = {
+				has_war_with = JNC
+			}
+		}
 		NOT = {
 			has_war_with = FNG
-			country_exists = JNC
 		}
 		FNG = {
 			is_neighbor_of = ROOT
@@ -24053,6 +24121,18 @@ country_event = {
 			generator = { 613 606 598 1016 }
 		}
 		hidden_effect = {
+			JNC = {
+				every_owned_state = {
+					limit = {
+						is_controlled_by = FNG
+					}
+					transfer_state_to = FNG
+				}
+			}
+			annex_country = {
+				target = JNC
+				transfer_troops = yes
+			}
 			FNG = {
 				if = {
 					limit = {
@@ -24899,9 +24979,14 @@ country_event = {
 	picture = GFX_report_event_generic_peaceful_annexation
 	is_triggered_only = yes
 	trigger = {
-		has_global_flag = constitutional_protection_war
-		NOT = {
-			has_global_flag = constitutional_protection_war_end
+		OR = {
+			AND = {
+				has_global_flag = constitutional_protection_war
+				NOT = {
+					has_global_flag = constitutional_protection_war_end
+				}
+			}
+			has_global_flag = chinese_government_crackdown
 		}
 		CHI = {
 			owns_state = 1062
@@ -25135,7 +25220,10 @@ country_event = {
 				ruling_only = yes
 			}
 		}
-		has_global_flag = constitutional_protection_war_end
+		OR = {
+			has_global_flag = constitutional_protection_war_end
+			has_global_flag = chinese_government_crackdown
+		}
 	}
 	mean_time_to_happen = {
 		days = 0
@@ -25380,11 +25468,9 @@ country_event = {
 			PREV = {
 				SIC_yang_sen = {
 					set_nationality = PREV.PREV
+					promote_character = stratocracy
+					promote_character = warlordism
 				}
-			}
-			SIC_yang_sen = {
-				promote_character = stratocracy
-				promote_character = warlordism
 			}
 			add_dynamic_modifier = {
 				modifier = CHI_foreign_influence_modifier
@@ -25407,7 +25493,6 @@ country_event = {
 			ruling_only = yes
 		}
 		has_global_flag = cai_e_dead
-		is_subject = yes
 		owns_state = 1066
 		any_owned_state = {
 			NOT = {
@@ -29019,7 +29104,6 @@ country_event = {
 				limit = {
 					NOT = { country_exists = MEN }
 				}
-				611 = { transfer_state_to = FROM }
 				every_state = {
 					limit = {
 						owner = {
@@ -29031,8 +29115,8 @@ country_event = {
 							}
 						}
 						OR = {
+							state = 611
 							state = 612
-							state = 983
 						}
 					}
 					MEN = {
