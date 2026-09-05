@@ -4002,53 +4002,23 @@ country_event = {
 			news_event = {
 				id = eng_news.5
 			}
-			# North Darfur
-			if = {
-				limit = {
-					owns_state = 1135
-				}
-				if = {
-					limit = {
-						any_country = {
-							owns_state = 754
-							owns_state = 552
-						}
-					}
-					every_other_country = {
-						limit = {
-							owns_state = 754
-							owns_state = 552
-						}
-						transfer_state = 767
-					}
-					else = {
-						EGY = { transfer_state = 1135 }
-					}
-				}			
-			}
-			if = {
-				limit = {
-					owns_state = 767
-				}
-				if = {
-					limit = {
-						any_country = {
-							owns_state = 1135
-						}
-					}
-					every_other_country = {
-						limit = {
-							owns_state = 1135
-						}
-						transfer_state = 767
-					}
-					else = {
-						EGY = { transfer_state = 767 }
-					}
-				}
-			
-			}
 			EGY = {
+				# North Darfur
+				if = {
+					limit = {
+						country_exists = LBA
+					}
+					every_owned_state = {
+						limit = {
+							OR = {
+								state = 552
+								state = 1131
+								state = 1134
+							}
+						}
+						transfer_state_to = LBA
+					}
+				}
 				add_ideas = ENG_british_officers_independent_egypt
 				country_lock_all_division_template = no
 				set_cosmetic_tag = EGY_kingdom
@@ -4080,9 +4050,7 @@ country_event = {
 					is_claimed_by = EGY
 				}
 			}
-			EGY = {
-				transfer_state = PREV
-			}
+			transfer_state_to = EGY
 		}
 		hidden_effect = {
 			if = {
@@ -4669,16 +4637,16 @@ country_event = {
 				}
 				if = {
 					limit = {
-						any_country = {
-							owns_state = 173
-							NOT = { has_country_flag = great_war_loser }
+						173 = {
+							OWNER = {
+								NOT = { has_country_flag = great_war_loser }
+							}
 						}
 					}
-					random_country = {
-						limit = {
-							owns_state = 173
-						}
-						transfer_state = PREV
+					173 = {
+						OWNER = {
+							transfer_state = PREV
+						}	
 					}
 				}
 				else = {
@@ -7070,11 +7038,19 @@ unit_leader_event = {
 						}
 					}
 					ENG_douglas_haig = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = stratocracy
-								traits = { lunatic }
+						if = {
+							limit = {
+								has_ideology = stratocracy
+							}
+							promote_character = stratocracy
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = stratocracy
+									traits = { lunatic }
+								}
 							}
 						}
 					}

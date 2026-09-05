@@ -4683,11 +4683,12 @@ country_event = {
 				add = 5
 			}
 			modifier = {
-				any_country = {
-					has_war_with = GER
-					is_major = yes
-					NOT = {
-						tag = FRA
+				GER = {
+					any_enemy_country = {
+						is_major = yes
+						NOT = {
+							tag = FRA
+						}
 					}
 				}
 				add = 5
@@ -5252,30 +5253,33 @@ country_event = {
 			factor = 100
 			modifier = {
 				factor = 0
-				any_other_country = {
-					owns_state = 11
-					has_war_with = PREV
-				}
-			}
-			modifier = {
-				factor = 0
-				any_other_country = {
-					owns_state = 11
-					is_subject = yes
-					NOT = {
-						is_subject_of = PREV
+				11 = {
+					OWNER = {
+						has_war_with = PREV.PREV
 					}
 				}
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
-					owns_state = 11
-					if = {
-						limit = {
-							PREV = { NOT = { has_government = communism } }
+				11 = {
+					OWNER = {
+						is_subject = yes
+						NOT = {
+							is_subject_of = PREV.PREV
 						}
-						has_government = communism
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				11 = {
+					OWNER = {
+						if = {
+							limit = {
+								PREV.PREV = { NOT = { has_government = communism } }
+							}
+							has_government = communism
+						}
 					}
 				}
 			}
@@ -5289,11 +5293,10 @@ country_event = {
 				remove_contested_owner = LIT
 			}
 		}
-		every_other_country = {
-			limit = {
-				owns_state = 763
-			}
-			transfer_state = 188
+		763 = {
+			OWNER = {
+				transfer_state = 188
+			}		
 		}
 		ai_chance = {
 			base = 5
@@ -5303,42 +5306,44 @@ country_event = {
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
-					owns_state = 763
-					has_war_with = PREV
-				}
-			}
-			modifier = {
-				factor = 0
-				any_other_country = {
-					owns_state = 763
-					is_subject = yes
-					NOT = {
-						is_subject_of = PREV
+				763 = {
+					OWNER = {
+						has_war_with = PREV.PREV
 					}
 				}
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
-					owns_state = 763
-					if = {
-						limit = {
-							PREV = { NOT = { has_government = communism } }
+				763 = {
+					OWNER = {
+						is_subject = yes
+						NOT = {
+							is_subject_of = PREV.PREV
 						}
-						has_government = communism
 					}
 				}
 			}
 			modifier = {
 				factor = 0
-				any_other_country = {
-					owns_state = 763
-					if = {
-						limit = {
-							PREV = { NOT = { has_government = fascism } }
+				763 = {
+					OWNER = {
+						is_subject = yes
+						NOT = {
+							is_subject_of = PREV.PREV
 						}
-						has_government = fascism
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				763 = {
+					OWNER = {
+						if = {
+							limit = {
+								PREV.PREV = { NOT = { has_government = fascism } }
+							}
+							has_government = fascism
+						}
 					}
 				}
 			}
@@ -7572,12 +7577,17 @@ country_event = {
 		every_owned_state = {
 			limit = {
 				is_core_of = MOR
-			}
-			random_country = {
-				limit = {
-					owns_state = 461
+				OR = {
+					is_coastal = yes
+					any_neighbor_state = {
+						is_owned_by = MOR
+					}
 				}
-				transfer_state = PREV
+			}
+			461 = {
+				owner = {
+					transfer_state = PREV.PREV
+				}
 			}
 		}
 		# Pondicherry
@@ -11218,18 +11228,9 @@ country_event = {
 				is_locked = yes
 				force_allow_recruiting = yes
 				regiments = {
-					militia = {
-						x = 0
-						y = 0
-					}
-					militia = {
-						x = 0
-						y = 1
-					}
-					militia = {
-						x = 0
-						y = 2
-					}
+					militia = { x = 0 y = 0 }
+					militia = { x = 0 y = 1 }
+					militia = { x = 0 y = 2 }
 				}
 			}
 			if = {
@@ -11240,9 +11241,6 @@ country_event = {
 				}
 				FRA_create_FRC = yes
 				FRC = {
-					FRA_jean_longuet = {
-						promote_character = yes
-					}
 					load_focus_tree = france_socialist_focus
 				}
 				every_owned_state = {
@@ -11283,7 +11281,6 @@ country_event = {
 								is_character = FRA_charles_nollet
 							}	
 							OR = {
-								is_character = FRA_philippe_petain
 								has_trait = old_guard
 								has_trait = old_guard_navy
 								has_trait = trait_royalist
@@ -11305,7 +11302,6 @@ country_event = {
 									is_character = FRA_charles_nollet
 								}	
 								OR = {
-									is_character = FRA_philippe_petain
 									has_trait = old_guard
 									has_trait = old_guard_navy
 									has_trait = trait_royalist
@@ -11328,9 +11324,6 @@ country_event = {
 				}
 				FRA_create_NFA = yes
 				NFA = {
-					FRA_ferdinand_foch = {
-						promote_character = yes
-					}
 					load_focus_tree = france_nationalist_focus
 				}
 				every_owned_state = {
@@ -11449,9 +11442,16 @@ country_event = {
 			limit = {
 				original_tag = FRA
 			}
-			declare_war_on = {
-				target = PREV
-				type = civil_war
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = PREV
+					}
+				}
+				declare_war_on = {
+					target = PREV
+					type = civil_war
+				}
 			}
 			add_ideas = extensive_conscription
 			add_ideas = partial_economic_mobilisation
@@ -12074,21 +12074,6 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_france.24.a
-		# if = {
-		# 	limit = {
-		# 		tag = FRA
-		# 	}
-		# 	add_state_core = 459
-		# 	set_capital = { state = 459 }
-		# 	# to fix weird desert mechanism
-		# 	if = {
-		# 		limit = {
-		# 			owns_state = 567
-		# 		}
-		# 		transfer_state = 515
-		# 		transfer_state = 775
-		# 	}
-		# }
 		every_enemy_country = {
 			limit = {
 				OR = {
@@ -12137,7 +12122,53 @@ country_event = {
 			}
 			white_peace = ROOT
 		}
+		load_focus_tree = france_nationalist_focus
 		mark_focus_tree_layout_dirty = yes
+
+		hidden_effect = {
+			set_politics = {
+				ruling_party = fascism
+				elections_allowed = no
+			}
+			set_popularities = {
+				democratic = 18
+				neutrality = 0
+				fascism = 82
+				communism = 0
+			}
+			set_country_flag = FRA_nationalist_france_flag
+			set_cosmetic_tag = FRA_proto_fascism
+			set_party_name = {
+				ideology = fascism
+				long_name = FRA_FSN_long
+				name = FRA_FSN
+			}
+			add_ideas = FRA_disjointed_government2
+			FRA_ferdinand_foch = {
+				set_nationality = ROOT
+				promote_character = yes
+			}
+			FRA = {
+				FRA_philippe_petain = {
+					set_nationality = ROOT
+					if = {
+						limit = {
+							has_ideology = stratocracy
+						}
+						promote_character = stratocracy
+					}
+					else = {
+						add_country_leader_role = {
+							promote_leader = yes
+							country_leader = {
+								ideology = stratocracy
+								traits = { great_war_hero generallissimo }
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -14549,8 +14580,17 @@ country_event = {
 			}
 			add_command_power = -20
 			461 = {
-				add_resistance = -50
-				add_compliance = 20
+				if = {
+					limit = {
+						OWNER = {
+							PREV = {
+								NOT = { is_core_of = PREV }
+							}
+						}
+					}
+					add_resistance = -50
+					add_compliance = 20
+				}
 			}
 			else = {
 				effect_tooltip = {
@@ -14562,8 +14602,17 @@ country_event = {
 					}
 					add_command_power = -20
 					461 = {
-						add_resistance = -50
-						add_compliance = 20
+						if = {
+							limit = {
+								OWNER = {
+									PREV = {
+										NOT = { is_core_of = PREV }
+									}
+								}
+							}
+							add_resistance = -50
+							add_compliance = 20
+						}
 					}
 				}
 			}
@@ -14625,8 +14674,17 @@ country_event = {
 			add_command_power = -20
 			461 = {
 				add_manpower = -700
-				add_resistance = 10
-				add_compliance = -25
+				if = {
+					limit = {
+						OWNER = {
+							PREV = {
+								NOT = { is_core_of = PREV }
+							}
+						}
+					}
+					add_resistance = 10
+					add_compliance = -25
+				}
 			}
 			else = {
 				effect_tooltip = {
@@ -14644,8 +14702,17 @@ country_event = {
 					add_command_power = -20
 					461 = {
 						add_manpower = -700
-						add_resistance = 10
-						add_compliance = -25
+						if = {
+							limit = {
+								OWNER = {
+									PREV = {
+										NOT = { is_core_of = PREV }
+									}
+								}
+							}
+							add_resistance = 10
+							add_compliance = -25
+						}
 					}
 				}
 			}

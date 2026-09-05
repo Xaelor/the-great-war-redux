@@ -1,6 +1,5 @@
 PER_calculate_total_foreign_influnce = {
 	set_variable = { var = PER_total_foreign_influence value = 0 }
-	set_variable = { var = PER_total_independence value = 1 }
 	if = {
 		limit = { 
 			# NOT = { 
@@ -96,13 +95,12 @@ PER_calculate_total_foreign_influnce = {
 		min = 0
 		max = 1
 	}
-	subtract_from_variable = {
-		PER_total_independence = PER_total_foreign_influence
-	}
-	clamp_variable = {
-		var = PER_total_independence
-		min = 0
-		max = 1
+	set_variable = {
+		PER_total_independence = {
+			value = 1
+			subtract = PER_total_foreign_influence
+			min = 0
+		}
 	}
 }
 PER_calculate_foreign_influnce_modifiers = {

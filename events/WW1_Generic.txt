@@ -1554,82 +1554,124 @@ country_event = {
 	immediate = {
 		# stupid game can't setup occupation law for each state on startup
 		ENG = {
-			326 = { #Hong Kong
-				set_occupation_law = foreign_civilian_oversight
+			if = { # Hong Kong
+				limit = {
+					has_start_date < 1914.1.1
+				}
+				QIN = {
+					set_occupation_law = foreign_civilian_oversight
+				}
 			}
-			924 = { #Chinde
+			else = {
+				CHI = {
+					set_occupation_law = foreign_civilian_oversight
+				}
+			}
+			MZB = { #Chinde
 				set_occupation_law = foreign_civilian_oversight
 			}
 		}
 		FRA = {
-			320 = { #French India
+			RAJ = { #French India
 				set_occupation_law = autonomous_occupation
 			}
-			263 = { #Somaliland
+			SOM = { #Somaliland
 				set_occupation_law = foreign_civilian_oversight
 			}
-			1036 = { #Somaliland
-				set_occupation_law = foreign_civilian_oversight
-			}
+			# 1036 = { #Somaliland
+			# 	set_occupation_law = foreign_civilian_oversight
+			# }
 		}
-		GER = {
-			28 = { #Alsace-Lorraine
-				set_occupation_law = foreign_civilian_oversight
+		if = {
+			limit = {
+				has_start_date < 1914.1.1
 			}
-			1107 = { #Alsace-Lorraine
-				set_occupation_law = foreign_civilian_oversight
+			GER = {
+				ALS = { #Alsace-Lorraine
+					set_occupation_law = foreign_civilian_oversight
+				}
 			}
 		}
 		IND = {
-			728 = { #Guangzhou Bay
-				set_occupation_law = foreign_civilian_oversight
+			if = { #Guangzhou Bay
+				limit = {
+					has_start_date < 1914.1.1
+				}
+				QIN = {
+					set_occupation_law = foreign_civilian_oversight
+				}
 			}
-			822 = { #Xaignabouli
+			else = {
+				CHI = {
+					set_occupation_law = foreign_civilian_oversight
+				}
+			}
+			SIA = { #Xaignabouli
 				set_occupation_law = local_police_force_garrison
 			}
 		}
 		JAP = {
-			524 = { #Taiwan
+			FOR = {
 				set_occupation_law = local_police_force_garrison
 			}
 		}
 		POR = {
-			729 = { #Macau
-				set_occupation_law = foreign_civilian_oversight
+			if = { #Macau
+				limit = {
+					has_start_date < 1914.1.1
+				}
+				QIN = {
+					set_occupation_law = foreign_civilian_oversight
+				}
+			}
+			else = {
+				CHI = {
+					set_occupation_law = foreign_civilian_oversight
+				}
 			}
 		}
 		RAJ = {
-			659 = { #Aden
+			YEM = { #Aden
 				set_occupation_law = autonomous_occupation
 			}
 		}
-		TUR = {
-			every_owned_state = {
-				limit = {
-					NOT = {
-						is_core_of = PREV
-						is_core_of = ALB
-					}
-					OR = {
-						is_core_of = BUL
-						is_core_of = SER
-						is_core_of = MNT
-					}
+		# why core everywhere lol
+		# TUR = {
+		# 	if = {
+		# 		limit = {
+		# 			has_start_date < 1914.1.1
+		# 		}
+		# 		BUL = {
+		# 			set_occupation_law = local_police_force_garrison
+		# 		}
+		# 		SER = {
+		# 			set_occupation_law = local_police_force_garrison
+		# 		}
+		# 		MNT = {
+		# 			set_occupation_law = local_police_force_garrison
+		# 		}
+		# 		ALB = {
+		# 			set_occupation_law = local_police_force_garrison
+		# 		}
+		# 		CHA = { #Tibesti
+		# 			set_occupation_law = local_police_force_garrison
+		# 		}
+		# 	}
+		# }
+		# Affects Hawai itself, so commented out
+		# USA = {
+		# 	HAW = { #Johnston
+		# 		set_occupation_law = no_garrison
+		# 	}
+		# }
+		if = {
+			limit = {
+				has_start_date < 1914.1.1
+			}
+			QIN = {
+				BRM = { #Kachin
+					set_occupation_law = autonomous_occupation
 				}
-				set_occupation_law = local_police_force_garrison
-			}
-			1123 = { #Tibesti
-				set_occupation_law = no_garrison
-			}
-		}
-		USA = {
-			630 = {
-				set_occupation_law = no_garrison
-			}
-		}
-		QIN = {
-			601 = {
-				set_occupation_law = autonomous_occupation
 			}
 		}
 	}
@@ -1899,7 +1941,7 @@ country_event = {
 				tag = AUS # Austria-hungary will be dismantled and puppies will have the event
 				has_country_flag = great_war_loser
 			}
-			is_china_or_warlord_no_tt = yes #chinese civil war
+			is_china_or_warlord = yes #chinese civil war
 			#is_major = no
 			any_other_country = {	#dont demobilize twice
 				original_tag = ROOT

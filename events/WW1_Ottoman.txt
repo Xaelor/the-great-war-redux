@@ -1031,11 +1031,19 @@ country_event = {
 			name = TUR_saviour_officer
 		}
         TUR_ahmed_muhtar = {
-			add_country_leader_role = {
-				promote_leader = yes
-					country_leader = {
-					ideology = authoritarian_democracy
-					traits = { grand_vizier muhtar }
+			if = {
+				limit = {
+					has_ideology = authoritarian_democracy
+				}
+				promote_character = authoritarian_democracy
+			}
+			else = {
+				add_country_leader_role = {
+					promote_leader = yes
+						country_leader = {
+						ideology = authoritarian_democracy
+						traits = { grand_vizier muhtar }
+					}
 				}
 			}
 		}
@@ -16650,9 +16658,8 @@ country_event = {
 			base = 0
 			modifier = {
 				add = 12
-				any_country = {
+				any_enemy_country = {
 					is_major = yes
-					has_war_with = ROOT
 				}
 			}
 			modifier = {
@@ -18741,21 +18748,28 @@ country_event = {
 	}
 	immediate = {
 		hidden_effect = {
-			declare_war_on = {
-				target = CAU
-				type = take_claimed_state
-			}		
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = CAU
+					}
+				}
+				declare_war_on = {
+					target = CAU
+					type = take_claimed_state
+				}
+			}
 			CAU = {
 				country_event = {
 					id = ww1_georgia.2
 					days = 60
-				}					
-			}	
+				}
+			}
 		}
 	}
 	option = {
 		name = ww1_ottoman.171.a
-		effect_tooltip = {			
+		effect_tooltip = {
 			declare_war_on = {
 				target = CAU
 				type = take_claimed_state

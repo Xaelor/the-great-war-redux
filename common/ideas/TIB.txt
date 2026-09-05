@@ -30,10 +30,10 @@ ideas = {
 				is_subject = no
 				NOT = {
 					any_enemy_country = {
-						is_china_or_warlord_no_tt = yes
+						is_china_or_warlord = yes
 					}
 					any_enemy_country = {
-						is_china_or_warlord_no_tt = no
+						is_china_or_warlord = no
 						has_offensive_war_with = PREV
 					}
 				}
@@ -44,15 +44,15 @@ ideas = {
 						is_subject = no
 						NOT = {
 							any_enemy_country = {
-								is_china_or_warlord_no_tt = yes
+								is_china_or_warlord = yes
 							}
 						}
 						any_enemy_country = {
-							is_china_or_warlord_no_tt = no
+							is_china_or_warlord = no
 							has_offensive_war_with = PREV
 							NOT = {
-								any_other_country = {
-									is_china_or_warlord_no_tt = yes
+								any_country_with_original_tag_of = {
+									target = constant:country_groups.china_or_warlord
 									has_war_together_with = PREV
 								}
 							}
@@ -60,26 +60,30 @@ ideas = {
 					}
 					random_neighbor_country = {
 						limit = {
-							is_china_or_warlord_no_tt = yes
+							is_china_or_warlord = yes
 						}
 						if = {
 							limit = {
 								is_in_faction = yes
 								is_faction_leader = no
 								faction_leader = {
-									is_china_or_warlord_no_tt = yes
+									is_china_or_warlord = yes
 								}
 							}
-							country_event = ww1_tibet.6
+							faction_leader = {
+								country_event = ww1_tibet.6
+							}
 						}
 						else_if = {
 							limit = {
 								is_subject = yes
 								OVERLORD = {
-									is_china_or_warlord_no_tt = yes
+									is_china_or_warlord = yes
 								}
 							}
-							country_event = ww1_tibet.6
+							OVERLORD = {
+								country_event = ww1_tibet.6
+							}
 						}
 						else = {
 							country_event = ww1_tibet.6
@@ -89,6 +93,26 @@ ideas = {
 			}
 			modifier = {
 				custom_modifier_tooltip = TIB_de_facto_independence_tt
+			}
+		}
+		TIB_qing_occupation = {
+			picture = CHI_protracted_warfare
+			removal_cost = -1
+			allowed = {
+				always = no
+			}
+			allowed_civil_war = {
+				always = yes
+			}
+			available = {
+				is_subject = yes
+				OVERLORD = {
+					is_china_or_warlord = yes
+				}
+			}
+			modifier = {
+				party_popularity_stability_factor = -0.30
+				political_power_factor = -0.10
 			}
 		}
 	}
