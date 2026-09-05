@@ -7877,6 +7877,42 @@ country_event = {
 				}
 				dismantle_faction = yes
 			}
+			if = {
+				limit = {
+					country_exists = QZC
+				}
+				GXC = {
+					annex_country = {
+						target = QZC
+					}
+				}
+				CHI = {
+					CHI_long_jiguang = {
+						set_nationality = ANC
+						if = {
+							limit = {
+								has_ideology = warlordism
+							}
+							remove_country_leader_role = {
+								ideology = warlordism
+							}
+						}
+						if = {
+							limit = {
+								has_ideology = stratocracy
+							}
+							remove_country_leader_role = {
+								ideology = stratocracy
+							}
+						}
+					}
+				}
+				QZC = {
+					QZC_long_yuguang = {
+						set_nationality = ANC
+					}
+				}
+			}
 		}
 	}
 	option = {
@@ -8049,9 +8085,9 @@ country_event = {
 						}
 					}
 				}
-				CHI_long_jiguang = {
-					set_nationality = ANC
-				}
+				# CHI_long_jiguang = {
+				# 	set_nationality = ANC
+				# }
 				CHI_liu_guanxiong = {
 					set_nationality = ANC
 				}
@@ -8331,6 +8367,9 @@ country_event = {
 					hours = 10
 				}
 				change_tag_from = CHI
+			}
+			CHN = {
+				CHI_calculate_foreign_influnce_for_all = yes
 			}
 		}
 	}
@@ -8839,6 +8878,15 @@ country_event = {
 				NOT = { is_in_tech_sharing_group = chinese_tech_share }
 			}
 			add_to_tech_sharing_group = chinese_tech_share
+		}
+		if = {
+			limit = {
+				any_other_country = {
+					is_china_or_warlord = no
+					has_idea = CHI_nine_power_treaty
+				}
+			}
+			add_ideas = CHI_nine_power_treaty
 		}
 	}
 }
@@ -9708,6 +9756,17 @@ country_event = {
 				change_tag_from = NPA
 				change_tag_from = YUN #to do - remove later
 			}
+			every_state = {
+				limit = {
+					OWNER = { is_china_or_warlord = yes }
+				}
+				teleport_armies = {
+					limit = {
+						tag = CHI
+					}
+					to_state = 608
+				}
+			}
 			set_global_flag = national_protection_war_end
 		}
 	}
@@ -9972,28 +10031,30 @@ country_event = {
 						target = QZC
 					}
 				}
-				QZC = {
-					if = {
-						limit = {
-							has_character = CHI_long_jiguang
-						}
-						CHI_long_jiguang = {
+				CHI = {
+					CHI_long_jiguang = {
+						set_nationality = ANC
+						if = {
+							limit = {
+								has_ideology = warlordism
+							}
 							remove_country_leader_role = {
 								ideology = warlordism
+							}
+						}
+						if = {
+							limit = {
+								has_ideology = stratocracy
 							}
 							remove_country_leader_role = {
 								ideology = stratocracy
 							}
-							set_nationality = ANC
 						}
 					}
-					if = {
-						limit = {
-							has_character = QZC_long_yuguang
-						}
-						QZC_long_yuguang = {
-							set_nationality = ANC
-						}
+				}
+				QZC = {
+					QZC_long_yuguang = {
+						set_nationality = ANC
 					}
 				}
 			}
@@ -21758,39 +21819,39 @@ country_event = {
 		name = ww1_china.181.a
 		hidden_effect = {
 			set_country_leader_ideology = tridemism
-			CHI_zhao_hengti = {
-				if = {
-					limit = {
-						has_ideology = authoritarian_democracy
-					}
-					promote_character = authoritarian_democracy
-					else = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = authoritarian_democracy
-								
+			CHI = {
+				CHI_zhao_hengti = {
+					set_nationality = HNC
+					if = {
+						limit = {
+							has_ideology = authoritarian_democracy
+						}
+						promote_character = authoritarian_democracy
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = authoritarian_democracy
+									
+								}
 							}
 						}
 					}
-				}
-				if = {
-					limit = {
-						has_ideology = social_liberalism
-					}
-					promote_character = social_liberalism
-					else = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = social_liberalism
-								
+					if = {
+						limit = {
+							has_ideology = social_liberalism
+						}
+						promote_character = social_liberalism
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = social_liberalism
+									
+								}
 							}
 						}
 					}
-				}
-			}
-			CHI_zhao_hengti = {
 				if = {
 					limit = {
 						has_character_flag = kmt_allegiance
@@ -24030,9 +24091,16 @@ country_event = {
 			character = ZHC_sun_chuanfang
 			ruling_only = yes
 		}
+		OR = {
+			NOT = {
+				country_exists = JNC
+			}
+			FNG = {
+				has_war_with = JNC
+			}
+		}
 		NOT = {
 			has_war_with = FNG
-			country_exists = JNC
 		}
 		FNG = {
 			is_neighbor_of = ROOT
@@ -24053,6 +24121,18 @@ country_event = {
 			generator = { 613 606 598 1016 }
 		}
 		hidden_effect = {
+			JNC = {
+				every_owned_state = {
+					limit = {
+						is_controlled_by = FNG
+					}
+					transfer_state_to = FNG
+				}
+			}
+			annex_country = {
+				target = JNC
+				transfer_troops = yes
+			}
 			FNG = {
 				if = {
 					limit = {
@@ -24899,9 +24979,14 @@ country_event = {
 	picture = GFX_report_event_generic_peaceful_annexation
 	is_triggered_only = yes
 	trigger = {
-		has_global_flag = constitutional_protection_war
-		NOT = {
-			has_global_flag = constitutional_protection_war_end
+		OR = {
+			AND = {
+				has_global_flag = constitutional_protection_war
+				NOT = {
+					has_global_flag = constitutional_protection_war_end
+				}
+			}
+			has_global_flag = chinese_government_crackdown
 		}
 		CHI = {
 			owns_state = 1062
@@ -25135,7 +25220,10 @@ country_event = {
 				ruling_only = yes
 			}
 		}
-		has_global_flag = constitutional_protection_war_end
+		OR = {
+			has_global_flag = constitutional_protection_war_end
+			has_global_flag = chinese_government_crackdown
+		}
 	}
 	mean_time_to_happen = {
 		days = 0
@@ -25380,11 +25468,9 @@ country_event = {
 			PREV = {
 				SIC_yang_sen = {
 					set_nationality = PREV.PREV
+					promote_character = stratocracy
+					promote_character = warlordism
 				}
-			}
-			SIC_yang_sen = {
-				promote_character = stratocracy
-				promote_character = warlordism
 			}
 			add_dynamic_modifier = {
 				modifier = CHI_foreign_influence_modifier
@@ -25407,7 +25493,6 @@ country_event = {
 			ruling_only = yes
 		}
 		has_global_flag = cai_e_dead
-		is_subject = yes
 		owns_state = 1066
 		any_owned_state = {
 			NOT = {
@@ -29019,7 +29104,6 @@ country_event = {
 				limit = {
 					NOT = { country_exists = MEN }
 				}
-				611 = { transfer_state_to = FROM }
 				every_state = {
 					limit = {
 						owner = {
@@ -29031,8 +29115,8 @@ country_event = {
 							}
 						}
 						OR = {
+							state = 611
 							state = 612
-							state = 983
 						}
 					}
 					MEN = {
