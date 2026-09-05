@@ -4002,40 +4002,23 @@ country_event = {
 			news_event = {
 				id = eng_news.5
 			}
-			# North Darfur
-			if = {
-				limit = {
-					owns_state = 1134
-				}
+			EGY = {
+				# North Darfur
 				if = {
 					limit = {
-						754 = {
-							OWNER = {
-								owns_state = 552
+						country_exists = LBA
+					}
+					every_owned_state = {
+						limit = {
+							OR = {
+								state = 552
+								state = 1131
+								state = 1134
 							}
 						}
-					}
-					754 = {
-						OWNER = {
-							transfer_state = 1134
-						}
-					}
-					else = {
-						EGY = { transfer_state = 1134 }
+						transfer_state_to = LBA
 					}
 				}
-			}
-			if = {
-				limit = {
-					owns_state = 767
-				}
-				1134 = {
-					OWNER = {
-						transfer_state = 767
-					}
-				}		
-			}
-			EGY = {
 				add_ideas = ENG_british_officers_independent_egypt
 				country_lock_all_division_template = no
 				set_cosmetic_tag = EGY_kingdom
@@ -7055,11 +7038,19 @@ unit_leader_event = {
 						}
 					}
 					ENG_douglas_haig = {
-						add_country_leader_role = {
-							promote_leader = yes
-							country_leader = {
-								ideology = stratocracy
-								traits = { lunatic }
+						if = {
+							limit = {
+								has_ideology = stratocracy
+							}
+							promote_character = stratocracy
+						}
+						else = {
+							add_country_leader_role = {
+								promote_leader = yes
+								country_leader = {
+									ideology = stratocracy
+									traits = { lunatic }
+								}
 							}
 						}
 					}
