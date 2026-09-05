@@ -2297,6 +2297,27 @@ country_event = {
 			}
 			FROM = { transfer_state = PREV }
 		}
+		if = {
+			limit = {
+				has_dynamic_modifier = {
+					modifier = CHI_influence_in_china_modifier
+				}
+				check_variable = { ROOT.CHI_foreign_influence > 0 }
+			}
+			add_to_variable = {
+				CHI_foreign_influence = {
+					value = -0.1
+					clamp = { min = 0 max = 1 }
+				}
+				tooltip = CHI_modify_THIS_influence_tt
+			}
+			if = {
+				limit = { check_variable = { CHI_foreign_influence < 0.001 } }
+				remove_dynamic_modifier = { modifier = CHI_influence_in_china_modifier }
+			}
+			CHI_calculate_influnce_in_china_modifiers = yes
+			CHI_calculate_foreign_influnce_for_all = yes
+		}
 		add_political_power = 75
 		ai_chance = {
 			base = 1
@@ -2331,11 +2352,20 @@ country_event = {
 					value < 0
 				}
 			}
+			modifier = {
+				add = 30
+				OR = {
+					owns_state = 745
+					owns_state = 746
+				}
+				has_global_flag = MTG_naval_treaty_signatories
+				has_idea = MTG_washington_naval_treaty_adherent
+			}
 		}
 	}
 	option = {
 		name = ww1_qing.4.b
-		QIN = { country_event = ww1_qing.5 }
+		FROM = { country_event = ww1_qing.5 }
 		custom_effect_tooltip = disagree_effect_tooltip
 		effect_tooltip = {
 			FROM = {
@@ -2365,6 +2395,15 @@ country_event = {
 					ratio < 1
 				}
 			}
+			modifier = {
+				add = -30
+				OR = {
+					owns_state = 745
+					owns_state = 746
+				}
+				has_global_flag = MTG_naval_treaty_signatories
+				has_idea = MTG_washington_naval_treaty_adherent
+			}
 		}
 	}
 }
@@ -2381,7 +2420,7 @@ country_event = {
 	option = {
 		name = ww1_qing.5.a
 		trigger = {
-			is_major = yes
+			# is_major = yes
 			NOT = {
 				is_in_faction_with = FROM
 				has_idea = idea_armistice
@@ -2418,6 +2457,10 @@ country_event = {
 					has_government = fascism
 					has_government = communism
 				}
+			}
+			modifier = {
+				add = -6
+				is_major = no
 			}
 		}
 	}
