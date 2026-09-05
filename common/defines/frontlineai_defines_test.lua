@@ -297,3 +297,7 @@ NDefines.NAI.BUILDING_TARGETS_BUILDING_PRIORITIES = {
 	'dockyard',
 	'industrial_complex',
 }
+
+NDefines.NAI.ARMY_LEADER_MIN_DIVISIONS_FOR_HQ = 4						-- Army must contain at least this many divisions before the AI will deploy an HQ unit for it
+NDefines.NAI.MAX_DEPLOYED_ARMY_HQS = 20									-- AI will not deploy more than this many army HQs at once
+NDefines.NAI.MAX_CAPTURED_GENERALS_TO_STOP_HQ_DEPLOY = 10				-- AI stops deploying new army HQs once this many of its army leaders are captured
