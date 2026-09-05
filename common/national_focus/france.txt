@@ -9,7 +9,6 @@ focus_tree = {
 		}
 	}
 	shared_focus = VIN_paris_investments
-	shared_focus = FRA_ww1_first_moroccan_campaign
 	continuous_focus_position = {
 		x = 5200
 		y = 2800
@@ -2341,8 +2340,8 @@ focus_tree = {
 						is_core_of = ROOT
 					}
 				}
-				any_country = {
-					is_subject_of = ROOT
+				any_subject_country = {
+					is_european_tag = no
 				}
 			}
 			NOT = {
@@ -3077,24 +3076,15 @@ focus_tree = {
 					clr_country_flag = FRA_reformists_will_be_dominants
 					set_country_flag = FRA_anarchists_will_be_dominants
 				}
-				set_cosmetic_tag = FRA_socialism_not_commune
-				every_other_country = {
-					limit = {
-						is_subject_of = ROOT
-						OR = {
-							tag = ALG
-							tag = MOR
-							tag = TUN
-							tag = MLI
-							tag = IND
-						}
-					}
-					set_cosmetic_tag = FRA_socialist_red_alone
-				}
+				set_cosmetic_tag = FRA_democratic
 			}
 			
 			custom_effect_tooltip = FRA_mention_de_censure
 			custom_effect_tooltip = FRA_mention_de_censure_socialist
+			set_politics = {
+				ruling_party = communism
+				elections_allowed = yes
+			}
 			if = {
 				limit = {
 					NOT = {
@@ -3116,11 +3106,7 @@ focus_tree = {
 				country_event = {
 					id = ww1_france.398
 					days = 42
-				}
-				set_politics = {
-					ruling_party = communism
-					elections_allowed = yes
-				}
+				}			
 				remove_french_presidents = yes
 			}
 			add_ideas = FRA_alexandre_millerand_pm_advisor
@@ -3746,9 +3732,6 @@ focus_tree = {
 		}
 		completion_reward = {
 			hidden_effect = {
-				set_politics = {
-					ruling_party = democratic
-				}
 				add_popularity = {
 					ideology = democratic
 					popularity = 0.3
@@ -3764,16 +3747,25 @@ focus_tree = {
 						large="GFX_portrait_fra_leon_blum"
 					}
 				}
-				add_country_leader_role = {
-					promote_leader = yes	
-					country_leader = {
-						ideology = social_liberalism
-						traits = { democratic_reformer }
+				if = {
+					limit = { 
+						has_ideology = social_democracy
 					}
+					promote_character = social_democracy
 				}
+				else = {
+					add_country_leader_role = {
+						promote_leader = yes	
+						country_leader = {
+							ideology = social_democracy
+							traits = { democratic_reformer }
+						}
+					}
+				}			
 			}
-			set_party_name = {
-				ideology = democratic
+			set_politics = {
+				ruling_party = democratic
+				elections_allowed = yes
 				long_name = FRA_front_populaire_long
 				name = FRA_front_populaire
 			}
@@ -3787,29 +3779,6 @@ focus_tree = {
 				value = 1
 			}
 			hidden_effect = {
-				set_politics = {
-					ruling_party = democratic
-					elections_allowed = yes
-				}
-				every_country = {
-					limit = {
-						is_subject_of = FRA
-						has_cosmetic_tag = FRA_socialist_red_alone
-					}
-					drop_cosmetic_tag = yes
-					if = {
-						limit = {
-							tag = IND
-						}
-						set_cosmetic_tag = IND_FRA
-					}
-					if = {
-						limit = {
-							tag = TUN
-						}
-						set_cosmetic_tag = TUN_FRA
-					}
-				}
 				drop_cosmetic_tag = yes
 			}
 			if = {
@@ -4138,9 +4107,8 @@ focus_tree = {
 		}
 		available = {
 			is_subject = no
-			any_country = {
+			any_enemy_country = {
 				is_major = yes
-				has_war_with = ROOT
 			}
 			NOT = {
 				has_war_with = BUL
@@ -4245,8 +4213,8 @@ focus_tree = {
 						is_core_of = ROOT
 					}
 				}
-				any_country = {
-					is_subject_of = ROOT
+				any_subject_country = {
+					is_european_tag = no
 				}
 			}
 			NOT = {
@@ -4919,6 +4887,9 @@ focus_tree = {
 			focus = FRA_ww1_ecole_normale_william_ponty
 		}
 		available = {
+			any_owned_state = {
+				is_on_continent = europe
+			}
 			OR = {
 				has_idea = FRA_idea_union_sacree
 				ROOT = {
@@ -4992,6 +4963,9 @@ focus_tree = {
 			focus = FRA_continue_fransication_program
 		}
 		available = {
+			any_owned_state = {
+				is_on_continent = europe
+			}
 			460 = {
 				is_controlled_by_ROOT_or_subject = yes
 			}
@@ -5005,7 +4979,7 @@ focus_tree = {
 		completion_reward = {
 			release_autonomy = {
 				target = ALG
-				autonomy_state = autonomy_colony
+				autonomy_state = autonomy_tgwr_colony
 			}
 			hidden_effect = { 
 				ALG = { 
@@ -5054,26 +5028,11 @@ focus_tree = {
 					any_owned_state = { is_core_of = MOR }
 				}
 				every_owned_state = {
-					limit = { is_core_of = MOR }
-					transfer_state_to = MOR
-				}
-			}
-			hidden_effect = {
-				if = {
-					limit = { has_government = communism }
-					every_other_country = {
-						limit = {
-							is_subject_of = ROOT
-							OR = {
-								tag = ALG
-								tag = MOR
-								tag = TUN
-								tag = MLI
-								tag = IND
-							}
-						}
-						set_cosmetic_tag = FRA_socialist_red_alone
+					limit = {
+						is_core_of = MOR
+						region = 182
 					}
+					transfer_state_to = MOR
 				}
 			}
 			if = {
@@ -8278,8 +8237,7 @@ focus_tree = {
 				has_idea = idea_army_restrictions
 				has_idea = FRA_land_army_restrictions
 				has_idea = FRA_naval_army_restrictions
-				has_country_flag = FRA_surrender_alone
-				has_global_flag = FRA_surrender_alone
+				has_global_flag = FRA_surrender
 			}
 			has_army_manpower = { size > 1000000 }
 			OR = {
@@ -8919,7 +8877,6 @@ focus_tree = {
 				category  = light_fighter
 				uses = 1
 				bonus = 1
-				ahead_reduction = 1
 			}
 		}
 		ai_will_do = {
@@ -9420,16 +9377,8 @@ focus_tree = {
 			focus = FRA_ww1_doctrine_effort
 		}
 		available = {
-			any_state = {
-				OR = {
-					state = 860
-					state = 341
-					state = 861
-					state = 825
-					state = 1019
-					state = 347
-					state = 1018
-				}
+			any_state_of = {
+				target = { 860 341 861 825 1019 347 1018 }
 				OWNER = {
 					has_war_with = ROOT
 				}
@@ -10320,7 +10269,7 @@ focus_tree = {
 				NOT = {
 					has_war_with = FRA
 				}
-				is_puppet = no
+				is_subject = no
 			}
 		}
 		prerequisite = {
@@ -12220,7 +12169,7 @@ focus_tree = {
 			}
 			set_autonomy = {
 				target = RHN
-				autonomous_state = autonomy_satellite
+				autonomous_state = autonomy_tgwr_client_state
 			}
 			hidden_effect = {
 				RHN = {
@@ -12922,54 +12871,6 @@ focus_tree = {
 		y = 1
 	}
 
-	
-	# focus = {
-	# 	id = FRA_interwar_takeover_koln
-	# 	icon = GFX_goal_generic_territory_or_war
-	# 	relative_position_id = FRA_interwar_sanction_german_economy
-	# 	prerequisite = {
-	# 		focus = FRA_interwar_sanction_german_economy	
-	# 	}
-	# 	available = {
-	# 		has_war = no 
-	# 		has_country_flag = ENG_didnt_supported_paris_conference
-	# 		controls_state = 42
-	# 		controls_state = 873
-	# 		NOT = {
-	# 			owns_state = 343
-	# 		}
-	# 	}
-	# 	bypass_if_unavailable = yes
-	# 	completion_reward = {
-	# 		343 = {
-	# 			CONTROLLER = {
-	# 				country_event = {
-	# 					id = ww1_france.292
-	# 					days = 1
-	# 				}
-	# 				add_opinion_modifier = {
-	# 					target = ROOT
-	# 					modifier = large_decrease
-	# 				}
-	# 			}
-	# 		}
-	# 	}
-	# 	ai_will_do = {
-	# 		base = 300
-	# 		modifier = {
-	# 			is_historical_focus_on = yes 
-	# 			NOT = {
-	# 				has_government = neutrality
-	# 				has_government = fascism
-	# 			}
-	# 			factor = 0
-	# 		}
-	# 	}
-	# 	cost = 10
-	# 	x = -1
-	# 	y = 1
-	# }
-
 	focus = {
 		id = FRA_interwar_arrest_monarchist_figures
 		icon = GFX_focus_generic_court
@@ -13009,10 +12910,6 @@ focus_tree = {
 	focus = {
 		id = FRA_interwar_ENG_rupture
 		icon = GFX_focus_eng_decolonization
-		# relative_position_id = FRA_interwar_takeover_koln
-		# prerequisite = {
-		# 	focus = FRA_interwar_takeover_koln	
-		# }
 		relative_position_id = FRA_interwar_sanction_german_economy
 		prerequisite = {
 			focus = FRA_interwar_sanction_german_economy	
@@ -14560,782 +14457,4 @@ focus_tree = {
 		}
 	}
 
-}
-
-####################################
-#	JOINT FOCUSES
-########
-
-joint_focus = {
-	id = FRA_ww1_first_moroccan_campaign
-	icon = GFX_goal_moroccan_deal
-	#relative_position_id = FRA_ww1_save_the_republic 
-	x = 44	#joint focuses between different architectures cant have relative position id
-	y = 2
-	text_icon = joint_FRA_MOR_focus_style
-	available = {
-		OR = {
-			AND = {
-				tag = FRA
-				OR = {
-					has_idea = FRA_idea_union_sacree
-					ROOT = {
-						custom_trigger_tooltip = {
-							tooltip = FRA_150_seats	
-							check_variable = {
-								democrat_alliance > 150
-							}
-						}
-					}
-				}
-			}
-			AND = {
-				tag = MOR
-				is_subject_of = FRA
-			}
-		}
-		
-		461 = {
-			OWNER = {
-				OR = {
-					tag = FRA
-					is_subject_of = FRA
-				}
-			}
-		}
-	}
-	joint_trigger = {
-		OR = {
-			tag = FRA
-			tag = MOR
-		}
-	}
-	allow_branch = {
-		OR = {
-			tag = FRA
-			tag = MOR
-		}
-		NOT = {
-			has_completed_focus = FRA_ww1_memories_of_the_commune
-		}
-	}
-	prerequisite = {
-		focus = FRA_ww1_save_the_republic
-		focus = FRA_ww1_the_social_democrat_compromise
-		focus = FRA_ww1_rally_the_piou_piou
-		focus = MOR_cooperate_with_french
-	}
-	completion_reward_joint_originator = {
-		every_state = {
-			limit = {
-				OWNER = {
-					OR = {
-						tag = FRA
-						is_subject_of = FRA
-					}
-				}
-				has_dynamic_modifier = {
-					modifier = FRA_anti_french_resistance
-				}
-			}
-			remove_dynamic_modifier = {
-				modifier = FRA_anti_french_resistance
-			}
-		}
-		custom_effect_tooltip = FRA_MOR_create_colonial_division
-		hidden_effect = {
-			MOR = {
-				set_technology = {
-					tech_support = 1
-					tech_engineers = 1
-					improved_field_gun = 1
-				}
-				division_template = {
-					name = "Division Coloniale du Maroc"
-					division_names_group = FREN_GAR_01
-					regiments = {
-						infantry = { x = 0 y = 0 }
-						infantry = { x = 0 y = 1 }
-						infantry = { x = 0 y = 2 }
-						infantry = { x = 1 y = 0 }
-					}
-					support = {
-						engineer = { x = 0 y = 0 }
-						field_gun = { x = 0 y = 1 }
-					}
-				}
-				461 = {
-					create_unit = {
-						division = "name = \"1ère Division de tirailleurs Maroccains\" division_template = \"Division Coloniale du Maroc\" start_experience_factor = 0.1"
-						owner = MOR
-					}
-				}
-			}
-			
-		}
-		MOR = {
-			add_stability = 0.10
-			add_equipment_to_stockpile = {
-				type = infantry_equipment_0
-				producer = FRA
-				amount = 1500
-			}
-		}
-		FRA = {
-			far_left_hate = yes
-		}
-	}
-	search_filters = {
-		FOCUS_FILTER_INTERNAL_AFFAIRS
-		FOCUS_FILTER_HISTORICAL
-	}
-	ai_will_do = {
-		factor = 45
-		modifier = {
-			tag = MOR
-			factor = 100
-		}
-	}
-	offset = {
-		x = -18
-		y = 0
-		trigger = {
-			has_game_rule = {
-				rule = obsolete_focus_branches_visibility
-				option = HIDE
-			}
-			has_completed_focus = FRA_ww1_save_the_republic
-		}
-	}
-	offset = {
-		x = -19
-		y = 0
-		trigger = {
-			has_game_rule = {
-				rule = obsolete_focus_branches_visibility
-				option = HIDE
-			}
-			has_completed_focus = FRA_ww1_rally_the_piou_piou
-		}
-	}
-	offset = {
-		x = -14
-		y = 0
-		trigger = {
-			has_game_rule = {
-				rule = obsolete_focus_branches_visibility
-				option = HIDE
-			}
-			has_completed_focus = FRA_ww1_the_social_democrat_compromise
-		}
-	}
-	offset = {
-		x = -24
-		y = -1
-		trigger = {
-			has_focus_tree = morocco_focus
-		}
-	}
-	cost = 3
-}
-
-joint_focus = {
-	id = FRA_ww1_setup_the_railway_network
-	icon = GFX_focus_generic_industry_2
-	relative_position_id = FRA_ww1_first_moroccan_campaign
-	text_icon = joint_FRA_MOR_focus_style
-	available = {
-		OR = {
-			AND = {
-				tag = FRA
-				has_idea = FRA_idea_union_sacree
-				ROOT = {
-					custom_trigger_tooltip = {
-						tooltip = FRA_150_seats	
-						check_variable = {
-							democrat_alliance > 150
-						}
-					}
-				}
-			}
-			AND = {
-				tag = MOR
-				is_subject_of = FRA
-			}
-		}
-		461 = {
-			OWNER = {
-				OR = {
-					tag = FRA
-					is_subject_of = FRA
-				}
-			}
-		}
-		462 = {
-			OWNER = {
-				OR = {
-					tag = FRA
-					is_subject_of = FRA
-				}
-			}
-		}
-		108 = {
-			OWNER = {
-				OR = {
-					tag = FRA
-					is_subject_of = FRA
-				}
-			}
-		}
-	}
-	prerequisite = {
-		focus = FRA_ww1_first_moroccan_campaign
-	}
-	completion_reward_joint_originator = {
-		build_railway = {
-			path = { 7069 10023 1958 4108 } # where this railway goes?
-			level = 1
-		}
-		build_railway = {
-			path = { 7069 10070 7100 11987 4097 1111 989 4116}
-			level = 1
-		}
-		MOR = {
-			country_event = {
-				id = ww1_france.388
-				days = 1
-			}
-			add_political_power = 50
-			every_owned_state = {
-				add_dynamic_modifier = {
-					modifier = FRA_french_local_investments_non_UEII
-					days = 360
-				}
-			}
-		}
-	}
-	search_filters = {
-		FOCUS_FILTER_INTERNAL_AFFAIRS
-		FOCUS_FILTER_HISTORICAL
-	}
-	ai_will_do = {
-		factor = 25
-		modifier = {
-			tag = MOR
-			factor = 100
-		}
-	}
-	cost = 5
-	x = -1
-	y = 1
-}
-
-joint_focus = {
-	id = FRA_ww1_mineral_wealth
-	icon = GFX_focus_ENG_Legacy_Of_Industrial_Revolution
-	relative_position_id = FRA_ww1_first_moroccan_campaign
-	text_icon = joint_FRA_MOR_focus_style
-	available = {
-		OR = {
-			AND = {
-				tag = FRA
-				has_idea = FRA_idea_union_sacree
-				ROOT = {
-					custom_trigger_tooltip = {
-						tooltip = FRA_150_seats	
-						check_variable = {
-							democrat_alliance > 150
-						}
-					}
-				}
-			}
-			AND = {
-				tag = MOR
-				is_subject_of = FRA
-			}
-		}
-		461 = {
-			OWNER = {
-				OR = {
-					tag = FRA
-					is_subject_of = FRA
-				}
-			}
-		}
-	}
-	prerequisite = {
-		focus = FRA_ww1_first_moroccan_campaign
-	}
-	completion_reward_joint_originator = {
-		MOR = {
-			country_event = {
-				id = ww1_france.392
-				days = 1
-			}
-			461 = {
-				add_manpower = 10000
-				add_extra_state_shared_building_slots = 2
-				add_resource = {
-					type = steel
-					amount = 8
-				}
-			}
-		}
-		FRA = {
-			far_left_hate = yes
-		}
-	}
-	search_filters = {
-		FOCUS_FILTER_INTERNAL_AFFAIRS
-		FOCUS_FILTER_HISTORICAL
-	}
-	ai_will_do = {
-		factor = 10
-		modifier = {
-			tag = MOR
-			factor = 100
-		}
-	}
-	cost = 8
-	x = 1
-	y = 1
-}
-
-joint_focus = {
-	id = FRA_ww1_reproduce_the_tunisian_model
-	icon = GFX_focus_eng_move_to_secure_the_dominions
-	relative_position_id = FRA_ww1_setup_the_railway_network
-	text_icon = joint_FRA_focus_style
-	available = {
-		has_subject = MOR
-	}
-	prerequisite = {
-		focus = FRA_ww1_setup_the_railway_network
-	}
-	completion_reward_joint_originator = {
-		add_political_power = 50
-		add_stability = 0.05
-		MOR = {
-			every_owned_state = {
-				add_dynamic_modifier = {
-					modifier = FRA_colonial_conscription
-				}
-			}
-		}
-
-		MOR = {
-			country_event = {
-				id = ww1_france.389
-				days = 2
-			}
-			add_ideas = MOR_resident_general_dictatorship
-		}
-		FRA = {
-			far_left_hate_right_far_right_like = yes
-		}
-	}
-	mutually_exclusive = {
-		focus = FRA_ww1_cooperation_with_sharif
-	}
-	search_filters = {
-		FOCUS_FILTER_INTERNAL_AFFAIRS
-	}
-	ai_will_do = {
-		factor = 20
-	}
-	cost = 5
-	x = 1
-	y = 1
-}
-
-joint_focus = {
-	id = FRA_ww1_cooperation_with_sharif
-	icon = GFX_focus_BRA_reach_out_to_military_dem
-	relative_position_id = FRA_ww1_setup_the_railway_network
-	text_icon = joint_FRA_focus_style
-	available = {
-		has_subject = MOR
-	}
-	prerequisite = {
-		focus = FRA_ww1_setup_the_railway_network
-	}
-	completion_reward_joint_originator = {
-		add_political_power = 75
-		MOR = {
-			country_event = {
-				id = ww1_france.390
-				days = 2
-			}
-			add_ideas = MOR_sharifian_governement
-		}
-		MOR = {
-			every_owned_state = {
-				limit = {
-					NOT = {
-						is_core_of = MOR
-					}
-				}
-				add_dynamic_modifier = {
-					modifier = MOR_integration_efforts
-				}
-			}
-		}
-		FRA = {
-			liberals_like = yes
-		}
-	}
-	search_filters = {
-		FOCUS_FILTER_INTERNAL_AFFAIRS
-		FOCUS_FILTER_HISTORICAL
-	}
-	mutually_exclusive = {
-		focus = FRA_ww1_reproduce_the_tunisian_model
-	}
-	ai_will_do = {
-		factor = 20
-		modifier = {
-			tag = MOR
-			factor = 100
-		}
-	}
-	cost = 5
-	x = -1
-	y = 1
-}
-
-joint_focus = {
-	id = FRA_ww1_treaty_of_fes
-	icon = GFX_new_treaty
-	relative_position_id = FRA_ww1_cooperation_with_sharif
-	text_icon = joint_FRA_focus_style
-	available = {
-		has_subject = MOR
-	}
-	prerequisite = {
-		focus = FRA_ww1_cooperation_with_sharif
-		focus = FRA_ww1_reproduce_the_tunisian_model
-	}
-	completion_reward_joint_originator = {
-		news_event = {
-			id = ww1_morocco.55
-			days = 2
-		}
-		set_country_flag = FRA_ww1_treaty_of_fes
-		add_political_power = 75
-		FRA = {
-			every_owned_state = {
-				limit = { is_core_of = MOR }
-				transfer_state_to = MOR
-			}
-			MOR = {
-				set_country_flag = FRA_ww1_treaty_of_fes
-				set_country_flag = {
-					flag = MOR_resign_in
-					days = 90
-					value = 1
-				}
-				# hidden_effect = {
-				# 	set_cosmetic_tag = MOR_FRA
-				# }
-				hidden_effect = {
-					get_current_government_type = yes
-				}
-				FRA = {
-					set_autonomy = {
-						target = PREV
-						autonomy_state = autonomy_tgwr_integrated_protectorate
-						freedom_level = 0.9
-						end_civil_wars = no
-						end_wars = no
-					}
-				}
-				hidden_effect = {
-					restore_previous_government_type = yes	
-				}
-			}
-		}
-		
-	}
-	search_filters = {
-		FOCUS_FILTER_INTERNAL_AFFAIRS
-		FOCUS_FILTER_HISTORICAL
-	}
-	ai_will_do = {
-		factor = 20
-		modifier = {
-			tag = MOR
-			factor = 100
-		}
-	}
-	offset = {
-		x = 2
-		y = 0
-		trigger = {
-			has_game_rule = {
-				rule = obsolete_focus_branches_visibility
-				option = HIDE
-			}
-			has_completed_focus = FRA_ww1_rally_the_piou_piou
-		}
-	}
-	cost = 5
-	x = 1
-	y = 1
-}
-
-joint_focus = {
-	id = FRA_french_military_supplies
-	icon = GFX_goal_generic_construct_mil_factory
-	text_icon = joint_FRA_MOR_focus_style
-	available = {
-		OR = {
-			has_subject = MOR
-			is_subject_of = FRA
-		}
-	}
-	x = 1
-	y = 1
-	cost = 10
-	search_filters = {
-		FOCUS_FILTER_INTERNAL_AFFAIRS
-		FOCUS_FILTER_HISTORICAL
-	}
-	prerequisite = {
-		focus = FRA_ww1_treaty_of_fes
-	}
-	relative_position_id = FRA_ww1_treaty_of_fes
-
-	ai_will_do = {
-		factor = 100
-		modifier = {
-			tag = FRA
-			factor = 0.1
-		}
-	}
-	completion_reward_joint_originator = {
-		MOR = {
-			add_ideas = VIN_french_military_supplies
-			country_event = {
-				id = ww1_france.479
-				days = 2
-			}
-		}
-	}
-}
-
-joint_focus = {
-	id = FRA_rabat_administrative_center
-	icon = GFX_focus_AFG_establish_darulaman
-	text_icon = joint_FRA_MOR_focus_style
-	available = {
-		OR = {
-			has_subject = MOR
-			is_subject_of = FRA
-		}
-		MOR = {
-			owns_state = 1093
-		}
-	}
-	x = -1
-	y = 1
-	cost = 8
-	search_filters = {
-		FOCUS_FILTER_INTERNAL_AFFAIRS
-		FOCUS_FILTER_HISTORICAL
-	}
-	prerequisite = {
-		focus = FRA_ww1_treaty_of_fes
-	}
-	relative_position_id = FRA_ww1_treaty_of_fes
-
-	ai_will_do = {
-		factor = 100
-		modifier = {
-			tag = FRA
-			factor = 0.1
-		}
-	}
-	completion_reward_joint_originator = {
-		MOR = {
-			add_stability = 0.1
-			set_capital = {
-				state = 1093
-			}
-		}
-	}
-}
-
-joint_focus = {
-	id = FRA_caid_and_pachas_tutelage
-	icon = GFX_focus_AFG_contact_rural_loyalists
-	text_icon = joint_FRA_MOR_focus_style
-	available = {
-		OR = {
-			has_subject = MOR
-			is_subject_of = FRA
-		}
-	}
-	x = 1
-	y = 1
-	cost = 8
-	search_filters = {
-		FOCUS_FILTER_INTERNAL_AFFAIRS
-		FOCUS_FILTER_HISTORICAL
-	}
-	prerequisite = {
-		focus = FRA_rabat_administrative_center
-		focus = FRA_french_military_supplies
-	}
-	relative_position_id = FRA_rabat_administrative_center
-
-	ai_will_do = {
-		factor = 100
-		modifier = {
-			tag = FRA
-			factor = 0.1
-		}
-	}
-	completion_reward_joint_originator = {
-		MOR = {
-			add_stability = 0.05
-			if = {
-				limit = {
-					has_idea = MOR_decentralized_tribal_state
-				}
-				swap_ideas = {
-					add_idea = MOR_limited_tradition_preservation
-					remove_idea = MOR_decentralized_tribal_state
-				}
-			}
-			if = {
-				limit = {
-					has_idea = MOR_decentralized_tribal_state2
-				}
-				swap_ideas = {
-					add_idea = MOR_limited_tradition_preservation
-					remove_idea = MOR_decentralized_tribal_state2
-				}
-			}
-		}
-	}
-}
-
-joint_focus = {
-	id = FRA_franco_arab_schools
-	icon = GFX_focus_AFG_education_reform
-	text_icon = joint_FRA_MOR_focus_style
-	available = {
-		OR = {
-			has_subject = MOR
-			is_subject_of = FRA
-		}
-	}
-	x = -1
-	y = 1
-	cost = 10
-	search_filters = {
-		FOCUS_FILTER_INTERNAL_AFFAIRS
-		FOCUS_FILTER_HISTORICAL
-	}
-	prerequisite = {
-		focus = FRA_caid_and_pachas_tutelage
-	}
-	relative_position_id = FRA_caid_and_pachas_tutelage
-
-	ai_will_do = {
-		factor = 100
-		modifier = {
-			tag = FRA
-			factor = 0.1
-		}
-	}
-	completion_reward_joint_originator = {
-		MOR = {
-			#set_research_slots = 3
-			add_to_tech_sharing_group = french_tech_share
-		}
-	}
-}
-
-joint_focus = {
-	id = FRA_support_habous
-	icon = GFX_focus_IRQ_a_new_caliph
-	text_icon = joint_FRA_MOR_focus_style
-	available = {
-		OR = {
-			has_subject = MOR
-			is_subject_of = FRA
-		}
-	}
-	x = 0
-	y = 2
-	cost = 10
-	search_filters = {
-		FOCUS_FILTER_INTERNAL_AFFAIRS
-		FOCUS_FILTER_HISTORICAL
-	}
-	prerequisite = {
-		focus = FRA_caid_and_pachas_tutelage
-	}
-	relative_position_id = FRA_caid_and_pachas_tutelage
-
-	ai_will_do = {
-		factor = 100
-		modifier = {
-			tag = FRA
-			factor = 0.1
-		}
-	}
-	completion_reward_joint_originator = {
-		MOR = {
-			add_political_power = 75
-			swap_ideas = {
-				add_idea = MOR_limited_tradition_preservation2
-				remove_idea = MOR_limited_tradition_preservation
-			}
-			every_owned_state = {
-				limit = {
-					has_resistance = yes
-				}
-				add_resistance = -10
-				add_compliance = 25
-			}
-		}
-	}
-}
-
-joint_focus = {
-	id = FRA_berber_dahir
-	icon = GFX_focus_generic_court
-	text_icon = joint_FRA_MOR_focus_style
-	available = {
-		OR = {
-			has_subject = MOR
-			is_subject_of = FRA
-		}
-	}
-	x = 0
-	y = 1
-	cost = 10
-	search_filters = {
-		FOCUS_FILTER_INTERNAL_AFFAIRS
-		FOCUS_FILTER_HISTORICAL
-	}
-	prerequisite = {
-		focus = FRA_support_habous
-	}
-	relative_position_id = FRA_support_habous
-
-	ai_will_do = {
-		factor = 100
-		modifier = {
-			tag = FRA
-			factor = 0.1
-		}
-	}
-	completion_reward_joint_originator = {
-		MOR = {
-			add_stability = 0.05
-		}
-	}
 }

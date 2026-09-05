@@ -78,39 +78,21 @@ on_actions = {
 		effect = {
 			IF = {
 				limit = {
-					any_country = {
-						any_core_state = {
-							OR = {
-								is_on_continent = australia
-								is_on_continent = asia
-							}		
+					OR = {
+						any_country_with_original_tag_of = {
+							target = constant:country_groups.asian_tag
 						}
-						capital_scope = {
-							OR = {
-								is_on_continent = australia
-								is_on_continent = asia
-							}
-						}
-						OR =  {
-							exists = yes
-							exists = no
+						any_country_with_original_tag_of = {
+							target = constant:country_groups.oceanian_tag
 						}
 					}
 				}
 				every_possible_country = {
 					limit = {
-						any_core_state = {
-							OR = {
-								is_on_continent = australia
-								is_on_continent = asia
-							}		
-						}
-						capital_scope = {
-							OR = {
-								is_on_continent = australia
-								is_on_continent = asia
-							}
-						}
+						OR = {
+							is_asian_tag = yes
+							is_oceanian_tag = yes
+						}						
 					}
 					add_to_array = { global.asian_and_oceanian_countries = THIS }
 				}
@@ -121,27 +103,13 @@ on_actions = {
 		effect = {
 			IF = {
 				limit = {
-					any_country = {
-						any_core_state = {
-							is_on_continent = asia
-						}
-						capital_scope = {
-							is_on_continent = asia
-						}
-						OR =  {
-							exists = yes
-							exists = no
-						}
+					any_country_with_original_tag_of = {
+						target = constant:country_groups.asian_tag
 					}
 				}
 				every_possible_country = {
 					limit = {
-						any_core_state = {
-							is_on_continent = asia
-						}
-						capital_scope = {
-							is_on_continent = asia
-						}
+						is_asian_tag = yes
 					}
 					add_to_array = { global.asian_countries = THIS }
 				}
@@ -152,27 +120,13 @@ on_actions = {
 		effect = {
 			IF = {
 				limit = {
-					any_country = {
-						any_core_state = {
-							is_on_continent = south_america
-						}
-						capital_scope = {
-							is_on_continent = south_america
-						}
-						OR =  {
-							exists = yes
-							exists = no
-						}
+					any_country_with_original_tag_of = {
+						target = constant:country_groups.south_american_tag
 					}
 				}
 				every_possible_country = {
 					limit = {
-						any_core_state = {
-							is_on_continent = south_america
-						}
-						capital_scope = {
-							is_on_continent = south_america
-						}
+						is_south_american_tag = yes
 					}
 					add_to_array = { global.south_american_countries = THIS }
 				}
@@ -183,29 +137,32 @@ on_actions = {
 		effect = {
 			IF = {
 				limit = {
-					any_country = {
-						any_core_state = {
-							is_on_continent = middle_east
-						}
-						capital_scope = {
-							is_on_continent = middle_east
-						}
-						OR =  {
-							exists = yes
-							exists = no
-						}
+					any_country_with_original_tag_of = {
+						target = constant:country_groups.middle_eastern_tag
 					}
 				}
 				every_possible_country = {
 					limit = {
-						any_core_state = {
-							is_on_continent = middle_east
-						}
-						capital_scope = {
-							is_on_continent = middle_east
-						}
+						is_middle_eastern_tag = yes
 					}
 					add_to_array = { global.middle_eastern_countries = THIS }
+				}
+			}
+		}
+
+		#Setup European Nations
+		effect = {
+			IF = {
+				limit = {
+					any_country_with_original_tag_of = {
+						target = constant:country_groups.european_tag
+					}
+				}
+				every_possible_country = {
+					limit = {
+						is_european_tag_no_constant = yes
+					}
+					add_to_array = { global.european_countries = THIS }
 				}
 			}
 		}
@@ -346,7 +303,7 @@ on_actions = {
 				limit = {
 					NOT = {
 						has_autonomy_state = autonomy_tgwr_protectorate
-						has_autonomy_state = autonomy_tgwr_informal_protectorate
+						has_autonomy_state = autonomy_tgwr_protected_state
 						has_autonomy_state = autonomy_tgwr_ottoman_emirate
 						has_autonomy_state = autonomy_tgwr_concession
 						ROOT = { #We should remove this
@@ -762,6 +719,7 @@ on_actions = {
 								has_character_flag = unit_leader_can_be_KIA
 							}	
 						}
+						release_from_captivity = yes
 						set_character_flag = character_died
 						if = {
 							limit = {
@@ -809,6 +767,7 @@ on_actions = {
 								has_character_flag = unit_leader_can_be_KIA
 							}	
 						}
+						release_from_captivity = yes
 						set_character_flag = character_died
 						if = {
 							limit = {
@@ -874,6 +833,7 @@ on_actions = {
 				}
 				else_if = {
 					limit = { has_character_flag = unit_leader_can_be_KIA }
+					release_from_captivity = yes
 					set_character_flag = character_died
 					if = {
 						limit = {

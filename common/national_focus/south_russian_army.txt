@@ -51,7 +51,7 @@ focus_tree = {
 		x = -4
 		y = 1
 		relative_position_id = SRA_ice_march
-		cost = 2
+		cost = 1
 		search_filters = {  
 			FOCUS_FILTER_POLITICAL 
 			FOCUS_FILTER_POLITICAL_CHARACTER
@@ -154,6 +154,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_ideas = RCW_army_supply_corruption
 			if = {
 				limit = {
 					DON = {
@@ -198,8 +199,8 @@ focus_tree = {
 			FOCUS_FILTER_ANNEXATION
 		}
 		completion_reward = {
-			unlock_decision_tooltip = SRA_core_states
-			set_country_flag = vol_core_states
+			unlock_decision_category_tooltip = RCW_terrtorial_management
+			set_country_flag = RCW_can_core_states
 		}
 	}
 	focus = {
@@ -223,6 +224,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			activate_mission = SRA_moscow_directive_absolute
+			activate_mission = SRA_moscow_directive_phase_1
 			add_timed_idea = {
 				idea =  SRA_moscow_directive_1
 				days = 150
@@ -230,20 +232,10 @@ focus_tree = {
 			custom_effect_tooltip = SRA_moscow_directive_absolute_tt_desc
 		}
 		ai_will_do = {
-			factor = 0
+			base = 300
 			modifier = {
 				add = 1000
-				has_army_manpower = {
-					size > 250000
-				}
-				OR = {
-					has_country_leader = {
-						character = RUS_anton_denikin
-					}
-					has_country_leader = {
-						character = RUS_lavr_kornilov
-					}
-				}
+				is_historical_focus_on = yes
 			}
 		}
 	}
@@ -307,7 +299,7 @@ focus_tree = {
 					has_war_with = GER
 				}
 				has_war_with = SOV
-				is_puppet = no
+				is_subject = no
 				exists = yes
 			}
 		}
@@ -392,14 +384,14 @@ focus_tree = {
 			focus = SRA_special_council
 		}
 		available = {
-			
+			has_idea = SRA_agrarian_question_idea_1
 		}
 		x = 1
 		y = 1
 		relative_position_id = SRA_special_council
 		cost = 5
 		search_filters = {  
-			FOCUS_FILTER_ANNEXATION
+			FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL_CHARACTER
 		}
 
 		ai_will_do = {
@@ -407,20 +399,38 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			effect_tooltip = {
-				swap_ideas = {
-					remove_idea = SRA_agrarian_question_idea_1 
-					add_idea = SRA_agrarian_question_idea_2 
-				}
+			swap_ideas = {
+				remove_idea = SRA_agrarian_question_idea_1
+				add_idea = SRA_agrarian_question_idea_2
+				days = 90
 			}
-			hidden_effect = {
-				remove_ideas = SRA_agrarian_question_idea_1 
-				add_timed_idea = {
-					idea = SRA_agrarian_question_idea_2 
-					days = 90
-				}
+			RUS = {
+				RUS_alexander_krivoshein = {
+					set_nationality = ROOT
+					if = {
+						limit = { 
+							ROOT = {
+								has_country_leader = {
+									character = RUS_pyotr_wrangel
+								}
+							}						
+						}
+						add_country_leader_role = {
+							promote_leader = yes
+							country_leader = { 
+								ideology = conservatism
+							}
+						}
+						ROOT = {
+							set_party_name = {
+								ideology = democratic
+								long_name = RUS_russian_assembly_party
+								name = RUS_russian_assembly_party
+							}
+						}
+					}
+				}		
 			}
-			custom_effect_tooltip = sra_agrarian_reform_tt
 		}
 	}
 
@@ -542,7 +552,7 @@ focus_tree = {
 		x = 4
 		y = 1
 		relative_position_id = SRA_ice_march
-		cost = 3
+		cost = 1
 		search_filters = {  
 			FOCUS_FILTER_POLITICAL 
 		}
@@ -573,7 +583,7 @@ focus_tree = {
 			}
 			random_controlled_state = {
 				create_unit = {
-					division = "division_template = \"Mobilizovannaya Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 1.0"
+					division = "division_template = \"Mobilizovannaya Diviziya\" start_experience_factor = 0.2 start_equipment_factor = 0.8"
 					owner = ROOT
 					count = 10
 				}

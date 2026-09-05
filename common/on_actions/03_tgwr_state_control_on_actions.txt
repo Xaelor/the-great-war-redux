@@ -13,7 +13,7 @@ on_actions = {
 				}
 				BEL = { set_country_flag = achievement_lost_state }
 			}
-			if = {
+			else_if = {
 				limit = {
 					FROM.FROM = { state = 330 }
 				}
@@ -337,25 +337,23 @@ on_actions = {
 					}
 					if = {
 						limit = { 
-							any_country = {
-								owns_state = 1134
-								owns_state = 775
+							1134 = {
+								OWNER = {
+									owns_state = 775
+								}
 							}
 						}
-						random_country = {
-							limit = {
-								owns_state = 1134
-								owns_state = 775
-							}
-							transfer_state = 767
+						1134 = {
+							OWNER = {
+								transfer_state = 767
+							}	
 						}			
 					}
 					else = {
-						random_country = {
-							limit = {
-								owns_state = 1130
-							}
-							transfer_state = 767
+						1130 = {
+							OWNER = {
+								transfer_state = 767
+							}	
 						}				
 					}		
 				}
@@ -384,26 +382,24 @@ on_actions = {
 						}			
 					}
 					if = {
-						limit = { 
-							any_country = {
-								owns_state = 775
-								owns_state = 567
+						limit = {
+							775 = {
+								OWNER = {
+									owns_state = 567
+								}
 							}
 						}
-						random_country = {
-							limit = {
-								owns_state = 775
-								owns_state = 567
+						775 = {
+							OWNER = {
+								transfer_state = 1135
 							}
-							transfer_state = 1135
-						}			
+						}		
 					}
 					else = {
-						random_country = {
-							limit = {
-								owns_state = 515
-							}
-							transfer_state = 1135
+						515 = {
+							OWNER = {
+								transfer_state = 1135
+							}					
 						}				
 					}
 				}
@@ -415,6 +411,26 @@ on_actions = {
 				if = {
 					limit = { owns_state = FROM.FROM }
 					transfer_state = 1207
+				}
+			}
+			else_if = {
+				limit = {
+					original_tag = PER
+					FROM = {
+						original_tag = PER
+						any_owned_state = {
+							NOT = { state = FROM.FROM }
+						}
+					}
+					FROM.FROM = {
+						OWNER = {
+							original_tag = PER
+						}
+						is_capital = no					
+					}
+				}
+				FROM.FROM = {
+					set_state_owner_to = ROOT			
 				}
 			}
 		}

@@ -1,43 +1,34 @@
-operations = {
+TGWR_great_power_politics = {
+	#great_power_politics_misc
 	GEO_take_sochi = {
 		icon = border_war
 		allowed = {
 			original_tag = GEO
 		}
-		visible = {
-			owns_state = 1068
-			NOT = { owns_state = 233 }
-			233 = {
+		target_trigger = {
+			FROM = {
 				owner = {
 					NOT = {
-						is_subject_of = ROOT
-						is_in_faction_with = ROOT
+						tag = ROOT
+						is_ally_with = ROOT
 						has_war_with = ROOT
 					}
 				}
 			}
+		}
+		target_root_trigger = {
 			OR = {
 				is_subject = no
 				AND = {
 					is_subject = yes
 					OVERLORD = { is_russian_tag = no }
 				}
-			}
-			NOT = {
-				has_cosmetic_tag = GEO_TSCN
-				has_cosmetic_tag = GEO_TSCN_committee
-				has_cosmetic_tag = GEO_TSCN_commissariat
-				has_cosmetic_tag = GEO_TSCN_communism
-			}
+			}		
 		}
 		state_target = yes
 		targets = {
+			1299
 			223
-		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 233
-			}
 		}
 		available = {
 			NOT = {
@@ -45,14 +36,33 @@ operations = {
 				has_active_mission = frankfurt_conference
 				has_active_mission = versallies_conference
 			}
+			if = {
+				limit = {
+					FROM = { state = 1299 }
+				}
+				owns_state = 1068
+			}
+			else_if = {
+				limit = {
+					FROM = { state = 223 }
+				}
+				owns_state = 1299
+			}
 		}
+		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes
+		}
+		custom_cost_trigger = {
+			command_power > 9.9
+		}
+		custom_cost_text = decision_cost_CP_10
 		ai_will_do = {
 			base = 0
 			modifier = {
 				add = 100
 				has_war	= no
 				has_global_flag = october_revolution
-				233 = {
+				FROM = {
 					owner = {
 						has_war = yes
 						NOT = {
@@ -64,28 +74,61 @@ operations = {
 		}
 		fire_only_once = yes
 		complete_effect = {
+			hidden_effect = {
+				add_command_power = -10
+			}
+			FROM = {
+				save_event_target_as = defender_state
+				set_variable = { FROM.defender_state_vs_@ROOT = id }
+				set_temp_variable = { defender_state_temp = id }
+				set_state_flag = border_incident_active
+			}
+			if = {
+				limit = {
+					FROM = { state = 1299 }
+				}
+				1068 = {
+					save_event_target_as = attacker_state
+					set_variable = { FROM.attacker_state_vs_@ROOT = id }
+					set_temp_variable = { attacker_state_temp = id }
+					set_state_flag = border_incident_active
+				}
+			}
+			else_if = {
+				limit = {
+					FROM = { state = 223 }
+				}
+				1299 = {
+					save_event_target_as = attacker_state
+					set_variable = { FROM.attacker_state_vs_@ROOT = id }
+					set_temp_variable = { attacker_state_temp = id }
+					set_state_flag = border_incident_active
+				}
+			}
 			start_border_war = {
 				change_state_after_war = no
 				attacker = {
-					state = 1068
+					state = var:FROM.attacker_state_vs_@ROOT
 					num_provinces = 1
-					on_win = ww1_georgia.13
-					on_lose = ww1_georgia.14
+					on_win = wtt_border_conflict_won_attacker.1
+					on_lose = wtt_border_conflict_lost_attacker.1
+					on_cancel = wtt_border_conflict_canceled_attacker.1
 					dig_in_factor = 0
 					terrain_factor = 0
 				}	
 				defender = {
-					state = 233
+					state = var:FROM.defender_state_vs_@ROOT
 					num_provinces = 1
-					on_win = ww1_georgia.15
-					on_lose = ww1_georgia.16
+					on_win = wtt_border_conflict_won_defender.1
+					on_lose = wtt_border_conflict_lost_defender.1
+					on_cancel = wtt_border_conflict_canceled_defender.1
 				}
 			}
 		}
 	}
 }
 
-peace_deals = {
+TGWR_great_power_politics = {
 	# GEO_transcaucasia_surrender_now = {
 	# 	name = sue_for_peace_FROM
 	# 	icon = GFX_decision_eng_trade_unions_support
@@ -103,7 +146,7 @@ peace_deals = {
 	# 	available = {
 	# 		OR = {
 	# 			surrender_progress > 0.10
-	# 			has_global_flag = brest_litovsk_finished
+	# 			has_global_flag = RUS_surrender
 	# 		}
 	# 	}
 	# 	visible = {
@@ -128,7 +171,7 @@ peace_deals = {
 	# 		modifier = {
 	# 			factor = 0
 	# 			surrender_progress < 0.65
-	# 			NOT = { has_global_flag = brest_litovsk_finished }
+	# 			NOT = { has_global_flag = RUS_surrender }
 	# 		}
 	# 	}
 	# 	complete_effect = {
@@ -139,44 +182,31 @@ peace_deals = {
 		name = sue_for_peace_FROM
 		icon = GFX_decision_eng_trade_unions_support
 		allowed = {
-			tag = GEO
+			tag = CAU
 		}
 		targets = {
 			GER
 			ENT
 		}
-		# target_root_trigger = {
-		# 	has_war_with = FROM
-		# }
 		available = {
 			OR = {
-				has_global_flag = brest_litovsk_finished
+				has_global_flag = RUS_surrender
 				has_global_flag = ENT_capitulation
 				has_global_flag = GER_capitulation
 			}
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			NOT = {
-				any_owned_state = {
-					any_country = {
-						has_war_with = ROOT
-						PREV = {
-							OR = {
-								is_core_of = PREV
-								is_claimed_by = PREV
-							}
-						}
+				any_enemy_country = {
+					any_controlled_state = {
+						is_owned_by = ROOT
 					}
 				}
 				has_war_with = TUR
 				has_war_with = PER
 				has_war_with = RUS
 				FROM = { is_in_faction_with = TUR }
-			}
-			OR = {
-				has_cosmetic_tag = GEO_TSCN
-				has_cosmetic_tag = GEO_TSCN_committee
-				has_cosmetic_tag = GEO_TSCN_commissariat
 			}
 			is_subject = no
 			is_in_faction = no
@@ -202,16 +232,19 @@ peace_deals = {
 	}
 }
 
-foreign_politics = {
+TGWR_great_power_politics = {
+	#great_power_politics_empire_of_the_periphery
 	join_transcaucasia = {
 		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
 			OR = {
+				original_tag = GEO
 				original_tag = AZR
 				original_tag = ARM
 			}
 		}
 		visible = {
+			great_power_politics_empire_of_the_periphery_visible = yes	
 			OR = {
 				is_subject = no
 				is_subject_of = FROM
@@ -221,14 +254,11 @@ foreign_politics = {
 			has_war = no
 			FROM = { has_war = no }
 		}
+		targets = {
+			CAU
+		}
 		target_trigger = {
 			FROM = {
-				OR = {
-					has_cosmetic_tag = GEO_TSCN_commissariat
-					has_cosmetic_tag = GEO_TSCN
-					has_cosmetic_tag = GEO_TSCN_committee
-					has_cosmetic_tag = GEO_TSCN_communism
-				}
 				is_subject = no
 			}
 		}
@@ -286,6 +316,10 @@ foreign_politics = {
 			modifier = {
 				factor = 0
 				OR = {
+					AND = {
+						original_tag = GEO
+						owns_state = 231
+					}
 					AND = {
 						original_tag = AZR
 						owns_state = 229 #Baku

@@ -837,7 +837,7 @@ country_event = {
 					GER = { 
 						set_autonomy = {
 							target = NOR
-							autonomy_state = autonomy_tgwr_informal_protectorate
+							autonomy_state = autonomy_tgwr_protected_state
 						}
 					}
 				}
@@ -850,7 +850,7 @@ country_event = {
 					ENG = { 
 						set_autonomy = {
 							target = NOR
-							autonomy_state = autonomy_tgwr_informal_protectorate
+							autonomy_state = autonomy_tgwr_protected_state
 						}
 					}
 				}
@@ -1064,30 +1064,25 @@ country_event = {
 	option = {
 		name = ww1_sweden.30.c
 		trigger = {
-			any_country = {
-				owns_state = 195
-				NOT = { has_war_with = ROOT }
-				OR = {
-					NOT = { has_government = communism }
-					has_government = ROOT
+			195 = {
+				OWNER = {
+					NOT = { has_war_with = ROOT }
+					OR = {
+						NOT = { has_government = communism }
+						has_government = ROOT
+					}
 				}
 			}
 		}
-		random_other_country = {
-			limit = {
-				owns_state = 195
-				NOT = { has_war_with = ROOT }
-				OR = {
-					NOT = { has_government = communism }
-					has_government = ROOT
+		195 = {
+			OWNER = {
+				transfer_state = 145
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = transfer_aland
 				}
 			}
-			transfer_state = 145
-			add_opinion_modifier = {
-				target = ROOT
-				modifier = transfer_aland
-			}
-		}
+		}	
 		145 = { set_demilitarized_zone = yes }
 		news_event = { id = ww1_sweden.31 hours = 3 }
 		ai_chance = {

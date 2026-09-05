@@ -8,134 +8,29 @@ country_event = {
 	desc = ww1_brest_litovsk.1.d
 	picture = GFX_report_event_generic_conference
 	is_triggered_only = yes
-	trigger = {
-		NOT = {
-			has_global_flag = ENT_accepts_GER_capitulation
-		}
-	}
-	fire_only_once = yes
 	option = {
 		name = ww1_brest_litovsk.1.a
-		# FROM = SOVIET RUSSIA
-		# ROOT = GERMAN EMPIRE
 		effect_tooltip = {
-			add_ideas = RUS_idea_armistice_cp
-			FROM = { add_ideas = RUS_idea_armistice_rus }
+			white_peace = RUS
+		}
+		if = {
+			limit = { 
+				RUS = {
+					tag = SOV
+				}
+			}
+			custom_effect_tooltip = RUS_GER_start_faustshlag_tt
 		}
 		hidden_effect = {
-			save_global_event_target_as = brest_litovsk_ger
-			FROM = {
-				save_global_event_target_as = brest_litovsk_rus
-				# Notify Russia that Germans accepted the Armistice
-				country_event = {
-					id = ww1_brest_litovsk.2
-					days = 3
-				}
-				# moved from .6
-				activate_mission = RUS_demobilizing_army_timer
-			}
-			every_country = {
-				limit = {
-					has_war_with = ROOT
-					OR = {
-						tag = FROM
-						tag = UKR
-						is_ally_with = FROM
-					}
-				}
-				add_ideas = RUS_idea_armistice_rus
-			}
-			every_country = {
-				limit = {
-					has_war_with = FROM
-					OR = {
-						tag = ROOT
-						is_ally_with = ROOT
-					}
-				}
-				add_ideas = RUS_idea_armistice_cp
-			}
-			# First decision: Baltics and Poland
-			country_event = {
-				id = ww1_brest_litovsk.4
-				days = 14
-			}
-			# Brest-Litovsk Negotiations news
 			news_event = {
 				id = ww1_brest_litovsk.101
-				days = 7
 			}
-			set_global_flag = russia_ask_for_brest_litovsk
-		}
-		every_state = {
-			limit = {
-				is_owned_by = RUS
-				OR = {
-					NOT = {
-						is_fully_controlled_by = RUS
-						is_fully_controlled_by = GER
-					}
-					AND = {
-						OR = {
-							is_controlled_by = GER
-							is_controlled_by = AUS
-						}
-						any_neighbor_state = {
-							is_fully_controlled_by = RUS
-						}
-					}
-				}
-			}
-			add_dynamic_modifier = {
-				modifier = RUS_armistice_effect
-			}
-		}
-		every_state = {
-			limit = {
-				is_owned_by = UKR
-				OR = {
-					NOT = {
-						is_fully_controlled_by = UKR
-						is_fully_controlled_by = GER
-					}
-					AND = {
-						OR = {
-							is_controlled_by = GER
-							is_controlled_by = AUS
-						}
-						any_neighbor_state = {
-							is_fully_controlled_by = UKR
-						}
-					}
-				}
-			}
-			add_dynamic_modifier = {
-				modifier = RUS_armistice_effect
+			RUS = {
+				country_event = ww1_brest_litovsk.2
 			}
 		}
 		ai_chance = {
 			base = 100
-		}
-	}
-	option = {
-		name = ww1_brest_litovsk.1.b
-		add_stability = -0.25
-		add_political_power = -200
-		hidden_effect = {
-			set_global_flag = brest_treaty_denounced
-			FROM = {
-				country_event = {
-					id = ww1_brest_litovsk.3
-					days = 3
-				}
-			}
-			news_event = {
-				id = ww1_brest_litovsk.100
-				days = 7
-			}
-		}
-		ai_chance = {
-			base = 0
 		}
 	}
 }
@@ -149,6 +44,14 @@ country_event = {
 	fire_only_once = yes
 	option = {
 		name = ww1_brest_litovsk.2.a
+		if = {
+			limit = { 
+				RUS = {
+					tag = SOV
+				}
+			}
+			custom_effect_tooltip = RUS_GER_start_faustshlag_tt
+		}
 		ai_chance = {
 			factor = 100
 		}
@@ -534,78 +437,30 @@ country_event = {
 	is_triggered_only = yes
 	trigger = {
 		NOT = {
-			has_global_flag = ENT_accepts_GER_capitulation
+			has_country_flag = great_war_loser
 		}
 	}
+	timeout_days = 3
 	option = {
 		name = ww1_brest_litovsk.6.a
+		declare_war_on = {
+			target = RUS
+			type = take_claimed_state
+		}
 		hidden_effect = {
-			FROM = {
-				remove_ideas = RUS_idea_armistice_rus
+			news_event = {
+				id = ww1_brest_litovsk.100
+				days = 2
+			}
+			RUS = {
 				country_event = ww1_brest_litovsk.7
-			}
-			every_country = {
-				limit = {
-					has_idea = RUS_idea_armistice_cp
+				every_allied_country = {						
+					add_to_war = {
+						targeted_alliance = RUS
+						enemy = GER
+					}
 				}
-				remove_ideas = RUS_idea_armistice_cp
 			}
-			# every_other_country = {
-			# 	limit = {
-			# 		original_tag = UKR
-			# 		has_idea = standing_alone
-			# 	}
-			# 	# remove_ideas = standing_alone
-			# 	if = {
-			# 		limit = {
-			# 			has_government = communism
-			# 		}
-			# 		add_to_war = {
-			# 			targeted_alliance = FROM
-			# 			enemy = ROOT
-			# 		}
-			# 	}
-			# 	else = {
-			# 		add_to_war = {
-			# 			targeted_alliance = ROOT
-			# 			enemy = FROM
-			# 		}
-			# 	}
-			# }
-		}
-		if = {
-			limit = {
-				190 = { is_controlled_by_ROOT_or_ally = yes }
-			}
-			GER_release_COU = yes
-		}
-		if = {
-			limit = {
-				189 = { is_controlled_by_ROOT_or_ally = yes }
-				11 = { is_controlled_by_ROOT_or_ally = yes }
-				784 = { is_controlled_by_ROOT_or_ally = yes }
-				773 = { is_controlled_by_ROOT_or_ally = yes }
-				97 = { is_controlled_by_ROOT_or_ally = yes }
-				1017 = { is_controlled_by_ROOT_or_ally = yes }
-			}
-			GER_release_LIT = yes
-		}
-		if = {
-			limit = {
-				13 = { is_controlled_by_ROOT_or_ally = yes }
-				191 = { is_controlled_by_ROOT_or_ally = yes }
-				12 = { is_controlled_by_ROOT_or_ally = yes }
-			}
-			GER_release_UBD = yes
-		}
-		if = {
-			limit = {
-				are_polish_criteria_states_controlled_by_ROOT_or_ally = yes
-			}
-			GER_release_POL = yes
-		}
-		ai_chance = {
-			base = 100
 		}
 	}
 }
@@ -621,12 +476,6 @@ country_event = {
 	fire_only_once = yes
 	option = {
 		name = ww1_brest_litovsk.7.a
-		hidden_effect = {
-			country_event = {
-				id = ww1_brest_litovsk.8
-				days = 14
-			}
-		}
 		ai_chance = {
 			factor = 100
 		}
@@ -685,29 +534,17 @@ country_event = {
 	# 	}
 	# }
 }
-#Russians come back for peace
 country_event = {
 	id = ww1_brest_litovsk.9
 	title = ww1_brest_litovsk.9.t
 	desc = ww1_brest_litovsk.9.d
-	picture = GFX_report_event_generic_conference
 	is_triggered_only = yes
-	trigger = {
-		NOT = {
-			has_global_flag = ENT_accepts_GER_capitulation
-		}
-	}
 	fire_only_once = yes
 	option = {
 		name = ww1_brest_litovsk.9.a
-		effect_tooltip = {
-			add_ideas = RUS_idea_armistice_cp
-			FROM = { add_ideas = RUS_idea_armistice_rus }
-		}
-		country_event = ww1_brest_litovsk.10
-		ai_chance = {
-			factor = 100
-		}
+		unlock_decision_tooltip = GER_form_lithuania
+		unlock_decision_tooltip = GER_form_baltic_duchy
+		unlock_decision_tooltip = GER_form_courland
 	}
 }
 # BREST TREATY: POLAND
@@ -1240,7 +1077,9 @@ country_event = {
 					limit = {
 						OR = {
 							state = 94
+							state = 1300
 							state = 95
+							state = 1301
 							state = 96
 							state = 194
 							state = 204
@@ -1463,7 +1302,7 @@ country_event = {
 	option = {
 		name = ww1_brest_litovsk.15.a
 		hidden_effect = {
-			set_global_flag = brest_litovsk_finished
+			set_global_flag = RUS_surrender
 			remove_ideas = RUS_idea_armistice_rus
 			every_country = {
 				limit = {
@@ -1548,7 +1387,7 @@ country_event = {
 								USR = {
 									set_autonomy = {
 										target = PREV
-										autonomous_state = autonomy_puppet
+										autonomous_state = autonomy_tgwr_assr
 										end_civil_wars = no
 										end_wars = no
 									}
@@ -1622,23 +1461,17 @@ country_event = {
 		hidden_effect = {
 			if = {
 				limit = {
-					GEO = {
-						OR = {
-							has_cosmetic_tag = GEO_TSCN_commissariat
-							has_cosmetic_tag = GEO_TSCN_committee
-							has_cosmetic_tag = GEO_TSCN
-							has_cosmetic_tag = GEO_TSCN_communism
-						}
+					CAU = {
 						is_in_faction_with = ROOT
 					}
 				}
 				if = {
 					limit = {
-						has_subject = GEO
+						has_subject = CAU
 					}
-					end_puppet = GEO
+					end_puppet = CAU
 				}
-				GEO = {
+				CAU = {
 					leave_faction = yes
 					add_ideas = standing_alone
 				}
@@ -1652,13 +1485,13 @@ country_event = {
 					}
 					every_country = {
 						limit = {
-							has_war_with = GEO
+							has_war_with = CAU
 							OR = {
 								is_in_faction_with = event_target:brest_litovsk_ger
 								tag = event_target:brest_litovsk_ger
 							}
 						}
-						white_peace = GEO
+						white_peace = CAU
 					}
 				}
 			}
@@ -1743,159 +1576,165 @@ country_event = {
 			has_global_flag = ENT_accepts_GER_capitulation
 		}
 	}
-	option = {
-		name = ww1_brest_litovsk.17.a
+	immediate = {		
 		hidden_effect = {
 			white_peace = UKR
-		}
-		set_global_flag = ukr_ger_bread_peace 
-		UKR = {
-			if = {
-				limit = { 
-					GER = {
-						NOT = {
-							has_war_with = SOV
+			set_global_flag = ukr_ger_bread_peace 
+			UKR = {
+				if = {
+					limit = { 
+						GER = {
+							NOT = {
+								has_war_with = SOV
+							}
 						}
 					}
-				}
-				hidden_effect = {
-					every_enemy_country = {
-						limit = {
-							original_tag = UKR
-						}
-						add_ideas = standing_alone	
-						leave_faction = yes
-						if = {
+					hidden_effect = {
+						every_enemy_country = {
 							limit = {
-								is_subject = yes
-							}				
-							OVERLORD = { 
-								end_puppet = PREV 
-								PREV = {
-									give_military_access = PREV
-								}
+								original_tag = UKR
 							}
+							add_ideas = standing_alone	
+							leave_faction = yes
 							if = {
 								limit = {
-									NOT = { tag = USR }
-									USR = {
-										has_war_with = UKR
-										has_government = communism
-									}
-								}	
-								get_current_government_type = yes
-								USR = {
-									set_autonomy = {
-										target = PREV
-										autonomous_state = autonomy_puppet
-										end_civil_wars = no
-										end_wars = no
+									is_subject = yes
+								}				
+								OVERLORD = { 
+									end_puppet = PREV 
+									PREV = {
+										give_military_access = PREV
 									}
 								}
-								restore_previous_government_type = yes
-							}	
-						}		
-					}
-				}
-				every_enemy_country = {
-					limit = {
-						OR = {
-							tag = SOV
-							is_ally_with = SOV
+								if = {
+									limit = {
+										NOT = { tag = USR }
+										USR = {
+											has_war_with = UKR
+											has_government = communism
+										}
+									}	
+									get_current_government_type = yes
+									USR = {
+										set_autonomy = {
+											target = PREV
+											autonomous_state = autonomy_tgwr_assr
+											end_civil_wars = no
+											end_wars = no
+										}
+									}
+									restore_previous_government_type = yes
+								}	
+							}		
 						}
-						NOT = {
-							original_tag = UKR
-						}
 					}
-					white_peace = UKR
-				}
-			}	
-			get_current_government_type = yes
-			set_country_flag = protectorate
-			set_country_flag = released_by_germany #needed for peace conference to not count them as a winner nor a loser
-			ROOT = {
-				set_autonomy = {
-					target = UKR
-					autonomy_state = autonomy_tgwr_informal_protectorate
-					end_civil_wars = no
-					end_wars = no
-				}
-			}
-			restore_previous_government_type = yes
-			every_state = {
-				limit = {
-					OR = {
-						state = 94
-						state = 194
-						state = 222
-						state = 240
-						state = 241
-						state = 808
-						state = 1233
-					}
-				}
-				add_claim_by = PREV
-			}
-			add_ideas = UKR_idea_bread_peace
-		}
-		if = {
-			limit = {
-				has_active_mission = GER_mission_food_shortages_timer
-			}
-			add_days_mission_timeout = {
-				mission = GER_mission_food_shortages_timer
-				days = 90
-			}
-			else = {
-				add_days_mission_timeout = {
-					mission = GER_mission_famine_timer
-					days = 70
-				}
-			}
-		}
-		hidden_effect = {
-			UKR = {
-				remove_ideas = RUS_idea_armistice_cp
-				remove_ideas = standing_alone
-				add_ideas = volunteer_only
-				every_state = {
-					limit = {
-						is_core_of = PREV
-						owner = {
+					every_enemy_country = {
+						limit = {
 							OR = {
-								tag = GER
-								is_in_russian_civil_war = yes
-								has_war_with = PREV.PREV
-								is_ally_with = RUS
+								tag = SOV
+								is_ally_with = SOV
 							}
 							NOT = {
 								original_tag = UKR
 							}
 						}
+						white_peace = UKR
 					}
-					transfer_state_to = PREV
-					remove_claim_by = GER
-					if = {
-						limit = {
-							is_russian_core = yes
-						}
-						remove_russian_cores = yes
-						remove_russian_claims = yes
+				}	
+				get_current_government_type = yes
+				set_country_flag = protectorate
+				set_country_flag = released_by_germany #needed for peace conference to not count them as a winner nor a loser
+				ROOT = {
+					set_autonomy = {
+						target = UKR
+						autonomy_state = autonomy_tgwr_protected_state
+						end_civil_wars = no
+						end_wars = no
 					}
 				}
-				army_experience = 100
-				delete_unit = { disband = yes }
-				delete_obsolete_russian_templates = yes
-				country_lock_all_division_template = no
+				restore_previous_government_type = yes
+				every_state = {
+					limit = {
+						OR = {
+							state = 94
+							state = 1300
+							state = 194
+							state = 222
+							state = 240
+							state = 241
+							state = 808
+							state = 1233
+						}
+					}
+					add_claim_by = PREV
+				}
+				add_ideas = UKR_idea_bread_peace
 			}
-			country_event = {
-				id = ww1_ukraine.1
-				days = 86
+			if = {
+				limit = {
+					has_active_mission = GER_mission_food_shortages_timer
+				}
+				add_days_mission_timeout = {
+					mission = GER_mission_food_shortages_timer
+					days = 90
+				}
+				else = {
+					add_days_mission_timeout = {
+						mission = GER_mission_famine_timer
+						days = 70
+					}
+				}
 			}
+			hidden_effect = {
+				UKR = {
+					remove_ideas = RUS_idea_armistice_cp
+					remove_ideas = standing_alone
+					add_ideas = volunteer_only
+					every_state = {
+						limit = {
+							is_core_of = PREV
+							owner = {
+								OR = {
+									tag = GER
+									is_in_russian_civil_war = yes
+									has_war_with = PREV.PREV
+									is_ally_with = RUS
+								}
+								NOT = {
+									original_tag = UKR
+								}
+							}
+						}
+						transfer_state_to = PREV
+						remove_claim_by = GER
+						if = {
+							limit = {
+								is_russian_core = yes
+							}
+							remove_russian_cores = yes
+							remove_russian_claims = yes
+						}
+					}
+					army_experience = 100
+					delete_unit = { disband = yes }
+					delete_obsolete_russian_templates = yes
+					country_lock_all_division_template = no
+				}
+				country_event = {
+					id = ww1_ukraine.1
+					days = 86
+				}
+			}
+
 		}
-		ai_chance = {
-			base = 100
+	}
+	option = {
+		name = ww1_brest_litovsk.17.a
+		effect_tooltip = {
+			add_to_faction = UKR
+			white_peace = UKR
 		}
+		country_event = ww1_brest_litovsk.6
 	}
 }
 # GERMANY CONTINUES WAR
@@ -1916,26 +1755,26 @@ news_event = {
 		name = ww1_brest_litovsk.100.a
 		trigger = {
 			OR = {
-				tag = event_target:brest_litovsk_ger
-				is_subject_of = event_target:brest_litovsk_ger
-				is_in_faction_with = event_target:brest_litovsk_ger
+				tag = GER
+				is_subject_of = GER
+				is_in_faction_with = GER
 			}
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 	option = {
 		name = ww1_brest_litovsk.100.b
 		trigger = {
 			NOT = {
-				tag = event_target:brest_litovsk_ger
-				is_subject_of = event_target:brest_litovsk_ger
-				is_in_faction_with = event_target:brest_litovsk_ger
+				tag = GER
+				is_subject_of = GER
+				is_in_faction_with = GER
 			}
 		}
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 	}
 }
@@ -1949,21 +1788,12 @@ news_event = {
 	picture = ww1_russia_6
 	major = yes
 	is_triggered_only = yes
-	trigger = {
-		NOT = {
-			has_global_flag = ENT_accepts_GER_capitulation
-		}
-	}
-	immediate = {
-		set_global_flag = brest_litovsk
-		set_global_flag = RUS_surrender_alone
-	}
 	option = {
 		name = ww1_brest_litovsk.101.a
 		trigger = {
 			OR = {
-				tag = event_target:brest_litovsk_rus
-				tag = event_target:brest_litovsk_ger
+				tag = RUS
+				tag = GER
 			}
 		}
 		hidden_effect = {
@@ -1977,8 +1807,8 @@ news_event = {
 		name = ww1_brest_litovsk.101.b
 		trigger = {
 			NOT = {
-				tag = event_target:brest_litovsk_rus
-				tag = event_target:brest_litovsk_ger
+				tag = RUS
+				tag = GER
 			}
 		}
 		ai_chance = {
@@ -1998,7 +1828,9 @@ news_event = {
 	is_triggered_only = yes
 	trigger = {
 		NOT = {
-			has_global_flag = ENT_accepts_GER_capitulation
+			GER = {
+				has_country_flag = great_war_loser
+			}
 		}
 	}
 	option = {

@@ -200,12 +200,12 @@ ideas = {
 			allowed_to_remove = {
 				OR = {
 					threat > 0.75
-					has_war = yes
+					is_in_major_war = yes
 				}
 				if = {
 					limit = { original_tag = USA }
 					OR = {
-						has_war = yes
+						is_in_major_war = yes
 						has_completed_focus = USA_revision_of_the_military_budget
 						has_completed_focus = USA_arms_tax
 					}
@@ -283,12 +283,12 @@ ideas = {
 				OR = {
 					threat > 0.75
 					has_war_support > 0.75
-					has_war = yes					
+					is_in_major_war = yes
 				}
 				if = {
 					limit = { original_tag = USA }
 					OR = {
-						has_war = yes
+						is_in_major_war = yes
 						has_completed_focus = USA_revision_of_the_military_budget
 						has_completed_focus = USA_arms_tax
 					}
@@ -376,10 +376,7 @@ ideas = {
 				fuel_gain_factor = 0.05
 			}
 			allowed_to_remove = {
-				OR = {
-					has_completed_focus = TUR_encourage_privatization
-					has_completed_focus = TUR_reintroduce_the_vakif_system
-				}
+				has_completed_focus = TUR_encourage_privatization
 			}
 			
 			ai_will_do = {
@@ -403,6 +400,10 @@ ideas = {
 		}
 		
 		civilian_economy = {
+
+			allowed = {
+				is_unplayable_tag = no
+			}
 
 			cost = 150
 			removal_cost = -1
@@ -509,11 +510,15 @@ ideas = {
 		}
 		
 		low_economic_mobilisation = {
+
+			allowed = {
+				is_unplayable_tag = no
+			}
 			
 			available = {
 				has_war_support > 0.15
 				OR = {
-					has_war = yes
+					is_in_major_war = yes				
 					threat > 0.10
 					has_government = fascism
 					custom_trigger_tooltip = {
@@ -527,7 +532,7 @@ ideas = {
 							is_GER_a_monarchy = yes
 						}
 						AND = {
-							has_war = yes
+							is_in_major_war = yes			
 							OR = {
 								has_completed_focus = GER_regulating_the_war_economy
 								has_completed_focus = GER_war_socialism
@@ -541,12 +546,7 @@ ideas = {
 					}
 				}
 				NOT = {
-					has_country_flag = cant_change_from_civilian_economy
-				}
-				hidden_trigger = {
-					NOT = {
-						has_idea = FRA_wadai_war
-					}	
+					has_country_flag = cant_change_from_civilian_economy				
 				}
 				if = {
 					limit = {
@@ -564,7 +564,7 @@ ideas = {
 				else_if = {
 					limit = { original_tag = LUX }
 					OR = {
-						has_war = yes
+						is_in_major_war = yes
 						NOT = {
 							has_idea = LUX_london_treaty
 						}
@@ -670,11 +670,15 @@ ideas = {
 		}
 		
 		partial_economic_mobilisation = {
+
+			allowed = {
+				is_unplayable_tag = no
+			}
 			
 			available = {
 				has_war_support > 0.25
 				OR = {
-					has_war = yes
+					is_in_major_war = yes
 					threat > 0.25
 					has_government = fascism
 					custom_trigger_tooltip = {
@@ -684,11 +688,6 @@ ideas = {
 				}		
 				NOT = {
 					has_country_flag = cant_change_from_civilian_economy
-				}
-				hidden_trigger = {
-					NOT = {
-						has_idea = FRA_wadai_war
-					}
 				}
 				if = {
 					limit = { original_tag = ENG } 
@@ -720,7 +719,7 @@ ideas = {
 				else_if = {
 					limit = { original_tag = LUX }
 					OR = {
-						has_war = yes
+						is_in_major_war = yes
 						NOT = {
 							has_idea = LUX_london_treaty
 						}
@@ -825,10 +824,14 @@ ideas = {
 		}
 		
 		war_economy = {
+
+			allowed = {
+				is_unplayable_tag = no
+			}
 			
 			available = {
 				
-				has_war = yes
+				is_in_major_war = yes
 				has_war_support > 0.5
 				if = {
 					limit = {
@@ -887,7 +890,7 @@ ideas = {
 				else_if = {
 					limit = { original_tag = LUX }
 					OR = {
-						has_war = yes
+						is_in_major_war = yes
 						NOT = {
 							has_idea = LUX_london_treaty
 						}
@@ -1011,96 +1014,33 @@ ideas = {
 		}
 		
 		tot_economic_mobilisation = {
+
+			allowed = {
+				is_unplayable_tag = no
+			}
 			
 			available = {
-				has_war = yes
-				has_war_support > 0.8
 				if = {
 					limit = {
 						tag = GER
 						has_focus_tree = german_focus
 						is_GER_a_monarchy = yes
 					}
+					has_war_with_major = yes
 					has_completed_focus = GER_war_socialism
 				}
-				else = {
-					OR = {
-						threat > 0.5
-						has_government = fascism
-						custom_trigger_tooltip = {
-							tooltip = has_government_vanguardism_tt
-							has_country_leader_ideology = vanguardism
-						}				
-					}
-				}		
-				any_enemy_country = {
-					ic_ratio = {
-						tag = ROOT
-						ratio > 0.7
-					}
-				}
-				NOT = {
-					has_country_flag = cant_change_from_civilian_economy
-				}
-				if = {
-					limit = { original_tag = ENG }
-					OR = {					
-						threat > 0.99
-						has_global_flag = great_war
-					}
-				}
-				if = {
+				else_if = {
 					limit = {
 						tag = SOV
-						has_idea = SOV_idea_NEP
 					}
-					has_completed_focus = SOV_economic_alternative
+					has_civil_war = yes
+					custom_trigger_tooltip = {
+						tooltip = has_government_vanguardism_tt
+						has_country_leader_ideology = vanguardism
+					}				
 				}
-				if = {
-					limit = {
-						has_completed_focus = TUR_strengthen_the_national_economy
-					}
-					NOT = {
-						has_idea = TUR_economic_etatism
-						has_idea = interwar_recovery
-					}
-				}
-				if = {
-					limit = { has_idea = SRA_marching_army }
-					NOT = { has_idea = SRA_marching_army }
-				}
-				else_if = {
-					limit = { original_tag = LUX }
-					OR = {
-						has_war = yes
-						NOT = {
-							has_idea = LUX_london_treaty
-						}
-					}
-					if = {
-						limit = {
-							has_idea = LUX_occupation
-						}
-						NOT = {
-							has_idea = LUX_occupation
-						}
-					}
-				}
-				else_if = {
-					limit = {
-						has_idea = HUN_ausgleich
-					}
-					NOT = {
-						has_idea = HUN_ausgleich
-					}
-				}
-				else_if = {
-					limit = {
-						has_idea = AUH_condominium
-					}
-					NOT = {
-						has_idea = AUH_condominium
-					}
+				else = {
+					always = no
 				}
 			}
 			on_add = {
@@ -1169,7 +1109,8 @@ ideas = {
 			
 			modifier = {
 				consumer_goods_expected_value = 0.10
-				conscription = -0.03
+				stability_weekly_factor = -0.002
+				war_support_weekly = -0.002
 				production_speed_arms_factory_factor = 0.3
 				conversion_cost_civ_to_mil_factor= -0.3
 				conversion_cost_mil_to_civ_factor = -0.3
@@ -1180,20 +1121,6 @@ ideas = {
 			
 			ai_will_do = {
 				factor = 80
-				modifier = { #don't increase without having enough manpower
-					factor = 0
-					check_variable = { manpower_k < num_battalions }
-				}
-				modifier = { #we don't want the conscription% to drop too low
-					factor = 0
-					has_manpower > 150000 #minimum manpower for minors
-					OR = {
-						has_idea = disarmed_nation
-						has_idea = volunteer_only
-						has_idea = limited_conscription
-						has_idea = extensive_conscription
-					}
-				}
 			}
 		}
 	}
@@ -1201,35 +1128,13 @@ ideas = {
 	trade_laws = { 
 		law = yes
 		use_list_view = yes
-		unequal_treaties = {
-			allowed = {
-				always = no
-			}
-			removal_cost = -1
-			
-			modifier = {
-				min_export = 0.96
-				industrial_capacity_factory = 0.15
-				industrial_capacity_dockyard = 0.15
-				production_speed_buildings_factor = 0.15
-				civilian_intel_to_others = 40.0
-				army_intel_to_others = 10.0
-				navy_intel_to_others = 20.0
-				#custom_modifier_tooltip = unequal_treaties_tt
-			}
-
-			allowed_to_remove = {
-				dont_have_unequal_treaties = yes
-			}
-			
-			cancel_if_invalid = no
-			
-			ai_will_do = {
-				factor = 0
-			}
-		}
 
 		free_trade = {
+			
+			allowed = {
+				is_unplayable_tag = no
+			}
+
 			cost = 150
 			removal_cost = -1
 			
@@ -1348,7 +1253,7 @@ ideas = {
 			ai_will_do = {
 				factor = 1
 				modifier = {
-					has_war = yes
+					is_in_major_war = yes
 					factor = 0
 				}
 				modifier = {
@@ -1399,7 +1304,10 @@ ideas = {
 		}
 		
 		export_focus = {
-			
+
+			allowed = {
+				is_unplayable_tag = no
+			}
 			
 			cost = 150
 			removal_cost = -1
@@ -1440,16 +1348,46 @@ ideas = {
 						has_idea = AUH_condominium
 					}
 				}	
+				else_if = {
+					limit = { 
+						has_dynamic_modifier = CHI_foreign_influence_modifier 
+					}
+					check_variable = {
+						var = CHI_domestic_independence
+						value = 0.5
+						compare = greater_than_or_equals
+						tooltip = has_domestic_independence_tt
+					}
+				}
 			}
 			
 			default = yes
 			
 			cancel_if_invalid = no
+
+			cancel = {
+				if = {
+					limit = { 
+						has_dynamic_modifier = CHI_foreign_influence_modifier 
+					}
+					check_variable = {
+						var = CHI_domestic_independence
+						value = 0.5
+						compare = less_than
+						tooltip = has_domestic_independence_tt_NOT
+					}
+				}
+				else = {
+					hidden_trigger = {
+						always = no
+					}
+				}
+			}
 			
 			ai_will_do = {
 				factor = 1
 				modifier = {
-					has_war = yes
+					is_in_major_war = yes
 					has_idea = free_trade
 					factor = 40
 				}
@@ -1501,6 +1439,11 @@ ideas = {
 		}
 		
 		limited_exports = {
+
+			allowed = {
+				is_unplayable_tag = no
+			}
+
 			available = {
 				OR = {
 					has_idea = partial_economic_mobilisation
@@ -1525,6 +1468,36 @@ ideas = {
 					}
 					NOT = {
 						has_idea = AUH_condominium
+					}
+				}
+				else_if = {
+					limit = { 
+						has_dynamic_modifier = CHI_foreign_influence_modifier 
+					}
+					check_variable = {
+						var = CHI_domestic_independence
+						value = 0.75
+						compare = greater_than_or_equals
+						tooltip = has_domestic_independence_tt
+					}
+				}
+			}
+
+			cancel = {
+				if = {
+					limit = { 
+						has_dynamic_modifier = CHI_foreign_influence_modifier 
+					}
+					check_variable = {
+						var = CHI_domestic_independence
+						value = 0.75
+						compare = less_than
+						tooltip = has_domestic_independence_tt_NOT
+					}
+				}
+				else = {
+					hidden_trigger = {
+						always = no
 					}
 				}
 			}
@@ -1615,13 +1588,25 @@ ideas = {
 		}
 		
 		closed_economy = {
+
+			allowed = {
+				is_unplayable_tag = no
+			}
+
 			available = {
 				if = {
+					limit = {
+						has_idea = isolation 
+						NOT = { original_tag = USA }
+					}
+					has_idea = isolation
+				}
+				else_if = {
 					limit = { has_idea = PAP_captivus_vaticani }
 					has_idea = PAP_captivus_vaticani
-				}
+				}		
 				else = {
-					has_war = yes
+					is_in_major_war = yes
 					OR = {
 						has_government = fascism
 						custom_trigger_tooltip = {
@@ -1660,14 +1645,33 @@ ideas = {
 						has_idea = AUH_condominium
 					}
 				}
+				else_if = {
+					limit = { 
+						has_dynamic_modifier = CHI_foreign_influence_modifier 
+					}
+					check_variable = {
+						var = CHI_domestic_independence
+						value = 0.95
+						compare = greater_than_or_equals
+						tooltip = has_domestic_independence_tt
+					}
+				}
 			}
-			
 			cost = 150
 			removal_cost = -1
 			
 			cancel = {
 				has_war = no
 				if = {
+					limit = {
+						has_idea = isolation 
+						NOT = { original_tag = USA }
+					}
+					NOT = {
+						has_idea = isolation
+					}
+				}
+				else_if = {
 					limit = { has_idea = PAP_captivus_vaticani }
 					NOT = {
 						has_idea = PAP_captivus_vaticani
@@ -1687,6 +1691,17 @@ ideas = {
 					}
 					NOT = {
 						has_idea = AUH_condominium
+					}
+				}
+				else_if = {
+					limit = { 
+						has_dynamic_modifier = CHI_foreign_influence_modifier 
+					}
+					check_variable = {
+						var = CHI_domestic_independence
+						value = 0.95
+						compare = less_than
+						tooltip = has_domestic_independence_tt_NOT
 					}
 				}
 			}

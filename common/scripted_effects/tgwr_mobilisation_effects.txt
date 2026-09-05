@@ -193,8 +193,7 @@ disband_units_setup = {
 disband_units_transfer_manpower = {
 	delete_unit = { disband = yes }
 
-	set_temp_variable = { manpower_diff = manpower_k }
-	subtract_from_temp_variable = { manpower_diff = old_manpower }
+	set_temp_variable = { manpower_diff = { value = manpower_k subtract = old_manpower } }
 
 	while_loop_effect = { #avoid overflows
 		limit = { check_variable = { manpower_diff > 100 } }
@@ -220,7 +219,13 @@ disband_one_to_three_divisions = {
 		disband_units_setup = yes
 		transfer_units_fraction = {
 			target = var:debug_tag_instance
+			target_organization = 1
+			source_organization = 1
 			size = 0
+			stockpile_ratio = 0
+			army_ratio = 0.01
+			navy_ratio = 0
+			air_ratio = 0
 			keep_unit_leaders_trigger = { always = yes }
 		}
 		var:debug_tag_instance = {
@@ -237,6 +242,8 @@ disband_ten_percent_units = {
 		disband_units_setup = yes
 		transfer_units_fraction = {
 			target = var:debug_tag_instance
+			target_organization = 1
+			source_organization = 1
 			size = 0
 			army_ratio = 0.1
 			keep_unit_leaders_trigger = { always = yes }
@@ -255,6 +262,8 @@ disband_twenty_percent_units = {
 		disband_units_setup = yes
 		transfer_units_fraction = {
 			target = var:debug_tag_instance
+			target_organization = 1
+			source_organization = 1
 			size = 0
 			army_ratio = 0.2
 			keep_unit_leaders_trigger = { always = yes }
@@ -273,11 +282,11 @@ disband_twenty_percent_units_delete_equipment = { #used for disarming countries 
 		disband_units_setup = yes
 		transfer_units_fraction = {
 			target = var:debug_tag_instance
+			target_organization = 1
+			source_organization = 1
 			size = 0
 			army_ratio = 0.2
-			keep_unit_leaders_trigger = {
-				always = yes
-			}
+			keep_unit_leaders_trigger = { always = yes }
 		}
 		var:debug_tag_instance = {
 			disband_units_transfer_manpower = yes
@@ -293,6 +302,8 @@ disband_fifty_percent_units = {
 		disband_units_setup = yes
 		transfer_units_fraction = {
 			target = var:debug_tag_instance
+			target_organization = 1
+			source_organization = 1
 			size = 0
 			army_ratio = 0.5
 			keep_unit_leaders_trigger = { always = yes }
@@ -463,7 +474,7 @@ calculate_maximum_divisions = {
 	# +100 for chinese tags
 	if = {
 		limit = {
-			is_china_or_warlord_no_tt = yes
+			is_china_or_warlord = yes
 		}
 		multiply_variable = { max_divisions = 1.20 }
 	}
@@ -490,14 +501,7 @@ calculate_maximum_divisions = {
 	# -20% for low level puppets
 	if = {
 		limit = { 
-			OR = {
-				has_autonomy_state = autonomy_integrated_puppet
-				has_autonomy_state = autonomy_colony
-				has_autonomy_state = autonomy_tgwr_integrated_protectorate
-				has_autonomy_state = autonomy_tgwr_protectorate
-				has_autonomy_state = autonomy_tgwr_concession
-				has_autonomy_state = autonomy_tgwr_governorate_general
-			} 
+			is_low_level_puppet = yes
 		}
 		multiply_variable = { max_divisions = 0.80 }
 	}

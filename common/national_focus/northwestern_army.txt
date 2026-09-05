@@ -1091,6 +1091,8 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_POLITICAL FOCUS_FILTER_POLITICAL_CHARACTER }
 		completion_reward = {
 			add_political_power = 100
+			unlock_decision_category_tooltip = RCW_terrtorial_management
+			set_country_flag = RCW_can_core_states
 			if = {
 				limit = {
 					has_idea = NWA_decentralized_administration
@@ -1149,24 +1151,29 @@ focus_tree = {
 		}
 
 		available = {
-			any_country = {
-				is_russian_tag = yes
-				has_war_with = SOV
-				NOT = { has_war_with = ROOT }
+			SOV = {
+				any_enemy_country = {
+					is_russian_tag = yes
+					NOT = {
+						tag = ROOT
+						has_war_with = ROOT
+					}	
+				}
 			}
 		}
 
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_POLITICAL }
 		completion_reward = {
-			every_country = {
-				limit = {
-					is_russian_tag = yes
-					has_war_with = SOV
-				}
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = large_increase
+			SOV = {
+				every_enemy_country = {
+					limit = {
+						is_russian_tag = yes
+					}
+					add_opinion_modifier = {
+						target = ROOT
+						modifier = large_increase
+					}
 				}
 			}
 			add_political_power = 100
@@ -1200,7 +1207,7 @@ focus_tree = {
 			}
 			modifier = {
 				factor = 0
-				has_completed_focus = NWA_yet_another_retreat			
+				has_completed_focus = NWA_we_failed			
 			}
 		}
 
@@ -1398,7 +1405,7 @@ focus_tree = {
 		id = NWA_suppress_remaining_commies
 		icon = GFX_focus_broken_red_star
 		cost = 5
-		x = 4
+		x = 5
 		y = 1
 		relative_position_id = NWA_imperial_capital_is_ours
 		prerequisite = {
@@ -1441,6 +1448,7 @@ focus_tree = {
 		prerequisite = {
 			focus = NWA_fire_the_defence_minister
 			focus = NWA_dissolve_government
+			focus = NWA_monarchist_government
 		}
 
 		mutually_exclusive = {
@@ -1480,7 +1488,7 @@ focus_tree = {
 		dynamic = yes
 		icon = GFX_focus_generic_military_dictatorship
 		cost = 5
-		x = 1
+		x = 0
 		y = 1
 		relative_position_id = NWA_suppress_remaining_commies
 		prerequisite = {
@@ -1492,6 +1500,9 @@ focus_tree = {
 
 		mutually_exclusive = {
 			focus = NWA_fire_the_defence_minister
+		}
+		mutually_exclusive = {
+			focus = NWA_monarchist_government
 		}
 
 		ai_will_do = {
@@ -1568,7 +1579,7 @@ focus_tree = {
 			GFX_goal_support_democracy = yes
 		}
 		cost = 5
-		x = -1
+		x = -2
 		y = 1
 		relative_position_id = NWA_suppress_remaining_commies
 		prerequisite = {
@@ -1580,6 +1591,9 @@ focus_tree = {
 
 		mutually_exclusive = {
 			focus = NWA_dissolve_government
+		}
+		mutually_exclusive = {
+			focus = NWA_monarchist_government
 		}
 
 		ai_will_do = {
@@ -1604,6 +1618,66 @@ focus_tree = {
 				election_frequency = 48
 			}
 			add_stability = 0.1
+		}
+	}
+	focus = {
+		id = NWA_monarchist_government
+		icon = GFX_focus_SOV_zemsky_sobor
+		cost = 5
+		x = 2
+		y = 1
+		relative_position_id = NWA_suppress_remaining_commies
+		prerequisite = {
+			focus = NWA_suppress_remaining_commies
+		}
+		prerequisite = {
+			focus = NWA_form_northwestern_government
+		}
+
+		mutually_exclusive = {
+			focus = NWA_fire_the_defence_minister
+		}
+		mutually_exclusive = {
+			focus = NWA_dissolve_government
+		}
+
+		ai_will_do = {
+			base = 10
+			modifier = {
+				factor = 5
+				has_completed_focus = NWA_with_german_support
+			}
+		}
+
+		available = {
+			is_subject = no
+			has_character = RUS_nikolai_markov
+			NOT = {				
+				has_country_leader = {
+					character = RUS_alexandr_rodzyanko 
+				}
+				has_government = democratic
+				has_government = communism
+			}
+		}
+
+		bypass = {
+			
+		}
+
+		available_if_capitulated = yes
+		search_filters = {  }
+		completion_reward = {
+			add_political_power = 50
+			RUS_nikolai_markov = {
+				promote_character = reactionism
+			}
+			set_politics = {
+				ruling_party = fascism
+				name = NWA_white_cross_party
+				long_name = NWA_white_cross_party
+				elections_allowed = no
+			}		
 		}
 	}
 	focus = {

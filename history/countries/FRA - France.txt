@@ -21,8 +21,11 @@ give_guarantee = ADR
 give_guarantee = MCO
 give_guarantee = BEL # Treaty of London (1839)
 give_guarantee = LUX
-give_guarantee = NOR # Treaty of Norway (1907)
 give_guarantee = GRE # London Protocol (1830)
+
+set_country_flag = core_member_ENT
+set_country_flag = great_power_politics_scramble_for_africa_visible
+set_variable = { great_power_politics_scramble_for_africa_button = 2 }
 
 # Doesn't need explaining
 add_opinion_modifier = {
@@ -30,29 +33,30 @@ add_opinion_modifier = {
 	modifier = historical_rival
 }
 
-TUN = { set_country_flag = protectorate }
 set_autonomy = {
 	target = TUN
-	autonomous_state = autonomy_tgwr_integrated_protectorate
+	autonomous_state = autonomy_tgwr_protectorate
 	freedom_level = 0.3
 }
-IND = { set_country_flag = protectorate }
 set_autonomy = {
 	target = IND
-	autonomous_state = autonomy_tgwr_integrated_protectorate
+	autonomous_state = autonomy_tgwr_protectorate
 	freedom_level = 0.1
 }
-FUJ = { set_country_flag = protectorate }
 set_autonomy = {
 	target = FUJ
-	autonomous_state = autonomy_tgwr_integrated_protectorate
+	autonomous_state = autonomy_tgwr_protectorate
 	freedom_level = 0.1
 }
-KUT = { set_country_flag = protectorate }
 set_autonomy = {
 	target = KUT
-	autonomous_state = autonomy_tgwr_protectorate
+	autonomous_state = autonomy_tgwr_protected_state
 	freedom_level = 0.8
+}
+set_autonomy = {
+	target = GOB
+	autonomous_state = autonomy_tgwr_protected_state
+	freedom_level = 0.5
 }
 
 FRA = {
@@ -169,6 +173,7 @@ FRA = {
 		limited_conscription
 		FRA_armand_fallieres
 	}
+	add_dynamic_modifier = { modifier = colonial_war }
 	
 	if = {
 		limit = {
@@ -179,12 +184,29 @@ FRA = {
 			type = annex_everything
 		}
 		activate_mission = FRA_wadai_war_timer
-		add_ideas = FRA_wadai_war
+		country_event = { id = ww1_china.331 days = 10 } # 1910 Chinese Railway Status Report
 		country_event = { id = ww1_france.46 days = 1370 }
 		country_event = { id = ww1_france.269 days = 644 }
 		news_event = { id = kis_news.111 days = 477 }
 		news_event = { id = kis_news.118 days = 1241 }
+		FRA_charles_lanrezac = { unit_leader_event = { id = ww1_generic.39 days = 1596 }} #retired in 1914.9.3, should be its own event, it was political
+		FRA_michel_maunoury = { unit_leader_event = { id = ww1_generic.39 days = 1775 }} #retired in 1915.3.11, should be its own event, was blinded
+		FRA_nicolas_charles_chomer = { unit_leader_event = { id = ww1_generic.38 days = 1847 }} #died in 1915.5.22
+		FRA_auguste_boue_de_lapeyrere = { unit_leader_event = { id = ww1_generic.39 days = 1979 random_days = 30 }} #retired in 1915.10
+		FRA_fernand_de_langle_de_cary = { unit_leader_event = { id = ww1_generic.39 days = 2103 }} #retired in 1916.2.25, should be its own event, was blamed for Verdun
+		FRA_joseph_gallieni = { unit_leader_event = { id = ww1_france.67 days = 2218 }} #died in 1916.5.27
+		FRA_joseph_joffre = { unit_leader_event = { id = ww1_generic.39 days = 2431 }} #retired in 1916.12.26, should be its own event, it was political
+		FRA_louis_dartige_du_fournet = { unit_leader_event = { id = ww1_generic.39 days = 2468 random_days = 28 }} #retired in 1917.2
 		FRA_joseph_paul_eydoux = { unit_leader_event = { id = ww1_generic.39 days = 2577 }} #retired in 1917.5.21
+		FRA_pierre_joseph_dubois = { unit_leader_event = { id = ww1_generic.39 days = 2771 }} #retired in 1917.12.1
+		FRA_emile_fayolle = { unit_leader_event = { id = ww1_generic.39 days = 3167 random_days = 360 }} #retired in 1919
+		FRA_noel_edouard_de_castelnau = { unit_leader_event = { id = ww1_generic.39 days = 3167 random_days = 360 }} #retired in 1919
+		FRA_dominique_marie_gauchet = { unit_leader_event = { id = ww1_generic.39 days = 3167 random_days = 360 }} #retired in 1919
+		FRA_jean_baptiste_marchand = { unit_leader_event = { id = ww1_generic.39 days = 3260 }} #retired in 1919.4.4
+		FRA_marie_georges_demange = { unit_leader_event = { id = ww1_generic.39 days = 4263 random_days = 300 }} #retired in 1922
+		FRA_lucien_lacaze = { unit_leader_event = { id = ww1_generic.39 days = 4414 random_days = 30 }} #retired in 1922.6
+		FRA_paul_maistre = { unit_leader_event = { id = ww1_generic.38 days = 4468 }} #died in 1922.7.25
+		FRA_ferdinand_foch = { unit_leader_event = { id = ww1_generic.39 days = 4628 random_days = 300 }} #retired in 1923
 	}	
 
 	add_timed_idea = {
@@ -248,6 +270,7 @@ FRA = {
 	#set_country_flag = FRA_saint_erasme_battery_decomission_done
 	set_country_flag = FRA_exceptional_credit_to_minister_of_war_passed
 	set_country_flag = FRA_HBM_law_done
+	set_country_flag = FRA_resistance_in_chad
 	
 	destroy_ships = {
 		type = ship_hull_heavy
@@ -302,10 +325,6 @@ FRA = {
 	unlock_national_focus = FRA_ww1_picardie_manoeuvers
 	unlock_national_focus = FRA_ww1_revanchist_propaganda
 	complete_national_focus = FRA_ww1_to_rhineland
-	complete_national_focus = FRA_ww1_first_moroccan_campaign
-	complete_national_focus = FRA_ww1_setup_the_railway_network
-	complete_national_focus = FRA_ww1_cooperation_with_sharif
-	unlock_national_focus = FRA_ww1_treaty_of_fes
 	unlock_national_focus = FRA_ww1_press_abolition_of_slavery_in_africa
 	# it is better to be not unlocked since you can't deploy a ship from history file
 	# this will be added to 1914 naval oob (wip)
@@ -347,7 +366,24 @@ FRA = {
 	set_variable = { var = vacant value = 0 }
 	set_variable = { var = seatNumbers value = 585 }
 
+	FRA_charles_lanrezac = { unit_leader_event = { id = ww1_generic.39 days = 91 }} #retired in 1914.9.3, should be its own event, it was political
+	FRA_michel_maunoury = { unit_leader_event = { id = ww1_generic.39 days = 270 }} #retired in 1915.3.11, should be its own event, was blinded
+	FRA_nicolas_charles_chomer = { unit_leader_event = { id = ww1_generic.38 days = 342 }} #died in 1915.5.22
+	FRA_auguste_boue_de_lapeyrere = { unit_leader_event = { id = ww1_generic.39 days = 474 random_days = 30 }} #retired in 1915.10
+	FRA_fernand_de_langle_de_cary = { unit_leader_event = { id = ww1_generic.39 days = 598 }} #retired in 1916.2.25, should be its own event, was blamed for Verdun
+	FRA_joseph_gallieni = { unit_leader_event = { id = ww1_france.67 days = 713 }} #died in 1916.5.27
+	FRA_joseph_joffre = { unit_leader_event = { id = ww1_generic.39 days = 926 }} #retired in 1916.12.26, should be its own event, it was political
+	FRA_louis_dartige_du_fournet = { unit_leader_event = { id = ww1_generic.39 days = 963 random_days = 28 }} #retired in 1917.2
 	FRA_joseph_paul_eydoux = { unit_leader_event = { id = ww1_generic.39 days = 1072 }} #retired in 1917.5.21
+	FRA_pierre_joseph_dubois = { unit_leader_event = { id = ww1_generic.39 days = 1266 }} #retired in 1917.12.1
+	FRA_emile_fayolle = { unit_leader_event = { id = ww1_generic.39 days = 1662 random_days = 360 }} #retired in 1919
+	FRA_noel_edouard_de_castelnau = { unit_leader_event = { id = ww1_generic.39 days = 1662 random_days = 360 }} #retired in 1919
+	FRA_dominique_marie_gauchet = { unit_leader_event = { id = ww1_generic.39 days = 1662 random_days = 360 }} #retired in 1919
+	FRA_jean_baptiste_marchand = { unit_leader_event = { id = ww1_generic.39 days = 1755 }} #retired in 1919.4.4
+	FRA_marie_georges_demange = { unit_leader_event = { id = ww1_generic.39 days = 2758 random_days = 300 }} #retired in 1922
+	FRA_lucien_lacaze = { unit_leader_event = { id = ww1_generic.39 days = 2909 random_days = 30 }} #retired in 1922.6
+	FRA_paul_maistre = { unit_leader_event = { id = ww1_generic.38 days = 2963 }} #died in 1922.7.25
+	FRA_ferdinand_foch = { unit_leader_event = { id = ww1_generic.39 days = 3123 random_days = 300 }} #retired in 1923
 
 	set_technology = {
 		scout_plane2 = 1
@@ -407,10 +443,9 @@ FRA = {
 			improved_ship_torpedo_launcher = 1
 		}
 	}
-	MOR = { set_country_flag = protectorate }
 	set_autonomy = {
 		target = MOR
-		autonomous_state = autonomy_tgwr_integrated_protectorate
+		autonomous_state = autonomy_tgwr_protectorate
 		freedom_level = 0.9
 	}
 }
@@ -484,6 +519,9 @@ recruit_character = FRA_denis_auguste_duchene
 recruit_character = FRA_jean_marie_degoutte
 recruit_character = FRA_noel_edouard_de_castelnau
 recruit_character = FRA_michel_maunoury
+FRA_michel_maunoury = {
+	set_character_flag = unit_leader_can_be_KIA #was blinded from the wound instead of killed
+}
 recruit_character = FRA_georges_louis_humbert
 recruit_character = FRA_joseph_paul_eydoux
 recruit_character = FRA_pierre_joseph_dubois

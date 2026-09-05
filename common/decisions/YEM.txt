@@ -1,12 +1,17 @@
-operations = {
+TGWR_great_power_politics = {
 	YEM_annex_BID = {
 		icon = border_war
 		allowed = {
 			original_tag = YEM
 		}
-		target_array = 930.owner
+
 		targets = {
 			BID
+		}
+		target_trigger = {
+			FROM = {
+				owns_state = 930
+			}
 		}
 		highlight_states = {
 			highlight_state_targets = {
@@ -14,6 +19,7 @@ operations = {
 			}
 		}
 		visible = {
+			great_power_politics_misc_visible = yes
 			FROM = {
 				is_neighbor_of = ROOT
 				NOT = { 
@@ -24,7 +30,10 @@ operations = {
 					is_subject_of = ROOT
 				}
 			}
-			654 = { is_owned_and_controlled_by = ROOT }
+			OR = {
+				654 = { is_owned_and_controlled_by = ROOT }
+				293 = { is_owned_and_controlled_by = ROOT }
+			}
 			659 = { is_owned_and_controlled_by = ROOT }
 		}
 		available = {
@@ -42,7 +51,7 @@ operations = {
 		fire_only_once = no
 		days_remove = 45
 		cancel_if_not_visible = yes
-		war_with_on_remove = BID
+		war_with_target_on_remove = yes
 		remove_effect = {
 			add_state_core = 930
 			if = {
@@ -102,12 +111,20 @@ operations = {
 		allowed = {
 			original_tag = YEM
 		}
-		target_array = 929.owner
 		targets = {
 			NAJ
 		}
+		target_trigger = {
+			FROM = {
+				owns_state = 929
+			}
+		}
+		target_root_trigger = {
+			owns_state = 293
+		}
 		war_with_target_on_remove = yes
 		visible = {
+			great_power_politics_misc_visible = yes
 			293 = { is_owned_and_controlled_by = ROOT }
 			NOT = {
 				has_war_with = FROM
@@ -168,7 +185,9 @@ operations = {
 				limit = {
 					has_subject = FROM
 				}
-				end_puppet = FROM
+				FROM = {
+					free_subject_leave_faction = yes
+				}
 			}
 			start_border_war = {
 				change_state_after_war = no
@@ -193,9 +212,20 @@ operations = {
 		allowed = {
 			original_tag = YEM
 		}
-		target_array = 929.owner
+		targets = {
+			NAJ
+		}
+		target_trigger = {
+			FROM = {
+				owns_state = 929
+			}
+		}
+		target_root_trigger = {
+			owns_state = 293
+		}
 		war_with_target_on_remove = yes
 		visible = {
+			great_power_politics_misc_visible = yes
 			293 = { is_owned_and_controlled_by = ROOT }
 			OR = {
 				has_country_flag = yemeni_attempt_to_annex_najran
@@ -259,7 +289,9 @@ operations = {
 				limit = {
 					has_subject = FROM
 				}
-				end_puppet = FROM
+				FROM = {
+					free_subject_leave_faction = yes
+				}
 			}
 			declare_war_on = {
 				target = FROM

@@ -3,9 +3,7 @@ RUS_no_garrision = {
 		tag = RUS
 	}
 	enable = {
-		NOT = {
-			tag = SOV
-		}
+		always = yes
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
@@ -15,6 +13,60 @@ RUS_no_garrision = {
 	ai_strategy = {
 		type = garrison
 		value = -1000
+	}
+}
+
+RUS_peace_with_CENPO = {
+	allowed = {
+		tag = RUS
+	}
+	enable = {
+		has_global_flag = brest_litovsk_negotiations_started
+		NOT = {
+			has_global_flag = RUS_surrender
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = prepare_for_war
+		id = GER
+		value = 10
+	}
+}
+
+CAU_peace_with_TUR = {
+	allowed = {
+		tag = CAU
+	}
+	enable = {
+		has_global_flag = brest_litovsk_negotiations_started
+		NOT = {
+			has_global_flag = treaty_of_batum
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = prepare_for_war
+		id = TUR
+		value = 10
+	}
+}
+
+breakaway_states_dont_defend_SOV = {
+	allowed = {
+		OR = {
+			original_tag = UKR
+			original_tag = CAU
+		}
+	}
+	enable = {
+		has_autonomy_state = autonomy_tgwr_nominal_constituency
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = dont_defend_ally_borders
+		id = RUS
+		value = 1
 	}
 }
 
@@ -180,27 +232,55 @@ RUS_fight_TUR = {
 	ai_strategy = {
 		type = front_control
 		country_trigger = {
-			has_country_flag = PER_gendarmerie_flag
+			has_country_flag = PER_defense_committee_flag
 			has_war_with = FROM
 		}
-		ratio = 0.1
-		priority = 100
 		ordertype = front
-		execution_type = rush_weak
-	}
-	ai_strategy = {
-		type = front_unit_request
-		country_trigger = {
-			has_country_flag = PER_gendarmerie_flag
-			has_war_with = FROM
-			is_ai = yes
-		}
-		value = -70
+		execution_type = rush
+		execute_order = yes
 	}
 	ai_strategy = {
 		type = dont_defend_ally_borders
 		id = ARB
 		value = 1
+	}
+}
+
+RUS_special_military_operation_in_PER = {
+	allowed = {
+		tag = RUS
+	}
+	enable = {
+		OR = {
+			AND = {
+				focus_progress = {
+					focus = RUS_ultimatum_to_persia
+					progress > 0
+				}
+				NOT = {
+					has_completed_focus = RUS_ultimatum_to_persia
+				}
+			}
+			has_active_mission = RUS_secure_tehran
+			has_active_mission = RUS_invasion_of_persia
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = prepare_for_war
+		id = PER
+		value = 1
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = PER
+		value = 100
+	}
+	ai_strategy = {
+		type = front_control
+		tag = PER
+		execution_type = rush
+		execute_order = yes
 	}
 }
 
@@ -549,6 +629,15 @@ RUS_early_offensive = {
 		ordertype = front
 		execution_type = rush
 	}
+	ai_strategy = {
+		type = force_concentration_factor
+		value = 40
+	}
+	ai_strategy = {
+		type = force_concentration_target_weight
+		strategic_region = 39
+		value = 1000
+	}
 }
 
 RUS_vilna_backline = {
@@ -734,7 +823,7 @@ RUS_moldova_backline = {
 		states = {
 			78
 		}
-		ratio = 0.2
+		ratio = 0.25
 		subtract_fronts_from_need = yes
 	}
 }
@@ -1429,7 +1518,7 @@ EST_ignore_NWA = {
 
 RUS_avoid_caspian = {
 	allowed = {
-		is_russian_tag = yes
+		is_russian_tag_no_tt = yes
 		NOT = {
 			original_tag = UCH
 			tag = TRC
@@ -1753,6 +1842,9 @@ RUS_danish_belts_are_dangerous = {
 		tag = RUS
 	}
 	enable = {
+		NOT = {
+			tag = SOV
+		}
 		has_war_with = GER
 	}
 	abort_when_not_enabled = yes
@@ -1773,6 +1865,9 @@ RUS_great_retreatment = {
 		GER = {
 			has_idea = GER_focus_on_russian_front
 		}
+		NOT = {
+			tag = SOV
+		}
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
@@ -1781,13 +1876,17 @@ RUS_great_retreatment = {
 		id = RUS
 		states = {
 			1202
+			1264
+			1265
 			87
 			98
 			10
 			90
 			1201
 			92
+			1262
 			766
+			1263
 			1017
 			189
 			951

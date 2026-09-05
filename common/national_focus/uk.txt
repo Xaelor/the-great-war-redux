@@ -96,10 +96,10 @@ focus_tree = {
 			modifier = {
 				add = 180
 				OR = {
-					GER = {
-						# has_completed_focus = GER_contain_kaiser
-						has_completed_focus = GER_pursue_british_neutrality
-					}
+					#GER = {
+					#	# has_completed_focus = GER_contain_kaiser
+					#	has_completed_focus = GER_pursue_british_neutrality
+					#}
 					RUS = {
 						has_completed_focus = RUS_spirit_of_social_populism
 					}
@@ -332,7 +332,7 @@ focus_tree = {
 			ENG = {
 				set_autonomy = {
 					target = SAF
-					autonomous_state = autonomy_dominion
+					autonomous_state = autonomy_tgwr_dominion
 					freedom_level = 0.55
 				}
 			}
@@ -505,7 +505,7 @@ focus_tree = {
 			ENG = {
 				set_autonomy = {
 					target = ZIM
-					autonomous_state = autonomy_colony
+					autonomous_state = autonomy_tgwr_colony
 					freedom_level = 0.2
 				}
 			}
@@ -1177,7 +1177,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = ENG_fighter_focus
 				bonus = 1.2
-				uses = 2
+				uses = 1
 				category = light_fighter
 			}
 			IF = {
@@ -1916,13 +1916,13 @@ focus_tree = {
 		y = 1
 		available = {
 			any_subject_country = {
-				has_autonomy_state = autonomy_dominion
+				has_autonomy_state = autonomy_tgwr_dominion
 			}
 		}
 		completion_reward = {
 			every_subject_country = {
 				limit = {
-					has_autonomy_state = autonomy_dominion
+					has_autonomy_state = autonomy_tgwr_dominion
 				}
 				add_political_power = 120
 				add_autonomy_ratio = {
@@ -2553,6 +2553,7 @@ focus_tree = {
 				has_global_flag = somaliland_campaign
 			}	
 		}
+		will_lead_to_war_with = SOM
 		completion_reward = {
 			set_global_flag = somaliland_campaign
 			declare_war_on = {
@@ -2764,6 +2765,7 @@ focus_tree = {
 						state = 135
 						state = 134
 						state = 122
+						state = 1298
 					}				
 				}
 				set_demilitarized_zone = yes
@@ -2823,6 +2825,7 @@ focus_tree = {
 					state = 135
 					state = 134
 					state = 122
+					state = 1298
 				}
 				set_demilitarized_zone = no
 			}
@@ -3617,13 +3620,13 @@ focus_tree = {
 		}
 		ai_will_do = {
 			factor = 5
-			modifier = {
-				factor = 0
-				GER = {
-					# has_completed_focus = GER_contain_kaiser
-					has_completed_focus = GER_pursue_british_neutrality
-				}
-			}
+			#modifier = {
+			#	factor = 0
+			#	GER = {
+			#		# has_completed_focus = GER_contain_kaiser
+			#		has_completed_focus = GER_pursue_british_neutrality
+			#	}
+			#}
 		}
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
@@ -3929,6 +3932,17 @@ focus_tree = {
 				id = AMR
 				value = 1
 			}
+			if = {
+				limit = {
+					owns_state = 183
+					TUR = {
+						has_contested_owner = 183
+					}
+				}
+				183 = {
+					remove_contested_owner = TUR
+				}
+			}
 		}
 		search_filters = {
 			FOCUS_FILTER_HISTORICAL
@@ -4018,8 +4032,7 @@ focus_tree = {
 					is_subject_of = TUR
 					AND = {
 						exists = no
-						any_state = {
-							is_core_of = HJZ
+						any_core_state = {
 							is_owned_by = TUR
 						}
 					}				
@@ -4032,10 +4045,11 @@ focus_tree = {
 					has_country_flag = great_war_loser
 				}
 				NOT = {
-					any_state = {
-						is_core_of = HJZ
-						is_owned_by = TUR
-					}
+					HJZ = {
+						any_core_state = {
+							is_owned_by = TUR
+						}
+					}	
 				}		
 				AND = {
 					HJZ = {
@@ -4065,10 +4079,7 @@ focus_tree = {
 					white_peace = HJZ
 				}
 				HJZ = {
-					leave_faction = yes
-					OVERLORD = {
-						end_puppet = HJZ
-					}
+					free_subject_leave_faction = yes
 				}
 			}
 			create_operative_leader = {
@@ -4560,20 +4571,15 @@ focus_tree = {
 			has_subject = EGY
 		}
 		bypass = {
-			OR = {
-				NOT = {
-					has_subject = EGY
-				}
-				TUR = {
-					has_completed_focus = TUR_kick_the_british_out_of_egypt
-				}
+			NOT = {
+				has_subject = EGY
 			}
 		}
 		completion_reward = {
 			EGY = { set_country_flag = protectorate }
 			set_autonomy = {
 				target = EGY
-				autonomous_state = autonomy_tgwr_integrated_protectorate
+				autonomous_state = autonomy_tgwr_protectorate
 				freedom_level = 0.8
 				end_wars = no
 			}
@@ -5506,6 +5512,7 @@ focus_tree = {
 				has_subject = PLS
 				has_subject = TRG
 				has_subject = JOH
+				has_subject = SET
 			}
 		}
 		completion_reward = {
@@ -5552,6 +5559,7 @@ focus_tree = {
 						original_tag = PLS
 						original_tag = TRG
 						original_tag = JOH
+						original_tag = SET
 					}
 				}
 				add_political_power = 100
@@ -5576,15 +5584,9 @@ focus_tree = {
 				has_war_with = PER
 			}
 			PER = {
-				OR = {
-					has_idea = PER_idea_foreign_reliance
-					any_owned_state = {
-						has_dynamic_modifier = {
-							modifier = per_british_sphere
-						}
-					}
-				}
+				has_dynamic_modifier = PER_foreign_influence_modifier
 			}
+			check_variable = { ENG.PER_foreign_influence > 0.1 }
 		}
 		x = -2
 		y = 0
@@ -5592,16 +5594,6 @@ focus_tree = {
 		completion_reward = {
 			effect_tooltip = {
 				PER = {
-					add_ideas = PER_idea_nationalised_oil
-					every_subject_country = {
-						limit = {
-							OR = {
-								owns_state = 413
-								owns_state = 412
-							}
-						}
-						add_ideas = PER_idea_nationalised_oil
-					}
 					if = {
 						limit = {
 							OR = {
@@ -5634,6 +5626,24 @@ focus_tree = {
 								give_resource_rights = {
 									receiver = ENG
 									state = 412
+								}
+							}
+						}
+					}
+					if = {
+						limit = {
+							OR = {
+								owns_state = 1246
+								any_subject_country = {
+									owns_state = 1246
+								}
+							}			
+						}
+						1246 = {
+							OWNER = {
+								give_resource_rights = {
+									receiver = ENG
+									state = 1246
 								}
 							}
 						}

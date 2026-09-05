@@ -1,0 +1,422 @@
+add_namespace = ww1_mount_athos
+
+# Mount Athos under our control
+####################
+country_event = {
+	id = ww1_mount_athos.1
+	title = ww1_mount_athos.1.t
+	desc = ww1_mount_athos.1.d
+	picture = GFX_report_event_ATH_greek_soldiers
+	trigger = {
+		owns_state = 345
+		NOT = {
+			original_tag = ATH
+			has_subject = ATH 
+		}
+		has_war = no
+		NOT = {
+			AND = {
+				original_tag = FRA
+				345 = {
+					has_state_flag = french_salonika
+				}			
+			}		
+		}
+	}
+	immediate = {
+		hidden_effect = {
+			ATH = {
+				if = {
+					limit = { is_subject = yes }
+					OVERLORD = {
+						country_event = {
+							id = ww1_mount_athos.3
+							hours = 1
+						}	
+					}
+				}
+				set_country_flag = protectorate
+				get_current_government_type = yes
+				ROOT = {
+					set_autonomy = {
+						target = PREV
+						autonomous_state = autonomy_tgwr_feudal_autonomy
+						freedom_level = 0.5
+					}	
+				}
+				restore_previous_government_type = yes
+				country_event = ww1_mount_athos.2
+			}
+		}
+	}
+	mean_time_to_happen = { days = 0 }
+	option = {
+		name = ww1_mount_athos.1.a
+		effect_tooltip = {
+			puppet = ATH
+		}
+	}
+}
+
+# Mount Athos: New overlord
+####################
+country_event = {
+	id = ww1_mount_athos.2
+	title = ww1_mount_athos.2.t
+	desc = ww1_mount_athos.2.d
+	picture = GFX_report_event_ATH_greek_soldiers
+
+	immediate = {
+		hidden_effect = {
+			send_embargo = PAP
+			add_opinion_modifier = {
+				target = PAP
+				modifier = ATH_great_schism
+			}
+			add_opinion_modifier = {
+				target = SER
+				modifier = ATH_protectors_of_hilandar 
+			}
+			add_opinion_modifier = {
+				target = BUL
+				modifier = ATH_bulgarian_exarchate 
+			}
+			every_possible_country = {
+				limit = {
+					has_orthodoxy = yes
+					NOT = { original_tag = ROOT }
+				}
+				ROOT = {
+					add_opinion_modifier = {
+						target = PREV
+						modifier = ATH_orhodox_country  
+					}
+				}
+			}
+		}
+	}
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ww1_mount_athos.2.a
+		effect_tooltip = {
+			FROM = {
+				puppet = ROOT
+			}			
+		}
+	}
+}
+
+# Lost Mount Athos
+####################
+country_event = {
+	id = ww1_mount_athos.3
+	title = ww1_mount_athos.3.t
+	desc = ww1_mount_athos.3.d
+	picture = GFX_report_event_ATH_greek_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ww1_mount_athos.3.a
+		effect_tooltip = {
+			FROM = {
+				puppet = ATH
+			}			
+		}
+	}
+}
+
+# Mount Athos Liberated!
+####################
+country_event = {
+	id = ww1_mount_athos.4
+	title = ww1_mount_athos.4.t
+	desc = ww1_mount_athos.4.d
+	picture = GFX_report_event_ATH_greek_soldiers
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			ATH = {
+				set_country_flag = protectorate
+				get_current_government_type = yes
+				ROOT = {
+					set_autonomy = {
+						target = PREV
+						autonomous_state = autonomy_tgwr_feudal_autonomy
+						freedom_level = 0.5
+					}	
+				}
+				restore_previous_government_type = yes
+				separate_peace_all_wars = yes
+				country_event = ww1_mount_athos.5
+			}
+		}
+	}
+	option = {
+		name = ww1_mount_athos.4.a
+		effect_tooltip = {
+			puppet = ATH
+			ATH = {
+				remove_ideas = ATH_ottoman_garrison
+			}
+		}
+		news_event = {
+			id = ww1_mount_athos.7
+			hours = 2
+		}
+	}
+}
+
+# Mount Athos: Liberatiom
+####################
+country_event = {
+	id = ww1_mount_athos.5
+	title = ww1_mount_athos.5.t
+	desc = ww1_mount_athos.4.d
+	picture = GFX_report_event_ATH_greek_soldiers
+
+	immediate = {
+		hidden_effect = {
+			send_embargo = PAP
+			add_opinion_modifier = {
+				target = PAP
+				modifier = ATH_great_schism
+			}
+			add_opinion_modifier = {
+				target = SER
+				modifier = ATH_protectors_of_hilandar 
+			}
+			add_opinion_modifier = {
+				target = BUL
+				modifier = ATH_bulgarian_exarchate 
+			}
+			every_possible_country = {
+				limit = {
+					has_orthodoxy = yes
+					NOT = { original_tag = ROOT }
+				}
+				ROOT = {
+					add_opinion_modifier = {
+						target = PREV
+						modifier = ATH_orhodox_country  
+					}
+				}
+			}
+			remove_ideas = ATH_ottoman_garrison
+		}
+	}
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ww1_mount_athos.5.a
+		effect_tooltip = {
+			GRE = {
+				puppet = ROOT
+			}
+			remove_ideas = ATH_ottoman_garrison		
+		}
+	}
+}
+
+# Ottomans: Greeks landed in Mount Athos
+####################
+country_event = {
+	id = ww1_mount_athos.6
+	title = ww1_mount_athos.6.t
+	desc = ww1_mount_athos.4.d
+	picture = GFX_report_event_ATH_greek_soldiers
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ww1_mount_athos.6.a
+		effect_tooltip = {
+			GRE = {
+				puppet = ATH
+			}
+			ATH = {
+				remove_ideas = ATH_ottoman_garrison
+			}			
+		}
+	}
+}
+
+# News: Mount Athos Liberated!
+####################
+news_event = {
+	id = ww1_mount_athos.7
+	title = ww1_mount_athos.7.t
+	desc = ww1_mount_athos.4.d
+	picture = GFX_news_event_ATH_greek_soldiers
+	is_triggered_only = yes
+	show_major = {
+		OR = {
+			has_orthodoxy = yes
+			tag = TUR
+		}
+	}
+	option = {
+		name = ww1_mount_athos.7.a
+		trigger = {
+			has_orthodoxy = yes
+			NOT = { tag = RUS }
+		}
+	}
+	option = {
+		name = ww1_mount_athos.7.b
+		trigger = {
+			tag = TUR
+		}
+	}
+	option = {
+		name = ww1_mount_athos.7.c
+		trigger = {
+			tag = RUS
+		}
+	}
+}
+
+# Death of Joachim III
+####################
+country_event = {
+	id = ww1_mount_athos.8
+	title = ww1_mount_athos.8.t
+	desc = ww1_mount_athos.8.d
+	picture = GFX_report_event_ATH_greek_soldiers
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = {
+		has_character = ATH_joachim_iii
+	}
+
+	immediate = {
+		hidden_effect = {
+			ATH_holy_and_sacred_synod = {
+				promote_character = theocracy_ideology
+				promote_character = fundamentalism
+			}			
+		}
+	}
+	
+	option = {
+		name = ww1_mount_athos.8.a
+		retire_character = ATH_joachim_iii
+		hidden_effect = {
+			news_event = { id = ww1_mount_athos.9 hours = 1 }
+			country_event = { id = ww1_mount_athos.10 days = 89 }		
+		}	
+	}
+}
+
+# News Joachim III funeral
+####################
+news_event = {
+	id = ww1_mount_athos.9
+	title = ww1_mount_athos.8.t
+	desc = ww1_mount_athos.8.d
+	picture = GFX_news_event_ATH_joachim_iii_funeral
+	is_triggered_only = yes
+	show_major = {
+		OR = {
+			has_orthodoxy = yes
+			tag = TUR
+		}
+	}
+	option = {
+		name = ww1_mount_athos.9.a
+		trigger = {
+			OR = {
+				tag = SER
+				tag = BUL
+				tag = GRE
+				tag = MNT
+				tag = CRE
+				tag = SMS
+				tag = IKR
+			}
+			has_war_with = TUR
+		}
+	}
+	option = {
+		name = ww1_mount_athos.9.b
+		trigger = {
+			OR = {
+				tag = SER
+				tag = BUL
+				tag = GRE
+				tag = MNT
+				tag = CRE
+				tag = SMS
+				tag = IKR
+			}
+			NOT = { has_war_with = TUR }		
+		}
+	}
+	option = {
+		name = ww1_mount_athos.9.c
+		trigger = {
+			tag = TUR
+			has_war_with = BLL
+		}
+	}
+	option = {
+		name = ww1_mount_athos.9.d
+		trigger = {
+			tag = TUR
+			NOT = {
+				has_war_with = BLL
+			}		
+		}
+	}
+	option = {
+		name = ww1_mount_athos.9.d
+		trigger = {
+			tag = RUS	
+		}
+	}
+	option = {
+		name = ww1_mount_athos.9.f
+		trigger = {
+			NOT = {
+				tag = SER
+				tag = BUL
+				tag = GRE
+				tag = MNT
+				tag = CRE
+				tag = SMS
+				tag = IKR
+				tag = TUR
+				tag = RUS
+			}	
+		}
+	}
+}
+
+# Election of Germanus V
+####################
+country_event = {
+	id = ww1_mount_athos.10
+	title = ww1_mount_athos.10.t
+	desc = ww1_mount_athos.10.d
+	picture = GFX_report_event_ATH_germanus_v
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	trigger = {
+		has_character = ATH_germanus_v
+	}
+	
+	option = {
+		name = ww1_mount_athos.10.a
+		ATH_germanus_v = {
+			promote_character = theocracy_ideology
+			promote_character = fundamentalism
+		}
+	}
+}

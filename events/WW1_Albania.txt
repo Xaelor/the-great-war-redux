@@ -426,6 +426,7 @@ country_event = {
 					state = 106
 					state = 758
 					state = 203
+					state = 1258
 					state = 759
 					state = 1140
 					state = 1141
@@ -564,7 +565,15 @@ country_event = {
 	option = {
 		name = ww1_albania.2.a
 		847 = {
-			add_resistance = 25
+			if = {
+				limit = { has_resistance = yes }
+				add_resistance = 25
+			}
+			else = {
+				remove_core_of = ROOT
+				start_resistance = yes
+				add_resistance = 25
+			}
 		}
 		ai_chance = {
 			factor = 100
@@ -597,12 +606,13 @@ country_event = {
 		}
 		date > 1913.4.10
 		has_start_date < 1914.1.1
-		any_state = {
-			is_core_of = ALB
-			has_dynamic_modifier = {
-				modifier = TUR_albanian_minority
+		ALB = {
+			any_core_state = {
+				has_dynamic_modifier = {
+					modifier = TUR_albanian_minority
+				}
 			}
-		}
+		}		
 	}
 	option = {
 		name = ww1_albania.2.a
@@ -617,11 +627,13 @@ country_event = {
 					state = 848
 					state = 847
 					state = 1214
+					state = 1240
+					state = 1284
 					state = 1215
 				}
-				has_dynamic_modifier = {
-					modifier = TUR_albanian_minority
-				}
+				# has_dynamic_modifier = {
+				# 	modifier = TUR_albanian_minority
+				# }
 			}
 			transfer_state_to = ALB
 		}
@@ -1436,11 +1448,8 @@ country_event = {
 					id = ww1_albania.17
 					days = 3
 				}
-				end_puppet = ROOT
-				ROOT = {
-					leave_faction = yes
-				}
 			}
+			free_subject_leave_faction = yes
 		}
 		set_cosmetic_tag = ALB_republic
 		set_politics = {
@@ -1950,7 +1959,7 @@ country_event = {
 			size = 0
 			transfer_state = 44
 			set_cosmetic_tag = ALB_central
-			load_focus_tree = empty_focus
+			load_focus_tree = generic_focus
 			set_politics = {
 				ruling_party = neutrality
 				elections_allowed = no
@@ -2032,7 +2041,7 @@ country_event = {
 			size = 0
 			transfer_state = 44
 			set_cosmetic_tag = ALB_central
-			load_focus_tree = empty_focus
+			load_focus_tree = generic_focus
 			set_politics = {
 				ruling_party = neutrality
 				elections_allowed = no
@@ -2104,17 +2113,7 @@ country_event = {
 	trigger = {
 		tag = ALB
 		has_template = "Dutch Gendarmerie"
-		any_other_country = {
-			is_major = yes
-			OR = {
-				has_war_with = ENG
-				has_war_with = FRA
-				has_war_with = GER
-				has_war_with = RUS
-				has_war_with = AUS
-				has_war_with = ITA
-			}
-		}
+		is_great_war_ongoing = yes
 		NOT = {
 			has_country_flag = ALB_dutch_gendarmerie_dissolved
 		}
@@ -2300,6 +2299,7 @@ country_event = {
 	picture = GFX_report_event_military_planning
 	fire_only_once = yes
 	trigger = {
+		tag = SER
 		ALB = {
 			has_country_flag = TUR_albanian_plot_accepted
 		}
@@ -2454,8 +2454,9 @@ country_event = {
 		name = ww1_albania.39.a
 		effect_tooltip = {
 			ALB = {
-				puppet = {
+				set_autonomy = {
 					target = EPR
+					autonomy_state = autonomy_tgwr_regional_government
 					end_wars = yes
 					end_civil_wars = yes
 				}
@@ -2470,8 +2471,9 @@ country_event = {
 				EPR = {
 					get_current_government_type = yes
 					ALB = {
-						puppet = {
+						set_autonomy = {
 							target = EPR
+							autonomy_state = autonomy_tgwr_regional_government
 							end_wars = yes
 							end_civil_wars = yes
 						}

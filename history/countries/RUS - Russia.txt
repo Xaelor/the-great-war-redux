@@ -14,25 +14,25 @@ set_politics = {
 	elections_allowed = yes 
 }
 
-FIN = { set_country_flag = monarchist_puppet }
+set_country_flag = core_member_ENT
+set_country_flag = great_power_politics_strangling_of_persia_visible
+set_variable = { great_power_politics_strangling_of_persia_button = 2 }
+
 set_autonomy = {
 	target = FIN
-	autonomous_state = autonomy_tgwr_real_union
+	autonomous_state = autonomy_tgwr_autonomous_governorate
 	freedom_level = 0.8
 }
-BUK = { set_country_flag = protectorate }
 set_autonomy = {
 	target = BUK
-	autonomous_state = autonomy_tgwr_protectorate
+	autonomous_state = autonomy_tgwr_protected_state
 	freedom_level = 0.8
 }
-KHI = { set_country_flag = protectorate }
 set_autonomy = {
 	target = KHI
-	autonomous_state = autonomy_tgwr_protectorate
+	autonomous_state = autonomy_tgwr_protected_state
 	freedom_level = 0.4
 }
-
 set_autonomy = {
 	target = CER
 	autonomous_state = autonomy_tgwr_concession
@@ -81,7 +81,6 @@ add_opinion_modifier = {
 give_guarantee = LUX
 give_guarantee = SIA  # Russian-Siamese Declaration of Friendship (1899)
 give_guarantee = BEL
-give_guarantee = NOR # Treaty of Norway (1907)
 give_guarantee = GRE # London Protocol (1830)
 
 diplomatic_relation = {
@@ -162,7 +161,7 @@ recruit_character = RUS_pavel_rennenkampf
 recruit_character = RUS_abram_dragomirov
 recruit_character = RUS_nikolai_yanushkevich
 recruit_character = RUS_vladimir_may_mayevsky
-recruit_character = RUS_illarion_vorontsovdashkov
+recruit_character = RUS_illarion_vorontsov_dashkov
 #Admirals
 recruit_character = RUS_nikolai_von_esen
 recruit_character = RUS_alexander_kolchak
@@ -1244,6 +1243,7 @@ recruit_character = RUS_aleksey_krylov
 		RUS_threat_of_revolution
 		RUS_idea_strike_movement
 	}
+	add_dynamic_modifier = { modifier = colonial_war }
 	
 	activate_advisor = RUS_pyotr_stolypin		
 
@@ -1260,12 +1260,14 @@ recruit_character = RUS_aleksey_krylov
 		country_event = { id = ww1_russia.25 days = 717 }
 		country_event = { id = ww1_russia.23 days = 492 }
 		country_event = { id = ww1_russia.3 days = 2421 }
-		RUS_vladimir_sukhomlinov = { unit_leader_event = { id = ww1_generic.39 days = 1837 }} #retired in 1915.5.12, should be its own event
+		RUS_vladimir_sukhomlinov = { unit_leader_event = { id = ww1_generic.39 days = 1837 }} #retired in 1915.5.12, should be its own even
+		RUS_illarion_vorontsov_dashkov = { unit_leader_event = { id = ww1_generic.39 days = 1940 }} #retired in 1915.8.23, should be its own event
 		RUS_aleksei_polivanov = { unit_leader_event = { id = ww1_generic.39 days = 2185 }} #retired in 1916.4.24, should be its own event
 		RUS_yakov_zhilinsky = { unit_leader_event = { id = ww1_generic.39 days = 2696 }} #retired in 1917.9.17
 		RUS_pavel_pleve = { unit_leader_event = { id = ww1_generic.38 days = 2171 }} #died in 1916.4.10
 		RUS_nikolai_yanushkevich = { unit_leader_event = { id = ww1_generic.39 days = 2526 }} #retired in 1917.03.31
 		RUS_nikolai_von_esen = { unit_leader_event = { id = ww1_generic.38 days = 1845 }} #died in 1915.5.20
+		activate_mission = RUS_occupation_of_northern_persia_timeout
 	}
 }
 1914.1.1 = {	
@@ -1317,11 +1319,12 @@ recruit_character = RUS_aleksey_krylov
 	set_global_flag = russia_won_persian_campaign
 	set_global_flag = informed_of_TUR_GER_mission
 
-	diplomatic_relation = {
-		country = PER
-		relation = military_access
-		active = yes
-	}
+	# error log says already have it
+	# diplomatic_relation = {
+	# 	country = PER
+	# 	relation = military_access
+	# 	active = yes
+	# }
 	set_technology = {
 		prewar_field_gun = 1
 		infantry_weapons2 = 1
@@ -1602,6 +1605,7 @@ recruit_character = RUS_aleksey_krylov
 
 	country_event = { id = ww1_russia.3 days = 916 }
 	RUS_vladimir_sukhomlinov = { unit_leader_event = { id = ww1_generic.39 days = 332 }} #retired in 1915.5.12, should be its own event
+	RUS_illarion_vorontsov_dashkov = { unit_leader_event = { id = ww1_generic.39 days = 435 }} #retired in 1915.8.23, should be its own event
 	RUS_aleksei_polivanov = { unit_leader_event = { id = ww1_generic.39 days = 680 }} #retired in 1916.4.24, should be its own event
 	RUS_yakov_zhilinsky = { unit_leader_event = { id = ww1_generic.39 days = 1191 }} #retired in 1917.9.17
 	RUS_pavel_pleve = { unit_leader_event = { id = ww1_generic.38 days = 666 }} #died in 1916.4.10
@@ -1622,16 +1626,7 @@ recruit_character = RUS_aleksey_krylov
 		}
 		set_cosmetic_tag = RUS_republic_vanguardism
 		reserve_dynamic_country = yes
-		every_state = {
-			limit = {
-				is_claimed_by = PREV
-			}
-			remove_claim_by = PREV
-		}
-		every_state = {
-			limit = {
-				is_core_of = PREV
-			}
+		every_core_state = {
 			remove_core_of = PREV
 		}
 		
@@ -1723,6 +1718,13 @@ recruit_character = RUS_aleksey_krylov
 		recruit_character = SOV_karl_radek
 
 		recruit_character = SOV_alexander_antonov
+
+		every_unit_leader = {
+			limit = {
+				NOT = { is_character = SOV_alexander_antonov }
+			}
+			set_character_flag = soviet_character		
+		}
 	}
 
 	create_dynamic_country = {
@@ -1764,16 +1766,7 @@ recruit_character = RUS_aleksey_krylov
 			long_name = RUS_communism_party_SR_long
 			name = RUS_communism_party_SR
 		}
-		every_state = {
-			limit = {
-				is_claimed_by = PREV
-			}
-			remove_claim_by = PREV
-		}
-		every_state = {
-			limit = {
-				is_core_of = PREV
-			}
+		every_core_state = {
 			remove_core_of = PREV
 		}
 		set_stability = 0.8
@@ -1800,7 +1793,7 @@ recruit_character = RUS_aleksey_krylov
 		set_cosmetic_tag = KOMUCH	
 		reserve_dynamic_country = yes
 		
-		load_focus_tree = white_guard_focus
+		load_focus_tree = komuch_focus
 		
 		set_popularities = {
 			fascism = 32
@@ -1823,16 +1816,7 @@ recruit_character = RUS_aleksey_krylov
 			long_name = KOMUCH_fascism_party_long
 			name = KOMUCH_fascism_party
 		}
-		every_state = {
-			limit = {
-				is_claimed_by = PREV
-			}
-			remove_claim_by = PREV
-		}
-		every_state = {
-			limit = {
-				is_core_of = PREV
-			}
+		every_core_state = {
 			remove_core_of = PREV
 		}
 		recruit_character = RUS_vladimir_volsky	
@@ -1853,6 +1837,72 @@ recruit_character = RUS_aleksey_krylov
 			promote_character = warlordism
 		}
 	}
+	create_dynamic_country = {
+		original_tag = RUS
+		set_country_flag = RUS_izhvot_uprising_tag
+		set_capital = { state = 399 }
+		set_politics = {
+			ruling_party = neutrality
+			long_name = IZH_people_army_party_long
+			name = IZH_people_army_party
+			elections_allowed = no
+		}
+		set_cosmetic_tag = IZH
+		reserve_dynamic_country = yes
+
+		set_popularities = {
+			fascism = 20
+			communism = 5
+			democratic = 40
+			neutrality = 35
+		}
+
+		set_party_name = {
+			ideology = democratic
+			long_name = RUS_communism_party_SR_long
+			name = RUS_communism_party_SR
+		}	
+		set_party_name = {
+			ideology = communism
+			long_name = RUS_communism_party_SR_long
+			name = RUS_communism_party_SR
+		}
+		set_party_name = {
+			ideology = fascism
+			long_name = IZH_people_army_party_long
+			name = IZH_people_army_party
+		}
+		every_core_state = {
+			remove_core_of = PREV
+		}
+		add_ideas = {
+			IZH_union_of_front_line_soldiers
+			IZH_factory_country
+			RCW_lack_of_officers1
+			SRA_no_civ_government_1
+		}
+		set_stability = 0.3
+		set_war_support = 0.6
+		recruit_character = RUS_semen_soldatov
+		recruit_character = RUS_dmitriy_fedichkin
+		recruit_character = RUS_vasiliy_buzanov
+		recruit_character = RUS_nikolai_yevseyev
+		recruit_character = RUS_aleksandr_koryakin
+		recruit_character = RUS_konstantin_shulakov
+		# recruit_character = RUS_pavel_likhvintsev
+		activate_advisor = RUS_semen_soldatov
+		# RUS_pavel_likhvintsev = {
+		# 	promote_character = vanguardism
+		# }
+		RUS_dmitriy_fedichkin = {
+			promote_character = authoritarian_democracy
+			promote_character = stratocracy
+		}
+		RUS_nikolai_yevseyev = {
+			promote_character = social_democracy
+			promote_character = agrarian_socialism
+		}
+	}	
 	
 	create_dynamic_country = {
 		original_tag = RUS
@@ -1907,6 +1957,7 @@ recruit_character = RUS_aleksey_krylov
 		}
 		SIB_boris_shumyatsky = {
 			promote_character = vanguardism
+			set_character_flag = soviet_character
 		}
 		
 		set_popularities = {
@@ -1930,16 +1981,7 @@ recruit_character = RUS_aleksey_krylov
 			long_name = SIB_communism_party_long
 			name = SIB_communism_party
 		}
-		every_state = {
-			limit = {
-				is_claimed_by = PREV
-			}
-			remove_claim_by = PREV
-		}
-		every_state = {
-			limit = {
-				is_core_of = PREV
-			}
+		every_core_state = {
 			remove_core_of = PREV
 		}
 		add_ideas = {
@@ -1988,8 +2030,8 @@ recruit_character = RUS_aleksey_krylov
 		}
 		set_party_name = {
 			ideology = fascism
-			long_name = RSO_nothern_army_party
-			name = RSO_nothern_army_party
+			long_name = RSO_northern_army_party
+			name = RSO_northern_army_party
 		}
 		set_party_name = {
 			ideology = communism
@@ -2007,16 +2049,7 @@ recruit_character = RUS_aleksey_krylov
 		
 		load_focus_tree = white_guard_focus
 
-		every_state = {
-			limit = {
-				is_claimed_by = PREV
-			}
-			remove_claim_by = PREV
-		}
-		every_state = {
-			limit = {
-				is_core_of = PREV
-			}
+		every_core_state = {
 			remove_core_of = PREV
 		}
 	}	
@@ -2045,6 +2078,7 @@ recruit_character = RUS_aleksey_krylov
 		}
 		URA_aleksandr_beloborodov = {
 			promote_character = vanguardism
+			set_character_flag = soviet_character
 		}
 		
 		set_popularities = {
@@ -2068,16 +2102,7 @@ recruit_character = RUS_aleksey_krylov
 			long_name = URA_communism_party_long
 			name = URA_communism_party
 		}
-		every_state = {
-			limit = {
-				is_claimed_by = PREV
-			}
-			remove_claim_by = PREV
-		}
-		every_state = {
-			limit = {
-				is_core_of = PREV
-			}
+		every_core_state = {
 			remove_core_of = PREV
 		}
 	}
@@ -2114,6 +2139,7 @@ recruit_character = RUS_aleksey_krylov
 		}
 		TRC_yakov_zhitnikov = {
 			promote_character = vanguardism
+			set_character_flag = soviet_character
 		}
 		
 		set_popularities = {
@@ -2136,16 +2162,7 @@ recruit_character = RUS_aleksey_krylov
 			long_name = TRC_communism_party
 			name = TRC_communism_party
 		}
-		every_state = {
-			limit = {
-				is_claimed_by = PREV
-			}
-			remove_claim_by = PREV
-		}
-		every_state = {
-			limit = {
-				is_core_of = PREV
-			}
+		every_core_state = {
 			remove_core_of = PREV
 		}
 	}
@@ -2172,11 +2189,17 @@ recruit_character = RUS_aleksey_krylov
 		
 		load_focus_tree = northwestern_army_focus
 
+		recruit_character = NWA_aleksei_vandam
 		recruit_character = NWA_Daniil_Vetrenko
 		recruit_character = NWA_stepan_lianozov
 		recruit_character = NWA_Anton_Fedorovich_Dzerozhinsky
 		recruit_character = NWA_Alexey_Palen
 		recruit_character = NWA_Heinrich_von_neff
+
+		NWA_aleksei_vandam = {
+			promote_character = stratocracy
+			promote_character = personalistic_dictatorship
+		}
 		
 		set_popularities = {
 			neutrality = 11
@@ -2204,16 +2227,7 @@ recruit_character = RUS_aleksey_krylov
 			NWA_incompetent_military
 			standing_alone
 		}
-		every_state = {
-			limit = {
-				is_claimed_by = PREV
-			}
-			remove_claim_by = PREV
-		}
-		every_state = {
-			limit = {
-				is_core_of = PREV
-			}
+		every_core_state = {
 			remove_core_of = PREV
 		}
 	}
@@ -2269,17 +2283,9 @@ recruit_character = RUS_aleksey_krylov
 		}
 		add_ideas = {
 			limited_exports
+			RCW_lack_of_officers1
 		}
-		every_state = {
-			limit = {
-				is_claimed_by = PREV
-			}
-			remove_claim_by = PREV
-		}
-		every_state = {
-			limit = {
-				is_core_of = PREV
-			}
+		every_core_state = {
 			remove_core_of = PREV
 		}
 	}

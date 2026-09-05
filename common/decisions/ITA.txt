@@ -4,12 +4,6 @@ ITA_post_war_pm = {
 		allowed = {
 			original_tag = ITA
 		}
-		visible = {
-			original_tag = ITA
-		}
-		available = {
-			original_tag = ITA
-		}
 		fire_only_once = no
 		days_remove = 30
 		ai_will_do = {
@@ -736,170 +730,6 @@ ITA_war_prep = {
 	}
 }
 
-ITA_great_war_austria = {
-	ITA_the_knock_out_blow = {
-		icon = GFX_decision_hol_draw_up_staff_plans
-		cost = 10
-		allowed = {
-			original_tag = AUS
-		}
-		available = {
-			has_war_with = ITA
-			is_in_faction_with = GER
-			NOT = {
-				has_global_flag = great_war_ends
-				has_global_flag = GER_capitulation
-				has_global_flag = ENT_capitulation
-			}
-		}
-		visible = {
-			has_war_with = ITA
-			is_in_faction_with = GER
-			NOT = {
-				has_global_flag = great_war_ends
-				has_global_flag = GER_capitulation
-				has_global_flag = ENT_capitulation
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 1
-				war_length_with = {
-					tag = ITA
-					months > 3
-				}
-			}
-			modifier = {
-				add = 5
-				war_length_with = {
-					tag = ITA
-					months > 5
-				}
-			}
-			modifier = {
-				add = 10
-				war_length_with = {
-					tag = ITA
-					months > 8
-				}
-			}
-			modifier = {
-				add = 200
-				war_length_with = {
-					tag = ITA
-					months > 12
-				}
-			}
-		}
-		complete_effect = {
-			add_timed_idea = {
-				idea = ITA_final_blow_idea_AUS
-				days = 90
-			}
-			hidden_effect = {
-				ITA = {
-					country_event = ww1_italy.295
-				}
-			}
-		}
-	}
-	AUS_blockade_italy = {
-		days_remove = 180
-		icon = GFX_decision_generic_ignite_civil_war
-		fire_only_once = no
-		allowed = {
-			tag = AUS
-		}
-		available = {
-			FROM = {
-				NOT = {
-					has_completed_focus = ITA_impliment_cunibertis_theory
-				}
-			}
-			has_completed_focus = AUH_naval_excercices 
-		}
-		targets = {
-			ITA
-		}
-		visible = {
-			has_war_with = FROM
-		}
-		complete_effect = {
-			custom_effect_tooltip = ITA_british_pov_thing
-			effect_tooltip = {
-				add_to_variable = {
-					ITA_bread_shortages = 1
-					tooltip = ITA_modify_bread_shortages_tt
-				}
-				add_to_variable = {
-					ITA_percieved_usefulness = -2
-					tooltip = ITA_modify_war_score_tt
-				}
-			}
-			FROM = {
-				country_event = ww1_italy.292
-			}
-		}
-		ai_will_do = {
-			base = 1
-		}
-	}
-	AUS_shell_venice = {
-		days_remove = 180
-		icon = GFX_decision_generic_ignite_civil_war
-		fire_only_once = no
-		allowed = {
-			tag = AUS
-		}
-		available = {
-			FROM = {
-				NOT = {
-					has_completed_focus = ITA_utilize_the_radio
-				}
-			}
-			controls_state = 736
-		}
-		target_trigger = {
-			FROM = {
-				controls_state = 160
-			}
-		}
-		target_root_trigger = {
-			has_completed_focus = AUH_naval_excercices 
-		}
-		targets = {
-			ITA
-		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 160
-			}
-		}
-		visible = {
-			has_war_with = FROM
-		}
-		complete_effect = {
-			160 = {
-				add_dynamic_modifier = {
-					modifier = ITA_aus_shell
-					scope = FROM
-					days = 30
-				}
-			}
-			custom_effect_tooltip = ITA_british_pov_thing
-			add_to_variable = {
-				ITA.ITA_percieved_usefulness = -2
-				tooltip = ITA_modify_war_score_tt
-			}
-		}
-		ai_will_do = {
-			base = 1
-		}
-	}
-}
-
 ITA_great_war = {
 	ITA_reset_capture_points = {
 		allowed = {
@@ -1188,42 +1018,42 @@ ITA_great_war = {
 		fire_only_once = yes
 		is_good = no
 	}
-	ITA_anti_war_news_hits_the_papers = {
-		priority = 10
-		icon = GFX_decision_generic_ignite_civil_war
-		allowed = {
-			original_tag = ITA
-		}
-		days_mission_timeout = ITA_anti_war_timer
-		available = {
-			OR = {
-				has_war = no
-				has_war_support < 0.4
-				has_global_flag = great_war_ends
-			}
-		}
-		activation = {
-			has_war_support > 0.4
-			has_war_with_major = yes
-			is_great_war_ongoing = yes
-			has_civil_war = no
-		}
-		cancel_trigger = {
-			OR = {
-				has_completed_focus = ITA_arise_workers_of_italy
-				has_war = no
-				has_italian_civil_war = yes
-			}
-		}
-		timeout_effect = {
-			add_war_support = -0.06
-			activate_mission = ITA_anti_war_news_hits_the_papers
-		}
-		complete_effect = {
-		}
-		fire_only_once = no
-		is_good = no
-	}
+	# ITA_anti_war_news_hits_the_papers = {
+	# 	priority = 10
+	# 	icon = GFX_decision_generic_ignite_civil_war
+	# 	allowed = {
+	# 		original_tag = ITA
+	# 	}
+	# 	days_mission_timeout = ITA_anti_war_timer
+	# 	available = {
+	# 		OR = {
+	# 			has_war = no
+	# 			has_war_support < 0.4
+	# 			has_global_flag = great_war_ends
+	# 		}
+	# 	}
+	# 	activation = {
+	# 		has_war_support > 0.4
+	# 		has_war_with_major = yes
+	# 		is_great_war_ongoing = yes
+	# 		has_civil_war = no
+	# 	}
+	# 	cancel_trigger = {
+	# 		OR = {
+	# 			has_completed_focus = ITA_arise_workers_of_italy
+	# 			has_war = no
+	# 			has_italian_civil_war = yes
+	# 		}
+	# 	}
+	# 	timeout_effect = {
+	# 		add_war_support = -0.06
+	# 		activate_mission = ITA_anti_war_news_hits_the_papers
+	# 	}
+	# 	complete_effect = {
+	# 	}
+	# 	fire_only_once = no
+	# 	is_good = no
+	# }
 	ITA_bread_shortages = {
 		priority = 10
 		icon = GFX_decision_generic_ignite_civil_war
@@ -1849,7 +1679,7 @@ ITA_great_war = {
 			custom_trigger_tooltip = {
 				tooltip = ITA_at_least_1_budget_not
 				check_variable = {
-					ITA_war_budget < 0
+					ITA_war_budget < 1
 				}
 			}
 		}
@@ -3008,6 +2838,9 @@ ITA_libyan_war = {
 			}
 		}
 		activation = {
+			NOT = {
+				has_global_flag = libyan_crisis_resolved
+			}
 			has_war_with = TUR
 			NOT = {
 				has_war_with = GER
@@ -3444,7 +3277,7 @@ ITA_libyan_war = {
 					TUR = { is_ai = no }
 					LBA = { is_ai = no }
 				}
-				casualties > 50000
+				casualties > 100000
 			}
 			modifier = {
 				add = 10
@@ -4650,13 +4483,14 @@ ITA_government_house_of_cards = {
 	}
 }
 
-ITA_ministry_of_colonies_dec = {
+TGWR_great_power_politics = {
 	ITA_demand_the_restoration_of_treaties_with_hobyo = {
 		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
 			original_tag = ITA
 		}
 		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
 			has_completed_focus = ITA_solidify_control_of_somialand
 			HBY = {
 				exists = yes
@@ -4692,6 +4526,7 @@ ITA_ministry_of_colonies_dec = {
 			original_tag = ITA
 		}
 		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
 			has_completed_focus = ITA_solidify_control_of_somialand
 			MJT = {
 				exists = yes
@@ -4727,6 +4562,7 @@ ITA_ministry_of_colonies_dec = {
 			original_tag = ITA
 		}
 		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
 			has_completed_focus = ITA_solidify_control_of_somialand
 			GLD = {
 				exists = yes
@@ -4761,6 +4597,7 @@ ITA_ministry_of_colonies_dec = {
 			original_tag = ITA
 		}
 		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
 			has_completed_focus = ITA_solidify_control_of_somialand
 			NOT = {
 				has_global_flag = ITA_funded_italian_farmers_flag
@@ -4818,6 +4655,7 @@ ITA_ministry_of_colonies_dec = {
 			original_tag = ITA
 		}
 		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
 			has_completed_focus = ITA_solidify_control_of_somialand
 			NOT = {
 				has_global_flag = ITA_mogadishu_railway_flag
@@ -4878,6 +4716,7 @@ ITA_ministry_of_colonies_dec = {
 			original_tag = ITA
 		}
 		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
 			has_completed_focus = ITA_solidify_control_of_somialand
 			NOT = {
 				has_global_flag = ITA_expand_somali_agriculture_cw_check
@@ -4925,6 +4764,7 @@ ITA_ministry_of_colonies_dec = {
 			original_tag = ITA
 		}
 		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
 			has_completed_focus = ITA_ministry_of_italian_africa_tgwr
 			NOT = {
 				has_global_flag = ITA_eritrea_livestock_flag
@@ -4968,6 +4808,7 @@ ITA_ministry_of_colonies_dec = {
 			original_tag = ITA
 		}
 		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
 			has_completed_focus = ITA_ministry_of_italian_africa_tgwr
 			NOT = {
 				has_global_flag = ITA_eritrea_railway_flag
@@ -5036,6 +4877,7 @@ ITA_ministry_of_colonies_dec = {
 			original_tag = ITA
 		}
 		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
 			has_completed_focus = ITA_ministry_of_italian_africa_tgwr
 			550 = {
 				is_owned_and_controlled_by = ROOT
@@ -5086,6 +4928,7 @@ ITA_ministry_of_colonies_dec = {
 			original_tag = ITA
 		}
 		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
 			has_completed_focus = ITA_develop_libyan_colony
 			448 = {
 				is_owned_and_controlled_by = ROOT
@@ -5164,6 +5007,7 @@ ITA_ministry_of_colonies_dec = {
 			original_tag = ITA
 		}
 		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
 			has_completed_focus = ITA_develop_libyan_colony
 		}
 		available = {
@@ -5194,6 +5038,7 @@ ITA_ministry_of_colonies_dec = {
 			original_tag = ITA
 		}
 		visible = {
+			great_power_politics_scramble_for_africa_visible = yes
 			has_completed_focus = ITA_develop_libyan_colony
 			NOT = {
 				has_global_flag = ITA_savari_cw_check
@@ -5304,6 +5149,7 @@ ITA_reforming_the_country = {
 			158
 			159
 			160
+			1259
 			833
 			161
 			162
@@ -8090,16 +7936,16 @@ ITA_reforming_the_country = {
 		}
 		visible = {
 			has_completed_focus = ITA_emilia_electricity_industries
-			owns_state = 833
+			owns_state = 161
 		}
 		available = {
-			833 = {
+			161 = {
 				is_controlled_by = ROOT
 			}
 		}
 		highlight_states = {
 			highlight_state_targets = {
-				state = 833
+				state = 161
 			}
 		}
 		fire_only_once = yes
@@ -8111,7 +7957,7 @@ ITA_reforming_the_country = {
 		complete_effect = {
 		}
 		remove_effect = {
-			833 = {
+			161 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
@@ -8121,7 +7967,7 @@ ITA_reforming_the_country = {
 			}
 		}
 		cancel_trigger = {
-			833 = {
+			161 = {
 				NOT = {
 					is_owned_and_controlled_by = ROOT
 				}
@@ -8143,6 +7989,7 @@ ITA_reforming_the_country = {
 					state = 161
 					state = 159
 					state = 160
+					state = 1259
 					state = 1216
 				}
 			}
@@ -8164,6 +8011,7 @@ ITA_reforming_the_country = {
 						state = 161
 						state = 159
 						state = 160
+						state = 1259
 						state = 1216
 					}
 				}
@@ -9968,7 +9816,7 @@ ITA_free_trade_decat = {
 	}
 }
 
-peace_deals = {
+TGWR_great_power_politics = {
 	ITA_return_rhodes_mission = {
 		# After Treaty of Ouchy
 		icon = GFX_decision_infiltrate_state
@@ -10091,9 +9939,6 @@ peace_deals = {
 			}
 		}
 	}
-}
-
-operations = {
 	ITA_claim_corsica = {
 		icon = GFX_decision_eng_trade_unions_demand
 		allowed = {
@@ -10112,6 +9957,7 @@ operations = {
 		}
 		cost = 25
 		visible = {
+			great_power_politics_great_war_visible = yes
 			any_enemy_country = {
 				owns_state = 1
 			}
@@ -10147,6 +9993,7 @@ operations = {
 			}
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			owns_state = 115
 			NOT = {
 				has_country_flag = great_war_loser
@@ -10216,651 +10063,651 @@ operations = {
 	}
 }
 
-ITA_italian_civil_war_decisions = {
-	ROI_withdraw_to_sardinia = {
-		icon = GFX_decision_eng_blackshirt_march
-		allowed = {
-			original_tag = ITA
-		}
-		available = {
-			controls_state = 114
-			surrender_progress > 0.5
-		}
-		visible = {
-			has_global_flag = italian_civil_war
-			has_country_flag = ITA_republican_italy_flag
-			any_country_with_original_tag = {
-				original_tag_to_check = ITA
-				OR = {
-					has_country_flag = ITA_socialist_italy_flag
-					has_country_flag = ITA_monarchist_italy_flag
-				}
-				has_war_with = ITA
-			}
-			controls_state = 114
-		}
-		highlight_states = {
-			highlight_state_targets = {
-				state = 114
-			}
-		}
-		fire_only_once = yes
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 1000
-				surrender_progress > 0.8
-			}
-		}
-		complete_effect = {
-			country_event = garibaldi.9
-		}
-	}
-	ITS_coronation = {
-		icon = GFX_decision_generic_monarchy
-		allowed = {
-			original_tag = ITA
-		}
-		available = {
-			is_subject = no
-			has_capitulated = no
-		}
-		visible = {
-			has_country_flag = ITA_monarchist_italy_flag
-			has_country_leader_with_trait = ITA_regency_council
-		}
-		cost = 50
-		fire_only_once = no
-		days_remove = 40
-		ai_will_do = {
-			factor = 1000
-		}
-		cancel_if_not_visible = yes
-		remove_effect = {
-			country_event = {
-				id = garibaldi.8
-			}
-		}
-	}
-	ITA_civil_war_timer = {
-		icon = revolt
-		days_mission_timeout = 40
-		activation = {
-			has_global_flag = italian_civil_war
-			OR = {
-				has_country_flag = ITA_republican_italy_flag
-				has_country_flag = ITA_monarchist_italy_flag
-				has_country_flag = ITA_socialist_italy_flag
-			}
-			any_country_with_original_tag = {
-				original_tag_to_check = ITA
-				OR = {
-					has_country_flag = ITA_republican_italy_flag
-					has_country_flag = ITA_monarchist_italy_flag
-					has_country_flag = ITA_socialist_italy_flag
-				}
-				has_war_with = ITA
-			}
-			OR = {
-				has_stability < 0.11
-				has_war_support < 0.11
-				surrender_progress > 0.5
-				AND = {
-					has_manpower < 1
-					casualties > 110000
-				}
-			}
-			if = {
-				limit = {
-					has_country_flag = ITA_republican_italy_flag
-				}
-				has_country_flag = ROI_exiled_to_sardinia
-				NOT = {
-					is_in_faction_with = ITS
-				}
-			}
-		}
-		allowed = {
-			original_tag = ITA
-		}
-		available = {
-			has_stability > 0.1
-			has_war_support > 0.1
-			has_manpower > 0
-			surrender_progress < 0.51
-		}
-		visible = {
-			has_global_flag = italian_civil_war
-			OR = {
-				has_country_flag = ITA_republican_italy_flag
-				has_country_flag = ITA_monarchist_italy_flag
-				has_country_flag = ITA_socialist_italy_flag
-			}
-			OR = {
-				has_war_with = ROI
-				has_war_with = ITS
-				has_war_with = SRI
-			}
-		}
-		is_good = no
-		timeout_effect = {
-			country_event = garibaldi.16
-		}
-	}
-	ITA_foreign_support_ROI = {
-		icon = ger_military_buildup
-		allowed = {
-			NOT = {
-				original_tag = ITA
-			}
-		}
-		available = {
-			has_global_flag = italian_civil_war
-			NOT = {
-				OR = {
-					original_tag = ITA
-					has_country_flag = ITA_republican_italy_flag
-					has_country_flag = ITA_monarchist_italy_flag
-					has_country_flag = ITA_socialist_italy_flag
-				}
-			}
-			any_country_with_original_tag = {
-				original_tag_to_check = ITA
-				has_country_flag = ITA_republican_italy_flag
-				OR = {
-					has_war_with = SRI
-					has_war_with = ITS
-				}
-			}
-			NOT = {
-				has_country_flag = supported_italian_civil_war
-			}
-		}
-		visible = {
-			has_global_flag = italian_civil_war
-			any_country_with_original_tag = {
-				original_tag_to_check = ITA
-				has_country_flag = ITA_republican_italy_flag
-				OR = {
-					has_war_with = SRI
-					has_war_with = ITS
-				}
-			}
-			NOT = {
-				has_country_flag = supported_italian_civil_war
-			}
-		}
-		fire_only_once = yes
-		custom_cost_trigger = {
-			has_equipment = {
-				infantry_equipment > 1999
-			}
-		}
-		custom_cost_text = 2000_infantry_equipment_1
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				has_equipment = {
-					infantry_equipment < 4000
-				}
-			}
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
-			modifier = {
-				factor = 0
-				NOT = {
-					has_government = democratic
-				}
-			}
-		}
-		targets = {
-			ROI
-		}
-		complete_effect = {
-			set_country_flag = supported_italian_civil_war
-			army_experience = 5
-			send_equipment = {
-				target = ROI
-				type = infantry_equipment
-				amount = 2000
-			}
-			ROI = {
-				country_event = garibaldi.32
-			}
-		}
-	}
-	ITA_foreign_support_ITS = {
-		icon = ger_military_buildup
-		allowed = {
-			NOT = {
-				original_tag = ITA
-			}
-		}
-		available = {
-			has_global_flag = italian_civil_war
-			NOT = {
-				OR = {
-					original_tag = ITA
-					has_country_flag = ITA_republican_italy_flag
-					has_country_flag = ITA_monarchist_italy_flag
-					has_country_flag = ITA_socialist_italy_flag
-				}
-			}
-			any_country_with_original_tag = {
-				original_tag_to_check = ITA
-				has_country_flag = ITA_monarchist_italy_flag
-				OR = {
-					has_war_with = SRI
-					has_war_with = ROI
-				}
-			}
-			NOT = {
-				has_country_flag = supported_italian_civil_war
-			}
-		}
-		visible = {
-			has_global_flag = italian_civil_war
-			any_country_with_original_tag = {
-				original_tag_to_check = ITA
-				has_country_flag = ITA_monarchist_italy_flag
-				OR = {
-					has_war_with = SRI
-					has_war_with = ROI
-				}
-			}
-			NOT = {
-				has_country_flag = supported_italian_civil_war
-			}
-		}
-		fire_only_once = yes
-		custom_cost_trigger = {
-			has_equipment = {
-				infantry_equipment > 1999
-			}
-		}
-		custom_cost_text = 2000_infantry_equipment_1
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				has_equipment = {
-					infantry_equipment < 4000
-				}
-			}
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
-			modifier = {
-				factor = 0
-				NOT = {
-					has_government = neutrality
-				}
-			}
-		}
-		targets = {
-			ITS
-		}
-		complete_effect = {
-			set_country_flag = supported_italian_civil_war
-			army_experience = 5
-			send_equipment = {
-				target = ITS
-				type = infantry_equipment
-				amount = 2000
-			}
-			ITS = {
-				country_event = garibaldi.32
-			}
-		}
-	}
-	ITA_foreign_support_SRI = {
-		icon = ger_military_buildup
-		allowed = {
-			NOT = {
-				original_tag = ITA
-			}
-		}
-		available = {
-			has_global_flag = italian_civil_war
-			NOT = {
-				OR = {
-					original_tag = ITA
-					has_country_flag = ITA_republican_italy_flag
-					has_country_flag = ITA_monarchist_italy_flag
-					has_country_flag = ITA_socialist_italy_flag
-				}
-			}
-			any_country_with_original_tag = {
-				original_tag_to_check = ITA
-				has_country_flag = ITA_socialist_italy_flag
-				OR = {
-					has_war_with = ITS
-					has_war_with = ROI
-				}
-			}
-			NOT = {
-				has_country_flag = supported_italian_civil_war
-			}
-		}
-		visible = {
-			has_global_flag = italian_civil_war
-			any_country_with_original_tag = {
-				original_tag_to_check = ITA
-				has_country_flag = ITA_socialist_italy_flag
-				OR = {
-					has_war_with = ITS
-					has_war_with = ROI
-				}
-			}
-			NOT = {
-				has_country_flag = supported_italian_civil_war
-			}
-		}
-		fire_only_once = yes
-		custom_cost_trigger = {
-			has_equipment = {
-				infantry_equipment > 1999
-			}
-		}
-		custom_cost_text = 2000_infantry_equipment_1
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				has_equipment = {
-					infantry_equipment < 4000
-				}
-			}
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
-			modifier = {
-				factor = 0
-				NOT = {
-					has_government = communism
-				}
-			}
-		}
-		targets = {
-			SRI
-		}
-		complete_effect = {
-			set_country_flag = supported_italian_civil_war
-			army_experience = 5
-			send_equipment = {
-				target = SRI
-				type = infantry_equipment
-				amount = 2000
-			}
-			SRI = {
-				country_event = garibaldi.32
-			}
-		}
-	}
-	ITA_intervention_in_northern_italy = {
-		icon = ger_military_buildup
-		allowed = {
-			original_tag = ITA
-		}
-		available = {
-			has_global_flag = italian_civil_war
-			any_country_with_original_tag = {
-				original_tag_to_check = ITA
-				has_government = communism
-				has_war = yes
-				NOT = {
-					has_war_with = ITA
-				}
-			}
-		}
-		visible = {
-			has_global_flag = italian_civil_war
-			has_war = no
-			NOT = {
-				has_country_flag = ITA_second_civil_war_intervention
-			}
-			any_country_with_original_tag = {
-				original_tag_to_check = ITA
-				has_government = communism
-			}
-		}
-		fire_only_once = yes
-		war_with_target_on_remove = yes
-		ai_will_do = {
-			factor = 5
-			modifier = {
-				factor = 0
-				has_equipment = {
-					infantry_equipment < 4000
-				}
-			}
-		}
-		targets = {
-			SRI
-		}
-		complete_effect = {
-			set_country_flag = ITA_second_civil_war_intervention
-			declare_war_on = {
-				target = SRI
-				type = annex_everything
-			}
-		}
-	}
-	ITA_FRA_intervene_in_civil_war = {
-		icon = GFX_decision_generic_prepare_civil_war
-		allowed = {
-			original_tag = FRA
-		}
-		available = {
-			has_global_flag = italian_civil_war
-			any_country_with_original_tag = {
-				original_tag_to_check = ITA
-				has_country_flag = ITA_socialist_italy_flag
-				OR = {
-					has_war_with = ITS
-					has_war_with = ROI
-				}
-			}
-			has_war = no
-			is_subject = no
-		}
-		visible = {
-			is_faction_leader = yes
-			NOT = {
-				has_government = democratic
-			}
-			has_global_flag = italian_civil_war
-			any_country_with_original_tag = {
-				original_tag_to_check = ITA
-				has_country_flag = ITA_socialist_italy_flag
-				OR = {
-					has_war_with = ITS
-					has_war_with = ROI
-				}
-			}
-			is_neighbor_of = SRI
-			is_subject = no
-			OR = {
-				AND = {
-					has_government = communism
-					OR = {
-						any_country_with_original_tag = {
-							original_tag_to_check = ITA
-							has_country_flag = ITA_monarchist_italy_flag
-						}
-						any_country_with_original_tag = {
-							original_tag_to_check = ITA
-							has_country_flag = ITA_republican_italy_flag
-						}
-					}
-				}
-				AND = {
-					NOT = {
-						has_government = communism
-					}
-					any_country_with_original_tag = {
-						original_tag_to_check = ITA
-						has_country_flag = ITA_socialist_italy_flag
-					}
-				}
-			}
-		}
-		fire_only_once = yes
-		cost = 125
-		days_remove = 15
-		targets = {
-			SRI
-		}
-		cancel_trigger = {
-			hidden_trigger = {
-				NOT = {
-					OR = {
-						any_country_with_original_tag = {
-							original_tag_to_check = ITA
-							has_country_flag = ITA_socialist_italy_flag
-							OR = {
-								has_war_with = ITS
-								has_war_with = ROI
-							}
-						}
-						AND = {
-							if = {
-								limit = {
-									has_government = communism
-								}
-								OR = {
-									any_country_with_original_tag = {
-										original_tag_to_check = ITA
-										has_country_flag = ITA_monarchist_italy_flag
-									}
-									any_country_with_original_tag = {
-										original_tag_to_check = ITA
-										has_country_flag = ITA_republican_italy_flag
-									}
-								}
-							}
-							if = {
-								limit = {
-									NOT = {
-										has_government = communism
-									}
-								}
-								any_country_with_original_tag = {
-									original_tag_to_check = ITA
-									has_country_flag = ITA_socialist_italy_flag
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		remove_effect = {
-			if = {
-				limit = {
-					has_government = communism
-				}
-				if = {
-					limit = {
-						any_country_with_original_tag = {
-							original_tag_to_check = ITA
-							exists = yes
-							has_country_flag = ITA_socialist_italy_flag
-						}
-					}
-					give_guarantee = SRI
-					SRI = {
-						give_guarantee = ROOT
-						give_military_access = ROOT
-					}
-				}
-				if = {
-					limit = {
-						any_country_with_original_tag = {
-							original_tag_to_check = ITA
-							has_country_flag = ITA_monarchist_italy_flag
-							has_war_with = SRI
-						}
-					}
-					declare_war_on = {
-						target = ITS
-						type = topple_government
-					}
-				}
-				if = {
-					limit = {
-						any_country_with_original_tag = {
-							original_tag_to_check = ITA
-							has_country_flag = ITA_republican_italy_flag
-							has_war_with = SRI
-						}
-					}
-					declare_war_on = {
-						target = ROI
-						type = topple_government
-					}
-				}
-			}
-			else = {
-				if = {
-					limit = {
-						any_country_with_original_tag = {
-							original_tag_to_check = ITA
-							has_country_flag = ITA_monarchist_italy_flag
-						}
-					}
-					give_guarantee = ITS
-					ITS = {
-						give_guarantee = ROOT
-						give_military_access = ROOT
-					}
-				}
-				declare_war_on = {
-					target = SRI
-					type = topple_government
-				}
-			}
-			add_named_threat = {
-				threat = 3
-				name = ITA_FRA_intervene_in_civil_war
-			}
-			set_country_flag = intervened_in_italian_civil_war
-			every_other_country = {
-				limit = {
-					is_in_faction_with = ROOT
-					is_subject_of = ROOT
-				}
-				set_country_flag = intervened_in_italian_civil_war
-			}
-		}
-		ai_will_do = {
-			base = 100
-			modifier = {
-				factor = 0
-				NOT = {
-					has_government = communism
-				}
-			}
-			modifier = {
-				factor = 0
-				threat < 0.3
-			}
-			modifier = {
-				factor = 0
-				has_war = yes
-			}
-			modifier = {
-				factor = 0
-				has_war_support < 0.5
-			}
-		}
-	}
-}
+#ITA_italian_civil_war_decisions = {
+#	ROI_withdraw_to_sardinia = {
+#		icon = GFX_decision_eng_blackshirt_march
+#		allowed = {
+#			original_tag = ITA
+#		}
+#		available = {
+#			controls_state = 114
+#			surrender_progress > 0.5
+#		}
+#		visible = {
+#			has_global_flag = italian_civil_war
+#			has_country_flag = ITA_republican_italy_flag
+#			any_country_with_original_tag = {
+#				original_tag_to_check = ITA
+#				OR = {
+#					has_country_flag = ITA_socialist_italy_flag
+#					has_country_flag = ITA_monarchist_italy_flag
+#				}
+#				has_war_with = ITA
+#			}
+#			controls_state = 114
+#		}
+#		highlight_states = {
+#			highlight_state_targets = {
+#				state = 114
+#			}
+#		}
+#		fire_only_once = yes
+#		ai_will_do = {
+#			base = 0
+#			modifier = {
+#				add = 1000
+#				surrender_progress > 0.8
+#			}
+#		}
+#		complete_effect = {
+#			country_event = garibaldi.9
+#		}
+#	}
+#	ITS_coronation = {
+#		icon = GFX_decision_generic_monarchy
+#		allowed = {
+#			original_tag = ITA
+#		}
+#		available = {
+#			is_subject = no
+#			has_capitulated = no
+#		}
+#		visible = {
+#			has_country_flag = ITA_monarchist_italy_flag
+#			has_country_leader_with_trait = ITA_regency_council
+#		}
+#		cost = 50
+#		fire_only_once = no
+#		days_remove = 40
+#		ai_will_do = {
+#			factor = 1000
+#		}
+#		cancel_if_not_visible = yes
+#		remove_effect = {
+#			country_event = {
+#				id = garibaldi.8
+#			}
+#		}
+#	}
+#	ITA_civil_war_timer = {
+#		icon = revolt
+#		days_mission_timeout = 40
+#		activation = {
+#			has_global_flag = italian_civil_war
+#			OR = {
+#				has_country_flag = ITA_republican_italy_flag
+#				has_country_flag = ITA_monarchist_italy_flag
+#				has_country_flag = ITA_socialist_italy_flag
+#			}
+#			any_country_with_original_tag = {
+#				original_tag_to_check = ITA
+#				OR = {
+#					has_country_flag = ITA_republican_italy_flag
+#					has_country_flag = ITA_monarchist_italy_flag
+#					has_country_flag = ITA_socialist_italy_flag
+#				}
+#				has_war_with = ITA
+#			}
+#			OR = {
+#				has_stability < 0.11
+#				has_war_support < 0.11
+#				surrender_progress > 0.5
+#				AND = {
+#					has_manpower < 1
+#					casualties > 110000
+#				}
+#			}
+#			if = {
+#				limit = {
+#					has_country_flag = ITA_republican_italy_flag
+#				}
+#				has_country_flag = ROI_exiled_to_sardinia
+#				NOT = {
+#					is_in_faction_with = ITS
+#				}
+#			}
+#		}
+#		allowed = {
+#			original_tag = ITA
+#		}
+#		available = {
+#			has_stability > 0.1
+#			has_war_support > 0.1
+#			has_manpower > 0
+#			surrender_progress < 0.51
+#		}
+#		visible = {
+#			has_global_flag = italian_civil_war
+#			OR = {
+#				has_country_flag = ITA_republican_italy_flag
+#				has_country_flag = ITA_monarchist_italy_flag
+#				has_country_flag = ITA_socialist_italy_flag
+#			}
+#			OR = {
+#				has_war_with = ROI
+#				has_war_with = ITS
+#				has_war_with = SRI
+#			}
+#		}
+#		is_good = no
+#		timeout_effect = {
+#			country_event = garibaldi.16
+#		}
+#	}
+#	ITA_foreign_support_ROI = {
+#		icon = ger_military_buildup
+#		allowed = {
+#			NOT = {
+#				original_tag = ITA
+#			}
+#		}
+#		available = {
+#			has_global_flag = italian_civil_war
+#			NOT = {
+#				OR = {
+#					original_tag = ITA
+#					has_country_flag = ITA_republican_italy_flag
+#					has_country_flag = ITA_monarchist_italy_flag
+#					has_country_flag = ITA_socialist_italy_flag
+#				}
+#			}
+#			any_country_with_original_tag = {
+#				original_tag_to_check = ITA
+#				has_country_flag = ITA_republican_italy_flag
+#				OR = {
+#					has_war_with = SRI
+#					has_war_with = ITS
+#				}
+#			}
+#			NOT = {
+#				has_country_flag = supported_italian_civil_war
+#			}
+#		}
+#		visible = {
+#			has_global_flag = italian_civil_war
+#			any_country_with_original_tag = {
+#				original_tag_to_check = ITA
+#				has_country_flag = ITA_republican_italy_flag
+#				OR = {
+#					has_war_with = SRI
+#					has_war_with = ITS
+#				}
+#			}
+#			NOT = {
+#				has_country_flag = supported_italian_civil_war
+#			}
+#		}
+#		fire_only_once = yes
+#		custom_cost_trigger = {
+#			has_equipment = {
+#				infantry_equipment > 1999
+#			}
+#		}
+#		custom_cost_text = 2000_infantry_equipment_1
+#		ai_will_do = {
+#			factor = 1
+#			modifier = {
+#				factor = 0
+#				has_equipment = {
+#					infantry_equipment < 4000
+#				}
+#			}
+#			modifier = {
+#				factor = 0
+#				has_war = yes
+#			}
+#			modifier = {
+#				factor = 0
+#				NOT = {
+#					has_government = democratic
+#				}
+#			}
+#		}
+#		targets = {
+#			ROI
+#		}
+#		complete_effect = {
+#			set_country_flag = supported_italian_civil_war
+#			army_experience = 5
+#			send_equipment = {
+#				target = ROI
+#				type = infantry_equipment
+#				amount = 2000
+#			}
+#			ROI = {
+#				country_event = garibaldi.32
+#			}
+#		}
+#	}
+#	ITA_foreign_support_ITS = {
+#		icon = ger_military_buildup
+#		allowed = {
+#			NOT = {
+#				original_tag = ITA
+#			}
+#		}
+#		available = {
+#			has_global_flag = italian_civil_war
+#			NOT = {
+#				OR = {
+#					original_tag = ITA
+#					has_country_flag = ITA_republican_italy_flag
+#					has_country_flag = ITA_monarchist_italy_flag
+#					has_country_flag = ITA_socialist_italy_flag
+#				}
+#			}
+#			any_country_with_original_tag = {
+#				original_tag_to_check = ITA
+#				has_country_flag = ITA_monarchist_italy_flag
+#				OR = {
+#					has_war_with = SRI
+#					has_war_with = ROI
+#				}
+#			}
+#			NOT = {
+#				has_country_flag = supported_italian_civil_war
+#			}
+#		}
+#		visible = {
+#			has_global_flag = italian_civil_war
+#			any_country_with_original_tag = {
+#				original_tag_to_check = ITA
+#				has_country_flag = ITA_monarchist_italy_flag
+#				OR = {
+#					has_war_with = SRI
+#					has_war_with = ROI
+#				}
+#			}
+#			NOT = {
+#				has_country_flag = supported_italian_civil_war
+#			}
+#		}
+#		fire_only_once = yes
+#		custom_cost_trigger = {
+#			has_equipment = {
+#				infantry_equipment > 1999
+#			}
+#		}
+#		custom_cost_text = 2000_infantry_equipment_1
+#		ai_will_do = {
+#			factor = 1
+#			modifier = {
+#				factor = 0
+#				has_equipment = {
+#					infantry_equipment < 4000
+#				}
+#			}
+#			modifier = {
+#				factor = 0
+#				has_war = yes
+#			}
+#			modifier = {
+#				factor = 0
+#				NOT = {
+#					has_government = neutrality
+#				}
+#			}
+#		}
+#		targets = {
+#			ITS
+#		}
+#		complete_effect = {
+#			set_country_flag = supported_italian_civil_war
+#			army_experience = 5
+#			send_equipment = {
+#				target = ITS
+#				type = infantry_equipment
+#				amount = 2000
+#			}
+#			ITS = {
+#				country_event = garibaldi.32
+#			}
+#		}
+#	}
+#	ITA_foreign_support_SRI = {
+#		icon = ger_military_buildup
+#		allowed = {
+#			NOT = {
+#				original_tag = ITA
+#			}
+#		}
+#		available = {
+#			has_global_flag = italian_civil_war
+#			NOT = {
+#				OR = {
+#					original_tag = ITA
+#					has_country_flag = ITA_republican_italy_flag
+#					has_country_flag = ITA_monarchist_italy_flag
+#					has_country_flag = ITA_socialist_italy_flag
+#				}
+#			}
+#			any_country_with_original_tag = {
+#				original_tag_to_check = ITA
+#				has_country_flag = ITA_socialist_italy_flag
+#				OR = {
+#					has_war_with = ITS
+#					has_war_with = ROI
+#				}
+#			}
+#			NOT = {
+#				has_country_flag = supported_italian_civil_war
+#			}
+#		}
+#		visible = {
+#			has_global_flag = italian_civil_war
+#			any_country_with_original_tag = {
+#				original_tag_to_check = ITA
+#				has_country_flag = ITA_socialist_italy_flag
+#				OR = {
+#					has_war_with = ITS
+#					has_war_with = ROI
+#				}
+#			}
+#			NOT = {
+#				has_country_flag = supported_italian_civil_war
+#			}
+#		}
+#		fire_only_once = yes
+#		custom_cost_trigger = {
+#			has_equipment = {
+#				infantry_equipment > 1999
+#			}
+#		}
+#		custom_cost_text = 2000_infantry_equipment_1
+#		ai_will_do = {
+#			factor = 1
+#			modifier = {
+#				factor = 0
+#				has_equipment = {
+#					infantry_equipment < 4000
+#				}
+#			}
+#			modifier = {
+#				factor = 0
+#				has_war = yes
+#			}
+#			modifier = {
+#				factor = 0
+#				NOT = {
+#					has_government = communism
+#				}
+#			}
+#		}
+#		targets = {
+#			SRI
+#		}
+#		complete_effect = {
+#			set_country_flag = supported_italian_civil_war
+#			army_experience = 5
+#			send_equipment = {
+#				target = SRI
+#				type = infantry_equipment
+#				amount = 2000
+#			}
+#			SRI = {
+#				country_event = garibaldi.32
+#			}
+#		}
+#	}
+#	ITA_intervention_in_northern_italy = {
+#		icon = ger_military_buildup
+#		allowed = {
+#			original_tag = ITA
+#		}
+#		available = {
+#			has_global_flag = italian_civil_war
+#			any_country_with_original_tag = {
+#				original_tag_to_check = ITA
+#				has_government = communism
+#				has_war = yes
+#				NOT = {
+#					has_war_with = ITA
+#				}
+#			}
+#		}
+#		visible = {
+#			has_global_flag = italian_civil_war
+#			has_war = no
+#			NOT = {
+#				has_country_flag = ITA_second_civil_war_intervention
+#			}
+#			any_country_with_original_tag = {
+#				original_tag_to_check = ITA
+#				has_government = communism
+#			}
+#		}
+#		fire_only_once = yes
+#		war_with_target_on_remove = yes
+#		ai_will_do = {
+#			factor = 5
+#			modifier = {
+#				factor = 0
+#				has_equipment = {
+#					infantry_equipment < 4000
+#				}
+#			}
+#		}
+#		targets = {
+#			SRI
+#		}
+#		complete_effect = {
+#			set_country_flag = ITA_second_civil_war_intervention
+#			declare_war_on = {
+#				target = SRI
+#				type = annex_everything
+#			}
+#		}
+#	}
+#	ITA_FRA_intervene_in_civil_war = {
+#		icon = GFX_decision_generic_prepare_civil_war
+#		allowed = {
+#			original_tag = FRA
+#		}
+#		available = {
+#			has_global_flag = italian_civil_war
+#			any_country_with_original_tag = {
+#				original_tag_to_check = ITA
+#				has_country_flag = ITA_socialist_italy_flag
+#				OR = {
+#					has_war_with = ITS
+#					has_war_with = ROI
+#				}
+#			}
+#			has_war = no
+#			is_subject = no
+#		}
+#		visible = {
+#			is_faction_leader = yes
+#			NOT = {
+#				has_government = democratic
+#			}
+#			has_global_flag = italian_civil_war
+#			any_country_with_original_tag = {
+#				original_tag_to_check = ITA
+#				has_country_flag = ITA_socialist_italy_flag
+#				OR = {
+#					has_war_with = ITS
+#					has_war_with = ROI
+#				}
+#			}
+#			is_neighbor_of = SRI
+#			is_subject = no
+#			OR = {
+#				AND = {
+#					has_government = communism
+#					OR = {
+#						any_country_with_original_tag = {
+#							original_tag_to_check = ITA
+#							has_country_flag = ITA_monarchist_italy_flag
+#						}
+#						any_country_with_original_tag = {
+#							original_tag_to_check = ITA
+#							has_country_flag = ITA_republican_italy_flag
+#						}
+#					}
+#				}
+#				AND = {
+#					NOT = {
+#						has_government = communism
+#					}
+#					any_country_with_original_tag = {
+#						original_tag_to_check = ITA
+#						has_country_flag = ITA_socialist_italy_flag
+#					}
+#				}
+#			}
+#		}
+#		fire_only_once = yes
+#		cost = 125
+#		days_remove = 15
+#		targets = {
+#			SRI
+#		}
+#		cancel_trigger = {
+#			hidden_trigger = {
+#				NOT = {
+#					OR = {
+#						any_country_with_original_tag = {
+#							original_tag_to_check = ITA
+#							has_country_flag = ITA_socialist_italy_flag
+#							OR = {
+#								has_war_with = ITS
+#								has_war_with = ROI
+#							}
+#						}
+#						AND = {
+#							if = {
+#								limit = {
+#									has_government = communism
+#								}
+#								OR = {
+#									any_country_with_original_tag = {
+#										original_tag_to_check = ITA
+#										has_country_flag = ITA_monarchist_italy_flag
+#									}
+#									any_country_with_original_tag = {
+#										original_tag_to_check = ITA
+#										has_country_flag = ITA_republican_italy_flag
+#									}
+#								}
+#							}
+#							if = {
+#								limit = {
+#									NOT = {
+#										has_government = communism
+#									}
+#								}
+#								any_country_with_original_tag = {
+#									original_tag_to_check = ITA
+#									has_country_flag = ITA_socialist_italy_flag
+#								}
+#							}
+#						}
+#					}
+#				}
+#			}
+#		}
+#		remove_effect = {
+#			if = {
+#				limit = {
+#					has_government = communism
+#				}
+#				if = {
+#					limit = {
+#						any_country_with_original_tag = {
+#							original_tag_to_check = ITA
+#							exists = yes
+#							has_country_flag = ITA_socialist_italy_flag
+#						}
+#					}
+#					give_guarantee = SRI
+#					SRI = {
+#						give_guarantee = ROOT
+#						give_military_access = ROOT
+#					}
+#				}
+#				if = {
+#					limit = {
+#						any_country_with_original_tag = {
+#							original_tag_to_check = ITA
+#							has_country_flag = ITA_monarchist_italy_flag
+#							has_war_with = SRI
+#						}
+#					}
+#					declare_war_on = {
+#						target = ITS
+#						type = topple_government
+#					}
+#				}
+#				if = {
+#					limit = {
+#						any_country_with_original_tag = {
+#							original_tag_to_check = ITA
+#							has_country_flag = ITA_republican_italy_flag
+#							has_war_with = SRI
+#						}
+#					}
+#					declare_war_on = {
+#						target = ROI
+#						type = topple_government
+#					}
+#				}
+#			}
+#			else = {
+#				if = {
+#					limit = {
+#						any_country_with_original_tag = {
+#							original_tag_to_check = ITA
+#							has_country_flag = ITA_monarchist_italy_flag
+#						}
+#					}
+#					give_guarantee = ITS
+#					ITS = {
+#						give_guarantee = ROOT
+#						give_military_access = ROOT
+#					}
+#				}
+#				declare_war_on = {
+#					target = SRI
+#					type = topple_government
+#				}
+#			}
+#			add_named_threat = {
+#				threat = 3
+#				name = ITA_FRA_intervene_in_civil_war
+#			}
+#			set_country_flag = intervened_in_italian_civil_war
+#			every_other_country = {
+#				limit = {
+#					is_in_faction_with = ROOT
+#					is_subject_of = ROOT
+#				}
+#				set_country_flag = intervened_in_italian_civil_war
+#			}
+#		}
+#		ai_will_do = {
+#			base = 100
+#			modifier = {
+#				factor = 0
+#				NOT = {
+#					has_government = communism
+#				}
+#			}
+#			modifier = {
+#				factor = 0
+#				threat < 0.3
+#			}
+#			modifier = {
+#				factor = 0
+#				has_war = yes
+#			}
+#			modifier = {
+#				factor = 0
+#				has_war_support < 0.5
+#			}
+#		}
+#	}
+#}
 
 ITA_war_preperations = {
 	ITA_nationalist_media_pressure = {
@@ -11283,16 +11130,12 @@ ITA_war_preperations = {
 			modifier = {
 				add = 1000
 				OR = {
-					has_global_flag = ITA_wp_check_4
+					AND = {
+						is_historical_focus_on = no
+						has_global_flag = ITA_wp_check_4
+					}
 					date > 1911.9.24
 				}
-			}
-			modifier = {
-				factor = 0
-				AND = {
-					is_historical_focus_on = yes
-					date < 1911.9.24
-				}			
 			}
 		}
 	}
@@ -12124,22 +11967,24 @@ ITA_army_reforms = {
 				add_building_construction = {
 					type = bunker
 					level = 2
+					province = 1126
+				}
+			}
+			1259 = {
+				add_building_construction = {
+					type = bunker
+					level = 2
 					province = 628
 				}
 				add_building_construction = {
 					type = bunker
 					level = 2
 					province = 9613
-				}
+				}		
 				add_building_construction = {
 					type = bunker
 					level = 2
 					province = 13376
-				}
-				add_building_construction = {
-					type = bunker
-					level = 2
-					province = 1126
 				}
 				add_building_construction = {
 					type = bunker
@@ -12195,6 +12040,8 @@ ITA_army_reforms = {
 					level = 3
 					province = 603
 				}
+			}
+			159 = {
 				add_building_construction = {
 					type = bunker
 					level = 2
@@ -12636,13 +12483,19 @@ ITA_army_reforms = {
 			has_war_with = AUS
 		}
 		available = {
-			1197 = {
-				is_owned_and_controlled_by = AUS
+			OR = {
+				1197 = {
+					is_owned_and_controlled_by = AUS
+				}
+				1260 = {
+					is_owned_and_controlled_by = AUS
+				}
 			}
 		}
 		highlight_states = {
 			highlight_state_targets = {
 				state = 1197
+				state = 1260
 			}
 		}
 		cancel_trigger = {
@@ -12672,6 +12525,13 @@ ITA_army_reforms = {
 					scope = ROOT
 				}
 			}
+			1260 = {
+				add_dynamic_modifier = {
+					modifier = ITA_offensive
+					days = 120
+					scope = ROOT
+				}
+			}
 		}
 	}
 	ITA_veneto_counteroffensive = {
@@ -12685,11 +12545,21 @@ ITA_army_reforms = {
 			# no cw check needed as communist italy cant do these focuses
 		}
 		available = {
-			160 = {
-				NOT = {
-					is_fully_controlled_by = ROOT
-					has_dynamic_modifier = {
-						modifier = ITA_stand_on_the_piave
+			AND = {
+				160 = {
+					NOT = {
+						is_fully_controlled_by = ROOT
+						has_dynamic_modifier = {
+							modifier = ITA_stand_on_the_piave
+						}
+					}
+				}
+				1259 = {
+					NOT = {
+						is_fully_controlled_by = ROOT
+						has_dynamic_modifier = {
+							modifier = ITA_stand_on_the_piave
+						}
 					}
 				}
 			}
@@ -12718,6 +12588,13 @@ ITA_army_reforms = {
 		}
 		remove_effect = {
 			160 = {
+				add_dynamic_modifier = {
+					modifier = ITA_veneto_offensive
+					days = 100
+					scope = ROOT
+				}
+			}
+			1259 = {
 				add_dynamic_modifier = {
 					modifier = ITA_veneto_offensive
 					days = 100
@@ -13753,10 +13630,10 @@ ITA_italy_communist_decisions = {
 			num_of_civilian_factories_available_for_projects > 2
 		}
 		days_remove = 140
+		target_array = faction_members
 		target_trigger = {
 			FROM = {
 				is_major = no
-				is_in_faction_with = ROOT
 			}
 		}
 		fire_only_once = no
@@ -13810,11 +13687,7 @@ ITA_socialist_sabotadge_entente = {
 			}
 		}
 		days_remove = 90
-		target_trigger = {
-			FROM = {
-				has_war_with = GER
-			}
-		}
+		target_array = GER.enemies
 		fire_only_once = no
 		ai_will_do = {
 			base = 50

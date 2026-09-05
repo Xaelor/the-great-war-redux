@@ -205,93 +205,6 @@ RUS_civil_war = {
 			}
 		}
 	}
-	SRA_core_states = {
-		icon = generic_army_support
-		allowed = {
-			tag = SRA
-		}
-
-		cost = 10
-
-		state_target = yes
-		targets = {
-			940
-			233
-			234
-			579
-			137
-			235
-			236
-			590
-			217
-			265
-			245
-			238
-			218
-			222
-			240
-			220
-			260
-			401
-			239
-			257
-			258
-			223
-			224
-			242
-			205
-			246
-			210
-			209
-			925
-			251
-			249
-			399
-			400
-			397
-			250
-			255
-			256
-			252
-			254
-			253
-			248
-			247
-			351
-			263
-			214
-			264
-			926
-			955
-			238
-			## States excluded: Karelia, Ukraine, byelorussia, St. Petersburg && Moscow, Urals + Asia, baltics, poland, transcaucasia and Terek
-		}
-		on_map_mode = map_and_decisions_view
-		days_remove = 10
-		visible = {
-			has_country_flag = vol_core_states
-			FROM = {
-				is_controlled_by = ROOT
-				NOT = {
-					is_core_of = SRA
-				}
-			}
-		}
-		complete_effect = {
-
-		}
-		remove_effect = {
-			FROM = {
-				add_core_of = SRA
-				SRA = {
-					set_state_owner = PREV
-				}
-			}
-		}
-		ai_will_do = {
-			base = 100
-		}
-	}
 	SRA_rehabilitate_officers = {
 		icon = generic_army_support
 		allowed = {
@@ -445,22 +358,63 @@ RUS_civil_war = {
 		}
 		remove_effect = {
 			clr_country_flag = SRA_is_annexing
-			every_state = {
-				limit = {			
-					OR = {
-						is_core_of = FROM
-						AND = {
-							is_core_of = RUS
-							is_owned_by = FROM
-						}	
+			if = {
+				limit = { 
+					FROM = {
+						is_russian_tag = yes
 					}
 				}
-				add_core_of = SRA
+				RCW_ROOT_fuze_with_FROM = yes
 			}
-			annex_country = {
-				target = FROM
-				transfer_troops = yes
-			}
+			else = {
+				annex_country = {
+					target = FROM
+					transfer_troops = yes
+				}
+				FROM = {
+					every_core_state = {
+						limit = {
+							is_in_array = {
+								array = global.RCW_core_states_array
+								value = FROM
+							}
+						}
+						ROOT = {
+							RCW_core_state_PREV = yes
+						}
+					}
+				}
+				if = {
+					limit = {
+						FROM = {
+							original_tag = MOU
+							has_country_leader = {
+								character = MOU_mikail_halilov 
+							}
+						}
+					}
+					MOU = {
+						MOU_mikail_halilov = {
+							set_nationality = ROOT
+						}
+						hidden_effect = {
+							set_politics = {
+								ruling_party = democratic
+								elections_allowed = no
+							}
+							add_popularity = {
+								ideology = fascism
+								popularity = -0.1
+							}
+							set_party_name = {
+								ideology = fascism
+								long_name = MOU_fascism_party
+								name = MOU_fascism_party
+							}
+						}
+					}
+				}
+			}		
 		}
 		cost = 25
 		ai_will_do = {
@@ -746,7 +700,7 @@ RUS_civil_war = {
 		available = {
 			controls_province = 9355 #kursk
 			controls_province = 3578 #Saratov
-			controls_province = 413  #Voronezh
+			controls_province = 260  #Voronezh
 		}
 
 		days_mission_timeout = 100
@@ -764,7 +718,7 @@ RUS_civil_war = {
 		is_good = no
 
 		activation = {
-			has_country_flag = SRA_moscow_directive_phase_1
+			always = no
 		}
 
 		timeout_effect = {	
@@ -938,7 +892,7 @@ RUS_civil_war = {
 	}
 }
 
-operations = {
+TGWR_great_power_politics = {
 	SRA_vol_departure = {
 		icon = eng_blackshirt_march
 
@@ -981,14 +935,14 @@ operations = {
 	}
 }
 
-political_actions = {
+TGWR_great_power_politics = {
 	KUB_alliance_with_SRA = {
 		icon = generic_decision
 		allowed = {
 			tag = KUB
 		}
 		visible = {
-			tag = KUB
+			great_power_politics_empire_of_the_periphery_visible = yes
 			has_war_with = SOV
 			SRA = {
 				exists = yes
@@ -1707,7 +1661,7 @@ SRA_rada_interactions = {
 			}
 			capital_scope = {
 				create_unit = {
-					division = "name = \"Kuban Cossacks\" division_template = \"Kazachiy polk VSYUR\" start_experience_factor = 0.5"
+					division = "name = \"Kuban Cossacks\" division_template = \"Kazachiy polk VSYUR\" start_experience_factor = 0.5 start_equipment_factor = 0.7"
 					owner = ROOT
 					count = 2
 					allow_spawning_on_enemy_provs = no

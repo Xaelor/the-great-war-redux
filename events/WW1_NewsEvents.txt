@@ -9,11 +9,6 @@ news_event = {
 	is_triggered_only = yes
 	major = yes
 	immediate = {
-		set_global_flag = {
-			flag = WW1_intented_duration
-			days = 1840
-			value = 1
-		}
 		hidden_effect = {
 			if = {
 				limit = {
@@ -37,7 +32,7 @@ news_event = {
 			}
 			FROM = {
 				add_named_threat = {
-					threat = 10
+					threat = 40
 					name = kis_news.1.t
 				}
 			}
@@ -309,7 +304,7 @@ news_event = {
 
 # NEWS - SUFFRAGETTES DEMONSTRATION
 #################################
-# feminist event is banned lol (transfered to ww1_usa)
+# feminist event is banned lol (transferred to ww1_usa)
 # OLYMPIC GAMES
 ################
 news_event = {
@@ -336,9 +331,7 @@ news_event = {
 	option = {
 		name = kis_news.107.a
 		trigger = {
-			NOT = {
-				is_china_or_warlord = yes
-			}
+			is_china_or_warlord = no
 		}
 	}
 	option = {
@@ -347,6 +340,7 @@ news_event = {
 			is_china_or_warlord = yes
 			NOT = {
 				tag = QIN
+				is_subject_of = QIN
 			}
 		}
 	}
@@ -599,24 +593,26 @@ news_event = {
 	option = {
 		name = kis_news.115.a
 		trigger = {
-			any_country = {
-				owns_state = 64
-				has_war = yes
+			64 = {
+				OWNER = {
+					has_war = yes
+				}
 			}
 		}
 	}
 	option = {
 		name = kis_news.115.b
 		trigger = {
-			any_country = {
-				owns_state = 64
-				has_war = no
-				ROOT = {
+			64 = {
+				OWNER = {
 					has_war = no
-					NOT = {
-						has_opinion = {
-							target = PREV
-							value < -50
+					ROOT = {
+						has_war = no
+						NOT = {
+							has_opinion = {
+								target = PREV
+								value < -50
+							}
 						}
 					}
 				}
@@ -626,19 +622,20 @@ news_event = {
 	option = {
 		name = kis_news.115.c
 		trigger = {
-			any_country = {
-				owns_state = 64
-				has_war = no
-				ROOT = {
-					OR = {
-						has_war = yes
-						has_opinion = {
-							target = PREV
-							value < -50
+			64 = {
+				OWNER = {
+					has_war = no
+					ROOT = {
+						OR = {
+							has_war = yes
+							has_opinion = {
+								target = PREV
+								value < -50
+							}
 						}
 					}
 				}
-			}
+			}	
 		}
 	}
 }
@@ -787,18 +784,20 @@ news_event = {
 	option = {
 		name = kis_news.120.a
 		trigger = {
-			any_country = {
-				owns_state = 6
-				has_war = yes
+			6 = {
+				owner = {
+					has_war = yes
+				}
 			}
 		}
 	}
 	option = {
 		name = kis_news.120.b
 		trigger = {
-			any_country = {
-				owns_state = 6
-				has_war = no
+			6 = {
+				owner = {
+					has_war = no
+				}
 			}
 			has_war = no
 			NOT = {
@@ -809,9 +808,10 @@ news_event = {
 	option = {
 		name = kis_news.120.c
 		trigger = {
-			any_country = {
-				owns_state = 6
-				has_war = no
+			6 = {
+				owner = {
+					has_war = no
+				}
 			}
 			OR = {
 				has_war = yes
@@ -1320,7 +1320,7 @@ news_event = {
 	id = kis_news.130
 	title = kis_news.130.t
 	desc = kis_news.130.d
-	picture = GFX_news_event_german_soldiers
+	picture = GFX_news_event_GER_invasion_of_belgium
 	is_triggered_only = yes
 	major = yes
 	option = {
@@ -2033,7 +2033,12 @@ news_event = {
 	title = kis_news.147.t
 	desc = kis_news.147.d
 	picture = GFX_news_event_joan
-	major = yes
+	show_major = {
+		OR  = {
+			has_catholicism = yes
+			original_tag = ENG
+		}		
+	}
 	is_triggered_only = yes
 	option = {
 		name = kis_news.147.a
@@ -2233,7 +2238,7 @@ news_event = {
 	id = kis_news.154
 	title = kis_news.154.t
 	desc = kis_news.154.d
-	picture = GFX_news_event_german_soldiers
+	picture = GFX_news_event_german_soldiers_in_netherlands
 	is_triggered_only = yes
 	major = yes
 	option = {

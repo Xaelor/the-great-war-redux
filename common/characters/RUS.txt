@@ -30,11 +30,11 @@ characters={
 		}
 		portraits={
 			army={
-				small="GFX_idea_RUS_nicholas_II"
-				large="gfx/leaders/RUS/RUS_nicholas_romanov_war.png"
+				large="gfx/leaders/RUS/RUS_nikolai_ii_war.png"
+				small="gfx/interface/ideas/RUS/idea_RUS_nikolai_ii_war.png"
 			}
 			civilian={
-				large="gfx/leaders/RUS/RUS_nicholas_romanov.png"
+				large="gfx/leaders/RUS/RUS_nikolai_ii.png"
 			}
 		}
 		country_leader={
@@ -1915,8 +1915,7 @@ characters={
 			}
 		}
 	}
-	RUS_illarion_vorontsovdashkov={
-		name="RUS_illarion_vorontsovdashkov"
+	RUS_illarion_vorontsov_dashkov={
 		can_be_captured = no
 		portraits={
 			army={
@@ -2249,7 +2248,7 @@ characters={
 				NOT = {
 					tag = RUS
 				}
-				is_russian_tag = yes
+				is_russian_tag_no_tt = yes
 			}
 			available = {
 				has_global_flag = october_revolution
@@ -2819,9 +2818,6 @@ characters={
 			allowed  = {
 				tag = SRA
 				has_dlc = "La Resistance"
-			}
-			visible = {
-				tag = SRA
 			}
 			available = {
 				has_intelligence_agency = yes
@@ -3627,24 +3623,41 @@ characters={
 		}
 		advisor={
 			slot = political_advisor
-			idea_token = RUS_nikolai_markov		
+			idea_token = RUS_nikolai_markov
 			traits  = {
 				monarchist_media_mogul
 			}	
 			visible  = {
 				is_country_leader = no
-				NOT = {
-					has_completed_focus = RUS_convene_iv_state_duma
-				}
+				if = {
+					limit = { 
+						NOT = { tag = NWA }
+					}
+					NOT = {
+						has_completed_focus = RUS_convene_iv_state_duma
+					}
+				}	
 			}
 			available = {
-				is_country_leader = no	
-				is_hired_as_advisor = yes			
+				is_country_leader = no
+				if = {
+					limit = { 
+						NOT = { tag = NWA }
+					}
+					is_hired_as_advisor = yes
+				}	
+				else = {
+					has_completed_focus = NWA_with_german_support
+				}	
 			}
 			can_be_fired = no
 		}
 		country_leader={
 			ideology=reactionism
+			traits  = {
+				monarchist_media_mogul
+				likes_germany
+			}
 		}
 	}
 	RUS_nikolai_astrov={

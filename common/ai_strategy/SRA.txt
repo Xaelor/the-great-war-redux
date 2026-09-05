@@ -41,11 +41,12 @@ SRA_moscow_directive = {
 	}
 	enable = {
 		has_war_with = SOV
-		SRA = {
-			OR = {
-				has_idea = SRA_UFA_directive_1
-				has_idea = SRA_moscow_directive_1
-			}
+		OR = {
+			has_active_mission = SRA_ufa_directive
+			has_active_mission = SRA_moscow_directive_absolute
+			has_active_mission = SRA_moscow_directive_phase_1
+			has_active_mission = SRA_moscow_directive_phase_2
+			has_active_mission = SRA_moscow_directive_phase_3
 		}
 	}
 	abort_when_not_enabled = yes
@@ -124,54 +125,6 @@ SRA_dont_rush = {
 	}
 }
 
-SRA_protect_crimea = {
-	allowed = {
-		tag = SRA
-	}
-	enable = {
-		OR = {
-			controls_state = 137
-			any_subject_country = {
-				controls_state = 137
-			}
-		}
-	}
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = put_unit_buffers
-		ratio = 0.1
-		states = {
-			137 955
-		}
-		subtract_fronts_from_need = no
-	}
-}
-
-SRA_protect_ekaterinodar = {
-	allowed = {
-		tag = SRA
-	}
-	enable = {
-		OR = {
-			controls_state = 234
-			any_subject_country = {
-				controls_state = 234
-			}
-		}
-	}
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = put_unit_buffers
-		ratio = 0.1
-		states = {
-			234
-		}
-		subtract_fronts_from_need = no
-	}
-}
-
 SRA_attack_without_offensive = {
 	allowed = {
 		tag = SRA
@@ -186,49 +139,6 @@ SRA_attack_without_offensive = {
 		}
 	}
 	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = front_control
-		state_trigger = {
-			state = 219
-		}
-		# SOV tag not working here
-		country_trigger = {
-			OR = {
-				is_subject_of = SOV
-				tag = SOV
-			}
-		}
-		priority = 1000
-		ratio = 0.5
-		ordertype = front
-		execution_type = balanced
-		manual_attack = yes
-		execute_order = yes
-	}
-	ai_strategy = {
-		type = front_control
-		# VLN tag not working here
-		country_trigger = {
-			tag = VLN
-		}
-		priority = 100
-		ratio = 0.5
-		ordertype = front
-		execution_type = balanced
-		manual_attack = yes
-		execute_order = yes
-	}
-	ai_strategy = {
-		type = front_unit_request
-		country_trigger = {
-			OR = {
-				is_subject_of = SOV
-				tag = SOV
-			}
-		}
-		value = 1000
-	}
 	ai_strategy = {
 		type = garrison
 		value = -100
@@ -608,13 +518,6 @@ DON_attack_dsr = {
 		}
 		value = 9999
 	}
-	ai_strategy = {
-		type = front_control
-		tag = DON
-		ordertype = front
-		execution_type = balanced
-		manual_attack = yes
-	}
 }
 
 DSR_attack_don = {
@@ -631,13 +534,6 @@ DSR_attack_don = {
 		type = front_unit_request
 		tag = DON
 		value = 9999
-	}
-	ai_strategy = {
-		type = front_control
-		tag = DON
-		ordertype = front
-		execution_type = balanced
-		manual_attack = yes
 	}
 }
 DSR_ignore_sra = {

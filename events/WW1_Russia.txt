@@ -386,20 +386,6 @@ country_event = {
 		add_to_tech_sharing_group = russian_research
 		if = {
 			limit = {
-				has_idea = FRA_wadai_war
-			}
-			effect_tooltip = {
-				army_experience = 10
-			}
-			hidden_effect = {
-				army_experience = 101
-			}
-			else = {
-				army_experience = 10
-			}
-		}			
-		if = {
-			limit = {
 				tag = ROOT
 				has_tech = basic_armored_car
 				RUS = {
@@ -472,20 +458,25 @@ country_event = {
 	picture = GFX_report_event_soldiers_in_france
 	is_triggered_only = yes
 	trigger = {
-		has_cosmetic_tag = GEO_TSCN_committee
+		has_country_leader = {
+			character = DON_vasiliy_kharlamov
+		}
 	}
 	option = {
 		name = ww1_russia.32.a
-		set_cosmetic_tag = GEO_TSCN_commissariat
 		set_party_name = {
 			ideology = neutrality
-			long_name = GEO_TSCN_commissariat_party 
-			name = GEO_TSCN_commissariat_party 
+			long_name = TSCN_commissariat_party 
+			name = TSCN_commissariat_party 
 		}
-		GEO_evgeni_gegechkori = {
-			promote_character = social_democracy
-			promote_character = authoritarian_democracy
-		}
+		GEO = {
+			GEO_evgeni_gegechkori = {
+				set_nationality = ROOT
+				promote_character = social_democracy
+				promote_character = authoritarian_democracy
+				set_character_flag = georgian_character
+			}
+		}	
 		hidden_effect = {
 			DON_vasiliy_kharlamov = {
 				set_nationality = DON
@@ -519,8 +510,8 @@ country_event = {
 # 		set_cosmetic_tag = GEO_TSCN
 # 		set_party_name = { 
 # 			ideology = neutrality 
-# 			long_name = GEO_TSCN_neutrality_party 
-# 			name = GEO_TSCN_neutrality_party 
+# 			long_name = TSCN_neutrality_party 
+# 			name = TSCN_neutrality_party 
 # 		}
 # 		set_politics = {
 # 			ruling_party = democratic
@@ -1190,11 +1181,21 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_russia.49.a
-		RUS = {
-			transfer_state = 419
-			transfer_state = 420
-			transfer_state = 877
-			transfer_state = 1212
+		PER = {
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 419
+						state = 420
+						state = 877
+						state = 1212
+						state = 1245
+						state = 1250
+						state = 1251
+					}				
+				}
+				transfer_state_to = RUS
+			}
 		}
 		add_ai_strategy = {
 			type = alliance
@@ -1667,13 +1668,8 @@ country_event = {
 	option = {
 		name = ww1_russia.59.a
 		add_equipment_to_stockpile = {
-			type = infantry_equipment
-			amount = 2500
-			producer = RUS
-		}
-		add_equipment_to_stockpile = {
 			type = support_equipment
-			amount = 750
+			amount = 900
 			producer = RUS
 		}
 		add_opinion_modifier = {
@@ -1740,7 +1736,7 @@ country_event = {
 	}
 }
 
-# PERSIA REJECTS ULTIMATUM
+# PERSIA REJECTS ULTIMATUM - UNUSED
 ##################
 country_event = {
 	id = ww1_russia.62
@@ -1752,16 +1748,16 @@ country_event = {
 	option = {
 		name = ww1_russia.62.a
 		PER = {
-			activate_targeted_decision = {
-				target = RUS
-				decision = RUS_border_conflict_warning_PER_1911
-			}			#МИССИЯ ЗАЩИТНИКУ
+			#activate_targeted_decision = {
+			#	target = RUS
+			#	decision = RUS_border_conflict_warning_PER_1911
+			#}			#МИССИЯ ЗАЩИТНИКУ
 		}
 		RUS = {
-			activate_targeted_decision = {
-				target = PER
-				decision = RUS_escalate_incident_to_border_conflict_PER_1911
-			}			#МИССИЯ АГРЕССОРУ, ЧТО КОНФЛИКТ НАЧИНАЕТСЯ
+			#activate_targeted_decision = {
+			#	target = PER
+			#	decision = RUS_escalate_incident_to_border_conflict_PER_1911
+			#}			#МИССИЯ АГРЕССОРУ, ЧТО КОНФЛИКТ НАЧИНАЕТСЯ
 		}
 		419 = {
 			set_border_war = yes
@@ -1773,6 +1769,9 @@ country_event = {
 			set_border_war = yes
 		}
 		1212 = {
+			set_border_war = yes
+		}
+		1245 = {
 			set_border_war = yes
 		}
 		ai_chance = {
@@ -1789,7 +1788,7 @@ country_event = {
 	}
 }
 
-# PERSIA - RUSSIAN ULTIMATUM
+# PERSIA - RUSSIAN ULTIMATUM - UNUSED
 ##################
 country_event = {
 	id = ww1_russia.63
@@ -1809,41 +1808,10 @@ country_event = {
 	option = {
 		name = ww1_russia.63.b
 		add_stability = -0.1
-		RUS = {
-			diplomatic_relation = {
-				country = PER
-				relation = military_access
-				active = yes
-			}
-		}			
-		hidden_effect = {
-			266 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			411 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			1117 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			1013 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			416 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			417 = {
-					add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			418 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			420 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			421 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
+		retire_character = PER_william_morgan_shuster
+		set_politics = {
+			ruling_party = neutrality
+			elections_allowed = yes
 		}
 	}
 }
@@ -1867,46 +1835,22 @@ country_event = {
 			category = land_doctrine
 			cost_reduction = 0.5
 		}
-		add_state_claim = 420
-		add_state_claim = 419
-		add_state_claim = 877
-		add_state_claim = 1212
+		# add_state_claim = 420
+		# add_state_claim = 419
+		# add_state_claim = 877
+		# add_state_claim = 1212
+		# add_state_claim = 1245
 		877 = {
 			add_manpower = -1200
 		}
-		hidden_effect = {
-			266 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
+		effect_tooltip = {
+			PER = {
+				retire_character = PER_william_morgan_shuster
+				set_politics = {
+					ruling_party = neutrality
+					elections_allowed = yes
+				}
 			}
-			411 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			1117 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			1013 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			416 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			417 = {
-					add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			418 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			420 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-			421 = {
-				add_dynamic_modifier = { modifier = per_russian_sphere  }
-			}
-		}
-		diplomatic_relation = {
-			country = PER
-			relation = military_access
-			active = yes
 		}
 		set_global_flag = russia_won_persian_campaign
 		ai_chance = {
@@ -1924,6 +1868,12 @@ country_event = {
 			target = RUS
 			modifier = small_decrease
 		}
+		retire_character = PER_william_morgan_shuster
+		set_politics = {
+			ruling_party = neutrality
+			elections_allowed = yes
+		}
+		PER_double_worsen_foreign_advisors = yes
 		hidden_effect = {
 			419 = {
 				set_border_war = no
@@ -1935,6 +1885,9 @@ country_event = {
 				set_border_war = no
 			}
 			1212 = {
+				set_border_war = no
+			}
+			1245 = {
 				set_border_war = no
 			}
 		}
@@ -1972,14 +1925,18 @@ country_event = {
 			tag = PER
 		}
 		add_doctrine_cost_reduction = {
-			name = RUS_border_conflict_won
+			name = MEX_border_conflict_won
 			category = land_doctrine
 			cost_reduction = 0.5
 		}
-		PER = {
-			transfer_state = 877
-			transfer_state = 1212
-			transfer_state = 419
+		RUS = {
+			every_owned_state = {
+				limit = {
+					has_contested_owner = ROOT
+				}
+				transfer_state_to = ROOT
+				remove_contested_owner = ROOT
+			}
 		}
 		hidden_effect = {
 			419 = {
@@ -1992,6 +1949,9 @@ country_event = {
 				set_border_war = no
 			}
 			1212 = {
+				set_border_war = no
+			}
+			1245 = {
 				set_border_war = no
 			}
 		}
@@ -2211,20 +2171,16 @@ country_event = {
 		RUS = {
 			OR = {
 				has_country_flag = great_war_loser
-				has_war_with = RUS
+				is_in_russian_civil_war = yes
 			}
 			OR = {
-				owns_state = 420
-				owns_state = 419
-				owns_state = 417
-				owns_state = 421
-				owns_state = 416
-				owns_state = 266
-				owns_state = 418
-				owns_state = 414
-				owns_state = 411
-				owns_state = 877
-				owns_state = 1212
+				any_owned_state = {
+					region = 116
+				}
+				has_subject = MAK
+				has_subject = MRG
+				has_subject = PER
+				check_variable = { RUS.PER_foreign_influence > 0 }
 			}
 		}
 	}
@@ -2269,6 +2225,11 @@ country_event = {
 				relation = military_access
 				active = no
 			}
+			diplomatic_relation = {
+				country = MAK
+				relation = military_access
+				active = no
+			}
 		}
 		every_owned_state = {
 			limit = {
@@ -2285,6 +2246,112 @@ country_event = {
 			}
             RUS = {
                 remove_state_claim = PREV
+			}
+		}
+		if = {
+			limit = {
+				has_subject = MAK
+			}
+			if = {
+				limit = {
+					country_exists = PER
+				}
+				MAK = {
+					clr_subject_flags = yes
+					get_current_government_type = yes
+					PER = {
+						set_autonomy = {
+							target = MAK
+							autonomous_state = autonomy_tgwr_feudal_autonomy
+							freedom_level = 0.9
+						}
+					}	
+					restore_previous_government_type = yes
+					remove_trait = {
+						character = MAK_murtuzaqulu_khan_bayat
+						ideology = absolute_monarchy
+						trait = tgwr_exiled
+					}
+				}
+			}		
+			else = {
+				end_puppet = MAK
+				MAK = {
+					every_enemy_country = {
+						limit = {
+							NOT = {
+								original_tag = PER
+								has_wargoal_against = PER
+								any_state = {
+									OR = {
+										is_owned_by = PER
+										is_owned_by = PRG
+									}
+									is_claimed_by = PREV			
+								}
+							}
+						}
+						MAK = {
+							white_peace = PREV
+						}
+					}
+					leave_faction = yes
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_subject = MRG
+			}
+			if = {
+				limit = {
+					country_exists = PER
+				}
+				MRG = {
+					clr_subject_flags = yes
+					get_current_government_type = yes
+					PER = {
+						set_autonomy = {
+							target = MRG
+							autonomous_state = autonomy_tgwr_feudal_autonomy
+							freedom_level = 0.9
+						}
+					}	
+					restore_previous_government_type = yes
+				}
+			}		
+			else = {
+				end_puppet = MRG
+				MRG = {
+					every_enemy_country = {
+						limit = {
+							NOT = {
+								original_tag = PER
+								has_wargoal_against = PER
+								any_state = {
+									OR = {
+										is_owned_by = PER
+										is_owned_by = PRG
+									}
+									is_claimed_by = PREV			
+								}
+							}
+						}
+						MRG = {
+							white_peace = PREV
+						}
+					}
+					leave_faction = yes
+				}
+			}
+		}
+		set_variable = { var = RUS.PER_foreign_influence value = 0 }
+		if = {
+			limit = { 
+				has_dynamic_modifier = PER_influence_in_persia_modifier
+			}
+			remove_dynamic_modifier = {
+				modifier = PER_influence_in_persia_modifier
 			}
 		}
 	}
@@ -2857,8 +2924,9 @@ country_event = {
 				else = {
 					add_country_leader_role = {
 						country_leader = {
-							ideology = semi_constitutional_monarchy			
-						}	
+							ideology = semi_constitutional_monarchy
+							desc = RUS_mikhail_ii_desc
+						}
 						promote_leader = yes
 					}
 				}
@@ -3209,11 +3277,17 @@ country_event = {
 	trigger = {
 		original_tag = RUS
 		date > 1916.1.1
-		has_character = RUS_illarion_vorontsovdashkov
+		has_character = RUS_illarion_vorontsov_dashkov
 	}
 	immediate = {
 		hidden_effect = {
-			retire_character = RUS_illarion_vorontsovdashkov
+			RUS_illarion_vorontsov_dashkov = {
+				release_from_captivity = yes
+				set_character_flag = character_died
+			}
+			CAU = {
+				retire_character = CAU_illarion_vorontsov_dashkov
+			}
 		}
 	}
 	mean_time_to_happen = {
@@ -3221,11 +3295,7 @@ country_event = {
 	}
 	option = {
 		name = ww1_russia.96.a
-		effect_tooltip = {
-			RUS_illarion_vorontsovdashkov = {
-				remove_unit_leader_role = yes
-			}
-		}
+		retire_character = RUS_illarion_vorontsov_dashkov
 	}
 }
 # Polish Autonomy after Great War
@@ -3283,6 +3353,7 @@ country_event = {
 					state = 763
 					state = 5
 					state = 237
+					state = 1270
 					is_core_of = BLR
 					is_core_of = UKR
 					is_core_of = WUK
@@ -3349,7 +3420,7 @@ country_event = {
 					has_government = communism
 				}
 				POL = {
-					clr_country_flag = monarchist_puppet
+					clr_subject_flags = yes
 				}
 				if = {
 					limit = {
@@ -3387,6 +3458,10 @@ country_event = {
 			if = {
 				limit = { owns_state = 237 }
 				237 = { set_demilitarized_zone = no }
+			}
+			if = {
+				limit = { owns_state = 1270 }
+				1270 = { set_demilitarized_zone = no }
 			}
 		}
 		effect_tooltip = {
@@ -3474,7 +3549,9 @@ country_event = {
 					is_owned_by = RUS
 					OR = {
 						state = 94
+						state = 1300
 						state = 95
+						state = 1301
 						state = 194
 						state = 204
 						state = 206
@@ -3559,9 +3636,9 @@ country_event = {
 						state = 201
 						state = 199
 						state = 93
+						state = 1302
 						state = 192
 						state = 197
-						state = 203
 						state = 226
 						state = 200
 						state = 196
@@ -3574,6 +3651,7 @@ country_event = {
 						state = 227
 						state = 808
 						state = 766
+						state = 1263
 						state = 78
 						state = 137
 						state = 955
@@ -3616,14 +3694,14 @@ country_event = {
 						}
 						set_autonomy = {
 							target = UKR
-							autonomous_state = autonomy_satellite
+							autonomous_state = autonomy_tgwr_client_state
 						}
 					}
 					else = {
 						GER = {
 							set_autonomy = {
 								target = UKR
-								autonomous_state = autonomy_satellite
+								autonomous_state = autonomy_tgwr_client_state
 							}
 						}
 					}					
@@ -3774,7 +3852,7 @@ country_event = {
 					DON = { set_country_flag = protectorate }
 					set_autonomy = {
 						target = DON
-						autonomous_state = autonomy_tgwr_informal_protectorate
+						autonomous_state = autonomy_tgwr_protected_state
 					}
 					DON = {
 						set_country_flag = released_by_germany
@@ -3800,6 +3878,7 @@ country_event = {
 					limit = {
 						OR = {
 							state = 233
+							state = 1299
 							state = 234
 							state = 579
 							state = 940
@@ -3832,7 +3911,7 @@ country_event = {
 					KUB = { set_country_flag = protectorate }
 					set_autonomy = {
 						target = KUB
-						autonomous_state = autonomy_tgwr_informal_protectorate
+						autonomous_state = autonomy_tgwr_protected_state
 					}
 					KUB = {
 						set_country_flag = released_by_germany
@@ -3901,7 +3980,7 @@ country_event = {
 				GEO = { set_country_flag = protectorate }
 				set_autonomy = {
 					target = GEO
-					autonomous_state = autonomy_tgwr_informal_protectorate
+					autonomous_state = autonomy_tgwr_protected_state
 					freedom_level = 0.6
 				}
 				GEO = {
@@ -3995,7 +4074,7 @@ country_event = {
 						}
 						set_autonomy = {
 							target = ARM
-							autonomy_state = autonomy_integrated_puppet
+							autonomy_state = autonomy_tgwr_occupied_state
 							freedom_level = 0.8
 						}
 						ARM = {
@@ -4065,6 +4144,25 @@ country_event = {
 							}
 							transfer_state_to = TUR
 						}
+					}
+					if = {
+						limit = {
+							CAU = {
+								is_subject_of = RUS
+							}
+						}
+						CAU = {
+							every_owned_state = {
+								limit = {
+
+									OR = {
+										is_core_of = TUR
+										is_claimed_by = TUR
+									}
+								}
+								transfer_state_to = TUR
+							}
+						}			
 					}
 				}
 			}
@@ -4139,9 +4237,8 @@ country_event = {
 			}
 			
 			# RELEASE PUPPETS
-			every_other_country = {
+			every_subject_country = {
 				limit = {
-					is_subject_of = RUS
 					NOT = {
 						original_tag = BUK
 						original_tag = KHI
@@ -4151,14 +4248,7 @@ country_event = {
 						original_tag = TAN
 					}
 				}
-				RUS = { end_puppet = PREV }
-				clr_country_flag = protectorate 
-				if = {
-					limit = {
-						is_in_faction_with = RUS
-					}
-					leave_faction = yes
-				}
+				free_subject_leave_faction = yes
 				every_other_country = {
 					limit = {
 						has_war_with = PREV
@@ -4204,7 +4294,6 @@ country_event = {
 					}
 					has_war = yes
 				}
-				set_country_flag = RUS_surrender_alone
 				set_country_flag = great_war_loser
 				white_peace = {
 					tag = GER
@@ -4235,7 +4324,7 @@ country_event = {
 			}
 			
 			# FIRE ONLY ONCE
-			set_global_flag = RUS_surrender_alone
+			set_global_flag = RUS_surrender
 		}
 	}
 	option = {
@@ -4401,10 +4490,10 @@ country_event = {
 		}
 		ai_chance = {
 			base = 1
-			modifier = {
-				add = 10
-				has_completed_focus = GER_pursue_british_neutrality
-			}
+			#modifier = {
+			#	add = 10
+			#	has_completed_focus = GER_pursue_british_neutrality
+			#}
 			modifier = {
 				add = 10
 				has_completed_focus = GER_TUR_military_mission
@@ -4423,7 +4512,7 @@ country_event = {
 		has_idea = RUS_demobilizing_army
 		# has_reached_maximum_divisions = no // too late
 		has_global_flag = {
-			flag = brest_litovsk_finished
+			flag = RUS_surrender
 			days > 30
 			value = 1
 		}

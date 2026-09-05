@@ -1,0 +1,78 @@
+capital = 1255
+
+set_research_slots = 0
+set_stability = 0.6
+set_war_support = 0
+#set_convoys = 175
+
+recruit_character = ATH_joachim_iii
+recruit_character = ATH_holy_and_sacred_synod
+
+recruit_character = ATH_germanus_v
+recruit_character = ATH_meletius_metaxakis
+
+send_embargo = PAP
+
+add_opinion_modifier = {
+	target = PAP
+	modifier = ATH_great_schism
+}
+
+add_opinion_modifier = {
+	target = SER
+	modifier = ATH_protectors_of_hilandar 
+}
+
+add_opinion_modifier = {
+	target = BUL
+	modifier = ATH_bulgarian_exarchate 
+}
+
+1910.1.1 = {
+	set_politics = {
+		ruling_party = neutrality
+		last_election = "1908.12.17"
+		election_frequency = 48
+		elections_allowed = no
+	}
+	set_popularities = {
+		neutrality = 100
+	}
+
+	add_ideas = {
+		disarmed_nation
+		isolation  
+		closed_economy
+		ATH_monastic_state
+		ATH_avaton
+		ATH_ottoman_garrison
+	}
+
+	every_possible_country = {
+		limit = {
+			has_orthodoxy = yes
+			NOT = { original_tag = ROOT }
+		}
+		add_opinion_modifier = {
+			target = ATH
+			modifier = ATH_spiritual_heart_of_eastern_orthodoxy 
+		}
+		ROOT = {
+			add_opinion_modifier = {
+				target = PREV
+				modifier = ATH_orhodox_country  
+			}
+		}
+	}
+	if = {
+		limit = { has_start_date < 1914.1.1 }	
+		country_event = { id = ww1_mount_athos.8 days = 927 } #Death of Joachim III
+	}
+}
+1914.1.1 = {
+	retire_character = ATH_joachim_iii
+	ATH_germanus_v = {
+		promote_character = theocracy_ideology
+		promote_character = fundamentalism
+	}
+}

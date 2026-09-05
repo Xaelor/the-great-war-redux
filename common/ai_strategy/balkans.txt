@@ -1,3 +1,37 @@
+BALKANS_contain_ottomans = {
+	allowed = {
+		OR = {
+			tag = SER
+			tag = BUL
+			tag = GRE
+			tag = MNT
+		}
+	}
+	enable = {
+		always = yes
+	}
+	abort = {
+		is_ally_with = TUR
+		if = {
+			limit = {
+				tag = BUL
+			}
+			TUR = {
+				has_completed_focus = TUR_ottoman_bulgarian_alliance
+			}
+		}
+	}
+	ai_strategy = {
+		type = alliance
+		id = TUR
+		value = -500
+	}
+	ai_strategy = {
+		type = antagonize
+		id = TUR
+		value = 1000
+	}
+}
 
 SER_GRE_dont_put_units_in_ROM = {
 	allowed = {
@@ -75,10 +109,6 @@ BALKANS_first_balkan_war = {
 		OR = {
 			has_global_flag = kis_firstbalkanwar_victory
 			has_global_flag = kis_firstbalkanwar_lose
-			has_global_flag = balkan_league_fail
-			is_subject = yes
-			has_global_flag = great_war
-			is_in_faction_with = TUR
 		}
 	}
 	ai_strategy = {
@@ -90,6 +120,15 @@ BALKANS_first_balkan_war = {
 		type = contain
 		id = TUR
 		value = 2000
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = TUR
+		value = 100
+	}
+	ai_strategy = {
+		type = garrison
+		value = -100
 	}
 	ai_strategy = {
 		type = prepare_for_war
@@ -104,7 +143,7 @@ BALKANS_first_balkan_war_rush_turkey = {
 			tag = BUL
 			tag = SER
 			tag = MNT
-			tag = SER
+			tag = GRE
 		}
 	}
 	enable = {
@@ -119,46 +158,151 @@ BALKANS_first_balkan_war_rush_turkey = {
 		execution_type = rush
 		execute_order = yes
 	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = TUR
+		value = 300
+	}
 }
 
-BALKANS_passive_against_BUL = {
+BALKANS_BW1_armistice = {
 	allowed = {
 		OR = {
-			tag = ROM
-			tag = TUR
-			tag = GRE
+			tag = BUL
 			tag = SER
+			tag = GRE
 			tag = MNT
 		}
 	}
 	enable = {
-		BUL = {
-			is_ai = yes
-		}
-		has_global_flag = kis_firstbalkanwar_victory
-		NOT = {
-			has_global_flag = kis_secondbalkanwar_victory
-			has_global_flag = kis_secondbalkanwar_lose
-			has_global_flag = great_war
-		}
-		OR = {
-			has_game_rule = {
-				rule = second_balkan_war_outcome
-				option = STATEMATE
-			}
-			has_game_rule = {
-				rule = second_balkan_war_outcome
-				option = BUL_BULGARIAN_VICTORY
-			}
-		}
+		has_idea = BW1_armistice_balkans
 	}
 	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = front_control
+		tag = TUR
+		priority = 1000
+		execute_order = no
+	}
+}
 
+TUR_BW1_armistice_ser = {
+	allowed = {
+		tag = TUR
+	}
+	enable = {
+		has_idea = BW1_armistice_TUR_ser
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = front_control
+		tag = SER
+		priority = 1000
+		execute_order = no
+	}
+	ai_strategy = {
+		type = force_concentration_front_factor
+		tag = SER
+		ratio = 0
+		value = -1000
+	}
+}
+
+TUR_BW1_armistice_bul = {
+	allowed = {
+		tag = TUR
+	}
+	enable = {
+		has_idea = BW1_armistice_TUR_bul
+	}
+	abort_when_not_enabled = yes
 	ai_strategy = {
 		type = front_control
 		tag = BUL
 		priority = 1000
 		execute_order = no
-		manual_attack = no
+	}
+	ai_strategy = {
+		type = force_concentration_front_factor
+		tag = BUL
+		ratio = 0
+		value = -1000
+	}
+}
+
+TUR_BW1_armistice_gre = {
+	allowed = {
+		tag = TUR
+	}
+	enable = {
+		has_idea = BW1_armistice_TUR_gre
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = front_control
+		tag = GRE
+		priority = 1000
+		execute_order = no
+	}
+	ai_strategy = {
+		type = force_concentration_front_factor
+		tag = GRE
+		ratio = 0
+		value = -1000
+	}
+}
+
+TUR_BW1_armistice_mnt = {
+	allowed = {
+		tag = TUR
+	}
+	enable = {
+		has_idea = BW1_armistice_TUR_mnt
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = front_control
+		tag = MNT
+		priority = 1000
+		execute_order = no
+	}
+	ai_strategy = {
+		type = force_concentration_front_factor
+		tag = MNT
+		ratio = 0
+		value = -1000
+	}
+}
+
+BUL_bw1_dont_anyone = {
+	allowed = {
+		tag = BUL
+	}
+	enable = {
+		NOT = {
+			has_global_flag = kis_firstbalkanwar_lose
+			has_global_flag = kis_firstbalkanwar_victory
+		}			
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = dont_defend_ally_borders
+		id = SER
+		value = 1
+	}
+	ai_strategy = {
+		type = dont_defend_ally_borders
+		id = GRE
+		value = 1
+	}
+	ai_strategy = {
+		type = dont_defend_ally_borders
+		id = MNT
+		value = 1
+	}
+	ai_strategy = {
+		type = dont_defend_ally_borders
+		id = CRE
+		value = 1
 	}
 }

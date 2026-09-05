@@ -63,46 +63,6 @@ country_event = {
 				remove_unit_leader_role = yes
 			}
 		}
-		if = {
-			limit = {
-				has_power_balance = {
-					id = TUR_inner_party_factionalism
-				}
-			}
-			remove_power_balance = {
-				id = TUR_inner_party_factionalism
-			}
-		}
-		if = {
-			limit = {
-				has_power_balance = {
-					id = TUR_anti_imperialist_revanchist_struggle
-				}
-			}
-			remove_power_balance = {
-				id = TUR_anti_imperialist_revanchist_struggle
-			}
-		}
-		if = {
-			limit = {
-				has_power_balance = {
-					id = TUR_army_civilian_struggle
-				}
-			}
-			remove_power_balance = {
-				id = TUR_army_civilian_struggle
-			}
-		}
-		if = {
-			limit = {
-				has_power_balance = {
-					id = TUR_leftist_coalition
-				}
-			}
-			remove_power_balance = {
-				id = TUR_leftist_coalition
-			}
-		}
 		every_country = {
 			limit = {
 				has_country_flag = great_war_winner
@@ -127,7 +87,7 @@ country_event = {
 			}
 			clear_all_ledgers = yes
 		}
-		load_focus_tree = empty_focus
+		load_focus_tree = generic_focus
 		set_country_flag = had_ittihadist_government
 		TUR_ahmet_tevfik = {
 			set_character_name = TUR_ahmed_tevfik_pasha
@@ -213,17 +173,15 @@ country_event = {
 		has_war = no
 		has_country_flag = great_war_loser
 		has_country_flag = had_ittihadist_government
-		any_country = { 
+		any_country_of = { 
+			target = {
+				ENG FRA RUS
+			}
 			is_major = yes
 			is_subject = no
 			NOT = {
 				has_government = communism
-			}
-			OR = {
-				tag = ENG
-				tag = FRA
-				tag = RUS
-			}
+			}		
 			has_country_flag = great_war_winner
 		}
 		OR = {
@@ -373,6 +331,22 @@ country_event = {
 					}
 				}
 			}
+			else_if = {
+				limit = {
+					country_exists = CAU
+				}
+				every_state = {
+					limit = {
+						is_owned_by = TUR
+						OR = {
+							state = 787
+							state = 806
+							state = 939
+						}
+					}
+					transfer_state_to = CAU
+				}
+			}
 			if = {
 				limit = {
 					country_exists = GEO
@@ -394,6 +368,29 @@ country_event = {
 						230 = { is_core_of = GEO }
 					}
 					806 = { transfer_state_to = GEO }
+				}
+			}
+			else_if = {
+				limit = {
+					country_exists = CAU
+				}
+				every_state = {
+					limit = {
+						is_owned_by = TUR
+						OR = {
+							state = 748
+							state = 816
+							state = 855
+						}
+					}
+					transfer_state_to = CAU
+				}
+				if = {
+					limit = {
+						owns_state = 806
+						230 = { is_core_of = GEO }
+					}
+					806 = { transfer_state_to = CAU }
 				}
 			}
 		}
@@ -615,7 +612,7 @@ country_event = {
 			ENG = {
 				set_autonomy = {
 					target = TUR
-					autonomous_state = autonomy_satellite
+					autonomous_state = autonomy_tgwr_client_state
 					freedom_level = 0.1
 				}
 				if = {
@@ -627,7 +624,7 @@ country_event = {
 					}
 					set_autonomy = {
 						target = KRS
-						autonomy_state = autonomy_tgwr_informal_protectorate
+						autonomy_state = autonomy_tgwr_protected_state
 						freedom_level = 0.1
 					}
 					KRS = {
@@ -649,7 +646,7 @@ country_event = {
 				FRA = {
 					set_autonomy = {
 						target = TUR
-						autonomous_state = autonomy_satellite
+						autonomous_state = autonomy_tgwr_client_state
 						freedom_level = 0.1
 					}
 				}
@@ -662,33 +659,13 @@ country_event = {
 					}
 					set_autonomy = {
 						target = KRS
-						autonomy_state = autonomy_tgwr_informal_protectorate
+						autonomy_state = autonomy_tgwr_protected_state
 						freedom_level = 0.1
 					}
 					KRS = {
 						restore_previous_government_type = yes
 					}
 				}
-			}
-		}
-		if = {
-			limit = {
-				has_power_balance = {
-					id = TUR_seyhulislam_sultan
-				}
-			}
-			remove_power_balance = {
-				id = TUR_seyhulislam_sultan
-			}
-		}
-		if = {
-			limit = {
-				has_power_balance = {
-					id = TUR_parliament_sultan
-				}
-			}
-			remove_power_balance = {
-				id = TUR_parliament_sultan
 			}
 		}
 		set_politics = {
@@ -1350,7 +1327,7 @@ country_event = {
 			TRR = {
 				set_autonomy = {
 					target = KRS
-					autonomy_state = autonomy_integrated_puppet
+					autonomy_state = autonomy_tgwr_client_state
 				}
 			}
 			KRS = { restore_previous_government_type = yes }
@@ -2546,6 +2523,7 @@ country_event = {
 								state = 825
 								state = 1019
 								state = 1018
+								state = 1031
 								state = 341
 								state = 860
 							}
@@ -2661,6 +2639,7 @@ country_event = {
 						state = 825
 						state = 1019
 						state = 1018
+						state = 1031
 						state = 341
 						state = 860
 					}
@@ -6601,7 +6580,7 @@ country_event = {
 				GRE = {
 					set_autonomy = {
 						target = OTT
-						autonomy_state = autonomy_satellite
+						autonomy_state = autonomy_tgwr_client_state
 					}
 					hidden_effect = {
 						OTT = {
@@ -8000,7 +7979,7 @@ country_event = {
 			ENG = {
 				set_autonomy = {
 					target = TUR
-					autonomous_state = autonomy_satellite
+					autonomous_state = autonomy_tgwr_client_state
 					freedom_level = 0.1
 				}
 				if = {
@@ -8012,7 +7991,7 @@ country_event = {
 					}
 					set_autonomy = {
 						target = KRS
-						autonomy_state = autonomy_tgwr_informal_protectorate
+						autonomy_state = autonomy_tgwr_protected_state
 						freedom_level = 0.1
 					}
 					KRS = {
@@ -8035,7 +8014,7 @@ country_event = {
 			FRA = {
 				set_autonomy = {
 					target = TUR
-					autonomous_state = autonomy_satellite
+					autonomous_state = autonomy_tgwr_client_state
 					freedom_level = 0.1
 				}
 				if = {
@@ -8047,7 +8026,7 @@ country_event = {
 					}
 					set_autonomy = {
 						target = KRS
-						autonomy_state = autonomy_tgwr_informal_protectorate
+						autonomy_state = autonomy_tgwr_protected_state
 						freedom_level = 0.1
 					}
 					KRS = {

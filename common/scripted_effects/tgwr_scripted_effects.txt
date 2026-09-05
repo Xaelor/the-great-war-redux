@@ -1,3 +1,30 @@
+declare_war_on_PREV = {
+	custom_effect_tooltip = declare_war_on_PREV_tt
+	hidden_effect = {
+		every_country = {
+			limit = {
+				OR = {
+					tag = PREV.PREV
+					AND = {
+						is_subject_of = PREV.PREV
+						NOT = {
+							has_autonomy_state = autonomy_tgwr_feudal_autonomy
+							has_autonomy_state = autonomy_tgwr_protected_state
+							has_autonomy_state = autonomy_tgwr_protectorate
+							has_autonomy_state = autonomy_tgwr_ottoman_emirate
+						}
+					}
+				}
+			}
+			PREV = {
+				declare_war_on = {
+					target = PREV
+					type = annex_everything
+				}
+			}
+		}
+	}
+}
 abandon_puppet_tag = { #in testing
 	if = {
 		limit = {
@@ -13,8 +40,6 @@ abandon_puppet_tag = { #in testing
 				has_cosmetic_tag = ALS_GER
 
 				# French
-				has_cosmetic_tag = FRA_classic_blue
-				has_cosmetic_tag = FRA_socialist_red_alone
 				has_cosmetic_tag = ALG_FRA
 				has_cosmetic_tag = TUN_FRA
 				has_cosmetic_tag = FUJ_FRA
@@ -73,11 +98,9 @@ abandon_puppet_tag = { #in testing
 				has_cosmetic_tag = USA_FRA
 				has_cosmetic_tag = USA_UK
 				has_cosmetic_tag = USA_CSA
-				has_cosmetic_tag = USA_RUS
 				has_cosmetic_tag = USA_GER
 
 				has_cosmetic_tag = CHI_KOR
-				has_cosmetic_tag = CHI_RUS
 				has_cosmetic_tag = CHI_ENG
 				has_cosmetic_tag = CHI_GER
 				has_cosmetic_tag = CHI_JAP
@@ -182,547 +205,6 @@ RUS_rasputin_influence_level_up = {
 #		remove_ideas = ITA_lackluster_industrialisation_3
 #	}
 #}
-##BREST-LITOVSK
-
-# Warning: this will make Poland a German Puppet in any case
-GER_release_POL = {
-	custom_effect_tooltip = GER_establish_poland_tt
-	hidden_effect = {
-		# Step 1: Transfer eligible RUS/SOV states to POL
-		# Excludes states where Germany has a core or claim.
-		every_state = {
-			limit = {
-				OWNER = {
-					OR = {
-						is_russian_tag = yes
-						AND = {
-							original_tag = UKR
-							OR = {
-								is_subject_of = PREV.PREV
-								is_subject_of = RUS
-							}
-						}
-					}
-				}
-				is_polish_criteria_state = yes
-				NOT = {
-					is_core_of = PREV
-					is_claimed_by = PREV
-				}
-			}
-			if = {
-				limit = { 
-					NOT = { 
-						is_owned_by = POL 
-					} 
-				} 
-				transfer_state_to = POL # This will create Poland if it doesn't exist already
-			}
-		}
-
-		# Step 2: Transfer Polish criteria states with GER cores/claims to GER
-		every_state = {
-			limit = {
-				OWNER = {
-					is_russian_tag = yes
-				}
-				is_polish_criteria_state = yes
-				OR = {
-					is_core_of = PREV
-					is_claimed_by = PREV
-				}
-			}
-			transfer_state_to = PREV 
-		}
-
-		# Step 3: Puppet Poland
-		if = {
-			limit = { 
-				country_exists = POL 
-			}
-
-			puppet = POL
-
-			hidden_effect = {
-				POL = {			
-					drop_cosmetic_tag = yes
-					inherit_technology = ROOT
-					delete_obsolete_russian_templates = yes
-					# load_oob = "POL_divisions"	
-
-					# If either Kaiser or OHL in charge, setup Polands Politics
-					if = {
-						limit = { 
-							ROOT = { 
-								is_GER_a_monarchy = yes
-							}
-						}
-						set_country_flag = released_by_germany
-						set_politics = { 
-							ruling_party = neutrality
-							elections_allowed = no
-						}
-						set_popularities = { 
-							democratic = 45
-							fascism = 0
-							communism = 35
-							neutrality = 20
-						}
-						promote_character = POL_regency_council
-						# Original effect promoted POL_gabriel_narutowicz if Poland was a Russian puppet before, but I don't really understand why
-						# (Would also unnecessarily complicate logic)
-					}
-				}
-			}
-
-			# Transfer armistice idea if GER has it
-			if = {
-				limit = {
-					ROOT = { 
-						has_idea = RUS_idea_armistice_cp 
-					} 
-				}
-				POL = { 
-					add_ideas = RUS_idea_armistice_cp 
-				}
-			}
-			set_global_flag = poland_released
-
-			# Remove Russian cores from final POL cores
-			every_state = {
-				limit = {
-					is_polish_criteria_state = yes
-					OR = {
-						is_owned_by = ROOT
-						is_owned_by = POL
-					}
-				}
-				remove_russian_cores = yes	
-			}
-
-			# Poland Established Follow Up event
-			country_event = ww1_poland.12
-		}
-	}
-}
-
-GER_release_LIT = {
-	if = {
-		limit = {
-			NOT = {
-				country_exists = LIT
-			}
-		}
-		every_state = {
-			limit = {
-				OR = {
-					is_owned_by = RUS
-					is_owned_by = SOV
-					AND = {
-						is_owned_by = GER
-						NOT = {
-							is_core_of = GER
-							is_claimed_by = GER
-						}
-					}
-				}
-				OR = {
-					state = 11
-					state = 189
-					state = 784
-					state = 97
-					state = 1015
-					state = 773
-					state = 1017
-					# state = 946
-				}
-			}
-			remove_russian_cores = yes
-			transfer_state_to = LIT
-		}
-		puppet = LIT
-		hidden_effect = {
-			LIT = {
-				set_country_flag = released_by_germany
-				set_cosmetic_tag = LIT_GER
-				inherit_technology = GER
-				delete_obsolete_russian_templates = yes
-				if = {
-					limit = {
-						GER = {
-							is_GER_a_monarchy = yes
-						}
-					}
-					if = {
-						limit = {
-							date < 1928.3.24
-						}
-						GER = {
-							GER_wilhelm_karl_von_urach = {
-								set_character_name = LIT_mindaugas_ii
-								promote_leader = yes
-								set_nationality = LIT
-								if = {
-									limit = { has_ideology = semi_constitutional_monarchy }
-									promote_character = semi_constitutional_monarchy
-								}
-								else = {
-									add_country_leader_role = {
-										country_leader = {
-											ideology = semi_constitutional_monarchy
-											traits = { german_agent  }
-										}
-										promote_leader = yes
-									}
-								}
-							}
-						}
-						else = {
-							LIT_vytautas_ii = {
-								set_character_name = LIT_vytautas_ii
-								if = {
-									limit = { has_ideology = semi_constitutional_monarchy }
-									promote_character = semi_constitutional_monarchy
-								}
-								else = {
-									add_country_leader_role = {
-										country_leader = {
-											ideology = semi_constitutional_monarchy
-											traits = { german_agent }
-										}
-										promote_leader = yes
-									}
-								}
-							}
-						}
-					}
-					set_party_name = {
-						ideology = neutrality 
-						long_name = LIT_kingdom_party 
-						name = LIT_kingdom_party
-					}
-					set_politics = {
-						ruling_party = neutrality
-						elections_allowed = no
-					}
-					set_popularities = {
-						democratic = 4
-						 fascism = 0
-						communism = 16
-						neutrality = 80
-					}
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = {
-			LIT = {
-				is_subject_of = RUS
-			}
-		}
-		every_state = {
-			limit = {
-				OR = {
-					is_owned_by = RUS
-					is_owned_by = SOV
-				}
-				OR = {
-					state = 11
-					state = 189
-					state = 784
-					state = 97
-					state = 773
-					state = 1015
-					state = 1017
-				}
-			}
-			transfer_state_to = LIT
-		}
-		every_state = {
-			limit = {
-				is_owned_by = LIT
-				OR = {
-					is_core_of = GER
-					is_claimed_by = GER
-				}
-			}
-			transfer_state_to = GER
-		}
-		puppet = LIT
-		hidden_effect = {
-			LIT = {
-				set_country_flag = released_by_germany
-				set_cosmetic_tag = LIT_GER
-				inherit_technology = GER
-				delete_obsolete_russian_templates = yes
-				if = {
-					limit = {
-						GER = {
-							is_GER_a_monarchy = yes
-						}
-					}
-					if = {
-						limit = {
-							date < 1928.3.24
-						}
-						GER = {
-							GER_wilhelm_karl_von_urach = {
-								set_character_name = LIT_mindaugas_ii
-								promote_leader = yes
-								set_nationality = LIT
-								if = {
-									limit = { has_ideology = semi_constitutional_monarchy }
-									promote_character = semi_constitutional_monarchy
-								}
-								else = {
-									add_country_leader_role = {
-										country_leader = {
-											ideology = semi_constitutional_monarchy
-											traits = { german_agent  }
-										}
-										promote_leader = yes
-									}
-								}
-							}
-						}
-						else = {
-							LIT_vytautas_ii = {
-								set_character_name = LIT_vytautas_ii
-								if = {
-									limit = { has_ideology = semi_constitutional_monarchy }
-									promote_character = semi_constitutional_monarchy
-								}
-								else = {
-									add_country_leader_role = {
-										country_leader = {
-											ideology = semi_constitutional_monarchy
-											traits = { german_agent }
-										}
-										promote_leader = yes
-									}
-								}
-							}
-						}
-					}
-					set_party_name = {
-						ideology = neutrality 
-						long_name = LIT_kingdom_party 
-						name = LIT_kingdom_party
-					}
-					set_politics = {
-						ruling_party = neutrality
-						elections_allowed = no
-					}
-					set_popularities = {
-						democratic = 4
-						fascism = 0
-						communism = 16
-						neutrality = 80
-					}
-				}
-			}
-		}
-	}
-	else = {
-		every_state = {
-			limit = {
-				OR = {
-					is_owned_by = RUS
-					is_owned_by = SOV
-				}
-				NOT = {
-					is_core_of = GER
-					is_claimed_by = GER
-				}
-				OR = {
-					state = 11
-					state = 189
-					state = 784
-					state = 97
-					state = 773
-					state = 1015
-					state = 1017
-				}
-			}
-			transfer_state_to = LIT
-		}
-	}
-	hidden_effect = {
-		if = {
-			limit = {
-				GER = { has_idea = RUS_idea_armistice_cp }
-			}
-			LIT = { add_ideas = RUS_idea_armistice_cp }
-		}
-		set_global_flag = litva_released
-		every_state = {
-			limit = {
-				is_core_of = LIT
-			}
-			remove_russian_cores = yes
-		}
-	}
-}
-GER_release_UBD = {
-	every_state = {
-		limit = {
-			OR = {
-				is_owned_by = RUS
-				is_owned_by = GER
-			}
-			OR = {
-				is_core_of = EST
-				is_core_of = LAT
-			}
-			NOT = {
-				is_core_of = COU
-				state = 96
-				state = 945
-				state = 947
-				state = 944
-			}
-		}
-		transfer_state_to = UBD
-	}
-	if = {
-		limit = {
-			EST = {
-				OR = {
-					is_subject_of = RUS
-					is_subject_of = SOV
-					is_subject_of = GER
-				}
-			}
-		}
-		UBD = {
-			annex_country = {
-				target = EST
-			}
-		}
-	}
-	if = {
-		limit = {
-			LAT = {
-				OR = {
-					is_subject_of = RUS
-					is_subject_of = SOV
-					is_subject_of = GER
-				}
-			}
-		}
-		UBD = {
-			annex_country = {
-				target = LAT
-			}
-		}
-	}
-	puppet = UBD
-	hidden_effect = {
-		UBD = {
-			if = {
-				limit = {
-					GER = {
-						is_GER_a_monarchy = yes
-					}
-				}
-				set_politics = {
-					ruling_party = neutrality
-  					elections_allowed = no
-				}
-				set_popularities = {
-   					democratic = 25
-   					fascism = 12
-   					communism = 10
-   					neutrality = 53
-				}
-			}
-			set_country_flag = released_by_germany
-			inherit_technology = GER
-			delete_obsolete_russian_templates = yes
-		}
-		every_state = {
-			limit = {
-				OR = {
-					is_core_of = LAT
-					is_core_of = EST
-					is_core_of = COU
-				}
-			}
-			add_core_of = UBD
-			if = {
-				limit = { region = 37 }
-				remove_russian_cores = yes
-			}
-		}
-		if = {
-			limit = {
-				GER = { has_idea = RUS_idea_armistice_cp }
-			}
-			UBD = { add_ideas = RUS_idea_armistice_cp }
-		}
-	}
-}
-GER_release_COU = {
-	if = {
-		limit = {
-			any_state = {
-				is_core_of = COU
-				OR = {
-					is_owned_by = RUS
-					is_owned_by = GER
-				}
-			}
-		}
-		clr_country_flag = COU_should_be_released
-		every_state = {
-			limit = {
-				OR = {
-					is_owned_by = RUS
-					is_owned_by = GER
-				}
-				is_core_of = COU
-			}
-			transfer_state_to = COU
-			remove_russian_claims = yes
-			remove_russian_cores = yes
-		}
-		puppet = COU
-		hidden_effect = {
-			set_global_flag = COU_released
-			COU = {
-				if = {
-					limit = {
-						GER = {
-							is_GER_a_monarchy = yes
-						}
-					}
-					set_politics = {
-						ruling_party = neutrality
-						elections_allowed = no
-					}
-					set_popularities = {
-						democratic = 25
-						communism = 22
-						neutrality = 53
-					}
-				}
-				set_country_flag = released_by_germany
-				inherit_technology = GER
-				delete_obsolete_russian_templates = yes
-			}
-			if = {
-				limit = {
-					GER = { has_idea = RUS_idea_armistice_cp }
-				}
-				COU = { add_ideas = RUS_idea_armistice_cp }
-			}
-		}
-	}
-	else = {
-		set_country_flag = COU_should_be_released
-	}
-}
 
 change_ruling_party_popularity = {
 	if = {
@@ -1005,22 +487,7 @@ separate_peace_all_wars = {
 
 # ends puppet status, removes from faction and all current wars (used for rebellions)
 clear_all_relations = {
-	if = {
-		limit = { is_subject = yes }
-		overlord = {
-			set_autonomy = {
-				target = PREV
-				autonomy_state = autonomy_free
-			}
-		}
-	}
-	clr_country_flag = protectorate
-	clr_country_flag = colony
-	clr_country_flag = monarchist_puppet
-	if = {
-		limit = { is_in_faction = yes }
-		leave_faction = yes
-	}
+	free_subject_leave_faction = yes
 	separate_peace_all_wars = yes
 	every_other_country = {
 		limit = { is_guaranteed_by = PREV }
@@ -1133,9 +600,10 @@ clear_all_relations_with_TARGET = {
 	if = {
 		limit = { has_subject = var:target }
 		set_autonomy = {
-			target = PREV
+			target = var:target
 			autonomy_state = autonomy_free
 		}
+		var:target = { clr_subject_flags = yes }
 	}
 	else_if = {
 		limit = { is_subject_of = var:target }
@@ -1145,10 +613,8 @@ clear_all_relations_with_TARGET = {
 				autonomy_state = autonomy_free
 			}
 		}
+		clr_subject_flags = yes
 	}
-	clr_country_flag = protectorate
-	clr_country_flag = colony
-	clr_country_flag = monarchist_puppet
 	if = {
 		limit = { is_in_faction_with = var:target }
 		leave_faction = yes
@@ -1203,19 +669,7 @@ clear_all_relations_with_TARGET = {
 
 # ends puppet status, removes from faction and clears all relations except wars (used for rebellions)
 clear_all_relations_except_wars = {
-	if = {
-		limit = { is_subject = yes }
-		overlord = {
-			set_autonomy = {
-				target = PREV
-				autonomy_state = autonomy_free
-			}
-		}
-	}
-	if = {
-		limit = { is_in_faction = yes }
-		leave_faction = yes
-	}
+	free_subject_leave_faction = yes
 	every_other_country = {
 		limit = { is_guaranteed_by = PREV }
 		PREV = {
@@ -1260,6 +714,22 @@ clear_all_relations_except_wars = {
 			active = no
 		}
 	}
+	every_other_country = {
+		limit = { has_market_access_with = PREV }
+		diplomatic_relation = {
+			country = PREV
+			relation = market_access_rights
+			active = no
+		}
+	}	
+	every_other_country = {
+		limit = { is_embargoing = PREV }
+		diplomatic_relation = {
+			country = PREV
+			relation = embargo
+			active = no
+		}
+	}
 	if = {
 		limit = { is_in_tech_sharing_group = german_research }
 		remove_from_tech_sharing_group = german_research
@@ -1290,6 +760,9 @@ clear_relations_with_PREV = {
 			target = PREV
 			autonomy_state = autonomy_free
 		}
+		PREV = {
+			clr_subject_flags = yes
+		}
 	}
 	else_if = {
 		limit = { is_subject_of = PREV }
@@ -1299,6 +772,7 @@ clear_relations_with_PREV = {
 				autonomy_state = autonomy_free
 			}
 		}
+		clr_subject_flags = yes
 	}
 	if = {
 		limit = {
@@ -1581,14 +1055,13 @@ get_current_government_type = {
 	add_to_array = { original_popularities = party_popularity_100@neutrality }
 	add_to_array = { original_popularities = party_popularity_100@democratic }
 	add_to_array = { original_popularities = party_popularity_100@fascism }
-	add_to_array = { original_popularities = party_popularity_100@communism }
 
 	set_temp_variable = { sum = 100 }
 	for_each_loop = {
 		array = original_popularities
 		subtract_from_temp_variable = { sum = v }
 	}
-	add_to_array = { original_popularities = sum } #last value (natpop), calculated directly to avoid rounding errors
+	add_to_array = { original_popularities = sum } # last value (communism), calculated directly to avoid rounding errors
 }
 
 restore_previous_government_type = {
@@ -1673,23 +1146,6 @@ destroy_all_ships = {
 	destroy_ships = {
 		type = ship_hull_carrier_conversion_ca
 		count = all
-	}
-}
-
-# scope is the country being freed
-remove_puppet_and_leave_faction = {
-	if = {
-		limit = { is_in_faction = yes }
-		leave_faction = yes
-	}
-	if = {
-		limit = { is_subject = yes }
-		overlord = {
-			set_autonomy = {
-				target = PREV
-				autonomy_state = autonomy_free
-			}
-		}
 	}
 }
 
@@ -1841,193 +1297,49 @@ take_all_subjects_FROM = {
 		limit = {
 			is_subject_of = FROM
 		}
+		# TGWR AUTONOMIES
 		if = {
 			limit = {
-				has_autonomy_state = autonomy_dominion
+				has_autonomy_state = autonomy_tgwr_dominion
 			}
 			FROM = { end_puppet = PREV }
 			get_current_government_type = yes
 			ROOT = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_dominion
+					autonomous_state = autonomy_tgwr_dominion
 				}
 			}
 			restore_previous_government_type = yes
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_colony
+				has_autonomy_state = autonomy_tgwr_self_governing_colony
 			}
 			FROM = { end_puppet = PREV }
 			get_current_government_type = yes
 			ROOT = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_colony
+					autonomous_state = autonomy_tgwr_self_governing_colony
 				}
 			}
 			restore_previous_government_type = yes
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_puppet
+				has_autonomy_state = autonomy_tgwr_colony
 			}
 			FROM = { end_puppet = PREV }
 			get_current_government_type = yes
 			ROOT = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_puppet
+					autonomous_state = autonomy_tgwr_colony
 				}
 			}
 			restore_previous_government_type = yes
 		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_integrated_puppet
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_integrated_puppet
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# DEATH OR DISHONOUR
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_satellite
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_satellite
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichsprotectorate
-		# 	}
-		# 	FROM = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	ROOT = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_reichsprotectorate
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichskommissariat
-		# 	}
-		# 	FROM = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	ROOT = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_reichskommissariat
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# WAKING THE TIGER
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_wtt_imperial_subject
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_wtt_imperial_subject
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_wtt_imperial_associate
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_wtt_imperial_associate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_wtt_imperial_protectorate
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_wtt_imperial_protectorate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_supervised_state
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_supervised_state
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# LA RESISTANCE
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_collaboration_government
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_collaboration_government
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# NO STEP BACK
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_personal_union
-		# 	}
-		# 	FROM = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	ROOT = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_personal_union
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# TGWR AUTONOMIES
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_tgwr_protectorate
@@ -2045,7 +1357,7 @@ take_all_subjects_FROM = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_informal_protectorate
+				has_autonomy_state = autonomy_tgwr_protected_state
 			}
 			FROM = { end_puppet = PREV }
 			get_current_government_type = yes
@@ -2053,22 +1365,49 @@ take_all_subjects_FROM = {
 				PREV = { set_country_flag = protectorate }
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_informal_protectorate
+					autonomous_state = autonomy_tgwr_protected_state
 				}
 			}
 			restore_previous_government_type = yes
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_integrated_protectorate
+				has_autonomy_state = autonomy_tgwr_military_government
 			}
 			FROM = { end_puppet = PREV }
 			get_current_government_type = yes
 			ROOT = {
-				PREV = { set_country_flag = protectorate }
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_integrated_protectorate
+					autonomous_state = autonomy_tgwr_military_government
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_occupied_state
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_occupied_state
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_client_state
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_client_state
 				}
 			}
 			restore_previous_government_type = yes
@@ -2089,42 +1428,14 @@ take_all_subjects_FROM = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_balkan_federal_subject
+				has_autonomy_state = autonomy_tgwr_condominium
 			}
 			FROM = { end_puppet = PREV }
 			get_current_government_type = yes
 			ROOT = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_balkan_federal_subject
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_ottoman_emirate
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_ottoman_emirate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_unilateral_union
-			}
-			FROM = { end_puppet = PREV }
-			get_current_government_type = yes
-			ROOT = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_unilateral_union
+					autonomous_state = autonomy_tgwr_condominium
 				}
 			}
 			restore_previous_government_type = yes
@@ -2145,28 +1456,42 @@ take_all_subjects_FROM = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_governorate_general
+				has_autonomy_state = autonomy_tgwr_nominal_constituency
 			}
 			FROM = { end_puppet = PREV }
 			get_current_government_type = yes
 			ROOT = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_governorate_general
+					autonomous_state = autonomy_tgwr_nominal_constituency
 				}
 			}
 			restore_previous_government_type = yes
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_real_union
+				has_autonomy_state = autonomy_tgwr_feudal_autonomy
 			}
 			FROM = { end_puppet = PREV }
 			get_current_government_type = yes
 			ROOT = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_real_union
+					autonomous_state = autonomy_tgwr_feudal_autonomy
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_ottoman_emirate
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_ottoman_emirate
 				}
 			}
 			restore_previous_government_type = yes
@@ -2187,14 +1512,70 @@ take_all_subjects_FROM = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_self_governing_colony
+				has_autonomy_state = autonomy_tgwr_real_union
 			}
 			FROM = { end_puppet = PREV }
 			get_current_government_type = yes
 			ROOT = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_self_governing_colony
+					autonomous_state = autonomy_tgwr_real_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_unilateral_union
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_unilateral_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_milrevcom
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_milrevcom
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_assr
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_assr
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_ssr
+			}
+			FROM = { end_puppet = PREV }
+			get_current_government_type = yes
+			ROOT = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_ssr
 				}
 			}
 			restore_previous_government_type = yes
@@ -2213,193 +1594,49 @@ take_all_subjects_ROOT = {
 		limit = {
 			is_subject_of = ROOT
 		}
+		# TGWR AUTONOMIES
 		if = {
 			limit = {
-				has_autonomy_state = autonomy_dominion
+				has_autonomy_state = autonomy_tgwr_dominion
 			}
 			ROOT = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_dominion
+					autonomous_state = autonomy_tgwr_dominion
 				}
 			}
 			restore_previous_government_type = yes
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_colony
+				has_autonomy_state = autonomy_tgwr_self_governing_colony
 			}
 			ROOT = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_colony
+					autonomous_state = autonomy_tgwr_self_governing_colony
 				}
 			}
 			restore_previous_government_type = yes
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_puppet
+				has_autonomy_state = autonomy_tgwr_colony
 			}
 			ROOT = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_puppet
+					autonomous_state = autonomy_tgwr_colony
 				}
 			}
 			restore_previous_government_type = yes
 		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_integrated_puppet
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_integrated_puppet
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# DEATH OR DISHONOUR
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_satellite
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_satellite
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichsprotectorate
-		# 	}
-		# 	ROOT = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	PREV = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_reichsprotectorate
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichskommissariat
-		# 	}
-		# 	ROOT = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	PREV = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_reichskommissariat
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# WAKING THE TIGER
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_wtt_imperial_subject
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_wtt_imperial_subject
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_wtt_imperial_associate
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_wtt_imperial_associate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_wtt_imperial_protectorate
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_wtt_imperial_protectorate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_supervised_state
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_supervised_state
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# LA RESISTANCE
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_collaboration_government
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_collaboration_government
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# NO STEP BACK
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_personal_union
-		# 	}
-		# 	ROOT = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	PREV = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_personal_union
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# TGWR AUTONOMIES
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_tgwr_protectorate
@@ -2417,7 +1654,7 @@ take_all_subjects_ROOT = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_informal_protectorate
+				has_autonomy_state = autonomy_tgwr_protected_state
 			}
 			ROOT = { end_puppet = PREV }
 			get_current_government_type = yes
@@ -2425,22 +1662,49 @@ take_all_subjects_ROOT = {
 				PREV = { set_country_flag = protectorate }
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_informal_protectorate
+					autonomous_state = autonomy_tgwr_protected_state
 				}
 			}
 			restore_previous_government_type = yes
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_integrated_protectorate
+				has_autonomy_state = autonomy_tgwr_military_government
 			}
 			ROOT = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
-				PREV = { set_country_flag = protectorate }
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_integrated_protectorate
+					autonomous_state = autonomy_tgwr_military_government
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_occupied_state
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_occupied_state
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_client_state
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_client_state
 				}
 			}
 			restore_previous_government_type = yes
@@ -2461,42 +1725,14 @@ take_all_subjects_ROOT = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_balkan_federal_subject
+				has_autonomy_state = autonomy_tgwr_condominium
 			}
 			ROOT = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_balkan_federal_subject
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_ottoman_emirate
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_ottoman_emirate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_unilateral_union
-			}
-			ROOT = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_unilateral_union
+					autonomous_state = autonomy_tgwr_condominium
 				}
 			}
 			restore_previous_government_type = yes
@@ -2517,28 +1753,42 @@ take_all_subjects_ROOT = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_governorate_general
+				has_autonomy_state = autonomy_tgwr_nominal_constituency
 			}
 			ROOT = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_governorate_general
+					autonomous_state = autonomy_tgwr_nominal_constituency
 				}
 			}
 			restore_previous_government_type = yes
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_real_union
+				has_autonomy_state = autonomy_tgwr_feudal_autonomy
 			}
 			ROOT = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_real_union
+					autonomous_state = autonomy_tgwr_feudal_autonomy
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_ottoman_emirate
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_ottoman_emirate
 				}
 			}
 			restore_previous_government_type = yes
@@ -2559,14 +1809,70 @@ take_all_subjects_ROOT = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_self_governing_colony
+				has_autonomy_state = autonomy_tgwr_real_union
 			}
 			ROOT = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_self_governing_colony
+					autonomous_state = autonomy_tgwr_real_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_unilateral_union
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_unilateral_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_milrevcom
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_milrevcom
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_assr
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_assr
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_ssr
+			}
+			ROOT = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_ssr
 				}
 			}
 			restore_previous_government_type = yes
@@ -2585,193 +1891,49 @@ take_all_subjects_PREV = {
 		limit = {
 			is_subject_of = PREV.PREV
 		}
+		# TGWR AUTONOMIES
 		if = {
 			limit = {
-				has_autonomy_state = autonomy_dominion
+				has_autonomy_state = autonomy_tgwr_dominion
 			}
 			PREV.PREV = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_dominion
+					autonomous_state = autonomy_tgwr_dominion
 				}
 			}
 			restore_previous_government_type = yes
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_colony
+				has_autonomy_state = autonomy_tgwr_self_governing_colony
 			}
 			PREV.PREV = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_colony
+					autonomous_state = autonomy_tgwr_self_governing_colony
 				}
 			}
 			restore_previous_government_type = yes
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_puppet
+				has_autonomy_state = autonomy_tgwr_colony
 			}
 			PREV.PREV = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_puppet
+					autonomous_state = autonomy_tgwr_colony
 				}
 			}
 			restore_previous_government_type = yes
 		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_integrated_puppet
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_integrated_puppet
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# DEATH OR DISHONOUR
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_satellite
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_satellite
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichsprotectorate
-		# 	}
-		# 	PREV.PREV = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	PREV = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_reichsprotectorate
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichskommissariat
-		# 	}
-		# 	PREV.PREV = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	PREV = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_reichskommissariat
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# WAKING THE TIGER
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_wtt_imperial_subject
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_wtt_imperial_subject
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_wtt_imperial_associate
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_wtt_imperial_associate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_wtt_imperial_protectorate
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_wtt_imperial_protectorate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_supervised_state
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_supervised_state
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# LA RESISTANCE
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_collaboration_government
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_collaboration_government
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		# NO STEP BACK
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_personal_union
-		# 	}
-		# 	PREV.PREV = { end_puppet = PREV }
-		# 	get_current_government_type = yes
-		# 	PREV = {
-		# 		set_autonomy = {
-		# 			target = PREV
-		# 			autonomous_state = autonomy_personal_union
-		# 		}
-		# 	}
-		# 	restore_previous_government_type = yes
-		# }
-		# TGWR AUTONOMIES
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_tgwr_protectorate
@@ -2789,7 +1951,7 @@ take_all_subjects_PREV = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_informal_protectorate
+				has_autonomy_state = autonomy_tgwr_protected_state
 			}
 			PREV.PREV = { end_puppet = PREV }
 			get_current_government_type = yes
@@ -2797,22 +1959,49 @@ take_all_subjects_PREV = {
 				PREV = { set_country_flag = protectorate }
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_informal_protectorate
+					autonomous_state = autonomy_tgwr_protected_state
 				}
 			}
 			restore_previous_government_type = yes
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_integrated_protectorate
+				has_autonomy_state = autonomy_tgwr_military_government
 			}
 			PREV.PREV = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
-				PREV = { set_country_flag = protectorate }
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_integrated_protectorate
+					autonomous_state = autonomy_tgwr_military_government
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_occupied_state
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_occupied_state
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_client_state
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_client_state
 				}
 			}
 			restore_previous_government_type = yes
@@ -2833,42 +2022,14 @@ take_all_subjects_PREV = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_balkan_federal_subject
+				has_autonomy_state = autonomy_tgwr_condominium
 			}
 			PREV.PREV = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_balkan_federal_subject
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_ottoman_emirate
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_ottoman_emirate
-				}
-			}
-			restore_previous_government_type = yes
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_unilateral_union
-			}
-			PREV.PREV = { end_puppet = PREV }
-			get_current_government_type = yes
-			PREV = {
-				set_autonomy = {
-					target = PREV
-					autonomous_state = autonomy_tgwr_unilateral_union
+					autonomous_state = autonomy_tgwr_condominium
 				}
 			}
 			restore_previous_government_type = yes
@@ -2889,28 +2050,42 @@ take_all_subjects_PREV = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_governorate_general
+				has_autonomy_state = autonomy_tgwr_nominal_constituency
 			}
 			PREV.PREV = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_governorate_general
+					autonomous_state = autonomy_tgwr_nominal_constituency
 				}
 			}
 			restore_previous_government_type = yes
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_real_union
+				has_autonomy_state = autonomy_tgwr_feudal_autonomy
 			}
 			PREV.PREV = { end_puppet = PREV }
 			get_current_government_type = yes
 			PREV = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_real_union
+					autonomous_state = autonomy_tgwr_feudal_autonomy
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_ottoman_emirate
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_ottoman_emirate
 				}
 			}
 			restore_previous_government_type = yes
@@ -2931,14 +2106,70 @@ take_all_subjects_PREV = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_self_governing_colony
+				has_autonomy_state = autonomy_tgwr_real_union
 			}
 			PREV.PREV = { end_puppet = PREV }
 			get_current_government_type = yes
-			ROOT = {
+			PREV = {
 				set_autonomy = {
 					target = PREV
-					autonomous_state = autonomy_tgwr_self_governing_colony
+					autonomous_state = autonomy_tgwr_real_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_unilateral_union
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_unilateral_union
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_milrevcom
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_milrevcom
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_assr
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_assr
+				}
+			}
+			restore_previous_government_type = yes
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_ssr
+			}
+			PREV.PREV = { end_puppet = PREV }
+			get_current_government_type = yes
+			PREV = {
+				set_autonomy = {
+					target = PREV
+					autonomous_state = autonomy_tgwr_ssr
 				}
 			}
 			restore_previous_government_type = yes
@@ -2954,167 +2185,43 @@ take_all_subjects_PREV = {
 
 copy_autonomy_from_ROOT = {
 	ROOT = {
+		# TGWR AUTONOMIES
 		if = {
 			limit = {
-				has_autonomy_state = autonomy_satellite
+				has_autonomy_state = autonomy_tgwr_dominion
 			}
 			OVERLORD = {
 				end_puppet = PREV
 				set_autonomy = {
 					target = PREV.PREV
-					autonomous_state = autonomy_satellite
+					autonomous_state = autonomy_tgwr_dominion
 				}
 			}
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_colony
+				has_autonomy_state = autonomy_tgwr_self_governing_colony
 			}
 			OVERLORD = {
 				end_puppet = PREV
 				set_autonomy = {
 					target = PREV.PREV
-					autonomous_state = autonomy_colony
+					autonomous_state = autonomy_tgwr_self_governing_colony
 				}
 			}
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_puppet
+				has_autonomy_state = autonomy_tgwr_colony
 			}
 			OVERLORD = {
 				end_puppet = PREV
 				set_autonomy = {
 					target = PREV.PREV
-					autonomous_state = autonomy_puppet
+					autonomous_state = autonomy_tgwr_colony
 				}
 			}
 		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_integrated_puppet
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_integrated_puppet
-				}
-			}
-		}
-		# DEATH OR DISHONOUR
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_satellite
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_satellite
-				}
-			}
-		}
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichsprotectorate
-		# 	}
-		# 	OVERLORD = {
-		# 		end_puppet = PREV
-		# 		set_autonomy = {
-		# 			target = PREV.PREV
-		# 			autonomous_state = autonomy_reichsprotectorate
-		# 		}
-		# 	}
-		# }
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_reichskommissariat
-		# 	}
-		# 	OVERLORD = {
-		# 		end_puppet = PREV
-		# 		set_autonomy = {
-		# 			target = PREV.PREV
-		# 			autonomous_state = autonomy_reichskommissariat
-		# 		}
-		# 	}
-		# }
-		# WAKING THE TIGER
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_wtt_imperial_subject
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_wtt_imperial_subject
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_wtt_imperial_associate
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_wtt_imperial_associate
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_wtt_imperial_protectorate
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_wtt_imperial_protectorate
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_supervised_state
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_supervised_state
-				}
-			}
-		}
-		# LA RESISTANCE
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_collaboration_government
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_collaboration_government
-				}
-			}
-		}
-		# NO STEP BACK
-		# else_if = {
-		# 	limit = {
-		# 		has_autonomy_state = autonomy_personal_union
-		# 	}
-		# 	OVERLORD = {
-		# 		end_puppet = PREV
-		# 		set_autonomy = {
-		# 			target = PREV.PREV
-		# 			autonomous_state = autonomy_personal_union
-		# 		}
-		# 	}
-		# }
-		# TGWR AUTONOMIES
 		else_if = {
 			limit = {
 				has_autonomy_state = autonomy_tgwr_protectorate
@@ -3130,27 +2237,50 @@ copy_autonomy_from_ROOT = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_informal_protectorate
+				has_autonomy_state = autonomy_tgwr_protected_state
 			}
 			OVERLORD = {
 				end_puppet = PREV
 				PREV = { set_country_flag = protectorate }
 				set_autonomy = {
 					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_informal_protectorate
+					autonomous_state = autonomy_tgwr_protected_state
 				}
 			}
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_integrated_protectorate
+				has_autonomy_state = autonomy_tgwr_military_government
 			}
 			OVERLORD = {
 				end_puppet = PREV
-				PREV = { set_country_flag = protectorate }
 				set_autonomy = {
 					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_integrated_protectorate
+					autonomous_state = autonomy_tgwr_military_government
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_occupied_state
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_occupied_state
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_client_state
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_client_state
 				}
 			}
 		}
@@ -3168,37 +2298,13 @@ copy_autonomy_from_ROOT = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_balkan_federal_subject
+				has_autonomy_state = autonomy_tgwr_condominium
 			}
 			OVERLORD = {
 				end_puppet = PREV
 				set_autonomy = {
 					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_balkan_federal_subject
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_ottoman_emirate
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_ottoman_emirate
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				has_autonomy_state = autonomy_tgwr_unilateral_union
-			}
-			OVERLORD = {
-				end_puppet = PREV
-				set_autonomy = {
-					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_unilateral_union
+					autonomous_state = autonomy_tgwr_condominium
 				}
 			}
 		}
@@ -3216,25 +2322,37 @@ copy_autonomy_from_ROOT = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_governorate_general
+				has_autonomy_state = autonomy_tgwr_nominal_constituency
 			}
 			OVERLORD = {
 				end_puppet = PREV
 				set_autonomy = {
 					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_governorate_general
+					autonomous_state = autonomy_tgwr_nominal_constituency
 				}
 			}
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_real_union
+				has_autonomy_state = autonomy_tgwr_feudal_autonomy
 			}
 			OVERLORD = {
 				end_puppet = PREV
 				set_autonomy = {
 					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_real_union
+					autonomous_state = autonomy_tgwr_feudal_autonomy
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_ottoman_emirate
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_ottoman_emirate
 				}
 			}
 		}
@@ -3252,13 +2370,61 @@ copy_autonomy_from_ROOT = {
 		}
 		else_if = {
 			limit = {
-				has_autonomy_state = autonomy_tgwr_self_governing_colony
+				has_autonomy_state = autonomy_tgwr_real_union
 			}
 			OVERLORD = {
 				end_puppet = PREV
 				set_autonomy = {
 					target = PREV.PREV
-					autonomous_state = autonomy_tgwr_self_governing_colony
+					autonomous_state = autonomy_tgwr_real_union
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_unilateral_union
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_unilateral_union
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_milrevcom
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_milrevcom
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_assr
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_assr
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_autonomy_state = autonomy_tgwr_ssr
+			}
+			OVERLORD = {
+				end_puppet = PREV
+				set_autonomy = {
+					target = PREV.PREV
+					autonomous_state = autonomy_tgwr_ssr
 				}
 			}
 		}
@@ -3330,6 +2496,7 @@ set_up_syrian_monarchs = {
 					promote_leader = yes
 					country_leader = {
 						ideology = semi_constitutional_monarchy
+						traits = { sayyid }
 					}
 				}
 			}
@@ -3561,6 +2728,9 @@ GEO_withdraw_from_persia = {
 						state = 419
 						state = 877
 						state = 1212
+						state = 1245
+						state = 1250
+						state = 1251
 					}
 				}
 				if = {
@@ -3581,11 +2751,15 @@ GEO_withdraw_from_persia = {
 					}
 				}
 				else = {
-					transfer_state_to = PER
+					PER = {
+						safe_transfer_state_to = yes
+					}
 				}
 			}
 			else = {
-				transfer_state_to = PER
+				PER = {
+					safe_transfer_state_to = yes
+				}
 			}
 		}
 	}
@@ -3642,8 +2816,7 @@ create_AOF = {
 					autonomous_state = autonomy_colony
 				}
 			}
-			set_country_flag = empty_focus
-			load_focus_tree = empty_focus		
+			load_focus_tree = generic_focus		
 			set_capital = { state = 272 }
 			hidden_effect = {
 				every_state = {
@@ -3815,8 +2988,7 @@ create_AEF = {
 					autonomous_state = autonomy_colony
 				}
 			}
-			set_country_flag = empty_focus
-			load_focus_tree = empty_focus
+			load_focus_tree = generic_focus
 			set_capital = { state = 772 }
 			hidden_effect = {
 				every_state = {
@@ -4018,52 +3190,6 @@ fire_random_advisor_if_no_slots = {
 	}
 }
 
-join_great_war_against_GER = {
-	if = {
-		limit = {
-			ENT = {
-				is_faction_leader = yes
-				has_war_with = GER
-				NOT = { has_war_with = ROOT }
-			}
-		}
-		add_to_war = {
-			targeted_alliance = ENT
-			enemy = GER
-		}
-	}
-	else_if = {
-		limit = {
-			any_other_country = {
-				is_actual_major = yes
-				has_war_with = GER
-				NOT = { has_war_with = ROOT }
-			}
-		}
-		random_other_country = {
-			limit = {
-				is_actual_major = yes
-				has_war_with = GER
-				NOT = {
-					has_war_with = ROOT
-				}
-			}
-			ROOT = {
-				add_to_war = {
-					targeted_alliance = PREV
-					enemy = GER
-				}
-			}
-		}
-	}
-	else = {
-		declare_war_on = {
-			target = GER
-			type = topple_government
-		}
-	}
-}
-
 relinguish_entente_leadership_peace = {
 	if = {
 		limit = {
@@ -4082,7 +3208,7 @@ relinguish_entente_leadership_peace = {
 					is_subject = no
 					has_capitulated = no
 					NOT = {
-						has_country_flag = FRA_surrender_alone
+						has_country_flag = great_war_loser
 						tag = PREV
 					}
 				}
@@ -4101,7 +3227,7 @@ relinguish_entente_leadership_peace = {
 					tag = SOV
 					NOT = {
 						has_country_flag = has_capitulated_with_france_early
-						has_global_flag = RUS_surrender_alone
+						has_global_flag = RUS_surrender
 						tag = SOV
 						tag = PREV
 					}
@@ -4234,7 +3360,7 @@ relinguish_entente_leadership = {
 					is_subject = no
 					has_capitulated = no
 					NOT = {
-						has_country_flag = FRA_surrender_alone
+						has_country_flag = great_war_loser
 						tag = PREV
 					}
 				}
@@ -4260,7 +3386,7 @@ relinguish_entente_leadership = {
 					has_capitulated = no
 					NOT = {
 						has_country_flag = has_capitulated_with_france_early
-						has_global_flag = RUS_surrender_alone
+						has_global_flag = RUS_surrender
 						tag = SOV
 						tag = PREV
 					}
@@ -4485,55 +3611,6 @@ research_trucks_to_improve_supply_effect = {
 			}	
 		}
 	}	
-}
-protectorate_logic = {
-	leave_faction = yes
-	OVERLORD = {
-		if = {
-			limit = {
-				is_in_faction = yes
-				NOT = { has_military_access_to = PREV }
-			}
-			diplomatic_relation = {
-				country = PREV
-				relation = military_access
-				active = yes
-			}
-		}
-	}
-	country_event = { id = ww1_political.7 hours = 1 } #needed if the faction leader is at war, don't ask
-}
-vassal_of_vassal_logic = {
-	OVERLORD = {
-		if = {
-			limit = { 
-				is_subject = yes
-			}
-			# PREV = {
-			# 	give_market_access = PREV.OVERLORD
-			# }	
-			if = {
-				limit = { 
-					OVERLORD = {
-						NOT = { 
-							has_military_access_to = PREV.PREV 
-							is_in_faction_with = PREV.PREV 
-						}
-					}
-				}
-				PREV = {
-					PREV.OVERLORD = {
-						#give_guarantee = PREV
-						diplomatic_relation = {
-							country = PREV
-							relation = military_access
-							active = yes
-						}
-					}
-				}	
-			}
-		}
-	}
 }
 
 clear_all_ledgers = {

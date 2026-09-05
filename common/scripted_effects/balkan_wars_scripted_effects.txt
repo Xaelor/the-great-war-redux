@@ -1,0 +1,1270 @@
+# First Balkan War
+
+BW1_init_effect = {
+	if = {
+		limit = { 
+			NOT = {
+				has_global_flag = kis_firstbalkan_war
+			}
+		}
+		set_global_flag = kis_firstbalkan_war
+		if = {
+			limit = { 
+				BUL = {
+					has_completed_focus = BUL_lone_liberator
+				}
+			}
+			news_event = ww1_firstbalkan.116
+		}
+		else = {
+			news_event = ww1_firstbalkan.2
+		}
+		add_named_threat = {
+			threat = 3
+			name = kis_firstbalkan_war
+		}	
+		TUR = {
+			country_event = {
+				id = ww1_firstbalkan.3
+				days = 42
+			}
+			country_event = {
+				id = ottoman.212
+			}
+			activate_mission = BW1_armistice_mission
+		}	
+	}
+}
+
+BW1_attack_effect = {
+	add_ideas = war_of_liberation
+	if = {
+		limit = { 
+			tag = GRE
+		}
+		add_timed_idea = {
+			idea = gre_naval_supremacy_idea
+			days = 60
+		}
+		add_timed_idea = {
+			idea = GRE_thessaloniki_race
+			days = 60
+		}
+	}
+	if = {
+		limit = {
+			tag = BUL
+			has_completed_focus = BUL_lozengradska_operacija
+		}
+		add_timed_idea = {
+			idea = BUL_idea_lozengradska_operacija
+			days = 60
+		}
+	}
+	if = {
+		limit = {
+			tag = SER
+		}
+		country_event = {
+			id = ww1_firstbalkan.118
+			days = 10
+		}
+		if = {
+			limit = { 
+				has_completed_focus = SER_bitolska_bitka
+			}
+			add_timed_idea = {
+				idea = SER_idea_bitolska_bitka
+				days = 60
+			}
+		}
+	}
+	hidden_effect = {
+		activate_mission = BW1_armistice_mission_fake
+	}
+	add_war_support = 0.05
+}
+
+BW1_balkans_victory_effect = {
+	custom_effect_tooltip = BW1_balkan_league_won_tt
+	set_global_flag = kis_firstbalkanwar_victory
+	hidden_effect = {
+		TUR = {
+			set_country_flag = BW1_loser
+			every_allied_country = {
+				set_country_flag = BW1_loser
+			}
+		}
+		SER = {
+			set_country_flag = BW1_winner
+		}
+		BUL = {
+			set_country_flag = BW1_winner
+		}
+		GRE = {
+			set_country_flag = BW1_winner
+		}
+		MNT = {
+			set_country_flag = BW1_winner
+		}
+		if = {
+			limit = { 
+				has_global_flag = balkan_league_success
+			}
+			TUR = {
+				white_peace = {
+					tag = BLL
+					message = BW1_balkan_league_won_message
+				}
+			}
+			TUR = {
+				every_state = {
+					limit = {
+						is_owned_or_subject_trigger = yes
+					}
+					if = {
+						limit = {
+							OR = {
+								state = 849
+								state = 756
+								state = 200
+								state = 757
+								state = 451
+								state = 184
+								state = 788
+								state = 225
+								state = 759
+								state = 1141
+							}
+						}
+						transfer_state_to = BUL
+					}
+					if = {
+						limit = {
+							OR = {
+								state = 760
+								state = 847
+								state = 106
+								state = 1140
+								state = 1258
+								state = 203
+								state = 1213
+								state = 1240
+								state = 1284
+								state = 1214
+								state = 44
+								state = 1215
+							}
+						}
+						transfer_state_to = SER
+					}
+					if = {
+						limit = {
+							OR = {
+								state = 345
+								state = 731
+								state = 1257
+								state = 826
+								state = 1256
+								state = 758
+								state = 803
+								state = 1225
+								state = 790
+								state = 164
+								state = 899
+								state = 975
+								state = 974
+								state = 871
+							}
+						}
+						transfer_state_to = GRE
+					}
+				}
+			}
+		}
+		else = {				
+			TUR = {
+				white_peace = {
+					tag = BUL
+					message = BW1_balkan_league_won_message
+				}
+				white_peace = {
+					tag = SER
+					message = BW1_balkan_league_won_message
+				}
+				white_peace = {
+					tag = MNT
+					message = BW1_balkan_league_won_message
+				}
+				white_peace = {
+					tag = GRE
+					message = BW1_balkan_league_won_message
+				}
+
+				every_state = {
+					limit = {
+						is_owned_or_subject_trigger = yes
+					}
+					if = {
+						limit = {
+							OR = {
+								state = 849
+								state = 756
+								state = 200
+								state = 757
+								state = 451
+								state = 184
+								state = 788
+								state = 225
+								state = 759
+								state = 1141
+								state = 1140
+								state = 1258
+								state = 345
+								state = 731
+							}
+						}
+						transfer_state_to = BUL
+					}
+					if = {
+						limit = {
+							OR = {
+								state = 760
+								state = 203
+								state = 1213
+								state = 106
+								state = 847
+								state = 1240
+								state = 1284
+								state = 1214
+								state = 44
+								state = 1215
+							}
+						}
+						transfer_state_to = SER
+					}
+					if = {
+						limit = {
+							OR = {
+								state = 1256
+								state = 1257
+								state = 826
+								state = 758
+								state = 803
+								state = 1225
+								state = 790
+								state = 164
+								state = 899
+								state = 975
+								state = 974
+								state = 871
+							}
+						}
+						transfer_state_to = GRE
+					}
+				}
+			}
+		}
+		TUR = {
+			every_state = {
+				limit = {
+					is_owned_or_subject_trigger = yes
+				}
+				if = {
+					limit = {
+						OR = {
+							state = 870
+							state = 848
+							state = 761
+						}
+					}
+					transfer_state_to = MNT
+				}
+			}
+		}
+		GRE = {
+			every_other_country = {
+				limit = {
+					has_guaranteed = PREV
+				}
+				diplomatic_relation = {
+					country = PREV
+					relation = guarantee
+					active = no
+				}
+			}
+		}
+		TUR = {
+			if = {
+				limit = { has_war_with = ALB }
+				white_peace = {
+					tag = ALB
+					message = albania_independence_message
+				}
+				ALB = { remove_ideas = standing_alone }
+			}
+		}
+		if = {
+			limit = {
+				country_exists = ALB
+			}
+			if = {
+				limit = { 
+					ALB = {
+						is_subject_of = TUR
+					}
+				}
+				ALB = {
+					set_politics = {
+						ruling_party = democratic
+						elections_allowed = yes
+					}
+					TUR = {
+						country_event = {
+							id = ww1_albania.28
+							days = 4
+						}
+					}
+					if = {
+						limit = {
+							has_capitulated = no
+						}
+						# if albania held albania, then they didnt losed it
+						every_state = {
+							limit = {
+								OR = {
+									state = 44
+									state = 870
+									state = 871
+									state = 1214
+									state = 1240
+									state = 1284
+									state = 1215
+								}
+							}
+							remove_claim_by = MNT
+							remove_claim_by = SER
+						}
+					}						
+				}
+			}
+			ALB = {
+				every_core_state = {
+					limit = {
+						OWNER = {
+							OR = {
+								tag = TUR
+								is_subject_of = TUR
+								has_country_flag = BW1_loser
+							}
+						}
+					}
+					transfer_state_to = PREV
+				}
+			}
+		}
+		every_state = {
+			limit = {
+				OR = {
+					region = 26
+					region = 24
+					region = 14
+					region = 25
+					region = 202
+					state = 182
+				}
+				OR = {
+					is_claimed_by = TUR
+					is_core_of = TUR
+				}
+				NOT = {
+					is_owned_by = TUR
+					state = 756
+					state = 200
+					state = 757
+					state = 451
+					# state = 731
+					state = 345
+					state = 1255
+					state = 184
+				}
+			}
+			remove_core_of = TUR
+			remove_claim_by = TUR
+		}
+
+		# BW2 part
+		if = {
+			limit = { 
+				has_global_flag = balkan_league_success
+			}
+			BUL = {
+				country_event = {
+					id = ww1_secondbalkan.30
+					days = 5
+				}
+			}
+		}
+		else = {
+			SER = {
+				country_event = {
+					id = ww1_secondbalkan.28
+					days = 2
+				}
+			}
+		}
+	}
+}
+
+BW1_status_quo_effect = {
+	custom_effect_tooltip = BW1_balkan_turkey_won_tt
+	set_global_flag = kis_firstbalkanwar_lose
+	hidden_effect = {
+		TUR = {
+			set_country_flag = BW1_winner
+			every_allied_country = {
+				limit = {
+					has_war_with = BUL
+				}
+				set_country_flag = BW1_winner
+			}
+		}
+		SER = {
+			set_country_flag = BW1_loser
+		}
+		BUL = {
+			set_country_flag = BW1_loser
+		}
+		GRE = {
+			set_country_flag = BW1_loser
+		}
+		MNT = {
+			set_country_flag = BW1_loser
+		}
+		BUL = {
+			add_ideas = BUL_idea_first_national_catastrophe
+			complete_national_focus = BUL_our_darkest_hours
+		}
+	
+		if = {
+			limit = { 
+				has_global_flag = balkan_league_success
+			}
+			BLL = {
+				white_peace = {
+					tag = TUR
+					message = BW1_balkan_turkey_won_message
+				}
+				dismantle_faction = yes
+			}
+		}
+		else = {				
+			TUR = {
+				white_peace = {
+					tag = BUL
+					message = BW1_balkan_turkey_won_message
+				}
+				white_peace = {
+					tag = SER
+					message = BW1_balkan_turkey_won_message
+				}
+				white_peace = {
+					tag = GRE
+					message = BW1_balkan_turkey_won_message
+				}
+				white_peace = {
+					tag = MNT
+					message = BW1_balkan_turkey_won_message
+				}
+			}
+		}
+		TUR = {
+			if = {
+				limit = { 
+					country_exists = SMS
+					SMS = {
+						is_subject_of = GRE
+					}
+				}
+				annex_country = {
+					target = SMS
+				}
+			}
+			if = {
+				limit = { 
+					country_exists = IKR
+					IKR = {
+						is_subject_of = GRE
+					}
+				}
+				annex_country = {
+					target = IKR
+				}
+			}
+		}	
+
+		news_event = {
+			id = ww1_firstbalkan.8
+			hours = 3
+		}
+	}
+}
+
+BW1_turkish_victory_effect = {
+	BW1_status_quo_effect = yes
+	hidden_effect = {		
+		TUR = {
+			if = {
+				limit = { 
+					GRE = {
+						182 = {
+							is_owned_or_subject_PREV_trigger = yes
+						}
+					}
+				}
+				transfer_state = 182
+			}
+		}	
+	}
+}
+
+BW1_peace_effect = {
+	if = {
+		limit = { 
+			BW1_balkans_crushing_defeat = yes
+		}
+		BW1_turkish_victory_effect = yes
+	}
+	else_if = {
+		limit = { 
+			OR = {
+				BW1_has_turkey_lost_european_territories = yes	
+				BW1_turkey_crushing_defeat = yes
+			}
+		}
+		BW1_balkans_victory_effect = yes
+	}
+	else = {
+		BW1_turkish_victory_effect = yes
+	}
+	hidden_effect = {
+		every_country = {
+			limit = {
+				OR = {
+					tag = SER
+					tag = MNT
+					tag = GRE
+					tag = TUR
+				}
+			}
+			every_state = {
+				limit = {
+					NOT = {
+						is_owned_by = PREV
+					}
+				}
+				teleport_armies = {
+					limit = {
+						tag = PREV.PREV
+					}
+				}
+			}
+		}
+	}
+}
+
+BW1_TUR_truce_with_FROM = {
+	TUR = {
+		if = {
+			limit = { 
+				FROM = {
+					tag = BUL
+				}
+			}
+			add_ideas = BW1_armistice_TUR_bul
+		}
+		else_if = {
+			limit = { 
+				FROM = {
+					tag = SER
+				}				
+			}
+			add_ideas = BW1_armistice_TUR_ser
+		}
+		else_if = {
+			limit = { 
+				FROM = {
+					tag = GRE
+				}				
+			}
+			add_ideas = BW1_armistice_TUR_gre
+		}
+		else_if = {
+			limit = { 
+				FROM = {
+					tag = MNT
+				}				
+			}
+			add_ideas = BW1_armistice_TUR_mnt
+		}
+	}
+}
+
+# Second Balkan War
+
+BW2_SER_satisfy_bulgaria_effect = {
+	add_political_power = -50
+	every_owned_state = {
+		limit = {
+			OR = {
+				state = 203
+				state = 1258
+				state = 1140
+			}
+		}
+		transfer_state_to = BUL
+	}
+	hidden_effect = {		
+		BUL = {
+			country_event = {
+				id = ww1_secondbalkan.32
+				days = 1
+			}
+		}
+	}
+}
+
+BW2_BUL_satisfy_antibulgaria_effect = {
+	add_political_power = -70
+	every_owned_state = {
+		limit = {
+			OR = {
+				state = 1258
+				state = 1140
+			}
+		}
+		transfer_state_to = SER
+	}
+	every_owned_state = {
+		limit = {
+			OR = {
+				state = 731
+				state = 345
+			}
+		}
+		transfer_state_to = GRE
+	}
+	hidden_effect = {		
+		SER = {
+			country_event = {
+				id = ww1_secondbalkan.35
+				days = 1
+			}
+		}
+		if = {
+			limit = { 
+				GRE = {
+					is_in_faction_with = SER
+				}
+			}
+			GRE = {
+				country_event = {
+					id = ww1_secondbalkan.35
+					days = 1
+				}
+			}
+		}
+		BUL = {
+			complete_national_focus = BUL_relative_hegemony
+		}
+		BW2_dissolve_balkan_alliance = yes
+	}
+}
+
+BW2_init_effect = {
+	hidden_effect = {
+		set_global_flag =  kis_secondbalkan_war
+		add_named_threat = {
+			threat = 2
+			name = ww1_secondbalkan.3.t
+		}
+		SER = {
+			country_event = ww1_secondbalkan.3
+		}
+		news_event = {
+			id = ww1_secondbalkan.16
+			hours = 3
+		}
+		BUL = {
+			activate_mission = BW2_war_timer
+			every_other_country = {
+				limit = {
+					OR = {
+						tag = ROM
+						tag = SER
+						tag = GRE
+						tag = MNT
+						tag = TUR
+					}
+				}
+				activate_mission = BW2_war_timer_fake
+			}
+			if = {
+				limit = {
+					has_idea = SER_russian_protection
+				}
+				remove_ideas = SER_russian_protection
+			}
+			RUS = {
+				if = {
+					limit = {
+						has_non_aggression_pact_with = PREV
+					}
+					diplomatic_relation = {
+						country = PREV
+						relation = non_aggression_pact
+						active = no
+					}
+				}
+			}
+			ROM = {
+				country_event = {
+					id = ww1_secondbalkan.21
+					days = 2
+				}
+			}
+			TUR = {
+				country_event = {
+					id = ww1_secondbalkan.21
+					days = 2
+				}
+			}
+		}
+	}	
+}
+
+BW2_intervention_in_bulgaria_effect = {
+	declare_war_on = {
+		target = BUL
+		type = take_claimed_state
+	}
+	if = {
+		limit = { 
+			tag = ROM
+		}
+		hidden_effect = {					
+			news_event = {
+				id = ww1_secondbalkan.17
+				hours = 1
+			}
+		}
+		if = {
+			limit = { 
+				SER = {
+					is_faction_leader = yes
+				}
+			}
+			SER = {
+				add_to_faction = ROOT
+			}
+		}
+	}
+	else_if = {
+		limit = { 
+			tag = TUR
+		}
+		activate_mission = BW2_turkey_intervention
+		hidden_effect = {
+			news_event = {
+				id = ww1_secondbalkan.18
+				days = 1
+			}
+			country_event = {
+				id = ww1_secondbalkan.26
+				days = 3
+			}
+			BUL = {
+				activate_mission = BW2_turkey_intervention_fake
+			}
+			# Russian Intervention?
+			RUS = {
+				country_event = {
+					id = ww1_secondbalkan.13
+					days = 3
+				}
+			}
+		}
+	}	
+}
+
+BW2_balkans_victory_effect = {
+	custom_effect_tooltip = BW2_balkans_victory_tt
+	set_global_flag = kis_secondbalkanwar_lose
+	hidden_effect = {		
+		BUL = {
+			set_country_flag = defeated_in_bw2
+			complete_national_focus = BUL_first_national_catastrophe
+			country_event = ww1_secondbalkan.27
+			country_event = {
+				id = ww1_secondbalkan.6
+				days = 2
+			}
+			every_owned_state = {
+				limit = {
+					OR = {
+						state = 106
+						state = 203
+						state = 1258
+						state = 759
+						state = 1140
+						state = 1141
+						state = 1213
+					}
+				}
+				transfer_state_to = SER
+			}
+			if = {
+				limit = { 
+					GRE = {
+						has_war_together_with = SER
+					}
+				}
+				every_owned_state = {
+					limit = {
+						OR = {
+							state = 184
+							state = 345
+							state = 1255
+							state = 731
+							state = 1256
+						}
+					}
+					transfer_state_to = GRE
+				}
+			}
+			if = {
+				limit = { 
+					ROM = {
+						has_war_together_with = SER
+					}
+				}
+				if = {
+					limit = {
+						77 = {
+							is_owned_by = PREV
+						}
+					}
+					77 = {
+						transfer_state_to = ROM
+					}
+				}
+			}
+			country_event = {
+				id = ww1_bulgaria.12
+				days = 1
+			}
+			every_country = {
+				limit = {
+					OR = {
+						tag = SER
+						tag = GRE
+						tag = ROM
+						tag = MNT
+					}
+				}
+				if = {
+					limit = {
+						has_military_access_to = ROM
+					}
+					diplomatic_relation = {
+						country = ROM
+						relation = military_access
+						active = no
+					}
+				}
+				set_major = no
+			}
+		}
+		every_enemy_country = {
+			limit = {
+				OR = {
+					tag = ROM
+					tag = SER
+					tag = GRE
+					tag = MNT
+				}
+			}
+			country_event = ww1_secondbalkan.5
+			set_country_flag = kis_secondbalkan_war_winner
+			BUL = {
+				white_peace = {
+					tag = PREV
+					message = BW2_balkans_victory_message
+				}
+			}
+		}
+		BW2_dissolve_balkan_alliance = yes
+	}
+}
+
+BW2_bulgaria_victory_effect = {
+	custom_effect_tooltip = BW2_bulgaria_victory_tt
+	hidden_effect = {	
+		BUL = {
+			complete_national_focus = BUL_victory_in_second_balkan_war
+			set_country_flag = kis_secondbalkan_war_winner
+			country_event = ww1_secondbalkan.8
+		}
+		set_global_flag = kis_secondbalkanwar_victory
+		news_event = {
+			id = ww1_secondbalkan.19
+			hours = 3
+		}
+		SER = {
+			white_peace = {
+				tag = BUL
+				message = BW2_bulgaria_victory_message
+			}
+			every_faction_member = {
+				set_country_flag = defeated_in_bw2
+				country_event =  ww1_secondbalkan.9
+				if = {
+					limit = {
+						tag = SER
+					}
+					country_event = {
+						id = ww1_serbia.36
+						days = 15
+					}
+				}				
+			}
+		}
+		every_country = {
+			limit = {
+				OR = {
+					tag = SER
+					tag = GRE
+					tag = MNT
+					tag = ROM
+				}
+			}
+			set_major = no
+		}
+		every_state = {
+			limit = {
+				owner = {
+					has_country_flag = defeated_in_bw2
+					OR = {
+						tag = SER
+						tag = GRE
+						tag = ROM
+					}
+				}
+				OR = {
+					state = 203
+					state = 1258
+					state = 821
+					state = 106
+					state = 345
+					state = 1255
+					state = 759
+					state = 731
+					state = 1256
+					state = 846
+					state = 756
+					state = 860
+					state = 341
+					state = 860
+					state = 1140
+					state = 1141
+					state = 1213
+				}
+			}
+			transfer_state_to = BUL
+		}
+		BW2_dissolve_balkan_alliance = yes
+	}
+}
+
+BW2_stalemate_effect = {
+	custom_effect_tooltip = BW2_stalemate_tt
+	set_global_flag = kis_secondbalkanwar_stalemate
+	hidden_effect = {		
+		BUL = {
+			if = {
+				limit = { 
+					has_global_flag = balkan_league_success
+				}
+				if = {
+					limit = { 
+						ROM = {
+							has_capitulated = yes
+							846 = {
+								is_owned_by = PREV
+							}
+						}
+					}
+					transfer_state = 846
+				}
+				else_if = {
+					limit = { 
+						GRE = {
+							has_capitulated = yes
+							345 = {
+								is_owned_by = PREV
+							}
+						}
+					}
+					transfer_state = 345
+				}
+			}
+			complete_national_focus = BUL_relative_hegemony
+			country_event = ww1_secondbalkan.22
+			white_peace = {
+				tag = SER
+				message = BW2_stalemate_message
+			}
+			SER = {
+				country_event = ww1_secondbalkan.22
+			}
+			if = {
+				limit = { 
+					ROM = {
+						has_war_with = PREV
+					}
+				}
+				white_peace = {
+					tag = ROM
+					message = BW2_stalemate_message
+				}
+				ROM = {
+					country_event = ww1_secondbalkan.22
+				}
+			}
+			if = {
+				limit = { 
+					GRE = {
+						has_war_with = PREV
+					}
+				}
+				white_peace = {
+					tag = GRE
+					message = BW2_stalemate_message
+				}
+				GRE = {
+					country_event = ww1_secondbalkan.22
+				}
+			}
+		}
+		BW2_dissolve_balkan_alliance = yes
+	}
+}
+
+BW2_dissolve_balkan_alliance = {
+	if = {
+		limit = { 
+			BUL = {
+				is_faction_leader = yes
+			}
+		}
+		BUL = {
+			dismantle_faction = yes
+		}
+	}
+	else_if = {
+		limit = { 
+			SER = {
+				is_faction_leader = yes
+			}
+		}
+		SER = {
+			dismantle_faction = yes
+		}
+	}
+	else_if = {
+		limit = { 
+			GRE = {
+				is_faction_leader = yes
+			}
+		}
+		GRE = {
+			dismantle_faction = yes
+		}
+	}
+	else_if = {
+		limit = { 
+			ROM = {
+				is_faction_leader = yes
+			}
+		}
+		ROM = {
+			dismantle_faction = yes
+		}
+	}
+	else_if = {
+		limit = { 
+			MNT = {
+				is_faction_leader = yes
+			}
+		}
+		MNT = {
+			dismantle_faction = yes
+		}
+	}
+}
+
+BW2_peace_effect = {
+	if = {
+		limit = { 
+			OR = {
+				BW2_bulgaria_crushing_defeat = yes
+				AND = {
+					BW2_balkans_partly_defeat = no
+					BW2_bulgaria_partly_defeat = yes
+				}
+			}
+		}
+		BW2_balkans_victory_effect = yes
+	}
+	else_if = {
+		limit = { 
+			OR = {
+				BW2_balkans_crushing_defeat = yes
+				AND = {
+					BW2_balkans_partly_defeat = yes
+					BW2_bulgaria_partly_defeat = no
+				}
+			}
+		}
+		BW2_bulgaria_victory_effect = yes
+	}
+	else = {
+		BW2_stalemate_effect = yes
+	}
+	hidden_effect = {
+		every_country = {
+			limit = {
+				OR = {
+					tag = SER
+					tag = MNT
+					tag = GRE
+				}
+			}
+			every_state = {
+				limit = {
+					NOT = {
+						is_owned_by = PREV
+					}
+				}
+				teleport_armies = {
+					limit = {
+						tag = PREV.PREV
+					}
+				}
+			}
+		}
+	}	
+}
+
+# Turkish Intervention
+BW2_turkish_victory_effect = {
+	custom_effect_tooltip = TUR_bw2_victory_tt
+	hidden_effect = {	
+		TUR = {
+			set_country_flag = kis_secondbalkan_war_winner
+			country_event = ww1_secondbalkan.25
+			country_event = {
+				id = ww1_secondbalkan.10
+				days = 20
+			}
+			if = {
+				limit = { 
+					has_subject = WTH
+				}
+				set_autonomy = {
+					target = WTH
+					autonomous_state = autonomy_free
+					end_wars = no
+				}
+			}
+			BUL = {
+				country_event = ww1_secondbalkan.25
+				country_event = {
+					id = ww1_secondbalkan.10
+					days = 20
+				}
+				if = {
+					limit = {
+						country_exists = WTH
+					}
+					activate_mission = BW2_dissolve_wth
+				}
+				every_owned_state = {
+					limit = {
+						OR = {
+							state = 756
+							AND = {
+								is_controlled_by = PREV.PREV
+								state = 200
+							}
+						}
+					}
+					transfer_state_to = PREV.PREV
+				}
+			}
+			white_peace = {
+				tag = BUL
+				message = BW2_ottoman_victory_message
+			}
+		}
+	}
+}
+
+BW2_turkish_lose_effect = {
+	custom_effect_tooltip = TUR_bw2_lose_tt
+	hidden_effect = {
+		TUR = {
+			add_war_support = -0.1
+			country_event = ww1_secondbalkan.23
+			if = {
+				limit = { 
+					has_subject = WTH
+				}
+				set_autonomy = {
+					target = WTH
+					autonomous_state = autonomy_free
+					end_wars = no
+				}
+			}
+			white_peace = {
+				tag = BUL
+				message = BW2_ottoman_withdrawal_defeat_message
+			}
+		}
+		BUL = {
+			add_war_support = 0.1
+			country_event = ww1_secondbalkan.24
+			if = {
+				limit = {
+					country_exists = WTH
+				}
+				activate_mission = BW2_dissolve_wth
+			}
+		}
+	}
+}
+
+BW2_turkish_intervention_peace_effect = {
+	if = {
+		limit = { 
+			OR = {
+				BW2_turkish_intervention_turkey_fail_of_intervention = yes
+				BW2_turkish_intervention_turkey_total_defeat = yes
+			}
+		}
+		BW2_turkish_lose_effect = yes
+	}
+	else = {
+		BW2_turkish_victory_effect = yes
+	}
+}

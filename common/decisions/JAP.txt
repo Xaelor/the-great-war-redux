@@ -1,4 +1,4 @@
-peace_deals = {
+TGWR_great_power_politics = {
 	JAP_sue_for_peace_KOR = {
 		icon = GFX_decision_eng_trade_unions_support
 		days_mission_timeout = 120
@@ -180,6 +180,9 @@ JAP_cat_siberian_intervention = {
 				}
 			}
 		}
+		target_root_trigger = {
+			has_global_flag = JAP_start_siberian_intervention
+		}
 		available = {
 
 		}
@@ -267,6 +270,9 @@ JAP_cat_siberian_intervention = {
 				}
 			}
 		}
+		target_root_trigger = {
+			has_global_flag = JAP_start_siberian_intervention
+		}
 		fire_only_once = no
 		days_re_enable = 100
 		custom_cost_trigger = {
@@ -315,6 +321,9 @@ JAP_cat_siberian_intervention = {
 			NOT = {
 				has_war_with = SOV
 			}
+		}
+		target_root_trigger = {
+			has_global_flag = JAP_start_siberian_intervention
 		}
 		complete_effect = {
 			FROM = {
@@ -580,7 +589,9 @@ JAP_cat_siberian_intervention = {
 			}
 		}
 		available = {
-			any_other_country = {
+			any_country_with_original_tag_of = {
+				target = constant:country_groups.russian_tag
+				tooltip = any_russian_tag_tt
 				has_idea = JAP_siberian_intervention
 			}
 			has_war_with_major = no
@@ -637,35 +648,28 @@ JAP_cat_siberian_intervention = {
 	}
 }
 
-operations = {
+TGWR_great_power_politics = {
 	JAP_invade_kiautschou_mission_activate = {
 		icon = GFX_decision_generic_operation
 		allowed = {
 			original_tag = JAP
 		}
-		target_trigger = {
-			FROM = {
-				owns_state = 745
-			}
-		}
-		targets = {
-			GER
-		}
 		available = {
 			has_completed_focus = JAP_ww1_Siege_of_Tsingtao
-			FROM = {
+			GER = {
 				controls_state = 745
 			}
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			has_capitulated = no
 			is_subject = no
-			has_war_with = FROM
+			has_war_with = GER
 			872 = {
 				owner = {
 					NOT = {
 						has_war_with = ROOT
-						has_war_with = FROM
+						has_war_with = GER
 					}
 				}
 			}
@@ -680,8 +684,8 @@ operations = {
 				has_war = no
 				has_capitulated = yes
 				is_subject = yes
-				NOT = { has_war_with = FROM }
-				FROM = {
+				NOT = { has_war_with = GER }
+				GER = {
 					NOT = { controls_state = 745 }
 				}
 				controls_state = 745
@@ -735,13 +739,40 @@ operations = {
 						872 = { owns_or_subject_of = no }
 					}
 					# Chinese reaction
-					872 = { owner = { country_event = ww1_kiautschou.3 } }
+					CHN = {
+						country_event = ww1_kiautschou.3
+						if = {
+							limit = {
+								NOT = { owns_state = 872 }
+							}
+							872 = {
+								OWNER = {
+									country_event = ww1_kiautschou.11
+								}
+							}
+						}
+					}
 				}
 				# first they control every provinces
-				FROM = { transfer_state = 872 }
-				set_state_owner = 872
-				# German reaction
-				FROM = {
+				872 = {
+					add_contested_owner = CHN
+					if = {
+						limit = {
+							CHN = {
+								NOT = { owns_state = 597 }
+							}
+						}
+						597 = {
+							OWNER = {
+								872 = { add_contested_owner = PREV }
+							}
+						}
+					}
+					transfer_state_to = GER
+					set_state_owner_to = ROOT
+				}
+				GER = {
+					# German reaction
 					country_event = ww1_kiautschou.5
 				}
 				country_event = ww1_kiautschou.2
@@ -768,6 +799,7 @@ operations = {
 			}
 		}
 		visible = {
+			great_power_politics_great_war_visible = yes
 			controls_state = 745
 			is_subject = no
 			NOT = {
@@ -796,7 +828,19 @@ operations = {
 					name = kiautschou_mission_fired
 				}
 				# Chinese reaction
-				872 = { owner = { country_event = ww1_kiautschou.3 } }
+				CHN = {
+					country_event = ww1_kiautschou.3
+					if = {
+						limit = {
+							NOT = { owns_state = 872 }
+						}
+						872 = {
+							OWNER = {
+								country_event = ww1_kiautschou.11
+							}
+						}
+					}
+				}
 			}
 			transfer_state = 872
 		}

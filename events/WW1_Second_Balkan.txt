@@ -88,162 +88,66 @@ country_event = {
 	desc = ww1_secondbalkan.3.d
 	picture = GFX_report_event_bul_troops_macedonia
 	is_triggered_only = yes
-	immediate = {
-		hidden_effect = {
-			news_event = {
-				id = ww1_secondbalkan.16
-				hours = 3
-			}
-			BUL = {
-				if = {
-					limit = {
-						has_idea = SER_russian_protection
-					}
-					remove_ideas = SER_russian_protection
-				}
-				RUS = {
-					if = {
-						limit = {
-							has_non_aggression_pact_with = PREV
-						}
-						diplomatic_relation = {
-							country = PREV
-							relation = non_aggression_pact
-							active = no
-						}
-					}
-				}
-				declare_war_on = {
-					target = SER
-					type = take_claimed_state
-					generator = {
-						203
-					}
-				}
-				declare_war_on = {
-					target = GRE
-					type = take_claimed_state
-					generator = {
-						345
-					}
-				}
-				# if = {
-				# 	limit = {
-				# 		is_in_faction = no
-				# 	}
-				# 	create_faction = greater_bulgaria
-				# }
-			}
-			if = {
-				limit = {
-					SER = {
-						is_in_faction = no
-					}
-				}
-				create_faction_from_template = faction_template_generic
-				set_faction_name = anti_bulgarian_league
-				add_to_faction = GRE
-				add_to_faction = MNT
-				else_if = {
-					limit = {
-						SER = {
-							is_faction_leader = yes
-						}
-					}
-					set_faction_name = anti_bulgarian_league
-				}
-				GRE = {
-					set_major = yes
-				}
-			}
-			if = {
-				limit = {
-					has_dlc = "No Compromise, No Surrender"
-					SER = {
-						is_faction_leader = yes
-						has_faction_template = faction_template_balkan_league
-					}
-				}
-				SER = {
-					add_faction_goal_slot = {
-						category  = long_term 
-						value = 1 
-					}
-					add_faction_goal = faction_goal_balkan_league_defeat_bulgaria
-				}
-			}
-		}
-	}
 	option = {
 		name = event_generic_ok
 		ai_chance = {
-			factor = 100
+			base = 100
 		}
 		effect_tooltip = {
 			BUL = {
 				declare_war_on = {
 					target = SER
 					type = take_claimed_state
-					generator = {
-						203
-					}
-				}
-				declare_war_on = {
-					target = GRE
-					type = take_claimed_state
-					generator = {
-						345
-					}
 				}
 			}
 		}
 	}
 }
 #Romanian intervnetion
-country_event = {
-	id = ww1_secondbalkan.4
-	title = ww1_secondbalkan.4.t
-	desc = ww1_secondbalkan.4.d
-	picture = GFX_report_event_romanian_soldiers
-	is_triggered_only = yes
-	immediate = {
-		hidden_effect = {
-			news_event = {
-				id = ww1_secondbalkan.17
-				hours = 3
-			}
-			ROM = {
-				declare_war_on = {
-					target = BUL
-					type = take_claimed_state
-					generator = {
-						77
-					}
-				}
-			}
-			SER = {
-				add_to_faction = ROM
-			}
-		}
-	}
-	option = {
-		name = event_generic_ok
-		ai_chance = {
-			factor = 100
-		}
-		effect_tooltip = {
-			ROM = {
-				declare_war_on = {
-					target = BUL
-					type = take_claimed_state
-					generator = {
-						77
-					}
-				}
-			}
-		}
-	}
-}
+#country_event = {
+#	id = ww1_secondbalkan.4
+#	title = ww1_secondbalkan.4.t
+#	desc = ww1_secondbalkan.4.d
+#	picture = GFX_report_event_romanian_soldiers
+#	is_triggered_only = yes
+#	immediate = {
+#		hidden_effect = {
+#			news_event = {
+#				id = ww1_secondbalkan.17
+#				hours = 3
+#			}
+#			ROM = {
+#				declare_war_on = {
+#					target = BUL
+#					type = take_claimed_state
+#					generator = {
+#						77
+#					}
+#				}
+#			}
+#			SER = {
+#				add_to_faction = ROM
+#			}
+#		}
+#	}
+#	option = {
+#		name = event_generic_ok
+#		ai_chance = {
+#			factor = 100
+#		}
+#		effect_tooltip = {
+#			ROM = {
+#				declare_war_on = {
+#					target = BUL
+#					type = take_claimed_state
+#					generator = {
+#						77
+#					}
+#				}
+#			}
+#		}
+#	}
+#}
 
 # Bulgaria Surrenders to the Balkans
 country_event = {
@@ -254,22 +158,14 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_secondbalkan.5.a
-		FROM = {
-			country_event = {
-				id = ww1_secondbalkan.6
-				days = 5
+		effect_tooltip = {			
+			BUL = {
+				white_peace = ROM
+				white_peace = GRE
+				white_peace = SER
+				white_peace = MNT
 			}
 		}
-		every_country = {
-			limit = {
-				NOT = {
-					tag = TUR
-				}
-				has_war_with = BUL
-			}
-			white_peace = BUL
-		}
-		set_global_flag = kis_secondbalkanwar_lose
 	}
 }
 
@@ -282,116 +178,6 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_secondbalkan.6.a
-		every_owned_state = {
-			limit = {
-				NOT = {
-					has_state_flag = under_bulgarian_control_for_partial_defeat
-				}
-				OR = {
-					state = 106
-					state = 203
-					state = 759
-					state = 1140
-					state = 1141
-					state = 1213
-				}
-			}
-			transfer_state_to = SER
-		}
-		every_owned_state = {
-			limit = {
-				NOT = {
-					has_state_flag = under_bulgarian_control_for_partial_defeat
-				}
-				OR = {
-					state = 184
-					state = 345
-					state = 731
-				}
-			}
-			transfer_state_to = GRE
-		}
-		every_owned_state = {
-			limit = {
-				NOT = {
-					has_state_flag = under_bulgarian_control_for_partial_defeat
-				}
-				state = 77
-			}
-			transfer_state_to = ROM
-		}
-		every_state = {
-			limit = {
-				has_state_flag = under_bulgarian_control_for_partial_defeat
-				any_neighbor_state = {
-					is_controlled_by = BUL #avoid floating states isolated from mainland
-				}
-				OR = {
-					is_claimed_by = BUL
-					is_core_of = BUL
-				}
-			}
-			transfer_state_to = BUL
-		}
-		country_event = {
-			id = ww1_bulgaria.12
-			days = 1
-		}
-		hidden_effect = {
-			if = {
-				limit = {
-					has_war = no
-				}
-				news_event = {
-					id = ww1_secondbalkan.20
-					hours = 3
-				}
-			}
-			every_other_country = {
-				limit = {
-					is_faction_leader = yes
-					OR = {
-						tag = SER
-						tag = GRE
-						tag = ROM
-					}
-				}
-				if = {
-					limit = {
-						has_military_access_to = ROM
-					}
-					diplomatic_relation = {
-						country = ROM
-						relation = military_access
-						active = no
-					}
-				}
-				dismantle_faction = yes
-			}
-			every_country = {
-				limit = {
-					OR = {
-						tag = SER
-						tag = GRE
-						tag = ROM
-						tag = MON
-					}
-				}
-				# idk where this apparent set_major code snipplet is so am adding it myself
-				set_major = no
-			}
-		}
-		if = {
-			limit = {
-				TUR = {
-					has_country_flag = kis_secondbalkan_war_winner
-				}
-			}
-			TUR = {
-				transfer_state = 756
-				transfer_state = 200
-			}
-		}
 	}
 }
 
@@ -400,51 +186,9 @@ country_event = {
 	id = ww1_secondbalkan.7
 	title = ww1_secondbalkan.7.t
 	desc = ww1_secondbalkan.7.d
-	fire_only_once = yes
-	trigger = {
-		tag = RUS
-		is_subject = no
-		has_war = no
-		has_global_flag = kis_secondbalkan_war
-		TUR = {
-			has_country_flag = BW1_loser
-			# they've crossed the maritsa river
-			any_state = {
-				OR = {
-					region = 14
-					NOT = {
-						state = 200
-						state = 341
-						state = 347
-						state = 756
-						state = 849
-						state = 860
-						state = 1018
-					}
-				}
-				OR = {
-					is_owned_by = PREV
-					AND = {
-						is_owned_by = BUL
-						is_controlled_by = PREV
-					}
-				}
-			}
-			NOT = {
-				has_country_flag = TUR_special_operation_last_less_than_30_days
-				is_in_faction_with = ROOT
-				is_subject_of = ROOT
-			}
-		}
-	}
-	immediate = {
-		hidden_effect = {
-			set_global_flag = RUS_TUR_timeout_ultimatum
-		}
-	}
+	is_triggered_only = yes
 	option = {
 		name = ww1_secondbalkan.7.a
-		custom_effect_tooltip = historical_tt
 		add_war_support = 0.05
 		custom_effect_tooltip = if_they_refuse
 		effect_tooltip = {
@@ -462,11 +206,11 @@ country_event = {
 			}
 		}
 	}
-	option = {
-		name = ww1_secondbalkan.7.b
-		ai_chance = { factor = 0 }
-		add_war_support = -0.05
-	}
+	#option = {
+	#	name = ww1_secondbalkan.7.b
+	#	ai_chance = { base = 0 }
+	#	add_war_support = -0.05
+	#}
 }
 
 #Serbia and Greece surrender
@@ -478,49 +222,6 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_secondbalkan.8.a
-		every_other_country = {
-			limit = {
-				has_war_with = ROOT
-				is_in_faction_with = FROM
-			}
-			white_peace = ROOT
-			set_country_flag = defeated_in_bw2
-			effect_tooltip = {
-				every_owned_state = {
-					limit = {
-						OR = {
-							is_claimed_by = ROOT
-							is_core_of = ROOT
-						}
-					}
-					transfer_state_to = ROOT
-				}
-			}
-			hidden_effect = {
-				country_event = {
-					id = ww1_secondbalkan.9
-					days = 5
-				}
-				if = {
-					limit = {
-						is_faction_leader = yes
-					}
-					dismantle_faction = yes
-				}
-				every_country = {
-					limit = {
-						OR = {
-							tag = SER
-							tag = GRE
-							tag = MON
-							tag = ROM
-						}
-					}
-					# same here
-					set_major = no
-				}
-			}
-		}
 	}
 }
 
@@ -533,50 +234,6 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_secondbalkan.9.a
-		if = {
-			limit = {
-				NOT = { has_global_flag = kis_secondbalkanwar_victory }
-			}
-			set_global_flag = kis_secondbalkanwar_victory
-			news_event = {
-				id = ww1_secondbalkan.19
-				hours = 3
-			}
-		}
-		every_owned_state = {
-			limit = {
-				OR = {
-					state = 203
-					state = 821
-					state = 106
-					state = 345
-					state = 759
-					state = 731
-					state = 846
-					state = 805
-					state = 756
-					state = 860
-					state = 341
-					state = 860
-					state = 1140
-					state = 1141
-					state = 1213
-				}
-			}
-			transfer_state_to = FROM
-		}
-		if = {
-			limit = {
-				tag = SER
-			}
-			country_event = {
-				id = ww1_serbia.36
-				days = 15
-			}
-		}
-		# GRE = {
-		# 	add_ideas = GRE_idea_national_catastrophe
-		# }
 	}
 }
 
@@ -587,61 +244,24 @@ country_event = {
 	desc = ww1_secondbalkan.10.d
 	picture = GFX_report_event_tur_turkish_soldiers
 	is_triggered_only = yes
-	trigger = {
-		NOT = {
-			has_war_with = RUS
-			has_war_with = BUL
-			has_war_with = TUR
-		}
-	}
 	option = {
 		name = ww1_secondbalkan.10.a
+		effect_tooltip = {
+			756 = {
+				transfer_state_to = TUR
+			}
+		}
 		trigger = {
 			NOT = { tag = BUL }
 		}
-		set_country_flag = kis_secondbalkan_war_winner
-		if = {
-			limit = {
-				country_exists = WTH
-			}
-			every_state = {
-				limit = {
-					is_core_of = WTH
-				}
-				remove_core_of = WTH
-			}
-			BUL = {
-				annex_country = {
-					target = WTH
-				}
-				if = {
-					limit = {
-						OR = {
-							owns_state = 184
-							owns_state = 345
-						}
-						GRE = { has_country_flag = kis_secondbalkan_war_winner }
-					}
-					every_owned_state = {
-						limit = {
-							OR = {
-								state = 184
-								state = 345
-							}
-						}
-						transfer_state_to = GRE
-					}
-				}
-			}
-		}
-		hidden_effect = {
-			BUL = {
-				country_event = ww1_secondbalkan.10
-			}
-		}
 	}
 	option = {
 		name = ww1_secondbalkan.10.a
+		effect_tooltip = {
+			756 = {
+				transfer_state_to = TUR
+			}
+		}
 		trigger = {
 			tag = BUL
 		}
@@ -688,7 +308,6 @@ country_event = {
 			transfer_state = 200
 			transfer_state = 756
 			add_war_support = -0.05
-			set_global_flag = TUR_BUL_separated_peace
 			country_event = {
 				id = ww1_secondbalkan.10
 				days = 30
@@ -782,11 +401,11 @@ news_event = {
 	picture = GFX_news_event_020
 	is_triggered_only = yes
 	major = yes
-	immediate = {
-		hidden_effect = {
-			set_global_flag = bw2_russia_threat
-		}
-	}
+	#immediate = {
+	#	hidden_effect = {
+	#		set_global_flag = bw2_russia_threat
+	#	}
+	#}
 	option = {
 		name = ww1_secondbalkan.14.a
 		trigger = {
@@ -808,27 +427,6 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = ww1_secondbalkan.15.a
-		every_state = {
-			limit = {
-				is_owned_by = FROM
-				OR = {
-					state = 200
-					state = 756
-					AND = {
-						is_controlled_by = ROOT
-						OR = {
-							state = 184
-							state = 345
-							state = 451
-							state = 757
-							state = 849
-						}
-					}
-				}
-			}
-			transfer_state_to = ROOT
-		}
-		white_peace = FROM
 	}
 }
 
@@ -969,5 +567,534 @@ news_event = {
 		trigger = {
 			tag = BUL
 		}
+	}
+}
+
+
+# OLD STUFF IS ABOVE
+
+
+
+# intervention in bulgaria for everyone
+country_event = {
+	id = ww1_secondbalkan.21
+	title = ww1_secondbalkan.21.t
+	desc = ww1_secondbalkan.21.d
+	is_triggered_only = yes
+	trigger = {
+		is_BW2_ongoing = yes
+		is_in_faction = no
+	}
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = { 
+					tag = ROM
+				}
+				add_state_claim = 77
+			}
+		}
+	}
+	option = {
+		name = ww1_secondbalkan.21.a
+		set_country_flag = BW2_can_intervene_in_bulgaria
+		unlock_decision_tooltip = BW2_intervention_in_bulgaria
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = ww1_secondbalkan.21.b
+		BW2_intervention_in_bulgaria_effect = yes
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+# The stalemate outcome of the war
+country_event = {
+	id = ww1_secondbalkan.22
+	title = ww1_secondbalkan.22.t
+	desc = ww1_secondbalkan.22.d
+	is_triggered_only = yes
+	option = {
+		name = ww1_secondbalkan.22.a
+		add_war_support = -0.1
+	}
+}
+
+# turkey failed intervention in bulgaria TUR
+country_event = {
+	id = ww1_secondbalkan.23
+	title = ww1_secondbalkan.23.t
+	desc = ww1_secondbalkan.23.d
+	is_triggered_only = yes
+	option = {
+		name = ww1_secondbalkan.23.a
+		effect_tooltip = {
+			white_peace = BUL
+			add_war_support = -0.1
+		}
+	}
+}
+
+# turkey failed intervention in bulgaria BUL
+country_event = {
+	id = ww1_secondbalkan.24
+	title = ww1_secondbalkan.24.t
+	desc = ww1_secondbalkan.24.d
+	is_triggered_only = yes
+	option = {
+		name = ww1_secondbalkan.24.a
+		effect_tooltip = {
+			white_peace = TUR
+			add_war_support = 0.1
+		}
+	}
+}
+
+# bulgaria signed peace with turkey
+country_event = {
+	id = ww1_secondbalkan.25
+	title = {
+		text = ww1_secondbalkan.25.t_bul
+		trigger = {
+			tag = BUL
+		}
+	}
+	desc = {
+		text = ww1_secondbalkan.25.d_bul
+		trigger = {
+			tag = BUL
+		}
+	}
+	title = {
+		text = ww1_secondbalkan.25.t_tur
+		trigger = {
+			tag = TUR
+		}
+	}
+	desc = {
+		text = ww1_secondbalkan.25.d_tur
+		trigger = {
+			tag = TUR
+		}
+	}
+	is_triggered_only = yes
+	option = {
+		name = ww1_secondbalkan.25.a
+		trigger = {
+			tag = BUL
+		}
+		effect_tooltip = {
+			white_peace = TUR
+		}
+	}
+	option = {
+		name = ww1_secondbalkan.25.b
+		trigger = {
+			tag = TUR
+		}
+		effect_tooltip = {
+			white_peace = BUL
+		}
+	}
+}
+
+# create WTH - TUR
+country_event = {
+	id = ww1_secondbalkan.26
+	title = ww1_secondbalkan.26.t
+	desc = ww1_secondbalkan.26.d
+	is_triggered_only = yes
+	option = {
+		name = ww1_secondbalkan.26.a
+		unlock_decision_tooltip = TUR_create_wth
+	}
+}
+
+# surrender to balkans - BUL
+country_event = {
+	id = ww1_secondbalkan.27
+	title = ww1_secondbalkan.27.t
+	desc = ww1_secondbalkan.27.d
+	is_triggered_only = yes
+	option = {
+		name = ww1_secondbalkan.27.a
+		effect_tooltip = {			
+			BUL = {
+				white_peace = ROM
+				white_peace = GRE
+				white_peace = SER
+				white_peace = MNT
+			}
+		}
+	}
+}
+
+# serbia starts BW2
+country_event = {
+	id = ww1_secondbalkan.28
+	title = ww1_secondbalkan.28.t
+	desc = ww1_secondbalkan.28.d
+	is_triggered_only = yes
+	timeout_days = 4
+	immediate = {
+		SER = {
+			create_faction_from_template = faction_template_anti_bulgarian_league
+			MNT = {
+				country_event = ww1_secondbalkan.33
+			}
+			GRE = {
+				country_event = {
+					id = ww1_secondbalkan.33
+					days = 1
+				}
+			}
+		}
+	}
+	option = {
+		name = ww1_secondbalkan.28.a
+		effect_tooltip = {			
+			GRE = {
+				country_event = {
+					id = ww1_secondbalkan.33
+					days = 1
+				}
+			}
+		}
+	}
+}
+
+# serbia starts BW2 - BUL notifies
+country_event = {
+	id = ww1_secondbalkan.29
+	title = ww1_secondbalkan.29.t
+	desc = ww1_secondbalkan.29.d
+	is_triggered_only = yes
+	option = {
+		name = ww1_secondbalkan.29.a
+		unlock_decision_tooltip = BUL_cede_macedonia_to_serbia
+		custom_effect_tooltip = BW2_preventing_ahist_war_tt
+		effect_tooltip = {			
+			activate_mission = BW2_war_with_bulgarian_traitor_fake
+		}
+		ai_chance = {
+			base = 5
+		}
+	}
+	option = {
+		name = ww1_secondbalkan.29.b
+		BW2_BUL_satisfy_antibulgaria_effect = yes
+		ai_chance = {
+			base = 0
+		}
+	}
+}
+
+#Serbia claims Ohrid
+country_event = {
+	id = ww1_secondbalkan.30
+	title = ww1_secondbalkan.30.t
+	desc = ww1_secondbalkan.30.d
+	picture = GFX_report_event_generic_rifles
+	is_triggered_only = yes
+	timeout_days = 3
+	immediate = {
+		hidden_effect = {
+			add_state_claim = 203
+			add_state_claim = 1140
+			add_state_claim = 1258
+			if = {
+				limit = {
+					is_faction_leader = yes
+				}
+				SER = {
+					set_faction_leader = yes
+				}
+			}
+			leave_faction = yes
+			activate_mission = BW2_war_with_serbian_traitor
+
+			remove_opinion_modifier = {
+				target = SER
+				modifier = BUL_treaty_of_friendship
+			}
+			diplomatic_relation = {
+				country = SER
+				relation = guarantee
+				active = no
+			}
+			SER = {
+				country_event = ww1_secondbalkan.31
+				remove_opinion_modifier = {
+					target = ROOT
+					modifier = BUL_treaty_of_friendship
+				}
+				diplomatic_relation = {
+					country = ROOT
+					relation = guarantee
+					active = no
+				}
+				
+				activate_mission = BW2_war_with_serbian_traitor_fake
+				if = {
+					limit = { 
+						GRE = {
+							is_in_faction_with = PREV
+						}
+					}
+					GRE = {
+						activate_mission = BW2_war_with_serbian_traitor_fake
+					}
+				}
+				if = {
+					limit = { 
+						MNT = {
+							is_in_faction_with = PREV
+						}
+					}
+					MNT = {
+						activate_mission = BW2_war_with_serbian_traitor_fake
+					}
+				}
+			}
+			diplomatic_relation = {
+				country = SER
+				relation = guarantee
+				active = no
+			}			
+		}	
+	}
+	option = {
+		name = ww1_secondbalkan.30.a
+		effect_tooltip = {
+			leave_faction = yes
+			activate_mission = BW2_war_with_serbian_traitor
+			SER = {
+				country_event = ww1_secondbalkan.31
+			}				
+		}
+		custom_effect_tooltip = BW2_preventing_war_tt
+		ai_chance = {
+			base = 70
+		}
+	}
+}
+
+#Bulgaria claims Ohrid
+country_event = {
+	id = ww1_secondbalkan.31
+	title = ww1_secondbalkan.31.t
+	desc = ww1_secondbalkan.31.d
+	picture = GFX_report_event_generic_rifles
+	is_triggered_only = yes
+	timeout_days = 3
+	immediate = {
+		hidden_effect = {
+			add_state_claim = 759
+			add_state_claim = 1141
+			if = {
+				limit = {
+					has_dlc = "No Compromise, No Surrender"
+					SER = {
+						is_faction_leader = yes
+						has_faction_template = faction_template_balkan_league
+					}
+				}
+				SER = {
+					set_faction_name = anti_bulgarian_league
+					add_faction_goal_slot = {
+						category  = long_term 
+						value = 1 
+					}
+					add_faction_goal = faction_goal_balkan_league_defeat_bulgaria
+				}
+			}
+		}
+	}
+	option = {
+		name = ww1_secondbalkan.31.a
+		custom_effect_tooltip = BW2_preventing_war_tt
+		unlock_decision_tooltip = SER_cede_macedonia_to_bulgaria
+		effect_tooltip = {
+			activate_mission = BW2_war_with_serbian_traitor_fake
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+	option = {
+		name = ww1_secondbalkan.31.b
+		BW2_SER_satisfy_bulgaria_effect = yes
+		ai_chance = {
+			base = 50
+			modifier = {
+				is_historical_focus_on = yes
+				factor = 0
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ww1_secondbalkan.32
+	title = ww1_secondbalkan.32.t
+	desc = ww1_secondbalkan.32.d
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			complete_national_focus = BUL_relative_hegemony
+			BW2_dissolve_balkan_alliance = yes
+		}
+	}
+	option = {
+		name = ww1_secondbalkan.32.a
+		effect_tooltip = {
+			complete_national_focus = BUL_relative_hegemony			
+		}
+	}
+}
+
+# serbia invites us to anti-bulgarian alliance
+country_event = {
+	id = ww1_secondbalkan.33
+	title = ww1_secondbalkan.33.t
+	desc = {
+		text = ww1_secondbalkan.33.d_gre
+		trigger = {
+			tag = GRE
+		}
+	}
+	desc = {
+		text = ww1_secondbalkan.33.d_mnt
+		trigger = {
+			tag = MNT
+		}
+	}
+	picture = GFX_report_event_generic_rifles
+	is_triggered_only = yes
+	immediate = {
+		SER = {
+			add_to_faction = ROOT
+			if = {
+				limit = { 
+					ROOT = {
+						tag = GRE
+					}
+				}
+				country_event = {
+					id = ww1_secondbalkan.34
+					days = 1
+					random_hours = 7
+				}
+			}
+		}
+	}
+	option = {
+		name = ww1_secondbalkan.33.a
+		effect_tooltip = {
+			SER = {
+				add_to_faction = ROOT
+			}			
+		}
+	}
+}
+
+# ROOT joined anti bulgarian alliance
+country_event = {
+	id = ww1_secondbalkan.34
+	title = ww1_secondbalkan.34.t
+	desc = ww1_secondbalkan.34.d
+	picture = GFX_report_event_generic_rifles
+	is_triggered_only = yes
+	immediate = {
+		hidden_effect = {
+			BUL = {
+				activate_mission = BW2_war_with_bulgarian_traitor_fake
+				country_event = ww1_secondbalkan.29
+			}
+			SER = {
+				activate_mission = BW2_war_with_bulgarian_traitor
+			}
+			if = {
+				limit = { 
+					GRE = {
+						is_in_faction_with = ROOT
+					}
+				}
+				GRE = {
+					country_event = {
+						id = ww1_secondbalkan.36
+						days = 5
+					}
+				}
+			}
+			if = {
+				limit = { 
+					MNT = {
+						is_in_faction_with = ROOT
+					}
+				}
+				MNT = {
+					country_event = {
+						id = ww1_secondbalkan.36
+						days = 5
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = ww1_secondbalkan.34.a
+		effect_tooltip = {
+			SER = {
+				add_to_faction = FROM
+			}
+			activate_mission = BW2_war_with_bulgarian_traitor	
+		}
+		custom_effect_tooltip = BW2_preventing_ahist_war_tt
+	}
+}
+
+
+country_event = {
+	id = ww1_secondbalkan.35
+	title = ww1_secondbalkan.35.t
+	desc = ww1_secondbalkan.35.d
+	is_triggered_only = yes
+	option = {
+		name = ww1_secondbalkan.35.a
+		if = {
+			limit = { 
+				tag = SER
+			}
+			effect_tooltip = {
+				transfer_state = 1140
+				transfer_state = 1258
+			}
+		}
+		else_if = {
+			limit = { 
+				tag = GRE
+			}
+			effect_tooltip = {
+				transfer_state = 731
+				transfer_state = 345
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ww1_secondbalkan.36
+	title = ww1_secondbalkan.36.t
+	desc = ww1_secondbalkan.36.d
+	is_triggered_only = yes
+	option = {
+		name = ww1_secondbalkan.36.a
+		unlock_decision_tooltip = BW2_info_when_attack_ahist
+		custom_effect_tooltip = BW2_preventing_ahist_war_tt
 	}
 }

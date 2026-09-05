@@ -744,20 +744,6 @@ country_event = {
 				days = 2
 			}
 			GER_1918_revolution_effect = yes
-			if = {
-				limit = {
-					has_war = yes
-					is_great_war_ongoing = yes
-					NOT = {
-						has_global_flag = ENT_capitulation
-						has_global_flag = GER_capitulation
-					}
-				}
-				activate_targeted_decision = {
-					target = ENT
-					decision = GER_armistice
-				}
-			}
 			add_stability = -0.1
 		}
 	}
@@ -1091,23 +1077,14 @@ country_event = {
 			modifier = {
 				factor = 0
 				has_game_rule = {
-						rule = GER_postwar_path
-						option = COMMUNIST_SPARTAKIST
-						}
-						NOT = { 
-							RUS = {
-								has_country_flag = great_war_winner
-								has_country_leader = {
-								character = RUS_nikolai_ii
-								ruling_only = no
-							}
-					OR = {
-						has_cosmetic_tag = RUS_absolutism
-						NOT = {
-							has_government = communism
-							}
-						}
-					}
+					rule = GER_postwar_path
+					option = COMMUNIST_SPARTAKIST
+				}
+				NOT = {
+					RUS = {
+						has_country_flag = great_war_winner
+						is_russia_a_monarchy = yes
+					}	
 				}
 			}
 		}
@@ -1137,16 +1114,7 @@ country_event = {
 			modifier = {
 				RUS = {
 					has_country_flag = great_war_winner
-					has_country_leader = {
-						character = RUS_nikolai_ii
-						ruling_only = no
-					}
-					OR = {
-						has_cosmetic_tag = RUS_absolutism
-						NOT = {
-							has_government = communism
-						}
-					}
+					is_russia_a_monarchy = yes
 				}
 				factor = 0
 			}

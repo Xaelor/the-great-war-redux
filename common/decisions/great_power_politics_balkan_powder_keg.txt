@@ -1,0 +1,1446 @@
+@BW2_length = 60
+@BW2_turkish_intervention = 60
+
+
+# July Crisis
+TGWR_great_power_politics = { 
+	AUH_ultimatum_to_SER = {
+		icon = GFX_decision_eng_trade_unions_demand
+		
+		allowed = {
+			always = no
+		}	
+
+		targets = {
+			AUS
+		}
+		
+		available = {
+			OR = {
+				SER = {
+					is_subject_of = AUS
+				}
+				AUS = {
+					has_war_with = SER
+				}
+				has_global_flag = kis_serbia_accept
+				has_global_flag = july_crisis_ends
+			}
+		}
+		
+		activation = {
+			always = no
+		}
+
+		fire_only_once = yes		
+
+		is_good = no
+		days_mission_timeout = 28
+
+		war_with_on_timeout = AUS
+
+		timeout_effect = {
+			effect_tooltip = {
+				AUS = { country_event = ww1_franzferdinand.4 }
+			}		
+		}
+	}
+	
+	european_crisis_mission = {
+		icon = GFX_decision_generic_ignite_civil_war
+		
+		allowed = {
+			always = no
+		}
+
+		targets = {
+			SER
+		}
+		
+		available = {
+			OR = {
+				SER = {
+					is_subject_of = AUS
+				}
+				AUS = {
+					has_war_with = SER
+				}
+				has_global_flag = kis_serbia_accept
+				has_global_flag = july_crisis_ends
+			}
+		}
+
+		visible = {
+			OR = {
+				is_in_faction_with = GER
+				is_in_faction_with = FRA
+				is_actual_major = yes
+			}
+		}
+		
+		activation = {
+			always = no
+		}
+
+		fire_only_once = yes		
+
+		is_good = no
+		days_mission_timeout = 28
+
+		complete_effect = {		
+			if = {
+				limit = {
+					tag = AUS
+				}
+				delete_crisis = yes
+				set_global_flag = july_crisis_ends		
+			}
+		}	
+
+		timeout_effect = {
+			if = {
+				limit = {
+					tag = AUS
+				}
+				set_global_flag = july_crisis_ends
+				country_event = ww1_franzferdinand.4
+			}
+			custom_effect_tooltip = european_crisis_mission_tt
+		}
+	}
+	
+	#RUS_start_mobilization = {
+	#	icon = GFX_decision_generic_industry
+	#	allowed = {
+	#		tag = RUS
+	#	}
+	#	available = {
+	#		NOT = { has_war_with = AUS }
+	#	}
+	#	visible = {
+	#		great_power_politics_balkan_powder_keg_visible = yes
+	#		is_subject = no
+	#		has_capitulated = no
+	#		has_global_flag = july_crisis_alert
+	#		NOT = {
+	#			has_global_flag = july_crisis_ends
+	#			has_war_with = SER
+	#			is_in_faction_with = AUS
+	#		}
+	#	}
+	#	fire_only_once = yes
+	#	war_with_on_timeout = AUS
+	#	ai_will_do = {
+	#		base = 400
+	#		modifier = {
+	#			add = -200
+	#			NOT = {
+	#				is_in_faction_with = SER
+	#				is_in_faction_with = FRA
+	#			}
+	#		}
+	#		modifier = {
+	#			add = -200
+	#			is_in_faction_with = GER
+	#		}
+	#		modifier = {
+	#			add = -1000
+	#			has_government = communism
+	#			NOT = {
+	#				has_country_leader = {
+	#					character = RUS_nikolai_ii
+	#					ruling_only = yes
+	#				}
+	#			}
+	#			SER = {
+	#				OR = {
+	#					has_government = neutrality
+	#					has_idea = SER_aleksandar_karadjordjevic
+	#				}
+	#			}
+	#		}
+	#		modifier = {
+	#			add = -1000
+	#			is_russia_a_monarchy = yes
+	#			SER = {
+	#				has_government = communism
+	#			}
+	#		}
+	#	}
+	#	complete_effect = {
+	#		set_country_flag = RUS_mobilization_flag
+	#		add_war_support = 0.05
+	#		give_guarantee = SER
+	#		if = {
+	#			limit = {
+	#				is_in_faction_with = FRA
+	#			}
+	#			FRA = { country_event = { id = ww1_franzferdinand.9 days = 2 } }	
+	#		}
+	#	}
+	#}
+}
+
+# Northern Epirus
+TGWR_great_power_politics = {
+	GRE_leave_northern_epirus_mission = {
+		icon = GFX_decision_infiltrate_state
+		highlight_states = {
+			highlight_state_targets = {
+				state = 803
+				state = 1225
+			}
+		}
+		allowed = {
+			OR = {
+				tag = GRE
+				tag = ITA
+				tag = AUS
+			}
+		}
+		visible = {
+			OR = {
+				tag = GRE
+				has_country_flag = AUH_ITA_BUL_reaction_to_GRE_occupation_of_northern_epirus
+				has_country_flag = ROOT_against_GRE_occupation_of_northern_epirus
+			}	
+		}
+		activation = {
+			AUS = {
+				exists = yes
+				is_subject = no
+				NOT = {
+					has_country_flag = great_war_loser
+				}
+				has_country_flag = AUH_ITA_BUL_reaction_to_GRE_occupation_of_northern_epirus
+			}
+			NOT = {
+				has_global_flag = epirus_has_been_freed
+			}
+			803 = { is_owned_and_controlled_by = GRE }
+			1225 = { is_owned_and_controlled_by = GRE }
+		}
+		selectable_mission = yes
+		cost = 0
+		timeout_effect = {
+			every_country = {
+				limit = {
+					has_country_flag = ROOT_against_GRE_occupation_of_northern_epirus
+					is_subject = no
+					has_war = no
+					is_subject = no
+					NOT = {
+						has_country_flag = great_war_loser
+					}
+				}
+				declare_war_on = {
+					target = GRE
+					type = liberate_wargoal
+				}
+			}
+		}
+		complete_effect = {
+			set_global_flag = epirus_has_been_freed
+			news_event = {
+				id = ww1_greece.237
+				days = 1
+			}
+			hidden_effect = {
+				EPR = {
+					transfer_state = 803
+					transfer_state = 1225
+				}
+			}
+			every_country = {
+				limit = {
+					has_country_flag = ROOT_against_GRE_occupation_of_northern_epirus
+				}
+				country_event = {
+					id = ww1_firstbalkan.52
+					days = 2
+				}
+				clr_country_flag = ROOT_against_GRE_occupation_of_northern_epirus
+				hidden_effect = {
+					remove_decision = GRE_leave_northern_epirus_mission
+					remove_mission = GRE_leave_northern_epirus_mission
+				}
+				
+			}
+		}
+		available = {
+			if = {
+				limit = {
+					tag = GRE
+				}
+				has_completed_focus = GRE_florence_protocol
+				owns_state = 803
+				owns_state = 1225
+				else = {
+					always = no
+				}	
+			}
+			
+		}
+		ai_will_do = {
+			factor = 15
+			modifier = {
+				date < 1914.1.1
+				is_historical_focus_on = yes
+				factor = 5
+			}
+			modifier = {
+				date > 1914.2.2
+				factor = 100
+			}
+		}
+		days_mission_timeout = 400
+		is_good = no
+	}
+	GRE_send_ministers_to_northern_epirus = {
+		icon = "GFX_decision_generic_autonomy"
+		allowed = {
+			original_tag = GRE
+		}
+		targets = {
+			EPR
+		}
+		visible = {
+			great_power_politics_balkan_powder_keg_visible = yes
+			FROM = {
+				is_subject = no
+				has_war_with = ALB
+			}
+			original_tag = GRE
+		}
+		fire_only_once = yes
+		cost = 25
+		remove_effect = {
+			FROM = {
+				set_country_flag = GRE_sent_support
+				custom_effect_tooltip = available_political_advisor
+				show_ideas_tooltip = EPR_Alexandros_Karapanos
+				custom_effect_tooltip = available_chief_of_army
+				show_ideas_tooltip = EPR_Dimitrios_Doulis
+			}
+			
+		}
+		ai_will_do = {
+			factor = 2.5
+		}
+	}
+	GRE_send_weapons_to_epirus = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			original_tag = GRE
+		}
+		targets = {
+			EPR
+		}
+		visible = {
+			great_power_politics_balkan_powder_keg_visible = yes
+			FROM = {
+				is_subject = no
+				has_war_with = ALB
+			}
+		}
+		fire_only_once = yes
+		custom_cost_trigger = {
+			has_equipment = { infantry_equipment > 499 }
+		}
+		custom_cost_text = 500_infantry_equipment_1
+		remove_effect = {
+			send_equipment = {
+				amount = 500
+				equipment = infantry_equipment
+				target = FROM
+			}
+			
+		}
+		ai_will_do = {
+			factor = 2.5
+			modifier = {
+				factor = 0
+				stockpile_ratio = { 
+					archetype = infantry_equipment
+					ratio < 0.75
+				}
+			}
+		}
+	}
+	GRE_occupy_northern_epirus_epr = {
+		icon = GFX_decision_infiltrate_state
+		allowed = {
+			original_tag = GRE
+		}
+		target_trigger = {
+			FROM = {
+				OR = {
+					is_subject = no
+					is_subject_of = ALB
+				}
+			}
+		}
+		targets = {
+			EPR
+		}
+		visible = {
+			great_power_politics_balkan_powder_keg_visible = yes
+			owns_state = 758
+			FROM = {
+				owns_state = 803
+				owns_state = 1225
+			} 
+		}
+		target_root_trigger = {
+			has_completed_focus = GRE_florence_protocol
+			has_global_flag = albanian_peasant_revolt
+			has_global_flag = great_war
+		}
+		available = {
+			count_triggers = {
+				amount = 4
+				FRA = { any_enemy_country = { is_major = yes } }
+				ENG = { any_enemy_country = { is_major = yes } }
+				ITA = { any_enemy_country = { is_major = yes } }
+				RUS = { any_enemy_country = { is_major = yes } }
+				AUS = { any_enemy_country = { is_major = yes } }
+				GER = { any_enemy_country = { is_major = yes } }
+			}
+			is_subject = no
+			has_capitulated = no
+			FROM = { NOT = { has_war_with = ROOT } }
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 803
+				state = 1225
+			}
+		}
+		fire_only_once = yes
+		custom_cost_trigger = {
+			command_power > 4.9
+		}
+		custom_cost_text = decision_cost_CP_5
+		ai_will_do = {
+			factor = 1000
+		}
+		complete_effect = {
+			hidden_effect = { add_command_power = -5 }
+			add_named_threat = {
+				threat = 3
+				name = GRE_occupation_of_northern_epirus
+			}
+			effect_tooltip = {
+				transfer_state = 803
+				transfer_state = 1225
+			}
+			hidden_effect = {
+				if = {
+					limit = { FROM = { is_subject = yes } }
+					FROM.OVERLORD = { country_event = ww1_albania.5 }
+				}
+				else = { FROM = { country_event = ww1_albania.5 } }
+			}
+		}
+	}
+}
+
+# First Balkan War
+TGWR_great_power_politics = {
+	BW1_war_with_turkey = {
+		icon = GFX_decision_generic_ignite_civil_war
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		days_mission_timeout = 811 # -80 days from 891, +80 days if we sent invitation to greece
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = BLL_attack_together_tt
+				any_country_of = {
+					target = {
+						BUL
+						GRE
+						MNT
+						SER
+					}
+					has_war_with = TUR
+				}
+			}
+		}
+		cancel_trigger = {
+			if = {
+				limit = { 
+					NOT = {
+						tag = BUL
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = BLL_replace_mission_tt
+					BUL = {
+						tag = BLL
+						has_active_mission = BW1_war_with_turkey
+					}
+					is_in_faction_with = BLL
+				}
+			}
+			else = {
+				hidden_trigger = {
+					always = no
+				}
+			}
+		}
+		timeout_effect = {
+			hidden_effect = {
+				BW1_init_effect = yes
+			}
+			
+			if = {
+				limit = {
+					tag = BLL
+				}
+				declare_war_on = {
+					target = TUR
+					type = take_claimed_state
+				}
+				every_allied_country = {					
+					add_to_war = {
+						targeted_alliance = BLL
+						enemy = TUR
+						hostility_reason = take_claimed_state
+					}
+				}
+				every_faction_member = {
+					BW1_attack_effect = yes
+				}
+			}
+			else = {
+				declare_war_on = {
+					target = TUR
+					type = take_claimed_state
+				}
+				BW1_attack_effect = yes
+			}
+		}
+		complete_effect = {
+			hidden_effect = {
+				BW1_init_effect = yes
+
+				if = {
+					limit = {
+						tag = BLL
+					}
+					declare_war_on = {
+						target = TUR
+						type = take_claimed_state
+					}
+					every_allied_country = {					
+						add_to_war = {
+							targeted_alliance = BLL
+							enemy = TUR
+							hostility_reason = take_claimed_state
+						}
+					}
+					every_faction_member = {
+						BW1_attack_effect = yes
+					}
+				}
+				else = {
+					declare_war_on = {
+						target = TUR
+						type = take_claimed_state
+					}
+					BW1_attack_effect = yes
+				}		
+			}
+			
+		}
+	}
+
+	BW1_info_when_attack = {
+		icon = GFX_decision_generic_ignite_civil_war
+		allowed = {
+			OR = {
+				tag = SER
+				tag = GRE
+				tag = MNT
+				tag = CRE
+			}
+		}
+		visible = {
+			great_power_politics_balkan_powder_keg_visible = yes
+			NOT = {
+				has_global_flag = kis_firstbalkan_war
+			}
+			is_in_faction_with = BLL
+			BLL = {
+				has_active_mission = BW1_war_with_turkey
+			}
+		}
+		available = {
+			always = no
+		}
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
+		complete_effect = {
+			effect_tooltip = {
+				declare_war_on = {
+					target = TUR
+					type = take_claimed_state
+				}
+				BW1_attack_effect = yes
+			}
+		}
+	}
+
+	BW1_war_with_turkey_debug = {
+		allowed = {
+			OR = {
+				tag = MNT
+				tag = BUL
+				tag = SER
+				tag = GRE
+			}
+		}
+		available = {
+			is_ai = no
+		}
+		visible = {
+			is_debug = yes
+		}
+		complete_effect = {
+			if = {
+				limit = { 
+					NOT = {
+						has_active_mission = BW1_war_with_turkey
+					}
+				}
+				SER = {
+					activate_mission = BW1_war_with_turkey
+				}
+				BUL = {
+					activate_mission = BW1_war_with_turkey
+				}
+				MNT = {
+					activate_mission = BW1_war_with_turkey
+				}
+				GRE = {
+					activate_mission = BW1_war_with_turkey
+				}
+			}
+			add_days_mission_timeout = {
+				mission = BW1_war_with_turkey
+				days = -1000
+			}
+		}
+	}
+
+	BW1_armistice_mission = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		days_mission_timeout = 60
+		available = {
+			BW1_turkey_crushing_defeat = yes
+		}
+		cancel_trigger = {
+			if = {
+				limit = {
+					is_BW1_ongoing = yes
+				}
+				BW1_balkans_crushing_defeat = yes
+			}
+			else = {
+				hidden_trigger = {
+					always = yes
+				}
+			}
+		}
+		is_good = no
+		timeout_effect = {
+			custom_effect_tooltip = BW1_armistice_tt
+			hidden_effect = {				
+				TUR = {
+					every_enemy_country = {
+						limit = {
+							OR = {
+								tag = SER
+								tag = GRE
+								tag = MNT
+								tag = BUL
+							}
+						}
+						hidden_effect = {
+							activate_mission = BW1_london_conference_fake
+						}
+					}
+					country_event = ww1_firstbalkan.121
+					hidden_effect = {
+						activate_mission = BW1_london_conference
+					}
+				}
+			}
+		}
+		complete_effect = {
+			hidden_effect = {
+				if = {
+					limit = { 
+						is_BW1_ongoing = yes
+					}
+					BW1_peace_effect = yes
+				}
+			}
+		}
+		cancel_effect = {
+			hidden_effect = {
+				if = {
+					limit = { 
+						is_BW1_ongoing = yes
+					}
+					BW1_peace_effect = yes
+				}
+			}
+		}
+	}
+
+	BW1_armistice_mission_fake = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		days_mission_timeout = 60
+		available = {
+			BW1_turkey_crushing_defeat = yes
+		}
+		cancel_trigger = {
+			if = {
+				limit = {
+					is_BW1_ongoing = yes
+				}
+				BW1_balkans_crushing_defeat = yes
+			}
+			else = {
+				hidden_trigger = {
+					always = yes
+				}
+			}
+		}
+		is_good = no
+		timeout_effect = {
+			custom_effect_tooltip = BW1_armistice_tt
+		}
+	}
+
+	BW1_london_conference = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		is_good = no
+		available = {
+			BW1_turkey_crushing_defeat = yes
+		}
+		cancel_trigger = {
+			if = {
+				limit = {
+					is_BW1_ongoing = yes
+				}
+				BW1_balkans_crushing_defeat = yes
+			}
+			else = {
+				hidden_trigger = {
+					always = yes
+				}
+			}
+		}
+		days_mission_timeout = 173
+		timeout_effect = {			
+			BW1_peace_effect = yes
+		}
+		complete_effect = {
+			hidden_effect = {
+				if = {
+					limit = { 
+						is_BW1_ongoing = yes
+					}
+					BW1_peace_effect = yes
+				}
+			}
+		}
+		cancel_effect = {
+			hidden_effect = {
+				if = {
+					limit = { 
+						is_BW1_ongoing = yes
+					}
+					BW1_peace_effect = yes
+				}
+			}
+		}
+	}
+
+	BW1_london_conference_fake = {
+		icon = GFX_decision_eng_trade_unions_support
+		name = BW1_london_conference
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		is_good = no
+		available = {
+			BW1_turkey_crushing_defeat = yes
+		}
+		cancel_trigger = {
+			if = {
+				limit = {
+					is_BW1_ongoing = yes
+				}
+				BW1_balkans_crushing_defeat = yes
+			}
+			else = {
+				hidden_trigger = {
+					always = yes
+				}
+			}
+		}
+		days_mission_timeout = 173
+		timeout_effect = {
+			effect_tooltip = {
+				BW1_peace_effect = yes
+			}
+		}
+	}
+}
+
+# Second Balkan War
+TGWR_great_power_politics = {
+	BW2_war_with_serbian_traitor = {
+		icon = GFX_decision_generic_ignite_civil_war
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		available = {
+			BW2_is_bulgaria_satiesfied = yes
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 1258
+				state = 1140
+				state = 203
+			}
+		}
+		days_mission_timeout = 25
+		war_with_on_timeout = SER
+		timeout_effect = {
+			declare_war_on = {
+				target = SER
+				type = take_claimed_state
+			}
+			effect_tooltip = {
+				activate_mission = BW2_war_timer
+			}
+			hidden_effect = {					
+				SER = {
+					every_allied_country = {
+						add_to_war = {
+							targeted_alliance = PREV
+							enemy = ROOT
+						}
+					}
+				}
+			}
+			BW2_init_effect = yes
+		}
+	}
+
+	BW2_war_with_serbian_traitor_fake = {
+		icon = GFX_decision_generic_ignite_civil_war
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		available = {
+			BW2_is_bulgaria_satiesfied = yes
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 1258
+				state = 1140
+				state = 203
+			}
+		}
+		days_mission_timeout = 25
+		war_with_on_timeout = BUL
+		timeout_effect = {
+			effect_tooltip = {				
+				BUL = {
+					declare_war_on = {
+						target = SER
+						type = take_claimed_state
+					}
+				}
+				activate_mission = BW2_war_timer
+			}
+		}
+	}
+
+	BW2_war_with_bulgarian_traitor = {
+		icon = GFX_decision_generic_ignite_civil_war
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		available = {
+			BW2_is_antibulgarian_alliance_satiesfied = yes
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 1258
+				state = 1140
+				state = 345
+				state = 731
+			}		
+		}
+		days_mission_timeout = 25
+		war_with_on_timeout = BUL
+		timeout_effect = {
+			declare_war_on = {
+				target = BUL
+				type = take_claimed_state
+			}
+			effect_tooltip = {
+				activate_mission = BW2_war_timer
+			}
+			hidden_effect = {
+				every_allied_country = {
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = BUL
+					}
+				}
+			}
+			BW2_init_effect = yes
+		}
+	}
+
+	BW2_war_with_bulgarian_traitor_fake = {
+		icon = GFX_decision_generic_ignite_civil_war
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		available = {
+			BW2_is_antibulgarian_alliance_satiesfied = yes
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 1258
+				state = 1140
+				state = 345
+				state = 731
+			}		
+		}
+		days_mission_timeout = 25
+		war_with_on_timeout = SER
+		timeout_effect = {
+			effect_tooltip = {
+				SER = {
+					declare_war_on = {
+						target = BUL
+						type = take_claimed_state
+					}
+				}
+				activate_mission = BW2_war_timer
+			}
+		}
+	}
+
+	BW2_info_when_attack_ahist = {
+		icon = GFX_decision_generic_ignite_civil_war
+		allowed = {
+			OR = {
+				tag = GRE
+				tag = MNT
+			}
+		}
+		visible = {
+			great_power_politics_balkan_powder_keg_visible = yes
+			NOT = {
+				has_global_flag = kis_secondbalkan_war
+			}
+			is_in_faction_with = SER
+			SER = {
+				has_active_mission = BW2_war_with_bulgarian_traitor
+			}
+		}
+		available = {
+			always = no
+		}
+		custom_cost_trigger = {
+			always = no
+		}
+		custom_cost_text = decision_cost_INFO
+		complete_effect = {
+			effect_tooltip = {
+				declare_war_on = {
+					target = BUL
+					type = take_claimed_state
+				}
+				activate_mission = BW2_war_timer
+			}
+		}
+	}
+
+	BW2_war_timer = {
+		icon = GFX_decision_generic_civil_support
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		is_good = no
+		available = {
+			BW2_bulgaria_crushing_defeat = yes
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				has_global_flag = balkan_league_success
+				OR = {
+					state = 1258
+					state = 1140
+					state = 203
+				}
+			}
+		}
+		cancel_trigger = {
+			if = {
+				limit = { 
+					is_BW2_ongoing = yes
+				}
+				BW2_balkans_crushing_defeat = yes
+			}
+			else = {
+				hidden_trigger = {
+					always = yes
+				}
+			}
+		}
+		days_mission_timeout = @BW2_length
+		timeout_effect = {
+			if = {
+				limit = { 
+					has_global_flag = balkan_league_success
+				}
+				custom_effect_tooltip = BW2_BUL_hist_how_to_win_tt
+			}
+			else = {
+				custom_effect_tooltip = BW2_BUL_ahist_how_to_win_tt
+			}
+			BW2_peace_effect = yes
+		}
+		
+		complete_effect = {
+			hidden_effect = {
+				if = {
+					limit = { 
+						is_BW2_ongoing = yes
+					}
+					BW2_peace_effect = yes
+				}
+			}
+		}
+		cancel_effect = {
+			hidden_effect = {
+				if = {
+					limit = { 
+						is_BW2_ongoing = yes
+					}
+					BW2_peace_effect = yes
+				}
+			}
+		}
+	}
+
+	BW2_war_timer_fake = {
+		icon = GFX_decision_generic_civil_support
+		name = BW2_war_timer
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		is_good = no
+		available = {
+			BW2_bulgaria_crushing_defeat = yes
+		}
+		highlight_states = {
+			highlight_states_trigger = {
+				has_global_flag = balkan_league_success
+				OR = {
+					state = 1258
+					state = 1140
+					state = 203
+				}
+			}
+		}
+		cancel_trigger = {
+			if = {
+				limit = { 
+					is_BW2_ongoing = yes
+				}
+				BW2_balkans_crushing_defeat = yes
+			}
+			else = {
+				hidden_trigger = {
+					always = yes
+				}
+			}
+		}
+		days_mission_timeout = @BW2_length
+		timeout_effect = {
+			if = {
+				limit = { 
+					OR = {
+						tag = SER
+						tag = GRE
+						tag = ROM
+						tag = MNT
+					}
+				}
+				if = {
+					limit = { 
+						has_global_flag = balkan_league_success
+					}
+					custom_effect_tooltip = BW2_balkans_hist_how_to_win_tt
+				}
+				else = {
+					custom_effect_tooltip = BW2_balkans_ahist_how_to_win_tt
+				}
+			}
+			effect_tooltip = {
+				BW2_peace_effect = yes
+			}
+		}
+	}
+	
+	BW2_intervention_in_bulgaria = {
+		icon = GFX_decision_generic_operation
+		allowed = {
+			OR = {
+				tag = TUR
+				tag = ROM
+			}
+		}
+		visible = {
+			is_BW2_ongoing = yes
+			has_country_flag = BW2_can_intervene_in_bulgaria
+		}
+		fire_only_once = yes
+		complete_effect = {
+			BW2_intervention_in_bulgaria_effect = yes
+			clr_country_flag = BW2_can_intervene_in_bulgaria
+		}
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 100
+				tag = ROM
+				BUL = {
+					has_active_mission = BW2_war_timer
+				}
+				check_expr = {
+					value = BUL.days_mission_timeout@BW2_war_timer
+					less_than = {
+						value = @BW2_length
+						add = -12
+					}
+				}
+			}
+			modifier = {
+				add = 100
+				tag = TUR
+				BUL = {
+					has_active_mission = BW2_war_timer
+				}
+				check_expr = {
+					value = BUL.days_mission_timeout@BW2_war_timer
+					less_than = {
+						value = @BW2_length
+						add = -11
+					}
+				}
+			}
+		}
+	}
+
+	BW2_turkey_intervention = {
+		icon = GFX_decision_generic_ignite_civil_war
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 756
+				state = 200
+			}
+		}
+		is_good = no
+		available = {
+			if = {
+				limit = { 
+					BUL = {
+						has_war_with = SER
+					}
+				}
+				hidden_trigger = {
+					always = no
+				}
+			}
+			else = {
+				BW2_bulgaria_crushing_defeat = yes
+			}
+		}
+		cancel_trigger = {
+			if = {
+				limit = { 
+					BUL = {
+						has_war_with = TUR
+					}
+				}
+				BW2_turkish_intervention_turkey_total_defeat = yes
+			}
+			else = {
+				hidden_trigger = {
+					always = yes
+				}
+			}
+		}
+		days_mission_timeout = @BW2_turkish_intervention
+		timeout_effect = {
+			custom_effect_tooltip = BW2_turkish_intervention_TUR_how_to_win_tt
+			BW2_turkish_intervention_peace_effect = yes
+		}
+		complete_effect = {
+			hidden_effect = {
+				if = {
+					limit = { 
+						BUL = {
+							has_war_with = TUR
+						}
+					}
+					BW2_turkish_intervention_peace_effect = yes
+				}
+			}
+		}
+		cancel_effect = {
+			hidden_effect = {
+				if = {
+					limit = { 
+						BUL = {
+							has_war_with = TUR
+						}
+					}
+					BW2_turkish_intervention_peace_effect = yes
+				}
+			}
+		}
+	}
+
+	BW2_turkey_intervention_fake = {
+		icon = GFX_decision_generic_ignite_civil_war
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		is_good = no
+		available = {
+			if = {
+				limit = { 
+					BUL = {
+						has_war_with = SER
+					}
+				}
+				hidden_trigger = {
+					always = no
+				}
+			}
+			else = {
+				BW2_bulgaria_crushing_defeat = yes
+			}
+		}
+		cancel_trigger = {
+			if = {
+				limit = { 
+					BUL = {
+						has_war_with = TUR
+					}
+				}
+				BW2_turkish_intervention_turkey_total_defeat = yes
+			}
+			else = {
+				hidden_trigger = {
+					always = yes
+				}
+			}
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 756
+				state = 200
+			}
+		}
+		days_mission_timeout = @BW2_turkish_intervention
+		timeout_effect = {
+			custom_effect_tooltip = BW2_turkish_intervention_BUL_how_to_win_tt
+			effect_tooltip = {				
+				BW2_turkish_intervention_peace_effect = yes
+			}
+		}
+	}
+
+	BW2_dissolve_wth = {
+		icon = GFX_decision_oppression
+		allowed = {
+			always = no
+		}
+		activation = {
+			always = no
+		}
+		available = {
+			NOT = {
+				country_exists = WTH
+			}
+		}
+		is_good = yes
+		days_mission_timeout = 45
+		timeout_effect = {
+			custom_effect_tooltip = BW2_dissolve_wth_tt
+			add_stability = -0.2
+			add_political_power = -100
+			annex_country = {
+				target = WTH
+			}
+			hidden_effect = {
+				WTH = {
+					every_core_state = {
+						remove_core_of = PREV
+					}
+				}
+			}			
+		}
+	}
+
+	TUR_create_wth = {
+		icon = GFX_decision_generic_nationalism
+		allowed = {
+			tag = TUR
+		}
+		visible = {
+			has_active_mission = BW2_turkey_intervention
+		}
+		available = {
+			controls_state = 757
+			controls_state = 451
+		}
+		fire_only_once = yes
+		complete_effect = {
+			create_western_thrace = yes
+		}
+		ai_will_do = {
+			base = 100
+		}
+	}
+
+	SER_cede_macedonia_to_bulgaria = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			tag = SER
+		}
+		visible = {
+			has_global_flag = balkan_league_success
+			has_global_flag = kis_firstbalkanwar_victory
+			NOT = {
+				has_global_flag = kis_secondbalkan_war
+			}
+			has_active_mission = BW2_war_with_serbian_traitor_fake
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 1258
+				state = 1140
+				state = 203
+			}
+		}
+		fire_only_once = yes
+		complete_effect = {
+			BW2_SER_satisfy_bulgaria_effect = yes
+		}
+		ai_will_do = {
+			base = 0
+		}
+	}
+
+	BUL_cede_macedonia_to_serbia = {
+		icon = GFX_decision_eng_trade_unions_support
+		allowed = {
+			tag = BUL
+		}
+		visible = {
+			NOT = {
+				has_global_flag = balkan_league_success
+			}
+			has_global_flag = kis_firstbalkanwar_victory
+			NOT = {
+				has_global_flag = kis_secondbalkan_war
+			}
+			has_active_mission = BW2_war_with_bulgarian_traitor_fake
+		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 1258
+				state = 1140
+				state = 345
+				state = 731
+			}		
+		}
+		fire_only_once = yes
+		complete_effect = {
+			BW2_BUL_satisfy_antibulgaria_effect = yes
+		}
+		ai_will_do = {
+			base = 0
+		}
+	}
+}

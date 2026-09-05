@@ -348,9 +348,13 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			custom_effect_tooltip = on_select_ROM_our_duty_to_the_people
-			effect_tooltip = {
-				ROM_land_reform_up = yes
+			custom_effect_tooltip = immediate_effect_upon_focus_start_tt
+			effect_tooltip = { ROM_land_reform_up = yes }
+			hidden_effect = {
+				if = {
+					limit = { has_country_flag = ROM_land_reform_passed }
+					country_event = ww1_romania.7
+				}
 			}
 		}
 		ai_will_do = {
@@ -6192,7 +6196,7 @@ focus_tree = {
 					limit = { 
 						has_start_date < 1914.1.1
 					}
-					# oil adding in 1914 transfered to on_startup
+					# oil adding in 1914 transferred to on_startup
 					add_resource = {
 						type = oil
 						amount = 5
@@ -6593,7 +6597,6 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			add_political_power = -50
 			custom_effect_tooltip = available_chief_of_airforce
 			show_ideas_tooltip = ROM_george_bibescu
 		}
@@ -6943,15 +6946,15 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			unlock_decision_tooltip = {
-				decision = ROM_armistice_of_focsani_decision
-				show_effect_tooltip = yes
-			}
-			custom_effect_tooltip = empty_space_tt
-			unlock_decision_tooltip = {
-				decision = ROM_treaty_of_bucharest
-				show_effect_tooltip = yes
-			}
+		#	unlock_decision_tooltip = {
+		#		decision = ROM_armistice_of_focsani_decision
+		#		show_effect_tooltip = yes
+		#	}
+		#	custom_effect_tooltip = empty_space_tt
+		#	unlock_decision_tooltip = {
+		#		decision = ROM_treaty_of_bucharest
+		#		show_effect_tooltip = yes
+		#	}
 		}
 		bypass = {
 			has_global_flag = great_war
@@ -7292,7 +7295,14 @@ focus_tree = {
 		}
 		completion_reward = {
 			army_experience = 25
-			country_lock_all_division_template = no
+			custom_effect_tooltip = ROM_modify_army_tt
+			custom_effect_tooltip = ROM_tackle_the_core_issue_tt
+			add_to_variable = {
+				ROM_infantry_brigade_cost = -1
+			}
+			add_to_variable = {
+				ROM_arty_brigade_cost = -1
+			}
 			if = {
 				limit = {
 					is_ai = yes
@@ -7715,15 +7725,20 @@ focus_tree = {
 			focus = ROM_the_moderating_influence
 		}
 		completion_reward = {
-			remove_trait = {
-				character = ROM_dimitrie_sturdza
-				slot = political_advisor
-				trait = scholarly_statesman
-			}
-			add_trait = {
-				character = ROM_dimitrie_sturdza
-				slot = political_advisor
-				trait = establishment_liberal
+			if = {
+				limit = {
+					has_character = ROM_dimitrie_sturdza
+				}
+				remove_trait = {
+					character = ROM_dimitrie_sturdza
+					slot = political_advisor
+					trait = scholarly_statesman
+				}
+				add_trait = {
+					character = ROM_dimitrie_sturdza
+					slot = political_advisor
+					trait = establishment_liberal
+				}
 			}
 			custom_effect_tooltip = empty_space_tt
 			unlock_decision_tooltip = {
@@ -8704,16 +8719,7 @@ focus_tree = {
 			has_war_with = RUS
 		}
 		completion_reward = {
-			GER = {
-				country_event = {
-					id = generic.2
-				}
-			}
-			add_to_war = {
-				targeted_alliance = GER
-				enemy = RUS
-				hostility_reason = asked_to_join
-			}
+			join_CENPO_declare_war_on_ENT = yes
 			# hidden_effect = {
 			# 	GER = {
 			# 		add_to_faction = ROOT
@@ -9002,16 +9008,7 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			ENT = {
-				country_event = {
-					id = generic.2
-				}
-			}
-			add_to_war = {
-				targeted_alliance = ENT
-				enemy = AUS
-				hostility_reason = asked_to_join
-			}
+			join_ENT_declare_war_on_CENPO = yes
 			unlock_decision_tooltip = {
 				decision = ROM_request_french_military_mission
 				show_effect_tooltip = yes
@@ -9183,13 +9180,6 @@ focus_tree = {
 				has_country_flag = ROM_treaty_of_bucharest_violated
 				has_country_flag = ROM_treaty_of_bucharest_nullified
 			}
-			OR = {
-				RUS = {
-					has_war_with = GER
-				}
-				owns_state = 78
-			}
-			
 		}
 		prerequisite = {
 			focus = ROM_recover_from_defeat
@@ -9551,6 +9541,7 @@ focus_tree = {
 					state = 1044
 					state = 83
 					state = 78
+					state = 1303
 				}
 				is_owned_and_controlled_by = ROOT
 			}
@@ -9650,6 +9641,14 @@ focus_tree = {
 			78 = {
 				add_compliance = 10
 			}
+			if = {
+				limit = { 
+					owns_state = 1303
+				}
+				1303 = {
+					add_compliance = 10
+				}
+			}			
 			custom_effect_tooltip = ROM_modify_economy_tt
 			add_to_variable = {
 				ROM_consumer_goods = -0.05
@@ -9686,6 +9685,14 @@ focus_tree = {
 			78 = {
 				add_compliance = 15
 			}
+			if = {
+				limit = { 
+					owns_state = 1303
+				}
+				1303 = {
+					add_compliance = 15
+				}
+			}
 		}
 		ai_will_do = {
 			factor = 0
@@ -9719,6 +9726,14 @@ focus_tree = {
 			78 = {
 				add_core_of = ROM
 			}
+			if = {
+				limit = { 
+					owns_state = 1303
+				}
+				1303 = {
+					add_core_of = ROM
+				}
+			}			
 		}
 		ai_will_do = {
 			factor = 0
@@ -12161,7 +12176,7 @@ focus_tree = {
 			}
 			set_autonomy = {
 				target = HUN
-				autonomous_state = autonomy_integrated_puppet
+				autonomous_state = autonomy_tgwr_occupied_state
 				end_wars = yes
 				end_civil_wars = yes
 			}
@@ -12871,13 +12886,12 @@ focus_tree = {
 					idea = ROM_bessarabia_compensation
 					days = 1080
 				}
-				every_country = {
-					limit = {
-						owns_state = 78
-					}
-					add_timed_idea = {
-						idea = ROM_bessarabia_compensation2
-						days = 1080
+				78 = { 
+					owner = {
+						add_timed_idea = {
+							idea = ROM_bessarabia_compensation2
+							days = 1080
+						}
 					}
 				}
 			}

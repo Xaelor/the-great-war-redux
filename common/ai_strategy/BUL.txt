@@ -20,21 +20,31 @@ BUL_defend_thessaloniki = {
 	}
 	abort_when_not_enabled = yes
 	ai_strategy = {
-		type = front_control	
-		country_trigger = {
-			has_war_with = BUL
-			is_neighbor_of = BUL
-			NOT = {
-				tag = ROM
-				tag = RUS
-			}
-		}
-		ratio = 0.4
-		execution_type = balanced
-	}
-	ai_strategy = {
 		type = garrison	
 		value = -200
+	}
+}
+
+BUL_build_army = {
+	allowed = {
+		original_tag = BUL
+	}
+	enable = {
+		NOT = {
+			has_global_flag = kis_firstbalkan_war
+			has_war = yes
+			has_global_flag = great_war_ends
+		}
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = build_army
+		id = infantry
+		value = 100
+	}
+	ai_strategy = {
+		type = force_build_armies
+		value = 1000
 	}
 }
 
@@ -201,9 +211,8 @@ BUL_second_balkan_war = {
 	}		
 	enable = {
 		has_global_flag = kis_firstbalkanwar_victory
+		has_BW_ended = no
 		NOT = {
-			has_global_flag = kis_secondbalkanwar_victory
-			has_global_flag = kis_secondbalkanwar_lose
 			has_global_flag = great_war
 			is_in_faction_with = SER
 			is_in_faction_with = GRE
@@ -251,56 +260,6 @@ BUL_second_balkan_war = {
 		type = front_unit_request
 		tag = ROM
 		value = 50
-	}
-}
-
-BUL_stalemate_BW2 = {
-	allowed = {
-		original_tag = BUL
-	}
-	enable = {
-		has_global_flag = kis_firstbalkanwar_victory
-		NOT = {
-			has_global_flag = kis_secondbalkanwar_victory
-			has_global_flag = kis_secondbalkanwar_lose
-			has_global_flag = great_war
-		}
-		has_game_rule = {
-			rule = second_balkan_war_outcome
-			option = STATEMATE
-		}
-	}
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = front_control
-		tag = MNT
-		execute_order = no
-		manual_attack = no
-	}
-	ai_strategy = {
-		type = front_control
-		tag = SER
-		execute_order = no
-		manual_attack = no
-	}
-	ai_strategy = {
-		type = front_control
-		tag = GRE
-		execute_order = no
-		manual_attack = no
-	}
-	ai_strategy = {
-		type = front_control
-		tag = TUR
-		execute_order = no
-		manual_attack = no
-	}
-	ai_strategy = {
-		type = front_control
-		tag = TUR
-		execute_order = no
-		manual_attack = no
 	}
 }
 

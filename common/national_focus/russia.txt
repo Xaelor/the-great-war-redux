@@ -346,13 +346,7 @@ focus_tree = {
 				name = RUS_democratic_party_SR
 			}
 			RUS_nikolai_ii = {
-				remove_country_leader_trait = inept_autocrat
-				set_character_flag = RUS_nicholas_romanov_democratic
-				set_portraits = {
-					civilian = {
-						large="gfx/leaders/RUS/RUS_nicholas_romanov_democratic.png"
-					}
-				}				
+				remove_country_leader_trait = inept_autocrat				
 			}
 			hidden_effect = {
 				news_event = {
@@ -961,21 +955,25 @@ focus_tree = {
 				swap_ruler_traits = { remove = inept_autocrat add = autocratic_imperialist }
 				set_country_leader_ideology = absolute_monarchy	
 			}		
-			RUS_nikolai_ii = {
-				set_character_flag = RUS_nicholas_romanov_dictator
-				set_portraits = {
-					civilian = {
-						large="gfx/leaders/RUS/RUS_nicholas_romanov_dictator.png"
-					}
-				}
-			}
 			custom_effect_tooltip = RUS_orthodoxy_autocracy_nationality_tt
 			set_politics={
 				ruling_party = neutrality
 				elections_allowed = no 
 			}
-			hidden_effect = {			
-				set_cosmetic_tag = RUS_absolutism
+			hidden_effect = {
+				set_country_flag = RUS_romanov_flag
+				if = {
+					limit = {
+						has_game_rule = {
+							rule = rule_russian_name
+							option = EMPIRE_RUSSIA_NAME
+						}
+					}
+					set_cosmetic_tag = RUS_romanov_empire
+				}
+				else = {
+					set_cosmetic_tag = RUS_romanov
+				}
 				every_state = {
 					limit = {
 						is_core_of = UKR
@@ -2724,6 +2722,7 @@ focus_tree = {
 					}
 				}
 				set_cosmetic_tag = RUS_republic
+				set_country_flag = RUS_republic_flag
 			}
 			if = {
 				limit = {
@@ -2882,7 +2881,7 @@ focus_tree = {
 								tag = BUK
 								has_country_flag = protectorate
 								has_autonomy_state = autonomy_tgwr_protectorate
-								has_autonomy_state = autonomy_tgwr_informal_protectorate
+								has_autonomy_state = autonomy_tgwr_protected_state
 								has_autonomy_state = autonomy_tgwr_concession
 							}
 						}
@@ -2953,6 +2952,7 @@ focus_tree = {
 		completion_reward = {
 			set_global_flag = russian_revolution
 			set_cosmetic_tag = RUS_republic
+			set_country_flag = RUS_republic_flag
 			set_politics = {
 				ruling_party = democratic
 			}
@@ -3045,20 +3045,15 @@ focus_tree = {
 						has_completed_focus = RUS_self_determination_of_nations
 					}
 				}
-				every_country = {
+				every_subject_country = {
 					limit = {
-						is_subject_of = RUS
 						OR = {
 							tag = KHI
 							tag = BUK
 						}
 						has_government = neutrality
 					}
-					RUS = {
-						end_puppet = PREV
-					}
-					leave_faction = yes
-					clr_country_flag = protectorate
+					free_subject_leave_faction = yes
 				}
 			}		
 		}
@@ -3110,7 +3105,7 @@ focus_tree = {
 					has_subject = FIN
 				}
 				FIN = {
-					clr_country_flag = monarchist_puppet
+					clr_subject_flags = yes
 					retire_character = FIN_franz_albert_seyn
 					hidden_effect = {
 						set_cosmetic_tag = FIN_senate
@@ -3121,7 +3116,7 @@ focus_tree = {
 				}
 				set_autonomy = {
 					target = FIN
-					autonomy_state = autonomy_satellite
+					autonomy_state = autonomy_tgwr_personal_union
 				}
 			}		
 			hidden_effect = {
@@ -3153,8 +3148,14 @@ focus_tree = {
 					set_cosmetic_tag = TRK_RUS
 				}
 			}
-			puppet = KAZ
-			puppet = TRK
+			set_autonomy = {
+				target = KAZ
+				autonomy_state = autonomy_tgwr_autonomous_governorate
+			}
+			set_autonomy = {
+				target = TRK
+				autonomy_state = autonomy_tgwr_autonomous_governorate
+			}
 			hidden_effect = {
 				TRK = {
 					TRK_aleksandr_samsonov = {
@@ -3301,87 +3302,6 @@ focus_tree = {
 					}
 				}
 				add_claim_by = ROOT
-			}
-			if = {
-				limit = {
-					NOT = {
-						has_war_with = AUS
-						has_subject = AUS
-						is_in_faction_with = AUS
-						has_war_With = SOV
-						tag = SOV
-					}
-					country_exists = AUS
-				}
-				add_named_threat = {
-					threat = 5
-					name = RUS_reunion_ruthenia
-				}
-				create_wargoal = {
-					type = take_claimed_state
-					target = AUS
-					generator = {
-						91
-						88
-						89
-						80
-						72
-					}
-				}
-				else = {
-					add_named_threat = {
-						threat = 2
-						name = RUS_reunion_ruthenia
-					}
-				}
-			}
-			if = {
-				limit = {
-					WUK = {
-						exists = yes
-						is_subject = no
-						is_in_faction = no
-						NOT = {
-							has_war_with = ROOT
-						}
-					}
-				}
-				create_wargoal = {
-					type = annex_everything
-					target = WUK
-				}
-			}
-			if = {
-				limit = {
-					POL = {
-						exists = yes
-						is_subject = no
-						is_in_faction = no
-						NOT = {
-							has_war_with = ROOT
-						}
-					}
-				}
-				create_wargoal = {
-					type = annex_everything
-					target = POL
-				}
-			}
-			if = {
-				limit = {
-					UKR = {
-						exists = yes
-						is_subject = no
-						is_in_faction = no
-						NOT = {
-							has_war_with = ROOT
-						}
-					}
-				}
-				create_wargoal = {
-					type = annex_everything
-					target = UKR
-				}
 			}
 		}
 		ai_will_do = {
@@ -3661,21 +3581,32 @@ focus_tree = {
 		available = {
 			is_subject = no
 			PER = {
-				exists = yes
+				has_government = democratic
+				NOT = {
+					has_active_mission = PER_looming_absolutist_revolt_in_astrabad
+					has_war_with = PEX
+				}
 			}
 			NOT = {
 				has_war_with = PER
 			}
+			has_active_mission = RUS_occupation_of_northern_persia_timeout
 		}
+		select_effect = {
+			add_days_mission_timeout = { mission = RUS_occupation_of_northern_persia_timeout days = 71 }
+			PER = {
+				country_event = ww1_per_rus_strangling.1
+			}
+		}
+		cancelable = no
+		will_lead_to_war_with = PER
 		completion_reward = {
 			add_named_threat = {
-				threat = 5
+				threat = 3
 				name = RUS_ultimatum_to_persia
 			}
 			PER = {
-				country_event = {
-					id = ww1_russia.63
-				}
+				country_event = ww1_per_rus_strangling.7
 			}
 		}
 		ai_will_do = {

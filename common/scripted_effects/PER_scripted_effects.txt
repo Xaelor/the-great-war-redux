@@ -1,0 +1,445 @@
+PER_calculate_total_foreign_influnce = {
+	set_variable = { var = PER_total_foreign_influence value = 0 }
+	if = {
+		limit = { 
+			# NOT = { 
+			# 	original_tag = MAK
+			# 	original_tag = MRG
+			# }
+			ENG = {
+				exists = yes
+				NOT = { has_war_with = ROOT }
+				has_dynamic_modifier = PER_influence_in_persia_modifier
+			}
+		}
+		add_to_variable = { var = PER_total_foreign_influence value = ENG.PER_foreign_influence }
+	}
+	else_if = {
+		limit = { 
+			ENG = {
+				NOT = {
+					exists = yes
+					has_dynamic_modifier = PER_influence_in_persia_modifier
+				}
+			}		
+		}
+		set_variable = { ENG.PER_foreign_influence = 0 }
+	}
+	if = {
+		limit = { 
+			# NOT = { original_tag = ARB }
+			RUS = {
+				exists = yes
+				NOT = { has_war_with = ROOT }
+				has_dynamic_modifier = PER_influence_in_persia_modifier
+			}
+		}
+		add_to_variable = { var = PER_total_foreign_influence value = RUS.PER_foreign_influence }
+	}
+	else_if = {
+		limit = {
+			RUS = {
+				NOT = {
+					exists = yes
+					has_dynamic_modifier = PER_influence_in_persia_modifier
+				}
+			}		
+		}
+		set_variable = { RUS.PER_foreign_influence = 0 }
+	}
+	if = {
+		limit = {
+			# NOT = { original_tag = ARB }
+			GER = {
+				exists = yes
+				NOT = { has_war_with = ROOT }
+				has_dynamic_modifier = PER_influence_in_persia_modifier
+			}
+		}
+		add_to_variable = { var = PER_total_foreign_influence value = GER.PER_foreign_influence }
+	}
+	else_if = {
+		limit = {
+			GER = {
+				NOT = {
+					exists = yes
+					has_dynamic_modifier = PER_influence_in_persia_modifier
+				}
+			}		
+		}
+		set_variable = { GER.PER_foreign_influence = 0 }
+	}
+	if = {
+		limit = { 
+			TUR = {
+				exists = yes
+				NOT = { has_war_with = ROOT }
+				has_dynamic_modifier = PER_influence_in_persia_modifier
+			}
+		}
+		add_to_variable = { var = PER_total_foreign_influence value = TUR.PER_foreign_influence }
+	}
+	else_if = {
+		limit = {
+			TUR = {
+				NOT = {
+					exists = yes
+					has_dynamic_modifier = PER_influence_in_persia_modifier
+				}
+			}		
+		}
+		set_variable = { TUR.PER_foreign_influence = 0 }
+	}
+	clamp_variable = {
+		var = PER_total_foreign_influence
+		min = 0
+		max = 1
+	}
+	set_variable = {
+		PER_total_independence = {
+			value = 1
+			subtract = PER_total_foreign_influence
+			min = 0
+		}
+	}
+}
+PER_calculate_foreign_influnce_modifiers = {
+	set_variable = {
+		PER_political_power_gain = {
+			value = PER_total_foreign_influence
+			multiply = -1
+		}
+	}
+	#set_variable = { var = PER_consumer_goods_expected_value value = PER_total_foreign_influence }
+	#multiply_variable = { var = PER_consumer_goods_expected_value value = 0.1 }
+	set_variable = {
+		PER_civilian_intel_to_others = {
+			value = PER_total_foreign_influence
+			multiply = 100
+		}
+	}
+}
+PER_calculate_foreign_influnce = {
+	hidden_effect = {
+		every_country_with_original_tag = {
+			original_tag_to_check = PER
+			limit = {
+				has_dynamic_modifier = PER_foreign_influence_modifier
+			}
+			PER_calculate_total_foreign_influnce = yes
+			PER_calculate_foreign_influnce_modifiers = yes
+		}
+	}	
+}
+
+PER_calculate_influnce_in_persia_modifiers = {
+	set_variable = {
+		PER_political_power_gain = {
+			value = PER_foreign_influence
+			multiply = 0.2
+		}
+	}
+	set_variable = {
+		PER_consumer_goods_factor = {
+			value = PER_foreign_influence
+			multiply = -0.1
+		}
+	}
+}
+
+PER_improve_foreign_advisors = {
+	if = {
+		limit = { has_idea = PER_foreign_advisors_0 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_0
+			add_idea = PER_foreign_advisors_1
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_1 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_1
+			add_idea = PER_foreign_advisors_2
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_2 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_2
+			add_idea = PER_foreign_advisors_3
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_3 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_3
+			add_idea = PER_foreign_advisors_4
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_4 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_4
+			add_idea = PER_foreign_advisors_5
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_5 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_5
+			add_idea = PER_foreign_advisors_6
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_6 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_6
+			add_idea = PER_foreign_advisors_7
+		}
+	}
+}
+
+PER_worsen_foreign_advisors = {
+	if = {
+		limit = { has_idea = PER_foreign_advisors_7 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_7
+			add_idea = PER_foreign_advisors_6
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_6 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_6
+			add_idea = PER_foreign_advisors_5
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_5 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_5
+			add_idea = PER_foreign_advisors_4
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_4 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_4
+			add_idea = PER_foreign_advisors_3
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_3 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_3
+			add_idea = PER_foreign_advisors_2
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_2 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_2
+			add_idea = PER_foreign_advisors_1
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_1 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_1
+			add_idea = PER_foreign_advisors_0
+		}
+	}
+}
+
+PER_double_worsen_foreign_advisors = {
+	if = {
+		limit = { has_idea = PER_foreign_advisors_7 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_7
+			add_idea = PER_foreign_advisors_5
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_5 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_5
+			add_idea = PER_foreign_advisors_3
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_3 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_3
+			add_idea = PER_foreign_advisors_1
+		}
+	}
+	else_if = {
+		limit = { has_idea = PER_foreign_advisors_1 }
+		swap_ideas = {
+			remove_idea = PER_foreign_advisors_1
+			add_idea = PER_foreign_advisors_0
+		}
+	}
+}
+
+PER_create_templates = {
+	if = {
+		limit = {
+			NOT = { has_template = "Berīgād-e Markazī" }
+		}
+		division_template = {
+			name = "Berīgād-e Markazī" #Central Brigade
+			division_names_group = PER_INF_01
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+			}
+			support = {
+				field_gun = { x = 0 y = 0 }
+				recon = { x = 0 y = 1 }
+			}
+		}
+	}
+	if = {
+		limit = {
+			NOT = { has_template = "Ataryād-e Qazāqkhāneh" }
+		}
+		division_template = {
+			name = "Ataryād-e Qazāqkhāneh" #Cossack Regiment
+			division_names_group = PER_COS_01
+			override_model = RUS_cavalry_entity
+			template_counter = 106
+			regiments = {
+				cavalry = { x = 0 y = 0 }
+				infantry = { x = 1 y = 0 }
+			}
+			support = {
+				field_gun = { x = 0 y = 0 }
+			}
+			is_locked = yes
+		}
+		set_division_template_cap = { 
+			division_template = "Ataryād-e Qazāqkhāneh" 
+			division_cap = global.PER_cossack_cap
+		}
+	}
+	if = {
+		limit = {
+			NOT = { has_template = "Nīrū-ye Eshāyer" }
+		}
+		division_template = {
+			name = "Nīrū-ye Eshāyer" # Irregular Troops
+			#division_names_group = PER_INF_01
+			override_model = middle_eastern_gfx_cavalry_entity
+			regiments = {
+				irregular_cavalry = { x = 0 y = 0 }
+				irregular_infantry = { x = 1 y = 0 }
+			}
+			is_locked = yes
+			priority = 0
+		}
+		set_division_template_cap = {
+			division_template = "Nīrū-ye Eshāyer"
+			division_cap = PER_irregulars_cap
+		}
+	}
+	if = {
+		limit = {
+			has_completed_focus = PER_create_the_government_gendarmerie
+			NOT = { has_template = "Žāndārmirī-ye Daulatī" }
+		}
+		division_template = {
+			name = "Žāndārmirī-ye Daulatī"
+			is_locked = yes
+			regiments = {
+				militia = { x = 0 y = 0 }
+			}
+		}
+		set_division_template_cap = {
+			division_template = "Žāndārmirī-ye Daulatī" 
+			division_cap = global.PER_gendarmerie_cap
+		}
+	}
+}
+
+copy_PER_base_ideas = {
+	add_dynamic_modifier = {
+		modifier = PER_foreign_influence_modifier
+	}
+	PER_calculate_foreign_influnce = yes
+	set_variable = { PER_centralization_level = PREV.PER_centralization_level }
+	if = {
+		limit = { PREV = { has_idea = PER_centralization_level_0 } }
+		add_ideas = PER_centralization_level_0
+		else_if = {
+			limit = { PREV = { has_idea = PER_centralization_level_1 } }
+			add_ideas = PER_centralization_level_1
+		}
+		else_if = {
+			limit = { PREV = { has_idea = PER_centralization_level_2 } }
+			add_ideas = PER_centralization_level_2
+		}
+		else_if = {
+			limit = { PREV = { has_idea = PER_centralization_level_3 } }
+			add_ideas = PER_centralization_level_3
+		}
+		else_if = {
+			limit = { PREV = { has_idea = PER_centralization_level_4 } }
+			add_ideas = PER_centralization_level_4
+		}
+		else_if = {
+			limit = { PREV = { has_idea = PER_centralization_level_5 } }
+			add_ideas = PER_centralization_level_5
+		}
+		else_if = {
+			limit = { PREV = { has_idea = PER_centralization_level_6 } }
+			add_ideas = PER_centralization_level_6
+		}
+		else_if = {
+			limit = { PREV = { has_idea = PER_centralization_level_7 } }
+			add_ideas = PER_centralization_level_7
+		}
+		else_if = {
+			limit = { PREV = { has_idea = PER_centralization_level_8 } }
+			add_ideas = PER_centralization_level_8
+		}
+		else_if = {
+			limit = { PREV = { has_idea = PER_centralization_level_9 } }
+			add_ideas = PER_centralization_level_9
+		}
+	}
+}
+copy_PER_foreign_advisors = {
+	if = {
+		limit = { PREV = { has_idea = PER_foreign_advisors_0 } }
+		add_ideas = PER_foreign_advisors_0
+	}
+	else_if = {
+		limit = { PREV = { has_idea = PER_foreign_advisors_1 } }
+		add_ideas = PER_foreign_advisors_1
+	}
+	else_if = {
+		limit = { PREV = { has_idea = PER_foreign_advisors_2 } }
+		add_ideas = PER_foreign_advisors_2
+	}
+	else_if = {
+		limit = { PREV = { has_idea = PER_foreign_advisors_3 } }
+			add_ideas = PER_foreign_advisors_3
+	}
+	else_if = {
+		limit = { PREV = { has_idea = PER_foreign_advisors_4 } }
+		add_ideas = PER_foreign_advisors_4
+	}
+	else_if = {
+		limit = { PREV = { has_idea = PER_foreign_advisors_5 } }
+		add_ideas = PER_foreign_advisors_5
+	}
+	else_if = {
+		limit = { PREV = { has_idea = PER_foreign_advisors_6 } }
+		add_ideas = PER_foreign_advisors_6
+	}
+	else_if = {
+		limit = { PREV = { has_idea = PER_foreign_advisors_7 } }
+		add_ideas = PER_foreign_advisors_7
+		}
+}

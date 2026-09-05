@@ -340,9 +340,8 @@ focus_tree = {
 			FOCUS_FILTER_WAR_SUPPORT
 		}
 		available = {
-			any_state = {
+			any_controlled_state = {
 				is_coastal = yes
-				is_controlled_by = ROOT
 			}
 		}
 		completion_reward = {
@@ -808,13 +807,6 @@ focus_tree = {
 				category = land_doctrine
 			}
 			remove_ideas = KOR_disbanded_army
-			if = {
-				limit = { has_idea = unequal_treaties }
-				swap_ideas = {
-					remove_idea = unequal_treaties
-					add_idea = free_trade
-				}
-			}
 			if = {
 				limit = { has_idea = isolation }
 				swap_ideas = {
@@ -1476,7 +1468,10 @@ focus_tree = {
 					add_state_core = 526
 					transfer_state = 526
 				}
-				puppet = OKN
+				set_autonomy = {
+					target = OKN
+					autonomy_state = autonomy_tgwr_client_state
+				}
 				if = {
 					limit = {
 						NOT = { has_government = communism }
@@ -1947,11 +1942,14 @@ focus_tree = {
 								}
 								transfer_state_to = PREV.PREV
 							}
-							puppet = PREV
+							set_autonomy = {
+								target = PREV
+								autonomy_state = autonomy_tgwr_client_state
+							}
 						}
 						add_ideas = MAN_banditry
 						add_ideas = CHI_idea_manchu_ethnic_problem
-						load_focus_tree = empty_focus
+						load_focus_tree = generic_focus
 					}
 				}
 				if = {
@@ -3077,24 +3075,9 @@ focus_tree = {
 				get_current_government_type = yes
 			}
 			OVERLORD = {
-				if = {
-					limit = {
-						OR = {
-							has_government = fascism
-							has_government = neutrality
-						}
-					}
-					ROOT = { clr_country_flag = protectorate }
-					set_autonomy = {
-						target = KOR
-						autonomous_state = autonomy_wtt_imperial_associate
-					}
-				}
-				else = {
-					set_autonomy = {
-						target = KOR
-						autonomous_state = autonomy_satellite
-					}
+				set_autonomy = {
+					target = KOR
+					autonomous_state = autonomy_tgwr_self_governing_colony
 				}
 				country_event = ww1_korea.4
 			}
@@ -3331,9 +3314,8 @@ focus_tree = {
 			FOCUS_FILTER_WAR_SUPPORT
 		}
 		available = {
-			any_state = {
+			any_controlled_state = {
 				is_coastal = yes
-				is_controlled_by = ROOT
 			}
 		}
 		completion_reward = {

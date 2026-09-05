@@ -60,7 +60,7 @@ world_uncapitulated_democratic_countries_and_dominions = {
 			has_capitulated = no
 			OR = {
 				is_subject = no
-				has_autonomy_state = autonomy_satellite
+				has_autonomy_state = autonomy_tgwr_dominion
 			}
 		}
 	}
@@ -108,11 +108,12 @@ europe_non_aligned_countries = {
 
 
 countries_china = {
+	#input = constant:country_groups.china_or_warlord #doesn't count dynamic countries
 	input = game:all_countries
 	name = COLLECTION_COUNTRIES_CHINA
 	operators = {
 		limit = {
-			is_china_or_warlord_no_tt = yes
+			is_china_or_warlord = yes
 		}
 	}
 }
@@ -121,33 +122,26 @@ countries_china = {
 # New Order in Asia etc
 
 countries_asia = {
-	input = game:all_countries
+	input = constant:country_groups.asian_tag
 	name = COLLECTION_COUNTRIES_ASIA
-	operators = {
-		limit = {
-			capital_scope = { is_on_continent = asia }
-		}
-	}
 }
 
 
 communist_countries_asia = {
-	input = game:all_countries
+	input = constant:country_groups.asian_tag
 	name = COLLECTION_COUNTRIES_ASIA_COMMUNIST
 	operators = {
 		limit = {
-			capital_scope = { is_on_continent = asia }
 			has_government = communism
 		}
 	}
 }
 
 non_communist_or_capitulated_countries_asia = {
-	input = game:all_countries
+	input = constant:country_groups.asian_tag
 	name = COLLECTION_COUNTRIES_ASIA_NON_COMMUNIST
 	operators = {
 		limit = {
-			capital_scope = { is_on_continent = asia }
 			OR = {
 				NOT = { has_government = communism }
 				AND = {
@@ -653,18 +647,12 @@ non_colonial_power_controlled_african_states = {
 	operators = {
 		limit = {
 			controller = {
-				AND = {
-					capital_scope = {
-						is_on_continent = africa 
-					}
-					NOT = {
-						any_country = {
-							has_subject = PREV
-							capital_scope = {
-								NOT = {
-									is_on_continent = africa
-								}
-							}
+				is_african_tag = yes
+				NOT = {			
+					AND = {
+						is_subject = yes
+						OVERLORD = {
+							is_african_tag = no
 						}
 					}
 				}

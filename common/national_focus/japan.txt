@@ -8,9 +8,6 @@ focus_tree = {
 			tag = JAP
 		}
 	}
-	shared_focus = early_industrialization
-	shared_focus = naval_experience
-	shared_focus = state_of_the_country_army
 	###########################################################################################################################
 	# POLITICAL
 	###########################################################################################################################
@@ -588,9 +585,11 @@ focus_tree = {
 			focus = JAP_ww1_assert_position_pacific
 		}
 		available = {
-			any_state = {
-				is_core_of = PHI
-				is_owned_by = USA
+			USA = {
+				any_owned_state = {
+					is_core_of = PHI
+					has_resistance = yes
+				}
 			}
 		}
 		bypass = {
@@ -601,16 +600,16 @@ focus_tree = {
 				country_exists = PHI
 			}		
 		}
-		completion_reward = {
-			every_state = {
-				limit = {
-					is_core_of = PHI
-					is_owned_by = USA
-				}
-				add_resistance = 30
-				add_compliance = -30
-			}
+		completion_reward = {		
 			USA = {
+				every_owned_state = {
+					limit = {
+						is_core_of = PHI
+						has_resistance = yes
+					}
+					add_resistance = 30
+					add_compliance = -30
+				}
 				add_opinion_modifier = {
 					target = PREV
 					modifier = HOI4TGW_Opinion_hostile_diplomatic_relations
@@ -806,7 +805,7 @@ focus_tree = {
 		will_lead_to_war_with = KOR
 		completion_reward = {
 			add_named_threat = {
-				threat = 5
+				threat = 2
 				name = JAP_ww1_Japan_Korea_Treaty
 			}
 			KOR = {
@@ -839,6 +838,10 @@ focus_tree = {
 		}
 		bypass = {
 			has_railway_connection = {
+				start_province = 6110
+				target_province = 11835
+			}
+			has_railway_connection = {
 				start_province = 7125
 				target_province = 848
 			}
@@ -848,6 +851,24 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
+			if = {
+				limit = {
+					NOT = {
+						has_railway_connection = {
+							start_province = 6110
+							target_province = 11835
+						}
+					}
+				}
+				build_railway = {
+					path = { 6110 11835 }
+					start_province = 6110
+					target_province = 11835
+					level = 3
+					build_only_on_allied = yes
+					fallback = no
+				}
+			}
 			if = {
 				limit = {
 					NOT = {
@@ -1355,13 +1376,8 @@ focus_tree = {
 		}
 		icon = GFX_focus_attack_britain
 		available = {
-			any_state = {
-				OR = {
-					state = 333
-					state = 336
-					state = 896
-					state = 897
-				}
+			any_state_of = {
+				target = { 333 336 896 897 }
 				owns_or_subject_of = no
 			}
 		}
@@ -1541,9 +1557,9 @@ focus_tree = {
 		}
 		completion_reward = {
 			army_experience = 50
-			every_other_country = {
-				limit = {
-					is_china_or_warlord = yes
+			every_collection_element = {
+				input = {
+					input = collection:countries_china 
 				}
 				add_opinion_modifier = {
 					target = PREV
@@ -1577,9 +1593,9 @@ focus_tree = {
 			add_state_claim = 872
 			add_state_claim = 745
 			add_state_claim = 746
-			every_other_country = {
-				limit = {
-					is_china_or_warlord = yes
+			every_collection_element = {
+				input = {
+					input = collection:countries_china 
 				}
 				add_opinion_modifier = {
 					target = PREV
@@ -1615,28 +1631,33 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_political_power = 75
-			every_other_country = {
-				limit = {
-					exists = yes
-					OR = {
-						AND = {
+			every_collection_element = {
+				input = {
+					input = collection:countries_china 
+					operators =  {
+						limit = {
+							exists = yes
 							OR = {
-								original_tag = CHI
-								original_tag = QIN
-							}
-							OR = {
-								has_government = neutrality
-								has_government = fascism
+								AND = {
+									OR = {
+										original_tag = CHI
+										original_tag = QIN
+									}
+									OR = {
+										has_government = neutrality
+										has_government = fascism
+									}
+								}
+								original_tag = ANC
+								original_tag = ZHC
+								original_tag = FNG
+								AND = {
+									is_china_or_warlord = yes
+									is_ally_with = ROOT
+								}
 							}
 						}
-						original_tag = ANC
-						original_tag = ZHC
-						original_tag = FNG
-						AND = {
-							is_china_or_warlord = yes
-							is_ally_with = ROOT
-						}
-					}
+					}		
 				}
 				add_opinion_modifier = {
 					target = ROOT
@@ -1978,6 +1999,12 @@ focus_tree = {
 						add_ideas = MAN_banditry
 						add_ideas = CHI_idea_manchu_ethnic_problem
 						add_ideas = CHI_FNG_idea_kwantung_army
+						ROOT = {
+							set_autonomy = {
+								target = PREV
+								autonomous_state = autonomy_tgwr_military_government
+							}
+						}
 					}
 				}
 				else = {
@@ -1988,12 +2015,14 @@ focus_tree = {
 						transfer_state = 1003
 						transfer_state = 1004
 					}
-					puppet = MAN
+					set_autonomy = {
+						target = MAN
+						autonomous_state = autonomy_tgwr_military_government
+					}
 				}
-				random_other_country = {
+				random_subject_country = {
 					limit = {
 						original_tag = MAN
-						is_subject_of = ROOT
 					}
 					transfer_state = 1003
 					transfer_state = 1004
@@ -2070,13 +2099,18 @@ focus_tree = {
 						}
 						add_claim_by = PREV
 					}
-					every_other_country = {
-						limit = {
-							is_china_or_warlord_no_tt = yes
-							any_owned_state = {
-								region = 155
+					every_collection_element = {
+						input = {
+							input = collection:countries_china 
+							operators =  {
+								limit = {
+									NOT = { tag = PREV }
+									any_owned_state = {
+										region = 155
+									}
+								}
 							}
-						}
+						}		
 						PREV = {
 							declare_war_on = {
 								target = PREV
@@ -2095,18 +2129,22 @@ focus_tree = {
 				}
 			}
 			effect_tooltip = {
-				random_other_country = {
+				random_subject_country = {
 					limit = {
 						original_tag = MAN
-						is_subject_of = ROOT
 					}
-					every_other_country = {
-						limit = {
-							is_china_or_warlord_no_tt = yes
-							any_owned_state = {
-								region = 155
+					every_collection_element = {
+						input = {
+							input = collection:countries_china 
+							operators =  {
+								limit = {
+									NOT = { tag = PREV }
+									any_owned_state = {
+										region = 155
+									}
+								}
 							}
-						}
+						}		
 						PREV = {
 							declare_war_on = {
 								target = PREV
@@ -2178,25 +2216,24 @@ focus_tree = {
 			617 = {
 				controls_or_subject_of = yes
 			}
-			714 = {
-				controls_or_subject_of = yes
-			}
+			# 714 = {
+			# 	controls_or_subject_of = yes
+			# }
 			715 = {
 				controls_or_subject_of = yes
 			}
 			716 = {
 				controls_or_subject_of = yes
 			}
-			717 = {
-				controls_or_subject_of = yes
-			}
+			# 717 = {
+			# 	controls_or_subject_of = yes
+			# }
 		}
 		completion_reward = {
 			hidden_effect = {
-				random_other_country = {
+				random_subject_country = {
 					limit = {
 						original_tag = MAN
-						is_subject_of = ROOT
 					}
 					save_event_target_as = JAP_manchukuo
 
@@ -2214,14 +2251,15 @@ focus_tree = {
 				every_state = {
 					limit = {
 						is_core_of = event_target:JAP_manchukuo
-						controller = {
-							OR = {
-								tag = ROOT
-								is_subject_of = ROOT
-							}
-						}
+						# controller = {
+						# 	OR = {
+						# 		tag = ROOT
+						# 		is_subject_of = ROOT
+						# 	}
+						# }
 						NOT = {
 							is_core_of = ROOT
+							state = 610
 							state = 744 # Dalian
 							owner = {
 								tag = CER
@@ -2231,12 +2269,16 @@ focus_tree = {
 					transfer_state_to = event_target:JAP_manchukuo
 				}
 
-				every_other_country = {
-					limit = {
-						is_subject = no
-						NOT = { is_in_faction_with = ROOT }
-						is_china_or_warlord_no_tt = yes
-					}
+				every_collection_element = {
+					input = {
+						input = collection:countries_china 
+						operators =  {
+							limit = {
+								is_subject = no
+								NOT = { is_in_faction_with = ROOT }
+							}
+						}
+					}	
 					country_event = ww1_china.66
 					if = {
 						limit = {
@@ -2253,7 +2295,7 @@ focus_tree = {
 				}
 				set_autonomy = {
 					target = event_target:JAP_manchukuo
-					autonomy_state = autonomy_wtt_imperial_protectorate
+					autonomy_state = autonomy_tgwr_occupied_state
 				}
 				every_subject_country = {
 					limit = {
@@ -2298,10 +2340,9 @@ focus_tree = {
 						}
 					}
 				}
-				random_other_country = {
+				random_subject_country = {
 					limit = {
 						original_tag = MAN
-						is_subject_of = ROOT
 					}
 					load_focus_tree = generic_focus
 					set_politics = {
@@ -2315,17 +2356,9 @@ focus_tree = {
 					remove_ideas = standing_alone
 					add_ideas = CHI_FNG_idea_kwantung_army
 					drop_cosmetic_tag = yes
-					every_possible_country = {
-						limit = {
-							has_character = FNG_zhang_haipeng
-						}
+					FNG = {
 						FNG_zhang_haipeng = {
 							set_nationality = PREV.PREV
-						}
-					}
-					every_possible_country = {
-						limit = {
-							has_character = FNG_zhang_jinghui
 						}
 						FNG_zhang_jinghui = {
 							set_nationality = PREV.PREV
@@ -2337,27 +2370,36 @@ focus_tree = {
 								is_qing_monarchy = no
 							}
 						}
-						if = {
-							limit = {
-								NOT = { has_character = MAN_aisin_gioro_puyi }
-							}
-							MAN = {
-								MAN_aisin_gioro_puyi = { set_nationality = PREV.PREV }
-							}
-						}
-						MAN_aisin_gioro_puyi = {
-							add_country_leader_role = {
-								promote_leader = yes
-								country_leader = {
-									ideology = semi_constitutional_monarchy
-									traits = { warrior_code }
+						QIN = {
+							QIN_xuantong = {
+								set_nationality = PREV.PREV
+								set_character_name = MAN_aisin_gioro_puyi
+								set_portraits = {
+									civilian = {
+										large = "gfx/leaders/QIN/QIN_puyi.png"
+									}
 								}
-							}
-							add_country_leader_role = {
-								promote_leader = yes
-								country_leader = {
-									ideology = fascism_ideology
-									traits = { warrior_code }
+								if = {
+									limit = {
+										has_ideology = semi_constitutional_monarchy
+									}
+									remove_country_leader_role = {
+										ideology = semi_constitutional_monarchy
+									}
+								}
+								add_country_leader_role = {
+									promote_leader = yes
+									country_leader = {
+										ideology = semi_constitutional_monarchy
+										traits = { warrior_code }
+									}
+								}
+								add_country_leader_role = {
+									promote_leader = yes
+									country_leader = {
+										ideology = fascism_ideology
+										traits = { warrior_code }
+									}
 								}
 							}
 						}
@@ -2399,10 +2441,13 @@ focus_tree = {
 					id = ww1_china.313
 					days = 200
 				}
-				every_other_country = {
-					limit = {
-						is_china_or_warlord_no_tt = yes
-					}
+				every_collection_element = {
+					input = {
+						input = collection:countries_china 
+						operators =  {
+							limit = { NOT = { tag = PREV } }
+						}
+					}	
 					country_event = {
 						id = ww1_china.309
 						days = 40
@@ -2568,9 +2613,10 @@ focus_tree = {
 					TBK = {
 						exists = no
 					}
-					any_country = {
-						is_russian_tag = yes
-						owns_state = 563
+					563 = {
+						OWNER = {
+							is_russian_tag = yes
+						}
 					}
 				}
 				country_event = ww1_rcw.3
