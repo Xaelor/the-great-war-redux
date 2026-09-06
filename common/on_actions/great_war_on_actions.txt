@@ -6,6 +6,7 @@ on_actions = {
 				every_subject_country = {
 					limit = {
 						is_puppet = yes
+						NOT = { has_war_with = FROM }
 					}
 					add_to_war = {
 						targeted_alliance = ROOT
@@ -17,6 +18,7 @@ on_actions = {
 				every_subject_country = {
 					limit = {
 						is_puppet = yes
+						NOT = { has_war_with = ROOT }
 					}
 					add_to_war = {
 						targeted_alliance = FROM
@@ -27,27 +29,52 @@ on_actions = {
 		}
 	}
 	# rebel countries mechanic
-	on_peaceconference_started = {
+	on_capitulation_immediate = {
 		effect = {
 			if = {
-				limit = { 
-					FROM = {
-						has_variable = rebel_annex_to
-						check_variable = {
-							rebel_annex_to = ROOT
-						}
-					}				
-					#is_in_faction = no
-				}				
-				FROM = {
-					var:rebel_annex_to = {
-						annex_country = {
-							target = FROM
-						}
+				limit = {
+					has_variable = rebel_annex_to
+					check_variable = {
+						rebel_annex_to = FROM
 					}
-					clear_variable = rebel_annex_to
-				}			
+					is_in_faction = no
+				}
+				white_peace = {
+					tag = FROM
+					message = revolt_supressed_message
+				}
+				FROM = {
+					annex_country = {
+						target = ROOT
+					}
+				}
+				clear_variable = rebel_annex_to
 			}
+		}
+	}
+	on_peaceconference_started = {
+		effect = {
+			# if = {
+			# 	limit = { 
+			# 		FROM = {
+			# 			has_variable = rebel_annex_to
+			# 			check_variable = {
+			# 				rebel_annex_to = ROOT
+			# 			}
+			# 		}
+			# 		is_in_faction = yes
+			# 		is_faction_leader = no
+			# 	}				
+			# 	white_peace = {
+			# 		tag = ROOT
+			# 		message = revolt_supressed_message
+			# 	}
+			# 	ROOT = {
+			# 		annex_country = {
+			# 			target = FROM
+			# 		}
+			# 	}			
+			# }
 			if = {
 				limit = {
 					ROOT = {

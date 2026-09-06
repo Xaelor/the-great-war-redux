@@ -71,14 +71,30 @@ country_event = {
 						add_claim_by = ROOT
 					}
 				}
+			}	
+			if = {
+				limit = {
+					has_subject = HJZ
+				}
+				end_puppet = HJZ
 			}
 			HJZ = {
+				if = {
+					limit = {
+						PREV = { 
+							has_war_with = ENT 
+							has_war_together_with = GER
+						}
+					}
+					join_ENT_declare_war_on_CENPO = yes
+				}
 				add_ideas = MOR_guerrilla_warfare
 				set_variable = {
 					rebel_annex_to = TUR
 				}
 				clear_all_relations = yes
 				load_oob = "HJZ_1910"
+				set_country_flag = arab_revolt_member
 			}
 			if = {
 				limit = {
@@ -92,7 +108,15 @@ country_event = {
 				}		
 				add_state_claim = 747
 				ASR = {
-					join_ENT_declare_war_on_CENPO = yes
+					if = {
+						limit = {
+							PREV = { 
+								has_war_with = ENT 
+								has_war_together_with = GER
+							}
+						}
+						join_ENT_declare_war_on_CENPO = yes
+					}
 					add_ideas = MOR_guerrilla_warfare	
 					set_variable = {
 						rebel_annex_to = TUR
@@ -165,6 +189,15 @@ country_event = {
 					add_claim_by = ROOT
 				}
 				YEM = {
+					if = {
+						limit = {
+							PREV = { 
+								has_war_with = ENT 
+								has_war_together_with = GER
+							}
+						}
+						join_ENT_declare_war_on_CENPO = yes
+					}
 					clear_all_relations = yes
 					remove_ideas = standing_alone
 					load_oob = "YEM_1910"
@@ -191,8 +224,17 @@ country_event = {
 					active = no
 				}
 			}
-			HJZ = {
-				join_ENT_declare_war_on_CENPO = yes
+			if = {
+				limit = {
+					HJZ = {
+						has_country_flag = arab_revolt_member
+						NOT = { has_war_with = PREV }
+					}
+				}
+				declare_war_on = {
+					target = HJZ
+					type = annex_everything
+				}
 			}
 			if = {
 				limit = {
